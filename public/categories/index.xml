@@ -2,66 +2,66 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Shirin&#39;s playgRound</title>
-    <link>https://shiring.github.io/categories/</link>
+    <link>https://singer-sheeting-31760.netlify.com/categories/</link>
     <description>Recent content in Categories on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 01 Jul 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://shiring.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://singer-sheeting-31760.netlify.com/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Archive</title>
-      <link>https://shiring.github.io/categories/archive/</link>
+      <link>https://singer-sheeting-31760.netlify.com/categories/archive/</link>
       <pubDate>Sat, 01 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shiring.github.io/categories/archive/</guid>
+      <guid>https://singer-sheeting-31760.netlify.com/categories/archive/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Blogdown</title>
-      <link>https://shiring.github.io/categories/blogdown/</link>
+      <link>https://singer-sheeting-31760.netlify.com/categories/blogdown/</link>
       <pubDate>Tue, 12 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shiring.github.io/categories/blogdown/</guid>
+      <guid>https://singer-sheeting-31760.netlify.com/categories/blogdown/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Github</title>
-      <link>https://shiring.github.io/categories/github/</link>
+      <link>https://singer-sheeting-31760.netlify.com/categories/github/</link>
       <pubDate>Mon, 04 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shiring.github.io/categories/github/</guid>
+      <guid>https://singer-sheeting-31760.netlify.com/categories/github/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Gitlab</title>
-      <link>https://shiring.github.io/categories/gitlab/</link>
+      <link>https://singer-sheeting-31760.netlify.com/categories/gitlab/</link>
       <pubDate>Mon, 04 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shiring.github.io/categories/gitlab/</guid>
+      <guid>https://singer-sheeting-31760.netlify.com/categories/gitlab/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Machine Learning</title>
-      <link>https://shiring.github.io/categories/machine-learning/</link>
+      <link>https://singer-sheeting-31760.netlify.com/categories/machine-learning/</link>
       <pubDate>Wed, 06 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shiring.github.io/categories/machine-learning/</guid>
+      <guid>https://singer-sheeting-31760.netlify.com/categories/machine-learning/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Text Analysis</title>
-      <link>https://shiring.github.io/categories/text-analysis/</link>
+      <link>https://singer-sheeting-31760.netlify.com/categories/text-analysis/</link>
       <pubDate>Fri, 28 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shiring.github.io/categories/text-analysis/</guid>
+      <guid>https://singer-sheeting-31760.netlify.com/categories/text-analysis/</guid>
       <description></description>
     </item>
     

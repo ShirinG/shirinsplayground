@@ -12,12 +12,12 @@
 # For developpers, if you modify this theme, put your images in `source/images` folder and
 # use grunt task `build` to synchronize assets
 
-baseurl = "https://shiring.github.io/"
+baseurl = "https://singer-sheeting-31760.netlify.com/"
 languageCode = "en-us"
 defaultContentLanguage = "en-us"
 title = "Shirin's playgRound"
 theme = "hugo-tranquilpeak-theme"
-disqusShortname = "shirinsplayground"
+# disqusShortname = "shirinsplayground"
 # googleAnalytics = "UA-86119417-1"
 paginate = 7
 canonifyurls = true
