@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Shirin&#39;s playgRound</title>
-    <link>/post/</link>
+    <link>https://shiring.github.io/post/</link>
     <description>Recent content in Posts on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 12 Sep 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://shiring.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Moving my blog to blogdown</title>
-      <link>/2017/09/moving-my-blog-to-blogdown/</link>
+      <link>https://shiring.github.io/2017/09/moving-my-blog-to-blogdown/</link>
       <pubDate>Tue, 12 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>/2017/09/moving-my-blog-to-blogdown/</guid>
+      <guid>https://shiring.github.io/2017/09/moving-my-blog-to-blogdown/</guid>
       <description>It’s been a long time coming but I finally moved my blog from Jekyll and Bootstrap on Github pages to blogdown and Hugo! Yay!!!
 I followed the blogdown ebook to set up my blog. I chose Thibaud Leprêtre’s tranquilpeak theme.
 My old blog will remain where it is, so that I don’t have to go through the hassle of migrating all my posts to my new site. You find a link to my old site in the sidebar.</description>
@@ -24,40 +24,40 @@ My old blog will remain where it is, so that I don’t have to go through the ha
     
     <item>
       <title>Data Science for Fraud Detection</title>
-      <link>/2017/09/data-science-fraud-detection/</link>
+      <link>https://shiring.github.io/2017/09/data-science-fraud-detection/</link>
       <pubDate>Wed, 06 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>/2017/09/data-science-fraud-detection/</guid>
+      <guid>https://shiring.github.io/2017/09/data-science-fraud-detection/</guid>
       <description>I have written the following post about Data Science for Fraud Detection at my company codecentric&amp;rsquo;s blog:
  Fraud can be defined as “the crime of getting money by deceiving people” (Cambridge Dictionary); it is as old as humanity: whenever two parties exchange goods or conduct business there is the potential for one party scamming the other. With an ever increasing use of the internet for shopping, banking, filing insurance claims, etc.</description>
     </item>
     
     <item>
       <title>Migrating from GitHub to GitLab with RStudio (Tutorial)</title>
-      <link>/2017/09/migrating-github-gitlab/</link>
+      <link>https://shiring.github.io/2017/09/migrating-github-gitlab/</link>
       <pubDate>Mon, 04 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>/2017/09/migrating-github-gitlab/</guid>
+      <guid>https://shiring.github.io/2017/09/migrating-github-gitlab/</guid>
       <description>GitHub vs. GitLab Git is a distributed implementation of version control. Many people have written very eloquently about why it is a good idea to use version control, not only if you collaborate in a team but also if you work on your own; one example is this article from RStudio&amp;rsquo;s Support pages.
 In short, its main feature is that version control allows you to keep track of the changes you make to your code.</description>
     </item>
     
     <item>
       <title>Social Network Analysis and Topic Modeling of codecentric’s Twitter friends and followers</title>
-      <link>/2017/07/twitter-analysis-codecentric/</link>
+      <link>https://shiring.github.io/2017/07/twitter-analysis-codecentric/</link>
       <pubDate>Fri, 28 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>/2017/07/twitter-analysis-codecentric/</guid>
+      <guid>https://shiring.github.io/2017/07/twitter-analysis-codecentric/</guid>
       <description>I have written the following post about Social Network Analysis and Topic Modeling of codecentric&amp;rsquo;s Twitter friends and followers for codecentric&amp;rsquo;s blog:
  Recently, Matthias Radtke has written a very nice blog post on Topic Modeling of the codecentric Blog Articles, where he is giving a comprehensive introduction to Topic Modeling. In this article I am showing a real-world example of how we can use Data Science to gain insights from text data and social network analysis.</description>
     </item>
     
     <item>
       <title>Find all my other posts on my old website!</title>
-      <link>/2017/07/find-all-my-other-posts-on-my-old-website/</link>
+      <link>https://shiring.github.io/2017/07/find-all-my-other-posts-on-my-old-website/</link>
       <pubDate>Sat, 01 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>/2017/07/find-all-my-other-posts-on-my-old-website/</guid>
+      <guid>https://shiring.github.io/2017/07/find-all-my-other-posts-on-my-old-website/</guid>
       <description>For all my other posts, see my old website: shiring.github.io</description>
     </item>
     

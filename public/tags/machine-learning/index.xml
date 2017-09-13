@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Machine Learning on Shirin&#39;s playgRound</title>
-    <link>/tags/machine-learning/</link>
+    <link>https://shiring.github.io/tags/machine-learning/</link>
     <description>Recent content in Machine Learning on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 06 Sep 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/machine-learning/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://shiring.github.io/tags/machine-learning/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Data Science for Fraud Detection</title>
-      <link>/2017/09/data-science-fraud-detection/</link>
+      <link>https://shiring.github.io/2017/09/data-science-fraud-detection/</link>
       <pubDate>Wed, 06 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>/2017/09/data-science-fraud-detection/</guid>
+      <guid>https://shiring.github.io/2017/09/data-science-fraud-detection/</guid>
       <description>I have written the following post about Data Science for Fraud Detection at my company codecentric&amp;rsquo;s blog:
  Fraud can be defined as “the crime of getting money by deceiving people” (Cambridge Dictionary); it is as old as humanity: whenever two parties exchange goods or conduct business there is the potential for one party scamming the other. With an ever increasing use of the internet for shopping, banking, filing insurance claims, etc.</description>
     </item>

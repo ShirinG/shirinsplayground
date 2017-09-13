@@ -3,198 +3,198 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/page/about/</loc>
+    <loc>https://shiring.github.io/page/about/</loc>
     <lastmod>2017-09-12T16:06:06+02:00</lastmod>
   </url>
   
   <url>
-    <loc>/2017/09/moving-my-blog-to-blogdown/</loc>
+    <loc>https://shiring.github.io/2017/09/moving-my-blog-to-blogdown/</loc>
     <lastmod>2017-09-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/2017/09/data-science-fraud-detection/</loc>
+    <loc>https://shiring.github.io/2017/09/data-science-fraud-detection/</loc>
     <lastmod>2017-09-06T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/2017/09/migrating-github-gitlab/</loc>
+    <loc>https://shiring.github.io/2017/09/migrating-github-gitlab/</loc>
     <lastmod>2017-09-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/2017/07/twitter-analysis-codecentric/</loc>
+    <loc>https://shiring.github.io/2017/07/twitter-analysis-codecentric/</loc>
     <lastmod>2017-07-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/2017/07/find-all-my-other-posts-on-my-old-website/</loc>
+    <loc>https://shiring.github.io/2017/07/find-all-my-other-posts-on-my-old-website/</loc>
     <lastmod>2017-07-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/anomaly-detection/</loc>
+    <loc>https://shiring.github.io/tags/anomaly-detection/</loc>
     <lastmod>2017-09-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/archive/</loc>
+    <loc>https://shiring.github.io/categories/archive/</loc>
     <lastmod>2017-07-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/archive/</loc>
+    <loc>https://shiring.github.io/tags/archive/</loc>
     <lastmod>2017-07-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/archives/</loc>
+    <loc>https://shiring.github.io/archives/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/autoencoder/</loc>
+    <loc>https://shiring.github.io/tags/autoencoder/</loc>
     <lastmod>2017-09-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/blogdown/</loc>
+    <loc>https://shiring.github.io/categories/blogdown/</loc>
     <lastmod>2017-09-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/blogdown/</loc>
+    <loc>https://shiring.github.io/tags/blogdown/</loc>
     <lastmod>2017-09-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/</loc>
+    <loc>https://shiring.github.io/categories/</loc>
     <lastmod>2017-07-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/codecentric/</loc>
+    <loc>https://shiring.github.io/tags/codecentric/</loc>
     <lastmod>2017-09-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/fraud-detection/</loc>
+    <loc>https://shiring.github.io/tags/fraud-detection/</loc>
     <lastmod>2017-09-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/github/</loc>
+    <loc>https://shiring.github.io/categories/github/</loc>
     <lastmod>2017-09-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/github/</loc>
+    <loc>https://shiring.github.io/tags/github/</loc>
     <lastmod>2017-09-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/gitlab/</loc>
+    <loc>https://shiring.github.io/categories/gitlab/</loc>
     <lastmod>2017-09-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/gitlab/</loc>
+    <loc>https://shiring.github.io/tags/gitlab/</loc>
     <lastmod>2017-09-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/h2o/</loc>
+    <loc>https://shiring.github.io/tags/h2o/</loc>
     <lastmod>2017-09-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/machine-learning/</loc>
+    <loc>https://shiring.github.io/categories/machine-learning/</loc>
     <lastmod>2017-09-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/machine-learning/</loc>
+    <loc>https://shiring.github.io/tags/machine-learning/</loc>
     <lastmod>2017-09-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/network-analysis/</loc>
+    <loc>https://shiring.github.io/tags/network-analysis/</loc>
     <lastmod>2017-07-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/page/</loc>
-    <lastmod>2017-09-12T16:06:06+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/pca/</loc>
-    <lastmod>2017-09-06T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/post/</loc>
-    <lastmod>2017-09-12T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/r-markdown/</loc>
-    <lastmod>2017-09-12T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/</loc>
+    <loc>https://shiring.github.io/page/</loc>
     <lastmod>2017-09-12T16:06:06+02:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/t-sne/</loc>
+    <loc>https://shiring.github.io/tags/pca/</loc>
     <lastmod>2017-09-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/</loc>
+    <loc>https://shiring.github.io/post/</loc>
+    <lastmod>2017-09-12T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://shiring.github.io/tags/r-markdown/</loc>
+    <lastmod>2017-09-12T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://shiring.github.io/</loc>
+    <lastmod>2017-09-12T16:06:06+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://shiring.github.io/tags/t-sne/</loc>
     <lastmod>2017-09-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/text-analysis/</loc>
+    <loc>https://shiring.github.io/tags/</loc>
+    <lastmod>2017-09-06T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://shiring.github.io/categories/text-analysis/</loc>
     <lastmod>2017-07-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/text-analysis/</loc>
+    <loc>https://shiring.github.io/tags/text-analysis/</loc>
     <lastmod>2017-07-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/twitter/</loc>
+    <loc>https://shiring.github.io/tags/twitter/</loc>
     <lastmod>2017-07-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>

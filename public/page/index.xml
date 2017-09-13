@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Pages on Shirin&#39;s playgRound</title>
-    <link>/page/</link>
+    <link>https://shiring.github.io/page/</link>
     <description>Recent content in Pages on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 12 Sep 2017 16:06:06 +0200</lastBuildDate>
     
-	<atom:link href="/page/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://shiring.github.io/page/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Welcome to my page!</title>
-      <link>/page/about/</link>
+      <link>https://shiring.github.io/page/about/</link>
       <pubDate>Tue, 12 Sep 2017 16:06:06 +0200</pubDate>
       
-      <guid>/page/about/</guid>
+      <guid>https://shiring.github.io/page/about/</guid>
       <description>I&amp;rsquo;m Shirin, a biologist turned bioinformatician turned data scientist.
 I&amp;rsquo;m especially interested in machine learning and data visualization. While I am using R most every day at work, I wanted to have an incentive to regularly explore other types of analyses and other types of data that I don&amp;rsquo;t normally work with. I have also very often benefited from other people&amp;rsquo;s published code in that it gave me ideas for my own work; and I hope that sharing my own analyses will inspire others as much as I often am by what can be be done with data.</description>
     </item>
