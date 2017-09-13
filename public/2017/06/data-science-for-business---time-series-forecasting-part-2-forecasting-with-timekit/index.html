@@ -1,0 +1,1250 @@
+
+
+  
+    
+  
+
+
+  
+
+
+
+
+  
+
+
+  
+
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hugo 0.27 with theme Tranquilpeak 0.4.1-BETA">
+    <title>Data Science for Business - Time Series Forecasting Part 2: Forecasting with timekit</title>
+    <meta name="author" content="Dr. Shirin Glander">
+    <meta name="keywords" content="">
+
+    <link rel="icon" href="img/favicon.png">
+    
+
+    
+    <meta name="description" content="In my last post, I prepared and visually explored time series data.
+Now, I will use this data to test the timekit package for time series forecasting with machine learning.
+
+Forecasting In time series forecasting, we use models to predict future time points based on past observations.
+As mentioned in timekit&rsquo;s vignette, &ldquo;as with most machine learning applications, the prediction is only as good as the patterns in the data.">
+    <meta property="og:description" content="In my last post, I prepared and visually explored time series data.
+Now, I will use this data to test the timekit package for time series forecasting with machine learning.
+
+Forecasting In time series forecasting, we use models to predict future time points based on past observations.
+As mentioned in timekit&rsquo;s vignette, &ldquo;as with most machine learning applications, the prediction is only as good as the patterns in the data.">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="Data Science for Business - Time Series Forecasting Part 2: Forecasting with timekit">
+    <meta property="og:url" content="/2017/06/data-science-for-business---time-series-forecasting-part-2-forecasting-with-timekit/">
+    <meta property="og:site_name" content="Shirin&#39;s playgRound">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Shirin&#39;s playgRound">
+    <meta name="twitter:description" content="In my last post, I prepared and visually explored time series data.
+Now, I will use this data to test the timekit package for time series forecasting with machine learning.
+
+Forecasting In time series forecasting, we use models to predict future time points based on past observations.
+As mentioned in timekit&rsquo;s vignette, &ldquo;as with most machine learning applications, the prediction is only as good as the patterns in the data.">
+    
+      <meta name="twitter:creator" content="@ShirinGlander">
+    
+    
+
+    
+    
+
+    
+      <meta property="og:image" content="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=640">
+    
+
+    
+      <meta property="og:image" content="/img/forecasting/2017/06/09/retail_forcasting_part2_files/figure-markdown_github/unnamed-chunk-28-1.png">
+    
+    
+    
+
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="/css/style-fpbzgxsy0kgmdvyrj5ykkg6ratccrk3gocmaqn4xpcjywmv5dteilzucro4f.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="/">Shirin&#39;s playgRound</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <h1 class="sidebar-profile-title">Data Science for Business - Time Series Forecasting Part 2: Forecasting with timekit</h1>
+        <a href="/#about">
+          <img class="sidebar-profile-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Dr. Shirin Glander</h4>
+        
+          <h5 class="sidebar-profile-bio">Biologist turned Bioinformatician turned Data Scientist</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/categories/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/tags/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/archives/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/page/about/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/ShirinG">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://stackoverflow.com/users/6623620/shirin-glander">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-stack-overflow"></i>
+      
+      <span class="sidebar-button-desc">Stack Overflow</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.r-bloggers.com/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-book"></i>
+      
+      <span class="sidebar-button-desc">R-bloggers</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaOut
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-center">
+  
+    <h1 class="post-title" itemprop="headline">
+      Data Science for Business - Time Series Forecasting Part 2: Forecasting with timekit
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2017-06-09T00:00:00Z">
+        
+  June 9, 2017
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="/categories/forecasting">forecasting</a>
+    
+  
+
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              
+
+<p>In <a href="/2017/05/data-science-business-forecasting-1">my last post</a>, I prepared and visually explored time series data.</p>
+
+<p>Now, I will use this data to test the <a href="https://cran.r-project.org/web/packages/timekit/index.html"><strong>timekit</strong> package</a> for time series forecasting with machine learning.</p>
+
+<p><br></p>
+
+<h2 id="forecasting">Forecasting</h2>
+
+<p>In time series forecasting, we use models to predict future time points based on past observations.</p>
+
+<p>As mentioned in <strong>timekit</strong>&rsquo;s vignette, &ldquo;as with most machine learning applications, the prediction is only as good as the patterns in the data. Forecasting using this approach may not be suitable when patterns are not present or when the future is highly uncertain (i.e. past is not a suitable predictor of future performance).&rdquo;</p>
+
+<p>And while this is certainly true, we don&rsquo;t always have data with a strong regular pattern. And, I would argue, data that has very obvious patterns doesn&rsquo;t need a complicated model to generate forecasts - we can already guess the future curve just by looking at it. So, if we think of use-cases for businesses, who want to predict e.g. product sales, forecasting models are especially relevant in cases where we can&rsquo;t make predictions manually or based on experience.</p>
+
+<p>The packages I am using are <strong>timekit</strong> for forecasting, <strong>tidyverse</strong> for data wrangling and visualization, <strong>caret</strong> for additional modeling functions, <strong>tidyquant</strong> for its ggplot theme, <strong>broom</strong> and <strong>modelr</strong> for (tidy) modeling.</p>
+
+<pre><code class="language-r">library(tidyverse)
+library(caret)
+
+library(tidyquant)
+library(broom)
+library(timekit)
+library(modelr)
+options(na.action = na.warn)
+</code></pre>
+
+<p><br></p>
+
+<h3 id="training-and-test-data">Training and test data</h3>
+
+<p>My input data is the tibble <code>retail_p_day</code>, that was created in <a href="https://shiring.github.io/forecasting/2017/05/28/retail_forcasting_part1">my last post</a>.</p>
+
+<p>I am splitting this dataset into training (all data points before/on Nov. 1st 2011) and test samples (all data points after Nov. 1st 2011).</p>
+
+<pre><code class="language-r">retail_p_day &lt;- retail_p_day %&gt;%
+  mutate(model = ifelse(day &lt;= &quot;2011-11-01&quot;, &quot;train&quot;, &quot;test&quot;))
+
+colnames(retail_p_day)[grep(&quot;^[0-9]+&quot;, colnames(retail_p_day))] &lt;- paste0(&quot;P_&quot;, colnames(retail_p_day)[grep(&quot;^[0-9]+&quot;, colnames(retail_p_day))])
+</code></pre>
+
+<p>Here, I am testing out <strong>timekit</strong>&rsquo;s functions with the net income per day as response variable. Because the time series in our data set is relatively short and doesn&rsquo;t cover multiple years, this forecast will only be able to capture recurring variation in days and weeks. Variations like increased sales before holidays, etc. would need additional data from several years to be accurately forecast.</p>
+
+<p>As we can see in the plot below, the net income shows variation between days.</p>
+
+<pre><code class="language-r">retail_p_day %&gt;%
+  ggplot(aes(x = day, y = sum_income, color = model)) +
+    geom_point(alpha = 0.5) +
+    geom_line(alpha = 0.5) +
+    scale_color_manual(values = palette_light()) +
+    theme_tq()
+</code></pre>
+
+<p><img src="/img/forecasting/2017/06/09/retail_forcasting_part2_files/figure-markdown_github/unnamed-chunk-4-1.png" alt="" /></p>
+
+<p><br></p>
+
+<h3 id="augmenting-the-time-series-signature">Augmenting the time series signature</h3>
+
+<p>With <strong>timekit</strong>, we can do forecasting with only a time series signature (a series of dates and times) and a corresponding response variable. If we had additional features that could be forecast independently, we could also introduce these into the model, but here, I will only work with the minimal data set.</p>
+
+<p>A central function of <strong>timekit</strong> is <code>tk_augment_timeseries_signature()</code>, which adds a number of features based on the properties of our time series signature:</p>
+
+<ul>
+<li>index: The index value that was decomposed</li>
+<li>index.num: The numeric value of the index in seconds. The base is “1970-01-01 00:00:00”.</li>
+<li>diff: The difference in seconds from the previous numeric index value.</li>
+<li>year: The year component of the index.</li>
+<li>half: The half component of the index.</li>
+<li>quarter: The quarter component of the index.</li>
+<li>month: The month component of the index with base 1.</li>
+<li>month.xts: The month component of the index with base 0, which is what xts implements.</li>
+<li>month.lbl: The month label as an ordered factor beginning with January and ending with December.</li>
+<li>day: The day component of the index.</li>
+<li>hour: The hour component of the index.</li>
+<li>minute: The minute component of the index.</li>
+<li>second: The second component of the index.</li>
+<li>hour12: The hour component on a 12 hour scale.</li>
+<li>am.pm: Morning (AM) = 1, Afternoon (PM) = 2.</li>
+<li>wday: The day of the week with base 1. Sunday = 1 and Saturday = 7.</li>
+<li>wday.xts: The day of the week with base 0, which is what xts implements. Sunday = 0 and Saturday = 6.</li>
+<li>wday.lbl: The day of the week label as an ordered factor begining with Sunday and ending with Saturday.</li>
+<li>mday: The day of the month.</li>
+<li>qday: The day of the quarter.</li>
+<li>yday: The day of the year.</li>
+<li>mweek: The week of the month.</li>
+<li>week: The week number of the year (Sunday start).</li>
+<li>week.iso: The ISO week number of the year (Monday start).</li>
+<li>week2: The modulus for bi-weekly frequency.</li>
+<li>week3: The modulus for tri-weekly frequency.</li>
+<li>week4: The modulus for quad-weekly frequency.</li>
+<li>mday7: The integer division of day of the month by seven, which returns the first, second, third, … instance the day has appeared in the month. Values begin at 1. For example, the first Saturday in the month has mday7 = 1. The second has mday7 = 2.</li>
+</ul>
+
+<p>Because we have missing data for the first column of diff, I am removing this row. We need to keep in mind too, that we have an irregular time series, because we never have data on Saturdays. This will affect the modeling and results and we need to account for this later on! Alternatively, it might make sense to compare the results when setting all NAs/Saturdays to 0, assuming that no information means that there was no income on a given day. Or we could impute missing values. Which strategy most accurately represents your data needs to be decided based on a good understanding of the business and how the data was collected.</p>
+
+<pre><code class="language-r">retail_p_day_aug &lt;- retail_p_day %&gt;%
+  rename(date = day) %&gt;%
+  select(model, date, sum_income) %&gt;% 
+  tk_augment_timeseries_signature() %&gt;%
+  select(-contains(&quot;month&quot;))
+  
+retail_p_day_aug &lt;- retail_p_day_aug[complete.cases(retail_p_day_aug), ]
+</code></pre>
+
+<p><br></p>
+
+<h3 id="preprocessing">Preprocessing</h3>
+
+<p>Not all of these augmented features will be informative for our model. For example, we don&rsquo;t have information about time of day, so features like hour, minute, second, etc. will be irrelevant here.</p>
+
+<p>Let&rsquo;s look at column variation for all numeric feature and remove those with a variance of 0.</p>
+
+<pre><code class="language-r">library(matrixStats)
+
+(var &lt;- data.frame(colnames = colnames(retail_p_day_aug[, sapply(retail_p_day_aug, is.numeric)]),
+           colvars = colVars(as.matrix(retail_p_day_aug[, sapply(retail_p_day_aug, is.numeric)]))) %&gt;%
+  filter(colvars == 0))
+</code></pre>
+
+<pre><code>##   colnames colvars
+## 1     hour       0
+## 2   minute       0
+## 3   second       0
+## 4   hour12       0
+## 5    am.pm       0
+</code></pre>
+
+<pre><code class="language-r">retail_p_day_aug &lt;- select(retail_p_day_aug, -one_of(as.character(var$colnames)))
+</code></pre>
+
+<p>Next, we want to remove highly correlated features. By plotting them, we can get an idea about which cutoff to set.</p>
+
+<pre><code class="language-r">library(ggcorrplot)
+
+cor &lt;- cor(retail_p_day_aug[, sapply(retail_p_day_aug, is.numeric)])
+p.cor &lt;- cor_pmat(retail_p_day_aug[, sapply(retail_p_day_aug, is.numeric)])
+
+ggcorrplot(cor,  type = &quot;upper&quot;, outline.col = &quot;white&quot;, hc.order = TRUE, p.mat = p.cor,
+           colors = c(palette_light()[1], &quot;white&quot;, palette_light()[2]))
+</code></pre>
+
+<p><img src="/img/forecasting/2017/06/09/retail_forcasting_part2_files/figure-markdown_github/unnamed-chunk-7-1.png" alt="" /></p>
+
+<p>I am going to choose a cutoff of 0.9 for removing features:</p>
+
+<pre><code class="language-r">cor_cut &lt;- findCorrelation(cor, cutoff=0.9) 
+retail_p_day_aug &lt;- select(retail_p_day_aug, -one_of(colnames(cor)[cor_cut]))
+</code></pre>
+
+<p><br></p>
+
+<p>Now, I can split the data into training and test sets:</p>
+
+<pre><code class="language-r">train &lt;- filter(retail_p_day_aug, model == &quot;train&quot;) %&gt;%
+  select(-model)
+test &lt;- filter(retail_p_day_aug, model == &quot;test&quot;)
+</code></pre>
+
+<p><br></p>
+
+<h3 id="modeling">Modeling</h3>
+
+<p>To model the time series of the response variable <code>sum_income</code>, I am using a <a href="https://en.wikipedia.org/wiki/Generalized_linear_model">generalized linear model</a>. We could try all kinds of different models and modeling parameters, but for this test I am keeping it simple.</p>
+
+<pre><code class="language-r">fit_lm &lt;- glm(sum_income ~ ., data = train)
+</code></pre>
+
+<p><br></p>
+
+<p>We can examine our model e.g. by visualizing:</p>
+
+<pre><code class="language-r">tidy(fit_lm) %&gt;%
+  gather(x, y, estimate:p.value) %&gt;%
+  ggplot(aes(x = term, y = y, color = x, fill = x)) +
+    facet_wrap(~ x, scales = &quot;free&quot;, ncol = 4) +
+    geom_bar(stat = &quot;identity&quot;, alpha = 0.8) +
+    scale_color_manual(values = palette_light()) +
+    scale_fill_manual(values = palette_light()) +
+    theme_tq() +
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+</code></pre>
+
+<p><img src="/img/forecasting/2017/06/09/retail_forcasting_part2_files/figure-markdown_github/unnamed-chunk-11-1.png" alt="" /></p>
+
+<pre><code class="language-r">augment(fit_lm) %&gt;%
+  ggplot(aes(x = date, y = .resid)) +
+    geom_hline(yintercept = 0, color = &quot;red&quot;) +
+    geom_point(alpha = 0.5, color = palette_light()[[1]]) +
+    geom_smooth() +
+    theme_tq()
+</code></pre>
+
+<p><img src="/img/forecasting/2017/06/09/retail_forcasting_part2_files/figure-markdown_github/unnamed-chunk-12-1.png" alt="" /></p>
+
+<p><br></p>
+
+<p>With this model, we can now add predictions and residuals for the test data&hellip;</p>
+
+<pre><code class="language-r">pred_test &lt;- test %&gt;%
+  add_predictions(fit_lm, &quot;pred_lm&quot;) %&gt;%
+  add_residuals(fit_lm, &quot;resid_lm&quot;)
+</code></pre>
+
+<p>&hellip; and visualize the residuals.</p>
+
+<pre><code class="language-r">pred_test %&gt;%
+    ggplot(aes(x = date, y = resid_lm)) +
+    geom_hline(yintercept = 0, color = &quot;red&quot;) +
+    geom_point(alpha = 0.5, color = palette_light()[[1]]) +
+    geom_smooth() +
+    theme_tq()
+</code></pre>
+
+<p><img src="/img/forecasting/2017/06/09/retail_forcasting_part2_files/figure-markdown_github/unnamed-chunk-14-1.png" alt="" /></p>
+
+<p>We can also compare the predicted with the actual sum income in the test set.</p>
+
+<pre><code class="language-r">pred_test %&gt;%
+  gather(x, y, sum_income, pred_lm) %&gt;%
+  ggplot(aes(x = date, y = y, color = x)) +
+    geom_point(alpha = 0.5) +
+    geom_line(alpha = 0.5) +
+    scale_color_manual(values = palette_light()) +
+    theme_tq()
+</code></pre>
+
+<p><img src="/img/forecasting/2017/06/09/retail_forcasting_part2_files/figure-markdown_github/unnamed-chunk-15-1.png" alt="" /></p>
+
+<p><br></p>
+
+<h3 id="forecasting-1">Forecasting</h3>
+
+<p>Once we are satisfied with our model&rsquo;s performance on the test set, we can use it to forecast future events. To create future time points for modeling, we need to extract the time index (the date column <code>day</code> in our data frame).</p>
+
+<pre><code class="language-r"># Extract index
+idx &lt;- retail_p_day %&gt;%
+    tk_index()
+</code></pre>
+
+<p>From this index we can generate the future time series.</p>
+
+<p>Here, we need to beware of a couple of things. Most importantly, we need to account for the irregularity of our data: We never have data for Saturdays and we have a few random missing values in between, as can be seen in the <code>diff</code> column of <code>retail_p_day_aug</code> (1 day difference == 86400 seconds).</p>
+
+<pre><code class="language-r">retail_p_day_aug %&gt;%
+  ggplot(aes(x = date, y = diff)) +
+    geom_point(alpha = 0.5, aes(color = as.factor(diff))) +
+    geom_line(alpha = 0.5) +
+    scale_color_manual(values = palette_light()) +
+    theme_tq()
+</code></pre>
+
+<p><img src="/img/forecasting/2017/06/09/retail_forcasting_part2_files/figure-markdown_github/unnamed-chunk-19-1.png" alt="" /></p>
+
+<p>What dates are these? Let&rsquo;s filter for dates with more than 1 day between the last recorded day that are not Sundays (as Saturdays are always off-days).</p>
+
+<pre><code class="language-r">retail_p_day_aug %&gt;%
+  select(date, wday.lbl, diff) %&gt;%
+  filter(wday.lbl != &quot;Sunday&quot; &amp; diff &gt; 86400) %&gt;%
+  mutate(days_missing = diff / 86400 -1)
+</code></pre>
+
+<pre><code>## # A tibble: 5 x 4
+##         date wday.lbl    diff days_missing
+##       &lt;date&gt;    &lt;ord&gt;   &lt;int&gt;        &lt;dbl&gt;
+## 1 2011-01-04  Tuesday 1036800           11
+## 2 2011-04-26  Tuesday  432000            4
+## 3 2011-05-03  Tuesday  172800            1
+## 4 2011-05-31  Tuesday  172800            1
+## 5 2011-08-30  Tuesday  172800            1
+</code></pre>
+
+<pre><code class="language-r">retail_p_day_aug %&gt;%
+  select(date, wday.lbl, diff) %&gt;%
+  filter(wday.lbl == &quot;Sunday&quot; &amp; diff &gt; 172800) %&gt;%
+  mutate(days_missing = diff / 86400 -1)
+</code></pre>
+
+<pre><code>## # A tibble: 1 x 4
+##         date wday.lbl   diff days_missing
+##       &lt;date&gt;    &lt;ord&gt;  &lt;int&gt;        &lt;dbl&gt;
+## 1 2011-05-01   Sunday 259200            2
+</code></pre>
+
+<p>Let&rsquo;s create a list of all missing days:</p>
+
+<pre><code class="language-r">off_days &lt;- c(&quot;2010-12-24&quot;, &quot;2010-12-25&quot;, &quot;2010-12-26&quot;, &quot;2010-12-27&quot;, &quot;2010-12-28&quot;, &quot;2010-12-29&quot;, &quot;2010-12-30&quot;, &quot;2010-01-01&quot;, &quot;2010-01-02&quot;, &quot;2010-01-03&quot;,
+              &quot;2011-04-22&quot;, &quot;2011-04-23&quot;, &quot;2011-04-24&quot;, &quot;2011-04-25&quot;, &quot;2011-05-02&quot;, &quot;2011-05-30&quot;, &quot;2011-08-29&quot;, &quot;2011-04-29&quot;, &quot;2011-04-30&quot;) %&gt;% 
+  ymd()
+</code></pre>
+
+<p>Official UK holidays during that time were:</p>
+
+<ul>
+<li>2011:</li>
+<li>Boxing Day December 26</li>
+
+<li><p>Christmas Day Holiday December 27</p></li>
+
+<li><p>2012:</p></li>
+
+<li><p>New Year&rsquo;s Day Holiday January 2</p></li>
+
+<li><p>Good Friday April 6</p></li>
+
+<li><p>Easter Monday April 9</p></li>
+
+<li><p>Early May Bank Holiday May 7</p></li>
+
+<li><p>Spring Bank Holiday June 4</p></li>
+
+<li><p>Diamond Jubilee Holiday June 5</p></li>
+
+<li><p>Summer Bank Holiday August 27</p></li>
+</ul>
+
+<p><br></p>
+
+<p>We can account for the missing Saturdays with <code>inspect_weekdays = TRUE</code>.</p>
+
+<p>Ideally, we would now use <code>skip_values</code> and <code>insert_values</code> to specifically account for days with irregular missing data in our future time series, e.g. by accounting for holidays. Generally, it is very difficult to account for holidays, because they don&rsquo;t occur with an easy to model rule (e.g. Easter is on the first Sunday after the first full moon in Spring). Unfortunately, in our dataset we have seen that holidays and randomly missing days did not have a big overlap in the past.</p>
+
+<p>Because not all holidays are missing days and we have more missing days than official holidays, I am using the list of missing days for skipping values - even though this is only a best-guess approach and likely not going to match all days that will be missing in reality during the future time series.</p>
+
+<pre><code class="language-r">idx_future &lt;- idx %&gt;%
+    tk_make_future_timeseries(n_future = 300, inspect_weekdays = TRUE, inspect_months = FALSE, skip_values = off_days)
+</code></pre>
+
+<pre><code class="language-r">idx_future %&gt;%
+    tk_get_timeseries_signature() %&gt;%
+    ggplot(aes(x = index, y = diff)) +
+    geom_point(alpha = 0.5, aes(color = as.factor(diff))) +
+    geom_line(alpha = 0.5) +
+    scale_color_manual(values = palette_light()) +
+    theme_tq()
+</code></pre>
+
+<p><img src="/img/forecasting/2017/06/09/retail_forcasting_part2_files/figure-markdown_github/unnamed-chunk-24-1.png" alt="" /></p>
+
+<p>Then, we can build the data frame for forecasting by using <code>tk_get_timeseries_signature()</code> and renaming the <code>index</code> column to <code>date</code>, so that it matches the features in the model. With this data frame, we can now predict future values and add this to the data frame.</p>
+
+<pre><code class="language-r">data_future &lt;- idx_future %&gt;%
+    tk_get_timeseries_signature() %&gt;%
+    rename(date = index)
+
+pred_future &lt;- predict(fit_lm, newdata = data_future)
+
+pred_future &lt;- data_future %&gt;%
+    select(date) %&gt;%
+    add_column(sum_income = pred_future)
+</code></pre>
+
+<pre><code class="language-r">retail_p_day %&gt;%
+  select(day, sum_income) %&gt;%
+  rename(date = day) %&gt;%
+  rbind(pred_future) %&gt;%
+  ggplot(aes(x = date, y = sum_income)) +
+    scale_x_date() +
+    geom_vline(xintercept = as.numeric(max(retail_p_day$day)), color = &quot;red&quot;, size = 1) +
+    geom_point(alpha = 0.5) +
+    geom_line(alpha = 0.5) +
+    theme_tq()
+</code></pre>
+
+<p><br></p>
+
+<p>When we evaluate the forecast, we want to account for uncertainty of accuracy, e.g. by accounting for the standard deviation of the test residuals.</p>
+
+<pre><code class="language-r">test_residuals &lt;- pred_test$resid_lm
+test_resid_sd &lt;- sd(test_residuals, na.rm = TRUE)
+
+pred_future &lt;- pred_future %&gt;%
+    mutate(
+        lo.95 = sum_income - 1.96 * test_resid_sd,
+        lo.80 = sum_income - 1.28 * test_resid_sd,
+        hi.80 = sum_income + 1.28 * test_resid_sd,
+        hi.95 = sum_income + 1.96 * test_resid_sd
+        )
+</code></pre>
+
+<p>This, we can then plot to show the forecast with confidence intervals:</p>
+
+<pre><code class="language-r">retail_p_day %&gt;%
+  select(day, sum_income) %&gt;%
+  rename(date = day) %&gt;%
+  ggplot(aes(x = date, y = sum_income)) +
+    geom_point(alpha = 0.5) +
+    geom_line(alpha = 0.5) +
+    geom_ribbon(aes(ymin = lo.95, ymax = hi.95), data = pred_future, 
+                fill = &quot;#D5DBFF&quot;, color = NA, size = 0) +
+    geom_ribbon(aes(ymin = lo.80, ymax = hi.80, fill = key), data = pred_future,
+                fill = &quot;#596DD5&quot;, color = NA, size = 0, alpha = 0.8) +
+    geom_point(aes(x = date, y = sum_income), data = pred_future,
+               alpha = 0.5, color = palette_light()[[2]]) +
+    geom_smooth(aes(x = date, y = sum_income), data = pred_future,
+                method = 'loess', color = &quot;white&quot;) +
+    theme_tq()
+</code></pre>
+
+<p><img src="/img/forecasting/2017/06/09/retail_forcasting_part2_files/figure-markdown_github/unnamed-chunk-28-1.png" alt="" /></p>
+
+<p>Our model predicts that income will follow a curve that is very similar to last year&rsquo;s with a drop after Christmas and an increase towards the later months of the year. In and off itself, this sounds reasonable. However, because we only have data from one year, we do not know whether the decline in January/February and the increase towards Christmas is an annually recurring trend or whether the increase we see at the end of 2011 will be independent of seasonality and continue to rise in the future.</p>
+
+<p>Next time, I&rsquo;ll compare how Facebook&rsquo;s <strong>prophet</strong> will predict the future income.</p>
+
+<hr />
+
+<p><br></p>
+
+<pre><code class="language-r">sessionInfo()
+</code></pre>
+
+<pre><code>## R version 3.4.0 (2017-04-21)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 7 x64 (build 7601) Service Pack 1
+## 
+## Matrix products: default
+## 
+## locale:
+## [1] LC_COLLATE=English_United States.1252 
+## [2] LC_CTYPE=English_United States.1252   
+## [3] LC_MONETARY=English_United States.1252
+## [4] LC_NUMERIC=C                          
+## [5] LC_TIME=English_United States.1252    
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] ggcorrplot_0.1.1              matrixStats_0.52.2           
+##  [3] modelr_0.1.0                  timekit_0.3.0                
+##  [5] broom_0.4.2                   tidyquant_0.5.1              
+##  [7] quantmod_0.4-8                TTR_0.23-1                   
+##  [9] PerformanceAnalytics_1.4.3541 xts_0.9-7                    
+## [11] zoo_1.8-0                     lubridate_1.6.0              
+## [13] caret_6.0-76                  lattice_0.20-35              
+## [15] dplyr_0.5.0                   purrr_0.2.2.2                
+## [17] readr_1.1.1                   tidyr_0.6.3                  
+## [19] tibble_1.3.1                  ggplot2_2.2.1                
+## [21] tidyverse_1.1.1              
+## 
+## loaded via a namespace (and not attached):
+##  [1] httr_1.2.1         jsonlite_1.5       splines_3.4.0     
+##  [4] foreach_1.4.3      assertthat_0.2.0   stats4_3.4.0      
+##  [7] cellranger_1.1.0   yaml_2.1.14        backports_1.0.5   
+## [10] quantreg_5.33      digest_0.6.12      rvest_0.3.2       
+## [13] minqa_1.2.4        colorspace_1.3-2   htmltools_0.3.6   
+## [16] Matrix_1.2-10      plyr_1.8.4         psych_1.7.5       
+## [19] SparseM_1.77       haven_1.0.0        padr_0.3.0        
+## [22] scales_0.4.1       lme4_1.1-13        MatrixModels_0.4-1
+## [25] mgcv_1.8-17        car_2.1-4          nnet_7.3-12       
+## [28] lazyeval_0.2.0     pbkrtest_0.4-7     mnormt_1.5-5      
+## [31] magrittr_1.5       readxl_1.0.0       evaluate_0.10     
+## [34] nlme_3.1-131       MASS_7.3-47        forcats_0.2.0     
+## [37] xml2_1.1.1         foreign_0.8-68     tools_3.4.0       
+## [40] hms_0.3            stringr_1.2.0      munsell_0.4.3     
+## [43] compiler_3.4.0     rlang_0.1.1        grid_3.4.0        
+## [46] nloptr_1.0.4       iterators_1.0.8    labeling_0.3      
+## [49] rmarkdown_1.5      gtable_0.2.0       ModelMetrics_1.1.0
+## [52] codetools_0.2-15   DBI_0.6-1          reshape2_1.4.2    
+## [55] R6_2.2.1           knitr_1.16         rprojroot_1.2     
+## [58] Quandl_2.8.0       stringi_1.1.5      parallel_3.4.0    
+## [61] Rcpp_0.12.11
+</code></pre>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="//tags/timeseries/">timeseries</a>
+
+  <a class="tag tag--primary tag--small" href="//tags/forecasting/">forecasting</a>
+
+  <a class="tag tag--primary tag--small" href="//tags/timekit/">timekit</a>
+
+  <a class="tag tag--primary tag--small" href="//tags/ggplot/">ggplot</a>
+
+  <a class="tag tag--primary tag--small" href="//tags/tidyverse/">tidyverse</a>
+
+                  </div>
+                
+              
+            
+            
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2017/06/data-science-for-business---time-series-forecasting-part-3-forecasting-with-facebooks-prophet/" data-tooltip="Data Science for Business - Time Series Forecasting Part 3: Forecasting with Facebook&#39;s Prophet">
+              
+                <i class="fa fa-angle-left"></i>
+                <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+              </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2017/05/data-science-business-forecasting-1/" data-tooltip="Data Science for Business - Time Series Forecasting Part 1: EDA &amp; Data Preparation">
+              
+                <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2017/06/data-science-for-business---time-series-forecasting-part-2-forecasting-with-timekit/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2017/06/data-science-for-business---time-series-forecasting-part-2-forecasting-with-timekit/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2017/06/data-science-for-business---time-series-forecasting-part-2-forecasting-with-timekit/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2017 Dr. Shirin Glander. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2017/06/data-science-for-business---time-series-forecasting-part-3-forecasting-with-facebooks-prophet/" data-tooltip="Data Science for Business - Time Series Forecasting Part 3: Forecasting with Facebook&#39;s Prophet">
+              
+                <i class="fa fa-angle-left"></i>
+                <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+              </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2017/05/data-science-business-forecasting-1/" data-tooltip="Data Science for Business - Time Series Forecasting Part 1: EDA &amp; Data Preparation">
+              
+                <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2017/06/data-science-for-business---time-series-forecasting-part-2-forecasting-with-timekit/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2017/06/data-science-for-business---time-series-forecasting-part-2-forecasting-with-timekit/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2017/06/data-science-for-business---time-series-forecasting-part-2-forecasting-with-timekit/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=%2F2017%2F06%2Fdata-science-for-business---time-series-forecasting-part-2-forecasting-with-timekit%2F">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=%2F2017%2F06%2Fdata-science-for-business---time-series-forecasting-part-2-forecasting-with-timekit%2F">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=%2F2017%2F06%2Fdata-science-for-business---time-series-forecasting-part-2-forecasting-with-timekit%2F">
+          <i class="fa fa-google-plus"></i><span>Share on Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Dr. Shirin Glander</h4>
+    
+      <div id="about-card-bio">Biologist turned Bioinformatician turned Data Scientist</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Data Scientist
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Münster, Germany
+      </div>
+    
+  </div>
+</div>
+
+    <div id="algolia-search-modal" class="modal-container">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="close-button"><i class="fa fa-close"></i></span>
+      <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
+        <span class="searchby-algolia-text text-color-light text-small">by</span>
+        <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
+      </a>
+      <i class="search-icon fa fa-search"></i>
+      <form id="algolia-search-form">
+        <input type="text" id="algolia-search-input" name="search"
+          class="form-control input--large search-input" placeholder="Search" />
+      </form>
+    </div>
+    <div class="modal-body">
+      <div class="no-result text-color-light text-center">no post found</div>
+      <div class="results">
+        
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2017/09/moving-my-blog-to-blogdown/">
+                <h3 class="media-heading">Moving my blog to blogdown</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Sep 9, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">It’s been a long time coming but I finally finished moving my blog from Jekyll and Bootstrap to blogdown and Hugo! Yay!!!
+Just to test that everything works, I run the example code:
+R Markdown This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.
+You can embed an R code chunk like this:</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2017/09/data-science-for-fraud-detection/">
+                <h3 class="media-heading">Data Science for Fraud Detection</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Sep 9, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">I have written the following post about Data Science for Fraud Detection at my company codecentric&rsquo;s blog:
+ Fraud can be defined as “the crime of getting money by deceiving people” (Cambridge Dictionary); it is as old as humanity: whenever two parties exchange goods or conduct business there is the potential for one party scamming the other. With an ever increasing use of the internet for shopping, banking, filing insurance claims, etc.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2017/09/migrating-from-github-to-gitlab-with-rstudio-tutorial/">
+                <h3 class="media-heading">Migrating from GitHub to GitLab with RStudio (Tutorial)</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Sep 9, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">GitHub vs. GitLab Git is a distributed implementation of version control. Many people have written very eloquently about why it is a good idea to use version control, not only if you collaborate in a team but also if you work on your own; one example is this article from RStudio&rsquo;s Support pages.
+In short, its main feature is that version control allows you to keep track of the changes you make to your code.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2017/07/social-network-analysis-and-topic-modeling-of-codecentrics-twitter-friends-and-followers/">
+                <h3 class="media-heading">Social Network Analysis and Topic Modeling of codecentric’s Twitter friends and followers</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jul 7, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">I have written the following post about Social Network Analysis and Topic Modeling of codecentric&rsquo;s Twitter friends and followers for codecentric&rsquo;s blog:
+ Recently, Matthias Radtke has written a very nice blog post on Topic Modeling of the codecentric Blog Articles, where he is giving a comprehensive introduction to Topic Modeling. In this article I am showing a real-world example of how we can use Data Science to gain insights from text data and social network analysis.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2017/07/how-to-do-optical-character-recognition-ocr-of-non-english-documents-in-r-using-tesseract/">
+                <h3 class="media-heading">How to do Optical Character Recognition (OCR) of non-English documents in R using Tesseract?</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jul 7, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">One of the many great packages of rOpenSci has implemented the open source engine Tesseract.
+Optical character recognition (OCR) is used to digitize written or typed documents, i.e. photos or scans of text documents are &ldquo;translated&rdquo; into a digital text on your computer.
+While this might seem like a trivial task at first glance, because it is so easy for our human brains. When reading text, we make use of our built-in word and sentence &ldquo;autocomplete&rdquo; that we learned from experience.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2017/06/data-science-for-business---time-series-forecasting-part-3-forecasting-with-facebooks-prophet/">
+                <h3 class="media-heading">Data Science for Business - Time Series Forecasting Part 3: Forecasting with Facebook&#39;s Prophet</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jun 6, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">In my last two posts (Part 1 and Part 2), I explored time series forecasting with the timekit package.
+In this post, I want to compare how Facebook&rsquo;s prophet performs on the same dataset.
+
+Predicting future events/sales/etc. isn&rsquo;t trivial for a number of reasons and different algorithms use different approaches to handle these problems. Time series data does not behave like a regular numeric vector, because months don&rsquo;t have the same number of days, weekends and holidays differ between years, etc.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2017/06/data-science-for-business---time-series-forecasting-part-2-forecasting-with-timekit/">
+                <h3 class="media-heading">Data Science for Business - Time Series Forecasting Part 2: Forecasting with timekit</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jun 6, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">In my last post, I prepared and visually explored time series data.
+Now, I will use this data to test the timekit package for time series forecasting with machine learning.
+
+Forecasting In time series forecasting, we use models to predict future time points based on past observations.
+As mentioned in timekit&rsquo;s vignette, &ldquo;as with most machine learning applications, the prediction is only as good as the patterns in the data.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2017/05/data-science-business-forecasting-1/">
+                <h3 class="media-heading">Data Science for Business - Time Series Forecasting Part 1: EDA &amp; Data Preparation</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  May 5, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Data Science is a fairly broad term and encompasses a wide range of techniques from data visualization to statistics and machine learning models. But the techniques are only tools in a - sometimes very messy - toolbox. And while it is important to know and understand these tools, here, I want to go at it from a different angle: What is the task at hand that data science tools can help tackle, and what question do we want to have answered?</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2016/09/expranalysis-package/">
+                <h3 class="media-heading">exprAnalysis package</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Sep 9, 2016
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">I created the R package exprAnalysis designed to streamline my RNA-seq data analysis pipeline. Below you find the vignette for installation and usage of the package.
+
+This package combines functions from various packages used to analyze and visualize expression data from NGS or expression chips.
+ It supports normalized input as e.g. from Cufflinks or expression chip arrays and raw count data from bam file input. It supports mRNA, miRNA, protein or other expression data.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2013/02/image-gallery-showcase/">
+                <h3 class="media-heading">Image gallery showcase</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Feb 2, 2013
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather"><p>And here is the image gallery!
+</p></div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+      </div>
+    </div>
+    <div class="modal-footer">
+      <p class="results-count text-medium"
+         data-message-zero="no post found"
+         data-message-one="1 post found"
+         data-message-other="{n} posts found">
+         11 posts found
+      </p>
+    </div>
+  </div>
+</div>
+    
+  
+    
+    <div id="cover" style="background-image:url('/images/cover.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" integrity="sha256-IFHWFEbU2/+wNycDECKgjIRSirRNIDp2acEB5fvdVRU=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js" integrity="sha256-+mpyNVJsNt4rVXCw0F+pAOiB3YxmHgrbJsx4ecPuUaI=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.js" integrity="sha256-vMxgR/7FtLovVA+IPrR7+xTgIgARH7y9VZQnmmi0HDI=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.js" integrity="sha256-N0qFUh7/9vLvia87dDndewmsgsyYoNkdA212tPc+2NI=" crossorigin="anonymous"></script>
+
+
+<script src="/js/script-qi9wbxp2ya2j6p7wx1i6tgavftewndznf4v0hy2gvivk1rxgc3lm7njqb6bz.min.js"></script>
+
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = '\/2017\/06\/data-science-for-business---time-series-forecasting-part-2-forecasting-with-timekit\/';
+          
+            this.page.identifier = '\/2017\/06\/data-science-for-business---time-series-forecasting-part-2-forecasting-with-timekit\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'shirinsplayground';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+    
+  </body>
+</html>
+

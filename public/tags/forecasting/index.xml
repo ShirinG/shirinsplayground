@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Forecasting on Shirin&#39;s playgRound</title>
+    <link>/tags/forecasting/</link>
+    <description>Recent content in Forecasting on Shirin&#39;s playgRound</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 13 Jun 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/forecasting/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Data Science for Business - Time Series Forecasting Part 3: Forecasting with Facebook&#39;s Prophet</title>
+      <link>/2017/06/data-science-business-forecasting-3/</link>
+      <pubDate>Tue, 13 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/06/data-science-business-forecasting-3/</guid>
+      <description>In my last two posts (Part 1 and Part 2), I explored time series forecasting with the timekit package.
+In this post, I want to compare how Facebook&amp;rsquo;s prophet performs on the same dataset.
+
+Predicting future events/sales/etc. isn&amp;rsquo;t trivial for a number of reasons and different algorithms use different approaches to handle these problems. Time series data does not behave like a regular numeric vector, because months don&amp;rsquo;t have the same number of days, weekends and holidays differ between years, etc.</description>
+    </item>
+    
+    <item>
+      <title>Data Science for Business - Time Series Forecasting Part 2: Forecasting with timekit</title>
+      <link>/2017/06/data-science-business-forecasting-2/</link>
+      <pubDate>Fri, 09 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/06/data-science-business-forecasting-2/</guid>
+      <description>In my last post, I prepared and visually explored time series data.
+Now, I will use this data to test the timekit package for time series forecasting with machine learning.
+
+Forecasting In time series forecasting, we use models to predict future time points based on past observations.
+As mentioned in timekit&amp;rsquo;s vignette, &amp;ldquo;as with most machine learning applications, the prediction is only as good as the patterns in the data.</description>
+    </item>
+    
+    <item>
+      <title>Data Science for Business - Time Series Forecasting Part 1: EDA &amp; Data Preparation</title>
+      <link>/2017/05/data-science-business-forecasting-1/</link>
+      <pubDate>Sun, 28 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/05/data-science-business-forecasting-1/</guid>
+      <description>Data Science is a fairly broad term and encompasses a wide range of techniques from data visualization to statistics and machine learning models. But the techniques are only tools in a - sometimes very messy - toolbox. And while it is important to know and understand these tools, here, I want to go at it from a different angle: What is the task at hand that data science tools can help tackle, and what question do we want to have answered?</description>
+    </item>
+    
+  </channel>
+</rss>

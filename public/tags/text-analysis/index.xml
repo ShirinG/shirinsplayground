@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Text Analysis on Shirin&#39;s playgRound</title>
+    <link>/tags/text-analysis/</link>
+    <description>Recent content in Text Analysis on Shirin&#39;s playgRound</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 28 Jul 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/text-analysis/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Social Network Analysis and Topic Modeling of codecentric’s Twitter friends and followers</title>
+      <link>/2017/07/twitter-analysis-codecentric/</link>
+      <pubDate>Fri, 28 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/07/twitter-analysis-codecentric/</guid>
+      <description>I have written the following post about Social Network Analysis and Topic Modeling of codecentric&amp;rsquo;s Twitter friends and followers for codecentric&amp;rsquo;s blog:
+ Recently, Matthias Radtke has written a very nice blog post on Topic Modeling of the codecentric Blog Articles, where he is giving a comprehensive introduction to Topic Modeling. In this article I am showing a real-world example of how we can use Data Science to gain insights from text data and social network analysis.</description>
+    </item>
+    
+  </channel>
+</rss>

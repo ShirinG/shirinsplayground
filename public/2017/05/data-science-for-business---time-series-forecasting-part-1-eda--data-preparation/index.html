@@ -1,0 +1,1646 @@
+
+
+  
+    
+  
+
+
+  
+
+
+
+
+  
+
+
+  
+
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hugo 0.27 with theme Tranquilpeak 0.4.1-BETA">
+    <title>Data Science for Business - Time Series Forecasting Part 1: EDA &amp; Data Preparation</title>
+    <meta name="author" content="Dr. Shirin Glander">
+    <meta name="keywords" content="">
+
+    <link rel="icon" href="img/favicon.png">
+    
+
+    
+    <meta name="description" content="Data Science is a fairly broad term and encompasses a wide range of techniques from data visualization to statistics and machine learning models. But the techniques are only tools in a - sometimes very messy - toolbox. And while it is important to know and understand these tools, here, I want to go at it from a different angle: What is the task at hand that data science tools can help tackle, and what question do we want to have answered?">
+    <meta property="og:description" content="Data Science is a fairly broad term and encompasses a wide range of techniques from data visualization to statistics and machine learning models. But the techniques are only tools in a - sometimes very messy - toolbox. And while it is important to know and understand these tools, here, I want to go at it from a different angle: What is the task at hand that data science tools can help tackle, and what question do we want to have answered?">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="Data Science for Business - Time Series Forecasting Part 1: EDA &amp; Data Preparation">
+    <meta property="og:url" content="/2017/05/data-science-for-business---time-series-forecasting-part-1-eda--data-preparation/">
+    <meta property="og:site_name" content="Shirin&#39;s playgRound">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Shirin&#39;s playgRound">
+    <meta name="twitter:description" content="Data Science is a fairly broad term and encompasses a wide range of techniques from data visualization to statistics and machine learning models. But the techniques are only tools in a - sometimes very messy - toolbox. And while it is important to know and understand these tools, here, I want to go at it from a different angle: What is the task at hand that data science tools can help tackle, and what question do we want to have answered?">
+    
+      <meta name="twitter:creator" content="@ShirinGlander">
+    
+    
+
+    
+    
+
+    
+      <meta property="og:image" content="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=640">
+    
+
+    
+      <meta property="og:image" content="/img/forecasting/2017/05/28/retail_forecasting_part1_files/figure-markdown_github/unnamed-chunk-26-1.png">
+    
+    
+    
+
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="/css/style-fpbzgxsy0kgmdvyrj5ykkg6ratccrk3gocmaqn4xpcjywmv5dteilzucro4f.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="/">Shirin&#39;s playgRound</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <h1 class="sidebar-profile-title">Data Science for Business - Time Series Forecasting Part 1: EDA &amp; Data Preparation</h1>
+        <a href="/#about">
+          <img class="sidebar-profile-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Dr. Shirin Glander</h4>
+        
+          <h5 class="sidebar-profile-bio">Biologist turned Bioinformatician turned Data Scientist</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/categories/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/tags/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/archives/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/page/about/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/ShirinG">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://stackoverflow.com/users/6623620/shirin-glander">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-stack-overflow"></i>
+      
+      <span class="sidebar-button-desc">Stack Overflow</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.r-bloggers.com/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-book"></i>
+      
+      <span class="sidebar-button-desc">R-bloggers</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaOut
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-center">
+  
+    <h1 class="post-title" itemprop="headline">
+      Data Science for Business - Time Series Forecasting Part 1: EDA &amp; Data Preparation
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2017-05-28T00:00:00Z">
+        
+  May 28, 2017
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="/categories/forecasting">forecasting</a>
+    
+  
+
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              
+
+<p>Data Science is a fairly broad term and encompasses a wide range of techniques from data visualization to statistics and machine learning models. But the techniques are only tools in a - sometimes very messy - toolbox. And while it is important to know and understand these tools, here, I want to go at it from a different angle: What is the task at hand that data science tools can help tackle, and what question do we want to have answered?</p>
+
+<p>A straight-forward business problem is to estimate future sales and future income. Based on past experience, i.e. data from past sales, data science can help improve forecasts and generate models that describe the main factors of influence. This, in turn, can then be used to develop actions based on what we have learned, like where to increase advertisement, how much of which products to keep in stock, etc.</p>
+
+<p><br></p>
+
+<h2 id="data-preparation">Data preparation</h2>
+
+<p>While it isn&rsquo;t the most exciting aspect of data science, and therefore often neglected in favor of fancy modeling techniques, getting the data into the right format and extracting meaningful features, is arguably THE most essential part of any analysis!</p>
+
+<p>Therefore, I have chosen to dedicate an entire article to this part and will discuss modeling and time series forecasting in separate blog posts.</p>
+
+<p><br></p>
+
+<p>Many of the formal concepts I am using when dealing with data in a tidy way come from <a href="http://r4ds.had.co.nz/">Hadley Wickham &amp; Garrett Grolemund&rsquo;s &ldquo;R for Data Science&rdquo;</a>.</p>
+
+<p>The central package is <strong>tidyverse</strong>, which contains <strong>tidyr</strong>, <strong>dplyr</strong>, <strong>ggplot</strong>, etc. Other packages I am using are <strong>tidyquant</strong> for its nice <strong>ggplot</strong> theme, <strong>modelr</strong>, <strong>gridExtra</strong> and <strong>grid</strong> for additional plotting functionalities.</p>
+
+<pre><code class="language-r">library(tidyverse)
+library(tidyquant)
+library(modelr)
+library(gridExtra)
+library(grid)
+</code></pre>
+
+<p><br></p>
+
+<h2 id="the-data">The data</h2>
+
+<p>I am again using a dataset from <a href="http://archive.ics.uci.edu/ml/datasets/Online+Retail">UC Irvine&rsquo;s machine learning repository</a> (converted to csv from xlsx).</p>
+
+<p>From the dataset description:</p>
+
+<blockquote>
+<p>This is a transnational data set which contains all the transactions occurring between 01/12/2010 and 09/12/2011 for a UK-based and registered non-store online retail.The company mainly sells unique all-occasion gifts. Many customers of the company are wholesalers.</p>
+
+<p>Daqing Chen, Sai Liang Sain, and Kun Guo, Data mining for the online retail industry: A case study of RFM model-based customer segmentation using data mining, Journal of Database Marketing and Customer Strategy Management, Vol. 19, No. 3, pp. 197â€“208, 2012 (Published online before print: 27 August 2012. doi: 10.1057/dbm.2012.17).</p>
+</blockquote>
+
+<p><br></p>
+
+<h3 id="reading-in-the-data">Reading in the data</h3>
+
+<p>A fast way to read in data in csv format is to use <strong>readr</strong>&rsquo;s <em>read_csv()</em> function. With a small dataset like this, it makes sense to specifically define what format each column should have (e.g. integers, character, etc.). In our case, this is particularly convenient for defining the date/time column to be read in correctly with <em>col_datetime()</em>.</p>
+
+<p>The original data contains the following features (description from <a href="http://archive.ics.uci.edu/ml/datasets/Online+Retail">UC Irvine&rsquo;s machine learning repository</a>):</p>
+
+<ul>
+<li>InvoiceNo: Invoice number uniquely assigned to each transaction. If this code starts with letter &lsquo;c&rsquo;, it indicates a cancellation.</li>
+<li>StockCode: Product (item) code uniquely assigned to each distinct product.</li>
+<li>Description: Product (item) name.</li>
+<li>Quantity: The quantities of each product (item) per transaction.</li>
+<li>InvoiceDate: Invoice Date and time, the day and time when each transaction was generated.</li>
+<li>UnitPrice: Unit price. Product price per unit in sterling.</li>
+<li>CustomerID: Customer number uniquely assigned to each customer.</li>
+<li>Country: Country name. The name of the country where each customer resides.</li>
+</ul>
+
+<p>Because read_csv generates a tibble (<a href="http://r4ds.had.co.nz/">a specific dataframe class</a>) and is part of the tidyverse, we can directly create a few additional columns:</p>
+
+<ul>
+<li>day: Invoice date, the day when each transaction was generated.</li>
+<li>time: Invoice time, the time when each transaction was generated.</li>
+<li>month: The month when each transaction was generated.</li>
+<li>income: The amount of income generated from each transaction (Quantity * UnitPrice), negative in case of returns</li>
+<li>income_return: Description of whether a transaction generated income or loss (i.e. purchase or return)</li>
+</ul>
+
+<pre><code class="language-r">retail &lt;- read_csv(&quot;OnlineRetail.csv&quot;,
+                   col_types = cols(
+                      InvoiceNo = col_character(),
+                      StockCode = col_character(),
+                      Description = col_character(),
+                      Quantity = col_integer(),
+                      InvoiceDate = col_datetime(&quot;%m/%d/%Y %H:%M&quot;),
+                      UnitPrice = col_double(),
+                      CustomerID = col_integer(),
+                      Country = col_character()
+                      )) %&gt;%
+  mutate(day = parse_date(format(InvoiceDate, &quot;%Y-%m-%d&quot;)),
+         day_of_week = wday(day, label = TRUE),
+         time = parse_time(format(InvoiceDate, &quot;%H:%M&quot;)),
+         month = format(InvoiceDate, &quot;%m&quot;),
+         income = Quantity * UnitPrice,
+         income_return = ifelse(Quantity &gt; 0, &quot;income&quot;, &quot;return&quot;))
+</code></pre>
+
+<p><br></p>
+
+<h2 id="exploratory-data-analysis-eda">Exploratory Data Analysis (EDA)</h2>
+
+<p>In order to decide, which features to use in the final dataset for modeling, we want to get a feel for our data. And a good way to do this, is by creating different visualizations. It also helps with assessing your models later on, because to closer you are acquainted with the data&rsquo;s properties, the better you&rsquo;ll be able to pick up on things that might have gone wrong in your analysis (think of it as a kind of sanity-check for your data).</p>
+
+<p><br></p>
+
+<h3 id="transactions-by-country">Transactions by country</h3>
+
+<p>The online retailer is UK-based, but its customers come from all over the world. However, the plots below tell us very quickly that the main customer base is from the UK, followed by Germany and France.</p>
+
+<pre><code class="language-r">p1 &lt;- retail %&gt;%
+  filter(Country == &quot;United Kingdom&quot;) %&gt;%
+  ggplot(aes(x = Country, fill = income_return)) +
+    geom_bar(alpha = 0.8) +
+    scale_fill_manual(values = palette_light()) +
+    theme_tq() +
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
+    guides(fill = FALSE) +
+    labs(x = &quot;&quot;)
+
+p2 &lt;- retail %&gt;%
+  filter(Country != &quot;United Kingdom&quot;) %&gt;%
+  ggplot(aes(x = Country, fill = income_return)) +
+    geom_bar(alpha = 0.8) +
+    scale_fill_manual(values = palette_light()) +
+    theme_tq() +
+    theme(legend.position = &quot;right&quot;) +
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
+    labs(x = &quot;&quot;,
+         fill = &quot;&quot;)
+
+grid.arrange(p1, p2, widths = c(0.2, 0.8))
+</code></pre>
+
+<p><img src="/img/forecasting/2017/05/28/retail_forecasting_part1_files/figure-markdown_github/unnamed-chunk-5-1.png" alt="" /></p>
+
+<p><br></p>
+
+<h3 id="transactions-over-time">Transactions over time</h3>
+
+<p>To get an idea of the number of transactions over time, we can use a frequency polygon. Here, we can see that the number purchases slightly increased during the last two months of recording, while the number of returns remained relatively stable.</p>
+
+<pre><code class="language-r">retail %&gt;%
+  ggplot(aes(x = day, color = income_return)) +
+    facet_grid(income_return ~ ., scales = &quot;free&quot;) +
+    geom_freqpoly(bins = 100, size = 1, alpha = 0.8) +
+    scale_color_manual(values = palette_light()) +
+    theme_tq() +
+    guides(color = FALSE) +
+    labs(title = &quot;Number of purchases/returns over time&quot;,
+         x = &quot;&quot;)
+</code></pre>
+
+<p><img src="/img/forecasting/2017/05/28/retail_forecasting_part1_files/figure-markdown_github/unnamed-chunk-6-1.png" alt="" /></p>
+
+<p><br></p>
+
+<p>Because the number of returns is much smaller than the number of purchases, it is difficult to visualize and compare them in the same plot. While above, I split them into two facets with free scales, we can also compare the density of values. From this plot, we can more easily see the relationship between purchases and returns over time: except for the last month, the proportion of both remained relatively stable.</p>
+
+<pre><code class="language-r">retail %&gt;%
+  ggplot(aes(x = day, y = ..density.., color = income_return)) +
+    geom_freqpoly(size = 1, alpha = 0.8, bins = 100) +
+    scale_color_manual(values = palette_light()) +
+    theme_tq() +
+    labs(title = &quot;Density of purchases/returns over time&quot;,
+         x = &quot;&quot;,
+         color = &quot;&quot;)
+</code></pre>
+
+<p><img src="/img/forecasting/2017/05/28/retail_forecasting_part1_files/figure-markdown_github/unnamed-chunk-7-1.png" alt="" /></p>
+
+<p><br></p>
+
+<h3 id="income-loss-from-transactions">Income/loss from transactions</h3>
+
+<p>Let&rsquo;s look at the income/loss from transactions over time. Here, we plot the sum of income and losses for each day. The income seems to increase slightly during the last month, while losses remained more stable. The only severe outlier is the last day.</p>
+
+<pre><code class="language-r">retail %&gt;%
+  group_by(day, income_return) %&gt;%
+  summarise(sum_income = sum(income)) %&gt;%
+  ggplot(aes(x = day, y = sum_income, color = income_return)) +
+    facet_grid(income_return ~ ., scales = &quot;free&quot;) +
+    geom_ref_line(h = 0, colour = &quot;grey&quot;) +
+    geom_line(size = 1, alpha = 0.8) +
+    scale_color_manual(values = palette_light()) +
+    theme_tq() +
+    guides(color = FALSE) +
+    labs(title = &quot;Income/loss from transactions per day&quot;,
+         x = &quot;&quot;,
+         y = &quot;sum of income/losses&quot;,
+         color = &quot;&quot;)
+</code></pre>
+
+<p><img src="/img/forecasting/2017/05/28/retail_forecasting_part1_files/figure-markdown_github/unnamed-chunk-8-1.png" alt="" /></p>
+
+<p><br></p>
+
+<p>We can also look at the sum of income and losses according to time of day of the transaction. Not surprisingly, transactions happen mostly during business hours.</p>
+
+<pre><code class="language-r">retail %&gt;%
+  group_by(time, income_return) %&gt;%
+  summarise(sum_income = sum(income)) %&gt;%
+  ggplot(aes(x = time, y = sum_income, color = income_return)) +
+    facet_grid(income_return ~ ., scales = &quot;free&quot;) +
+    geom_ref_line(h = 0, colour = &quot;grey&quot;) +
+    geom_line(size = 1, alpha = 0.8) +
+    scale_color_manual(values = palette_light()) +
+    theme_tq() +
+    guides(color = FALSE) +
+    labs(title = &quot;Income from purchases/returns per time of day&quot;,
+         x = &quot;time of day&quot;,
+         y = &quot;sum of income/losses&quot;,
+         color = &quot;&quot;)
+</code></pre>
+
+<p><img src="/img/forecasting/2017/05/28/retail_forecasting_part1_files/figure-markdown_github/unnamed-chunk-9-1.png" alt="" /></p>
+
+<p>Here, we again see the two extreme outliers. Let&rsquo;s look at them in the dataset. This purchase of 80995 paper craft birdies might have been a mistake, because we can see that the same customer who bought them at 09:15 cancelled the order only 15 minutes later and didn&rsquo;t order a smaller number either.</p>
+
+<pre><code class="language-r">retail %&gt;%
+  filter(day == &quot;2011-12-09&quot;) %&gt;%
+  arrange(-Quantity) %&gt;%
+  .[1:3, ]
+</code></pre>
+
+<pre><code>## # A tibble: 3 x 14
+##   InvoiceNo StockCode                         Description Quantity
+##       &lt;chr&gt;     &lt;chr&gt;                               &lt;chr&gt;    &lt;int&gt;
+## 1    581483     23843         PAPER CRAFT , LITTLE BIRDIE    80995
+## 2    581476     16008 SMALL FOLDING SCISSOR(POINTED EDGE)      240
+## 3    581476     22693  GROW A FLYTRAP OR SUNFLOWER IN TIN      192
+## # ... with 10 more variables: InvoiceDate &lt;dttm&gt;, UnitPrice &lt;dbl&gt;,
+## #   CustomerID &lt;int&gt;, Country &lt;chr&gt;, day &lt;date&gt;, day_of_week &lt;ord&gt;,
+## #   time &lt;time&gt;, month &lt;chr&gt;, income &lt;dbl&gt;, income_return &lt;chr&gt;
+</code></pre>
+
+<pre><code class="language-r">retail %&gt;%
+  filter(day == &quot;2011-12-09&quot;) %&gt;%
+  arrange(Quantity) %&gt;%
+  .[1:3, ]
+</code></pre>
+
+<pre><code>## # A tibble: 3 x 14
+##   InvoiceNo StockCode                     Description Quantity
+##       &lt;chr&gt;     &lt;chr&gt;                           &lt;chr&gt;    &lt;int&gt;
+## 1   C581484     23843     PAPER CRAFT , LITTLE BIRDIE   -80995
+## 2   C581490     22178 VICTORIAN GLASS HANGING T-LIGHT      -12
+## 3   C581490     23144 ZINC T-LIGHT HOLDER STARS SMALL      -11
+## # ... with 10 more variables: InvoiceDate &lt;dttm&gt;, UnitPrice &lt;dbl&gt;,
+## #   CustomerID &lt;int&gt;, Country &lt;chr&gt;, day &lt;date&gt;, day_of_week &lt;ord&gt;,
+## #   time &lt;time&gt;, month &lt;chr&gt;, income &lt;dbl&gt;, income_return &lt;chr&gt;
+</code></pre>
+
+<pre><code class="language-r">retail %&gt;%
+  filter(CustomerID == 16446)
+</code></pre>
+
+<pre><code>## # A tibble: 4 x 14
+##   InvoiceNo StockCode                 Description Quantity
+##       &lt;chr&gt;     &lt;chr&gt;                       &lt;chr&gt;    &lt;int&gt;
+## 1    553573     22980      PANTRY SCRUBBING BRUSH        1
+## 2    553573     22982         PANTRY PASTRY BRUSH        1
+## 3    581483     23843 PAPER CRAFT , LITTLE BIRDIE    80995
+## 4   C581484     23843 PAPER CRAFT , LITTLE BIRDIE   -80995
+## # ... with 10 more variables: InvoiceDate &lt;dttm&gt;, UnitPrice &lt;dbl&gt;,
+## #   CustomerID &lt;int&gt;, Country &lt;chr&gt;, day &lt;date&gt;, day_of_week &lt;ord&gt;,
+## #   time &lt;time&gt;, month &lt;chr&gt;, income &lt;dbl&gt;, income_return &lt;chr&gt;
+</code></pre>
+
+<p><br></p>
+
+<h3 id="transactions-by-day-and-time">Transactions by day and time</h3>
+
+<p>The last plot told us that in general, transactions were done during business hours. We can look at this in even more detail by comparing the day and time of transactions in a 2D-bin-plot where the tile colors indicate transaction numbers.</p>
+
+<pre><code class="language-r">retail %&gt;%
+  ggplot(aes(x = time, y = day)) +
+    stat_bin2d(alpha = 0.8, bins = 25, color = &quot;white&quot;) +
+    scale_fill_gradientn(colours = c(palette_light()[[1]], palette_light()[[2]])) +
+    theme_tq() +
+    theme(legend.position = &quot;right&quot;) +
+    labs(title = &quot;Purchases/returns per day and time&quot;)
+</code></pre>
+
+<p><img src="/img/forecasting/2017/05/28/retail_forecasting_part1_files/figure-markdown_github/unnamed-chunk-13-1.png" alt="" /></p>
+
+<p><br></p>
+
+<h3 id="net-income">Net income</h3>
+
+<p>The net income we can e.g. plot in a similar way by comparing month and day of the month of transactions with a tile plot:</p>
+
+<pre><code class="language-r">retail %&gt;%
+  mutate(day2 = format(InvoiceDate, &quot;%d&quot;)) %&gt;%
+  group_by(month, day2) %&gt;%
+  summarise(sum_income = sum(income)) %&gt;%
+  ggplot(aes(x = month, y = day2, fill = sum_income)) +
+    geom_tile(alpha = 0.8, color = &quot;white&quot;) +
+    scale_fill_gradientn(colours = c(palette_light()[[1]], palette_light()[[2]])) +
+    theme_tq() +
+    theme(legend.position = &quot;right&quot;) +
+    labs(title = &quot;Net income per month and day&quot;,
+         y = &quot;day of the month&quot;,
+         fill = &quot;net sum of income&quot;)
+</code></pre>
+
+<p><img src="/img/forecasting/2017/05/28/retail_forecasting_part1_files/figure-markdown_github/unnamed-chunk-14-1.png" alt="" /></p>
+
+<p><br></p>
+
+<h3 id="items">Items</h3>
+
+<p>Also of interest are the items that are being purchases or returned. Here, we sum up the net quantities for each item.</p>
+
+<pre><code class="language-r">retail %&gt;%
+  group_by(StockCode, Description) %&gt;%
+  summarise(sum = sum(Quantity)) %&gt;%
+  arrange(-sum)
+</code></pre>
+
+<pre><code>## Source: local data frame [5,749 x 3]
+## Groups: StockCode [4,070]
+## 
+## # A tibble: 5,749 x 3
+##    StockCode                        Description   sum
+##        &lt;chr&gt;                              &lt;chr&gt; &lt;int&gt;
+##  1     84077  WORLD WAR 2 GLIDERS ASSTD DESIGNS 53847
+##  2    85099B            JUMBO BAG RED RETROSPOT 47363
+##  3     84879      ASSORTED COLOUR BIRD ORNAMENT 36381
+##  4     22197                     POPCORN HOLDER 36334
+##  5     21212    PACK OF 72 RETROSPOT CAKE CASES 36039
+##  6    85123A WHITE HANGING HEART T-LIGHT HOLDER 35025
+##  7     23084                 RABBIT NIGHT LIGHT 30680
+##  8     22492             MINI PAINT SET VINTAGE 26437
+##  9     22616          PACK OF 12 LONDON TISSUES 26315
+## 10     21977 PACK OF 60 PINK PAISLEY CAKE CASES 24753
+## # ... with 5,739 more rows
+</code></pre>
+
+<p>As we can see in the plots below, the majority of items is purchases only occasionally, while a few items are purchased a lot.</p>
+
+<pre><code class="language-r">p1 &lt;- retail %&gt;%
+  group_by(StockCode, Description) %&gt;%
+  summarise(sum = sum(Quantity)) %&gt;%
+  ggplot(aes(x = sum)) +
+    geom_density(fill = palette_light()[[1]], alpha = 0.8) +
+    theme_tq()
+
+p2 &lt;- retail %&gt;%
+  group_by(StockCode, Description) %&gt;%
+  summarise(sum = sum(Quantity)) %&gt;%
+  filter(sum &gt; 1) %&gt;%
+  ggplot(aes(x = sum)) +
+    geom_density(fill = palette_light()[[1]], alpha = 0.8) +
+    theme_tq()
+
+p3 &lt;- retail %&gt;%
+  group_by(StockCode, Description) %&gt;%
+  summarise(sum = sum(Quantity)) %&gt;%
+  filter(sum &gt; 10000) %&gt;%
+  ggplot(aes(x = sum)) +
+    geom_density(fill = palette_light()[[1]], alpha = 0.8) +
+    theme_tq()
+    
+grid.arrange(p1, p2, p3, ncol = 3)
+</code></pre>
+
+<p><img src="/img/forecasting/2017/05/28/retail_forecasting_part1_files/figure-markdown_github/unnamed-chunk-16-1.png" alt="" /></p>
+
+<p><br></p>
+
+<p>We can also calculate on how many different days, items have been purchased.</p>
+
+<pre><code class="language-r">most_sold &lt;- retail %&gt;%
+  group_by(day, StockCode, Description) %&gt;%
+  summarise(sum = sum(Quantity)) %&gt;%
+  group_by(StockCode, Description) %&gt;%
+  summarise(n = n()) %&gt;%
+  arrange(-n)
+
+head(most_sold)
+</code></pre>
+
+<pre><code>## Source: local data frame [6 x 3]
+## Groups: StockCode [6]
+## 
+## # A tibble: 6 x 3
+##   StockCode                        Description     n
+##       &lt;chr&gt;                              &lt;chr&gt; &lt;int&gt;
+## 1    85123A WHITE HANGING HEART T-LIGHT HOLDER   304
+## 2    85099B            JUMBO BAG RED RETROSPOT   302
+## 3     22423           REGENCY CAKESTAND 3 TIER   301
+## 4     84879      ASSORTED COLOUR BIRD ORNAMENT   300
+## 5     20725            LUNCH BAG RED RETROSPOT   299
+## 6     21212    PACK OF 72 RETROSPOT CAKE CASES   299
+</code></pre>
+
+<p>The item that has been purchased most often in terms of days is the white hanging heart t-light holder. Let&rsquo;s look at its distribution of sold/returned quantities per day:</p>
+
+<pre><code class="language-r">retail %&gt;%
+  filter(StockCode == &quot;85123A&quot;) %&gt;%
+  group_by(day, income_return) %&gt;%
+  summarise(sum = sum(Quantity)) %&gt;%
+  ggplot(aes(x = day, y = sum, color = income_return)) +
+    facet_wrap(~ income_return, ncol = 1, scales = &quot;free&quot;) +
+    geom_line(size = 1, alpha = 0.5) +
+    scale_color_manual(values = palette_light()) +
+    theme_tq() +
+    labs(x = &quot;&quot;,
+         y = &quot;sum of quantities&quot;,
+         color = &quot;&quot;,
+         title = &quot;Transactions of WHITE HANGING HEART T-LIGHT HOLDER&quot;)
+</code></pre>
+
+<p><img src="/img/forecasting/2017/05/28/retail_forecasting_part1_files/figure-markdown_github/unnamed-chunk-18-1.png" alt="" /></p>
+
+<p><br></p>
+
+<h2 id="preparing-data-for-modeling-by-day">Preparing data for modeling by day</h2>
+
+<p>There are of course, infinitely more ways to visualize data but for now, I think we have enough of a feel for the data that we can start preparing a dataset for modeling. Because we have only limited information in that we only have data for one year, we might not have enough data to accurately forecast or model time-dependent trends. But we can try by creating a table of features per day.</p>
+
+<p><br></p>
+
+<h3 id="which-customers-are-repeat-customers">Which customers are repeat customers?</h3>
+
+<p>If the customer ID has been recorded on more than one day (i.e., they have made multiple transactions during the year of recording), they are considered repeat customers. As we can see in the plot, the majority of customers are repeat customers.</p>
+
+<pre><code class="language-r">rep_customer &lt;- retail %&gt;%
+  group_by(day, CustomerID) %&gt;%
+  summarise(sum = sum(Quantity)) %&gt;%
+  group_by(CustomerID) %&gt;%
+  summarise(n = n()) %&gt;%
+  mutate(repeat_customer = ifelse(n &gt; 1, &quot;repeat_cust&quot;, &quot;one_time_cust&quot;))
+
+length(which(rep_customer$repeat_customer == &quot;repeat_cust&quot;))
+</code></pre>
+
+<pre><code>## [1] 2992
+</code></pre>
+
+<pre><code class="language-r">rep_customer_day &lt;- left_join(retail, rep_customer, by = &quot;CustomerID&quot;) %&gt;%
+  distinct(day, CustomerID, repeat_customer) %&gt;%
+  group_by(day, repeat_customer) %&gt;%
+  summarise(n = n()) %&gt;%
+  spread(key = repeat_customer, value = n)
+</code></pre>
+
+<pre><code class="language-r">rep_customer %&gt;%
+  group_by(repeat_customer) %&gt;%
+  summarise(n = n()) %&gt;%
+  mutate(prop = n / sum(n)) %&gt;%
+  ggplot(aes(x = &quot;&quot;, y = prop, fill = repeat_customer)) +
+    geom_bar(stat = &quot;identity&quot;, alpha = 0.8) +
+    coord_polar(&quot;y&quot;, start = 0) +
+    scale_fill_manual(values = palette_light()) +
+    theme_tq() +
+    theme(legend.position = &quot;right&quot;) +
+    labs(x = &quot;&quot;,
+         y = &quot;&quot;,
+         fill = &quot;&quot;,
+         title = &quot;Proportion of one-time &amp; repeat customers&quot;)
+</code></pre>
+
+<p><img src="/img/forecasting/2017/05/28/retail_forecasting_part1_files/figure-markdown_github/unnamed-chunk-20-1.png" alt="" /></p>
+
+<p><br></p>
+
+<h3 id="transactions-quantities-and-items-per-customer-and-day">Transactions, quantities and items per customer and day</h3>
+
+<p>I am calculating the following metrics per day and customer.</p>
+
+<ul>
+<li>n: number of different items purchased/returned per customer per day</li>
+<li>sum_it: net sum of items (quantity) purchased/returned per customer per day</li>
+<li>sum_in: mean net income per customer per day</li>
+</ul>
+
+<p>From these, I can further calculate mean numbers per day:</p>
+
+<ul>
+<li>mean_in_cust: mean net income from all customers per day</li>
+<li>mean_quant_cust: mean net quantities of items from all customers per day</li>
+<li>mean_items_cust: mean number of items from all customers per day</li>
+</ul>
+
+<pre><code class="language-r">customer_purch &lt;- retail %&gt;%
+  group_by(day, CustomerID) %&gt;%
+  summarise(n = n(),
+            sum_it = sum(Quantity),
+            sum_in = sum(income)) %&gt;%
+  group_by(day) %&gt;%
+  summarise(mean_in_cust = mean(sum_in),
+            mean_quant_cust = mean(sum_it),
+            mean_items_cust = mean(n))
+</code></pre>
+
+<pre><code class="language-r">customer_purch %&gt;%
+  gather(x, y, mean_in_cust:mean_items_cust) %&gt;%
+  ggplot(aes(x = day, y = y)) +
+    facet_wrap(~ x, ncol = 1, scales = &quot;free&quot;) +
+    geom_line(color = palette_light()[[1]], size = 1, alpha = 0.8) +
+    geom_smooth(color = palette_light()[[2]], method = 'loess') +
+    theme_tq() +
+    labs(x = &quot;&quot;, 
+         y = &quot;&quot;)
+</code></pre>
+
+<p><img src="/img/forecasting/2017/05/28/retail_forecasting_part1_files/figure-markdown_github/unnamed-chunk-22-1.png" alt="" /></p>
+
+<p><br></p>
+
+<h3 id="purchases-returns-per-day">Purchases/returns per day</h3>
+
+<p>This calculates the quantities of items that are purchased and returned per day:</p>
+
+<pre><code class="language-r">income_return &lt;- retail %&gt;%
+  group_by(day, income_return) %&gt;%
+  summarise(sum = sum(Quantity)) %&gt;%
+  spread(key = income_return, value = sum)
+</code></pre>
+
+<pre><code class="language-r">income_return %&gt;%
+  gather(x, y, income:return) %&gt;%
+  ggplot(aes(x = day, y = y, color = x)) +
+    geom_line(size = 1, alpha = 0.8) +
+    scale_color_manual(values = palette_light()) +
+    theme_tq() +
+    labs(x = &quot;&quot;, 
+         y = &quot;quantity of items&quot;,
+         color = &quot;&quot;)
+</code></pre>
+
+<p><img src="/img/forecasting/2017/05/28/retail_forecasting_part1_files/figure-markdown_github/unnamed-chunk-24-1.png" alt="" /></p>
+
+<p><br></p>
+
+<h2 id="how-many-items-are-purchased-returned-per-country">How many items are purchased/returned per country?</h2>
+
+<p>Because the majority of transactions came from UK customers, I am dividing customers into UK-based and other nationalities and calculate the net quantities of items purchases and returned by day and country.</p>
+
+<pre><code class="language-r">country_purch &lt;- retail %&gt;%
+  mutate(Country2 = ifelse(Country == &quot;United Kingdom&quot;, &quot;uk&quot;, &quot;other_country&quot;)) %&gt;%
+  group_by(day, Country2) %&gt;%
+  summarise(sum = sum(Quantity)) %&gt;%
+  spread(key = Country2, value = sum) %&gt;%
+  mutate(prop_other_country = other_country / sum(other_country + uk),
+         prop_uk = uk / sum(other_country + uk))
+</code></pre>
+
+<pre><code class="language-r">country_purch %&gt;%
+  gather(x, y, prop_other_country:prop_uk) %&gt;%
+  ggplot(aes(x = day, y = y)) +
+    geom_bar(aes(fill = x), stat = &quot;identity&quot;, alpha = 0.6) +
+    scale_fill_manual(values = palette_light()) +
+    geom_line(data = country_purch, aes(x = day, y = prop_uk), size = 1) +
+    theme_tq() +
+    labs(x = &quot;&quot;, 
+         y = &quot;proportion of quantity of items&quot;,
+         fill = &quot;&quot;)
+</code></pre>
+
+<p><img src="/img/forecasting/2017/05/28/retail_forecasting_part1_files/figure-markdown_github/unnamed-chunk-26-1.png" alt="" /></p>
+
+<p>Here, we can now also see that not every day has a corresponding data point: there are regular (i.e. no Saturdays are recorded) and irregular patterns of missing data.</p>
+
+<p><br></p>
+
+<h3 id="how-many-different-items-are-purchased-returned-per-day">How many different items are purchased/returned per day?</h3>
+
+<p>I also want to know how many different items were purchased or returned. Here, we see a similar pattern where the number of different items per day increased during the last two months.</p>
+
+<pre><code class="language-r">n_items &lt;- retail %&gt;%
+  group_by(day, StockCode) %&gt;%
+  summarise(n = n()) %&gt;%
+  group_by(day) %&gt;%
+  summarise(n_items = n())
+</code></pre>
+
+<pre><code class="language-r">n_items %&gt;%
+  ggplot(aes(x = day, y = n_items)) +
+    geom_line(color = palette_light()[[1]], size = 1, alpha = 0.8) +
+    geom_smooth(color = palette_light()[[2]], method = 'loess') +
+    theme_tq() +
+    labs(x = &quot;&quot;, 
+         y = &quot;number of different items&quot;,
+         color = &quot;&quot;)
+</code></pre>
+
+<p><img src="/img/forecasting/2017/05/28/retail_forecasting_part1_files/figure-markdown_github/unnamed-chunk-28-1.png" alt="" /></p>
+
+<p><br></p>
+
+<h3 id="net-income-quantities-summaries">Net income &amp; quantities summaries</h3>
+
+<p>Finally, I am calculating the sum and mean of the net income and net quantities sold per day.</p>
+
+<pre><code class="language-r">income &lt;- retail %&gt;%
+  group_by(day) %&gt;%
+  summarise(sum_income = sum(income),
+            mean_income = mean(income),
+            sum_quantity = sum(Quantity),
+            mean_quantity = mean(Quantity))
+</code></pre>
+
+<pre><code class="language-r">income %&gt;%
+  gather(x, y, sum_income:mean_quantity) %&gt;%
+  ggplot(aes(x = day, y = y)) +
+    facet_wrap(~ x, ncol = 1, scales = &quot;free&quot;) +
+    geom_line(color = palette_light()[[1]], size = 1, alpha = 0.8) +
+    geom_smooth(color = palette_light()[[2]], method = 'loess') +
+    theme_tq() +
+    labs(x = &quot;&quot;, 
+         y = &quot;&quot;)
+</code></pre>
+
+<p><img src="/img/forecasting/2017/05/28/retail_forecasting_part1_files/figure-markdown_github/unnamed-chunk-30-1.png" alt="" /></p>
+
+<p><br></p>
+
+<h3 id="income-from-purchases-and-returns">Income from purchases and returns</h3>
+
+<p>The same I am also calculating for purchases and returns separately.</p>
+
+<pre><code class="language-r">purchases &lt;- retail %&gt;%
+  filter(income &gt; 0) %&gt;%
+  group_by(day) %&gt;%
+  summarise(sum_income_purch = sum(income),
+            mean_income_purch = mean(income),
+            sum_quantity_purch = sum(Quantity),
+            mean_quantity_purch = mean(Quantity))
+</code></pre>
+
+<pre><code class="language-r">purchases %&gt;%
+  gather(x, y, sum_income_purch:mean_quantity_purch) %&gt;%
+  ggplot(aes(x = day, y = y)) +
+    facet_wrap(~ x, ncol = 1, scales = &quot;free&quot;) +
+    geom_line(color = palette_light()[[1]], size = 1, alpha = 0.8) +
+    geom_smooth(color = palette_light()[[2]], method = 'loess') +
+    theme_tq() +
+    labs(x = &quot;&quot;, 
+         y = &quot;&quot;)
+</code></pre>
+
+<p><img src="/img/forecasting/2017/05/28/retail_forecasting_part1_files/figure-markdown_github/unnamed-chunk-32-1.png" alt="" /></p>
+
+<pre><code class="language-r">returns &lt;- retail %&gt;%
+  filter(income &lt; 0) %&gt;%
+  group_by(day) %&gt;%
+  summarise(sum_income_return = sum(income),
+            mean_income_return = mean(income),
+            sum_quantity_return = sum(Quantity),
+            mean_quantity_return = mean(Quantity))
+</code></pre>
+
+<pre><code class="language-r">returns %&gt;%
+  gather(x, y, sum_income_return:mean_quantity_return) %&gt;%
+  ggplot(aes(x = day, y = y)) +
+    facet_wrap(~ x, ncol = 1, scales = &quot;free&quot;) +
+    geom_line(color = palette_light()[[1]], size = 1, alpha = 0.8) +
+    theme_tq() +
+    labs(x = &quot;&quot;, 
+         y = &quot;&quot;)
+</code></pre>
+
+<p><img src="/img/forecasting/2017/05/28/retail_forecasting_part1_files/figure-markdown_github/unnamed-chunk-34-1.png" alt="" /></p>
+
+<p><br></p>
+
+<h3 id="mean-price-per-units-sold-per-day">Mean price per units sold per day</h3>
+
+<p>This is a bit more complicated than thought because some items are sold multiple times per time and unit prices of the same item change between transactions and days. Therefore, I am creating a temporary dataframe where I combine day &amp; StockCode. This, I can then combine with a table of the number of transactions per day and item to find the price per item and day. Based on this, I calculate the mean unit price per item and the mean unit price of all items per day.</p>
+
+<pre><code class="language-r">temp &lt;- distinct(select(retail, day, StockCode, UnitPrice)) %&gt;%
+  mutate(temp = paste(day, StockCode, sep = &quot;_&quot;)) %&gt;%
+  select(temp, UnitPrice)
+
+mean_unit_price &lt;- retail %&gt;%
+  filter(income_return == &quot;income&quot;) %&gt;%
+  group_by(day, StockCode) %&gt;%
+  summarise(n = n()) %&gt;%
+  mutate(temp = paste(day, StockCode, sep = &quot;_&quot;)) %&gt;%
+  left_join(temp, by = &quot;temp&quot;) %&gt;%
+  group_by(day, StockCode) %&gt;%
+  summarise(mean = mean(UnitPrice)) %&gt;%
+  group_by(day) %&gt;%
+  summarise(mean_unit_price = mean(mean))
+</code></pre>
+
+<pre><code class="language-r">mean_unit_price %&gt;%
+  ggplot(aes(x = day, y = mean_unit_price)) +
+    geom_line(color = palette_light()[[1]], size = 1, alpha = 0.8) +
+    theme_tq() +
+    labs(x = &quot;&quot;, 
+         y = &quot;mean unit price of sold items&quot;)
+</code></pre>
+
+<p><img src="/img/forecasting/2017/05/28/retail_forecasting_part1_files/figure-markdown_github/unnamed-chunk-36-1.png" alt="" /></p>
+
+<p><br></p>
+
+<h3 id="purchases-of-most-sold-items">Purchases of most sold items</h3>
+
+<p>The 10 items that have been sold on the most days throughout the year of recording are also introduced as separate features.</p>
+
+<pre><code class="language-r">most_sold_day &lt;- retail %&gt;%
+  filter(StockCode %in% most_sold$StockCode[1:10]) %&gt;%
+  group_by(day, StockCode) %&gt;%
+  summarise(sum = sum(Quantity)) %&gt;%
+  spread(key = StockCode, value = sum)
+</code></pre>
+
+<pre><code class="language-r">retail %&gt;%
+  filter(StockCode %in% most_sold$StockCode[1:10]) %&gt;%
+  group_by(day, StockCode, Description) %&gt;%
+  summarise(sum = sum(Quantity)) %&gt;%
+  ggplot(aes(x = day, y = sum)) +
+    facet_wrap(~ StockCode, ncol = 1, scales = &quot;free&quot;) +
+    geom_line(color = palette_light()[[1]], size = 1, alpha = 0.8) +
+    theme_tq() +
+    labs(x = &quot;&quot;, 
+         y = &quot;net sum of quantites sold&quot;)
+</code></pre>
+
+<p><img src="/img/forecasting/2017/05/28/retail_forecasting_part1_files/figure-markdown_github/unnamed-chunk-38-1.png" alt="" /></p>
+
+<p><br></p>
+
+<h3 id="combining-data">Combining data</h3>
+
+<p>Now, we can combine all the different per-day features into one dataframe. Now, I am also calculating the difference of the net sum of income to the previous day by using the <em>lag()</em> function. And I am creating a column for seasons.</p>
+
+<p>Additional time-based information will be added in a later part when we actually do forecasting with the <strong>timekit</strong> package.</p>
+
+<pre><code class="language-r">retail_p_day &lt;- distinct(select(retail, day, day_of_week, month)) %&gt;%
+  left_join(income, by = &quot;day&quot;) %&gt;%
+  left_join(mean_unit_price, by = &quot;day&quot;) %&gt;%
+  left_join(purchases, by = &quot;day&quot;) %&gt;%
+  left_join(returns, by = &quot;day&quot;) %&gt;%
+  left_join(customer_purch, by = &quot;day&quot;) %&gt;%
+  left_join(rep_customer_day, by = &quot;day&quot;) %&gt;%
+  left_join(income_return, by = &quot;day&quot;) %&gt;%
+  left_join(country_purch, by = &quot;day&quot;) %&gt;%
+  left_join(n_items, by = &quot;day&quot;) %&gt;%
+  left_join(most_sold_day, by = &quot;day&quot;) %&gt;%
+  mutate(diff_sum_income = sum_income - lag(sum_income),
+         season = ifelse(month %in% c(&quot;03&quot;, &quot;04&quot;, &quot;05&quot;), &quot;spring&quot;,
+                         ifelse(month %in% c(&quot;06&quot;, &quot;07&quot;, &quot;08&quot;), &quot;summer&quot;,
+                                ifelse(month %in% c(&quot;09&quot;, &quot;10&quot;, &quot;11&quot;), &quot;fall&quot;, &quot;winter&quot;))))
+</code></pre>
+
+<p>To keep track of the features, I am creating an additional dataframe/tibble containing the descriptions of every feature column.</p>
+
+<pre><code class="language-r">meta &lt;- tibble(colnames_retail_p_day = colnames(retail_p_day)) %&gt;%
+  mutate(description = c(
+    &quot;day in YYYY-MM-DD&quot;,
+    &quot;weekday (Sun - Fri, there are no Sat in the dataset)&quot;,
+    &quot;month (as month number)&quot;,
+    
+    &quot;sum of net income per day (all purchases &amp; losses per day combined)&quot;,
+    &quot;mean net income per day (all purchases &amp; losses per day combined)&quot;,
+    &quot;sum of net quantities sold/returned per day (all purchases &amp; returns per day combined)&quot;,
+    &quot;mean net quantities sold/returned per day (all purchases &amp; returns per day combined)&quot;,
+    
+    &quot;mean price per unit sold (returns excluded)&quot;,
+    
+    &quot;sum of income from purchases per day (losses excluded)&quot;,
+    &quot;mean income from purchases per day (losses excluded)&quot;,
+    &quot;sum of quantities from purchases per day (losses excluded)&quot;,
+    &quot;mean quantities from purchases per day (losses excluded)&quot;,
+    
+    &quot;sum of losses from returns per day (purchases excluded)&quot;,
+    &quot;mean losses from returns per day (purchases excluded)&quot;,
+    &quot;sum of quantities from returns per day (purchases excluded)&quot;,
+    &quot;mean quantities from returns per day (purchases excluded)&quot;,
+    
+    &quot;mean net income from all customers per day&quot;,
+    &quot;mean number of items from all customers per day&quot;,
+    &quot;mean number of items from all customers per day&quot;,
+
+    &quot;number of one-time customers per day&quot;,
+    &quot;number of repeat customers per day&quot;,
+    
+    &quot;sum of items (quantities) purchased per day (returns excluded)&quot;,
+    &quot;sum of items (quantities) returned per day (purchases excluded)&quot;,
+    
+    &quot;net sum of items (quantities) purchased per day from countries other than the UK&quot;,
+    &quot;net sum of items (quantities) purchased per day from the UK&quot;,
+    &quot;proportion of net sum of items (quantities) purchased per day from countries other than the UK&quot;,
+    &quot;proportion of net sum of items (quantities) purchased per day from the UK&quot;,
+    
+    &quot;number of different items purchased/returned per day&quot;,
+    
+    &quot;net sum of quantities sold of item with StockCode 20725&quot;,
+    &quot;net sum of quantities sold of item with StockCode 21212&quot;,
+    &quot;net sum of quantities sold of item with StockCode 22423&quot;,
+    &quot;net sum of quantities sold of item with StockCode 22457&quot;,
+    &quot;net sum of quantities sold of item with StockCode 22666&quot;,
+    &quot;net sum of quantities sold of item with StockCode 22960&quot;,
+    &quot;net sum of quantities sold of item with StockCode 47566&quot;,
+    &quot;net sum of quantities sold of item with StockCode 84879&quot;,
+    &quot;net sum of quantities sold of item with StockCode 85099B&quot;,
+    &quot;net sum of quantities sold of item with StockCode 85123A&quot;,
+    
+    &quot;difference in sum of net income (purchases - returns) to previous day&quot;,
+    &quot;season&quot;
+    ))
+</code></pre>
+
+<p><br></p>
+
+<p>Now, that we have all kinds of features per day, we can gather them in a final visualization to identify patterns and potential response variables suitable for modeling. I am also now adding points that are colored by day of the week so that we&rsquo;ll be able to judge potential weekday biases.</p>
+
+<pre><code class="language-r">retail_p_day %&gt;%
+  # remove last day because it is so extreme
+  filter(day != max(retail_p_day$day)) %&gt;%
+  gather(x, y, sum_income:diff_sum_income) %&gt;%
+  ggplot(aes(x = day, y = y)) +
+    facet_wrap(~ x, scales = &quot;free&quot;, ncol = 2) +
+    geom_line(alpha = 0.8, color = palette_light()[[1]]) +
+    geom_point(aes(color = day_of_week)) +
+    geom_smooth() +
+    scale_color_manual(values = palette_light()) +
+    theme_tq() +
+    labs(x = &quot;&quot;,
+         y = &quot;&quot;,
+         color = &quot;day of the week&quot;)
+</code></pre>
+
+<p><img src="/img/forecasting/2017/05/28/retail_forecasting_part1_files/figure-markdown_github/unnamed-chunk-43-1.png" alt="" /></p>
+
+<p>From the plots we can see that there has been a slight increase in sales during the months of November and December. Unfortunately, we don&rsquo;t have data from additional years to judge whether that has to do with Christmas sales or whether it is marking a general increase in sales that will continue into Januar and February.</p>
+
+<p>And indeed, for many features we see lower sales on Sundays than on Monday through Friday (Saturdays have not been recorded).</p>
+
+<p>Nevertheless, I will attempt a time-series forecast on this data. First, however, I will be developing some simple models to test for weekday biases and other statistics of the data. Stay tuned for my next post&hellip; :-)</p>
+
+<hr />
+
+<p><br></p>
+
+<pre><code class="language-r">sessionInfo()
+</code></pre>
+
+<pre><code>## R version 3.4.0 (2017-04-21)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS Sierra 10.12.3
+## 
+## Matrix products: default
+## BLAS: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+## [1] grid      stats     graphics  grDevices utils     datasets  methods  
+## [8] base     
+## 
+## other attached packages:
+##  [1] gridExtra_2.2.1               modelr_0.1.0                 
+##  [3] tidyquant_0.5.1               quantmod_0.4-8               
+##  [5] TTR_0.23-1                    PerformanceAnalytics_1.4.3541
+##  [7] xts_0.9-7                     zoo_1.8-0                    
+##  [9] lubridate_1.6.0               dplyr_0.5.0                  
+## [11] purrr_0.2.2.2                 readr_1.1.1                  
+## [13] tidyr_0.6.3                   tibble_1.3.1                 
+## [15] ggplot2_2.2.1                 tidyverse_1.1.1              
+## 
+## loaded via a namespace (and not attached):
+##  [1] reshape2_1.4.2   haven_1.0.0      lattice_0.20-35  colorspace_1.3-2
+##  [5] htmltools_0.3.6  yaml_2.1.14      rlang_0.1.1      foreign_0.8-68  
+##  [9] DBI_0.6-1        readxl_1.0.0     plyr_1.8.4       stringr_1.2.0   
+## [13] Quandl_2.8.0     munsell_0.4.3    gtable_0.2.0     cellranger_1.1.0
+## [17] rvest_0.3.2      psych_1.7.5      evaluate_0.10    labeling_0.3    
+## [21] knitr_1.16       forcats_0.2.0    parallel_3.4.0   broom_0.4.2     
+## [25] Rcpp_0.12.11     scales_0.4.1     backports_1.1.0  jsonlite_1.4    
+## [29] mnormt_1.5-5     hms_0.3          digest_0.6.12    stringi_1.1.5   
+## [33] rprojroot_1.2    tools_3.4.0      magrittr_1.5     lazyeval_0.2.0  
+## [37] xml2_1.1.1       assertthat_0.2.0 rmarkdown_1.5    httr_1.2.1      
+## [41] R6_2.2.1         nlme_3.1-131     compiler_3.4.0
+</code></pre>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="//tags/timeseries/">timeseries</a>
+
+  <a class="tag tag--primary tag--small" href="//tags/forecasting/">forecasting</a>
+
+  <a class="tag tag--primary tag--small" href="//tags/timekit/">timekit</a>
+
+  <a class="tag tag--primary tag--small" href="//tags/ggplot/">ggplot</a>
+
+  <a class="tag tag--primary tag--small" href="//tags/tidyverse/">tidyverse</a>
+
+                  </div>
+                
+              
+            
+            
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2017/06/data-science-for-business---time-series-forecasting-part-2-forecasting-with-timekit/" data-tooltip="Data Science for Business - Time Series Forecasting Part 2: Forecasting with timekit">
+              
+                <i class="fa fa-angle-left"></i>
+                <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+              </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2016/09/expranalysis-package/" data-tooltip="exprAnalysis package">
+              
+                <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2017/05/data-science-for-business---time-series-forecasting-part-1-eda--data-preparation/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2017/05/data-science-for-business---time-series-forecasting-part-1-eda--data-preparation/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2017/05/data-science-for-business---time-series-forecasting-part-1-eda--data-preparation/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2017 Dr. Shirin Glander. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2017/06/data-science-for-business---time-series-forecasting-part-2-forecasting-with-timekit/" data-tooltip="Data Science for Business - Time Series Forecasting Part 2: Forecasting with timekit">
+              
+                <i class="fa fa-angle-left"></i>
+                <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+              </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2016/09/expranalysis-package/" data-tooltip="exprAnalysis package">
+              
+                <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2017/05/data-science-for-business---time-series-forecasting-part-1-eda--data-preparation/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2017/05/data-science-for-business---time-series-forecasting-part-1-eda--data-preparation/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2017/05/data-science-for-business---time-series-forecasting-part-1-eda--data-preparation/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=%2F2017%2F05%2Fdata-science-for-business---time-series-forecasting-part-1-eda--data-preparation%2F">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=%2F2017%2F05%2Fdata-science-for-business---time-series-forecasting-part-1-eda--data-preparation%2F">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=%2F2017%2F05%2Fdata-science-for-business---time-series-forecasting-part-1-eda--data-preparation%2F">
+          <i class="fa fa-google-plus"></i><span>Share on Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Dr. Shirin Glander</h4>
+    
+      <div id="about-card-bio">Biologist turned Bioinformatician turned Data Scientist</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Data Scientist
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Münster, Germany
+      </div>
+    
+  </div>
+</div>
+
+    <div id="algolia-search-modal" class="modal-container">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="close-button"><i class="fa fa-close"></i></span>
+      <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
+        <span class="searchby-algolia-text text-color-light text-small">by</span>
+        <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
+      </a>
+      <i class="search-icon fa fa-search"></i>
+      <form id="algolia-search-form">
+        <input type="text" id="algolia-search-input" name="search"
+          class="form-control input--large search-input" placeholder="Search" />
+      </form>
+    </div>
+    <div class="modal-body">
+      <div class="no-result text-color-light text-center">no post found</div>
+      <div class="results">
+        
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2017/09/moving-my-blog-to-blogdown/">
+                <h3 class="media-heading">Moving my blog to blogdown</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Sep 9, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">It’s been a long time coming but I finally finished moving my blog from Jekyll and Bootstrap to blogdown and Hugo! Yay!!!
+Just to test that everything works, I run the example code:
+R Markdown This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.
+You can embed an R code chunk like this:</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2017/09/data-science-for-fraud-detection/">
+                <h3 class="media-heading">Data Science for Fraud Detection</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Sep 9, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">I have written the following post about Data Science for Fraud Detection at my company codecentric&rsquo;s blog:
+ Fraud can be defined as “the crime of getting money by deceiving people” (Cambridge Dictionary); it is as old as humanity: whenever two parties exchange goods or conduct business there is the potential for one party scamming the other. With an ever increasing use of the internet for shopping, banking, filing insurance claims, etc.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2017/09/migrating-from-github-to-gitlab-with-rstudio-tutorial/">
+                <h3 class="media-heading">Migrating from GitHub to GitLab with RStudio (Tutorial)</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Sep 9, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">GitHub vs. GitLab Git is a distributed implementation of version control. Many people have written very eloquently about why it is a good idea to use version control, not only if you collaborate in a team but also if you work on your own; one example is this article from RStudio&rsquo;s Support pages.
+In short, its main feature is that version control allows you to keep track of the changes you make to your code.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2017/07/social-network-analysis-and-topic-modeling-of-codecentrics-twitter-friends-and-followers/">
+                <h3 class="media-heading">Social Network Analysis and Topic Modeling of codecentric’s Twitter friends and followers</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jul 7, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">I have written the following post about Social Network Analysis and Topic Modeling of codecentric&rsquo;s Twitter friends and followers for codecentric&rsquo;s blog:
+ Recently, Matthias Radtke has written a very nice blog post on Topic Modeling of the codecentric Blog Articles, where he is giving a comprehensive introduction to Topic Modeling. In this article I am showing a real-world example of how we can use Data Science to gain insights from text data and social network analysis.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2017/07/how-to-do-optical-character-recognition-ocr-of-non-english-documents-in-r-using-tesseract/">
+                <h3 class="media-heading">How to do Optical Character Recognition (OCR) of non-English documents in R using Tesseract?</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jul 7, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">One of the many great packages of rOpenSci has implemented the open source engine Tesseract.
+Optical character recognition (OCR) is used to digitize written or typed documents, i.e. photos or scans of text documents are &ldquo;translated&rdquo; into a digital text on your computer.
+While this might seem like a trivial task at first glance, because it is so easy for our human brains. When reading text, we make use of our built-in word and sentence &ldquo;autocomplete&rdquo; that we learned from experience.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2017/06/data-science-for-business---time-series-forecasting-part-3-forecasting-with-facebooks-prophet/">
+                <h3 class="media-heading">Data Science for Business - Time Series Forecasting Part 3: Forecasting with Facebook&#39;s Prophet</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jun 6, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">In my last two posts (Part 1 and Part 2), I explored time series forecasting with the timekit package.
+In this post, I want to compare how Facebook&rsquo;s prophet performs on the same dataset.
+
+Predicting future events/sales/etc. isn&rsquo;t trivial for a number of reasons and different algorithms use different approaches to handle these problems. Time series data does not behave like a regular numeric vector, because months don&rsquo;t have the same number of days, weekends and holidays differ between years, etc.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2017/06/data-science-for-business---time-series-forecasting-part-2-forecasting-with-timekit/">
+                <h3 class="media-heading">Data Science for Business - Time Series Forecasting Part 2: Forecasting with timekit</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jun 6, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">In my last post, I prepared and visually explored time series data.
+Now, I will use this data to test the timekit package for time series forecasting with machine learning.
+
+Forecasting In time series forecasting, we use models to predict future time points based on past observations.
+As mentioned in timekit&rsquo;s vignette, &ldquo;as with most machine learning applications, the prediction is only as good as the patterns in the data.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2017/05/data-science-for-business---time-series-forecasting-part-1-eda--data-preparation/">
+                <h3 class="media-heading">Data Science for Business - Time Series Forecasting Part 1: EDA &amp; Data Preparation</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  May 5, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Data Science is a fairly broad term and encompasses a wide range of techniques from data visualization to statistics and machine learning models. But the techniques are only tools in a - sometimes very messy - toolbox. And while it is important to know and understand these tools, here, I want to go at it from a different angle: What is the task at hand that data science tools can help tackle, and what question do we want to have answered?</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2016/09/expranalysis-package/">
+                <h3 class="media-heading">exprAnalysis package</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Sep 9, 2016
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">I created the R package exprAnalysis designed to streamline my RNA-seq data analysis pipeline. Below you find the vignette for installation and usage of the package.
+
+This package combines functions from various packages used to analyze and visualize expression data from NGS or expression chips.
+ It supports normalized input as e.g. from Cufflinks or expression chip arrays and raw count data from bam file input. It supports mRNA, miRNA, protein or other expression data.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2013/02/image-gallery-showcase/">
+                <h3 class="media-heading">Image gallery showcase</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Feb 2, 2013
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather"><p>And here is the image gallery!
+</p></div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+      </div>
+    </div>
+    <div class="modal-footer">
+      <p class="results-count text-medium"
+         data-message-zero="no post found"
+         data-message-one="1 post found"
+         data-message-other="{n} posts found">
+         11 posts found
+      </p>
+    </div>
+  </div>
+</div>
+    
+  
+    
+    <div id="cover" style="background-image:url('/images/cover.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" integrity="sha256-IFHWFEbU2/+wNycDECKgjIRSirRNIDp2acEB5fvdVRU=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js" integrity="sha256-+mpyNVJsNt4rVXCw0F+pAOiB3YxmHgrbJsx4ecPuUaI=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.js" integrity="sha256-vMxgR/7FtLovVA+IPrR7+xTgIgARH7y9VZQnmmi0HDI=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.js" integrity="sha256-N0qFUh7/9vLvia87dDndewmsgsyYoNkdA212tPc+2NI=" crossorigin="anonymous"></script>
+
+
+<script src="/js/script-qi9wbxp2ya2j6p7wx1i6tgavftewndznf4v0hy2gvivk1rxgc3lm7njqb6bz.min.js"></script>
+
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = '\/2017\/05\/data-science-for-business---time-series-forecasting-part-1-eda--data-preparation\/';
+          
+            this.page.identifier = '\/2017\/05\/data-science-for-business---time-series-forecasting-part-1-eda--data-preparation\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'shirinsplayground';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+    
+  </body>
+</html>
+
