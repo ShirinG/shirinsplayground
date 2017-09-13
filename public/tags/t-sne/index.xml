@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>T Sne on Shirin&#39;s playgRound</title>
-    <link>https://singer-sheeting-31760.netlify.com/tags/t-sne/</link>
+    <link>https://shirinsplayground.netlify.com/tags/t-sne/</link>
     <description>Recent content in T Sne on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 06 Sep 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://singer-sheeting-31760.netlify.com/tags/t-sne/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://shirinsplayground.netlify.com/tags/t-sne/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Data Science for Fraud Detection</title>
-      <link>https://singer-sheeting-31760.netlify.com/2017/09/data-science-fraud-detection/</link>
+      <link>https://shirinsplayground.netlify.com/2017/09/data-science-fraud-detection/</link>
       <pubDate>Wed, 06 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://singer-sheeting-31760.netlify.com/2017/09/data-science-fraud-detection/</guid>
+      <guid>https://shirinsplayground.netlify.com/2017/09/data-science-fraud-detection/</guid>
       <description>I have written the following post about Data Science for Fraud Detection at my company codecentric&amp;rsquo;s blog:
  Fraud can be defined as “the crime of getting money by deceiving people” (Cambridge Dictionary); it is as old as humanity: whenever two parties exchange goods or conduct business there is the potential for one party scamming the other. With an ever increasing use of the internet for shopping, banking, filing insurance claims, etc.</description>
     </item>

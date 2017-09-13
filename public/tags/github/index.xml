@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Github on Shirin&#39;s playgRound</title>
-    <link>https://singer-sheeting-31760.netlify.com/tags/github/</link>
+    <link>https://shirinsplayground.netlify.com/tags/github/</link>
     <description>Recent content in Github on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 04 Sep 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://singer-sheeting-31760.netlify.com/tags/github/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://shirinsplayground.netlify.com/tags/github/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Migrating from GitHub to GitLab with RStudio (Tutorial)</title>
-      <link>https://singer-sheeting-31760.netlify.com/2017/09/migrating-github-gitlab/</link>
+      <link>https://shirinsplayground.netlify.com/2017/09/migrating-github-gitlab/</link>
       <pubDate>Mon, 04 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://singer-sheeting-31760.netlify.com/2017/09/migrating-github-gitlab/</guid>
+      <guid>https://shirinsplayground.netlify.com/2017/09/migrating-github-gitlab/</guid>
       <description>GitHub vs. GitLab Git is a distributed implementation of version control. Many people have written very eloquently about why it is a good idea to use version control, not only if you collaborate in a team but also if you work on your own; one example is this article from RStudio&amp;rsquo;s Support pages.
 In short, its main feature is that version control allows you to keep track of the changes you make to your code.</description>
     </item>
