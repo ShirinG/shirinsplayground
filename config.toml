@@ -79,38 +79,38 @@ canonifyurls = true
   url = "/page/about/"
 
 [[menu.links]]
-  weight = 1
+  weight = 6
   identifier = "github_playground"
   name = "My old blog @ Github pages"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-archive\"></i>"
   url = "https://shiring.github.io/"
 [[menu.links]]
-  weight = 2
+  weight = 7
   identifier = "github"
   name = "GitHub"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-github\"></i>"
   url = "https://github.com/ShirinG"
 [[menu.links]]
-  weight = 3
+  weight = 8
   identifier = "stackoverflow"
   name = "Stack Overflow"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-stack-overflow\"></i>"
   url = "https://stackoverflow.com/users/6623620/shirin-glander"
 [[menu.links]]
-  weight = 4
+  weight = 9
   identifier = "meetup"
   name = "MünsteR User Group Meetup"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-meetup\"></i>"
   url = "https://www.meetup.com/Munster-R-Users-Group"
 [[menu.links]]
-  weight = 4
+  weight = 10
   identifier = "rbloggers"
   name = "R-bloggers"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-book\"></i>"
   url = "https://www.r-bloggers.com/"
   
 [[menu.misc]]
-  weight = 1
+  weight = 11
   identifier = "rss"
   name = "RSS"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-rss\"></i>"
@@ -226,4 +226,4 @@ canonifyurls = true
   # [params.footer]
   #   copyright = "<a href=\"https://github.com/kakawait\">kakawait</a>"
 
-ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
+ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$", "^Thumbs\\.db$"]

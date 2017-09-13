@@ -39,13 +39,13 @@
   </url>
   
   <url>
-    <loc>https://shiring.github.io/categories/archive/</loc>
+    <loc>https://shiring.github.io/tags/archive/</loc>
     <lastmod>2017-07-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shiring.github.io/tags/archive/</loc>
+    <loc>https://shiring.github.io/categories/archive/</loc>
     <lastmod>2017-07-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -62,13 +62,13 @@
   </url>
   
   <url>
-    <loc>https://shiring.github.io/categories/blogdown/</loc>
+    <loc>https://shiring.github.io/tags/blogdown/</loc>
     <lastmod>2017-09-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shiring.github.io/tags/blogdown/</loc>
+    <loc>https://shiring.github.io/categories/blogdown/</loc>
     <lastmod>2017-09-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -92,19 +92,13 @@
   </url>
   
   <url>
-    <loc>https://shiring.github.io/categories/github/</loc>
-    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://shiring.github.io/tags/github/</loc>
     <lastmod>2017-09-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shiring.github.io/categories/gitlab/</loc>
+    <loc>https://shiring.github.io/categories/github/</loc>
     <lastmod>2017-09-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -116,19 +110,25 @@
   </url>
   
   <url>
+    <loc>https://shiring.github.io/categories/gitlab/</loc>
+    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://shiring.github.io/tags/h2o/</loc>
     <lastmod>2017-09-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shiring.github.io/categories/machine-learning/</loc>
+    <loc>https://shiring.github.io/tags/machine-learning/</loc>
     <lastmod>2017-09-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shiring.github.io/tags/machine-learning/</loc>
+    <loc>https://shiring.github.io/categories/machine-learning/</loc>
     <lastmod>2017-09-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -182,13 +182,13 @@
   </url>
   
   <url>
-    <loc>https://shiring.github.io/categories/text-analysis/</loc>
+    <loc>https://shiring.github.io/tags/text-analysis/</loc>
     <lastmod>2017-07-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shiring.github.io/tags/text-analysis/</loc>
+    <loc>https://shiring.github.io/categories/text-analysis/</loc>
     <lastmod>2017-07-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
