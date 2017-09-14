@@ -39,13 +39,13 @@
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/tags/archive/</loc>
+    <loc>https://shirinsplayground.netlify.com/categories/archive/</loc>
     <lastmod>2017-07-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/categories/archive/</loc>
+    <loc>https://shirinsplayground.netlify.com/tags/archive/</loc>
     <lastmod>2017-07-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -62,13 +62,13 @@
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/tags/blogdown/</loc>
+    <loc>https://shirinsplayground.netlify.com/categories/blogdown/</loc>
     <lastmod>2017-09-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/categories/blogdown/</loc>
+    <loc>https://shirinsplayground.netlify.com/tags/blogdown/</loc>
     <lastmod>2017-09-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -92,19 +92,13 @@
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/tags/github/</loc>
-    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://shirinsplayground.netlify.com/categories/github/</loc>
     <lastmod>2017-09-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/tags/gitlab/</loc>
+    <loc>https://shirinsplayground.netlify.com/tags/github/</loc>
     <lastmod>2017-09-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -116,19 +110,25 @@
   </url>
   
   <url>
+    <loc>https://shirinsplayground.netlify.com/tags/gitlab/</loc>
+    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://shirinsplayground.netlify.com/tags/h2o/</loc>
     <lastmod>2017-09-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/tags/machine-learning/</loc>
+    <loc>https://shirinsplayground.netlify.com/categories/machine-learning/</loc>
     <lastmod>2017-09-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/categories/machine-learning/</loc>
+    <loc>https://shirinsplayground.netlify.com/tags/machine-learning/</loc>
     <lastmod>2017-09-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -182,13 +182,13 @@
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/tags/text-analysis/</loc>
+    <loc>https://shirinsplayground.netlify.com/categories/text-analysis/</loc>
     <lastmod>2017-07-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/categories/text-analysis/</loc>
+    <loc>https://shirinsplayground.netlify.com/tags/text-analysis/</loc>
     <lastmod>2017-07-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
