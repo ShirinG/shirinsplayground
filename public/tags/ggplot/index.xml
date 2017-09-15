@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Ggplot on Shirin&#39;s playgRound</title>
-    <link>/tags/ggplot/</link>
+    <link>https://shirinsplayground.netlify.com/tags/ggplot/</link>
     <description>Recent content in Ggplot on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 15 Sep 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/ggplot/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://shirinsplayground.netlify.com/tags/ggplot/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>An Ode to R</title>
-      <link>/2017/09/an-ode-to-r/</link>
+      <title>Ode to R</title>
+      <link>https://shirinsplayground.netlify.com/2017/09/ode-to-r/</link>
       <pubDate>Fri, 15 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>/2017/09/an-ode-to-r/</guid>
-      <description>Working in Data Science, I often feel like I have to justify using R over Python for most tasks. And while I do use Python for running scripts in production, I am much more comfortable with the R environment. Basically, whenever I can use R for prototyping, testing and teaching, I will! But because personal gut-feeling preference isn’t a very good reason to give to (scientifically minded) people, I’ve thought a lot about the pros and cons of using R.</description>
+      <guid>https://shirinsplayground.netlify.com/2017/09/ode-to-r/</guid>
+      <description>Working in Data Science, I often feel like I have to justify using R over Python for most tasks. And while I do use Python for running scripts in production, I am much more comfortable with the R environment. Basically, whenever I can, I use R for prototyping, testing and teaching. But because personal gut-feeling preference isn’t a very good reason to give to (scientifically minded) people, I’ve thought a lot about the pros and cons of using R.</description>
     </item>
     
   </channel>

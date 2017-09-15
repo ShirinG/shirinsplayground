@@ -1,5 +1,6 @@
 ---
-title: An Ode to R
+title: Ode to R
+draft: true
 author: Shirin Glander
 date: '2017-09-15'
 categories: ["R"]
@@ -10,38 +11,30 @@ metaAlignment: center
 coverMeta: out
 ---
 
-Working in Data Science, I often feel like I have to justify using R over Python for most tasks. And while I do use Python for running scripts in production, I am much more comfortable with the R environment. Basically, whenever I can use R for prototyping, testing and teaching, I will! But because personal gut-feeling preference isn't a very good reason to give to (scientifically minded) people, I've thought a lot about the pros and cons of using R. And this is what I came up with why I prefer R:
+Working in Data Science, I often feel like I have to justify using R over Python for most tasks. And while I do use Python for running scripts in production, I am much more comfortable with the R environment. Basically, whenever I can, I use R for prototyping, testing and teaching. But because personal gut-feeling preference isn't a very good reason to give to (scientifically minded) people, I've thought a lot about the pros and cons of using R. And this is what I came up with why I prefer R...
 
-Disclaimer: I have "grown up" with R and I'm much more familiar with it, so I admit that I am quite biased in my assessment. If you think I'm not doing other languages justice, I'll be happy to hear your pros and cons!
+*Disclaimer:* I have "grown up" with R and I'm much more familiar with it, so I admit that I am quite biased in my assessment. If you think I'm not doing other languages justice, I'll be happy to hear your pros and cons!
 
-First of, R is an open-source, cross-platform language, so it's free to use by any- and everybody. Of course, so are other languages, like Python.
-
-It is also a very established language, so that there are lots and lots of packages for basically every type of analysis you can think of. You find packages for statistics, machine learning, econometrics, visualization, data mining, spatial analysis, bio-informatics, etc.
+First of, [R](https://www.r-project.org/) is an [open-source, cross-platform](https://cran.r-project.org/) language, so it's free to use by any- and everybody. Of course, so are other languages, like Python.
+It is also a very established language, so that there are lots and lots of packages for basically every type of analysis you can think of. You find packages for statistics, machine learning, visualization, data wrangling, spatial analysis, bioinformatics and more.
 But, same as with Python, where we also have lots of package options, this plethora of packages can sometimes make it a bit confusing: you would often need to test and compare several similar packages in order to find the best one.
+Most of the packages are of very high quality. And when a package is on [CRAN](https://cran.r-project.org/web/packages/available_packages_by_name.html) or [Bioconductor](https://www.bioconductor.org/) (as most are), you can be sure that it has been checked, that you will get proper documentation and that you won't have problems with installation, dependencies, etc. 
+R's graphics capabilities are superior to any other I know. Especially [ggplot2](http://ggplot2.org/) with all its [extensions](http://www.ggplot2-exts.org/) provides a structured, yet powerful set of tools for producing [high-quality publication-ready graphs and figures](http://www.r-graph-gallery.com/portfolio/ggplot2-package/).
+Moreover, ggplot2 integrates with the [tidyverse](https://www.tidyverse.org/) and [broom](https://cran.r-project.org/web/packages/broom/vignettes/broom.html), which has made data wrangling and analysis much more convenient and structured.
 
-Most of the packages are of very high quality. And when a package is on CRAN or Bioconductor (as most are), you can be sure that it has been checked, that you will get proper documentation and that you won't have problems with installation, dependencies, etc. 
-
-R's graphics capabilities are superior to any other I know. Especially ggplot2 with all its additions provides a structured, yet powerful set of tools for producing high-quality publication-ready graphs and figures.
-
-Moreover, ggplot2 integrates nicely with the tidyverse and broom, which has made data wrangling and analysis much more convenient. It's structured simplicity has been an eye-opener for me and motivates me to be even more diligent with how I organize my analyses.
-
-There is a big - and very active - community! This is one of the things I most enjoy about working with R. You can find many high-quality tutorials and resources for all kinds of topics. Most of them provided free of charge by people who often dedicate their spare time to help others. The same goes for asking questions on Stack Overflow, putting up issues on Github, Google groups: usually you will get several answers within a short period of time (from my experience minutes to hours). What other community is so supportive and so helpful!?
-
-There are several R Conferences, like the useR, rOpenSci Unconference and many R-user groups all around the globe.
-
-But for most things, you wouldn't even need to ask for help because many of the packages come with absolutely amazing vignettes, that describe the functions and workflows in a detailed, yet easy to understand way. 
-
-If that's not enough, you will very likely find additional tutorials on R-bloggers, a site maintained by Tal Galili, that collects hundreds of R-blogs. 
-
-The suite of tools around RStudio make it a blast to use for data analysis and for teaching. You can provide easy instructions for installation and provide RMarkdown files for your students to follow along. Everybody is going to use the same system. In Python, you are always dealing with complications like version 2 vs version 3, Spyder vs Jupyter Notebook, pip vs conda, etc. 
-
-Everything around RStudio is very well maintained and comes with extensive documentation and detailed tutorials. You find addins for Git, Shiny apps, writing books or other documents (bookdown) and you can even build your blog (as this one is) with blogdown from within RStudio!
-
+The suite of tools around [RStudio](https://www.rstudio.com/) make it perfect for data analysis and for teaching. You can provide easy instructions for installation and [RMarkdown](http://rmarkdown.rstudio.com/) files for your students to follow along. Everybody is going to use the same system. In Python, you are always dealing with complications like version 2 vs version 3, Spyder vs Jupyter Notebook, pip vs conda, etc. 
+[Everything around RStudio](https://www.rstudio.com/products/rpackages/) is very well maintained and comes with extensive documentation and detailed tutorials. You find add-ins for [version control](https://support.rstudio.com/hc/en-us/articles/200532077-Version-Control-with-Git-and-SVN), [Shiny](http://shiny.rstudio.com/) apps, writing books or other documents (bookdown) and you can even build your blog (as this one is) with blogdown from within RStudio!
 You can even write presentations directly in RMarkdown, including code + output and everything, as LaTeX beamer presentations, ioslides, HTML5, etc.!
 
-If you are looking for advanced functionalities, it is very likely that somebody has already written a package for you. For example, there are packages that allow you to access Spark, H2O, elasticsearch, TensorFlow, Keras, tesseract, etc. with no hassle at all. And you can even run bash, Python, or code from other languages from within R!
+If you are looking for advanced functionality, it is very likely that somebody has already written a package for you. For example, there are packages that allow you to access Spark, H2O, elasticsearch, Tensor Flow, Keras, tesseract, etc. with no hassle at all. And you can even run bash, Python, or code from other languages from within R!
+
+There is a big - and very active - community! This is one of the things I most enjoy about working with R. You can find many high-quality [manuals](https://cran.r-project.org/manuals.html), [resources](https://cran.r-project.org/other-docs.html) and tutorials for all kinds of topics. Most of them provided free of charge by people who often dedicate their spare time to help others. The same goes for asking questions on [Stack Overflow](https://stackoverflow.com/questions/tagged/r), putting up issues on [Github](https://github.com/) or [Google groups](https://groups.google.com/forum/#!forum/r-help-archive): usually you will get several answers within a short period of time (from my experience minutes to hours). What other community is so supportive and so helpful!?
+But for most things, you wouldn't even need to ask for help because many of the packages come with absolutely amazing vignettes, that describe the functions and workflows in a detailed, yet easy to understand way. 
+If that's not enough, you will very likely find additional tutorials on R-bloggers, a site maintained by Tal Galili, that collects hundreds of R-blogs. 
+
+There are several [R Conferences](https://www.r-project.org/conferences.html), like the [useR](https://user2018.r-project.org/), [rOpenSci Unconference](https://ropensci.org/community/events.html) and many [R-user groups](https://jumpingrivers.github.io/meetingsR/r-user-groups.html) all around the globe.
 
 I can't stress enough how much I appreciate all the people who are involved in the R-community; who write packages, tutorials, blogs, who share information, provide support and who think about how to make data analysis easy, more convenient and - dare I say - fun!
-A few noteable groups within the R community are the maintainers of RStudio, rOpenSci, 
+A few notable groups within the R community are the maintainers of RStudio, rOpenSci, 
 
 The main drawbacks I experience with R are that scripts tends to be harder to deploy than Python ([R-server](https://www.microsoft.com/en-us/cloud-platform/r-server) might be a solution, but I don't know enough about it to really judge). Dealing with memory, space and security issues is often difficult in R. But there has already been a vast improvement over the last months/years, so I'm sure we will see development there in the future...
