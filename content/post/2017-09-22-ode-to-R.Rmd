@@ -2,7 +2,7 @@
 title: Ode to R
 draft: true
 author: Shirin Glander
-date: '2017-09-15'
+date: '2017-09-22'
 categories: ["R"]
 tags: ["R Markdown", "blogdown", "ggplot", "tidyverse"]
 thumbnailImagePosition: left
