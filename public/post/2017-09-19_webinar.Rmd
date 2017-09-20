@@ -2,7 +2,7 @@
 title: From Biology to Industry. A Blogger’s Journey to Data Science.
 draft: false
 author: Shirin Glander
-date: '2017-09-20'
+date: '2017-09-19'
 categories: ["webinar"]
 tags: ["webinar", "blogging"]
 thumbnailImagePosition: left
