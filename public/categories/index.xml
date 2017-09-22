@@ -2,84 +2,84 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Shirin&#39;s playgRound</title>
-    <link>https://shirinsplayground.netlify.com/categories/</link>
+    <link>/categories/</link>
     <description>Recent content in Categories on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 01 Jul 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://shirinsplayground.netlify.com/categories/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Archive</title>
-      <link>https://shirinsplayground.netlify.com/categories/archive/</link>
+      <link>/categories/archive/</link>
       <pubDate>Sat, 01 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/categories/archive/</guid>
+      <guid>/categories/archive/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Blogdown</title>
-      <link>https://shirinsplayground.netlify.com/categories/blogdown/</link>
+      <link>/categories/blogdown/</link>
       <pubDate>Tue, 12 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/categories/blogdown/</guid>
+      <guid>/categories/blogdown/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Github</title>
-      <link>https://shirinsplayground.netlify.com/categories/github/</link>
+      <link>/categories/github/</link>
       <pubDate>Mon, 04 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/categories/github/</guid>
+      <guid>/categories/github/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Gitlab</title>
-      <link>https://shirinsplayground.netlify.com/categories/gitlab/</link>
+      <link>/categories/gitlab/</link>
       <pubDate>Mon, 04 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/categories/gitlab/</guid>
+      <guid>/categories/gitlab/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Machine Learning</title>
-      <link>https://shirinsplayground.netlify.com/categories/machine-learning/</link>
+      <link>/categories/machine-learning/</link>
       <pubDate>Wed, 06 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/categories/machine-learning/</guid>
+      <guid>/categories/machine-learning/</guid>
       <description></description>
     </item>
     
     <item>
       <title>R</title>
-      <link>https://shirinsplayground.netlify.com/categories/r/</link>
+      <link>/categories/r/</link>
       <pubDate>Tue, 19 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/categories/r/</guid>
+      <guid>/categories/r/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Text Analysis</title>
-      <link>https://shirinsplayground.netlify.com/categories/text-analysis/</link>
+      <link>/categories/text-analysis/</link>
       <pubDate>Fri, 28 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/categories/text-analysis/</guid>
+      <guid>/categories/text-analysis/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Webinar</title>
-      <link>https://shirinsplayground.netlify.com/categories/webinar/</link>
+      <link>/categories/webinar/</link>
       <pubDate>Wed, 20 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/categories/webinar/</guid>
+      <guid>/categories/webinar/</guid>
       <description></description>
     </item>
     
