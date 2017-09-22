@@ -1,0 +1,5 @@
+### Compiling css again with npm and grunt
+## open in terminal
+
+cd hugo-tranquilpeak-theme/
+npm run prod
