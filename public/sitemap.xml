@@ -3,250 +3,285 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/2017/09/from-biology-to-industry.-a-bloggers-journey-to-data-science./</loc>
+    <loc>/2017/09/ode_to_r/</loc>
+    <lastmod>2017-09-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2017/09/from-biology-to-industry.-a-bloggers-journey-to-data-science./</loc>
     <lastmod>2017-09-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/2017/09/ode_to_r/</loc>
+    <loc>/2017/09/ode_to_r/</loc>
     <lastmod>2017-09-19T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/page/about/</loc>
+    <loc>/page/about/</loc>
     <lastmod>2017-09-12T16:06:06+02:00</lastmod>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/2017/09/moving-my-blog-to-blogdown/</loc>
+    <loc>/2017/09/moving-my-blog-to-blogdown/</loc>
     <lastmod>2017-09-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/2017/09/data-science-fraud-detection/</loc>
+    <loc>/2017/09/data-science-fraud-detection/</loc>
     <lastmod>2017-09-06T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/2017/09/migrating-github-gitlab/</loc>
+    <loc>/2017/09/migrating-github-gitlab/</loc>
     <lastmod>2017-09-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/2017/07/twitter-analysis-codecentric/</loc>
+    <loc>/2017/07/twitter-analysis-codecentric/</loc>
     <lastmod>2017-07-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/2017/07/find-all-my-other-posts-on-my-old-website/</loc>
+    <loc>/2017/07/find-all-my-other-posts-on-my-old-website/</loc>
     <lastmod>2017-07-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/tags/anomaly-detection/</loc>
+    <loc>/tags/anomaly-detection/</loc>
     <lastmod>2017-09-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/tags/archive/</loc>
+    <loc>/tags/archive/</loc>
     <lastmod>2017-07-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/categories/archive/</loc>
+    <loc>/categories/archive/</loc>
     <lastmod>2017-07-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/archives/</loc>
+    <loc>/archives/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/tags/autoencoder/</loc>
+    <loc>/tags/autoencoder/</loc>
     <lastmod>2017-09-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/tags/blogdown/</loc>
+    <loc>/tags/blogdown/</loc>
     <lastmod>2017-09-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/categories/blogdown/</loc>
+    <loc>/categories/blogdown/</loc>
     <lastmod>2017-09-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/tags/blogging/</loc>
+    <loc>/tags/blogging/</loc>
     <lastmod>2017-09-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/tags/bookdown/</loc>
+    <loc>/tags/bookdown/</loc>
     <lastmod>2017-09-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/categories/</loc>
+    <loc>/tags/business-intelligence/</loc>
+    <lastmod>2017-09-28T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/</loc>
     <lastmod>2017-07-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/tags/codecentric/</loc>
+    <loc>/tags/codecentric/</loc>
     <lastmod>2017-09-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/tags/fraud-detection/</loc>
+    <loc>/tags/conference/</loc>
+    <lastmod>2017-09-28T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/conference/</loc>
+    <lastmod>2017-09-28T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/data-science/</loc>
+    <lastmod>2017-09-28T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/data2day/</loc>
+    <lastmod>2017-09-28T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/fraud-detection/</loc>
     <lastmod>2017-09-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/tags/ggplot/</loc>
+    <loc>/tags/ggplot/</loc>
     <lastmod>2017-09-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/tags/github/</loc>
+    <loc>/tags/github/</loc>
     <lastmod>2017-09-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/categories/github/</loc>
+    <loc>/categories/github/</loc>
     <lastmod>2017-09-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/tags/gitlab/</loc>
+    <loc>/tags/gitlab/</loc>
     <lastmod>2017-09-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/categories/gitlab/</loc>
+    <loc>/categories/gitlab/</loc>
     <lastmod>2017-09-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/tags/h2o/</loc>
+    <loc>/tags/h2o/</loc>
     <lastmod>2017-09-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/tags/machine-learning/</loc>
+    <loc>/tags/machine-learning/</loc>
+    <lastmod>2017-09-28T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/machine-learning/</loc>
     <lastmod>2017-09-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/categories/machine-learning/</loc>
-    <lastmod>2017-09-06T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://shirinsplayground.netlify.com/tags/network-analysis/</loc>
+    <loc>/tags/network-analysis/</loc>
     <lastmod>2017-07-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/page/</loc>
+    <loc>/page/</loc>
     <lastmod>2017-09-12T16:06:06+02:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/tags/pca/</loc>
+    <loc>/tags/pca/</loc>
     <lastmod>2017-09-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/post/</loc>
-    <lastmod>2017-09-20T00:00:00+00:00</lastmod>
+    <loc>/post/</loc>
+    <lastmod>2017-09-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/categories/r/</loc>
+    <loc>/categories/r/</loc>
     <lastmod>2017-09-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/tags/r-markdown/</loc>
+    <loc>/tags/r-markdown/</loc>
     <lastmod>2017-09-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/</loc>
-    <lastmod>2017-09-20T00:00:00+00:00</lastmod>
+    <loc>/</loc>
+    <lastmod>2017-09-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/tags/t-sne/</loc>
+    <loc>/tags/t-sne/</loc>
     <lastmod>2017-09-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/tags/</loc>
+    <loc>/tags/</loc>
     <lastmod>2017-09-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/tags/text-analysis/</loc>
+    <loc>/tags/text-analysis/</loc>
     <lastmod>2017-07-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/categories/text-analysis/</loc>
+    <loc>/categories/text-analysis/</loc>
     <lastmod>2017-07-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/tags/tidyverse/</loc>
+    <loc>/tags/tidyverse/</loc>
     <lastmod>2017-09-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/tags/twitter/</loc>
+    <loc>/tags/twitter/</loc>
     <lastmod>2017-07-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/tags/webinar/</loc>
+    <loc>/tags/webinar/</loc>
     <lastmod>2017-09-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://shirinsplayground.netlify.com/categories/webinar/</loc>
+    <loc>/categories/webinar/</loc>
     <lastmod>2017-09-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>

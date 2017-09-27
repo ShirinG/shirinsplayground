@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Webinar on Shirin&#39;s playgRound</title>
-    <link>https://shirinsplayground.netlify.com/categories/webinar/</link>
+    <link>/categories/webinar/</link>
     <description>Recent content in Webinar on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 20 Sep 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://shirinsplayground.netlify.com/categories/webinar/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/categories/webinar/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>From Biology to Industry. A Blogger’s Journey to Data Science.</title>
-      <link>https://shirinsplayground.netlify.com/2017/09/from-biology-to-industry.-a-bloggers-journey-to-data-science./</link>
+      <link>/2017/09/from-biology-to-industry.-a-bloggers-journey-to-data-science./</link>
       <pubDate>Wed, 20 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2017/09/from-biology-to-industry.-a-bloggers-journey-to-data-science./</guid>
+      <guid>/2017/09/from-biology-to-industry.-a-bloggers-journey-to-data-science./</guid>
       <description>Today, I have given a webinar for the Applied Epidemiology Didactic of the University of Wisconsin - Madison titled “From Biology to Industry. A Blogger’s Journey to Data Science.”
 I talked about how blogging about R and Data Science helped me become a Data Scientist. I also gave a short introduction to Machine Learning, Big Data and Neural Networks.
 My slides can be found here: https://www.slideshare.net/ShirinGlander/from-biology-to-industry-a-bloggers-journey-to-data-science</description>

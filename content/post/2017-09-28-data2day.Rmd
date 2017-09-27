@@ -1,0 +1,38 @@
+---
+title: data2day
+draft: true
+author: Shirin Glander
+date: '2017-09-28'
+categories: ["conference"]
+tags: ["data science", "conference", "data2day", "machine learning", "business intelligence"]
+thumbnailImagePosition: left
+thumbnailImage: https://www.data2day.de/common/images/konferenzen/data2day2017.svg
+metaAlignment: center
+coverMeta: out
+slug: ode_to_r
+---
+
+![](https://www.data2day.de/common/images/konferenzen/data2day2017.svg)
+
+Yesterday and today I attended the [data2day](www.data2day.de) conference in Heidelberg, Germany. Topics covered technical aspects of implementing Big Data, Data Science, Machine Learning, Artificial Intelligence and Internet of Things in business.
+
+While I spent most of the time at my company's conference stand, I did hear three very interesting talks.
+
+<br>
+
+1. **Scalable Machine Learning with Apache Spark for Fraud Detection**
+
+In this first talk I heard, Dr. Patrick Baier and Dr. Stanimir Dragiev presented their work at [Zalando](www.zalando.de/). They built a scalable machine learning framework with Apache Spark, Scala and AWS to assess and predict fraud in online transactions. [Zalando](www.zalando.de/) is a German online store that sells clothes, shoes and accessories. Normally, they allow registered customers to buy via invoice, i.e. they receive their ordered items before they pay them. This leaves them vulnerable to fraud where item are not paid for. The goal of their data science team is to use customer and basket data to obtain a probability score for how likely a transaction is going to be fraudulent. High-risk payment options, like invoice, can then be disabled in transactions with high fraud probability. To build and run such machine learning models, the Zalando data science team uses a combination of Spark, Scala, R, AWS, SQL, Python, Docker, etc. In their workflow, they use a combination of static and dynamic features, imputing missing values and building a decision model. In order to scale their modeling workflow to process more requests, use more data in training, update models more frequently and/or run more models, they described a workflow that uses Spark, Scala and Amazon Web Services (AWS). Spark's machine learning library can be used for modeling and scaled horizontally by increasing the number of clusters on which to run the models. Scala provides multi-threading functionality and AWS is used for storing data in S3 and extending computation power depending on changing needs. Finally, they include a model inspector into their workflow to assure comaprability of training and test data and check that the model is behaving as expected. Problems that they are dealing with include highly unbalanced data (which is getting even worse the better their models work as they keep reducing the number of fraud cases), delayed labeling due to the long process of the transactions, seasonality in data.
+
+<br>
+
+2. **Sparse Data: Don't Mind the Gap!**
+
+In this talk, my colleagues from [codecentric](www.codecentric.de) Dr. Daniel Pape and Dr. Michael Plümacher showed an example from ad targeting of how to deal with sparse data. Sparse data occurs in many areas, e.g. as rare events over a long period of time or in areas where there are many items and few occurrences per item, like in recommender systems or in natural language processing (NLP). In ad targeting, the measure of success is the rate of the click-through rate (CRT): this is the number of clicks on a given advertisement displayed to a user on a website divided by the total number of advertisements, or impressions. Because financial revenue comes from a high CTR, advertisements should be placed in a way that maximizes their chance of being clicked, i.e. we want to recommend advertisements for specific users that match their interests or are of actual relevance. Sparsity come into play with ad targeting because the number of clicks is very low compared to two metrics: a) from all the potential ads that a user could see, only a small proportion is actually shown to her/him and b) of the ads that a user sees, she/he only clicks on very few. This means that, a CTR matrix of advertisements x targets will have very few combinations that have been clicked (the mean CTR is 0.003) and contain many missing values. The approch they took was to impute the missing values and predict for each target/user the most similar ads from the imputed CTR matrix. This appraoch worked well for a reasonably large data set but it didn't perform so well with smaller (and therefore even sparser) data. They then talked about alternative approaches, like grouping users and/or ads into groups in order to reduce the sparsity of the data. Their take-home messages were that 1) there is no one-size-fits-all solution, what works depends on the context and 2) if the underlying data is of bad quality, the results will be suboptimal - no matter how sohisticated the model. 
+
+<br>
+
+3. Tensor Flow & Kubernetes
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="de" dir="ltr">Guten Morgen auf der <a href="https://twitter.com/data2day">@data2day</a> Kommt uns doch mal am Stand besuchen :-) <a href="https://t.co/YK46ACdNj9">pic.twitter.com/YK46ACdNj9</a></p>&mdash; codecentric AG (@codecentric) <a href="https://twitter.com/codecentric/status/912928993279606784">September 27, 2017</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>

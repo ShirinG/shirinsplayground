@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Data Science on Shirin&#39;s playgRound</title>
+    <link>/tags/data-science/</link>
+    <description>Recent content in Data Science on Shirin&#39;s playgRound</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 28 Sep 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/data-science/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>data2day</title>
+      <link>/2017/09/ode_to_r/</link>
+      <pubDate>Thu, 28 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/09/ode_to_r/</guid>
+      <description>Yesterday and today I attended the data2day conference in Heidelberg, Germany. Topics covered technical aspects of implementing Big Data, Data Science, Machine Learning, Artificial Intelligence and Internet of Things in business.
+While I spent most of the time at my company’s conference stand, I did hear three very interesting talks.
+
+Scalable Machine Learning with Apache Spark for Fraud Detection  In this first talk I heard, Dr. Patrick Baier and Dr.</description>
+    </item>
+    
+  </channel>
+</rss>
