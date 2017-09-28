@@ -1,25 +1,44 @@
 ---
-title: data2day
-draft: true
+title: Blockchain & distributed ML - my report from the data2day conference
+draft: false
 author: Shirin Glander
 date: '2017-09-28'
-categories: ["conference"]
-tags: ["data science", "conference", "data2day", "machine learning", "business intelligence"]
+categories: ["conference", "data2day"]
+tags: ["data science", "conference", "data2day", "machine learning", "artificial intelligence", "business intelligence", "scalability"]
 thumbnailImagePosition: left
 thumbnailImage: https://www.data2day.de/common/images/konferenzen/data2day2017.svg
 metaAlignment: center
 coverMeta: out
-slug: ode_to_r
+slug: data2day
 ---
 
 ![](https://www.data2day.de/common/images/konferenzen/data2day2017.svg)
 
-Yesterday and today I attended the [data2day](www.data2day.de) conference in Heidelberg, Germany. Topics covered technical aspects of implementing Big Data, Data Science, Machine Learning, Artificial Intelligence and Internet of Things in business.
-
-While I spent most of the time at my company's conference stand, I did hear three very interesting talks.
+Yesterday and today I attended the [data2day](www.data2day.de), a conference about Big Data, Machine Learning and Data Science in Heidelberg, Germany. Topics and workshops covered a range of topics surrounding (big) data analysis and Machine Learning, like Deep Learning, Reinforcement Learning, TensorFlow applications, etc. Distributed systems and scalability were a major part of a lot of the talks as well, reflecting the growing desire to build bigger and more complex models that can't (or would take too long to) run on a single computer. Most of the application examples were built in Python but one talk by Andreas Prawitt was specifically titled "Using R for Predictive Maintenance: an example from the TRUMPF Laser GmbH". I also saw quite a few graphs that were obviously made with ggplot!
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="de" dir="ltr">Guten Morgen auf der <a href="https://twitter.com/data2day">@data2day</a> Kommt uns doch mal am Stand besuchen :-) <a href="https://t.co/YK46ACdNj9">pic.twitter.com/YK46ACdNj9</a></p>&mdash; codecentric AG (@codecentric) <a href="https://twitter.com/codecentric/status/912928993279606784">September 27, 2017</a></blockquote>
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<br>
+
+The keynote lecture on Wednesday about **Blockchains for AI** was given by Trent McConaghy. [Blockchain technology](https://www.sitepen.com/blog/2017/09/21/blockchain-basics/) is based on a decentralized system of storing and validating data and changes in data. It experiences a huge hype at the moment but it is only starting to gain track in Data Science and Machine Learning as well. I therefore found it a very fitting topic for the keynote lecture! Trent and his colleagues at [BigchainDB](www.bigchaindb.com) are implementing an "internet-scale blockchain database for the world" - the Interplanetary Database (IPDB). 
+
+> "IPDB is a blockchain database that offers decentralized control, immutability and the creation and trading of digital assets. [...] As a database for the world, IPDB offers decentralized control, strong governance and universal accessibility. IPDB relies on “caretaker” organizations around the world, who share responsibility for managing the network and governing the IPDB Foundation. Anyone in the world will be able to use IPDB. [...]" https://blog.bigchaindb.com/ipdb-announced-as-public-planetary-scale-blockchain-database-7a363824fc14
+
+He presented a number of examples where blockchain technology for decentralized data storage/access can be beneficial to Machine Learning and AI, like exchanging data from self-driving cars, of online market places and for generating art with computers. You can learn more about him [here](https://blog.oceanprotocol.com/from-ai-to-blockchain-to-data-meet-ocean-f210ff460465):
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">It&#39;s always been about the data.<br>Announcing Ocean.<a href="https://twitter.com/hashtag/AI?src=hash&amp;ref_src=twsrc%5Etfw">#AI</a> <a href="https://twitter.com/hashtag/Blockchain?src=hash&amp;ref_src=twsrc%5Etfw">#Blockchain</a> <a href="https://twitter.com/oceanprotocol?ref_src=twsrc%5Etfw">@OceanProtocol</a><a href="https://t.co/Do4XNn3ucN">https://t.co/Do4XNn3ucN</a></p>&mdash; Trent McConaghy (@trentmc0) <a href="https://twitter.com/trentmc0/status/909793166416662528?ref_src=twsrc%5Etfw">September 18, 2017</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<br>
+
+The other talks were a mix of high- and low-level topics: from introductions to machine learning, Apache Spark and data analysis with Python to (distributed) data streaming with Kappa architecture or Apache Kafka, containerization with Docker and Kubernetes, data archiving with Apache Cassandra, relevance tuning with Solr and much more.
+While I spent most of the time at my company's conference stand, I did hear three of the talks. I summarize each of them below...
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="de" dir="ltr">Tag 2 auf der <a href="https://twitter.com/data2day?ref_src=twsrc%5Etfw">@data2day</a> kommt am Stand vorbei, wir haben noch ein paar T-Shirts und Softwerker für euch :-) <a href="https://t.co/xyG8Leg3lF">pic.twitter.com/xyG8Leg3lF</a></p>&mdash; codecentric AG (@codecentric) <a href="https://twitter.com/codecentric/status/913301091755941888?ref_src=twsrc%5Etfw">September 28, 2017</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<br>
 
 1. **Scalable Machine Learning with Apache Spark for Fraud Detection**
 
@@ -35,8 +54,7 @@ In this talk, my colleagues from [codecentric](www.codecentric.de) Dr. Daniel Pa
 
 3. **Distributed TensorFlow with Kubernetes**
 
-In the third talk, another colleague of mine from [codecentric](www.codecentric.de), Jakob Karalus, explained in detail how to set up a distributed machine learning modelling set-up with [TensorFlow](https://www.tensorflow.org/) and [Kubernetes](https://kubernetes.io/. TensorFlow is used to build neural networks in a graph-based manner. Distributed and parallel machine learning can be necessary when training big neural networks with a lot of training data, very deep neural networks, with complex parameters, grid search for hyper-parameter tuning, etc. A good way to build neural networks in a controlled and stable environment is to use [Docker](https://www.docker.com/) containers. Kubernetes is a container orchestration tool that can set up distribution of nodes from our TensorFlow modeling container. Setting up this distributed system is quite complex, though and Jakob recommended to try to stay on one CPU/GPU as long as possible.
-
+In the third talk, another colleague of mine from [codecentric](www.codecentric.de), Jakob Karalus, explained in detail how to set up a distributed machine learning modelling set-up with [TensorFlow](https://www.tensorflow.org/) and [Kubernetes](https://kubernetes.io/). TensorFlow is used to build neural networks in a graph-based manner. Distributed and parallel machine learning can be necessary when training big neural networks with a lot of training data, very deep neural networks, with complex parameters, grid search for hyper-parameter tuning, etc. A good way to build neural networks in a controlled and stable environment is to use [Docker](https://www.docker.com/) containers. Kubernetes is a container orchestration tool that can set up distribution of nodes from our TensorFlow modeling container. Setting up this distributed system is quite complex, though and Jakob recommended to try to stay on one CPU/GPU as long as possible.
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="de" dir="ltr">Verteiltes Deep Learning mit TensorFlow und Kubernetes - <a href="https://twitter.com/krallistic">@krallistic</a> auf der <a href="https://twitter.com/data2day">@data2day</a> <a href="https://t.co/5AGJdhL5U1">pic.twitter.com/5AGJdhL5U1</a></p>&mdash; codecentric AG (@codecentric) <a href="https://twitter.com/codecentric/status/913041395128111105">September 27, 2017</a></blockquote>
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>

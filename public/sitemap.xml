@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/2017/09/ode_to_r/</loc>
+    <loc>/2017/09/data2day/</loc>
     <lastmod>2017-09-28T00:00:00+00:00</lastmod>
   </url>
   
@@ -67,6 +67,12 @@
   
   <url>
     <loc>/archives/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/artificial-intelligence/</loc>
+    <lastmod>2017-09-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -138,6 +144,12 @@
   
   <url>
     <loc>/tags/data2day/</loc>
+    <lastmod>2017-09-28T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/data2day/</loc>
     <lastmod>2017-09-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -229,6 +241,12 @@
   <url>
     <loc>/tags/r-markdown/</loc>
     <lastmod>2017-09-19T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/scalability/</loc>
+    <lastmod>2017-09-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

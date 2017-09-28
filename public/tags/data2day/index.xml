@@ -12,14 +12,12 @@
     
     
     <item>
-      <title>data2day</title>
-      <link>/2017/09/ode_to_r/</link>
+      <title>Blockchain &amp; distributed ML - my report from the data2day conference</title>
+      <link>/2017/09/data2day/</link>
       <pubDate>Thu, 28 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>/2017/09/ode_to_r/</guid>
-      <description>Yesterday and today I attended the data2day conference in Heidelberg, Germany. Topics covered technical aspects of implementing Big Data, Data Science, Machine Learning, Artificial Intelligence and Internet of Things in business.
-While I spent most of the time at my company’s conference stand, I did hear three very interesting talks.
-Guten Morgen auf der @data2day Kommt uns doch mal am Stand besuchen :-) pic.twitter.com/YK46ACdNj9 — codecentric AG (@codecentric) September 27, 2017   Scalable Machine Learning with Apache Spark for Fraud Detection  In this first talk I heard, Dr.</description>
+      <guid>/2017/09/data2day/</guid>
+      <description>Yesterday and today I attended the data2day, a conference about Big Data, Machine Learning and Data Science in Heidelberg, Germany. Topics and workshops covered a range of topics surrounding (big) data analysis and Machine Learning, like Deep Learning, Reinforcement Learning, TensorFlow applications, etc. Distributed systems and scalability were a major part of a lot of the talks as well, reflecting the growing desire to build bigger and more complex models that can’t (or would take too long to) run on a single computer.</description>
     </item>
     
   </channel>

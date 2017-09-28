@@ -1,0 +1,866 @@
+
+
+  
+    
+  
+
+
+  
+
+
+
+
+  
+
+
+  
+
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hugo 0.27 with theme Tranquilpeak 0.4.1-BETA">
+    <title>Blockchain &amp; distributed ML - my report from the data2day conference</title>
+    <meta name="author" content="Dr. Shirin Glander">
+    <meta name="keywords" content=", R">
+
+    <link rel="icon" href="img/favicon.png">
+    
+
+    
+    <meta name="description" content="Yesterday and today I attended the data2day, a conference about Big Data, Machine Learning and Data Science in Heidelberg, Germany. Topics and workshops covered a range of topics surrounding (big) data analysis and Machine Learning, like Deep Learning, Reinforcement Learning, TensorFlow applications, etc. Distributed systems and scalability were a major part of a lot of the talks as well, reflecting the growing desire to build bigger and more complex models that can’t (or would take too long to) run on a single computer.">
+    <meta property="og:description" content="Yesterday and today I attended the data2day, a conference about Big Data, Machine Learning and Data Science in Heidelberg, Germany. Topics and workshops covered a range of topics surrounding (big) data analysis and Machine Learning, like Deep Learning, Reinforcement Learning, TensorFlow applications, etc. Distributed systems and scalability were a major part of a lot of the talks as well, reflecting the growing desire to build bigger and more complex models that can’t (or would take too long to) run on a single computer.">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="Blockchain &amp; distributed ML - my report from the data2day conference">
+    <meta property="og:url" content="/2017/09/data2day/">
+    <meta property="og:site_name" content="Shirin&#39;s playgRound">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Shirin&#39;s playgRound">
+    <meta name="twitter:description" content="Yesterday and today I attended the data2day, a conference about Big Data, Machine Learning and Data Science in Heidelberg, Germany. Topics and workshops covered a range of topics surrounding (big) data analysis and Machine Learning, like Deep Learning, Reinforcement Learning, TensorFlow applications, etc. Distributed systems and scalability were a major part of a lot of the talks as well, reflecting the growing desire to build bigger and more complex models that can’t (or would take too long to) run on a single computer.">
+    
+      <meta name="twitter:creator" content="@ShirinGlander">
+    
+    
+
+    
+    
+
+    
+      <meta property="og:image" content="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=640">
+    
+
+    
+      <meta property="og:image" content="https://www.data2day.de/common/images/konferenzen/data2day2017.svg">
+    
+    
+    
+
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="/css/style-hbs5om8csx9a8yrv5hnhpi2qqdv4ykuslajwbramhqxvleqbfklxgek50hye.min.css" />
+    
+    
+
+    
+      
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-86119417-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="/">Shirin&#39;s playgRound</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <h1 class="sidebar-profile-title">Blockchain &amp; distributed ML - my report from the data2day conference</h1>
+        <a href="/#about">
+          <img class="sidebar-profile-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Dr. Shirin Glander</h4>
+        
+          <h5 class="sidebar-profile-bio">Biologist turned Bioinformatician turned Data Scientist</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/archives/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/categories/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/tags/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/page/about/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://shiring.github.io/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">My old R-blog</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/ShirinG">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.linkedin.com/in/shirin-glander-01120881/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-linkedin"></i>
+      
+      <span class="sidebar-button-desc">LinkedIn</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://stackoverflow.com/users/6623620/shirin-glander">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-stack-overflow"></i>
+      
+      <span class="sidebar-button-desc">Stack Overflow</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/ShirinGlander">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.xing.com/profile/Shirin_Glander">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-xing"></i>
+      
+      <span class="sidebar-button-desc">Xing</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.meetup.com/Munster-R-Users-Group">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-meetup"></i>
+      
+      <span class="sidebar-button-desc">MünsteR</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.r-bloggers.com/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-book"></i>
+      
+      <span class="sidebar-button-desc">R-bloggers</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaOut
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-center">
+  
+    <h1 class="post-title" itemprop="headline">
+      Blockchain &amp; distributed ML - my report from the data2day conference
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2017-09-28T00:00:00Z">
+        
+  September 28, 2017
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="/categories/conference">conference</a>, 
+    
+      <a class="category-link" href="/categories/data2day">data2day</a>
+    
+  
+
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <div class="figure">
+<img src="https://www.data2day.de/common/images/konferenzen/data2day2017.svg" />
+
+</div>
+<p>Yesterday and today I attended the <a href="www.data2day.de">data2day</a>, a conference about Big Data, Machine Learning and Data Science in Heidelberg, Germany. Topics and workshops covered a range of topics surrounding (big) data analysis and Machine Learning, like Deep Learning, Reinforcement Learning, TensorFlow applications, etc. Distributed systems and scalability were a major part of a lot of the talks as well, reflecting the growing desire to build bigger and more complex models that can’t (or would take too long to) run on a single computer. Most of the application examples were built in Python but one talk by Andreas Prawitt was specifically titled “Using R for Predictive Maintenance: an example from the TRUMPF Laser GmbH”. I also saw quite a few graphs that were obviously made with ggplot!</p>
+<blockquote class="twitter-tweet" data-lang="en">
+<p lang="de" dir="ltr">
+Guten Morgen auf der <a href="https://twitter.com/data2day"><span class="citation">@data2day</span></a> Kommt uns doch mal am Stand besuchen :-) <a href="https://t.co/YK46ACdNj9">pic.twitter.com/YK46ACdNj9</a>
+</p>
+— codecentric AG (<span class="citation">@codecentric</span>) <a href="https://twitter.com/codecentric/status/912928993279606784">September 27, 2017</a>
+</blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p><br></p>
+<p>The keynote lecture on Wednesday about <strong>Blockchains for AI</strong> was given by Trent McConaghy. <a href="https://www.sitepen.com/blog/2017/09/21/blockchain-basics/">Blockchain technology</a> is based on a decentralized system of storing and validating data and changes in data. It experiences a huge hype at the moment but it is only starting to gain track in Data Science and Machine Learning as well. I therefore found it a very fitting topic for the keynote lecture! Trent and his colleagues at <a href="www.bigchaindb.com">BigchainDB</a> are implementing an “internet-scale blockchain database for the world” - the Interplanetary Database (IPDB).</p>
+<blockquote>
+<p>“IPDB is a blockchain database that offers decentralized control, immutability and the creation and trading of digital assets. […] As a database for the world, IPDB offers decentralized control, strong governance and universal accessibility. IPDB relies on “caretaker” organizations around the world, who share responsibility for managing the network and governing the IPDB Foundation. Anyone in the world will be able to use IPDB. […]” <a href="https://blog.bigchaindb.com/ipdb-announced-as-public-planetary-scale-blockchain-database-7a363824fc14" class="uri">https://blog.bigchaindb.com/ipdb-announced-as-public-planetary-scale-blockchain-database-7a363824fc14</a></p>
+</blockquote>
+<p>He presented a number of examples where blockchain technology for decentralized data storage/access can be beneficial to Machine Learning and AI, like exchanging data from self-driving cars, of online market places and for generating art with computers. You can learn more about him <a href="https://blog.oceanprotocol.com/from-ai-to-blockchain-to-data-meet-ocean-f210ff460465">here</a>:</p>
+<blockquote class="twitter-tweet" data-lang="en">
+<p lang="en" dir="ltr">
+It's always been about the data.<br>Announcing Ocean.<a href="https://twitter.com/hashtag/AI?src=hash&amp;ref_src=twsrc%5Etfw">#AI</a> <a href="https://twitter.com/hashtag/Blockchain?src=hash&amp;ref_src=twsrc%5Etfw">#Blockchain</a> <a href="https://twitter.com/oceanprotocol?ref_src=twsrc%5Etfw"><span class="citation">@OceanProtocol</span></a><a href="https://t.co/Do4XNn3ucN">https://t.co/Do4XNn3ucN</a>
+</p>
+— Trent McConaghy (<span class="citation">@trentmc0</span>) <a href="https://twitter.com/trentmc0/status/909793166416662528?ref_src=twsrc%5Etfw">September 18, 2017</a>
+</blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p><br></p>
+<p>The other talks were a mix of high- and low-level topics: from introductions to machine learning, Apache Spark and data analysis with Python to (distributed) data streaming with Kappa architecture or Apache Kafka, containerization with Docker and Kubernetes, data archiving with Apache Cassandra, relevance tuning with Solr and much more. While I spent most of the time at my company’s conference stand, I did hear three of the talks. I summarize each of them below…</p>
+<blockquote class="twitter-tweet" data-lang="en">
+<p lang="de" dir="ltr">
+Tag 2 auf der <a href="https://twitter.com/data2day?ref_src=twsrc%5Etfw"><span class="citation">@data2day</span></a> kommt am Stand vorbei, wir haben noch ein paar T-Shirts und Softwerker für euch :-) <a href="https://t.co/xyG8Leg3lF">pic.twitter.com/xyG8Leg3lF</a>
+</p>
+— codecentric AG (<span class="citation">@codecentric</span>) <a href="https://twitter.com/codecentric/status/913301091755941888?ref_src=twsrc%5Etfw">September 28, 2017</a>
+</blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p><br></p>
+<ol style="list-style-type: decimal">
+<li><strong>Scalable Machine Learning with Apache Spark for Fraud Detection</strong></li>
+</ol>
+<p>In this first talk I heard, Dr. Patrick Baier and Dr. Stanimir Dragiev presented their work at <a href="www.zalando.de/">Zalando</a>. They built a scalable machine learning framework with Apache Spark, Scala and AWS to assess and predict fraud in online transactions. <a href="www.zalando.de/">Zalando</a> is a German online store that sells clothes, shoes and accessories. Normally, they allow registered customers to buy via invoice, i.e. they receive their ordered items before they pay them. This leaves them vulnerable to fraud where item are not paid for. The goal of their data science team is to use customer and basket data to obtain a probability score for how likely a transaction is going to be fraudulent. High-risk payment options, like invoice, can then be disabled in transactions with high fraud probability. To build and run such machine learning models, the Zalando data science team uses a combination of Spark, Scala, R, AWS, SQL, Python, Docker, etc. In their workflow, they use a combination of static and dynamic features, imputing missing values and building a decision model. In order to scale their modeling workflow to process more requests, use more data in training, update models more frequently and/or run more models, they described a workflow that uses Spark, Scala and Amazon Web Services (AWS). Spark’s machine learning library can be used for modeling and scaled horizontally by increasing the number of clusters on which to run the models. Scala provides multi-threading functionality and AWS is used for storing data in S3 and extending computation power depending on changing needs. Finally, they include a model inspector into their workflow to assure comparability of training and test data and check that the model is behaving as expected. Problems that they are dealing with include highly unbalanced data (which is getting even worse the better their models work as they keep reducing the number of fraud cases), delayed labeling due to the long process of the transactions, seasonality in data.</p>
+<p><br></p>
+<ol start="2" style="list-style-type: decimal">
+<li><strong>Sparse Data: Don’t Mind the Gap!</strong></li>
+</ol>
+<p>In this talk, my colleagues from <a href="www.codecentric.de">codecentric</a> Dr. Daniel Pape and Dr. Michael Plümacher showed an example from ad targeting of how to deal with sparse data. Sparse data occurs in many areas, e.g. as rare events over a long period of time or in areas where there are many items and few occurrences per item, like in recommender systems or in natural language processing (NLP). In ad targeting, the measure of success is the rate of the click-through rate (CRT): this is the number of clicks on a given advertisement displayed to a user on a website divided by the total number of advertisements, or impressions. Because financial revenue comes from a high CTR, advertisements should be placed in a way that maximizes their chance of being clicked, i.e. we want to recommend advertisements for specific users that match their interests or are of actual relevance. Sparsity come into play with ad targeting because the number of clicks is very low compared to two metrics: a) from all the potential ads that a user could see, only a small proportion is actually shown to her/him and b) of the ads that a user sees, she/he only clicks on very few. This means that, a CTR matrix of advertisements x targets will have very few combinations that have been clicked (the mean CTR is 0.003) and contain many missing values. The approach they took was to impute the missing values and predict for each target/user the most similar ads from the imputed CTR matrix. This approach worked well for a reasonably large data set but it didn’t perform so well with smaller (and therefore even sparser) data. They then talked about alternative approaches, like grouping users and/or ads into groups in order to reduce the sparsity of the data. Their take-home messages were that 1) there is no one-size-fits-all solution, what works depends on the context and 2) if the underlying data is of bad quality, the results will be sub-optimal - no matter how sophisticated the model.</p>
+<p><br></p>
+<ol start="3" style="list-style-type: decimal">
+<li><strong>Distributed TensorFlow with Kubernetes</strong></li>
+</ol>
+<p>In the third talk, another colleague of mine from <a href="www.codecentric.de">codecentric</a>, Jakob Karalus, explained in detail how to set up a distributed machine learning modelling set-up with <a href="https://www.tensorflow.org/">TensorFlow</a> and <a href="https://kubernetes.io/">Kubernetes</a>. TensorFlow is used to build neural networks in a graph-based manner. Distributed and parallel machine learning can be necessary when training big neural networks with a lot of training data, very deep neural networks, with complex parameters, grid search for hyper-parameter tuning, etc. A good way to build neural networks in a controlled and stable environment is to use <a href="https://www.docker.com/">Docker</a> containers. Kubernetes is a container orchestration tool that can set up distribution of nodes from our TensorFlow modeling container. Setting up this distributed system is quite complex, though and Jakob recommended to try to stay on one CPU/GPU as long as possible.</p>
+<blockquote class="twitter-tweet" data-lang="en">
+<p lang="de" dir="ltr">
+Verteiltes Deep Learning mit TensorFlow und Kubernetes - <a href="https://twitter.com/krallistic"><span class="citation">@krallistic</span></a> auf der <a href="https://twitter.com/data2day"><span class="citation">@data2day</span></a> <a href="https://t.co/5AGJdhL5U1">pic.twitter.com/5AGJdhL5U1</a>
+</p>
+— codecentric AG (<span class="citation">@codecentric</span>) <a href="https://twitter.com/codecentric/status/913041395128111105">September 27, 2017</a>
+</blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="//tags/data-science/">data science</a>
+
+  <a class="tag tag--primary tag--small" href="//tags/conference/">conference</a>
+
+  <a class="tag tag--primary tag--small" href="//tags/data2day/">data2day</a>
+
+  <a class="tag tag--primary tag--small" href="//tags/machine-learning/">machine learning</a>
+
+  <a class="tag tag--primary tag--small" href="//tags/artificial-intelligence/">artificial intelligence</a>
+
+  <a class="tag tag--primary tag--small" href="//tags/business-intelligence/">business intelligence</a>
+
+  <a class="tag tag--primary tag--small" href="//tags/scalability/">scalability</a>
+
+                  </div>
+                
+              
+            
+            
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                <i class="fa fa-angle-left"></i>
+                <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+              </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2017/09/from-biology-to-industry.-a-bloggers-journey-to-data-science./" data-tooltip="From Biology to Industry. A Blogger’s Journey to Data Science.">
+              
+                <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2017/09/data2day/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2017/09/data2day/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2017/09/data2day/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2017 Dr. Shirin Glander. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                <i class="fa fa-angle-left"></i>
+                <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+              </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2017/09/from-biology-to-industry.-a-bloggers-journey-to-data-science./" data-tooltip="From Biology to Industry. A Blogger’s Journey to Data Science.">
+              
+                <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2017/09/data2day/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2017/09/data2day/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2017/09/data2day/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=%2F2017%2F09%2Fdata2day%2F">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=%2F2017%2F09%2Fdata2day%2F">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=%2F2017%2F09%2Fdata2day%2F">
+          <i class="fa fa-google-plus"></i><span>Share on Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Dr. Shirin Glander</h4>
+    
+      <div id="about-card-bio">Biologist turned Bioinformatician turned Data Scientist</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Data Scientist
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Münster, Germany
+      </div>
+    
+  </div>
+</div>
+
+    <div id="algolia-search-modal" class="modal-container">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="close-button"><i class="fa fa-close"></i></span>
+      <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
+        <span class="searchby-algolia-text text-color-light text-small">by</span>
+        <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
+      </a>
+      <i class="search-icon fa fa-search"></i>
+      <form id="algolia-search-form">
+        <input type="text" id="algolia-search-input" name="search"
+          class="form-control input--large search-input" placeholder="Search" />
+      </form>
+    </div>
+    <div class="modal-body">
+      <div class="no-result text-color-light text-center">no post found</div>
+      <div class="results">
+        
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2017/09/data2day/">
+                <h3 class="media-heading">Blockchain &amp; distributed ML - my report from the data2day conference</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Sep 9, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Yesterday and today I attended the data2day, a conference about Big Data, Machine Learning and Data Science in Heidelberg, Germany. Topics and workshops covered a range of topics surrounding (big) data analysis and Machine Learning, like Deep Learning, Reinforcement Learning, TensorFlow applications, etc. Distributed systems and scalability were a major part of a lot of the talks as well, reflecting the growing desire to build bigger and more complex models that can’t (or would take too long to) run on a single computer.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2017/09/from-biology-to-industry.-a-bloggers-journey-to-data-science./">
+                <h3 class="media-heading">From Biology to Industry. A Blogger’s Journey to Data Science.</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Sep 9, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Today, I have given a webinar for the Applied Epidemiology Didactic of the University of Wisconsin - Madison titled “From Biology to Industry. A Blogger’s Journey to Data Science.”
+I talked about how blogging about R and Data Science helped me become a Data Scientist. I also gave a short introduction to Machine Learning, Big Data and Neural Networks.
+My slides can be found here: https://www.slideshare.net/ShirinGlander/from-biology-to-industry-a-bloggers-journey-to-data-science</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2017/09/ode_to_r/">
+                <h3 class="media-heading">Why I use R for Data Science - An Ode to R</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Sep 9, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Working in Data Science, I often feel like I have to justify using R over Python. And while I do use Python for running scripts in production, I am much more comfortable with the R environment. Basically, whenever I can, I use R for prototyping, testing, visualizing and teaching. But because personal gut-feeling preference isn’t a very good reason to give to (scientifically minded) people, I’ve thought a lot about the pros and cons of using R.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2017/09/moving-my-blog-to-blogdown/">
+                <h3 class="media-heading">Moving my blog to blogdown</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Sep 9, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">It’s been a long time coming but I finally moved my blog from Jekyll/Bootstrap on Github pages to blogdown, Hugo and Netlify! Moreover, I also now have my own domain name www.shirin-glander.de. :-)
+I followed the blogdown ebook to set up my blog. I chose Thibaud Leprêtre’s tranquilpeak theme. It looks much more polished than my old blog.
+My old blog will remain where it is, so that all the links that are out there will still work (and I don’t have to go through the hassle of migrating all my posts to my new site).</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2017/09/data-science-fraud-detection/">
+                <h3 class="media-heading">Data Science for Fraud Detection</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Sep 9, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">I have written the following post about Data Science for Fraud Detection at my company codecentric&rsquo;s blog:
+ Fraud can be defined as “the crime of getting money by deceiving people” (Cambridge Dictionary); it is as old as humanity: whenever two parties exchange goods or conduct business there is the potential for one party scamming the other. With an ever increasing use of the internet for shopping, banking, filing insurance claims, etc.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2017/09/migrating-github-gitlab/">
+                <h3 class="media-heading">Migrating from GitHub to GitLab with RStudio (Tutorial)</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Sep 9, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">GitHub vs. GitLab Git is a distributed implementation of version control. Many people have written very eloquently about why it is a good idea to use version control, not only if you collaborate in a team but also if you work on your own; one example is this article from RStudio&rsquo;s Support pages.
+In short, its main feature is that version control allows you to keep track of the changes you make to your code.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2017/07/twitter-analysis-codecentric/">
+                <h3 class="media-heading">Social Network Analysis and Topic Modeling of codecentric’s Twitter friends and followers</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jul 7, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">I have written the following post about Social Network Analysis and Topic Modeling of codecentric&rsquo;s Twitter friends and followers for codecentric&rsquo;s blog:
+ Recently, Matthias Radtke has written a very nice blog post on Topic Modeling of the codecentric Blog Articles, where he is giving a comprehensive introduction to Topic Modeling. In this article I am showing a real-world example of how we can use Data Science to gain insights from text data and social network analysis.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2017/07/find-all-my-other-posts-on-my-old-website/">
+                <h3 class="media-heading">Find all my other posts on my old website!</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jul 7, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">For all my other posts, see my old website: shiring.github.io</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/post/">
+                <h3 class="media-heading">Posts</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Sep 9, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather"></div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+      </div>
+    </div>
+    <div class="modal-footer">
+      <p class="results-count text-medium"
+         data-message-zero="no post found"
+         data-message-one="1 post found"
+         data-message-other="{n} posts found">
+         9 posts found
+      </p>
+    </div>
+  </div>
+</div>
+    
+  
+    
+    <div id="cover" style="background-image:url('/images/cover.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" integrity="sha256-IFHWFEbU2/+wNycDECKgjIRSirRNIDp2acEB5fvdVRU=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js" integrity="sha256-+mpyNVJsNt4rVXCw0F+pAOiB3YxmHgrbJsx4ecPuUaI=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.js" integrity="sha256-vMxgR/7FtLovVA+IPrR7+xTgIgARH7y9VZQnmmi0HDI=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.js" integrity="sha256-N0qFUh7/9vLvia87dDndewmsgsyYoNkdA212tPc+2NI=" crossorigin="anonymous"></script>
+
+
+<script src="/js/script-kr8dyqj6rb6ortyib7whfo9x9p6td6zo8t1v4fdz4ecx5kwybsdlmk1slygn.min.js"></script>
+
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = '\/2017\/09\/data2day\/';
+          
+            this.page.identifier = '\/2017\/09\/data2day\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'shirinsplayground';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+    
+  </body>
+</html>
+
