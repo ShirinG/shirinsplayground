@@ -35,9 +35,6 @@ He presented a number of examples where blockchain technology for decentralized 
 The other talks were a mix of high- and low-level topics: from introductions to machine learning, Apache Spark and data analysis with Python to (distributed) data streaming with Kappa architecture or Apache Kafka, containerization with Docker and Kubernetes, data archiving with Apache Cassandra, relevance tuning with Solr and much more.
 While I spent most of the time at my company's conference stand, I did hear three of the talks. I summarize each of them below...
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="de" dir="ltr">Tag 2 auf der <a href="https://twitter.com/data2day?ref_src=twsrc%5Etfw">@data2day</a> kommt am Stand vorbei, wir haben noch ein paar T-Shirts und Softwerker für euch :-) <a href="https://t.co/xyG8Leg3lF">pic.twitter.com/xyG8Leg3lF</a></p>&mdash; codecentric AG (@codecentric) <a href="https://twitter.com/codecentric/status/913301091755941888?ref_src=twsrc%5Etfw">September 28, 2017</a></blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
 <br>
 
 1. **Scalable Machine Learning with Apache Spark for Fraud Detection**
@@ -55,6 +52,9 @@ In this talk, my colleagues from [codecentric](www.codecentric.de) Dr. Daniel Pa
 3. **Distributed TensorFlow with Kubernetes**
 
 In the third talk, another colleague of mine from [codecentric](www.codecentric.de), Jakob Karalus, explained in detail how to set up a distributed machine learning modelling set-up with [TensorFlow](https://www.tensorflow.org/) and [Kubernetes](https://kubernetes.io/). TensorFlow is used to build neural networks in a graph-based manner. Distributed and parallel machine learning can be necessary when training big neural networks with a lot of training data, very deep neural networks, with complex parameters, grid search for hyper-parameter tuning, etc. A good way to build neural networks in a controlled and stable environment is to use [Docker](https://www.docker.com/) containers. Kubernetes is a container orchestration tool that can set up distribution of nodes from our TensorFlow modeling container. Setting up this distributed system is quite complex, though and Jakob recommended to try to stay on one CPU/GPU as long as possible.
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="de" dir="ltr">Tag 2 auf der <a href="https://twitter.com/data2day?ref_src=twsrc%5Etfw">@data2day</a> kommt am Stand vorbei, wir haben noch ein paar T-Shirts und Softwerker für euch :-) <a href="https://t.co/xyG8Leg3lF">pic.twitter.com/xyG8Leg3lF</a></p>&mdash; codecentric AG (@codecentric) <a href="https://twitter.com/codecentric/status/913301091755941888?ref_src=twsrc%5Etfw">September 28, 2017</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="de" dir="ltr">Verteiltes Deep Learning mit TensorFlow und Kubernetes - <a href="https://twitter.com/krallistic">@krallistic</a> auf der <a href="https://twitter.com/data2day">@data2day</a> <a href="https://t.co/5AGJdhL5U1">pic.twitter.com/5AGJdhL5U1</a></p>&mdash; codecentric AG (@codecentric) <a href="https://twitter.com/codecentric/status/913041395128111105">September 27, 2017</a></blockquote>
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>

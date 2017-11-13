@@ -1,7 +1,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Shirin&#39;s playgRound</title>
-    <link>https://shirinsplayground.netlify.com/</link>
+    <link>/</link>
     <description>Recent content on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
@@ -10,12 +10,10 @@
     
     <item>
       <title>Explore Predictive Maintenance with flexdashboard</title>
-      <link>https://shirinsplayground.netlify.com/2017/11/predictive_maintenance_dashboard/</link>
+      <link>/2017/11/predictive_maintenance_dashboard/</link>
       <pubDate>Thu, 02 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2017/11/predictive_maintenance_dashboard/</guid>
-      <description>I have written the following post about Predictive Maintenance and flexdashboard at my company codecentric’s blog:
- Predictive Maintenance is an increasingly popular strategy associated with Industry 4.0; it uses advanced analytics and machine learning to optimize machine costs and output (see Google Trends plot below). A common use-case for Predictive Maintenance is to proactively monitor machines, so as to predict when a check-up is needed to reduce failure and maximize performance.</description>
+      <guid>/2017/11/predictive_maintenance_dashboard/</guid>
       <content:encoded><p>I have written the following post about <a href="https://blog.codecentric.de/en/2017/11/explore-predictive-maintenance-flexdashboard/">Predictive Maintenance and flexdashboard</a> at my company <a href="https://blog.codecentric.de/en/">codecentric</a>’s blog:</p>
 <blockquote>
 <p>Predictive Maintenance is an increasingly popular strategy associated with Industry 4.0; it uses advanced analytics and machine learning to optimize machine costs and output (see Google Trends plot below). A common use-case for Predictive Maintenance is to proactively monitor machines, so as to predict when a check-up is needed to reduce failure and maximize performance. In contrast to traditional maintenance, where each machine has to undergo regular routine check-ups, Predictive Maintenance can save costs and reduce downtime. A machine learning approach to such a problem would be to analyze machine failure over time to train a supervised classification model that predicts failure. Data from sensors and weather information is often used as features in modeling.</p>
@@ -39,45 +37,23 @@
     
     <item>
       <title>Blockchain &amp; distributed ML - my report from the data2day conference</title>
-      <link>https://shirinsplayground.netlify.com/2017/09/data2day/</link>
+      <link>/2017/09/data2day/</link>
       <pubDate>Thu, 28 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2017/09/data2day/</guid>
-      <description>Yesterday and today I attended the data2day, a conference about Big Data, Machine Learning and Data Science in Heidelberg, Germany. Topics and workshops covered a range of topics surrounding (big) data analysis and Machine Learning, like Deep Learning, Reinforcement Learning, TensorFlow applications, etc. Distributed systems and scalability were a major part of a lot of the talks as well, reflecting the growing desire to build bigger and more complex models that can’t (or would take too long to) run on a single computer.</description>
+      <guid>/2017/09/data2day/</guid>
       <content:encoded><div class="figure">
 <img src="https://www.data2day.de/common/images/konferenzen/data2day2017.svg" />
 
 </div>
 <p>Yesterday and today I attended the <a href="www.data2day.de">data2day</a>, a conference about Big Data, Machine Learning and Data Science in Heidelberg, Germany. Topics and workshops covered a range of topics surrounding (big) data analysis and Machine Learning, like Deep Learning, Reinforcement Learning, TensorFlow applications, etc. Distributed systems and scalability were a major part of a lot of the talks as well, reflecting the growing desire to build bigger and more complex models that can’t (or would take too long to) run on a single computer. Most of the application examples were built in Python but one talk by Andreas Prawitt was specifically titled “Using R for Predictive Maintenance: an example from the TRUMPF Laser GmbH”. I also saw quite a few graphs that were obviously made with ggplot!</p>
-<blockquote class="twitter-tweet" data-lang="en">
-<p lang="de" dir="ltr">
-Guten Morgen auf der <a href="https://twitter.com/data2day"><span class="citation">@data2day</span></a> Kommt uns doch mal am Stand besuchen :-) <a href="https://t.co/YK46ACdNj9">pic.twitter.com/YK46ACdNj9</a>
-</p>
-— codecentric AG (<span class="citation">@codecentric</span>) <a href="https://twitter.com/codecentric/status/912928993279606784">September 27, 2017</a>
-</blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 <p><br></p>
 <p>The keynote lecture on Wednesday about <strong>Blockchains for AI</strong> was given by Trent McConaghy. <a href="https://www.sitepen.com/blog/2017/09/21/blockchain-basics/">Blockchain technology</a> is based on a decentralized system of storing and validating data and changes in data. It experiences a huge hype at the moment but it is only starting to gain track in Data Science and Machine Learning as well. I therefore found it a very fitting topic for the keynote lecture! Trent and his colleagues at <a href="www.bigchaindb.com">BigchainDB</a> are implementing an “internet-scale blockchain database for the world” - the Interplanetary Database (IPDB).</p>
 <blockquote>
 <p>“IPDB is a blockchain database that offers decentralized control, immutability and the creation and trading of digital assets. […] As a database for the world, IPDB offers decentralized control, strong governance and universal accessibility. IPDB relies on “caretaker” organizations around the world, who share responsibility for managing the network and governing the IPDB Foundation. Anyone in the world will be able to use IPDB. […]” <a href="https://blog.bigchaindb.com/ipdb-announced-as-public-planetary-scale-blockchain-database-7a363824fc14" class="uri">https://blog.bigchaindb.com/ipdb-announced-as-public-planetary-scale-blockchain-database-7a363824fc14</a></p>
 </blockquote>
 <p>He presented a number of examples where blockchain technology for decentralized data storage/access can be beneficial to Machine Learning and AI, like exchanging data from self-driving cars, of online market places and for generating art with computers. You can learn more about him <a href="https://blog.oceanprotocol.com/from-ai-to-blockchain-to-data-meet-ocean-f210ff460465">here</a>:</p>
-<blockquote class="twitter-tweet" data-lang="en">
-<p lang="en" dir="ltr">
-It's always been about the data.<br>Announcing Ocean.<a href="https://twitter.com/hashtag/AI?src=hash&amp;ref_src=twsrc%5Etfw">#AI</a> <a href="https://twitter.com/hashtag/Blockchain?src=hash&amp;ref_src=twsrc%5Etfw">#Blockchain</a> <a href="https://twitter.com/oceanprotocol?ref_src=twsrc%5Etfw"><span class="citation">@OceanProtocol</span></a><a href="https://t.co/Do4XNn3ucN">https://t.co/Do4XNn3ucN</a>
-</p>
-— Trent McConaghy (<span class="citation">@trentmc0</span>) <a href="https://twitter.com/trentmc0/status/909793166416662528?ref_src=twsrc%5Etfw">September 18, 2017</a>
-</blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 <p><br></p>
 <p>The other talks were a mix of high- and low-level topics: from introductions to machine learning, Apache Spark and data analysis with Python to (distributed) data streaming with Kappa architecture or Apache Kafka, containerization with Docker and Kubernetes, data archiving with Apache Cassandra, relevance tuning with Solr and much more. While I spent most of the time at my company’s conference stand, I did hear three of the talks. I summarize each of them below…</p>
-<blockquote class="twitter-tweet" data-lang="en">
-<p lang="de" dir="ltr">
-Tag 2 auf der <a href="https://twitter.com/data2day?ref_src=twsrc%5Etfw"><span class="citation">@data2day</span></a> kommt am Stand vorbei, wir haben noch ein paar T-Shirts und Softwerker für euch :-) <a href="https://t.co/xyG8Leg3lF">pic.twitter.com/xyG8Leg3lF</a>
-</p>
-— codecentric AG (<span class="citation">@codecentric</span>) <a href="https://twitter.com/codecentric/status/913301091755941888?ref_src=twsrc%5Etfw">September 28, 2017</a>
-</blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 <p><br></p>
 <ol style="list-style-type: decimal">
 <li><strong>Scalable Machine Learning with Apache Spark for Fraud Detection</strong></li>
@@ -93,25 +69,15 @@ Tag 2 auf der <a href="https://twitter.com/data2day?ref_src=twsrc%5Etfw"><span c
 <li><strong>Distributed TensorFlow with Kubernetes</strong></li>
 </ol>
 <p>In the third talk, another colleague of mine from <a href="www.codecentric.de">codecentric</a>, Jakob Karalus, explained in detail how to set up a distributed machine learning modelling set-up with <a href="https://www.tensorflow.org/">TensorFlow</a> and <a href="https://kubernetes.io/">Kubernetes</a>. TensorFlow is used to build neural networks in a graph-based manner. Distributed and parallel machine learning can be necessary when training big neural networks with a lot of training data, very deep neural networks, with complex parameters, grid search for hyper-parameter tuning, etc. A good way to build neural networks in a controlled and stable environment is to use <a href="https://www.docker.com/">Docker</a> containers. Kubernetes is a container orchestration tool that can set up distribution of nodes from our TensorFlow modeling container. Setting up this distributed system is quite complex, though and Jakob recommended to try to stay on one CPU/GPU as long as possible.</p>
-<blockquote class="twitter-tweet" data-lang="en">
-<p lang="de" dir="ltr">
-Verteiltes Deep Learning mit TensorFlow und Kubernetes - <a href="https://twitter.com/krallistic"><span class="citation">@krallistic</span></a> auf der <a href="https://twitter.com/data2day"><span class="citation">@data2day</span></a> <a href="https://t.co/5AGJdhL5U1">pic.twitter.com/5AGJdhL5U1</a>
-</p>
-— codecentric AG (<span class="citation">@codecentric</span>) <a href="https://twitter.com/codecentric/status/913041395128111105">September 27, 2017</a>
-</blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 </content:encoded>
     </item>
     
     <item>
       <title>From Biology to Industry. A Blogger’s Journey to Data Science.</title>
-      <link>https://shirinsplayground.netlify.com/2017/09/from-biology-to-industry.-a-bloggers-journey-to-data-science./</link>
+      <link>/2017/09/from-biology-to-industry.-a-bloggers-journey-to-data-science./</link>
       <pubDate>Wed, 20 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2017/09/from-biology-to-industry.-a-bloggers-journey-to-data-science./</guid>
-      <description>Today, I have given a webinar for the Applied Epidemiology Didactic of the University of Wisconsin - Madison titled “From Biology to Industry. A Blogger’s Journey to Data Science.”
-I talked about how blogging about R and Data Science helped me become a Data Scientist. I also gave a short introduction to Machine Learning, Big Data and Neural Networks.
-My slides can be found here: https://www.slideshare.net/ShirinGlander/from-biology-to-industry-a-bloggers-journey-to-data-science</description>
+      <guid>/2017/09/from-biology-to-industry.-a-bloggers-journey-to-data-science./</guid>
       <content:encoded><p>Today, I have given a webinar for the Applied Epidemiology Didactic of the University of Wisconsin - Madison titled “From Biology to Industry. A Blogger’s Journey to Data Science.”</p>
 <p>I talked about how blogging about R and Data Science helped me become a Data Scientist. I also gave a short introduction to Machine Learning, Big Data and Neural Networks.</p>
 <p>My slides can be found here: <a href="https://www.slideshare.net/ShirinGlander/from-biology-to-industry-a-bloggers-journey-to-data-science" class="uri">https://www.slideshare.net/ShirinGlander/from-biology-to-industry-a-bloggers-journey-to-data-science</a></p>
@@ -120,11 +86,10 @@ My slides can be found here: https://www.slideshare.net/ShirinGlander/from-biolo
     
     <item>
       <title>Why I use R for Data Science - An Ode to R</title>
-      <link>https://shirinsplayground.netlify.com/2017/09/ode_to_r/</link>
+      <link>/2017/09/ode_to_r/</link>
       <pubDate>Tue, 19 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2017/09/ode_to_r/</guid>
-      <description>Working in Data Science, I often feel like I have to justify using R over Python. And while I do use Python for running scripts in production, I am much more comfortable with the R environment. Basically, whenever I can, I use R for prototyping, testing, visualizing and teaching. But because personal gut-feeling preference isn’t a very good reason to give to (scientifically minded) people, I’ve thought a lot about the pros and cons of using R.</description>
+      <guid>/2017/09/ode_to_r/</guid>
       <content:encoded><p>Working in Data Science, I often feel like I have to justify using R over Python. And while I do use Python for running scripts in production, I am much more comfortable with the R environment. Basically, whenever I can, I use R for prototyping, testing, visualizing and teaching. But because personal gut-feeling preference isn’t a very good reason to give to (scientifically minded) people, I’ve thought a lot about the pros and cons of using R. This is what I came up with why I still prefer R…</p>
 <p><em>Disclaimer:</em> I have “grown up” with R and I’m much more familiar with it, so I admit that I am quite biased in my assessment. If you think I’m not doing other languages justice, I’ll be happy to hear your pros and cons!</p>
 <p><br></p>
@@ -148,12 +113,10 @@ My slides can be found here: https://www.slideshare.net/ShirinGlander/from-biolo
     
     <item>
       <title>Welcome to my page!</title>
-      <link>https://shirinsplayground.netlify.com/page/about/</link>
+      <link>/page/about/</link>
       <pubDate>Tue, 12 Sep 2017 16:06:06 +0200</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/page/about/</guid>
-      <description>I&rsquo;m Shirin, a biologist turned bioinformatician turned data scientist.
-I&rsquo;m especially interested in machine learning and data visualization. While I am using R most every day at work, I wanted to have an incentive to regularly explore other types of analyses and other types of data that I don&rsquo;t normally work with. I have also very often benefited from other people&rsquo;s published code in that it gave me ideas for my own work; and I hope that sharing my own analyses will inspire others as much as I often am by what can be be done with data.</description>
+      <guid>/page/about/</guid>
       <content:encoded>
 
 <p><img src="/img/Bewerbungsfoto_klein.jpg" alt="" /></p>
@@ -192,13 +155,10 @@ I&rsquo;m especially interested in machine learning and data visualization. Whil
     
     <item>
       <title>Moving my blog to blogdown</title>
-      <link>https://shirinsplayground.netlify.com/2017/09/moving-my-blog-to-blogdown/</link>
+      <link>/2017/09/moving-my-blog-to-blogdown/</link>
       <pubDate>Tue, 12 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2017/09/moving-my-blog-to-blogdown/</guid>
-      <description>It’s been a long time coming but I finally moved my blog from Jekyll/Bootstrap on Github pages to blogdown, Hugo and Netlify! Moreover, I also now have my own domain name www.shirin-glander.de. :-)
-I followed the blogdown ebook to set up my blog. I chose Thibaud Leprêtre’s tranquilpeak theme. It looks much more polished than my old blog.
-My old blog will remain where it is, so that all the links that are out there will still work (and I don’t have to go through the hassle of migrating all my posts to my new site).</description>
+      <guid>/2017/09/moving-my-blog-to-blogdown/</guid>
       <content:encoded><p>It’s been a long time coming but I finally moved my blog from Jekyll/Bootstrap on Github pages to blogdown, Hugo and <a href="https://www.netlify.com/">Netlify</a>! Moreover, I also now have my own domain name <a href="https://www.shirin-glander.de">www.shirin-glander.de</a>. :-)</p>
 <p>I followed the <a href="https://bookdown.org/yihui/blogdown/">blogdown ebook</a> to set up my blog. I chose Thibaud Leprêtre’s <a href="https://themes.gohugo.io/hugo-tranquilpeak-theme/">tranquilpeak theme</a>. It looks much more polished than my old blog.</p>
 <p>My old blog will remain where it is, so that all the links that are out there will still work (and I don’t have to go through the hassle of migrating all my posts to my new site). You find a link to my old site in the sidebar.</p>
@@ -249,12 +209,10 @@ Figure 1: A fancy pie chart.
     
     <item>
       <title>Data Science for Fraud Detection</title>
-      <link>https://shirinsplayground.netlify.com/2017/09/data-science-fraud-detection/</link>
+      <link>/2017/09/data-science-fraud-detection/</link>
       <pubDate>Wed, 06 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2017/09/data-science-fraud-detection/</guid>
-      <description>I have written the following post about Data Science for Fraud Detection at my company codecentric&rsquo;s blog:
- Fraud can be defined as “the crime of getting money by deceiving people” (Cambridge Dictionary); it is as old as humanity: whenever two parties exchange goods or conduct business there is the potential for one party scamming the other. With an ever increasing use of the internet for shopping, banking, filing insurance claims, etc.</description>
+      <guid>/2017/09/data-science-fraud-detection/</guid>
       <content:encoded><p>I have written the following post about <a href="https://blog.codecentric.de/en/2017/09/data-science-fraud-detection/">Data Science for Fraud Detection</a> at my company <a href="https://blog.codecentric.de/en/">codecentric</a>&rsquo;s blog:</p>
 
 <blockquote>
@@ -275,12 +233,10 @@ Figure 1: A fancy pie chart.
     
     <item>
       <title>Migrating from GitHub to GitLab with RStudio (Tutorial)</title>
-      <link>https://shirinsplayground.netlify.com/2017/09/migrating-github-gitlab/</link>
+      <link>/2017/09/migrating-github-gitlab/</link>
       <pubDate>Mon, 04 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2017/09/migrating-github-gitlab/</guid>
-      <description>GitHub vs. GitLab Git is a distributed implementation of version control. Many people have written very eloquently about why it is a good idea to use version control, not only if you collaborate in a team but also if you work on your own; one example is this article from RStudio&rsquo;s Support pages.
-In short, its main feature is that version control allows you to keep track of the changes you make to your code.</description>
+      <guid>/2017/09/migrating-github-gitlab/</guid>
       <content:encoded>
 
 <h2 id="github-vs-gitlab">GitHub vs. GitLab</h2>
@@ -413,12 +369,10 @@ and the repository exists.
     
     <item>
       <title>Social Network Analysis and Topic Modeling of codecentric’s Twitter friends and followers</title>
-      <link>https://shirinsplayground.netlify.com/2017/07/twitter-analysis-codecentric/</link>
+      <link>/2017/07/twitter-analysis-codecentric/</link>
       <pubDate>Fri, 28 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2017/07/twitter-analysis-codecentric/</guid>
-      <description>I have written the following post about Social Network Analysis and Topic Modeling of codecentric&rsquo;s Twitter friends and followers for codecentric&rsquo;s blog:
- Recently, Matthias Radtke has written a very nice blog post on Topic Modeling of the codecentric Blog Articles, where he is giving a comprehensive introduction to Topic Modeling. In this article I am showing a real-world example of how we can use Data Science to gain insights from text data and social network analysis.</description>
+      <guid>/2017/07/twitter-analysis-codecentric/</guid>
       <content:encoded><p>I have written the following post about <a href="https://blog.codecentric.de/en/2017/07/combining-social-network-analysis-topic-modeling-characterize-codecentrics-twitter-friends-followers/">Social Network Analysis and Topic Modeling of codecentric&rsquo;s Twitter friends and followers</a> for <a href="https://blog.codecentric.de/en/">codecentric</a>&rsquo;s blog:</p>
 
 <blockquote>
@@ -441,11 +395,10 @@ and the repository exists.
     
     <item>
       <title>Find all my other posts on my old website!</title>
-      <link>https://shirinsplayground.netlify.com/2017/07/find-all-my-other-posts-on-my-old-website/</link>
+      <link>/2017/07/find-all-my-other-posts-on-my-old-website/</link>
       <pubDate>Sat, 01 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2017/07/find-all-my-other-posts-on-my-old-website/</guid>
-      <description>For all my other posts, see my old website: shiring.github.io</description>
+      <guid>/2017/07/find-all-my-other-posts-on-my-old-website/</guid>
       <content:encoded><p>For all my other posts, see my old website:
 <a href="https://shiring.github.io">shiring.github.io</a></p>
 </content:encoded>

@@ -132,7 +132,6 @@ canonifyurls = true
   identifier = "rss"
   name = "RSS"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-rss\"></i>"
-  #url = "/feed.xml"
   url = "/index.xml"
 
 [params]
@@ -248,14 +247,14 @@ canonifyurls = true
 
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$", "^Thumbs\\.db$"]
 
-[outputs]
-home = ["HTML","FEED"]
-
 [mediaTypes]
-[mediaTypes."application/rss"]
+[mediaTypes."application/atom"]
 suffix = "xml"
 
-[outputFormats]
-[outputFormats.FEED]
-mediatype = "application/rss"
-baseName = "feed"
+[outputFormats.Atom]
+mediaType = "application/atom"
+baseName = "index"
+isPlainText = false
+    
+[outputs]
+home = [ "HTML", "Atom" ]
