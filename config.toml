@@ -132,7 +132,8 @@ canonifyurls = true
   identifier = "rss"
   name = "RSS"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-rss\"></i>"
-  url = "/index.xml"
+  url = "/feed.xml"
+  #url = "/index.xml"
 
 [params]
   # Customize date format use to render blog post date, categories and other
@@ -246,3 +247,15 @@ canonifyurls = true
   #   copyright = "<a href=\"https://github.com/kakawait\">kakawait</a>"
 
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$", "^Thumbs\\.db$"]
+
+[outputs]
+home = ["HTML","FEED"]
+
+[mediaTypes]
+[mediaTypes."application/rss"]
+suffix = "xml"
+
+[outputFormats]
+[outputFormats.FEED]
+mediatype = "application/rss"
+baseName = "feed"

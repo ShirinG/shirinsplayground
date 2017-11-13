@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Business Intelligence on Shirin&#39;s playgRound</title>
-    <link>/tags/business-intelligence/</link>
+    <link>https://shirinsplayground.netlify.com/tags/business-intelligence/</link>
     <description>Recent content in Business Intelligence on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 28 Sep 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/business-intelligence/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://shirinsplayground.netlify.com/tags/business-intelligence/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Blockchain &amp; distributed ML - my report from the data2day conference</title>
-      <link>/2017/09/data2day/</link>
+      <link>https://shirinsplayground.netlify.com/2017/09/data2day/</link>
       <pubDate>Thu, 28 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>/2017/09/data2day/</guid>
+      <guid>https://shirinsplayground.netlify.com/2017/09/data2day/</guid>
       <description>Yesterday and today I attended the data2day, a conference about Big Data, Machine Learning and Data Science in Heidelberg, Germany. Topics and workshops covered a range of topics surrounding (big) data analysis and Machine Learning, like Deep Learning, Reinforcement Learning, TensorFlow applications, etc. Distributed systems and scalability were a major part of a lot of the talks as well, reflecting the growing desire to build bigger and more complex models that can’t (or would take too long to) run on a single computer.</description>
     </item>
     

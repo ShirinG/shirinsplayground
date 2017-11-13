@@ -26,3 +26,4 @@ A common use-case for Predictive Maintenance is to proactively monitor machines,
 Continue reading at https://blog.codecentric.de/en/2017/11/explore-predictive-maintenance-flexdashboard/
 
 ![](https://blog.codecentric.de/files/2017/10/dashboard_screenshot.png)
+

@@ -1,0 +1,455 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Shirin&#39;s playgRound</title>
+    <link>https://shirinsplayground.netlify.com/</link>
+    <description>Recent content on Shirin&#39;s playgRound</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 02 Nov 2017 00:00:00 +0000</lastBuildDate>
+    
+    
+    <item>
+      <title>Explore Predictive Maintenance with flexdashboard</title>
+      <link>https://shirinsplayground.netlify.com/2017/11/predictive_maintenance_dashboard/</link>
+      <pubDate>Thu, 02 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2017/11/predictive_maintenance_dashboard/</guid>
+      <description>I have written the following post about Predictive Maintenance and flexdashboard at my company codecentric’s blog:
+ Predictive Maintenance is an increasingly popular strategy associated with Industry 4.0; it uses advanced analytics and machine learning to optimize machine costs and output (see Google Trends plot below). A common use-case for Predictive Maintenance is to proactively monitor machines, so as to predict when a check-up is needed to reduce failure and maximize performance.</description>
+      <content:encoded><p>I have written the following post about <a href="https://blog.codecentric.de/en/2017/11/explore-predictive-maintenance-flexdashboard/">Predictive Maintenance and flexdashboard</a> at my company <a href="https://blog.codecentric.de/en/">codecentric</a>’s blog:</p>
+<blockquote>
+<p>Predictive Maintenance is an increasingly popular strategy associated with Industry 4.0; it uses advanced analytics and machine learning to optimize machine costs and output (see Google Trends plot below). A common use-case for Predictive Maintenance is to proactively monitor machines, so as to predict when a check-up is needed to reduce failure and maximize performance. In contrast to traditional maintenance, where each machine has to undergo regular routine check-ups, Predictive Maintenance can save costs and reduce downtime. A machine learning approach to such a problem would be to analyze machine failure over time to train a supervised classification model that predicts failure. Data from sensors and weather information is often used as features in modeling.</p>
+</blockquote>
+<blockquote>
+<p>…</p>
+</blockquote>
+<blockquote>
+<p>With flexdashboard RStudio provides a great way to create interactive dashboards with R. It is an easy and very fast way to present analyses or create story maps. Here, I have used it to demonstrate different analysis techniques for Predictive Maintenance. It uses Shiny run-time to create interactive content.</p>
+</blockquote>
+<blockquote>
+<p>…</p>
+</blockquote>
+<p>Continue reading at <a href="https://blog.codecentric.de/en/2017/11/explore-predictive-maintenance-flexdashboard/" class="uri">https://blog.codecentric.de/en/2017/11/explore-predictive-maintenance-flexdashboard/</a></p>
+<div class="figure">
+<img src="https://blog.codecentric.de/files/2017/10/dashboard_screenshot.png" />
+
+</div>
+</content:encoded>
+    </item>
+    
+    <item>
+      <title>Blockchain &amp; distributed ML - my report from the data2day conference</title>
+      <link>https://shirinsplayground.netlify.com/2017/09/data2day/</link>
+      <pubDate>Thu, 28 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2017/09/data2day/</guid>
+      <description>Yesterday and today I attended the data2day, a conference about Big Data, Machine Learning and Data Science in Heidelberg, Germany. Topics and workshops covered a range of topics surrounding (big) data analysis and Machine Learning, like Deep Learning, Reinforcement Learning, TensorFlow applications, etc. Distributed systems and scalability were a major part of a lot of the talks as well, reflecting the growing desire to build bigger and more complex models that can’t (or would take too long to) run on a single computer.</description>
+      <content:encoded><div class="figure">
+<img src="https://www.data2day.de/common/images/konferenzen/data2day2017.svg" />
+
+</div>
+<p>Yesterday and today I attended the <a href="www.data2day.de">data2day</a>, a conference about Big Data, Machine Learning and Data Science in Heidelberg, Germany. Topics and workshops covered a range of topics surrounding (big) data analysis and Machine Learning, like Deep Learning, Reinforcement Learning, TensorFlow applications, etc. Distributed systems and scalability were a major part of a lot of the talks as well, reflecting the growing desire to build bigger and more complex models that can’t (or would take too long to) run on a single computer. Most of the application examples were built in Python but one talk by Andreas Prawitt was specifically titled “Using R for Predictive Maintenance: an example from the TRUMPF Laser GmbH”. I also saw quite a few graphs that were obviously made with ggplot!</p>
+<blockquote class="twitter-tweet" data-lang="en">
+<p lang="de" dir="ltr">
+Guten Morgen auf der <a href="https://twitter.com/data2day"><span class="citation">@data2day</span></a> Kommt uns doch mal am Stand besuchen :-) <a href="https://t.co/YK46ACdNj9">pic.twitter.com/YK46ACdNj9</a>
+</p>
+— codecentric AG (<span class="citation">@codecentric</span>) <a href="https://twitter.com/codecentric/status/912928993279606784">September 27, 2017</a>
+</blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p><br></p>
+<p>The keynote lecture on Wednesday about <strong>Blockchains for AI</strong> was given by Trent McConaghy. <a href="https://www.sitepen.com/blog/2017/09/21/blockchain-basics/">Blockchain technology</a> is based on a decentralized system of storing and validating data and changes in data. It experiences a huge hype at the moment but it is only starting to gain track in Data Science and Machine Learning as well. I therefore found it a very fitting topic for the keynote lecture! Trent and his colleagues at <a href="www.bigchaindb.com">BigchainDB</a> are implementing an “internet-scale blockchain database for the world” - the Interplanetary Database (IPDB).</p>
+<blockquote>
+<p>“IPDB is a blockchain database that offers decentralized control, immutability and the creation and trading of digital assets. […] As a database for the world, IPDB offers decentralized control, strong governance and universal accessibility. IPDB relies on “caretaker” organizations around the world, who share responsibility for managing the network and governing the IPDB Foundation. Anyone in the world will be able to use IPDB. […]” <a href="https://blog.bigchaindb.com/ipdb-announced-as-public-planetary-scale-blockchain-database-7a363824fc14" class="uri">https://blog.bigchaindb.com/ipdb-announced-as-public-planetary-scale-blockchain-database-7a363824fc14</a></p>
+</blockquote>
+<p>He presented a number of examples where blockchain technology for decentralized data storage/access can be beneficial to Machine Learning and AI, like exchanging data from self-driving cars, of online market places and for generating art with computers. You can learn more about him <a href="https://blog.oceanprotocol.com/from-ai-to-blockchain-to-data-meet-ocean-f210ff460465">here</a>:</p>
+<blockquote class="twitter-tweet" data-lang="en">
+<p lang="en" dir="ltr">
+It's always been about the data.<br>Announcing Ocean.<a href="https://twitter.com/hashtag/AI?src=hash&amp;ref_src=twsrc%5Etfw">#AI</a> <a href="https://twitter.com/hashtag/Blockchain?src=hash&amp;ref_src=twsrc%5Etfw">#Blockchain</a> <a href="https://twitter.com/oceanprotocol?ref_src=twsrc%5Etfw"><span class="citation">@OceanProtocol</span></a><a href="https://t.co/Do4XNn3ucN">https://t.co/Do4XNn3ucN</a>
+</p>
+— Trent McConaghy (<span class="citation">@trentmc0</span>) <a href="https://twitter.com/trentmc0/status/909793166416662528?ref_src=twsrc%5Etfw">September 18, 2017</a>
+</blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p><br></p>
+<p>The other talks were a mix of high- and low-level topics: from introductions to machine learning, Apache Spark and data analysis with Python to (distributed) data streaming with Kappa architecture or Apache Kafka, containerization with Docker and Kubernetes, data archiving with Apache Cassandra, relevance tuning with Solr and much more. While I spent most of the time at my company’s conference stand, I did hear three of the talks. I summarize each of them below…</p>
+<blockquote class="twitter-tweet" data-lang="en">
+<p lang="de" dir="ltr">
+Tag 2 auf der <a href="https://twitter.com/data2day?ref_src=twsrc%5Etfw"><span class="citation">@data2day</span></a> kommt am Stand vorbei, wir haben noch ein paar T-Shirts und Softwerker für euch :-) <a href="https://t.co/xyG8Leg3lF">pic.twitter.com/xyG8Leg3lF</a>
+</p>
+— codecentric AG (<span class="citation">@codecentric</span>) <a href="https://twitter.com/codecentric/status/913301091755941888?ref_src=twsrc%5Etfw">September 28, 2017</a>
+</blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p><br></p>
+<ol style="list-style-type: decimal">
+<li><strong>Scalable Machine Learning with Apache Spark for Fraud Detection</strong></li>
+</ol>
+<p>In this first talk I heard, Dr. Patrick Baier and Dr. Stanimir Dragiev presented their work at <a href="www.zalando.de/">Zalando</a>. They built a scalable machine learning framework with Apache Spark, Scala and AWS to assess and predict fraud in online transactions. <a href="www.zalando.de/">Zalando</a> is a German online store that sells clothes, shoes and accessories. Normally, they allow registered customers to buy via invoice, i.e. they receive their ordered items before they pay them. This leaves them vulnerable to fraud where item are not paid for. The goal of their data science team is to use customer and basket data to obtain a probability score for how likely a transaction is going to be fraudulent. High-risk payment options, like invoice, can then be disabled in transactions with high fraud probability. To build and run such machine learning models, the Zalando data science team uses a combination of Spark, Scala, R, AWS, SQL, Python, Docker, etc. In their workflow, they use a combination of static and dynamic features, imputing missing values and building a decision model. In order to scale their modeling workflow to process more requests, use more data in training, update models more frequently and/or run more models, they described a workflow that uses Spark, Scala and Amazon Web Services (AWS). Spark’s machine learning library can be used for modeling and scaled horizontally by increasing the number of clusters on which to run the models. Scala provides multi-threading functionality and AWS is used for storing data in S3 and extending computation power depending on changing needs. Finally, they include a model inspector into their workflow to assure comparability of training and test data and check that the model is behaving as expected. Problems that they are dealing with include highly unbalanced data (which is getting even worse the better their models work as they keep reducing the number of fraud cases), delayed labeling due to the long process of the transactions, seasonality in data.</p>
+<p><br></p>
+<ol start="2" style="list-style-type: decimal">
+<li><strong>Sparse Data: Don’t Mind the Gap!</strong></li>
+</ol>
+<p>In this talk, my colleagues from <a href="www.codecentric.de">codecentric</a> Dr. Daniel Pape and Dr. Michael Plümacher showed an example from ad targeting of how to deal with sparse data. Sparse data occurs in many areas, e.g. as rare events over a long period of time or in areas where there are many items and few occurrences per item, like in recommender systems or in natural language processing (NLP). In ad targeting, the measure of success is the rate of the click-through rate (CRT): this is the number of clicks on a given advertisement displayed to a user on a website divided by the total number of advertisements, or impressions. Because financial revenue comes from a high CTR, advertisements should be placed in a way that maximizes their chance of being clicked, i.e. we want to recommend advertisements for specific users that match their interests or are of actual relevance. Sparsity come into play with ad targeting because the number of clicks is very low compared to two metrics: a) from all the potential ads that a user could see, only a small proportion is actually shown to her/him and b) of the ads that a user sees, she/he only clicks on very few. This means that, a CTR matrix of advertisements x targets will have very few combinations that have been clicked (the mean CTR is 0.003) and contain many missing values. The approach they took was to impute the missing values and predict for each target/user the most similar ads from the imputed CTR matrix. This approach worked well for a reasonably large data set but it didn’t perform so well with smaller (and therefore even sparser) data. They then talked about alternative approaches, like grouping users and/or ads into groups in order to reduce the sparsity of the data. Their take-home messages were that 1) there is no one-size-fits-all solution, what works depends on the context and 2) if the underlying data is of bad quality, the results will be sub-optimal - no matter how sophisticated the model.</p>
+<p><br></p>
+<ol start="3" style="list-style-type: decimal">
+<li><strong>Distributed TensorFlow with Kubernetes</strong></li>
+</ol>
+<p>In the third talk, another colleague of mine from <a href="www.codecentric.de">codecentric</a>, Jakob Karalus, explained in detail how to set up a distributed machine learning modelling set-up with <a href="https://www.tensorflow.org/">TensorFlow</a> and <a href="https://kubernetes.io/">Kubernetes</a>. TensorFlow is used to build neural networks in a graph-based manner. Distributed and parallel machine learning can be necessary when training big neural networks with a lot of training data, very deep neural networks, with complex parameters, grid search for hyper-parameter tuning, etc. A good way to build neural networks in a controlled and stable environment is to use <a href="https://www.docker.com/">Docker</a> containers. Kubernetes is a container orchestration tool that can set up distribution of nodes from our TensorFlow modeling container. Setting up this distributed system is quite complex, though and Jakob recommended to try to stay on one CPU/GPU as long as possible.</p>
+<blockquote class="twitter-tweet" data-lang="en">
+<p lang="de" dir="ltr">
+Verteiltes Deep Learning mit TensorFlow und Kubernetes - <a href="https://twitter.com/krallistic"><span class="citation">@krallistic</span></a> auf der <a href="https://twitter.com/data2day"><span class="citation">@data2day</span></a> <a href="https://t.co/5AGJdhL5U1">pic.twitter.com/5AGJdhL5U1</a>
+</p>
+— codecentric AG (<span class="citation">@codecentric</span>) <a href="https://twitter.com/codecentric/status/913041395128111105">September 27, 2017</a>
+</blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+</content:encoded>
+    </item>
+    
+    <item>
+      <title>From Biology to Industry. A Blogger’s Journey to Data Science.</title>
+      <link>https://shirinsplayground.netlify.com/2017/09/from-biology-to-industry.-a-bloggers-journey-to-data-science./</link>
+      <pubDate>Wed, 20 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2017/09/from-biology-to-industry.-a-bloggers-journey-to-data-science./</guid>
+      <description>Today, I have given a webinar for the Applied Epidemiology Didactic of the University of Wisconsin - Madison titled “From Biology to Industry. A Blogger’s Journey to Data Science.”
+I talked about how blogging about R and Data Science helped me become a Data Scientist. I also gave a short introduction to Machine Learning, Big Data and Neural Networks.
+My slides can be found here: https://www.slideshare.net/ShirinGlander/from-biology-to-industry-a-bloggers-journey-to-data-science</description>
+      <content:encoded><p>Today, I have given a webinar for the Applied Epidemiology Didactic of the University of Wisconsin - Madison titled “From Biology to Industry. A Blogger’s Journey to Data Science.”</p>
+<p>I talked about how blogging about R and Data Science helped me become a Data Scientist. I also gave a short introduction to Machine Learning, Big Data and Neural Networks.</p>
+<p>My slides can be found here: <a href="https://www.slideshare.net/ShirinGlander/from-biology-to-industry-a-bloggers-journey-to-data-science" class="uri">https://www.slideshare.net/ShirinGlander/from-biology-to-industry-a-bloggers-journey-to-data-science</a></p>
+</content:encoded>
+    </item>
+    
+    <item>
+      <title>Why I use R for Data Science - An Ode to R</title>
+      <link>https://shirinsplayground.netlify.com/2017/09/ode_to_r/</link>
+      <pubDate>Tue, 19 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2017/09/ode_to_r/</guid>
+      <description>Working in Data Science, I often feel like I have to justify using R over Python. And while I do use Python for running scripts in production, I am much more comfortable with the R environment. Basically, whenever I can, I use R for prototyping, testing, visualizing and teaching. But because personal gut-feeling preference isn’t a very good reason to give to (scientifically minded) people, I’ve thought a lot about the pros and cons of using R.</description>
+      <content:encoded><p>Working in Data Science, I often feel like I have to justify using R over Python. And while I do use Python for running scripts in production, I am much more comfortable with the R environment. Basically, whenever I can, I use R for prototyping, testing, visualizing and teaching. But because personal gut-feeling preference isn’t a very good reason to give to (scientifically minded) people, I’ve thought a lot about the pros and cons of using R. This is what I came up with why I still prefer R…</p>
+<p><em>Disclaimer:</em> I have “grown up” with R and I’m much more familiar with it, so I admit that I am quite biased in my assessment. If you think I’m not doing other languages justice, I’ll be happy to hear your pros and cons!</p>
+<p><br></p>
+<ol style="list-style-type: decimal">
+<li><p>First of, <a href="https://www.r-project.org/">R</a> is an <a href="https://cran.r-project.org/">open-source, cross-platform</a> language, so it’s free to use by any- and everybody. This in itself doesn’t make it special, though, because so are other languages, like Python.</p></li>
+<li><p>It is an established language, so that there are lots and lots of packages for basically every type of analysis you can think of. You find packages for <a href="https://www.analyticsvidhya.com/blog/2015/08/list-r-packages-data-analysis/">data analysis</a>, <a href="http://www.kdnuggets.com/2017/02/top-r-packages-machine-learning.html">machine learning</a>, <a href="https://support.rstudio.com/hc/en-us/articles/201057987-Quick-list-of-useful-R-packages">visualization</a>, <a href="https://www.computerworld.com/article/2921176/business-intelligence/great-r-packages-for-data-import-wrangling-visualization.html">data wrangling</a>, <a href="https://cran.r-project.org/web/views/Spatial.html">spatial analysis</a>, <a href="https://www.bioconductor.org/">bioinformatics</a> and much more. But, same as with Python, this plethora of packages can sometimes make things a bit confusing: you would often need to test and compare several similar packages in order to find the best one.</p></li>
+<li><p>Most of the packages are of very high quality. And when a package is on <a href="https://cran.r-project.org/web/packages/available_packages_by_name.html">CRAN</a> or <a href="https://www.bioconductor.org/">Bioconductor</a> (as most are), you can be sure that it has been checked, that you will get proper documentation and that you won’t have problems with installation, dependencies, etc. In my experience, R package and function documentation generally tends to be better than, say, of Python packages.</p></li>
+<li><p>R’s graphics capabilities are superior to any other I know. Especially <a href="http://ggplot2.org/">ggplot2</a> with all its <a href="http://www.ggplot2-exts.org/">extensions</a> provides a structured, yet powerful set of tools for producing <a href="http://www.r-graph-gallery.com/portfolio/ggplot2-package/">high-quality publication-ready graphs and figures</a>. Moreover, ggplot2 is part of the <a href="https://www.tidyverse.org/">tidyverse</a> and works well with <a href="https://cran.r-project.org/web/packages/broom/vignettes/broom.html">broom</a>. This has made data wrangling and analysis much more convenient and structured and structured for me.</p></li>
+<li><p>The suite of tools around <a href="https://www.rstudio.com/">R Studio</a> make it perfect for documenting data analysis workflows and for teaching. You can provide easy instructions for installation and <a href="http://rmarkdown.rstudio.com/">R Markdown</a> files for your students to follow along. Everybody is going to use the same system. In Python, you are always dealing with questions like version 2 vs version 3, Spyder vs Jupyter Notebook, pip vs conda, etc. <a href="https://www.rstudio.com/products/rpackages/">Everything around R Studio</a> is very well maintained and comes with extensive documentation and detailed tutorials. You find add-ins for <a href="https://support.rstudio.com/hc/en-us/articles/200532077-Version-Control-with-Git-and-SVN">version control</a>, <a href="http://shiny.rstudio.com/">Shiny</a> apps, writing books or other documents (<a href="https://bookdown.org/yihui/bookdown/">bookdown</a>) and you can write presentations directly in R Markdown, including code + output and everything as <a href="http://rmarkdown.rstudio.com/beamer_presentation_format.html">LaTeX beamer presentations</a>, <a href="http://rmarkdown.rstudio.com/ioslides_presentation_format.html">ioslides</a> or <a href="http://rmarkdown.rstudio.com/revealjs_presentation_format.html">reveal.js</a>. You can also create <a href="http://rmarkdown.rstudio.com/flexdashboard/">Dashboards</a>, include interactive <a href="http://rmarkdown.rstudio.com/developer_html_widgets.html">HTML widgets</a> and you can even build your blog (as this one is) with <a href="https://bookdown.org/yihui/blogdown/">blogdown</a> conveniently from within RStudio!</p></li>
+<li><p>If you are looking for advanced functionality, it is very likely that somebody has already written a package for it. There are packages that allow you to access <a href="https://spark.rstudio.com/">Spark</a>, <a href="https://cran.r-project.org/web/packages/h2o/index.html">H2O</a>, <a href="https://ropensci.org/tutorials/elastic_tutorial.html">elasticsearch</a>, <a href="https://tensorflow.rstudio.com/">TensorFlow</a>, <a href="https://tensorflow.rstudio.com/keras/">Keras</a>, <a href="https://ropensci.org/blog/blog/2016/11/16/tesseract">tesseract</a>, and so many more with no hassle at all. And you can even run <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/system2.html">bash</a>, <a href="https://github.com/rstudio/reticulate">Python</a> from within R!</p></li>
+<li><p>There is a big - and very active - community! This is one of the things I most enjoy about working with R. You can find many high-quality <a href="https://cran.r-project.org/manuals.html">manuals</a>, <a href="https://cran.r-project.org/other-docs.html">resources</a> and tutorials for all kinds of topics. Most of them provided free of charge by people who often dedicate their spare time to help others. The same goes for asking questions on <a href="https://stackoverflow.com/questions/tagged/r">Stack Overflow</a>, putting up issues on <a href="https://github.com/">Github</a> or <a href="https://groups.google.com/forum/#!forum/r-help-archive">Google groups</a>: usually you will get several answers within a short period of time (from my experience minutes to hours). What other community is so supportive and so helpful!? But for most things, you wouldn’t even need to ask for help because many of the packages come with absolutely amazing vignettes, that describe the functions and workflows in a detailed, yet easy to understand way. If that’s not enough, you will very likely find additional tutorials on <a href="https://www.r-bloggers.com/">R-bloggers</a>, a site maintained by Tal Galili that aggregates hundreds of R-blogs. There are several <a href="https://www.r-project.org/conferences.html">R Conferences</a>, like the <a href="https://user2018.r-project.org/">useR</a>, <a href="https://ropensci.org/community/events.html">rOpenSci Unconference</a> and many <a href="https://jumpingrivers.github.io/meetingsR/r-user-groups.html">R-user groups</a> all around the globe.</p></li>
+</ol>
+<p>I can’t stress enough how much I appreciate all the people who are involved in the R-community; who write packages, tutorials, blogs, who share information, provide support and who think about how to make data analysis easy, more convenient and - dare I say - fun!</p>
+<div class="figure">
+<img src="http://res.cloudinary.com/shiring/image/upload/v1505822167/circle-159252_1280_mfs0ku.png" alt="Community is everything!" />
+<p class="caption">Community is everything!</p>
+</div>
+<p>The main drawbacks I experience with R are that scripts tends to be harder to deploy than Python (<a href="https://www.microsoft.com/en-us/cloud-platform/r-server">R-server</a> might be a solution, but I don’t know enough about it to really judge). Dealing with memory, space and security issues is often difficult in R. But there has already been a vast improvement over the last months/years, so I’m sure we will see development there in the future…</p>
+</content:encoded>
+    </item>
+    
+    <item>
+      <title>Welcome to my page!</title>
+      <link>https://shirinsplayground.netlify.com/page/about/</link>
+      <pubDate>Tue, 12 Sep 2017 16:06:06 +0200</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/page/about/</guid>
+      <description>I&rsquo;m Shirin, a biologist turned bioinformatician turned data scientist.
+I&rsquo;m especially interested in machine learning and data visualization. While I am using R most every day at work, I wanted to have an incentive to regularly explore other types of analyses and other types of data that I don&rsquo;t normally work with. I have also very often benefited from other people&rsquo;s published code in that it gave me ideas for my own work; and I hope that sharing my own analyses will inspire others as much as I often am by what can be be done with data.</description>
+      <content:encoded>
+
+<p><img src="/img/Bewerbungsfoto_klein.jpg" alt="" /></p>
+
+<p>I&rsquo;m Shirin, a biologist turned bioinformatician turned data scientist.</p>
+
+<p>I&rsquo;m especially interested in machine learning and data visualization. While I am using R most every day at work, I wanted to have an incentive to regularly explore other types of analyses and other types of data that I don&rsquo;t normally work with. I have also very often benefited from other people&rsquo;s published code in that it gave me ideas for my own work; and I hope that sharing my own analyses will inspire others as much as I often am by what can be be done with data.  It&rsquo;s amazing to me what can be learned from analyzing and visualizing data!</p>
+
+<p>My tool of choice for data analysis so far has been R. I also organize the <a href="https://shiring.github.io/r_users_group/2017/05/20/muenster_r_user_group">MünsteR R-users group on meetup.com</a>.</p>
+
+<p><img src="/img/my_story.png" alt="My journey to Data Science" /></p>
+
+<p>I love dancing and used to do competitive ballroom and latin dancing. Even though I don&rsquo;t have time for that anymore, I still enjoy teaching &ldquo;social dances&rdquo; once a week with the Hochschulsport (university sports courses).</p>
+
+<p>I created the R package <a href="https://github.com/ShirinG/exprAnalysis">exprAnalysis</a>, designed to streamline my RNA-seq data analysis pipeline. It is available via Github. Instructions for installation and usage can be found <a href="https://shiring.github.io/rna-seq/microarray/2016/09/28/exprAnalysis">here</a>.</p>
+
+<p>This blog will showcase some of the analyses I have been doing with different data sets (all freely available). I will also host teaching materials for students to access in conjunction with R courses I am giving.</p>
+
+<hr />
+
+<h2 id="contact-me">Contact me:</h2>
+
+<ul>
+<li><a href="https://www.codecentric.de/team/shirin-glander/">Codecentric AG</a></li>
+<li><a href="mailto:shirin.glander@gmail.com">Email</a></li>
+<li><a href="http://www.xing.com/profile/Shirin_Glander">Xing</a></li>
+<li><a href="http://de.linkedin.com/in/shirin-glander-01120881">Linkedin</a></li>
+<li><a href="http://twitter.com/ShirinGlander">Twitter</a></li>
+</ul>
+
+<hr />
+
+<p>Also check out <a href="http://www.R-bloggers.com">R-bloggers</a> for lots of cool R stuff!</p>
+</content:encoded>
+    </item>
+    
+    <item>
+      <title>Moving my blog to blogdown</title>
+      <link>https://shirinsplayground.netlify.com/2017/09/moving-my-blog-to-blogdown/</link>
+      <pubDate>Tue, 12 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2017/09/moving-my-blog-to-blogdown/</guid>
+      <description>It’s been a long time coming but I finally moved my blog from Jekyll/Bootstrap on Github pages to blogdown, Hugo and Netlify! Moreover, I also now have my own domain name www.shirin-glander.de. :-)
+I followed the blogdown ebook to set up my blog. I chose Thibaud Leprêtre’s tranquilpeak theme. It looks much more polished than my old blog.
+My old blog will remain where it is, so that all the links that are out there will still work (and I don’t have to go through the hassle of migrating all my posts to my new site).</description>
+      <content:encoded><p>It’s been a long time coming but I finally moved my blog from Jekyll/Bootstrap on Github pages to blogdown, Hugo and <a href="https://www.netlify.com/">Netlify</a>! Moreover, I also now have my own domain name <a href="https://www.shirin-glander.de">www.shirin-glander.de</a>. :-)</p>
+<p>I followed the <a href="https://bookdown.org/yihui/blogdown/">blogdown ebook</a> to set up my blog. I chose Thibaud Leprêtre’s <a href="https://themes.gohugo.io/hugo-tranquilpeak-theme/">tranquilpeak theme</a>. It looks much more polished than my old blog.</p>
+<p>My old blog will remain where it is, so that all the links that are out there will still work (and I don’t have to go through the hassle of migrating all my posts to my new site). You find a link to my old site in the sidebar.</p>
+<p><br></p>
+<hr />
+<p>Just to test that everything works, I run the example code:</p>
+<div id="r-markdown" class="section level1">
+<h1>R Markdown</h1>
+<p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
+<p>You can embed an R code chunk like this:</p>
+<pre class="r"><code>summary(cars)
+##      speed           dist       
+##  Min.   : 4.0   Min.   :  2.00  
+##  1st Qu.:12.0   1st Qu.: 26.00  
+##  Median :15.0   Median : 36.00  
+##  Mean   :15.4   Mean   : 42.98  
+##  3rd Qu.:19.0   3rd Qu.: 56.00  
+##  Max.   :25.0   Max.   :120.00
+fit &lt;- lm(dist ~ speed, data = cars)
+fit
+## 
+## Call:
+## lm(formula = dist ~ speed, data = cars)
+## 
+## Coefficients:
+## (Intercept)        speed  
+##     -17.579        3.932</code></pre>
+</div>
+<div id="including-plots" class="section level1">
+<h1>Including Plots</h1>
+<p>You can also embed plots. See Figure <a href="#fig:pie">1</a> for example:</p>
+<pre class="r"><code>par(mar = c(0, 1, 0, 1))
+pie(
+  c(280, 60, 20),
+  c(&#39;Sky&#39;, &#39;Sunny side of pyramid&#39;, &#39;Shady side of pyramid&#39;),
+  col = c(&#39;#0292D8&#39;, &#39;#F7EA39&#39;, &#39;#C4B632&#39;),
+  init.angle = -50, border = NA
+)</code></pre>
+<div class="figure"><span id="fig:pie"></span>
+<img src="/post/2017-09-12-moving-my-blog-to-blogdown_files/figure-html/pie-1.png" alt="A fancy pie chart." width="672" />
+<p class="caption">
+Figure 1: A fancy pie chart.
+</p>
+</div>
+</div>
+</content:encoded>
+    </item>
+    
+    <item>
+      <title>Data Science for Fraud Detection</title>
+      <link>https://shirinsplayground.netlify.com/2017/09/data-science-fraud-detection/</link>
+      <pubDate>Wed, 06 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2017/09/data-science-fraud-detection/</guid>
+      <description>I have written the following post about Data Science for Fraud Detection at my company codecentric&rsquo;s blog:
+ Fraud can be defined as “the crime of getting money by deceiving people” (Cambridge Dictionary); it is as old as humanity: whenever two parties exchange goods or conduct business there is the potential for one party scamming the other. With an ever increasing use of the internet for shopping, banking, filing insurance claims, etc.</description>
+      <content:encoded><p>I have written the following post about <a href="https://blog.codecentric.de/en/2017/09/data-science-fraud-detection/">Data Science for Fraud Detection</a> at my company <a href="https://blog.codecentric.de/en/">codecentric</a>&rsquo;s blog:</p>
+
+<blockquote>
+<p>Fraud can be defined as “the crime of getting money by deceiving people” (Cambridge Dictionary); it is as old as humanity: whenever two parties exchange goods or conduct business there is the potential for one party scamming the other. With an ever increasing use of the internet for shopping, banking, filing insurance claims, etc. these businesses have become targets of fraud in a whole new dimension. Fraud has become a major problem in e-commerce and a lot of resources are being invested to recognize and prevent it.</p>
+
+<p>Traditional approaches to identifying fraud have been rule-based. This means that hard and fast rules for flagging a transaction as fraudulent have to be established manually and in advance. But this system isn’t flexible and inevitably results in an arms-race between the seller’s fraud detection system and criminals finding ways to circumnavigate these rules. The modern alternative is to leverage the vast amounts of Big Data that can be collected from online transactions and model it in a way that allows us to flag or predict fraud in future transactions. For this, Data Science and Machine Learning techniques, like Deep Neural Networks (DNNs), are the obvious solution!</p>
+
+<p>Here, I am going to show an example of how Data Science techniques can be used to identify fraud in financial transactions. I will offer some insights into the inner workings of fraud analysis, aimed at non-experts to understand.</p>
+</blockquote>
+
+<p>Continue reading at <a href="https://blog.codecentric.de/en/2017/09/data-science-fraud-detection/">https://blog.codecentric.de/en/2017/09/data-science-fraud-detection/</a>&hellip;</p>
+
+<p>The blog post is <a href="https://blog.codecentric.de/2017/09/fraud-analyse-mit-data-science-techniken/">also available in German</a>.</p>
+
+<p><img src="http://res.cloudinary.com/shiring/image/upload/v1505304742/r_mse_gklfsi.png" alt="" /></p>
+</content:encoded>
+    </item>
+    
+    <item>
+      <title>Migrating from GitHub to GitLab with RStudio (Tutorial)</title>
+      <link>https://shirinsplayground.netlify.com/2017/09/migrating-github-gitlab/</link>
+      <pubDate>Mon, 04 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2017/09/migrating-github-gitlab/</guid>
+      <description>GitHub vs. GitLab Git is a distributed implementation of version control. Many people have written very eloquently about why it is a good idea to use version control, not only if you collaborate in a team but also if you work on your own; one example is this article from RStudio&rsquo;s Support pages.
+In short, its main feature is that version control allows you to keep track of the changes you make to your code.</description>
+      <content:encoded>
+
+<h2 id="github-vs-gitlab">GitHub vs. GitLab</h2>
+
+<p>Git is a distributed implementation of version control. Many people have written very eloquently about why it is a good idea to use version control, not only if you collaborate in a team but also if you work on your own; one example is <a href="https://support.rstudio.com/hc/en-us/articles/200532077?version=1.0.153&amp;mode=desktop">this article from RStudio&rsquo;s Support pages</a>.</p>
+
+<p>In short, its main feature is that version control allows you to keep track of the changes you make to your code. It will also keep a history of all the changes you have made in the past and allows you to go back to specific versions if you made a major mistake. And Git makes collaborating on the same code very easy.</p>
+
+<p>Most R packages are also hosted on <a href="https://github.com/">GitHub</a>. You can check out their R code in the repositories if you want to get a deeper understanding of the functions, you can install the latest development versions of packages or install packages that are not on CRAN. The issue tracker function of GitHub also makes it easy to report and respond to issues/problems with your code.</p>
+
+<h3 id="why-would-you-want-to-leave-github">Why would you want to leave GitHub?</h3>
+
+<p>Public repositories are free on GitHub but you need to pay for private repos (if you are a student or work in academia, you <a href="https://education.github.com/discount_requests/new">get private repos for free</a>). Since I switched from academia to industry lately and no longer fulfil these criteria, all my private repos would have to be switched to public in the future. Here, GitLab is a great alternative!</p>
+
+<p><a href="https://gitlab.com/">GitLab</a> offers very similar functionalities as GitHub. There are <a href="https://www.slant.co/versus/532/4860/~github_vs_gitlab">many pros and cons for using GitHub versus GitLab</a> but for me, the selling point was that GitLab offers unlimited private projects and collaborators in its free plan.</p>
+
+<p><br></p>
+
+<h1 id="tutorial">Tutorial</h1>
+
+<p>Migrating from GitHub to <a href="https://gitlab.com/">GitLab</a> with RStudio is very easy! Here, I will show how I migrated my GitHub repositories of R projects, that I work with from within RStudio, to GitLab.</p>
+
+<p><img src="http://res.cloudinary.com/shiring/image/upload/v1505304786/GitLab_logo_yej6ht.png" alt="" /></p>
+
+<p>Beware, that ALL code snippets below show Terminal code (they are NOT from the R console)!</p>
+
+<p><br></p>
+
+<h2 id="migrating-existing-repositories">Migrating existing repositories</h2>
+
+<p>You first need to set up your GitLab account (you can login with your GitHub account) and connect your old GitHub account. Under <a href="https://gitlab.com/profile/account">Settings &amp;Account</a>, you will find &ldquo;Social sign-in&rdquo;; here click on &ldquo;Connect&rdquo; next to the GitHub symbol (if you signed in with your GitHub account, it will already be connected).</p>
+
+<p>Once you have done this, you can import all your GitHub repositories to GitLab. To do this, you first need to create a new project. Click on the drop-down arrow next to the plus sign in the top-right corner and select &ldquo;New project&rdquo;. This will open the following window:</p>
+
+<p><img src="http://res.cloudinary.com/shiring/image/upload/v1505304800/Bildschirmfoto1_yuc7gb.png" alt="" /></p>
+
+<p>Here, choose &ldquo;Import project from GitHub&rdquo; and choose the repositories you want to import.</p>
+
+<p>If you go into one of your repositories, GitLab will show you a message at the top of the site that tells you that you need to add an SSH key. The SSH key is used for secure communication between the GitLab server and your computer when you want to share information, like push/pull commits.</p>
+
+<p><img src="http://res.cloudinary.com/shiring/image/upload/v1505304805/Bildschirmfoto2_diwetw.png" alt="" /></p>
+
+<p>If you already work with GitHub on your computer, you will have an SSH key set up and you can <a href="https://gitlab.com/profile/keys">copy your public SSH key to GitLab</a>. Follow the instructions <a href="https://gitlab.com/help/ssh/README">here</a>.</p>
+
+<p>Here is how you do it on a Mac:</p>
+
+<ol>
+<li>Look for your public key and copy it to the clipboard</li>
+</ol>
+
+<!-- -->
+
+<pre><code>cat ~/.ssh/id_rsa.pub
+pbcopy &lt; ~/.ssh/id_rsa.pub
+</code></pre>
+
+<p>Then paste it into the respective field <a href="https://gitlab.com/profile/keys">here</a>.</p>
+
+<p>The next step is to change the remote URL for pushing/pulling your project from RStudio. In your Git window (tab next to &ldquo;Environment&rdquo; and &ldquo;History&rdquo; for me), click on Settings and &ldquo;Shell&rdquo;.</p>
+
+<p><img src="http://res.cloudinary.com/shiring/image/upload/v1505304881/Bildschirmfoto3_ydklnw.png" alt="" /></p>
+
+<p>Then write in the shell window that opened:</p>
+
+<pre><code>git remote set-url origin git@&lt;GITLABHOST&gt;:&lt;ORGNAME&gt;/&lt;REPO&gt;.git
+</code></pre>
+
+<p>You can copy the link in the navigation bar of your repo on GitLab.</p>
+
+<p><img src="http://res.cloudinary.com/shiring/image/upload/v1505304804/Bildschirmfoto4_dheikm.png" alt="" /></p>
+
+<p>Check that you now have the correct new gitlab path by going to &ldquo;Tools&rdquo;, &ldquo;Project Options&rdquo; and &ldquo;Git/SVN&rdquo;.</p>
+
+<p>Also check your SSH key configuration with:</p>
+
+<pre><code>ssh -T git@&lt;GITLABHOST&gt;
+</code></pre>
+
+<p>If you get the following message</p>
+
+<pre><code>The authenticity of host 'gitlab.com (52.167.219.168)' can't be established.
+ECDSA key fingerprint is ...
+Are you sure you want to continue connecting (yes/no)?
+</code></pre>
+
+<p>type &ldquo;yes&rdquo; (and enter passphrase if prompted).</p>
+
+<p>If everything is okay, you now get a message saying <code>Welcome to GitLab!</code></p>
+
+<p>Now, you can commit, push and pull from within RStudio just as you have done before!</p>
+
+<p><br></p>
+
+<h2 id="in-case-of-problems-with-pushing-pulling">In case of problems with pushing/pulling</h2>
+
+<p>In my case, I migrated both, my private as well as my company&rsquo;s GitHub repos to GitLab. While my private repos could be migrated without a hitch, migrating my company&rsquo;s repos was a bit more tricky (because they had additional security settings, I assume).</p>
+
+<p>Here is how I solved this problem with my company&rsquo;s repos:</p>
+
+<p>I have protected my SSH key with a passphrase. When pushing or pulling commits via the shell with <code>git pull</code> and <code>git push origin master</code>, I am prompted to enter my passphrase and everything works fine. Pushing/pulling from within RStudio, however, threw an error:</p>
+
+<pre><code>ssh_askpass: exec(/usr/X11R6/bin/ssh-askpass): No such file or directory
+Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+</code></pre>
+
+<p>I am using a MacBook Pro with MacOS Sierra version 10.12.6, so this might not be an issue with another operating system.</p>
+
+<p>The following solution worked for me:</p>
+
+<ol>
+<li>Add your SSH key</li>
+</ol>
+
+<!-- -->
+
+<pre><code>ssh-add ~/.ssh/id_rsa
+</code></pre>
+
+<ol>
+<li>And reinstall <a href="https://vscode-eastus.azurewebsites.net/docs/setup/mac">VS Code</a></li>
+</ol>
+
+<p>Now I could commit, push and pull from within RStudio just as before!</p>
+</content:encoded>
+    </item>
+    
+    <item>
+      <title>Social Network Analysis and Topic Modeling of codecentric’s Twitter friends and followers</title>
+      <link>https://shirinsplayground.netlify.com/2017/07/twitter-analysis-codecentric/</link>
+      <pubDate>Fri, 28 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2017/07/twitter-analysis-codecentric/</guid>
+      <description>I have written the following post about Social Network Analysis and Topic Modeling of codecentric&rsquo;s Twitter friends and followers for codecentric&rsquo;s blog:
+ Recently, Matthias Radtke has written a very nice blog post on Topic Modeling of the codecentric Blog Articles, where he is giving a comprehensive introduction to Topic Modeling. In this article I am showing a real-world example of how we can use Data Science to gain insights from text data and social network analysis.</description>
+      <content:encoded><p>I have written the following post about <a href="https://blog.codecentric.de/en/2017/07/combining-social-network-analysis-topic-modeling-characterize-codecentrics-twitter-friends-followers/">Social Network Analysis and Topic Modeling of codecentric&rsquo;s Twitter friends and followers</a> for <a href="https://blog.codecentric.de/en/">codecentric</a>&rsquo;s blog:</p>
+
+<blockquote>
+<p>Recently, Matthias Radtke has written a very nice blog post on Topic Modeling of the codecentric Blog Articles, where he is giving a comprehensive introduction to Topic Modeling. In this article I am showing a real-world example of how we can use Data Science to gain insights from text data and social network analysis.</p>
+
+<p>I am using publicly available Twitter data to characterize codecentric&rsquo;s friends and followers for identifying the most &ldquo;influential&rdquo; followers and using text analysis tools like sentiment analysis to characterize their interests from their user descriptions, performing Social Network Analysis on friends, followers and a subset of second degree connections to identify key players who will be able to pass on information to a wide reach of other users and combing this network analysis with topic modeling to identify meta-groups with similar interests.</p>
+
+<p>Knowing the interests and social network positions of our followers allows us to identify key users who are likely to retweet posts that fall within their range of interests and who will reach a wide audience.</p>
+
+<p>&hellip;</p>
+</blockquote>
+
+<p>Continue reading at <a href="https://blog.codecentric.de/en/2017/07/combining-social-network-analysis-topic-modeling-characterize-codecentrics-twitter-friends-followers/">https://blog.codecentric.de/en/2017/07/combining-social-network-analysis-topic-modeling-characterize-codecentrics-twitter-friends-followers/</a>&hellip;</p>
+
+<p>The entire analysis has been done in R 3.4.0 and you can find my code on <a href="https://github.com/ShirinG/blog_posts_prep/blob/master/twitter/twitter_codecentric.Rmd">Github</a>.</p>
+
+<p><img src="http://res.cloudinary.com/shiring/image/upload/v1505304891/twitter_net_topics_lnu3j9.png" alt="" /></p>
+</content:encoded>
+    </item>
+    
+    <item>
+      <title>Find all my other posts on my old website!</title>
+      <link>https://shirinsplayground.netlify.com/2017/07/find-all-my-other-posts-on-my-old-website/</link>
+      <pubDate>Sat, 01 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2017/07/find-all-my-other-posts-on-my-old-website/</guid>
+      <description>For all my other posts, see my old website: shiring.github.io</description>
+      <content:encoded><p>For all my other posts, see my old website:
+<a href="https://shiring.github.io">shiring.github.io</a></p>
+</content:encoded>
+    </item>
+    
+  </channel>
+</rss>
