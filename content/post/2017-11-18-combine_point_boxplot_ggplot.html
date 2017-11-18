@@ -14,8 +14,8 @@ slug: combine_point_boxplot_ggplot
 
 
 
-<p>In a recent project, I was looking to plot data from different variables along the same time axis. The difficulty was, that some of these variables I wanted to have as point plots, while others I wanted to as boxplots.</p>
-<p>Because I work with the tidyverse, I wanted to produce these plots with ggplot2. Facetting was the obvious first stept but it took me quite a while to figure out how to best combine facets with point plots (where I have one value per time point) with and boxplots (where I have multiple values per time point).</p>
+<p>In a recent project, I was looking to plot data from different variables along the same time axis. The difficulty was, that some of these variables I wanted to have as point plots, while others I wanted as box-plots.</p>
+<p>Because I work with the tidyverse, I wanted to produce these plots with ggplot2. Faceting was the obvious first step but it took me quite a while to figure out how to best combine facets with point plots (where I have one value per time point) with and box-plots (where I have multiple values per time point).</p>
 <p>The reason why this isn’t trivial is that box plots require groups or factors on the x-axis, while points can be plotted over a continuous range of x-values. If your alarm bells are ringing right now, you are absolutely right: before you try to combine plots with different x-axis properties, you should think long and hard whether this is an accurate representation of the data and if its a good idea to do so! Here, I had multiple values per time point for one variable and I wanted to make the median + variation explicitly clear, while also showing the continuous changes of other variables over the same range of time.</p>
 <p>So, I am writing this short tutorial here in hopes that it saves the next person trying to do something similar from spending an entire morning on stackoverflow. ;-)</p>
 <p>For this demonstration, I am creating some fake data:</p>
@@ -28,26 +28,26 @@ fake_data &lt;- data.frame(time = dates,
                         var2 = runif(length(dates))) %&gt;%
   sample_frac(size = 0.33)
 head(fake_data)</code></pre>
-<pre><code>##                   time     var1_1     var1_2    var1_3      var2
-## 14 2017-10-01 07:39:00 0.11342667 0.47865998 0.6384389 0.3318539
-## 63 2017-10-01 10:06:00 0.02167358 0.84012806 0.4113154 0.7939945
-## 25 2017-10-01 08:12:00 0.34869631 0.82120152 0.8492754 0.3573487
-## 71 2017-10-01 10:30:00 0.08358495 0.59176523 0.4413600 0.6749284
-## 32 2017-10-01 08:33:00 0.24567308 0.41915796 0.3839364 0.3238099
-## 59 2017-10-01 09:54:00 0.56781826 0.05964779 0.4405202 0.2602264</code></pre>
+<pre><code>##                   time    var1_1    var1_2    var1_3       var2
+## 8  2017-10-01 07:21:00 0.2359625 0.6121708 0.4114921 0.03327728
+## 27 2017-10-01 08:18:00 0.5592436 0.3834683 0.8025474 0.44557932
+## 29 2017-10-01 08:24:00 0.7667775 0.4636693 0.7642972 0.97718507
+## 18 2017-10-01 07:51:00 0.2819686 0.3995273 0.9127757 0.42115579
+## 1  2017-10-01 07:00:00 0.5940754 0.1599054 0.7287677 0.91953437
+## 71 2017-10-01 10:30:00 0.2159290 0.2853349 0.7817291 0.57598897</code></pre>
 <p>Here, variable 1 (<code>var1</code>) has three measurements per time point, while variable 2 (<code>var2</code>) has one.</p>
-<p>First, for plotting with ggplot2 we want our data in a tidy long format. I also add another column for facetting that groups the variables from <code>var1</code> together.</p>
+<p>First, for plotting with ggplot2 we want our data in a tidy long format. I also add another column for faceting that groups the variables from <code>var1</code> together.</p>
 <pre class="r"><code>fake_data_long &lt;- fake_data %&gt;%
   gather(x, y, var1_1:var2) %&gt;%
   mutate(facet = ifelse(x %in% c(&quot;var1_1&quot;, &quot;var1_2&quot;, &quot;var1_3&quot;), &quot;var1&quot;, x))
 head(fake_data_long)</code></pre>
-<pre><code>##                  time      x          y facet
-## 1 2017-10-01 07:39:00 var1_1 0.11342667  var1
-## 2 2017-10-01 10:06:00 var1_1 0.02167358  var1
-## 3 2017-10-01 08:12:00 var1_1 0.34869631  var1
-## 4 2017-10-01 10:30:00 var1_1 0.08358495  var1
-## 5 2017-10-01 08:33:00 var1_1 0.24567308  var1
-## 6 2017-10-01 09:54:00 var1_1 0.56781826  var1</code></pre>
+<pre><code>##                  time      x         y facet
+## 1 2017-10-01 07:21:00 var1_1 0.2359625  var1
+## 2 2017-10-01 08:18:00 var1_1 0.5592436  var1
+## 3 2017-10-01 08:24:00 var1_1 0.7667775  var1
+## 4 2017-10-01 07:51:00 var1_1 0.2819686  var1
+## 5 2017-10-01 07:00:00 var1_1 0.5940754  var1
+## 6 2017-10-01 10:30:00 var1_1 0.2159290  var1</code></pre>
 <p>Now, we can plot this the following way:</p>
 <ul>
 <li>facet by variable</li>
