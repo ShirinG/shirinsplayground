@@ -1,5 +1,9 @@
 
 
+  
+    
+  
+
 
   
 
@@ -18,7 +22,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Hugo 0.27 with theme Tranquilpeak 0.4.1-BETA">
-    <title>H2o</title>
+    <title>How to combine point and boxplots in timeline charts with ggplot2 facets</title>
     <meta name="author" content="Dr. Shirin Glander">
     <meta name="keywords" content=", R">
 
@@ -26,15 +30,18 @@
     
 
     
-    <meta name="description" content="exploring and playing with data in R">
-    <meta property="og:description" content="exploring and playing with data in R">
+    <meta name="description" content="In a recent project, I was looking to plot data from different variables along the same time axis. The difficulty was, that some of these variables I wanted to have as point plots, while others I wanted to as boxplots.
+Because I work with the tidyverse, I wanted to produce these plots with ggplot2. Facetting was the obvious first stept but it took me quite a while to figure out how to best combine facets with point plots (where I have one value per time point) with and boxplots (where I have multiple values per time point).">
+    <meta property="og:description" content="In a recent project, I was looking to plot data from different variables along the same time axis. The difficulty was, that some of these variables I wanted to have as point plots, while others I wanted to as boxplots.
+Because I work with the tidyverse, I wanted to produce these plots with ggplot2. Facetting was the obvious first stept but it took me quite a while to figure out how to best combine facets with point plots (where I have one value per time point) with and boxplots (where I have multiple values per time point).">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="H2o">
-    <meta property="og:url" content="/tags/h2o/">
+    <meta property="og:title" content="How to combine point and boxplots in timeline charts with ggplot2 facets">
+    <meta property="og:url" content="/2017/11/combine_point_boxplot_ggplot/">
     <meta property="og:site_name" content="Shirin&#39;s playgRound">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Shirin&#39;s playgRound">
-    <meta name="twitter:description" content="exploring and playing with data in R">
+    <meta name="twitter:description" content="In a recent project, I was looking to plot data from different variables along the same time axis. The difficulty was, that some of these variables I wanted to have as point plots, while others I wanted to as boxplots.
+Because I work with the tidyverse, I wanted to produce these plots with ggplot2. Facetting was the obvious first stept but it took me quite a while to figure out how to best combine facets with point plots (where I have one value per time point) with and boxplots (where I have multiple values per time point).">
     
       <meta name="twitter:creator" content="@ShirinGlander">
     
@@ -47,6 +54,8 @@
       <meta property="og:image" content="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=640">
     
 
+    
+      <meta property="og:image" content="http://res.cloudinary.com/shiring/image/upload/v1511025178/ggplot_facets_bmudxl.png">
     
     
     
@@ -81,7 +90,7 @@ ga('send', 'pageview');
 
   <body>
     <div id="blog">
-      <header id="header" data-behavior="1">
+      <header id="header" data-behavior="4">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
     <a class="header-title-link" href="https://shirinsplayground.netlify.com/">Shirin&#39;s playgRound</a>
@@ -101,11 +110,11 @@ ga('send', 'pageview');
   
 </header>
 
-      <nav id="sidebar" data-behavior="1">
+      <nav id="sidebar" data-behavior="4">
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
-        <h1 class="sidebar-profile-title">H2o</h1>
+        <h1 class="sidebar-profile-title">How to combine point and boxplots in timeline charts with ggplot2 facets</h1>
         <a href="https://shirinsplayground.netlify.com/#about">
           <img class="sidebar-profile-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=110" alt="Author&#39;s picture" />
         </a>
@@ -271,40 +280,26 @@ ga('send', 'pageview');
 </nav>
 
       
-        
 
-      
-      <div id="main" data-behavior="1"
+      <div id="main" data-behavior="4"
         class="
-               hasCoverMetaIn
+               hasCoverMetaOut
                ">
-        
-          <section class="postShorten-group main-content-wrap">
-            
-            
-              
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-center">
   
-    
+    <h1 class="post-title" itemprop="headline">
+      How to combine point and boxplots in timeline charts with ggplot2 facets
+    </h1>
   
-
-
   
-
-<article class="postShorten postShorten--thumbnailimg-left" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://shirinsplayground.netlify.com/2017/09/data-science-fraud-detection/">
-          Data Science for Fraud Detection
-        </a>
-      </h1>
-      
   <div class="postShorten-meta post-meta">
     
-      <time itemprop="datePublished" datetime="2017-09-06T00:00:00Z">
+      <time itemprop="datePublished" datetime="2017-11-18T00:00:00Z">
         
-  September 6, 2017
+  November 18, 2017
 
       </time>
     
@@ -313,37 +308,198 @@ ga('send', 'pageview');
   
     <span>in</span>
     
-      <a class="category-link" href="https://shirinsplayground.netlify.com/categories/machine-learning">machine learning</a>
+      <a class="category-link" href="https://shirinsplayground.netlify.com/categories/r">R</a>
     
   
 
 
   </div>
 
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      I have written the following post about Data Science for Fraud Detection at my company codecentric&rsquo;s blog:
- Fraud can be defined as “the crime of getting money by deceiving people” (Cambridge Dictionary); it is as old as humanity: whenever two parties exchange goods or conduct business there is the potential for one party scamming the other. With an ever increasing use of the internet for shopping, banking, filing insurance claims, etc.
-      <p>
-        <a href="https://shirinsplayground.netlify.com/2017/09/data-science-fraud-detection/" class="postShorten-excerpt_link link">Continue reading</a>
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>In a recent project, I was looking to plot data from different variables along the same time axis. The difficulty was, that some of these variables I wanted to have as point plots, while others I wanted to as boxplots.</p>
+<p>Because I work with the tidyverse, I wanted to produce these plots with ggplot2. Facetting was the obvious first stept but it took me quite a while to figure out how to best combine facets with point plots (where I have one value per time point) with and boxplots (where I have multiple values per time point).</p>
+<p>The reason why this isn’t trivial is that box plots require groups or factors on the x-axis, while points can be plotted over a continuous range of x-values. If your alarm bells are ringing right now, you are absolutely right: before you try to combine plots with different x-axis properties, you should think long and hard whether this is an accurate representation of the data and if its a good idea to do so! Here, I had multiple values per time point for one variable and I wanted to make the median + variation explicitly clear, while also showing the continuous changes of other variables over the same range of time.</p>
+<p>So, I am writing this short tutorial here in hopes that it saves the next person trying to do something similar from spending an entire morning on stackoverflow. ;-)</p>
+<p>For this demonstration, I am creating some fake data:</p>
+<pre class="r"><code>library(tidyverse)
+dates &lt;- seq(as.POSIXct(&quot;2017-10-01 07:00&quot;), as.POSIXct(&quot;2017-10-01 10:30&quot;), by = 180) # 180 seconds == 3 minutes
+fake_data &lt;- data.frame(time = dates,
+                        var1_1 = runif(length(dates)),
+                        var1_2 = runif(length(dates)),
+                        var1_3 = runif(length(dates)),
+                        var2 = runif(length(dates))) %&gt;%
+  sample_frac(size = 0.33)
+head(fake_data)</code></pre>
+<pre><code>##                   time     var1_1     var1_2    var1_3      var2
+## 14 2017-10-01 07:39:00 0.11342667 0.47865998 0.6384389 0.3318539
+## 63 2017-10-01 10:06:00 0.02167358 0.84012806 0.4113154 0.7939945
+## 25 2017-10-01 08:12:00 0.34869631 0.82120152 0.8492754 0.3573487
+## 71 2017-10-01 10:30:00 0.08358495 0.59176523 0.4413600 0.6749284
+## 32 2017-10-01 08:33:00 0.24567308 0.41915796 0.3839364 0.3238099
+## 59 2017-10-01 09:54:00 0.56781826 0.05964779 0.4405202 0.2602264</code></pre>
+<p>Here, variable 1 (<code>var1</code>) has three measurements per time point, while variable 2 (<code>var2</code>) has one.</p>
+<p>First, for plotting with ggplot2 we want our data in a tidy long format. I also add another column for facetting that groups the variables from <code>var1</code> together.</p>
+<pre class="r"><code>fake_data_long &lt;- fake_data %&gt;%
+  gather(x, y, var1_1:var2) %&gt;%
+  mutate(facet = ifelse(x %in% c(&quot;var1_1&quot;, &quot;var1_2&quot;, &quot;var1_3&quot;), &quot;var1&quot;, x))
+head(fake_data_long)</code></pre>
+<pre><code>##                  time      x          y facet
+## 1 2017-10-01 07:39:00 var1_1 0.11342667  var1
+## 2 2017-10-01 10:06:00 var1_1 0.02167358  var1
+## 3 2017-10-01 08:12:00 var1_1 0.34869631  var1
+## 4 2017-10-01 10:30:00 var1_1 0.08358495  var1
+## 5 2017-10-01 08:33:00 var1_1 0.24567308  var1
+## 6 2017-10-01 09:54:00 var1_1 0.56781826  var1</code></pre>
+<p>Now, we can plot this the following way:</p>
+<ul>
+<li>facet by variable</li>
+<li>subset data to facets for point plots and give aesthetics in <code>geom_point()</code></li>
+<li>subset data to facets for box plots and give aesthetics in <code>geom_boxplot()</code>. Here we also need to set the <code>group</code> aesthetic; if we don’t specifically give that, we will get a plot with one big box, instead of a box for every time point.</li>
+</ul>
+<pre class="r"><code>fake_data_long %&gt;%
+  ggplot() +
+    facet_grid(facet ~ ., scales = &quot;free&quot;) +
+    geom_point(data = subset(fake_data_long, facet == &quot;var2&quot;), 
+               aes(x = time, y = y),
+               size = 1) +
+    geom_line(data = subset(fake_data_long, facet == &quot;var2&quot;), 
+               aes(x = time, y = y)) +
+    geom_boxplot(data = subset(fake_data_long, facet == &quot;var1&quot;), 
+               aes(x = time, y = y, group = time))</code></pre>
+<p><img src="https://shirinsplayground.netlify.com/post/2017-11-18-combine_point_boxplot_ggplot_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 3.4.2 (2017-09-28)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS High Sierra 10.13.1
+## 
+## Matrix products: default
+## BLAS: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] de_DE.UTF-8/de_DE.UTF-8/de_DE.UTF-8/C/de_DE.UTF-8/de_DE.UTF-8
+## 
+## attached base packages:
+## [1] methods   stats     graphics  grDevices utils     datasets  base     
+## 
+## other attached packages:
+##  [1] bindrcpp_0.2    forcats_0.2.0   stringr_1.2.0   dplyr_0.7.4    
+##  [5] purrr_0.2.4     readr_1.1.1     tidyr_0.7.2     tibble_1.3.4   
+##  [9] ggplot2_2.2.1   tidyverse_1.2.1
+## 
+## loaded via a namespace (and not attached):
+##  [1] tidyselect_0.2.3 reshape2_1.4.2   haven_1.1.0      lattice_0.20-35 
+##  [5] colorspace_1.3-2 htmltools_0.3.6  yaml_2.1.14      rlang_0.1.4     
+##  [9] foreign_0.8-69   glue_1.2.0       modelr_0.1.1     readxl_1.0.0    
+## [13] bindr_0.1        plyr_1.8.4       munsell_0.4.3    blogdown_0.3    
+## [17] gtable_0.2.0     cellranger_1.1.0 rvest_0.3.2      psych_1.7.8     
+## [21] evaluate_0.10.1  labeling_0.3     knitr_1.17       parallel_3.4.2  
+## [25] broom_0.4.2      Rcpp_0.12.13     scales_0.5.0     backports_1.1.1 
+## [29] jsonlite_1.5     mnormt_1.5-5     hms_0.3          digest_0.6.12   
+## [33] stringi_1.1.5    bookdown_0.5     grid_3.4.2       rprojroot_1.2   
+## [37] cli_1.0.0        tools_3.4.2      magrittr_1.5     lazyeval_0.2.1  
+## [41] crayon_1.3.4     pkgconfig_2.0.1  xml2_1.1.1       lubridate_1.7.1 
+## [45] assertthat_0.2.0 rmarkdown_1.7    httr_1.3.1       rstudioapi_0.7  
+## [49] R6_2.2.2         nlme_3.1-131     compiler_3.4.2</code></pre>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://shirinsplayground.netlify.com//tags/ggplot2/">ggplot2</a>
+
+  <a class="tag tag--primary tag--small" href="https://shirinsplayground.netlify.com//tags/data-science/">Data Science</a>
+
+                  </div>
+                
+              
+            
+            
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                <i class="fa fa-angle-left"></i>
+                <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+              </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://shirinsplayground.netlify.com/2017/11/predictive_maintenance_dashboard/" data-tooltip="Explore Predictive Maintenance with flexdashboard">
+              
+                <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
         
-      </p>
-    </div>
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://shirinsplayground.netlify.com/2017/11/combine_point_boxplot_ggplot/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://shirinsplayground.netlify.com/2017/11/combine_point_boxplot_ggplot/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://shirinsplayground.netlify.com/2017/11/combine_point_boxplot_ggplot/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
   </div>
-  
-    <a href="https://shirinsplayground.netlify.com/2017/09/data-science-fraud-detection/">
-      <div class="postShorten-thumbnailimg">
-        <img alt="" itemprop="image" src="http://res.cloudinary.com/shiring/image/upload/v1505304742/r_mse_gklfsi.png"/>
-      </div>
-    </a>
-  
-</article>
+
 
             
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
             
-
-          </section>
-        
+          </div>
+        </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
     &copy; 2017 Dr. Shirin Glander. All Rights Reserved
@@ -351,6 +507,100 @@ ga('send', 'pageview');
 </footer>
 
       </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                <i class="fa fa-angle-left"></i>
+                <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+              </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://shirinsplayground.netlify.com/2017/11/predictive_maintenance_dashboard/" data-tooltip="Explore Predictive Maintenance with flexdashboard">
+              
+                <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://shirinsplayground.netlify.com/2017/11/combine_point_boxplot_ggplot/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://shirinsplayground.netlify.com/2017/11/combine_point_boxplot_ggplot/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://shirinsplayground.netlify.com/2017/11/combine_point_boxplot_ggplot/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fshirinsplayground.netlify.com%2F2017%2F11%2Fcombine_point_boxplot_ggplot%2F">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fshirinsplayground.netlify.com%2F2017%2F11%2Fcombine_point_boxplot_ggplot%2F">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2Fshirinsplayground.netlify.com%2F2017%2F11%2Fcombine_point_boxplot_ggplot%2F">
+          <i class="fa fa-google-plus"></i><span>Share on Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
     </div>
     
     <div id="about">
@@ -620,6 +870,32 @@ $(document).ready(function() {
   });
 });
 </script>
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = 'https:\/\/shirinsplayground.netlify.com\/2017\/11\/combine_point_boxplot_ggplot\/';
+          
+            this.page.identifier = '\/2017\/11\/combine_point_boxplot_ggplot\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'shirinsplayground';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
 
 
 

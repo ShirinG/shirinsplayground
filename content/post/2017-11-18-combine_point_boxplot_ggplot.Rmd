@@ -1,0 +1,88 @@
+---
+title: How to combine point and boxplots in timeline charts with ggplot2 facets
+draft: false
+author: Shirin Glander
+date: '2017-11-18'
+categories: ["R"]
+tags: ["ggplot2", "Data Science"]
+thumbnailImagePosition: left
+thumbnailImage: http://res.cloudinary.com/shiring/image/upload/v1511025178/ggplot_facets_bmudxl.png
+metaAlignment: center
+coverMeta: out
+slug: combine_point_boxplot_ggplot
+---
+
+In a recent project, I was looking to plot data from different variables along the same time axis. The difficulty was, that some of these variables I wanted to have as point plots, while others I wanted to as boxplots.
+
+Because I work with the tidyverse, I wanted to produce these plots with ggplot2. Facetting was the obvious first stept but it took me quite a while to figure out how to best combine facets with point plots (where I have one value per time point) with and boxplots (where I have multiple values per time point).
+
+The reason why this isn't trivial is that box plots require groups or factors on the x-axis, while points can be plotted over a continuous range of x-values. If your alarm bells are ringing right now, you are absolutely right: before you try to combine plots with different x-axis properties, you should think long and hard whether this is an accurate representation of the data and if its a good idea to do so! Here, I had multiple values per time point for one variable and I wanted to make the median + variation explicitly clear, while also showing the continuous changes of other variables over the same range of time.
+
+So, I am writing this short tutorial here in hopes that it saves the next person trying to do something similar from spending an entire morning on stackoverflow. ;-)
+
+For this demonstration, I am creating some fake data:
+
+```{r warning=FALSE, message=FALSE}
+library(tidyverse)
+dates <- seq(as.POSIXct("2017-10-01 07:00"), as.POSIXct("2017-10-01 10:30"), by = 180) # 180 seconds == 3 minutes
+fake_data <- data.frame(time = dates,
+                        var1_1 = runif(length(dates)),
+                        var1_2 = runif(length(dates)),
+                        var1_3 = runif(length(dates)),
+                        var2 = runif(length(dates))) %>%
+  sample_frac(size = 0.33)
+head(fake_data)
+```
+
+Here, variable 1 (`var1`) has three measurements per time point, while variable 2 (`var2`) has one.
+
+First, for plotting with ggplot2 we want our data in a tidy long format. I also add another column for facetting that groups the variables from `var1` together.
+
+```{r}
+fake_data_long <- fake_data %>%
+  gather(x, y, var1_1:var2) %>%
+  mutate(facet = ifelse(x %in% c("var1_1", "var1_2", "var1_3"), "var1", x))
+head(fake_data_long)
+```
+
+Now, we can plot this the following way:
+
+- facet by variable
+- subset data to facets for point plots and give aesthetics in `geom_point()`
+- subset data to facets for box plots and give aesthetics in `geom_boxplot()`. Here we also need to set the `group` aesthetic; if we don't specifically give that, we will get a plot with one big box, instead of a box for every time point.
+
+```{r}
+fake_data_long %>%
+  ggplot() +
+    facet_grid(facet ~ ., scales = "free") +
+    geom_point(data = subset(fake_data_long, facet == "var2"), 
+               aes(x = time, y = y),
+               size = 1) +
+    geom_line(data = subset(fake_data_long, facet == "var2"), 
+               aes(x = time, y = y)) +
+    geom_boxplot(data = subset(fake_data_long, facet == "var1"), 
+               aes(x = time, y = y, group = time))
+```
+
+```{r eval=FALSE, echo=FALSE}
+fake_data_long <- mutate(fake_data_long, 
+                         time_rounded = format(xts::align.time(time, n = 60*30), "%H:%M")) # round to 30 minutes
+```
+
+```{r plot, eval=FALSE, echo=FALSE}
+fake_data_long %>%
+  ggplot() +
+    facet_grid(facet ~ ., scales = "free") +
+    geom_point(data = subset(fake_data_long, facet == "var2"), 
+               aes(x = time, y = y),
+               size = 1) +
+    geom_line(data = subset(fake_data_long, facet == "var2"), 
+               aes(x = time, y = y)) +
+    geom_boxplot(data = subset(fake_data_long, facet == "var1"), 
+               aes(x = time, y = y, group = time_rounded))
+```
+
+```{r}
+sessionInfo()
+```
+

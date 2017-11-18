@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://shirinsplayground.netlify.com/2017/11/combine_point_boxplot_ggplot/</loc>
+    <lastmod>2017-11-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://shirinsplayground.netlify.com/2017/11/predictive_maintenance_dashboard/</loc>
     <lastmod>2017-11-02T00:00:00+00:00</lastmod>
   </url>
@@ -143,7 +148,7 @@
   
   <url>
     <loc>https://shirinsplayground.netlify.com/tags/data-science/</loc>
-    <lastmod>2017-11-02T00:00:00+00:00</lastmod>
+    <lastmod>2017-11-18T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -174,6 +179,12 @@
   <url>
     <loc>https://shirinsplayground.netlify.com/tags/ggplot/</loc>
     <lastmod>2017-09-19T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://shirinsplayground.netlify.com/tags/ggplot2/</loc>
+    <lastmod>2017-11-18T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -239,7 +250,7 @@
   
   <url>
     <loc>https://shirinsplayground.netlify.com/post/</loc>
-    <lastmod>2017-11-02T00:00:00+00:00</lastmod>
+    <lastmod>2017-11-18T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -251,7 +262,7 @@
   
   <url>
     <loc>https://shirinsplayground.netlify.com/categories/r/</loc>
-    <lastmod>2017-11-02T00:00:00+00:00</lastmod>
+    <lastmod>2017-11-18T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -275,7 +286,7 @@
   
   <url>
     <loc>https://shirinsplayground.netlify.com/</loc>
-    <lastmod>2017-11-02T00:00:00+00:00</lastmod>
+    <lastmod>2017-11-18T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
