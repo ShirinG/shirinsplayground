@@ -2,12 +2,45 @@
   <title>Shirin&#39;s playgRound</title>
   <link href="/index.xml" rel="self"/>
   <link href="/"/>
-  <updated>2017-11-18T00:00:00+00:00</updated>
+  <updated>2017-11-20T00:00:00+00:00</updated>
   <id>/</id>
   <author>
     <name>Dr. Shirin Glander</name>
   </author>
   <generator>Hugo -- gohugo.io</generator>
+  <entry>
+    <title type="html"><![CDATA[Workshop on Deep Learning with Keras and TensorFlow in R]]></title>
+    <link href="/2017/11/deep_learning_keras_tensorflow/"/>
+    <id>/2017/11/deep_learning_keras_tensorflow/</id>
+    <published>2017-11-20T00:00:00+00:00</published>
+    <updated>2017-11-20T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<p>You can now book me and my 1-day workshop on <a href="https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/">deep learning with Keras and TensorFlow using R</a>.</p>
+<p>In my workshop, you will learn</p>
+<ul>
+<li>the basics of deep learning</li>
+<li>what cross-entropy and loss is</li>
+<li>about activation functions</li>
+<li>how to optimize weights and biases with backpropagation and gradient descent</li>
+<li>how to build (deep) neural networks with Keras and TensorFlow</li>
+<li>how to save and load models and model weights</li>
+<li>how to visualize models with TensorBoard</li>
+<li>how to make predictions on test data</li>
+</ul>
+<p>Date and place depend on who and how many people are interested, so please contact me either directly or via the workshop page: <a href="https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/" class="uri">https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/</a> (the description is in German but I also offer to give the workshop in English).</p>
+<p><br></p>
+<div class="figure">
+<img src="/img/mlp.jpg" alt="Neural Network with three densely connected hidden layers" />
+<p class="caption">Neural Network with three densely connected hidden layers</p>
+</div>
+<p>Keras is a high-level API written in Python for building and prototyping neural networks. It can be used on top of TensorFlow, Theano or CNTK. Keras is very convenient for fast and easy prototyping of neural networks. It is highly modular and very flexible, so that you can build basically any type of neural network you want. It supports convolutional neural networks and recurrent neural networks, as well as combinations of both. Due to its layer structure, it is highly extensible and can run on CPU or GPU.</p>
+<p>The <code>keras</code> R package provides an interface to the Python library of Keras, just as the tensorflow package provides an interface to TensorFlow. Basically, R creates a conda instance and runs Keras it it, while you can still use all the functionalities of R for plotting, etc. Almost all function names are the same, so models can easily be recreated in Python for deployment.</p>
+<p><br></p>
+<div class="figure">
+<img src="https://blog.keras.io/img/keras-tensorflow-logo.jpg" />
+
+</div>
+]]></content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[How to combine point and boxplots in timeline charts with ggplot2 facets]]></title>
     <link href="/2017/11/combine_point_boxplot_ggplot/"/>

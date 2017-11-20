@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/2017/11/deep_learning_keras_tensorflow/</loc>
+    <lastmod>2017-11-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/2017/11/combine_point_boxplot_ggplot/</loc>
     <lastmod>2017-11-18T00:00:00+00:00</lastmod>
   </url>
@@ -148,7 +153,7 @@
   
   <url>
     <loc>/tags/data-science/</loc>
-    <lastmod>2017-11-18T00:00:00+00:00</lastmod>
+    <lastmod>2017-11-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -219,6 +224,12 @@
   </url>
   
   <url>
+    <loc>/tags/keras/</loc>
+    <lastmod>2017-11-20T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/tags/machine-learning/</loc>
     <lastmod>2017-09-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -250,7 +261,7 @@
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2017-11-18T00:00:00+00:00</lastmod>
+    <lastmod>2017-11-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -262,7 +273,7 @@
   
   <url>
     <loc>/categories/r/</loc>
-    <lastmod>2017-11-18T00:00:00+00:00</lastmod>
+    <lastmod>2017-11-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -286,7 +297,7 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2017-11-18T00:00:00+00:00</lastmod>
+    <lastmod>2017-11-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -299,6 +310,12 @@
   <url>
     <loc>/tags/</loc>
     <lastmod>2017-09-06T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/tensorflow/</loc>
+    <lastmod>2017-11-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -335,6 +352,12 @@
   <url>
     <loc>/categories/webinar/</loc>
     <lastmod>2017-09-20T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/workshop/</loc>
+    <lastmod>2017-11-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

@@ -1,0 +1,41 @@
+---
+title: Workshop on Deep Learning with Keras and TensorFlow in R
+draft: false
+author: Shirin Glander
+date: '2017-11-20'
+categories: ["R"]
+tags: ["Keras", "TensorFlow", "Data Science", "Workshop"]
+thumbnailImagePosition: left
+thumbnailImage: https://upload.wikimedia.org/wikipedia/commons/c/c9/Keras_Logo.jpg
+metaAlignment: center
+coverMeta: out
+slug: deep_learning_keras_tensorflow
+---
+
+You can now book me and my 1-day workshop on [deep learning with Keras and TensorFlow using R](https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/).
+
+In my workshop, you will learn
+
+- the basics of deep learning
+- what cross-entropy and loss is
+- about activation functions
+- how to optimize weights and biases with backpropagation and gradient descent
+- how to build (deep) neural networks with Keras and TensorFlow
+- how to save and load models and model weights
+- how to visualize models with TensorBoard
+- how to make predictions on test data
+
+Date and place depend on who and how many people are interested, so please contact me either directly or via the workshop page:
+https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/ (the description is in German but I also offer to give the workshop in English).
+
+<br>
+
+![Neural Network with three densely connected hidden layers](/img/mlp.jpg)
+
+Keras is a high-level API written in Python for building and prototyping neural networks. It can be used on top of TensorFlow, Theano or CNTK. Keras is very convenient for fast and easy prototyping of neural networks. It is highly modular and very flexible, so that you can build basically any type of neural network you want. It supports convolutional neural networks and recurrent neural networks, as well as combinations of both. Due to its layer structure, it is highly extensible and can run on CPU or GPU.
+
+The `keras` R package provides an interface to the Python library of Keras, just as the tensorflow package provides an interface to TensorFlow. Basically, R creates a conda instance and runs Keras it it, while you can still use all the functionalities of R for plotting, etc. Almost all function names are the same, so models can easily be recreated in Python for deployment.
+
+<br>
+
+![](https://blog.keras.io/img/keras-tensorflow-logo.jpg)
