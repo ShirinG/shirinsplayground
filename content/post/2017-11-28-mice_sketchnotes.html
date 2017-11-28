@@ -1,0 +1,28 @@
+---
+title: MICE (Multiple Imputation by Chained Equations) in R - sketchnotes from MünsteR Meetup
+draft: false
+author: Shirin Glander
+date: '2017-11-28'
+categories: ["R"]
+tags: ["MICE", "missing data", "Data Science", "imputation"]
+thumbnailImagePosition: left
+thumbnailImage: img/mice_sketchnote.jpg
+metaAlignment: center
+coverMeta: out
+slug: mice_sketchnotes
+---
+
+
+
+<p>Last night, the <a href="http://meetu.ps/c/3ffGL/w54bW/f">MünsteR R user-group</a> had <a href="https://www.meetup.com/Munster-R-Users-Group/events/243388360/">another great meetup</a>:</p>
+<p>Karin Groothuis-Oudshoorn, Assistant Professor at the University of Twente, presented her R package <code>mice</code> about Multivariate Imputation by Chained Equations.</p>
+<p>It was a very interesting talk and here are my sketchnotes that I took during it:</p>
+<div class="figure">
+<img src="/img/mice_sketchnote.jpg" alt="MICE talk sketchnotes" />
+<p class="caption">MICE talk sketchnotes</p>
+</div>
+<p>Here is the link to the paper referenced in my notes: <a href="https://www.jstatsoft.org/article/view/v045i03" class="uri">https://www.jstatsoft.org/article/view/v045i03</a></p>
+<blockquote>
+<p>“The mice package implements a method to deal with missing data. The package creates multiple imputations (replacement values) for multivariate missing data. The method is based on Fully Conditional Specification, where each incomplete variable is imputed by a separate model. The MICE algorithm can impute mixes of continuous, binary, unordered categorical and ordered categorical data. In addition, MICE can impute continuous two-level data, and maintain consistency between imputations by means of passive imputation. Many diagnostic plots are implemented to inspect the quality of the imputations.”&quot; (<a href="https://cran.r-project.org/web/packages/mice/README.html" class="uri">https://cran.r-project.org/web/packages/mice/README.html</a>)</p>
+</blockquote>
+<p>For more information on the package go to <a href="http://stefvanbuuren.github.io/mice/" class="uri">http://stefvanbuuren.github.io/mice/</a>.</p>

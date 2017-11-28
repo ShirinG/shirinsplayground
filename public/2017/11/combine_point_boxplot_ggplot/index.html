@@ -343,26 +343,26 @@ fake_data &lt;- data.frame(time = dates,
                         var2 = runif(length(dates))) %&gt;%
   sample_frac(size = 0.33)
 head(fake_data)</code></pre>
-<pre><code>##                   time    var1_1    var1_2    var1_3       var2
-## 8  2017-10-01 07:21:00 0.2359625 0.6121708 0.4114921 0.03327728
-## 27 2017-10-01 08:18:00 0.5592436 0.3834683 0.8025474 0.44557932
-## 29 2017-10-01 08:24:00 0.7667775 0.4636693 0.7642972 0.97718507
-## 18 2017-10-01 07:51:00 0.2819686 0.3995273 0.9127757 0.42115579
-## 1  2017-10-01 07:00:00 0.5940754 0.1599054 0.7287677 0.91953437
-## 71 2017-10-01 10:30:00 0.2159290 0.2853349 0.7817291 0.57598897</code></pre>
+<pre><code>##                   time     var1_1    var1_2    var1_3       var2
+## 37 2017-10-01 08:48:00 0.07175608 0.5641062 0.2502961 0.02417367
+## 21 2017-10-01 08:00:00 0.41508207 0.8934026 0.4230298 0.12985562
+## 67 2017-10-01 10:18:00 0.25452997 0.7144500 0.6424914 0.73024681
+## 55 2017-10-01 09:42:00 0.14190704 0.4078552 0.6612726 0.36456913
+## 6  2017-10-01 07:15:00 0.96192768 0.4485260 0.3236899 0.19431931
+## 3  2017-10-01 07:06:00 0.28983944 0.6356597 0.7815865 0.41453642</code></pre>
 <p>Here, variable 1 (<code>var1</code>) has three measurements per time point, while variable 2 (<code>var2</code>) has one.</p>
 <p>First, for plotting with ggplot2 we want our data in a tidy long format. I also add another column for faceting that groups the variables from <code>var1</code> together.</p>
 <pre class="r"><code>fake_data_long &lt;- fake_data %&gt;%
   gather(x, y, var1_1:var2) %&gt;%
   mutate(facet = ifelse(x %in% c(&quot;var1_1&quot;, &quot;var1_2&quot;, &quot;var1_3&quot;), &quot;var1&quot;, x))
 head(fake_data_long)</code></pre>
-<pre><code>##                  time      x         y facet
-## 1 2017-10-01 07:21:00 var1_1 0.2359625  var1
-## 2 2017-10-01 08:18:00 var1_1 0.5592436  var1
-## 3 2017-10-01 08:24:00 var1_1 0.7667775  var1
-## 4 2017-10-01 07:51:00 var1_1 0.2819686  var1
-## 5 2017-10-01 07:00:00 var1_1 0.5940754  var1
-## 6 2017-10-01 10:30:00 var1_1 0.2159290  var1</code></pre>
+<pre><code>##                  time      x          y facet
+## 1 2017-10-01 08:48:00 var1_1 0.07175608  var1
+## 2 2017-10-01 08:00:00 var1_1 0.41508207  var1
+## 3 2017-10-01 10:18:00 var1_1 0.25452997  var1
+## 4 2017-10-01 09:42:00 var1_1 0.14190704  var1
+## 5 2017-10-01 07:15:00 var1_1 0.96192768  var1
+## 6 2017-10-01 07:06:00 var1_1 0.28983944  var1</code></pre>
 <p>Now, we can plot this the following way:</p>
 <ul>
 <li>facet by variable</li>
@@ -664,6 +664,28 @@ head(fake_data_long)</code></pre>
           <div class="media">
             
             <div class="media-body">
+              <a class="link-unstyled" href="/2017/11/mice_sketchnotes/">
+                <h3 class="media-heading">MICE (Multiple Imputation by Chained Equations) in R - sketchnotes from MünsteR Meetup</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Nov 11, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Last night, the MünsteR R user-group had another great meetup:
+Karin Groothuis-Oudshoorn, Assistant Professor at the University of Twente, presented her R package mice about Multivariate Imputation by Chained Equations.
+It was a very interesting talk and here are my sketchnotes that I took during it:
+MICE talk sketchnotes
+ Here is the link to the paper referenced in my notes: https://www.jstatsoft.org/article/view/v045i03
+ “The mice package implements a method to deal with missing data.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
               <a class="link-unstyled" href="/2017/11/deep_learning_keras_tensorflow/">
                 <h3 class="media-heading">Workshop on Deep Learning with Keras and TensorFlow in R</h3>
               </a>
@@ -824,24 +846,6 @@ In short, its main feature is that version control allows you to keep track of t
             <hr>
           </div>
         
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="/2017/07/twitter-analysis-codecentric/">
-                <h3 class="media-heading">Social Network Analysis and Topic Modeling of codecentric’s Twitter friends and followers</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Jul 7, 2017
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">I have written the following post about Social Network Analysis and Topic Modeling of codecentric&rsquo;s Twitter friends and followers for codecentric&rsquo;s blog:
- Recently, Matthias Radtke has written a very nice blog post on Topic Modeling of the codecentric Blog Articles, where he is giving a comprehensive introduction to Topic Modeling. In this article I am showing a real-world example of how we can use Data Science to gain insights from text data and social network analysis.</div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
       </div>
     </div>
     <div class="modal-footer">
@@ -849,7 +853,7 @@ In short, its main feature is that version control allows you to keep track of t
          data-message-zero="no post found"
          data-message-one="1 post found"
          data-message-other="{n} posts found">
-         12 posts found
+         13 posts found
       </p>
     </div>
   </div>
