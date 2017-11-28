@@ -6,7 +6,7 @@ date: '2017-11-28'
 categories: ["R"]
 tags: ["MICE", "missing data", "Data Science", "imputation"]
 thumbnailImagePosition: left
-thumbnailImage: img/mice_sketchnote.jpg
+thumbnailImage: http://res.cloudinary.com/shiring/image/upload/v1511852479/mice_sketchnote_gxjsgc.jpg
 metaAlignment: center
 coverMeta: out
 slug: mice_sketchnotes
@@ -18,7 +18,7 @@ Karin Groothuis-Oudshoorn, Assistant Professor at the University of Twente, pres
 
 It was a very interesting talk and here are my sketchnotes that I took during it:
 
-![MICE talk sketchnotes](/img/mice_sketchnote.jpg)
+![MICE talk sketchnotes](http://res.cloudinary.com/shiring/image/upload/v1511852479/mice_sketchnote_gxjsgc.jpg)
 
 Here is the link to the paper referenced in my notes: https://www.jstatsoft.org/article/view/v045i03
 

@@ -18,7 +18,7 @@
 <p>Karin Groothuis-Oudshoorn, Assistant Professor at the University of Twente, presented her R package <code>mice</code> about Multivariate Imputation by Chained Equations.</p>
 <p>It was a very interesting talk and here are my sketchnotes that I took during it:</p>
 <div class="figure">
-<img src="/img/mice_sketchnote.jpg" alt="MICE talk sketchnotes" />
+<img src="http://res.cloudinary.com/shiring/image/upload/v1511852479/mice_sketchnote_gxjsgc.jpg" alt="MICE talk sketchnotes" />
 <p class="caption">MICE talk sketchnotes</p>
 </div>
 <p>Here is the link to the paper referenced in my notes: <a href="https://www.jstatsoft.org/article/view/v045i03" class="uri">https://www.jstatsoft.org/article/view/v045i03</a></p>
@@ -49,7 +49,7 @@
 <p>Date and place depend on who and how many people are interested, so please contact me either directly or via the workshop page: <a href="https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/" class="uri">https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/</a> (the description is in German but I also offer to give the workshop in English).</p>
 <p><br></p>
 <div class="figure">
-<img src="/img/mlp.jpg" alt="Neural Network with three densely connected hidden layers" />
+<img src="http://res.cloudinary.com/shiring/image/upload/v1511852487/mlp_r7pv7z.jpg" alt="Neural Network with three densely connected hidden layers" />
 <p class="caption">Neural Network with three densely connected hidden layers</p>
 </div>
 <p>Keras is a high-level API written in Python for building and prototyping neural networks. It can be used on top of TensorFlow, Theano or CNTK. Keras is very convenient for fast and easy prototyping of neural networks. It is highly modular and very flexible, so that you can build basically any type of neural network you want. It supports convolutional neural networks and recurrent neural networks, as well as combinations of both. Due to its layer structure, it is highly extensible and can run on CPU or GPU.</p>
@@ -297,7 +297,7 @@ Verteiltes Deep Learning mit TensorFlow und Kubernetes - <a href="https://twitte
 
 <p>My tool of choice for data analysis so far has been R. I also organize the <a href="https://shiring.github.io/r_users_group/2017/05/20/muenster_r_user_group">MünsteR R-users group on meetup.com</a>.</p>
 
-<p><img src="/img/my_story.png" alt="My journey to Data Science" /></p>
+<p><img src="http://res.cloudinary.com/shiring/image/upload/v1511852499/my_story_wml3zm.png" alt="My journey to Data Science" /></p>
 
 <p>I love dancing and used to do competitive ballroom and latin dancing. Even though I don&rsquo;t have time for that anymore, I still enjoy teaching &ldquo;social dances&rdquo; once a week with the Hochschulsport (university sports courses).</p>
 

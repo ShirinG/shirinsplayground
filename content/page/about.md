@@ -15,7 +15,7 @@ I'm especially interested in machine learning and data visualization. While I am
 
 My tool of choice for data analysis so far has been R. I also organize the [MünsteR R-users group on meetup.com](https://shiring.github.io/r_users_group/2017/05/20/muenster_r_user_group). 
 
-![My journey to Data Science](/img/my_story.png)
+![My journey to Data Science](http://res.cloudinary.com/shiring/image/upload/v1511852499/my_story_wml3zm.png)
 
 I love dancing and used to do competitive ballroom and latin dancing. Even though I don't have time for that anymore, I still enjoy teaching "social dances" once a week with the Hochschulsport (university sports courses).
 
