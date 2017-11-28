@@ -1,0 +1,25 @@
+---
+title: Deep Learning with Keras
+draft: true
+author: Shirin Glander
+date: '2017-12-03'
+categories: ["R", "Python"]
+tags: ["Keras", "TensorFlow", "Theano", "Data Science", "tensor"]
+thumbnailImagePosition: left
+thumbnailImage: http://res.cloudinary.com/shiring/image/upload/v1511863547/keras_sketchnotes_gulrff.jpg
+metaAlignment: center
+coverMeta: out
+slug: keras_sketchnotes
+---
+
+https://softwareengineeringdaily.com/2016/01/29/deep-learning-and-keras-with-francois-chollet/
+
+![Sketchnotes: Software Engineering Daily - Podcast from Jan 29th 2016](http://res.cloudinary.com/shiring/image/upload/v1511863547/keras_sketchnotes_gulrff.jpg)
+
+[Keras for Python](https://keras.io/)
+[Keras for R](https://keras.rstudio.com/)
+
+https://github.com/maxpumperla/elephas
+
+
+If you want to learn more about using Keras with TensorFlow in R, you can book my [workshop](https://shirinsplayground.netlify.com/2017/11/deep_learning_keras_tensorflow/).
