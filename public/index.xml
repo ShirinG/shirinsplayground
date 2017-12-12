@@ -17,10 +17,6 @@
     <content type="html"><![CDATA[<div id="slides-from-munster-data-science-meetup" class="section level2">
 <h2>Slides from Münster Data Science Meetup</h2>
 <p><a href="http://res.cloudinary.com/shiring/image/upload/v1513090254/lime_meetup_slides_wvsh6s.pdf">These are my slides</a> from the <a href="https://www.meetup.com/Data-Science-Meetup-Muenster/events/244173239/">Münster Data Science Meetup on December 12th, 2017</a>.</p>
-<div class="figure">
-<embed src="http://res.cloudinary.com/shiring/image/upload/v1513090254/lime_meetup_slides_wvsh6s.pdf" />
-
-</div>
 <p><br></p>
 <p>My sketchnotes were collected from these two podcasts:</p>
 <ul>
@@ -43,12 +39,11 @@ library(farff)      # for reading arff file
 library(missForest) # for imputing missing values
 library(dummies)    # for creating dummy variables
 library(caret)      # for modeling
-library(pROC)       # for ROC curve
 library(lime)       # for explaining predictions</code></pre>
 <div id="data" class="section level3">
 <h3>Data</h3>
 <p>The Chronic Kidney Disease dataset was downloaded from UC Irvine’s Machine Learning repository: <a href="http://archive.ics.uci.edu/ml/datasets/Chronic_Kidney_Disease" class="uri">http://archive.ics.uci.edu/ml/datasets/Chronic_Kidney_Disease</a></p>
-<pre class="r"><code>data_file &lt;- file.path(&quot;/Users/shiringlander/Documents/Github/data_science_meetup_ms/Chronic_Kidney_Disease/chronic_kidney_disease_full.arff&quot;)</code></pre>
+<pre class="r"><code>data_file &lt;- file.path(&quot;path/to/chronic_kidney_disease_full.arff&quot;)</code></pre>
 <ul>
 <li>load data with the <code>farff</code> package</li>
 </ul>
@@ -97,32 +92,28 @@ library(lime)       # for explaining predictions</code></pre>
 <li>create dummy variables (<code>caret::dummy.data.frame()</code>)</li>
 <li>scale and center</li>
 </ul>
-<pre class="reval"><code>data_imp_final &lt;- data_imp$ximp
+<pre class="r"><code>data_imp_final &lt;- data_imp$ximp
 data_dummy &lt;- dummy.data.frame(dplyr::select(data_imp_final, -class), sep = &quot;_&quot;)
 data &lt;- cbind(dplyr::select(data_imp_final, class), scale(data_dummy, 
                                                    center = apply(data_dummy, 2, min),
                                                    scale = apply(data_dummy, 2, max)))</code></pre>
 </div>
-<div id="training-and-test-split" class="section level3">
-<h3>Training and test split</h3>
-<pre class="r"><code>set.seed(42)
-index &lt;- createDataPartition(data$class, p = 0.9, list = FALSE)
-train_data &lt;- data[index, ]
-test_data  &lt;- data[-index, ]</code></pre>
-</div>
 <div id="modeling" class="section level3">
 <h3>Modeling</h3>
-<ul>
-<li>train random forest model with <code>caret</code></li>
-</ul>
-<pre class="r"><code>set.seed(42)
+<pre class="r"><code># training and test set
+set.seed(42)
+index &lt;- createDataPartition(data$class, p = 0.9, list = FALSE)
+train_data &lt;- data[index, ]
+test_data  &lt;- data[-index, ]
+
+# modeling
 model_rf &lt;- caret::train(class ~ .,
-          data = train_data,
-          method = &quot;rf&quot;,
-          trControl = trainControl(method = &quot;repeatedcv&quot;, 
-                 number = 10, 
-                 repeats = 5, 
-                 verboseIter = FALSE))</code></pre>
+  data = train_data,
+  method = &quot;rf&quot;, # random forest
+  trControl = trainControl(method = &quot;repeatedcv&quot;, 
+       number = 10, 
+       repeats = 5, 
+       verboseIter = FALSE))</code></pre>
 <pre class="r"><code>model_rf</code></pre>
 <pre><code>## Random Forest 
 ## 
@@ -142,24 +133,11 @@ model_rf &lt;- caret::train(class ~ .,
 ## 
 ## Accuracy was used to select the optimal model using  the largest value.
 ## The final value used for the model was mtry = 2.</code></pre>
-</div>
-<div id="predictions" class="section level3">
-<h3>Predictions</h3>
-<pre class="r"><code>pred &lt;- data.frame(sample_id = 1:nrow(test_data),
-                   predict(model_rf, test_data, type = &quot;prob&quot;),
-                   actual = test_data$class) %&gt;%
-  mutate(prediction = colnames(.)[2:3][apply(.[, 2:3], 1, which.max)],
-         correct = ifelse(actual == prediction, &quot;correct&quot;, &quot;wrong&quot;))</code></pre>
-<ul>
-<li>ROC curve</li>
-</ul>
-<pre class="r"><code>result.roc &lt;- roc(rev(as.numeric(pred$actual) -1), pred$ckd) # Draw ROC curve.
-plot(result.roc)</code></pre>
-<p><img src="/post/2017-12-12_lime_sketchnotes_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
-<ul>
-<li>confusion matrix</li>
-</ul>
-<pre class="r"><code>confusionMatrix(pred$actual, pred$prediction)</code></pre>
+<pre class="r"><code># predictions
+pred &lt;- data.frame(sample_id = 1:nrow(test_data), predict(model_rf, test_data, type = &quot;prob&quot;), actual = test_data$class) %&gt;%
+  mutate(prediction = colnames(.)[2:3][apply(.[, 2:3], 1, which.max)], correct = ifelse(actual == prediction, &quot;correct&quot;, &quot;wrong&quot;))
+
+confusionMatrix(pred$actual, pred$prediction)</code></pre>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -200,31 +178,23 @@ test_y &lt;- dplyr::select(test_data, class)</code></pre>
 <ul>
 <li>build explainer</li>
 </ul>
-<pre class="r"><code>explainer &lt;- lime(train_x, 
-                  model_rf, 
-                  n_bins = 5, 
-                  quantile_bins = TRUE)</code></pre>
+<pre class="r"><code>explainer &lt;- lime(train_x, model_rf, n_bins = 5, quantile_bins = TRUE)</code></pre>
 <ul>
 <li>run <code>explain()</code> function</li>
 </ul>
-<pre class="r"><code>explanation_df &lt;- lime::explain(test_x, 
-                                explainer, 
-                                n_labels = 1, 
-                                n_features = 8,
-                                n_permutations = 1000,
-                                feature_select = &quot;forward_selection&quot;)</code></pre>
+<pre class="r"><code>explanation_df &lt;- lime::explain(test_x, explainer, n_labels = 1, n_features = 8, n_permutations = 1000, feature_select = &quot;forward_selection&quot;)</code></pre>
 <ul>
 <li>model reliability</li>
 </ul>
 <pre class="r"><code>explanation_df %&gt;%
   ggplot(aes(x = model_r2, fill = label)) +
     geom_density(alpha = 0.5)</code></pre>
-<p><img src="/post/2017-12-12_lime_sketchnotes_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p><img src="/post/2017-12-12_lime_sketchnotes_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <ul>
 <li>plot explanations</li>
 </ul>
 <pre class="r"><code>plot_features(explanation_df[1:24, ], ncol = 1)</code></pre>
-<p><img src="/post/2017-12-12_lime_sketchnotes_files/figure-html/unnamed-chunk-17-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2017-12-12_lime_sketchnotes_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="session-info" class="section level3">
 <h3>Session Info</h3>
@@ -315,7 +285,6 @@ test_y &lt;- dplyr::select(test_data, class)</code></pre>
 ##  parallel       3.4.2    2017-10-04 local         
 ##  pkgconfig      2.0.1    2017-03-21 CRAN (R 3.4.0)
 ##  plyr           1.8.4    2016-06-08 CRAN (R 3.4.0)
-##  pROC         * 1.10.0   2017-06-10 CRAN (R 3.4.0)
 ##  prodlim        1.6.1    2017-03-06 CRAN (R 3.4.0)
 ##  psych          1.7.8    2017-09-09 CRAN (R 3.4.1)
 ##  purrr        * 0.2.4    2017-10-18 CRAN (R 3.4.2)
@@ -449,26 +418,26 @@ fake_data &lt;- data.frame(time = dates,
                         var2 = runif(length(dates))) %&gt;%
   sample_frac(size = 0.33)
 head(fake_data)</code></pre>
-<pre><code>##                   time     var1_1    var1_2     var1_3      var2
-## 58 2017-10-01 09:51:00 0.18659431 0.4884142 0.67499511 0.3847060
-## 47 2017-10-01 09:18:00 0.05723475 0.7462272 0.82958577 0.8189937
-## 52 2017-10-01 09:33:00 0.91306753 0.4560118 0.33849990 0.9003992
-## 32 2017-10-01 08:33:00 0.28218457 0.3366610 0.05865056 0.6852351
-## 38 2017-10-01 08:51:00 0.33958461 0.1152619 0.15120051 0.3679481
-## 46 2017-10-01 09:15:00 0.99795371 0.1515330 0.62306125 0.4855665</code></pre>
+<pre><code>##                   time    var1_1     var1_2    var1_3       var2
+## 59 2017-10-01 09:54:00 0.7522068 0.19164284 0.4144494 0.79770115
+## 58 2017-10-01 09:51:00 0.2280661 0.71679132 0.7057743 0.84598297
+## 34 2017-10-01 08:39:00 0.1559472 0.65772861 0.8805560 0.03178455
+## 7  2017-10-01 07:18:00 0.6587575 0.42514989 0.0735112 0.65127198
+## 67 2017-10-01 10:18:00 0.5080319 0.95918315 0.7072976 0.51867422
+## 38 2017-10-01 08:51:00 0.8959184 0.07420507 0.7812166 0.68003938</code></pre>
 <p>Here, variable 1 (<code>var1</code>) has three measurements per time point, while variable 2 (<code>var2</code>) has one.</p>
 <p>First, for plotting with ggplot2 we want our data in a tidy long format. I also add another column for faceting that groups the variables from <code>var1</code> together.</p>
 <pre class="r"><code>fake_data_long &lt;- fake_data %&gt;%
   gather(x, y, var1_1:var2) %&gt;%
   mutate(facet = ifelse(x %in% c(&quot;var1_1&quot;, &quot;var1_2&quot;, &quot;var1_3&quot;), &quot;var1&quot;, x))
 head(fake_data_long)</code></pre>
-<pre><code>##                  time      x          y facet
-## 1 2017-10-01 09:51:00 var1_1 0.18659431  var1
-## 2 2017-10-01 09:18:00 var1_1 0.05723475  var1
-## 3 2017-10-01 09:33:00 var1_1 0.91306753  var1
-## 4 2017-10-01 08:33:00 var1_1 0.28218457  var1
-## 5 2017-10-01 08:51:00 var1_1 0.33958461  var1
-## 6 2017-10-01 09:15:00 var1_1 0.99795371  var1</code></pre>
+<pre><code>##                  time      x         y facet
+## 1 2017-10-01 09:54:00 var1_1 0.7522068  var1
+## 2 2017-10-01 09:51:00 var1_1 0.2280661  var1
+## 3 2017-10-01 08:39:00 var1_1 0.1559472  var1
+## 4 2017-10-01 07:18:00 var1_1 0.6587575  var1
+## 5 2017-10-01 10:18:00 var1_1 0.5080319  var1
+## 6 2017-10-01 08:51:00 var1_1 0.8959184  var1</code></pre>
 <p>Now, we can plot this the following way:</p>
 <ul>
 <li>facet by variable</li>

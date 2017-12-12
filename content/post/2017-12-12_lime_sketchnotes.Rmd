@@ -16,8 +16,6 @@ slug: lime_sketchnotes
 
 [These are my slides](http://res.cloudinary.com/shiring/image/upload/v1513090254/lime_meetup_slides_wvsh6s.pdf) from the [Münster Data Science Meetup on December 12th, 2017](https://www.meetup.com/Data-Science-Meetup-Muenster/events/244173239/).
 
-![](http://res.cloudinary.com/shiring/image/upload/v1513090254/lime_meetup_slides_wvsh6s.pdf)
-
 <br>
 
 My sketchnotes were collected from these two podcasts:
@@ -39,7 +37,6 @@ library(farff)      # for reading arff file
 library(missForest) # for imputing missing values
 library(dummies)    # for creating dummy variables
 library(caret)      # for modeling
-library(pROC)       # for ROC curve
 library(lime)       # for explaining predictions
 ```
 
@@ -49,7 +46,7 @@ The Chronic Kidney Disease dataset was downloaded from UC Irvine's Machine Learn
 http://archive.ics.uci.edu/ml/datasets/Chronic_Kidney_Disease
 
 ```{r eval=FALSE}
-data_file <- file.path("/Users/shiringlander/Documents/Github/data_science_meetup_ms/Chronic_Kidney_Disease/chronic_kidney_disease_full.arff")
+data_file <- file.path("path/to/chronic_kidney_disease_full.arff")
 ```
 
 - load data with the `farff` package
@@ -99,7 +96,7 @@ data_imp <- missForest(data)
 - create dummy variables (`caret::dummy.data.frame()`)
 - scale and center
 
-```{reval=FALSE}
+```{r eval=FALSE}
 data_imp_final <- data_imp$ximp
 data_dummy <- dummy.data.frame(dplyr::select(data_imp_final, -class), sep = "_")
 data <- cbind(dplyr::select(data_imp_final, class), scale(data_dummy, 
@@ -107,28 +104,23 @@ data <- cbind(dplyr::select(data_imp_final, class), scale(data_dummy,
                                                    scale = apply(data_dummy, 2, max)))
 ```
 
-### Training and test split
+### Modeling
 
 ```{r eval=FALSE}
+# training and test set
 set.seed(42)
 index <- createDataPartition(data$class, p = 0.9, list = FALSE)
 train_data <- data[index, ]
 test_data  <- data[-index, ]
-```
 
-### Modeling
-
-- train random forest model with `caret`
-
-```{r eval=FALSE}
-set.seed(42)
+# modeling
 model_rf <- caret::train(class ~ .,
-          data = train_data,
-          method = "rf",
-          trControl = trainControl(method = "repeatedcv", 
-                 number = 10, 
-                 repeats = 5, 
-                 verboseIter = FALSE))
+  data = train_data,
+  method = "rf", # random forest
+  trControl = trainControl(method = "repeatedcv", 
+       number = 10, 
+       repeats = 5, 
+       verboseIter = FALSE))
 ```
 
 ```{r eval=FALSE, echo=FALSE}
@@ -143,30 +135,13 @@ load("../../data/test_data.RData")
 load("../../data/model_rf.RData")
 ```
 
-```{r}
+```{r }
 model_rf
-```
 
-### Predictions
+# predictions
+pred <- data.frame(sample_id = 1:nrow(test_data), predict(model_rf, test_data, type = "prob"), actual = test_data$class) %>%
+  mutate(prediction = colnames(.)[2:3][apply(.[, 2:3], 1, which.max)], correct = ifelse(actual == prediction, "correct", "wrong"))
 
-```{r}
-pred <- data.frame(sample_id = 1:nrow(test_data),
-                   predict(model_rf, test_data, type = "prob"),
-                   actual = test_data$class) %>%
-  mutate(prediction = colnames(.)[2:3][apply(.[, 2:3], 1, which.max)],
-         correct = ifelse(actual == prediction, "correct", "wrong"))
-```
-
-- ROC curve
-
-```{r}
-result.roc <- roc(rev(as.numeric(pred$actual) -1), pred$ckd) # Draw ROC curve.
-plot(result.roc)
-```
-
-- confusion matrix
-
-```{r}
 confusionMatrix(pred$actual, pred$prediction)
 ```
 
@@ -185,21 +160,13 @@ test_y <- dplyr::select(test_data, class)
 - build explainer
 
 ```{r}
-explainer <- lime(train_x, 
-                  model_rf, 
-                  n_bins = 5, 
-                  quantile_bins = TRUE)
+explainer <- lime(train_x, model_rf, n_bins = 5, quantile_bins = TRUE)
 ```
 
 - run `explain()` function
 
 ```{r}
-explanation_df <- lime::explain(test_x, 
-                                explainer, 
-                                n_labels = 1, 
-                                n_features = 8,
-                                n_permutations = 1000,
-                                feature_select = "forward_selection")
+explanation_df <- lime::explain(test_x, explainer, n_labels = 1, n_features = 8, n_permutations = 1000, feature_select = "forward_selection")
 ```
 
 - model reliability
