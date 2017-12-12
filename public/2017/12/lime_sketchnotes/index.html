@@ -1,0 +1,1199 @@
+
+
+  
+    
+  
+
+
+  
+
+
+
+
+  
+
+
+  
+
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hugo 0.27 with theme Tranquilpeak 0.4.1-BETA">
+    <title>Explaining Predictions of Machine Learning Models with LIME - Münster Data Science Meetup</title>
+    <meta name="author" content="Dr. Shirin Glander">
+    <meta name="keywords" content=", R">
+
+    <link rel="icon" href="img/favicon.png">
+    
+
+    
+    <meta name="description" content="Slides from Münster Data Science Meetup These are my slides from the Münster Data Science Meetup on December 12th, 2017.
+ 
+My sketchnotes were collected from these two podcasts:
+ https://twimlai.com/twiml-talk-7-carlos-guestrin-explaining-predictions-machine-learning-models/ https://dataskeptic.com/blog/episodes/2016/trusting-machine-learning-models-with-lime  Sketchnotes: TWiML Talk #7 with Carlos Guestrin – Explaining the Predictions of Machine Learning Models &amp; Data Skeptic Podcast - Trusting Machine Learning Models with Lime
+  Example Code  the following libraries were loaded:  library(tidyverse) # for tidy data analysis library(farff) # for reading arff file library(missForest) # for imputing missing values library(dummies) # for creating dummy variables library(caret) # for modeling library(pROC) # for ROC curve library(lime) # for explaining predictions Data The Chronic Kidney Disease dataset was downloaded from UC Irvine’s Machine Learning repository: http://archive.">
+    <meta property="og:description" content="Slides from Münster Data Science Meetup These are my slides from the Münster Data Science Meetup on December 12th, 2017.
+ 
+My sketchnotes were collected from these two podcasts:
+ https://twimlai.com/twiml-talk-7-carlos-guestrin-explaining-predictions-machine-learning-models/ https://dataskeptic.com/blog/episodes/2016/trusting-machine-learning-models-with-lime  Sketchnotes: TWiML Talk #7 with Carlos Guestrin – Explaining the Predictions of Machine Learning Models &amp; Data Skeptic Podcast - Trusting Machine Learning Models with Lime
+  Example Code  the following libraries were loaded:  library(tidyverse) # for tidy data analysis library(farff) # for reading arff file library(missForest) # for imputing missing values library(dummies) # for creating dummy variables library(caret) # for modeling library(pROC) # for ROC curve library(lime) # for explaining predictions Data The Chronic Kidney Disease dataset was downloaded from UC Irvine’s Machine Learning repository: http://archive.">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="Explaining Predictions of Machine Learning Models with LIME - Münster Data Science Meetup">
+    <meta property="og:url" content="/2017/12/lime_sketchnotes/">
+    <meta property="og:site_name" content="Shirin&#39;s playgRound">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Shirin&#39;s playgRound">
+    <meta name="twitter:description" content="Slides from Münster Data Science Meetup These are my slides from the Münster Data Science Meetup on December 12th, 2017.
+ 
+My sketchnotes were collected from these two podcasts:
+ https://twimlai.com/twiml-talk-7-carlos-guestrin-explaining-predictions-machine-learning-models/ https://dataskeptic.com/blog/episodes/2016/trusting-machine-learning-models-with-lime  Sketchnotes: TWiML Talk #7 with Carlos Guestrin – Explaining the Predictions of Machine Learning Models &amp; Data Skeptic Podcast - Trusting Machine Learning Models with Lime
+  Example Code  the following libraries were loaded:  library(tidyverse) # for tidy data analysis library(farff) # for reading arff file library(missForest) # for imputing missing values library(dummies) # for creating dummy variables library(caret) # for modeling library(pROC) # for ROC curve library(lime) # for explaining predictions Data The Chronic Kidney Disease dataset was downloaded from UC Irvine’s Machine Learning repository: http://archive.">
+    
+      <meta name="twitter:creator" content="@ShirinGlander">
+    
+    
+
+    
+    
+
+    
+      <meta property="og:image" content="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=640">
+    
+
+    
+      <meta property="og:image" content="http://res.cloudinary.com/shiring/image/upload/v1512627737/lime_sketchnotes_guq6u5.jpg">
+    
+    
+    
+
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="/css/style-hbs5om8csx9a8yrv5hnhpi2qqdv4ykuslajwbramhqxvleqbfklxgek50hye.min.css" />
+    
+    
+
+    
+      
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-86119417-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="/">Shirin&#39;s playgRound</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <h1 class="sidebar-profile-title">Explaining Predictions of Machine Learning Models with LIME - Münster Data Science Meetup</h1>
+        <a href="/#about">
+          <img class="sidebar-profile-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Dr. Shirin Glander</h4>
+        
+          <h5 class="sidebar-profile-bio">Biologist turned Bioinformatician turned Data Scientist</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/archives/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/categories/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/tags/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/page/about/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://shiring.github.io/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">My old R-blog</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/ShirinG">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.linkedin.com/in/shirin-glander-01120881/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-linkedin"></i>
+      
+      <span class="sidebar-button-desc">LinkedIn</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://stackoverflow.com/users/6623620/shirin-glander">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-stack-overflow"></i>
+      
+      <span class="sidebar-button-desc">Stack Overflow</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/ShirinGlander">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.xing.com/profile/Shirin_Glander">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-xing"></i>
+      
+      <span class="sidebar-button-desc">Xing</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.meetup.com/Munster-R-Users-Group">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-meetup"></i>
+      
+      <span class="sidebar-button-desc">MünsteR</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.r-bloggers.com/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-book"></i>
+      
+      <span class="sidebar-button-desc">R-bloggers</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.r-users.com/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-book"></i>
+      
+      <span class="sidebar-button-desc">R-users</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaOut
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-center">
+  
+    <h1 class="post-title" itemprop="headline">
+      Explaining Predictions of Machine Learning Models with LIME - Münster Data Science Meetup
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2017-12-12T00:00:00Z">
+        
+  December 12, 2017
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="/categories/r">R</a>, 
+    
+      <a class="category-link" href="/categories/python">Python</a>
+    
+  
+
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <div id="slides-from-munster-data-science-meetup" class="section level2">
+<h2>Slides from Münster Data Science Meetup</h2>
+<p><a href="http://res.cloudinary.com/shiring/image/upload/v1513090254/lime_meetup_slides_wvsh6s.pdf">These are my slides</a> from the <a href="https://www.meetup.com/Data-Science-Meetup-Muenster/events/244173239/">Münster Data Science Meetup on December 12th, 2017</a>.</p>
+<div class="figure">
+<embed src="http://res.cloudinary.com/shiring/image/upload/v1513090254/lime_meetup_slides_wvsh6s.pdf" />
+
+</div>
+<p><br></p>
+<p>My sketchnotes were collected from these two podcasts:</p>
+<ul>
+<li><a href="https://twimlai.com/twiml-talk-7-carlos-guestrin-explaining-predictions-machine-learning-models/" class="uri">https://twimlai.com/twiml-talk-7-carlos-guestrin-explaining-predictions-machine-learning-models/</a></li>
+<li><a href="https://dataskeptic.com/blog/episodes/2016/trusting-machine-learning-models-with-lime" class="uri">https://dataskeptic.com/blog/episodes/2016/trusting-machine-learning-models-with-lime</a></li>
+</ul>
+<div class="figure">
+<img src="http://res.cloudinary.com/shiring/image/upload/v1512627737/lime_sketchnotes_guq6u5.jpg" alt="Sketchnotes: TWiML Talk #7 with Carlos Guestrin – Explaining the Predictions of Machine Learning Models &amp; Data Skeptic Podcast - Trusting Machine Learning Models with Lime" />
+<p class="caption">Sketchnotes: TWiML Talk #7 with Carlos Guestrin – Explaining the Predictions of Machine Learning Models &amp; Data Skeptic Podcast - Trusting Machine Learning Models with Lime</p>
+</div>
+<hr />
+</div>
+<div id="example-code" class="section level2">
+<h2>Example Code</h2>
+<ul>
+<li>the following libraries were loaded:</li>
+</ul>
+<pre class="r"><code>library(tidyverse)  # for tidy data analysis
+library(farff)      # for reading arff file
+library(missForest) # for imputing missing values
+library(dummies)    # for creating dummy variables
+library(caret)      # for modeling
+library(pROC)       # for ROC curve
+library(lime)       # for explaining predictions</code></pre>
+<div id="data" class="section level3">
+<h3>Data</h3>
+<p>The Chronic Kidney Disease dataset was downloaded from UC Irvine’s Machine Learning repository: <a href="http://archive.ics.uci.edu/ml/datasets/Chronic_Kidney_Disease" class="uri">http://archive.ics.uci.edu/ml/datasets/Chronic_Kidney_Disease</a></p>
+<pre class="r"><code>data_file &lt;- file.path(&quot;/Users/shiringlander/Documents/Github/data_science_meetup_ms/Chronic_Kidney_Disease/chronic_kidney_disease_full.arff&quot;)</code></pre>
+<ul>
+<li>load data with the <code>farff</code> package</li>
+</ul>
+<pre class="r"><code>data &lt;- readARFF(data_file)</code></pre>
+<div id="features" class="section level4">
+<h4>Features</h4>
+<ul>
+<li>age - age</li>
+<li>bp - blood pressure</li>
+<li>sg - specific gravity</li>
+<li>al - albumin</li>
+<li>su - sugar</li>
+<li>rbc - red blood cells</li>
+<li>pc - pus cell</li>
+<li>pcc - pus cell clumps</li>
+<li>ba - bacteria</li>
+<li>bgr - blood glucose random</li>
+<li>bu - blood urea</li>
+<li>sc - serum creatinine</li>
+<li>sod - sodium</li>
+<li>pot - potassium</li>
+<li>hemo - hemoglobin</li>
+<li>pcv - packed cell volume</li>
+<li>wc - white blood cell count</li>
+<li>rc - red blood cell count</li>
+<li>htn - hypertension</li>
+<li>dm - diabetes mellitus</li>
+<li>cad - coronary artery disease</li>
+<li>appet - appetite</li>
+<li>pe - pedal edema</li>
+<li>ane - anemia</li>
+<li>class - class</li>
+</ul>
+</div>
+</div>
+<div id="missing-data" class="section level3">
+<h3>Missing data</h3>
+<ul>
+<li>impute missing data with Nonparametric Missing Value Imputation using Random Forest (<code>missForest</code> package)</li>
+</ul>
+<pre class="r"><code>data_imp &lt;- missForest(data)</code></pre>
+</div>
+<div id="one-hot-encoding" class="section level3">
+<h3>One-hot encoding</h3>
+<ul>
+<li>create dummy variables (<code>caret::dummy.data.frame()</code>)</li>
+<li>scale and center</li>
+</ul>
+<pre class="reval"><code>data_imp_final &lt;- data_imp$ximp
+data_dummy &lt;- dummy.data.frame(dplyr::select(data_imp_final, -class), sep = &quot;_&quot;)
+data &lt;- cbind(dplyr::select(data_imp_final, class), scale(data_dummy, 
+                                                   center = apply(data_dummy, 2, min),
+                                                   scale = apply(data_dummy, 2, max)))</code></pre>
+</div>
+<div id="training-and-test-split" class="section level3">
+<h3>Training and test split</h3>
+<pre class="r"><code>set.seed(42)
+index &lt;- createDataPartition(data$class, p = 0.9, list = FALSE)
+train_data &lt;- data[index, ]
+test_data  &lt;- data[-index, ]</code></pre>
+</div>
+<div id="modeling" class="section level3">
+<h3>Modeling</h3>
+<ul>
+<li>train random forest model with <code>caret</code></li>
+</ul>
+<pre class="r"><code>set.seed(42)
+model_rf &lt;- caret::train(class ~ .,
+          data = train_data,
+          method = &quot;rf&quot;,
+          trControl = trainControl(method = &quot;repeatedcv&quot;, 
+                 number = 10, 
+                 repeats = 5, 
+                 verboseIter = FALSE))</code></pre>
+<pre class="r"><code>model_rf</code></pre>
+<pre><code>## Random Forest 
+## 
+## 360 samples
+##  48 predictor
+##   2 classes: &#39;ckd&#39;, &#39;notckd&#39; 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold, repeated 5 times) 
+## Summary of sample sizes: 324, 324, 324, 324, 325, 324, ... 
+## Resampling results across tuning parameters:
+## 
+##   mtry  Accuracy   Kappa    
+##    2    0.9922647  0.9838466
+##   25    0.9917392  0.9826070
+##   48    0.9872930  0.9729881
+## 
+## Accuracy was used to select the optimal model using  the largest value.
+## The final value used for the model was mtry = 2.</code></pre>
+</div>
+<div id="predictions" class="section level3">
+<h3>Predictions</h3>
+<pre class="r"><code>pred &lt;- data.frame(sample_id = 1:nrow(test_data),
+                   predict(model_rf, test_data, type = &quot;prob&quot;),
+                   actual = test_data$class) %&gt;%
+  mutate(prediction = colnames(.)[2:3][apply(.[, 2:3], 1, which.max)],
+         correct = ifelse(actual == prediction, &quot;correct&quot;, &quot;wrong&quot;))</code></pre>
+<ul>
+<li>ROC curve</li>
+</ul>
+<pre class="r"><code>result.roc &lt;- roc(rev(as.numeric(pred$actual) -1), pred$ckd) # Draw ROC curve.
+plot(result.roc)</code></pre>
+<p><img src="/post/2017-12-12_lime_sketchnotes_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<ul>
+<li>confusion matrix</li>
+</ul>
+<pre class="r"><code>confusionMatrix(pred$actual, pred$prediction)</code></pre>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction ckd notckd
+##     ckd     23      2
+##     notckd   0     15
+##                                           
+##                Accuracy : 0.95            
+##                  95% CI : (0.8308, 0.9939)
+##     No Information Rate : 0.575           
+##     P-Value [Acc &gt; NIR] : 1.113e-07       
+##                                           
+##                   Kappa : 0.8961          
+##  Mcnemar&#39;s Test P-Value : 0.4795          
+##                                           
+##             Sensitivity : 1.0000          
+##             Specificity : 0.8824          
+##          Pos Pred Value : 0.9200          
+##          Neg Pred Value : 1.0000          
+##              Prevalence : 0.5750          
+##          Detection Rate : 0.5750          
+##    Detection Prevalence : 0.6250          
+##       Balanced Accuracy : 0.9412          
+##                                           
+##        &#39;Positive&#39; Class : ckd             
+## </code></pre>
+</div>
+<div id="lime" class="section level3">
+<h3>LIME</h3>
+<ul>
+<li>LIME needs data without response variable</li>
+</ul>
+<pre class="r"><code>train_x &lt;- dplyr::select(train_data, -class)
+test_x &lt;- dplyr::select(test_data, -class)
+
+train_y &lt;- dplyr::select(train_data, class)
+test_y &lt;- dplyr::select(test_data, class)</code></pre>
+<ul>
+<li>build explainer</li>
+</ul>
+<pre class="r"><code>explainer &lt;- lime(train_x, 
+                  model_rf, 
+                  n_bins = 5, 
+                  quantile_bins = TRUE)</code></pre>
+<ul>
+<li>run <code>explain()</code> function</li>
+</ul>
+<pre class="r"><code>explanation_df &lt;- lime::explain(test_x, 
+                                explainer, 
+                                n_labels = 1, 
+                                n_features = 8,
+                                n_permutations = 1000,
+                                feature_select = &quot;forward_selection&quot;)</code></pre>
+<ul>
+<li>model reliability</li>
+</ul>
+<pre class="r"><code>explanation_df %&gt;%
+  ggplot(aes(x = model_r2, fill = label)) +
+    geom_density(alpha = 0.5)</code></pre>
+<p><img src="/post/2017-12-12_lime_sketchnotes_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<ul>
+<li>plot explanations</li>
+</ul>
+<pre class="r"><code>plot_features(explanation_df[1:24, ], ncol = 1)</code></pre>
+<p><img src="/post/2017-12-12_lime_sketchnotes_files/figure-html/unnamed-chunk-17-1.png" width="70%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="session-info" class="section level3">
+<h3>Session Info</h3>
+<pre><code>## Session info -------------------------------------------------------------</code></pre>
+<pre><code>##  setting  value                       
+##  version  R version 3.4.2 (2017-09-28)
+##  system   x86_64, darwin15.6.0        
+##  ui       X11                         
+##  language (EN)                        
+##  collate  de_DE.UTF-8                 
+##  tz       &lt;NA&gt;                        
+##  date     2017-12-12</code></pre>
+<pre><code>## Packages -----------------------------------------------------------------</code></pre>
+<pre><code>##  package      * version  date       source        
+##  assertthat     0.2.0    2017-04-11 CRAN (R 3.4.0)
+##  backports      1.1.1    2017-09-25 CRAN (R 3.4.2)
+##  base         * 3.4.2    2017-10-04 local         
+##  BBmisc         1.11     2017-03-10 CRAN (R 3.4.0)
+##  bindr          0.1      2016-11-13 CRAN (R 3.4.0)
+##  bindrcpp     * 0.2      2017-06-17 CRAN (R 3.4.0)
+##  blogdown       0.3      2017-11-13 CRAN (R 3.4.2)
+##  bookdown       0.5      2017-08-20 CRAN (R 3.4.1)
+##  broom          0.4.3    2017-11-20 CRAN (R 3.4.2)
+##  caret        * 6.0-77   2017-09-07 CRAN (R 3.4.1)
+##  cellranger     1.1.0    2016-07-27 CRAN (R 3.4.0)
+##  checkmate      1.8.5    2017-10-24 CRAN (R 3.4.2)
+##  class          7.3-14   2015-08-30 CRAN (R 3.4.2)
+##  cli            1.0.0    2017-11-05 CRAN (R 3.4.2)
+##  codetools      0.2-15   2016-10-05 CRAN (R 3.4.2)
+##  colorspace     1.3-2    2016-12-14 CRAN (R 3.4.0)
+##  compiler       3.4.2    2017-10-04 local         
+##  crayon         1.3.4    2017-09-16 cran (@1.3.4) 
+##  CVST           0.2-1    2013-12-10 CRAN (R 3.4.0)
+##  datasets     * 3.4.2    2017-10-04 local         
+##  ddalpha        1.3.1    2017-09-27 CRAN (R 3.4.2)
+##  DEoptimR       1.0-8    2016-11-19 CRAN (R 3.4.0)
+##  devtools       1.13.4   2017-11-09 CRAN (R 3.4.2)
+##  digest         0.6.12   2017-01-27 CRAN (R 3.4.0)
+##  dimRed         0.1.0    2017-05-04 CRAN (R 3.4.0)
+##  dplyr        * 0.7.4    2017-09-28 CRAN (R 3.4.2)
+##  DRR            0.0.2    2016-09-15 CRAN (R 3.4.0)
+##  dummies      * 1.5.6    2012-06-14 CRAN (R 3.4.0)
+##  e1071          1.6-8    2017-02-02 CRAN (R 3.4.0)
+##  evaluate       0.10.1   2017-06-24 CRAN (R 3.4.0)
+##  farff        * 1.0      2016-09-11 CRAN (R 3.4.0)
+##  forcats      * 0.2.0    2017-01-23 CRAN (R 3.4.0)
+##  foreach      * 1.4.3    2015-10-13 CRAN (R 3.4.0)
+##  foreign        0.8-69   2017-06-22 CRAN (R 3.4.1)
+##  ggplot2      * 2.2.1    2016-12-30 CRAN (R 3.4.0)
+##  glmnet         2.0-13   2017-09-22 CRAN (R 3.4.2)
+##  glue           1.2.0    2017-10-29 CRAN (R 3.4.2)
+##  gower          0.1.2    2017-02-23 CRAN (R 3.4.0)
+##  graphics     * 3.4.2    2017-10-04 local         
+##  grDevices    * 3.4.2    2017-10-04 local         
+##  grid           3.4.2    2017-10-04 local         
+##  gtable         0.2.0    2016-02-26 CRAN (R 3.4.0)
+##  haven          1.1.0    2017-07-09 CRAN (R 3.4.0)
+##  hms            0.4.0    2017-11-23 CRAN (R 3.4.3)
+##  htmltools      0.3.6    2017-04-28 CRAN (R 3.4.0)
+##  htmlwidgets    0.9      2017-07-10 CRAN (R 3.4.1)
+##  httpuv         1.3.5    2017-07-04 CRAN (R 3.4.1)
+##  httr           1.3.1    2017-08-20 CRAN (R 3.4.1)
+##  ipred          0.9-6    2017-03-01 CRAN (R 3.4.0)
+##  iterators    * 1.0.8    2015-10-13 CRAN (R 3.4.0)
+##  itertools    * 0.1-3    2014-03-12 CRAN (R 3.4.0)
+##  jsonlite       1.5      2017-06-01 CRAN (R 3.4.0)
+##  kernlab        0.9-25   2016-10-03 CRAN (R 3.4.0)
+##  knitr          1.17     2017-08-10 CRAN (R 3.4.1)
+##  labeling       0.3      2014-08-23 CRAN (R 3.4.0)
+##  lattice      * 0.20-35  2017-03-25 CRAN (R 3.4.2)
+##  lava           1.5.1    2017-09-27 CRAN (R 3.4.1)
+##  lazyeval       0.2.1    2017-10-29 CRAN (R 3.4.2)
+##  lime         * 0.3.1    2017-11-24 CRAN (R 3.4.3)
+##  lubridate      1.7.1    2017-11-03 CRAN (R 3.4.2)
+##  magrittr       1.5      2014-11-22 CRAN (R 3.4.0)
+##  MASS           7.3-47   2017-02-26 CRAN (R 3.4.2)
+##  Matrix         1.2-12   2017-11-15 CRAN (R 3.4.2)
+##  memoise        1.1.0    2017-04-21 CRAN (R 3.4.0)
+##  methods      * 3.4.2    2017-10-04 local         
+##  mime           0.5      2016-07-07 CRAN (R 3.4.0)
+##  missForest   * 1.4      2013-12-31 CRAN (R 3.4.0)
+##  mnormt         1.5-5    2016-10-15 CRAN (R 3.4.0)
+##  ModelMetrics   1.1.0    2016-08-26 CRAN (R 3.4.0)
+##  modelr         0.1.1    2017-07-24 CRAN (R 3.4.1)
+##  munsell        0.4.3    2016-02-13 CRAN (R 3.4.0)
+##  nlme           3.1-131  2017-02-06 CRAN (R 3.4.2)
+##  nnet           7.3-12   2016-02-02 CRAN (R 3.4.2)
+##  parallel       3.4.2    2017-10-04 local         
+##  pkgconfig      2.0.1    2017-03-21 CRAN (R 3.4.0)
+##  plyr           1.8.4    2016-06-08 CRAN (R 3.4.0)
+##  pROC         * 1.10.0   2017-06-10 CRAN (R 3.4.0)
+##  prodlim        1.6.1    2017-03-06 CRAN (R 3.4.0)
+##  psych          1.7.8    2017-09-09 CRAN (R 3.4.1)
+##  purrr        * 0.2.4    2017-10-18 CRAN (R 3.4.2)
+##  R6             2.2.2    2017-06-17 CRAN (R 3.4.0)
+##  randomForest * 4.6-12   2015-10-07 CRAN (R 3.4.0)
+##  Rcpp           0.12.14  2017-11-23 CRAN (R 3.4.3)
+##  RcppRoll       0.2.2    2015-04-05 CRAN (R 3.4.0)
+##  readr        * 1.1.1    2017-05-16 CRAN (R 3.4.0)
+##  readxl         1.0.0    2017-04-18 CRAN (R 3.4.0)
+##  recipes        0.1.1    2017-11-20 CRAN (R 3.4.3)
+##  reshape2       1.4.2    2016-10-22 CRAN (R 3.4.0)
+##  rlang          0.1.4    2017-11-05 CRAN (R 3.4.2)
+##  rmarkdown      1.8      2017-11-17 CRAN (R 3.4.2)
+##  robustbase     0.92-8   2017-11-01 CRAN (R 3.4.2)
+##  rpart          4.1-11   2017-03-13 CRAN (R 3.4.2)
+##  rprojroot      1.2      2017-01-16 CRAN (R 3.4.0)
+##  rstudioapi     0.7      2017-09-07 CRAN (R 3.4.1)
+##  rvest          0.3.2    2016-06-17 CRAN (R 3.4.0)
+##  scales         0.5.0    2017-08-24 CRAN (R 3.4.1)
+##  sfsmisc        1.1-1    2017-06-08 CRAN (R 3.4.0)
+##  shiny          1.0.5    2017-08-23 CRAN (R 3.4.1)
+##  shinythemes    1.1.1    2016-10-12 CRAN (R 3.4.0)
+##  splines        3.4.2    2017-10-04 local         
+##  stats        * 3.4.2    2017-10-04 local         
+##  stats4         3.4.2    2017-10-04 local         
+##  stringdist     0.9.4.6  2017-07-31 CRAN (R 3.4.1)
+##  stringi        1.1.6    2017-11-17 CRAN (R 3.4.2)
+##  stringr      * 1.2.0    2017-02-18 CRAN (R 3.4.0)
+##  survival       2.41-3   2017-04-04 CRAN (R 3.4.0)
+##  tibble       * 1.3.4    2017-08-22 CRAN (R 3.4.1)
+##  tidyr        * 0.7.2    2017-10-16 CRAN (R 3.4.2)
+##  tidyselect     0.2.3    2017-11-06 CRAN (R 3.4.2)
+##  tidyverse    * 1.2.1    2017-11-14 CRAN (R 3.4.2)
+##  timeDate       3042.101 2017-11-16 CRAN (R 3.4.2)
+##  tools          3.4.2    2017-10-04 local         
+##  utils        * 3.4.2    2017-10-04 local         
+##  withr          2.1.0    2017-11-01 CRAN (R 3.4.2)
+##  xml2           1.1.1    2017-01-24 CRAN (R 3.4.0)
+##  xtable         1.8-2    2016-02-05 CRAN (R 3.4.0)
+##  yaml           2.1.15   2017-12-01 CRAN (R 3.4.3)</code></pre>
+</div>
+</div>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="//tags/lime/">LIME</a>
+
+  <a class="tag tag--primary tag--small" href="//tags/machine-learning/">Machine Learning</a>
+
+  <a class="tag tag--primary tag--small" href="//tags/data-science/">Data Science</a>
+
+                  </div>
+                
+              
+            
+            
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                <i class="fa fa-angle-left"></i>
+                <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+              </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2017/12/keras_sketchnotes/" data-tooltip="Deep Learning with Keras">
+              
+                <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2017/12/lime_sketchnotes/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2017/12/lime_sketchnotes/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2017/12/lime_sketchnotes/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2017 Dr. Shirin Glander. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                <i class="fa fa-angle-left"></i>
+                <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+              </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2017/12/keras_sketchnotes/" data-tooltip="Deep Learning with Keras">
+              
+                <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2017/12/lime_sketchnotes/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2017/12/lime_sketchnotes/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2017/12/lime_sketchnotes/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=%2F2017%2F12%2Flime_sketchnotes%2F">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=%2F2017%2F12%2Flime_sketchnotes%2F">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=%2F2017%2F12%2Flime_sketchnotes%2F">
+          <i class="fa fa-google-plus"></i><span>Share on Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Dr. Shirin Glander</h4>
+    
+      <div id="about-card-bio">Biologist turned Bioinformatician turned Data Scientist</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Data Scientist
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Münster, Germany
+      </div>
+    
+  </div>
+</div>
+
+    <div id="algolia-search-modal" class="modal-container">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="close-button"><i class="fa fa-close"></i></span>
+      <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
+        <span class="searchby-algolia-text text-color-light text-small">by</span>
+        <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
+      </a>
+      <i class="search-icon fa fa-search"></i>
+      <form id="algolia-search-form">
+        <input type="text" id="algolia-search-input" name="search"
+          class="form-control input--large search-input" placeholder="Search" />
+      </form>
+    </div>
+    <div class="modal-body">
+      <div class="no-result text-color-light text-center">no post found</div>
+      <div class="results">
+        
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2017/12/lime_sketchnotes/">
+                <h3 class="media-heading">Explaining Predictions of Machine Learning Models with LIME - Münster Data Science Meetup</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Dec 12, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Slides from Münster Data Science Meetup These are my slides from the Münster Data Science Meetup on December 12th, 2017.
+ 
+My sketchnotes were collected from these two podcasts:
+ https://twimlai.com/twiml-talk-7-carlos-guestrin-explaining-predictions-machine-learning-models/ https://dataskeptic.com/blog/episodes/2016/trusting-machine-learning-models-with-lime  Sketchnotes: TWiML Talk #7 with Carlos Guestrin – Explaining the Predictions of Machine Learning Models &amp; Data Skeptic Podcast - Trusting Machine Learning Models with Lime
+  Example Code  the following libraries were loaded:  library(tidyverse) # for tidy data analysis library(farff) # for reading arff file library(missForest) # for imputing missing values library(dummies) # for creating dummy variables library(caret) # for modeling library(pROC) # for ROC curve library(lime) # for explaining predictions Data The Chronic Kidney Disease dataset was downloaded from UC Irvine’s Machine Learning repository: http://archive.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2017/12/keras_sketchnotes/">
+                <h3 class="media-heading">Deep Learning with Keras</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Dec 12, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">https://softwareengineeringdaily.com/2016/01/29/deep-learning-and-keras-with-francois-chollet/
+Sketchnotes: Software Engineering Daily - Podcast from Jan 29th 2016
+ Keras for Python Keras for R
+https://github.com/maxpumperla/elephas
+If you want to learn more about using Keras with TensorFlow in R, you can book my workshop.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2017/11/mice_sketchnotes/">
+                <h3 class="media-heading">MICE (Multiple Imputation by Chained Equations) in R - sketchnotes from MünsteR Meetup</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Nov 11, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Last night, the MünsteR R user-group had another great meetup:
+Karin Groothuis-Oudshoorn, Assistant Professor at the University of Twente, presented her R package mice about Multivariate Imputation by Chained Equations.
+It was a very interesting talk and here are my sketchnotes that I took during it:
+MICE talk sketchnotes
+ Here is the link to the paper referenced in my notes: https://www.jstatsoft.org/article/view/v045i03
+ “The mice package implements a method to deal with missing data.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2017/11/deep_learning_keras_tensorflow/">
+                <h3 class="media-heading">Workshop on Deep Learning with Keras and TensorFlow in R</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Nov 11, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">You can now book me and my 1-day workshop on deep learning with Keras and TensorFlow using R.
+In my workshop, you will learn
+ the basics of deep learning what cross-entropy and loss is about activation functions how to optimize weights and biases with backpropagation and gradient descent how to build (deep) neural networks with Keras and TensorFlow how to save and load models and model weights how to visualize models with TensorBoard how to make predictions on test data  Date and place depend on who and how many people are interested, so please contact me either directly or via the workshop page: https://www.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2017/11/combine_point_boxplot_ggplot/">
+                <h3 class="media-heading">How to combine point and boxplots in timeline charts with ggplot2 facets</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Nov 11, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">In a recent project, I was looking to plot data from different variables along the same time axis. The difficulty was, that some of these variables I wanted to have as point plots, while others I wanted as box-plots.
+Because I work with the tidyverse, I wanted to produce these plots with ggplot2. Faceting was the obvious first step but it took me quite a while to figure out how to best combine facets with point plots (where I have one value per time point) with and box-plots (where I have multiple values per time point).</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2017/11/predictive_maintenance_dashboard/">
+                <h3 class="media-heading">Explore Predictive Maintenance with flexdashboard</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Nov 11, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">I have written the following post about Predictive Maintenance and flexdashboard at my company codecentric’s blog:
+ Predictive Maintenance is an increasingly popular strategy associated with Industry 4.0; it uses advanced analytics and machine learning to optimize machine costs and output (see Google Trends plot below). A common use-case for Predictive Maintenance is to proactively monitor machines, so as to predict when a check-up is needed to reduce failure and maximize performance.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2017/09/data2day/">
+                <h3 class="media-heading">Blockchain &amp; distributed ML - my report from the data2day conference</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Sep 9, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Yesterday and today I attended the data2day, a conference about Big Data, Machine Learning and Data Science in Heidelberg, Germany. Topics and workshops covered a range of topics surrounding (big) data analysis and Machine Learning, like Deep Learning, Reinforcement Learning, TensorFlow applications, etc. Distributed systems and scalability were a major part of a lot of the talks as well, reflecting the growing desire to build bigger and more complex models that can’t (or would take too long to) run on a single computer.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2017/09/from-biology-to-industry.-a-bloggers-journey-to-data-science./">
+                <h3 class="media-heading">From Biology to Industry. A Blogger’s Journey to Data Science.</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Sep 9, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Today, I have given a webinar for the Applied Epidemiology Didactic of the University of Wisconsin - Madison titled “From Biology to Industry. A Blogger’s Journey to Data Science.”
+I talked about how blogging about R and Data Science helped me become a Data Scientist. I also gave a short introduction to Machine Learning, Big Data and Neural Networks.
+My slides can be found here: https://www.slideshare.net/ShirinGlander/from-biology-to-industry-a-bloggers-journey-to-data-science</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2017/09/ode_to_r/">
+                <h3 class="media-heading">Why I use R for Data Science - An Ode to R</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Sep 9, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Working in Data Science, I often feel like I have to justify using R over Python. And while I do use Python for running scripts in production, I am much more comfortable with the R environment. Basically, whenever I can, I use R for prototyping, testing, visualizing and teaching. But because personal gut-feeling preference isn’t a very good reason to give to (scientifically minded) people, I’ve thought a lot about the pros and cons of using R.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2017/09/moving-my-blog-to-blogdown/">
+                <h3 class="media-heading">Moving my blog to blogdown</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Sep 9, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">It’s been a long time coming but I finally moved my blog from Jekyll/Bootstrap on Github pages to blogdown, Hugo and Netlify! Moreover, I also now have my own domain name www.shirin-glander.de. :-)
+I followed the blogdown ebook to set up my blog. I chose Thibaud Leprêtre’s tranquilpeak theme. It looks much more polished than my old blog.
+My old blog will remain where it is, so that all the links that are out there will still work (and I don’t have to go through the hassle of migrating all my posts to my new site).</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+      </div>
+    </div>
+    <div class="modal-footer">
+      <p class="results-count text-medium"
+         data-message-zero="no post found"
+         data-message-one="1 post found"
+         data-message-other="{n} posts found">
+         15 posts found
+      </p>
+    </div>
+  </div>
+</div>
+    
+  
+    
+    <div id="cover" style="background-image:url('/images/autumn-2789234_1920.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" integrity="sha256-IFHWFEbU2/+wNycDECKgjIRSirRNIDp2acEB5fvdVRU=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js" integrity="sha256-+mpyNVJsNt4rVXCw0F+pAOiB3YxmHgrbJsx4ecPuUaI=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.js" integrity="sha256-vMxgR/7FtLovVA+IPrR7+xTgIgARH7y9VZQnmmi0HDI=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.js" integrity="sha256-N0qFUh7/9vLvia87dDndewmsgsyYoNkdA212tPc+2NI=" crossorigin="anonymous"></script>
+
+
+<script src="/js/script-kr8dyqj6rb6ortyib7whfo9x9p6td6zo8t1v4fdz4ecx5kwybsdlmk1slygn.min.js"></script>
+
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = '\/2017\/12\/lime_sketchnotes\/';
+          
+            this.page.identifier = '\/2017\/12\/lime_sketchnotes\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'shirinsplayground';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+    
+  </body>
+</html>
+

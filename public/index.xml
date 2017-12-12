@@ -2,12 +2,380 @@
   <title>Shirin&#39;s playgRound</title>
   <link href="/index.xml" rel="self"/>
   <link href="/"/>
-  <updated>2017-11-28T00:00:00+00:00</updated>
+  <updated>2017-12-12T00:00:00+00:00</updated>
   <id>/</id>
   <author>
     <name>Dr. Shirin Glander</name>
   </author>
   <generator>Hugo -- gohugo.io</generator>
+  <entry>
+    <title type="html"><![CDATA[Explaining Predictions of Machine Learning Models with LIME - Münster Data Science Meetup]]></title>
+    <link href="/2017/12/lime_sketchnotes/"/>
+    <id>/2017/12/lime_sketchnotes/</id>
+    <published>2017-12-12T00:00:00+00:00</published>
+    <updated>2017-12-12T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<div id="slides-from-munster-data-science-meetup" class="section level2">
+<h2>Slides from Münster Data Science Meetup</h2>
+<p><a href="http://res.cloudinary.com/shiring/image/upload/v1513090254/lime_meetup_slides_wvsh6s.pdf">These are my slides</a> from the <a href="https://www.meetup.com/Data-Science-Meetup-Muenster/events/244173239/">Münster Data Science Meetup on December 12th, 2017</a>.</p>
+<div class="figure">
+<embed src="http://res.cloudinary.com/shiring/image/upload/v1513090254/lime_meetup_slides_wvsh6s.pdf" />
+
+</div>
+<p><br></p>
+<p>My sketchnotes were collected from these two podcasts:</p>
+<ul>
+<li><a href="https://twimlai.com/twiml-talk-7-carlos-guestrin-explaining-predictions-machine-learning-models/" class="uri">https://twimlai.com/twiml-talk-7-carlos-guestrin-explaining-predictions-machine-learning-models/</a></li>
+<li><a href="https://dataskeptic.com/blog/episodes/2016/trusting-machine-learning-models-with-lime" class="uri">https://dataskeptic.com/blog/episodes/2016/trusting-machine-learning-models-with-lime</a></li>
+</ul>
+<div class="figure">
+<img src="http://res.cloudinary.com/shiring/image/upload/v1512627737/lime_sketchnotes_guq6u5.jpg" alt="Sketchnotes: TWiML Talk #7 with Carlos Guestrin – Explaining the Predictions of Machine Learning Models &amp; Data Skeptic Podcast - Trusting Machine Learning Models with Lime" />
+<p class="caption">Sketchnotes: TWiML Talk #7 with Carlos Guestrin – Explaining the Predictions of Machine Learning Models &amp; Data Skeptic Podcast - Trusting Machine Learning Models with Lime</p>
+</div>
+<hr />
+</div>
+<div id="example-code" class="section level2">
+<h2>Example Code</h2>
+<ul>
+<li>the following libraries were loaded:</li>
+</ul>
+<pre class="r"><code>library(tidyverse)  # for tidy data analysis
+library(farff)      # for reading arff file
+library(missForest) # for imputing missing values
+library(dummies)    # for creating dummy variables
+library(caret)      # for modeling
+library(pROC)       # for ROC curve
+library(lime)       # for explaining predictions</code></pre>
+<div id="data" class="section level3">
+<h3>Data</h3>
+<p>The Chronic Kidney Disease dataset was downloaded from UC Irvine’s Machine Learning repository: <a href="http://archive.ics.uci.edu/ml/datasets/Chronic_Kidney_Disease" class="uri">http://archive.ics.uci.edu/ml/datasets/Chronic_Kidney_Disease</a></p>
+<pre class="r"><code>data_file &lt;- file.path(&quot;/Users/shiringlander/Documents/Github/data_science_meetup_ms/Chronic_Kidney_Disease/chronic_kidney_disease_full.arff&quot;)</code></pre>
+<ul>
+<li>load data with the <code>farff</code> package</li>
+</ul>
+<pre class="r"><code>data &lt;- readARFF(data_file)</code></pre>
+<div id="features" class="section level4">
+<h4>Features</h4>
+<ul>
+<li>age - age</li>
+<li>bp - blood pressure</li>
+<li>sg - specific gravity</li>
+<li>al - albumin</li>
+<li>su - sugar</li>
+<li>rbc - red blood cells</li>
+<li>pc - pus cell</li>
+<li>pcc - pus cell clumps</li>
+<li>ba - bacteria</li>
+<li>bgr - blood glucose random</li>
+<li>bu - blood urea</li>
+<li>sc - serum creatinine</li>
+<li>sod - sodium</li>
+<li>pot - potassium</li>
+<li>hemo - hemoglobin</li>
+<li>pcv - packed cell volume</li>
+<li>wc - white blood cell count</li>
+<li>rc - red blood cell count</li>
+<li>htn - hypertension</li>
+<li>dm - diabetes mellitus</li>
+<li>cad - coronary artery disease</li>
+<li>appet - appetite</li>
+<li>pe - pedal edema</li>
+<li>ane - anemia</li>
+<li>class - class</li>
+</ul>
+</div>
+</div>
+<div id="missing-data" class="section level3">
+<h3>Missing data</h3>
+<ul>
+<li>impute missing data with Nonparametric Missing Value Imputation using Random Forest (<code>missForest</code> package)</li>
+</ul>
+<pre class="r"><code>data_imp &lt;- missForest(data)</code></pre>
+</div>
+<div id="one-hot-encoding" class="section level3">
+<h3>One-hot encoding</h3>
+<ul>
+<li>create dummy variables (<code>caret::dummy.data.frame()</code>)</li>
+<li>scale and center</li>
+</ul>
+<pre class="reval"><code>data_imp_final &lt;- data_imp$ximp
+data_dummy &lt;- dummy.data.frame(dplyr::select(data_imp_final, -class), sep = &quot;_&quot;)
+data &lt;- cbind(dplyr::select(data_imp_final, class), scale(data_dummy, 
+                                                   center = apply(data_dummy, 2, min),
+                                                   scale = apply(data_dummy, 2, max)))</code></pre>
+</div>
+<div id="training-and-test-split" class="section level3">
+<h3>Training and test split</h3>
+<pre class="r"><code>set.seed(42)
+index &lt;- createDataPartition(data$class, p = 0.9, list = FALSE)
+train_data &lt;- data[index, ]
+test_data  &lt;- data[-index, ]</code></pre>
+</div>
+<div id="modeling" class="section level3">
+<h3>Modeling</h3>
+<ul>
+<li>train random forest model with <code>caret</code></li>
+</ul>
+<pre class="r"><code>set.seed(42)
+model_rf &lt;- caret::train(class ~ .,
+          data = train_data,
+          method = &quot;rf&quot;,
+          trControl = trainControl(method = &quot;repeatedcv&quot;, 
+                 number = 10, 
+                 repeats = 5, 
+                 verboseIter = FALSE))</code></pre>
+<pre class="r"><code>model_rf</code></pre>
+<pre><code>## Random Forest 
+## 
+## 360 samples
+##  48 predictor
+##   2 classes: &#39;ckd&#39;, &#39;notckd&#39; 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold, repeated 5 times) 
+## Summary of sample sizes: 324, 324, 324, 324, 325, 324, ... 
+## Resampling results across tuning parameters:
+## 
+##   mtry  Accuracy   Kappa    
+##    2    0.9922647  0.9838466
+##   25    0.9917392  0.9826070
+##   48    0.9872930  0.9729881
+## 
+## Accuracy was used to select the optimal model using  the largest value.
+## The final value used for the model was mtry = 2.</code></pre>
+</div>
+<div id="predictions" class="section level3">
+<h3>Predictions</h3>
+<pre class="r"><code>pred &lt;- data.frame(sample_id = 1:nrow(test_data),
+                   predict(model_rf, test_data, type = &quot;prob&quot;),
+                   actual = test_data$class) %&gt;%
+  mutate(prediction = colnames(.)[2:3][apply(.[, 2:3], 1, which.max)],
+         correct = ifelse(actual == prediction, &quot;correct&quot;, &quot;wrong&quot;))</code></pre>
+<ul>
+<li>ROC curve</li>
+</ul>
+<pre class="r"><code>result.roc &lt;- roc(rev(as.numeric(pred$actual) -1), pred$ckd) # Draw ROC curve.
+plot(result.roc)</code></pre>
+<p><img src="/post/2017-12-12_lime_sketchnotes_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<ul>
+<li>confusion matrix</li>
+</ul>
+<pre class="r"><code>confusionMatrix(pred$actual, pred$prediction)</code></pre>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction ckd notckd
+##     ckd     23      2
+##     notckd   0     15
+##                                           
+##                Accuracy : 0.95            
+##                  95% CI : (0.8308, 0.9939)
+##     No Information Rate : 0.575           
+##     P-Value [Acc &gt; NIR] : 1.113e-07       
+##                                           
+##                   Kappa : 0.8961          
+##  Mcnemar&#39;s Test P-Value : 0.4795          
+##                                           
+##             Sensitivity : 1.0000          
+##             Specificity : 0.8824          
+##          Pos Pred Value : 0.9200          
+##          Neg Pred Value : 1.0000          
+##              Prevalence : 0.5750          
+##          Detection Rate : 0.5750          
+##    Detection Prevalence : 0.6250          
+##       Balanced Accuracy : 0.9412          
+##                                           
+##        &#39;Positive&#39; Class : ckd             
+## </code></pre>
+</div>
+<div id="lime" class="section level3">
+<h3>LIME</h3>
+<ul>
+<li>LIME needs data without response variable</li>
+</ul>
+<pre class="r"><code>train_x &lt;- dplyr::select(train_data, -class)
+test_x &lt;- dplyr::select(test_data, -class)
+
+train_y &lt;- dplyr::select(train_data, class)
+test_y &lt;- dplyr::select(test_data, class)</code></pre>
+<ul>
+<li>build explainer</li>
+</ul>
+<pre class="r"><code>explainer &lt;- lime(train_x, 
+                  model_rf, 
+                  n_bins = 5, 
+                  quantile_bins = TRUE)</code></pre>
+<ul>
+<li>run <code>explain()</code> function</li>
+</ul>
+<pre class="r"><code>explanation_df &lt;- lime::explain(test_x, 
+                                explainer, 
+                                n_labels = 1, 
+                                n_features = 8,
+                                n_permutations = 1000,
+                                feature_select = &quot;forward_selection&quot;)</code></pre>
+<ul>
+<li>model reliability</li>
+</ul>
+<pre class="r"><code>explanation_df %&gt;%
+  ggplot(aes(x = model_r2, fill = label)) +
+    geom_density(alpha = 0.5)</code></pre>
+<p><img src="/post/2017-12-12_lime_sketchnotes_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<ul>
+<li>plot explanations</li>
+</ul>
+<pre class="r"><code>plot_features(explanation_df[1:24, ], ncol = 1)</code></pre>
+<p><img src="/post/2017-12-12_lime_sketchnotes_files/figure-html/unnamed-chunk-17-1.png" width="70%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="session-info" class="section level3">
+<h3>Session Info</h3>
+<pre><code>## Session info -------------------------------------------------------------</code></pre>
+<pre><code>##  setting  value                       
+##  version  R version 3.4.2 (2017-09-28)
+##  system   x86_64, darwin15.6.0        
+##  ui       X11                         
+##  language (EN)                        
+##  collate  de_DE.UTF-8                 
+##  tz       &lt;NA&gt;                        
+##  date     2017-12-12</code></pre>
+<pre><code>## Packages -----------------------------------------------------------------</code></pre>
+<pre><code>##  package      * version  date       source        
+##  assertthat     0.2.0    2017-04-11 CRAN (R 3.4.0)
+##  backports      1.1.1    2017-09-25 CRAN (R 3.4.2)
+##  base         * 3.4.2    2017-10-04 local         
+##  BBmisc         1.11     2017-03-10 CRAN (R 3.4.0)
+##  bindr          0.1      2016-11-13 CRAN (R 3.4.0)
+##  bindrcpp     * 0.2      2017-06-17 CRAN (R 3.4.0)
+##  blogdown       0.3      2017-11-13 CRAN (R 3.4.2)
+##  bookdown       0.5      2017-08-20 CRAN (R 3.4.1)
+##  broom          0.4.3    2017-11-20 CRAN (R 3.4.2)
+##  caret        * 6.0-77   2017-09-07 CRAN (R 3.4.1)
+##  cellranger     1.1.0    2016-07-27 CRAN (R 3.4.0)
+##  checkmate      1.8.5    2017-10-24 CRAN (R 3.4.2)
+##  class          7.3-14   2015-08-30 CRAN (R 3.4.2)
+##  cli            1.0.0    2017-11-05 CRAN (R 3.4.2)
+##  codetools      0.2-15   2016-10-05 CRAN (R 3.4.2)
+##  colorspace     1.3-2    2016-12-14 CRAN (R 3.4.0)
+##  compiler       3.4.2    2017-10-04 local         
+##  crayon         1.3.4    2017-09-16 cran (@1.3.4) 
+##  CVST           0.2-1    2013-12-10 CRAN (R 3.4.0)
+##  datasets     * 3.4.2    2017-10-04 local         
+##  ddalpha        1.3.1    2017-09-27 CRAN (R 3.4.2)
+##  DEoptimR       1.0-8    2016-11-19 CRAN (R 3.4.0)
+##  devtools       1.13.4   2017-11-09 CRAN (R 3.4.2)
+##  digest         0.6.12   2017-01-27 CRAN (R 3.4.0)
+##  dimRed         0.1.0    2017-05-04 CRAN (R 3.4.0)
+##  dplyr        * 0.7.4    2017-09-28 CRAN (R 3.4.2)
+##  DRR            0.0.2    2016-09-15 CRAN (R 3.4.0)
+##  dummies      * 1.5.6    2012-06-14 CRAN (R 3.4.0)
+##  e1071          1.6-8    2017-02-02 CRAN (R 3.4.0)
+##  evaluate       0.10.1   2017-06-24 CRAN (R 3.4.0)
+##  farff        * 1.0      2016-09-11 CRAN (R 3.4.0)
+##  forcats      * 0.2.0    2017-01-23 CRAN (R 3.4.0)
+##  foreach      * 1.4.3    2015-10-13 CRAN (R 3.4.0)
+##  foreign        0.8-69   2017-06-22 CRAN (R 3.4.1)
+##  ggplot2      * 2.2.1    2016-12-30 CRAN (R 3.4.0)
+##  glmnet         2.0-13   2017-09-22 CRAN (R 3.4.2)
+##  glue           1.2.0    2017-10-29 CRAN (R 3.4.2)
+##  gower          0.1.2    2017-02-23 CRAN (R 3.4.0)
+##  graphics     * 3.4.2    2017-10-04 local         
+##  grDevices    * 3.4.2    2017-10-04 local         
+##  grid           3.4.2    2017-10-04 local         
+##  gtable         0.2.0    2016-02-26 CRAN (R 3.4.0)
+##  haven          1.1.0    2017-07-09 CRAN (R 3.4.0)
+##  hms            0.4.0    2017-11-23 CRAN (R 3.4.3)
+##  htmltools      0.3.6    2017-04-28 CRAN (R 3.4.0)
+##  htmlwidgets    0.9      2017-07-10 CRAN (R 3.4.1)
+##  httpuv         1.3.5    2017-07-04 CRAN (R 3.4.1)
+##  httr           1.3.1    2017-08-20 CRAN (R 3.4.1)
+##  ipred          0.9-6    2017-03-01 CRAN (R 3.4.0)
+##  iterators    * 1.0.8    2015-10-13 CRAN (R 3.4.0)
+##  itertools    * 0.1-3    2014-03-12 CRAN (R 3.4.0)
+##  jsonlite       1.5      2017-06-01 CRAN (R 3.4.0)
+##  kernlab        0.9-25   2016-10-03 CRAN (R 3.4.0)
+##  knitr          1.17     2017-08-10 CRAN (R 3.4.1)
+##  labeling       0.3      2014-08-23 CRAN (R 3.4.0)
+##  lattice      * 0.20-35  2017-03-25 CRAN (R 3.4.2)
+##  lava           1.5.1    2017-09-27 CRAN (R 3.4.1)
+##  lazyeval       0.2.1    2017-10-29 CRAN (R 3.4.2)
+##  lime         * 0.3.1    2017-11-24 CRAN (R 3.4.3)
+##  lubridate      1.7.1    2017-11-03 CRAN (R 3.4.2)
+##  magrittr       1.5      2014-11-22 CRAN (R 3.4.0)
+##  MASS           7.3-47   2017-02-26 CRAN (R 3.4.2)
+##  Matrix         1.2-12   2017-11-15 CRAN (R 3.4.2)
+##  memoise        1.1.0    2017-04-21 CRAN (R 3.4.0)
+##  methods      * 3.4.2    2017-10-04 local         
+##  mime           0.5      2016-07-07 CRAN (R 3.4.0)
+##  missForest   * 1.4      2013-12-31 CRAN (R 3.4.0)
+##  mnormt         1.5-5    2016-10-15 CRAN (R 3.4.0)
+##  ModelMetrics   1.1.0    2016-08-26 CRAN (R 3.4.0)
+##  modelr         0.1.1    2017-07-24 CRAN (R 3.4.1)
+##  munsell        0.4.3    2016-02-13 CRAN (R 3.4.0)
+##  nlme           3.1-131  2017-02-06 CRAN (R 3.4.2)
+##  nnet           7.3-12   2016-02-02 CRAN (R 3.4.2)
+##  parallel       3.4.2    2017-10-04 local         
+##  pkgconfig      2.0.1    2017-03-21 CRAN (R 3.4.0)
+##  plyr           1.8.4    2016-06-08 CRAN (R 3.4.0)
+##  pROC         * 1.10.0   2017-06-10 CRAN (R 3.4.0)
+##  prodlim        1.6.1    2017-03-06 CRAN (R 3.4.0)
+##  psych          1.7.8    2017-09-09 CRAN (R 3.4.1)
+##  purrr        * 0.2.4    2017-10-18 CRAN (R 3.4.2)
+##  R6             2.2.2    2017-06-17 CRAN (R 3.4.0)
+##  randomForest * 4.6-12   2015-10-07 CRAN (R 3.4.0)
+##  Rcpp           0.12.14  2017-11-23 CRAN (R 3.4.3)
+##  RcppRoll       0.2.2    2015-04-05 CRAN (R 3.4.0)
+##  readr        * 1.1.1    2017-05-16 CRAN (R 3.4.0)
+##  readxl         1.0.0    2017-04-18 CRAN (R 3.4.0)
+##  recipes        0.1.1    2017-11-20 CRAN (R 3.4.3)
+##  reshape2       1.4.2    2016-10-22 CRAN (R 3.4.0)
+##  rlang          0.1.4    2017-11-05 CRAN (R 3.4.2)
+##  rmarkdown      1.8      2017-11-17 CRAN (R 3.4.2)
+##  robustbase     0.92-8   2017-11-01 CRAN (R 3.4.2)
+##  rpart          4.1-11   2017-03-13 CRAN (R 3.4.2)
+##  rprojroot      1.2      2017-01-16 CRAN (R 3.4.0)
+##  rstudioapi     0.7      2017-09-07 CRAN (R 3.4.1)
+##  rvest          0.3.2    2016-06-17 CRAN (R 3.4.0)
+##  scales         0.5.0    2017-08-24 CRAN (R 3.4.1)
+##  sfsmisc        1.1-1    2017-06-08 CRAN (R 3.4.0)
+##  shiny          1.0.5    2017-08-23 CRAN (R 3.4.1)
+##  shinythemes    1.1.1    2016-10-12 CRAN (R 3.4.0)
+##  splines        3.4.2    2017-10-04 local         
+##  stats        * 3.4.2    2017-10-04 local         
+##  stats4         3.4.2    2017-10-04 local         
+##  stringdist     0.9.4.6  2017-07-31 CRAN (R 3.4.1)
+##  stringi        1.1.6    2017-11-17 CRAN (R 3.4.2)
+##  stringr      * 1.2.0    2017-02-18 CRAN (R 3.4.0)
+##  survival       2.41-3   2017-04-04 CRAN (R 3.4.0)
+##  tibble       * 1.3.4    2017-08-22 CRAN (R 3.4.1)
+##  tidyr        * 0.7.2    2017-10-16 CRAN (R 3.4.2)
+##  tidyselect     0.2.3    2017-11-06 CRAN (R 3.4.2)
+##  tidyverse    * 1.2.1    2017-11-14 CRAN (R 3.4.2)
+##  timeDate       3042.101 2017-11-16 CRAN (R 3.4.2)
+##  tools          3.4.2    2017-10-04 local         
+##  utils        * 3.4.2    2017-10-04 local         
+##  withr          2.1.0    2017-11-01 CRAN (R 3.4.2)
+##  xml2           1.1.1    2017-01-24 CRAN (R 3.4.0)
+##  xtable         1.8-2    2016-02-05 CRAN (R 3.4.0)
+##  yaml           2.1.15   2017-12-01 CRAN (R 3.4.3)</code></pre>
+</div>
+</div>
+]]></content>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[Deep Learning with Keras]]></title>
+    <link href="/2017/12/keras_sketchnotes/"/>
+    <id>/2017/12/keras_sketchnotes/</id>
+    <published>2017-12-03T00:00:00+00:00</published>
+    <updated>2017-12-03T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<p><a href="https://softwareengineeringdaily.com/2016/01/29/deep-learning-and-keras-with-francois-chollet/" class="uri">https://softwareengineeringdaily.com/2016/01/29/deep-learning-and-keras-with-francois-chollet/</a></p>
+<div class="figure">
+<img src="http://res.cloudinary.com/shiring/image/upload/v1512627720/keras_sketchnotes_lgrnvo.jpg" alt="Sketchnotes: Software Engineering Daily - Podcast from Jan 29th 2016" />
+<p class="caption">Sketchnotes: Software Engineering Daily - Podcast from Jan 29th 2016</p>
+</div>
+<p><a href="https://keras.io/">Keras for Python</a> <a href="https://keras.rstudio.com/">Keras for R</a></p>
+<p><a href="https://github.com/maxpumperla/elephas" class="uri">https://github.com/maxpumperla/elephas</a></p>
+<p>If you want to learn more about using Keras with TensorFlow in R, you can book my <a href="https://shirinsplayground.netlify.com/2017/11/deep_learning_keras_tensorflow/">workshop</a>.</p>
+]]></content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[MICE (Multiple Imputation by Chained Equations) in R - sketchnotes from MünsteR Meetup]]></title>
     <link href="/2017/11/mice_sketchnotes/"/>
@@ -81,13 +449,13 @@ fake_data &lt;- data.frame(time = dates,
                         var2 = runif(length(dates))) %&gt;%
   sample_frac(size = 0.33)
 head(fake_data)</code></pre>
-<pre><code>##                   time     var1_1    var1_2    var1_3       var2
-## 37 2017-10-01 08:48:00 0.07175608 0.5641062 0.2502961 0.02417367
-## 21 2017-10-01 08:00:00 0.41508207 0.8934026 0.4230298 0.12985562
-## 67 2017-10-01 10:18:00 0.25452997 0.7144500 0.6424914 0.73024681
-## 55 2017-10-01 09:42:00 0.14190704 0.4078552 0.6612726 0.36456913
-## 6  2017-10-01 07:15:00 0.96192768 0.4485260 0.3236899 0.19431931
-## 3  2017-10-01 07:06:00 0.28983944 0.6356597 0.7815865 0.41453642</code></pre>
+<pre><code>##                   time     var1_1    var1_2     var1_3      var2
+## 58 2017-10-01 09:51:00 0.18659431 0.4884142 0.67499511 0.3847060
+## 47 2017-10-01 09:18:00 0.05723475 0.7462272 0.82958577 0.8189937
+## 52 2017-10-01 09:33:00 0.91306753 0.4560118 0.33849990 0.9003992
+## 32 2017-10-01 08:33:00 0.28218457 0.3366610 0.05865056 0.6852351
+## 38 2017-10-01 08:51:00 0.33958461 0.1152619 0.15120051 0.3679481
+## 46 2017-10-01 09:15:00 0.99795371 0.1515330 0.62306125 0.4855665</code></pre>
 <p>Here, variable 1 (<code>var1</code>) has three measurements per time point, while variable 2 (<code>var2</code>) has one.</p>
 <p>First, for plotting with ggplot2 we want our data in a tidy long format. I also add another column for faceting that groups the variables from <code>var1</code> together.</p>
 <pre class="r"><code>fake_data_long &lt;- fake_data %&gt;%
@@ -95,12 +463,12 @@ head(fake_data)</code></pre>
   mutate(facet = ifelse(x %in% c(&quot;var1_1&quot;, &quot;var1_2&quot;, &quot;var1_3&quot;), &quot;var1&quot;, x))
 head(fake_data_long)</code></pre>
 <pre><code>##                  time      x          y facet
-## 1 2017-10-01 08:48:00 var1_1 0.07175608  var1
-## 2 2017-10-01 08:00:00 var1_1 0.41508207  var1
-## 3 2017-10-01 10:18:00 var1_1 0.25452997  var1
-## 4 2017-10-01 09:42:00 var1_1 0.14190704  var1
-## 5 2017-10-01 07:15:00 var1_1 0.96192768  var1
-## 6 2017-10-01 07:06:00 var1_1 0.28983944  var1</code></pre>
+## 1 2017-10-01 09:51:00 var1_1 0.18659431  var1
+## 2 2017-10-01 09:18:00 var1_1 0.05723475  var1
+## 3 2017-10-01 09:33:00 var1_1 0.91306753  var1
+## 4 2017-10-01 08:33:00 var1_1 0.28218457  var1
+## 5 2017-10-01 08:51:00 var1_1 0.33958461  var1
+## 6 2017-10-01 09:15:00 var1_1 0.99795371  var1</code></pre>
 <p>Now, we can plot this the following way:</p>
 <ul>
 <li>facet by variable</li>
@@ -121,7 +489,7 @@ head(fake_data_long)</code></pre>
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>## R version 3.4.2 (2017-09-28)
 ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-## Running under: macOS High Sierra 10.13.1
+## Running under: macOS High Sierra 10.13.2
 ## 
 ## Matrix products: default
 ## BLAS: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRblas.0.dylib
@@ -140,17 +508,17 @@ head(fake_data_long)</code></pre>
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] tidyselect_0.2.3 reshape2_1.4.2   haven_1.1.0      lattice_0.20-35 
-##  [5] colorspace_1.3-2 htmltools_0.3.6  yaml_2.1.14      rlang_0.1.4     
+##  [5] colorspace_1.3-2 htmltools_0.3.6  yaml_2.1.15      rlang_0.1.4     
 ##  [9] foreign_0.8-69   glue_1.2.0       modelr_0.1.1     readxl_1.0.0    
 ## [13] bindr_0.1        plyr_1.8.4       munsell_0.4.3    blogdown_0.3    
 ## [17] gtable_0.2.0     cellranger_1.1.0 rvest_0.3.2      psych_1.7.8     
 ## [21] evaluate_0.10.1  labeling_0.3     knitr_1.17       parallel_3.4.2  
-## [25] broom_0.4.2      Rcpp_0.12.13     scales_0.5.0     backports_1.1.1 
-## [29] jsonlite_1.5     mnormt_1.5-5     hms_0.3          digest_0.6.12   
-## [33] stringi_1.1.5    bookdown_0.5     grid_3.4.2       rprojroot_1.2   
+## [25] broom_0.4.3      Rcpp_0.12.14     scales_0.5.0     backports_1.1.1 
+## [29] jsonlite_1.5     mnormt_1.5-5     hms_0.4.0        digest_0.6.12   
+## [33] stringi_1.1.6    bookdown_0.5     grid_3.4.2       rprojroot_1.2   
 ## [37] cli_1.0.0        tools_3.4.2      magrittr_1.5     lazyeval_0.2.1  
 ## [41] crayon_1.3.4     pkgconfig_2.0.1  xml2_1.1.1       lubridate_1.7.1 
-## [45] assertthat_0.2.0 rmarkdown_1.7    httr_1.3.1       rstudioapi_0.7  
+## [45] assertthat_0.2.0 rmarkdown_1.8    httr_1.3.1       rstudioapi_0.7  
 ## [49] R6_2.2.2         nlme_3.1-131     compiler_3.4.2</code></pre>
 ]]></content>
   </entry>

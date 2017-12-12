@@ -1,0 +1,223 @@
+---
+title: Explaining Predictions of Machine Learning Models with LIME - Münster Data Science Meetup
+draft: false
+author: Shirin Glander
+date: '2017-12-12'
+categories: ["R", "Python"]
+tags: ["LIME", "Machine Learning", "Data Science"]
+thumbnailImagePosition: left
+thumbnailImage: http://res.cloudinary.com/shiring/image/upload/v1512627737/lime_sketchnotes_guq6u5.jpg
+metaAlignment: center
+coverMeta: out
+slug: lime_sketchnotes
+---
+
+## Slides from Münster Data Science Meetup
+
+[These are my slides](http://res.cloudinary.com/shiring/image/upload/v1513090254/lime_meetup_slides_wvsh6s.pdf) from the [Münster Data Science Meetup on December 12th, 2017](https://www.meetup.com/Data-Science-Meetup-Muenster/events/244173239/).
+
+![](http://res.cloudinary.com/shiring/image/upload/v1513090254/lime_meetup_slides_wvsh6s.pdf)
+
+<br>
+
+My sketchnotes were collected from these two podcasts:
+
+- https://twimlai.com/twiml-talk-7-carlos-guestrin-explaining-predictions-machine-learning-models/
+- https://dataskeptic.com/blog/episodes/2016/trusting-machine-learning-models-with-lime
+
+![Sketchnotes: TWiML Talk #7 with Carlos Guestrin – Explaining the Predictions of Machine Learning Models & Data Skeptic Podcast - Trusting Machine Learning Models with Lime](http://res.cloudinary.com/shiring/image/upload/v1512627737/lime_sketchnotes_guq6u5.jpg)
+
+---
+
+## Example Code
+
+- the following libraries were loaded:
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)  # for tidy data analysis
+library(farff)      # for reading arff file
+library(missForest) # for imputing missing values
+library(dummies)    # for creating dummy variables
+library(caret)      # for modeling
+library(pROC)       # for ROC curve
+library(lime)       # for explaining predictions
+```
+
+### Data
+
+The Chronic Kidney Disease dataset was downloaded from UC Irvine's Machine Learning repository:
+http://archive.ics.uci.edu/ml/datasets/Chronic_Kidney_Disease
+
+```{r eval=FALSE}
+data_file <- file.path("/Users/shiringlander/Documents/Github/data_science_meetup_ms/Chronic_Kidney_Disease/chronic_kidney_disease_full.arff")
+```
+
+- load data with the `farff` package
+
+```{r message=FALSE, warning=FALSE, eval=FALSE}
+data <- readARFF(data_file)
+```
+
+#### Features
+
+- age	-	age	
+- bp	-	blood pressure 
+- sg	-	specific gravity 
+- al	- albumin 
+- su	-	sugar 
+- rbc	-	red blood cells 
+- pc	-	pus cell 
+- pcc	-	pus cell clumps 
+- ba	-	bacteria 
+- bgr	-	blood glucose random 
+- bu	-	blood urea 
+- sc	-	serum creatinine 
+- sod	-	sodium 
+- pot	-	potassium 
+- hemo	-	hemoglobin 
+- pcv	-	packed cell volume 
+- wc	-	white blood cell count 
+- rc	-	red blood cell count 
+- htn	-	hypertension 
+- dm	-	diabetes mellitus 
+- cad	-	coronary artery disease 
+- appet	-	appetite 
+- pe	-	pedal edema 
+- ane	-	anemia 
+- class	-	class
+
+### Missing data
+
+- impute missing data with Nonparametric Missing Value Imputation using Random Forest (`missForest` package)
+
+```{r eval=FALSE}
+data_imp <- missForest(data)
+```
+
+### One-hot encoding
+
+- create dummy variables (`caret::dummy.data.frame()`)
+- scale and center
+
+```{reval=FALSE}
+data_imp_final <- data_imp$ximp
+data_dummy <- dummy.data.frame(dplyr::select(data_imp_final, -class), sep = "_")
+data <- cbind(dplyr::select(data_imp_final, class), scale(data_dummy, 
+                                                   center = apply(data_dummy, 2, min),
+                                                   scale = apply(data_dummy, 2, max)))
+```
+
+### Training and test split
+
+```{r eval=FALSE}
+set.seed(42)
+index <- createDataPartition(data$class, p = 0.9, list = FALSE)
+train_data <- data[index, ]
+test_data  <- data[-index, ]
+```
+
+### Modeling
+
+- train random forest model with `caret`
+
+```{r eval=FALSE}
+set.seed(42)
+model_rf <- caret::train(class ~ .,
+          data = train_data,
+          method = "rf",
+          trControl = trainControl(method = "repeatedcv", 
+                 number = 10, 
+                 repeats = 5, 
+                 verboseIter = FALSE))
+```
+
+```{r eval=FALSE, echo=FALSE}
+save(train_data, file = "output/train_data.RData")
+save(test_data, file = "output/test_data.RData")
+save(model_rf, file = "output/model_rf.RData")
+```
+
+```{r echo=FALSE}
+load("../../data/train_data.RData")
+load("../../data/test_data.RData")
+load("../../data/model_rf.RData")
+```
+
+```{r}
+model_rf
+```
+
+### Predictions
+
+```{r}
+pred <- data.frame(sample_id = 1:nrow(test_data),
+                   predict(model_rf, test_data, type = "prob"),
+                   actual = test_data$class) %>%
+  mutate(prediction = colnames(.)[2:3][apply(.[, 2:3], 1, which.max)],
+         correct = ifelse(actual == prediction, "correct", "wrong"))
+```
+
+- ROC curve
+
+```{r}
+result.roc <- roc(rev(as.numeric(pred$actual) -1), pred$ckd) # Draw ROC curve.
+plot(result.roc)
+```
+
+- confusion matrix
+
+```{r}
+confusionMatrix(pred$actual, pred$prediction)
+```
+
+### LIME
+
+- LIME needs data without response variable
+
+```{r}
+train_x <- dplyr::select(train_data, -class)
+test_x <- dplyr::select(test_data, -class)
+
+train_y <- dplyr::select(train_data, class)
+test_y <- dplyr::select(test_data, class)
+```
+
+- build explainer
+
+```{r}
+explainer <- lime(train_x, 
+                  model_rf, 
+                  n_bins = 5, 
+                  quantile_bins = TRUE)
+```
+
+- run `explain()` function
+
+```{r}
+explanation_df <- lime::explain(test_x, 
+                                explainer, 
+                                n_labels = 1, 
+                                n_features = 8,
+                                n_permutations = 1000,
+                                feature_select = "forward_selection")
+```
+
+- model reliability
+
+```{r}
+explanation_df %>%
+  ggplot(aes(x = model_r2, fill = label)) +
+    geom_density(alpha = 0.5)
+```
+
+- plot explanations
+
+```{r, fig.asp=1.25, out.width='70%', fig.width=6, fig.align='center'}
+plot_features(explanation_df[1:24, ], ncol = 1)
+```
+
+### Session Info
+
+```{r, echo=FALSE}
+devtools::session_info()
+```
