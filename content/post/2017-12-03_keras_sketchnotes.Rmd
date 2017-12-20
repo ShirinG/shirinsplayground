@@ -1,8 +1,8 @@
 ---
-title: Deep Learning with Keras
-draft: true
+title: Registration now open for workshop on Deep Learning with Keras and TensorFlow using R
+draft: false
 author: Shirin Glander
-date: '2017-12-03'
+date: '2017-12-20'
 categories: ["R", "Python"]
 tags: ["Keras", "TensorFlow", "Theano", "Data Science", "tensor"]
 thumbnailImagePosition: left
@@ -12,14 +12,28 @@ coverMeta: out
 slug: keras_sketchnotes
 ---
 
-https://softwareengineeringdaily.com/2016/01/29/deep-learning-and-keras-with-francois-chollet/
+Recently, I announced [my workshop on Deep Learning with Keras and TensorFlow](https://shirinsplayground.netlify.com/2017/11/deep_learning_keras_tensorflow/).
+
+The next dates for it are **January 18th and 19th** in Solingen, Germany.
+
+You can register now by following this link:
+https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow
+
+If any non-German-speaking people want to attend, I'm happy to give the course in English!
+
+[Contact me if you have further questions.](mailto:shirin.glander@codecentric.de)
+
+---
+
+As a little bonus, I am also sharing my sketch notes from a Podcast I listened to when first getting into Keras:
+
+- [Software Engineering Daily with Francois Chollet](https://softwareengineeringdaily.com/2016/01/29/deep-learning-and-keras-with-francois-chollet/)
 
 ![Sketchnotes: Software Engineering Daily - Podcast from Jan 29th 2016](http://res.cloudinary.com/shiring/image/upload/v1512627720/keras_sketchnotes_lgrnvo.jpg)
 
-[Keras for Python](https://keras.io/)
-[Keras for R](https://keras.rstudio.com/)
+Links from the notes:
 
-https://github.com/maxpumperla/elephas
+- [Keras for Python](https://keras.io/)
+- [Keras for R](https://keras.rstudio.com/)
+- [elephas](https://github.com/maxpumperla/elephas)
 
-
-If you want to learn more about using Keras with TensorFlow in R, you can book my [workshop](https://shirinsplayground.netlify.com/2017/11/deep_learning_keras_tensorflow/).

@@ -3,13 +3,13 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/2017/12/lime_sketchnotes/</loc>
-    <lastmod>2017-12-12T00:00:00+00:00</lastmod>
+    <loc>/2017/12/keras_sketchnotes/</loc>
+    <lastmod>2017-12-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/2017/12/keras_sketchnotes/</loc>
-    <lastmod>2017-12-03T00:00:00+00:00</lastmod>
+    <loc>/2017/12/lime_sketchnotes/</loc>
+    <lastmod>2017-12-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -168,7 +168,7 @@
   
   <url>
     <loc>/tags/data-science/</loc>
-    <lastmod>2017-12-12T00:00:00+00:00</lastmod>
+    <lastmod>2017-12-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -246,7 +246,7 @@
   
   <url>
     <loc>/tags/keras/</loc>
-    <lastmod>2017-12-03T00:00:00+00:00</lastmod>
+    <lastmod>2017-12-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -300,7 +300,7 @@
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2017-12-12T00:00:00+00:00</lastmod>
+    <lastmod>2017-12-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -312,13 +312,13 @@
   
   <url>
     <loc>/categories/python/</loc>
-    <lastmod>2017-12-12T00:00:00+00:00</lastmod>
+    <lastmod>2017-12-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/r/</loc>
-    <lastmod>2017-12-12T00:00:00+00:00</lastmod>
+    <lastmod>2017-12-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -342,7 +342,7 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2017-12-12T00:00:00+00:00</lastmod>
+    <lastmod>2017-12-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -360,13 +360,13 @@
   
   <url>
     <loc>/tags/tensor/</loc>
-    <lastmod>2017-12-03T00:00:00+00:00</lastmod>
+    <lastmod>2017-12-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/tags/tensorflow/</loc>
-    <lastmod>2017-12-03T00:00:00+00:00</lastmod>
+    <lastmod>2017-12-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -384,7 +384,7 @@
   
   <url>
     <loc>/tags/theano/</loc>
-    <lastmod>2017-12-03T00:00:00+00:00</lastmod>
+    <lastmod>2017-12-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

@@ -2,12 +2,40 @@
   <title>Shirin&#39;s playgRound</title>
   <link href="/index.xml" rel="self"/>
   <link href="/"/>
-  <updated>2017-12-12T00:00:00+00:00</updated>
+  <updated>2017-12-20T00:00:00+00:00</updated>
   <id>/</id>
   <author>
     <name>Dr. Shirin Glander</name>
   </author>
   <generator>Hugo -- gohugo.io</generator>
+  <entry>
+    <title type="html"><![CDATA[Registration now open for workshop on Deep Learning with Keras and TensorFlow using R]]></title>
+    <link href="/2017/12/keras_sketchnotes/"/>
+    <id>/2017/12/keras_sketchnotes/</id>
+    <published>2017-12-20T00:00:00+00:00</published>
+    <updated>2017-12-20T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<p>Recently, I announced <a href="https://shirinsplayground.netlify.com/2017/11/deep_learning_keras_tensorflow/">my workshop on Deep Learning with Keras and TensorFlow</a>.</p>
+<p>The next dates for it are <strong>January 18th and 19th</strong> in Solingen, Germany.</p>
+<p>You can register now by following this link: <a href="https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow" class="uri">https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow</a></p>
+<p>If any non-German-speaking people want to attend, I’m happy to give the course in English!</p>
+<p><a href="mailto:shirin.glander@codecentric.de">Contact me if you have further questions.</a></p>
+<hr />
+<p>As a little bonus, I am also sharing my sketch notes from a Podcast I listened to when first getting into Keras:</p>
+<ul>
+<li><a href="https://softwareengineeringdaily.com/2016/01/29/deep-learning-and-keras-with-francois-chollet/">Software Engineering Daily with Francois Chollet</a></li>
+</ul>
+<div class="figure">
+<img src="http://res.cloudinary.com/shiring/image/upload/v1512627720/keras_sketchnotes_lgrnvo.jpg" alt="Sketchnotes: Software Engineering Daily - Podcast from Jan 29th 2016" />
+<p class="caption">Sketchnotes: Software Engineering Daily - Podcast from Jan 29th 2016</p>
+</div>
+<p>Links from the notes:</p>
+<ul>
+<li><a href="https://keras.io/">Keras for Python</a></li>
+<li><a href="https://keras.rstudio.com/">Keras for R</a></li>
+<li><a href="https://github.com/maxpumperla/elephas">elephas</a></li>
+</ul>
+]]></content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[Explaining Predictions of Machine Learning Models with LIME - Münster Data Science Meetup]]></title>
     <link href="/2017/12/lime_sketchnotes/"/>
@@ -327,22 +355,6 @@ test_y &lt;- dplyr::select(test_data, class)</code></pre>
 ##  yaml           2.1.15   2017-12-01 CRAN (R 3.4.3)</code></pre>
 </div>
 </div>
-]]></content>
-  </entry>
-  <entry>
-    <title type="html"><![CDATA[Deep Learning with Keras]]></title>
-    <link href="/2017/12/keras_sketchnotes/"/>
-    <id>/2017/12/keras_sketchnotes/</id>
-    <published>2017-12-03T00:00:00+00:00</published>
-    <updated>2017-12-03T00:00:00+00:00</updated>
-    <content type="html"><![CDATA[<p><a href="https://softwareengineeringdaily.com/2016/01/29/deep-learning-and-keras-with-francois-chollet/" class="uri">https://softwareengineeringdaily.com/2016/01/29/deep-learning-and-keras-with-francois-chollet/</a></p>
-<div class="figure">
-<img src="http://res.cloudinary.com/shiring/image/upload/v1512627720/keras_sketchnotes_lgrnvo.jpg" alt="Sketchnotes: Software Engineering Daily - Podcast from Jan 29th 2016" />
-<p class="caption">Sketchnotes: Software Engineering Daily - Podcast from Jan 29th 2016</p>
-</div>
-<p><a href="https://keras.io/">Keras for Python</a> <a href="https://keras.rstudio.com/">Keras for R</a></p>
-<p><a href="https://github.com/maxpumperla/elephas" class="uri">https://github.com/maxpumperla/elephas</a></p>
-<p>If you want to learn more about using Keras with TensorFlow in R, you can book my <a href="https://shirinsplayground.netlify.com/2017/11/deep_learning_keras_tensorflow/">workshop</a>.</p>
 ]]></content>
   </entry>
   <entry>
