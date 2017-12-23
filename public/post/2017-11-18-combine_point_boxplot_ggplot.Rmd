@@ -6,7 +6,7 @@ date: '2017-11-18'
 categories: ["R"]
 tags: ["ggplot2", "Data Science"]
 thumbnailImagePosition: left
-thumbnailImage: http://res.cloudinary.com/shiring/image/upload/v1511025178/ggplot_facets_bmudxl.png
+thumbnailImage: https://shiring.github.io/netlify_images/ggplot_facets_bmudxl.png
 metaAlignment: center
 coverMeta: out
 slug: combine_point_boxplot_ggplot

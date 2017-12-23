@@ -6,7 +6,7 @@ date: '2017-12-12'
 categories: ["R", "Python"]
 tags: ["LIME", "Machine Learning", "Data Science"]
 thumbnailImagePosition: left
-thumbnailImage: http://res.cloudinary.com/shiring/image/upload/v1512627737/lime_sketchnotes_guq6u5.jpg
+thumbnailImage: https://shiring.github.io/netlify_images/lime_sketchnotes_guq6u5.jpg
 metaAlignment: center
 coverMeta: out
 slug: lime_sketchnotes
@@ -14,7 +14,7 @@ slug: lime_sketchnotes
 
 ## Slides from Münster Data Science Meetup
 
-[These are my slides](http://res.cloudinary.com/shiring/image/upload/v1513090254/lime_meetup_slides_wvsh6s.pdf) from the [Münster Data Science Meetup on December 12th, 2017](https://www.meetup.com/Data-Science-Meetup-Muenster/events/244173239/).
+[These are my slides](https://shiring.github.io/netlify_images/lime_meetup_slides_wvsh6s.pdf) from the [Münster Data Science Meetup on December 12th, 2017](https://www.meetup.com/Data-Science-Meetup-Muenster/events/244173239/).
 
 <br>
 
@@ -23,7 +23,7 @@ My sketchnotes were collected from these two podcasts:
 - https://twimlai.com/twiml-talk-7-carlos-guestrin-explaining-predictions-machine-learning-models/
 - https://dataskeptic.com/blog/episodes/2016/trusting-machine-learning-models-with-lime
 
-![Sketchnotes: TWiML Talk #7 with Carlos Guestrin – Explaining the Predictions of Machine Learning Models & Data Skeptic Podcast - Trusting Machine Learning Models with Lime](http://res.cloudinary.com/shiring/image/upload/v1512627737/lime_sketchnotes_guq6u5.jpg)
+![Sketchnotes: TWiML Talk #7 with Carlos Guestrin – Explaining the Predictions of Machine Learning Models & Data Skeptic Podcast - Trusting Machine Learning Models with Lime](https://shiring.github.io/netlify_images/lime_sketchnotes_guq6u5.jpg)
 
 ---
 

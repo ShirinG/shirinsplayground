@@ -1,8 +1,8 @@
 ---
 title: "Migrating from GitHub to GitLab with RStudio (Tutorial)"
 thumbnailImagePosition: left
-thumbnailImage: http://res.cloudinary.com/shiring/image/upload/v1505304786/GitLab_logo_yej6ht.png
-#coverImage: http://res.cloudinary.com/shiring/image/upload/v1505304786/GitLab_logo_yej6ht.png
+thumbnailImage: https://shiring.github.io/netlify_images/GitLab_logo_yej6ht.png
+#coverImage: https://shiring.github.io/netlify_images/GitLab_logo_yej6ht.png
 metaAlignment: center
 coverMeta: out
 date: 2017-09-04
@@ -40,7 +40,7 @@ Tutorial
 
 Migrating from GitHub to [GitLab](https://gitlab.com/) with RStudio is very easy! Here, I will show how I migrated my GitHub repositories of R projects, that I work with from within RStudio, to GitLab.
 
-![](http://res.cloudinary.com/shiring/image/upload/v1505304786/GitLab_logo_yej6ht.png)
+![](https://shiring.github.io/netlify_images/GitLab_logo_yej6ht.png)
 
 Beware, that ALL code snippets below show Terminal code (they are NOT from the R console)!
 
@@ -53,13 +53,13 @@ You first need to set up your GitLab account (you can login with your GitHub acc
 
 Once you have done this, you can import all your GitHub repositories to GitLab. To do this, you first need to create a new project. Click on the drop-down arrow next to the plus sign in the top-right corner and select "New project". This will open the following window:
 
-![](http://res.cloudinary.com/shiring/image/upload/v1505304800/Bildschirmfoto1_yuc7gb.png)
+![](https://shiring.github.io/netlify_images/Bildschirmfoto1_yuc7gb.png)
 
 Here, choose "Import project from GitHub" and choose the repositories you want to import.
 
 If you go into one of your repositories, GitLab will show you a message at the top of the site that tells you that you need to add an SSH key. The SSH key is used for secure communication between the GitLab server and your computer when you want to share information, like push/pull commits.
 
-![](http://res.cloudinary.com/shiring/image/upload/v1505304805/Bildschirmfoto2_diwetw.png)
+![](https://shiring.github.io/netlify_images/Bildschirmfoto2_diwetw.png)
 
 If you already work with GitHub on your computer, you will have an SSH key set up and you can [copy your public SSH key to GitLab](https://gitlab.com/profile/keys). Follow the instructions [here](https://gitlab.com/help/ssh/README).
 
@@ -76,7 +76,7 @@ Then paste it into the respective field [here](https://gitlab.com/profile/keys).
 
 The next step is to change the remote URL for pushing/pulling your project from RStudio. In your Git window (tab next to "Environment" and "History" for me), click on Settings and "Shell".
 
-![](http://res.cloudinary.com/shiring/image/upload/v1505304881/Bildschirmfoto3_ydklnw.png)
+![](https://shiring.github.io/netlify_images/Bildschirmfoto3_ydklnw.png)
 
 Then write in the shell window that opened:
 
@@ -84,7 +84,7 @@ Then write in the shell window that opened:
 
 You can copy the link in the navigation bar of your repo on GitLab.
 
-![](http://res.cloudinary.com/shiring/image/upload/v1505304804/Bildschirmfoto4_dheikm.png)
+![](https://shiring.github.io/netlify_images/Bildschirmfoto4_dheikm.png)
 
 Check that you now have the correct new gitlab path by going to "Tools", "Project Options" and "Git/SVN".
 

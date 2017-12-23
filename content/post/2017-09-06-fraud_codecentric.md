@@ -1,8 +1,8 @@
 ---
 title: "Data Science for Fraud Detection"
 thumbnailImagePosition: left
-thumbnailImage: http://res.cloudinary.com/shiring/image/upload/v1505304742/r_mse_gklfsi.png
-#coverImage: http://res.cloudinary.com/shiring/image/upload/v1505304742/r_mse_gklfsi.png
+thumbnailImage: https://shiring.github.io/netlify_images/r_mse_gklfsi.png
+#coverImage: https://shiring.github.io/netlify_images/r_mse_gklfsi.png
 metaAlignment: center
 coverMeta: out
 date: 2017-09-06
@@ -35,4 +35,4 @@ Continue reading at <https://blog.codecentric.de/en/2017/09/data-science-fraud-d
 
 The blog post is [also available in German](https://blog.codecentric.de/2017/09/fraud-analyse-mit-data-science-techniken/).
 
-![](http://res.cloudinary.com/shiring/image/upload/v1505304742/r_mse_gklfsi.png)
+![](https://shiring.github.io/netlify_images/r_mse_gklfsi.png)

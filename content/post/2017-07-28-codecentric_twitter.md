@@ -1,8 +1,8 @@
 ---
 title: "Social Network Analysis and Topic Modeling of codecentric’s Twitter friends and followers"
 thumbnailImagePosition: left
-thumbnailImage: http://res.cloudinary.com/shiring/image/upload/v1505304891/twitter_net_topics_lnu3j9.png
-#coverImage: http://res.cloudinary.com/shiring/image/upload/v1505304891/twitter_net_topics_lnu3j9.png
+thumbnailImage: https://shiring.github.io/netlify_images/twitter_net_topics_lnu3j9.png
+#coverImage: https://shiring.github.io/netlify_images/twitter_net_topics_lnu3j9.png
 metaAlignment: center
 coverMeta: out
 date: 2017-07-28
@@ -32,4 +32,4 @@ Continue reading at <https://blog.codecentric.de/en/2017/07/combining-social-net
 
 The entire analysis has been done in R 3.4.0 and you can find my code on [Github](https://github.com/ShirinG/blog_posts_prep/blob/master/twitter/twitter_codecentric.Rmd).
 
-![](http://res.cloudinary.com/shiring/image/upload/v1505304891/twitter_net_topics_lnu3j9.png)
+![](https://shiring.github.io/netlify_images/twitter_net_topics_lnu3j9.png)

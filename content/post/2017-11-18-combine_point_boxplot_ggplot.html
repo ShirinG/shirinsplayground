@@ -6,7 +6,7 @@ date: '2017-11-18'
 categories: ["R"]
 tags: ["ggplot2", "Data Science"]
 thumbnailImagePosition: left
-thumbnailImage: http://res.cloudinary.com/shiring/image/upload/v1511025178/ggplot_facets_bmudxl.png
+thumbnailImage: https://shiring.github.io/netlify_images/ggplot_facets_bmudxl.png
 metaAlignment: center
 coverMeta: out
 slug: combine_point_boxplot_ggplot
@@ -28,13 +28,13 @@ fake_data &lt;- data.frame(time = dates,
                         var2 = runif(length(dates))) %&gt;%
   sample_frac(size = 0.33)
 head(fake_data)</code></pre>
-<pre><code>##                   time    var1_1     var1_2    var1_3       var2
-## 59 2017-10-01 09:54:00 0.7522068 0.19164284 0.4144494 0.79770115
-## 58 2017-10-01 09:51:00 0.2280661 0.71679132 0.7057743 0.84598297
-## 34 2017-10-01 08:39:00 0.1559472 0.65772861 0.8805560 0.03178455
-## 7  2017-10-01 07:18:00 0.6587575 0.42514989 0.0735112 0.65127198
-## 67 2017-10-01 10:18:00 0.5080319 0.95918315 0.7072976 0.51867422
-## 38 2017-10-01 08:51:00 0.8959184 0.07420507 0.7812166 0.68003938</code></pre>
+<pre><code>##                   time    var1_1    var1_2    var1_3       var2
+## 51 2017-10-01 09:30:00 0.6628838 0.3774437 0.3705070 0.83558379
+## 71 2017-10-01 10:30:00 0.1588796 0.8054277 0.1046912 0.10579296
+## 63 2017-10-01 10:06:00 0.2192869 0.7745992 0.2676257 0.08972961
+## 15 2017-10-01 07:42:00 0.2476828 0.3929930 0.5299044 0.89985142
+## 46 2017-10-01 09:15:00 0.9832714 0.8658254 0.2050664 0.00684586
+## 5  2017-10-01 07:12:00 0.8837097 0.2926485 0.9216781 0.35141055</code></pre>
 <p>Here, variable 1 (<code>var1</code>) has three measurements per time point, while variable 2 (<code>var2</code>) has one.</p>
 <p>First, for plotting with ggplot2 we want our data in a tidy long format. I also add another column for faceting that groups the variables from <code>var1</code> together.</p>
 <pre class="r"><code>fake_data_long &lt;- fake_data %&gt;%
@@ -42,12 +42,12 @@ head(fake_data)</code></pre>
   mutate(facet = ifelse(x %in% c(&quot;var1_1&quot;, &quot;var1_2&quot;, &quot;var1_3&quot;), &quot;var1&quot;, x))
 head(fake_data_long)</code></pre>
 <pre><code>##                  time      x         y facet
-## 1 2017-10-01 09:54:00 var1_1 0.7522068  var1
-## 2 2017-10-01 09:51:00 var1_1 0.2280661  var1
-## 3 2017-10-01 08:39:00 var1_1 0.1559472  var1
-## 4 2017-10-01 07:18:00 var1_1 0.6587575  var1
-## 5 2017-10-01 10:18:00 var1_1 0.5080319  var1
-## 6 2017-10-01 08:51:00 var1_1 0.8959184  var1</code></pre>
+## 1 2017-10-01 09:30:00 var1_1 0.6628838  var1
+## 2 2017-10-01 10:30:00 var1_1 0.1588796  var1
+## 3 2017-10-01 10:06:00 var1_1 0.2192869  var1
+## 4 2017-10-01 07:42:00 var1_1 0.2476828  var1
+## 5 2017-10-01 09:15:00 var1_1 0.9832714  var1
+## 6 2017-10-01 07:12:00 var1_1 0.8837097  var1</code></pre>
 <p>Now, we can plot this the following way:</p>
 <ul>
 <li>facet by variable</li>
