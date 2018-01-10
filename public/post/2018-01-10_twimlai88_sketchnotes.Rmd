@@ -1,0 +1,22 @@
+---
+title: "TWiMLAI talk 88 sketchnotes: Using Deep Learning and Google Street View to Estimate Demographics with Timnit Gebru"
+draft: true
+author: Shirin Glander
+date: '2018-01-10'
+categories: ["R"]
+tags: ["Fairness", "Machine Learning"]
+thumbnailImagePosition: left
+thumbnailImage: https://shiring.github.io/netlify_images/twimlai88_sketchnotes_vhjzac.jpg
+metaAlignment: center
+coverMeta: out
+slug: twimlai88_sketchnotes
+---
+
+https://twimlai.com/twiml-talk-88-using-deep-learning-google-street-view-estimate-demographics-timnit-gebru/
+
+![Sketchnotes from TWiMLAI talk #88: Using Deep Learning and Google Street View to Estimate Demographics with Timnit Gebru](https://shiring.github.io/netlify_images/twimlai88_sketchnotes_vhjzac.jpg)
+
+
+
+
+

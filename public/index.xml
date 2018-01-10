@@ -2,25 +2,52 @@
   <title>Shirin&#39;s playgRound</title>
   <link href="/index.xml" rel="self"/>
   <link href="/"/>
-  <updated>2017-12-24T00:00:00+00:00</updated>
+  <updated>2018-01-10T00:00:00+00:00</updated>
   <id>/</id>
   <author>
     <name>Dr. Shirin Glander</name>
   </author>
   <generator>Hugo -- gohugo.io</generator>
   <entry>
+    <title type="html"><![CDATA[Looking beyond accuracy to improve trust in machine learning]]></title>
+    <link href="/2018/01/looking_beyond_accuracy_to_improve_trust_in_ml/"/>
+    <id>/2018/01/looking_beyond_accuracy_to_improve_trust_in_ml/</id>
+    <published>2018-01-10T00:00:00+00:00</published>
+    <updated>2018-01-10T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<p>I have written another blogpost about <a href="https://blog.codecentric.de/en/2018/01/look-beyond-accuracy-improve-trust-machine-learning/">Looking beyond accuracy to improve trust in machine learning</a> at my company <a href="https://blog.codecentric.de/en/">codecentric</a>&rsquo;s blog:</p>
+
+<blockquote>
+<p>Traditional machine learning workflows focus heavily on model training and optimization; the best model is usually chosen via performance measures like accuracy or error and we tend to assume that a model is good enough for deployment if it passes certain thresholds of these performance criteria. Why a model makes the predictions it makes, however, is generally neglected. But being able to understand and interpret such models can be immensely important for improving model quality, increasing trust and transparency and for reducing bias. Because complex machine learning models are essentially black boxes and too complicated to understand, we need to use approximations to get a better sense of how they work. One such approach is LIME, which stands for Local Interpretable Model-agnostic Explanations and is a tool that helps understand and explain the decisions made by complex machine learning models.</p>
+</blockquote>
+
+<p>Continue reading at <a href="https://blog.codecentric.de/en/2018/01/look-beyond-accuracy-improve-trust-machine-learning/">https://blog.codecentric.de/en/2018/01/look-beyond-accuracy-improve-trust-machine-learning/</a>&hellip;</p>
+
+<p>Links to the entire example code and more info are given at the end of the blog post.</p>
+
+<p>The blog post is <a href="https://blog.codecentric.de/2018/01/vertrauen-und-vorurteile-maschinellem-lernen/">also available in German</a>.</p>
+
+<p><img src="https://blog.codecentric.de/files/2018/01/lime_output_figure.png" alt="" /></p>
+]]></content>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[Plumber package]]></title>
+    <link href="/2018/01/plumber/"/>
+    <id>/2018/01/plumber/</id>
+    <published>2018-01-10T00:00:00+00:00</published>
+    <updated>2018-01-10T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title type="html"><![CDATA[TWiMLAI talk 88 sketchnotes: Using Deep Learning and Google Street View to Estimate Demographics with Timnit Gebru]]></title>
-    <link href="/2017/12/twimlai88_sketchnotes/"/>
-    <id>/2017/12/twimlai88_sketchnotes/</id>
-    <published>2017-12-24T00:00:00+00:00</published>
-    <updated>2017-12-24T00:00:00+00:00</updated>
+    <link href="/2018/01/twimlai88_sketchnotes/"/>
+    <id>/2018/01/twimlai88_sketchnotes/</id>
+    <published>2018-01-10T00:00:00+00:00</published>
+    <updated>2018-01-10T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p><a href="https://twimlai.com/twiml-talk-88-using-deep-learning-google-street-view-estimate-demographics-timnit-gebru/" class="uri">https://twimlai.com/twiml-talk-88-using-deep-learning-google-street-view-estimate-demographics-timnit-gebru/</a></p>
 <div class="figure">
 <img src="https://shiring.github.io/netlify_images/twimlai88_sketchnotes_vhjzac.jpg" alt="Sketchnotes from TWiMLAI talk #88: Using Deep Learning and Google Street View to Estimate Demographics with Timnit Gebru" />
 <p class="caption">Sketchnotes from TWiMLAI talk #88: Using Deep Learning and Google Street View to Estimate Demographics with Timnit Gebru</p>
 </div>
-<hr />
-<p><a href="https://data.police.uk/" class="uri">https://data.police.uk/</a></p>
 ]]></content>
   </entry>
   <entry>
