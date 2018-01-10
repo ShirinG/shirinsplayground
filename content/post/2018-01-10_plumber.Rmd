@@ -17,7 +17,11 @@ The [plumber](www.rplumber.io) (Trestle Technology, LLC 2017) package for R make
 As said, you can take an existing R script and make accessible with plumber by simply adding a few lines of comments. If you have worked with Roxygen before, e.g. when building a package, you will already be familiar with the core concepts. If not, here are the most important things to know:
 
 - you define every input paramter that will go into your function
-- you define the output
+- you define the output or endpoint
+
+## Webservices and APIs
+
+
 
 ```{r warning=FALSE, message=FALSE}
 library(plumber)

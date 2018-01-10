@@ -35,7 +35,42 @@
     <id>/2018/01/plumber/</id>
     <published>2018-01-10T00:00:00+00:00</published>
     <updated>2018-01-10T00:00:00+00:00</updated>
-    <content type="html"><![CDATA[]]></content>
+    <content type="html"><![CDATA[<p>The <a href="www.rplumber.io">plumber</a> (Trestle Technology, LLC 2017) package for R makes it easy to expose existing R code as a webservice via an API.</p>
+<p>As said, you can take an existing R script and make accessible with plumber by simply adding a few lines of comments. If you have worked with Roxygen before, e.g. when building a package, you will already be familiar with the core concepts. If not, here are the most important things to know:</p>
+<ul>
+<li>you define every input paramter that will go into your function</li>
+<li>you define the output or endpoint</li>
+</ul>
+<div id="webservices-and-apis" class="section level2">
+<h2>Webservices and APIs</h2>
+<pre class="r"><code>library(plumber)</code></pre>
+<hr />
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 3.4.2 (2017-09-28)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS High Sierra 10.13.2
+## 
+## Matrix products: default
+## BLAS: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] de_DE.UTF-8/de_DE.UTF-8/de_DE.UTF-8/C/de_DE.UTF-8/de_DE.UTF-8
+## 
+## attached base packages:
+## [1] methods   stats     graphics  grDevices utils     datasets  base     
+## 
+## other attached packages:
+## [1] plumber_0.4.4
+## 
+## loaded via a namespace (and not attached):
+##  [1] Rcpp_0.12.14    bookdown_0.5    crayon_1.3.4    digest_0.6.12  
+##  [5] rprojroot_1.2   R6_2.2.2        jsonlite_1.5    backports_1.1.1
+##  [9] magrittr_1.5    evaluate_0.10.1 blogdown_0.3    stringi_1.1.6  
+## [13] rmarkdown_1.8   tools_3.4.2     stringr_1.2.0   httpuv_1.3.5   
+## [17] yaml_2.1.15     compiler_3.4.2  htmltools_0.3.6 knitr_1.17</code></pre>
+</div>
+]]></content>
   </entry>
   <entry>
     <title type="html"><![CDATA[TWiMLAI talk 88 sketchnotes: Using Deep Learning and Google Street View to Estimate Demographics with Timnit Gebru]]></title>
@@ -43,11 +78,29 @@
     <id>/2018/01/twimlai88_sketchnotes/</id>
     <published>2018-01-10T00:00:00+00:00</published>
     <updated>2018-01-10T00:00:00+00:00</updated>
-    <content type="html"><![CDATA[<p><a href="https://twimlai.com/twiml-talk-88-using-deep-learning-google-street-view-estimate-demographics-timnit-gebru/" class="uri">https://twimlai.com/twiml-talk-88-using-deep-learning-google-street-view-estimate-demographics-timnit-gebru/</a></p>
+    <content type="html"><![CDATA[<p>These are my sketchnotes taken from the <a href="https://twimlai.com/twiml-talk-88-using-deep-learning-google-street-view-estimate-demographics-timnit-gebru/">“This week in Machine Learning &amp; AI” podcast number 88 about Using Deep Learning and Google Street View to Estimate Demographics with Timnit Gebru</a>:</p>
 <div class="figure">
 <img src="https://shiring.github.io/netlify_images/twimlai88_sketchnotes_vhjzac.jpg" alt="Sketchnotes from TWiMLAI talk #88: Using Deep Learning and Google Street View to Estimate Demographics with Timnit Gebru" />
 <p class="caption">Sketchnotes from TWiMLAI talk #88: Using Deep Learning and Google Street View to Estimate Demographics with Timnit Gebru</p>
 </div>
+]]></content>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[Twimlai talk 91]]></title>
+    <link href="/2018/01/twimlai91/"/>
+    <id>/2018/01/twimlai91/</id>
+    <published>2018-01-10T00:00:00+00:00</published>
+    <updated>2018-01-10T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<p><a href="https://twimlai.com/twiml-talk-91-philosophy-intelligence-matthew-crosby/" class="uri">https://twimlai.com/twiml-talk-91-philosophy-intelligence-matthew-crosby/</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[Twimlai talk 92]]></title>
+    <link href="/2018/01/twimlai92/"/>
+    <id>/2018/01/twimlai92/</id>
+    <published>2018-01-10T00:00:00+00:00</published>
+    <updated>2018-01-10T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<p><a href="https://twimlai.com/twiml-talk-92-learning-state-representations-yael-niv/" class="uri">https://twimlai.com/twiml-talk-92-learning-state-representations-yael-niv/</a></p>
 ]]></content>
   </entry>
   <entry>
