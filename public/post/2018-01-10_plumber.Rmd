@@ -12,20 +12,152 @@ coverMeta: out
 slug: plumber
 ---
 
-The [plumber](www.rplumber.io) (Trestle Technology, LLC 2017) package for R makes it easy to expose existing R code as a webservice via an API.
+The [plumber](www.rplumber.io) package for R makes it easy to expose existing R code as a webservice via an API (Trestle Technology, LLC 2017).
 
-As said, you can take an existing R script and make accessible with plumber by simply adding a few lines of comments. If you have worked with Roxygen before, e.g. when building a package, you will already be familiar with the core concepts. If not, here are the most important things to know:
+You take an existing R script and make it accessible with `plumber` by simply adding a few lines of comments. If you have worked with Roxygen before, e.g. when building a package, you will already be familiar with the core concepts. If not, here are the most important things to know:
 
-- you define every input paramter that will go into your function
+- you can define every input parameter that will go into your function
 - you define the output or endpoint
 
-## Webservices and APIs
+## What are APIs and webservices?
 
+With `plumber`, we can build so called **HTTP APIs**. HTTP stands for Hypertext Transfer Protocol and is used to transmit information on the web; API stands for Application Programming Interface and governs the connection between some software and underlying applications. Software can then communicate via HTTP APIs.
 
+## How to convert your R script into an API with plumber
+
+Let's say we have trained a machine learning model as in [this post about LIME](https://shirinsplayground.netlify.com/2017/12/lime_sketchnotes/). I loaded a data set on chronic kidney disease, did some preprocessing, split it into training and test data and trained a random forest model with `caret`. We could now call predictions for one test case with the following code:
+
+```{r}
+# load test data
+load("../../data/test_data.RData")
+
+# load model
+load("../../data/model_rf.RData")
+
+# take first test case for prediction
+test <- test_data[1, ]
+
+# predict test case using model
+pred <- predict(model_rf, test, type = "prob")
+```
+
+I am wrapping the `predict()` function in a new custom function `calculate prediction()` because I might want to be able to quickly add additional preprocessing steps later without having to change too much code. With the function as it is right now this is not technically necessary.
 
 ```{r warning=FALSE, message=FALSE}
 library(plumber)
 ```
+
+In order to convert this very simple script into an API, we need to define the endpoint(s). Endpoints will return an output, in our case it will return the prediction probabilites from the `predict()` function. Here, we want to have the predictions returned, so we annotate the `predict()` function with `# @get`. This endpoint in the API we will give a custom name, so that we can call it later; here we call it `predict` and therefore write `#' @get /predict`.
+
+> According to the design of the HTTP specification, GET (along with HEAD) requests are used only to read data and not change it. Therefore, when used this way, they are considered safe. That is, they can be called without risk of data modification or corruption—calling it once has the same effect as calling it 10 times, or none at all. Additionally, GET (and HEAD) is idempotent, which means that making multiple identical requests ends up having the same result as a single request. http://www.restapitutorial.com/lessons/httpmethods.html
+
+```{r eval=FALSE}
+# predict test case using model
+#' @get /predict
+calculate_prediction <- function(test) {
+  predict(model_rf, test, type = "prob")
+}
+```
+
+We need to save the entire script as a *.R* file like so:
+
+```{r eval=FALSE}
+# plumber.R
+
+# load model
+load("../../data/model_rf.RData")
+
+# predict test case using model
+#' @get /predict
+#' #' @html
+calculate_prediction <- function(test) {
+  predict(model_rf, test, type = "prob")
+}
+
+```
+
+However, we still need to define the input, in our case the test data. When we look at the model object, we see that it expects the following parameters:
+
+```{r}
+model_rf$finalModel$xNames
+```
+
+In order for `plumber` to work with our input, it needs to be part of the HTTP request, which can then be routed to our R function.
+
+The [plumber documentation](https://www.rplumber.io/docs/quickstart.html#specifying-the-inputs) describes how to use query strings as inputs. But for our case, manually writing query strings is not practical because we have so many parameters. Of course, there are programs that let us generate query strings but the easiest way I found to format the input from a line of data is to use JSON.
+
+The `toJSON()` function from the `rjson` package converts out input line to JSON format:
+
+```{r}
+library(rjson)
+test_case_json <- toJSON(test)
+cat(test_case_json)
+```
+
+We can now run our script with the `plumb()` function and open it on port 800. Because we annotated the `calculate_prediction()` function in our script with `#' @get /predict` we could access it via *http://localhost:8000/predict*.
+
+```{r eval=FALSE}
+r <- plumb("/Users/shiringlander/Documents/Github/shirinsplayground/static/scripts/plumber.R")
+r$run(port=8000)
+```
+
+But we want to put our JSON formatted input into the function as the `test` parameter. To do this, we can use *curl* from the command line and feed in the JSON string from above.
+
+```{}
+curl -H "Content-Type: application/json" -X GET -d '{"test":[{"class":"ckd","age":0.511111111111111,"bp":0.111111111111111,"sg_1.005":1,"sg_1.010":0,"sg_1.015":0,"sg_1.020":0,"sg_1.025":0,"al_0":0,"al_1":0,"al_2":0,"al_3":0,"al_4":1,"al_5":0,"su_0":1,"su_1":0,"su_2":0,"su_3":0,"su_4":0,"su_5":0,"rbc_normal":1,"rbc_abnormal":0,"pc_normal":0,"pc_abnormal":1,"pcc_present":1,"pcc_notpresent":0,"ba_present":0,"ba_notpresent":1,"bgr":0.193877551020408,"bu":0.139386189258312,"sc":0.0447368421052632,"sod":0.653374233128834,"pot":0,"hemo":0.455056179775281,"pcv":0.425925925925926,"wbcc":0.170454545454545,"rbcc":0.225,"htn_yes":1,"htn_no":0,"dm_yes":0,"dm_no":1,"cad_yes":0,"cad_no":1,"appet_good":0,"appet_poor":1,"pe_yes":1,"pe_no":0,"ane_yes":1,"ane_no":0}]}' "http://localhost:8000/predict"
+```
+
+This will return the following output (also in JSON format):
+
+*[{"ckd":0.984,"notckd":0.016}]*
+
+## Tweaking the output
+
+```{r eval=FALSE}
+# plumber2.R
+
+# load model
+load("../../data/model_rf.RData")
+
+# predict test case using model
+#' @get /predict
+calculate_prediction <- function(test) {
+  pred <- predict(model_rf, test)
+  cat("----------------\nTest case predicted to be", unlist(pred), "\n----------------")
+}
+
+```
+
+```{r eval=FALSE}
+r2 <- plumb("/Users/shiringlander/Documents/Github/shirinsplayground/static/scripts/plumber2.R")
+r2$run(port=8000)
+```
+
+With the same *curl* command from above we now get output to our R console:
+
+```{}
+----------------
+Test case predicted to be 1 
+----------------
+```
+
+## Filters
+
+```{r eval=FALSE}
+r3 <- plumb("/Users/shiringlander/Documents/Github/shirinsplayground/static/scripts/plumber3.R")
+r3$run(port=8000)
+```
+
+```{}
+2018-01-12 08:12:41 - GET /predict - curl/7.54.0 @ 127.0.0.1 
+----------------
+Test case predicted to be 1 
+----------------
+```
+
+---
+
+https://www.r-bloggers.com/initiating-development-of-a-chatbot-with-plumber-and-ngrok/
 
 ---
 
