@@ -157,6 +157,21 @@ Test case predicted to be 1
 
 ---
 
+```{r eval=FALSE}
+r4 <- plumb("/Users/shiringlander/Documents/Github/shirinsplayground/static/scripts/plumber4.R")
+r4$run(port=8000)
+```
+
+```{}
+curl -H "Content-Type: application/json" -X POST -d '{"test":[{"class":"ckd","age":0.511111111111111,"bp":0.111111111111111,"sg_1.005":1,"sg_1.010":0,"sg_1.015":0,"sg_1.020":0,"sg_1.025":0,"al_0":0,"al_1":0,"al_2":0,"al_3":0,"al_4":1,"al_5":0,"su_0":1,"su_1":0,"su_2":0,"su_3":0,"su_4":0,"su_5":0,"rbc_normal":1,"rbc_abnormal":0,"pc_normal":0,"pc_abnormal":1,"pcc_present":1,"pcc_notpresent":0,"ba_present":0,"ba_notpresent":1,"bgr":0.193877551020408,"bu":0.139386189258312,"sc":0.0447368421052632,"sod":0.653374233128834,"pot":0,"hemo":0.455056179775281,"pcv":0.425925925925926,"wbcc":0.170454545454545,"rbcc":0.225,"htn_yes":1,"htn_no":0,"dm_yes":0,"dm_no":1,"cad_yes":0,"cad_no":1,"appet_good":0,"appet_poor":1,"pe_yes":1,"pe_no":0,"ane_yes":1,"ane_no":0}]}' "http://localhost:8000/predict"
+```
+
+```{}
+curl -H "Content-Type: application/json" -X POST -d '{"class":"ckd","age":0.511111111111111,"bp":0.111111111111111,"sg_1.005":1,"sg_1.010":0,"sg_1.015":0,"sg_1.020":0,"sg_1.025":0,"al_0":0,"al_1":0,"al_2":0,"al_3":0,"al_4":1,"al_5":0,"su_0":1,"su_1":0,"su_2":0,"su_3":0,"su_4":0,"su_5":0,"rbc_normal":1,"rbc_abnormal":0,"pc_normal":0,"pc_abnormal":1,"pcc_present":1,"pcc_notpresent":0,"ba_present":0,"ba_notpresent":1,"bgr":0.193877551020408,"bu":0.139386189258312,"sc":0.0447368421052632,"sod":0.653374233128834,"pot":0,"hemo":0.455056179775281,"pcv":0.425925925925926,"wbcc":0.170454545454545,"rbcc":0.225,"htn_yes":1,"htn_no":0,"dm_yes":0,"dm_no":1,"cad_yes":0,"cad_no":1,"appet_good":0,"appet_poor":1,"pe_yes":1,"pe_no":0,"ane_yes":1,"ane_no":0}' "http://localhost:8000/predict2"
+```
+
+---
+
 https://www.r-bloggers.com/initiating-development-of-a-chatbot-with-plumber-and-ngrok/
 
 ---
