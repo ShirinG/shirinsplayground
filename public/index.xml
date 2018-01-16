@@ -2,12 +2,364 @@
   <title>Shirin&#39;s playgRound</title>
   <link href="/index.xml" rel="self"/>
   <link href="/"/>
-  <updated>2018-01-14T00:00:00+00:00</updated>
+  <updated>2018-01-16T00:00:00+00:00</updated>
   <id>/</id>
   <author>
     <name>Dr. Shirin Glander</name>
   </author>
   <generator>Hugo -- gohugo.io</generator>
+  <entry>
+    <title type="html"><![CDATA[How to make your machine learning model available as an API with the plumber package]]></title>
+    <link href="/2018/01/plumber/"/>
+    <id>/2018/01/plumber/</id>
+    <published>2018-01-16T00:00:00+00:00</published>
+    <updated>2018-01-16T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<div class="figure">
+<img src="https://d33wubrfki0l68.cloudfront.net/03f3d9156c39a8043be42caeee1507d43d832472/8d968/components/images/plumber.png" />
+
+</div>
+<p>The <a href="www.rplumber.io">plumber</a> package for R makes it easy to expose existing R code as a webservice via an API (Trestle Technology, LLC 2017).</p>
+<p>You take an existing R script and make it accessible with <code>plumber</code> by simply adding a few lines of comments. If you have worked with Roxygen before, e.g. when building a package, you will already be familiar with the core concepts. If not, here are the most important things to know:</p>
+<ul>
+<li>you define the output or endpoint</li>
+<li>you can add additional annotation to customize your input, output and other functionalities of your API</li>
+<li>you can define every input parameter that will go into your function</li>
+<li>every such annotation will begin with either <code>#'</code> or <code>#*</code></li>
+</ul>
+<p>With this setup, we can take a trained machine learning model and make it available as an API. With this API, other programs can access it and use it to make predictions.</p>
+<div id="what-are-apis-and-webservices" class="section level2">
+<h2>What are APIs and webservices?</h2>
+<p>With <code>plumber</code>, we can build so called <strong>HTTP APIs</strong>. HTTP stands for Hypertext Transfer Protocol and is used to transmit information on the web; API stands for Application Programming Interface and governs the connection between some software and underlying applications. Software can then communicate via HTTP APIs. This way, our R script can be called from other software, even if the other program is not written in R and we have built a tool for machine-to-machine communication, i.e. a webservice.</p>
+</div>
+<div id="how-to-convert-your-r-script-into-an-api-with-plumber" class="section level2">
+<h2>How to convert your R script into an API with plumber</h2>
+<div id="training-and-saving-a-model" class="section level3">
+<h3>Training and saving a model</h3>
+<p>Let’s say we have trained a machine learning model as in <a href="https://shirinsplayground.netlify.com/2017/12/lime_sketchnotes/">this post about LIME</a>. I loaded a data set on chronic kidney disease, did some preprocessing (converting categorical features into dummy variables, scaling and centering), split it into training and test data and trained a Random Forest model with <code>caret</code>. We can use this trained model to make predictions for one test case with the following code:</p>
+<pre class="r"><code>library(tidyverse)
+
+# load test and train data
+load(&quot;../../data/test_data.RData&quot;)
+load(&quot;../../data/train_data.RData&quot;)
+
+# load model
+load(&quot;../../data/model_rf.RData&quot;)
+
+# take first test case for prediction
+input_data &lt;- test_data[1, ] %&gt;%
+  select(-class)
+
+# predict test case using model
+pred &lt;- predict(model_rf, input_data)
+cat(&quot;----------------\nTest case predicted to be&quot;, as.character(pred), &quot;\n----------------&quot;)</code></pre>
+<pre><code>## ----------------
+## Test case predicted to be ckd 
+## ----------------</code></pre>
+</div>
+<div id="the-input" class="section level3">
+<h3>The input</h3>
+<p>For our API to work, we need to define the input, in our case the features of the test data. When we look at the model object, we see that it expects the following parameters:</p>
+<pre class="r"><code>var_names &lt;- model_rf$finalModel$xNames
+var_names</code></pre>
+<pre><code>##  [1] &quot;age&quot;            &quot;bp&quot;             &quot;sg_1.005&quot;       &quot;sg_1.010&quot;      
+##  [5] &quot;sg_1.015&quot;       &quot;sg_1.020&quot;       &quot;sg_1.025&quot;       &quot;al_0&quot;          
+##  [9] &quot;al_1&quot;           &quot;al_2&quot;           &quot;al_3&quot;           &quot;al_4&quot;          
+## [13] &quot;al_5&quot;           &quot;su_0&quot;           &quot;su_1&quot;           &quot;su_2&quot;          
+## [17] &quot;su_3&quot;           &quot;su_4&quot;           &quot;su_5&quot;           &quot;rbc_normal&quot;    
+## [21] &quot;rbc_abnormal&quot;   &quot;pc_normal&quot;      &quot;pc_abnormal&quot;    &quot;pcc_present&quot;   
+## [25] &quot;pcc_notpresent&quot; &quot;ba_present&quot;     &quot;ba_notpresent&quot;  &quot;bgr&quot;           
+## [29] &quot;bu&quot;             &quot;sc&quot;             &quot;sod&quot;            &quot;pot&quot;           
+## [33] &quot;hemo&quot;           &quot;pcv&quot;            &quot;wbcc&quot;           &quot;rbcc&quot;          
+## [37] &quot;htn_yes&quot;        &quot;htn_no&quot;         &quot;dm_yes&quot;         &quot;dm_no&quot;         
+## [41] &quot;cad_yes&quot;        &quot;cad_no&quot;         &quot;appet_good&quot;     &quot;appet_poor&quot;    
+## [45] &quot;pe_yes&quot;         &quot;pe_no&quot;          &quot;ane_yes&quot;        &quot;ane_no&quot;</code></pre>
+<p>Good practice is to write the input parameter definition into you <a href="https://swagger.io/swagger-ui/">API Swagger UI</a>, but the code would work without these annotations. We define the parameters by annotating them with name and description in our R-script using <code>@parameter</code>. For this purpose, I want to know the type and min/max values for each of my variables in the training data. Because categorical data has been converted to dummy variables and then scaled and centered, these values will all be numeric and between 0 and 1 in this example. If I would build this script for a real case, I’d use the raw data as input and add a preprocessing function to my script, though!</p>
+<pre class="r"><code># show parameter definition for the first three features
+for (i in 1:3) {
+# if you wanted to see it for all features, use
+#for (i in 1:length(var_names)) {
+  var &lt;- var_names[i]
+  train_data_subs &lt;- train_data[, which(colnames(train_data) == var)]
+  type &lt;- class(train_data_subs)
+  
+  if (type == &quot;numeric&quot;) {
+    min &lt;- min(train_data_subs)
+    max &lt;- max(train_data_subs)
+  }
+  
+  cat(&quot;Variable:&quot;, var, &quot;is of type:&quot;, type, &quot;\n&quot;,
+      &quot;Min value in training data =&quot;, min, &quot;\n&quot;,
+      &quot;Max value in training data =&quot;, max, &quot;\n----------\n&quot;)
+
+}</code></pre>
+<pre><code>## Variable: age is of type: numeric 
+##  Min value in training data = 0 
+##  Max value in training data = 0.9777778 
+## ----------
+## Variable: bp is of type: numeric 
+##  Min value in training data = 0 
+##  Max value in training data = 0.7222222 
+## ----------
+## Variable: sg_1.005 is of type: numeric 
+##  Min value in training data = 0 
+##  Max value in training data = 1 
+## ----------</code></pre>
+<blockquote>
+<p>Unless otherwise instructed, all parameters passed into plumber endpoints from query strings or dynamic paths will be character strings. <a href="https://www.rplumber.io/docs/routing-and-input.html#typed-dynamic-routes" class="uri">https://www.rplumber.io/docs/routing-and-input.html#typed-dynamic-routes</a></p>
+</blockquote>
+<p>This means that we need to convert numeric values before we process them further. Or we can define the parameter type explicitly, e.g. by writing <code>variable_1:numeric</code> if we want to specifiy that <em>variable_1</em> is supposed to be numeric.</p>
+<p>To make sure that the model will perform as expected, it is also advisable to add a few validation functions. Here, I will validate</p>
+<ul>
+<li>whether every parameter is numeric/integer by checking for NAs (which would have resulted from <code>as.numeric()</code>/<code>as.integer()</code> applied to data of character type)</li>
+<li>whether every parameter is between 0 and 1</li>
+</ul>
+<p>In order for <code>plumber</code> to work with our input, it needs to be part of the HTTP request, which can then be routed to our R function. The <a href="https://www.rplumber.io/docs/routing-and-input.html#query-strings">plumber documentation</a> describes how to use query strings as inputs. But in our case, manually writing query strings is not practical because we have so many parameters. Of course, there are programs that let us generate query strings but the easiest way to format the input from a line of data I found is to use JSON.</p>
+<p>The <code>toJSON()</code> function from the <code>rjson</code> package converts our input line to JSON format:</p>
+<pre class="r"><code>library(rjson)
+test_case_json &lt;- toJSON(input_data)
+cat(test_case_json)</code></pre>
+<pre><code>## {&quot;age&quot;:0.511111111111111,&quot;bp&quot;:0.111111111111111,&quot;sg_1.005&quot;:1,&quot;sg_1.010&quot;:0,&quot;sg_1.015&quot;:0,&quot;sg_1.020&quot;:0,&quot;sg_1.025&quot;:0,&quot;al_0&quot;:0,&quot;al_1&quot;:0,&quot;al_2&quot;:0,&quot;al_3&quot;:0,&quot;al_4&quot;:1,&quot;al_5&quot;:0,&quot;su_0&quot;:1,&quot;su_1&quot;:0,&quot;su_2&quot;:0,&quot;su_3&quot;:0,&quot;su_4&quot;:0,&quot;su_5&quot;:0,&quot;rbc_normal&quot;:1,&quot;rbc_abnormal&quot;:0,&quot;pc_normal&quot;:0,&quot;pc_abnormal&quot;:1,&quot;pcc_present&quot;:1,&quot;pcc_notpresent&quot;:0,&quot;ba_present&quot;:0,&quot;ba_notpresent&quot;:1,&quot;bgr&quot;:0.193877551020408,&quot;bu&quot;:0.139386189258312,&quot;sc&quot;:0.0447368421052632,&quot;sod&quot;:0.653374233128834,&quot;pot&quot;:0,&quot;hemo&quot;:0.455056179775281,&quot;pcv&quot;:0.425925925925926,&quot;wbcc&quot;:0.170454545454545,&quot;rbcc&quot;:0.225,&quot;htn_yes&quot;:1,&quot;htn_no&quot;:0,&quot;dm_yes&quot;:0,&quot;dm_no&quot;:1,&quot;cad_yes&quot;:0,&quot;cad_no&quot;:1,&quot;appet_good&quot;:0,&quot;appet_poor&quot;:1,&quot;pe_yes&quot;:1,&quot;pe_no&quot;:0,&quot;ane_yes&quot;:1,&quot;ane_no&quot;:0}</code></pre>
+</div>
+<div id="defining-the-endpoint-and-output" class="section level3">
+<h3>Defining the endpoint and output</h3>
+<p>In order to convert this very simple script into an API, we need to define the endpoint(s). Endpoints will return an output, in our case it will return the output of the <code>predict()</code> function pasted into a line of text (e.g. “Test case predicted to be ckd”). Here, we want to have the predictions returned, so we annotate the entire function with <code>@get</code>. This endpoint in the API will get a custom name, so that we can call it later; here we call it <code>predict</code> and therefore write <code>#' @get /predict</code>.</p>
+<blockquote>
+<p>According to the design of the HTTP specification, GET (along with HEAD) requests are used only to read data and not change it. Therefore, when used this way, they are considered safe. That is, they can be called without risk of data modification or corruption — calling it once has the same effect as calling it 10 times, or none at all. Additionally, GET (and HEAD) is idempotent, which means that making multiple identical requests ends up having the same result as a single request. <a href="http://www.restapitutorial.com/lessons/httpmethods.html" class="uri">http://www.restapitutorial.com/lessons/httpmethods.html</a></p>
+</blockquote>
+<p>In this case, we could also consider using <code>@post</code> to avoid caching issues, but for this example I’ll leave it as <code>@get</code>.</p>
+<blockquote>
+<p>The POST verb is most-often utilized to <strong>create</strong> new resources. In particular, it’s used to create subordinate resources. That is, subordinate to some other (e.g. parent) resource. In other words, when creating a new resource, POST to the parent and the service takes care of associating the new resource with the parent, assigning an ID (new resource URI), etc. On successful creation, return HTTP status 201, returning a Location header with a link to the newly-created resource with the 201 HTTP status. POST is neither safe nor idempotent. It is therefore recommended for non-idempotent resource requests. Making two identical POST requests will most-likely result in two resources containing the same information. <a href="http://www.restapitutorial.com/lessons/httpmethods.html" class="uri">http://www.restapitutorial.com/lessons/httpmethods.html</a></p>
+</blockquote>
+<p>We can also customize the output. Keep in mind though, that the output should be <a href="https://www.rplumber.io/docs/rendering-and-output.html#serializers">“serialized”</a>. By default, the output will be in JSON format. Here, I want to have a text output, so I’ll specify <code>@html</code> without html formatting specifications, although I could add them if I wanted to display the text on a website. If we were to <a href="https://www.rplumber.io/docs/runtime.html#external-data-store">store the data in a database</a>, however, this would not be a good idea. In that case, it would be better to output the result as a JSON object.</p>
+</div>
+<div id="logging-with-filters" class="section level3">
+<h3>Logging with filters</h3>
+<p>It is also useful to provide some sort of logging for your API. Here, I am using the simple example from the <a href="https://www.rplumber.io/docs/routing-and-input.html#filters">plumber documentation</a> that uses filters and output the logs to the console or your API server logs. You could also <a href="https://www.rplumber.io/docs/runtime.html#file-system">write your logging output to a file</a>. In production, it would be better to use a real logging setup that stores information about each request, e.g. the time stamp, whether any errors or warnings occurred, etc. The <code>forward()</code> part of the logging function passes control on to the next handler in the pipeline, here our predict function.</p>
+</div>
+<div id="running-the-plumber-script" class="section level3">
+<h3>Running the plumber script</h3>
+<p>We need to save the entire script with annotations as an <em>.R</em> file as seen below. The regular comments <code>#</code> describe what each section does.</p>
+<pre><code># script name:
+# plumber.R
+
+# set API title and description to show up in http://localhost:8000/__swagger__/
+
+#&#39; @apiTitle Run predictions for Chronic Kidney Disease with Random Forest Model
+#&#39; @apiDescription This API takes as patient data on Chronic Kidney Disease and returns a prediction whether the lab values
+#&#39; indicate Chronic Kidney Disease (ckd) or not (notckd).
+#&#39; For details on how the model is built, see https://shirinsplayground.netlify.com/2017/12/lime_sketchnotes/
+#&#39; For further explanations of this plumber function, see https://shirinsplayground.netlify.com/2018/01/plumber/
+
+# load model
+# this path would have to be adapted if you would deploy this
+load(&quot;/Users/shiringlander/Documents/Github/shirinsplayground/data/model_rf.RData&quot;)
+
+#&#39; Log system time, request method and HTTP user agent of the incoming request
+#&#39; @filter logger
+function(req){
+  cat(&quot;System time:&quot;, as.character(Sys.time()), &quot;\n&quot;,
+      &quot;Request method:&quot;, req$REQUEST_METHOD, req$PATH_INFO, &quot;\n&quot;,
+      &quot;HTTP user agent:&quot;, req$HTTP_USER_AGENT, &quot;@&quot;, req$REMOTE_ADDR, &quot;\n&quot;)
+  plumber::forward()
+}
+
+# core function follows below:
+# define parameters with type and description
+# name endpoint
+# return output as html/text
+# specify 200 (okay) return
+
+#&#39; predict Chronic Kidney Disease of test case with Random Forest model
+#&#39; @param age:numeric The age of the patient, numeric (scaled and centered to be btw 0 and 1)
+#&#39; @param bp:numeric The blood pressure of the patient, numeric (scaled and centered to be btw 0 and 1)
+#&#39; @param sg_1.005:int The urinary specific gravity of the patient, integer (1: sg = 1.005, otherwise 0)
+#&#39; @param sg_1.010:int The urinary specific gravity of the patient, integer (1: sg = 1.010, otherwise 0)
+#&#39; @param sg_1.015:int The urinary specific gravity of the patient, integer (1: sg = 1.015, otherwise 0)
+#&#39; @param sg_1.020:int The urinary specific gravity of the patient, integer (1: sg = 1.020, otherwise 0)
+#&#39; @param sg_1.025:int The urinary specific gravity of the patient, integer (1: sg = 1.025, otherwise 0)
+#&#39; @param al_0:int The urine albumin level of the patient, integer (1: al = 0, otherwise 0)
+#&#39; @param al_1:int The urine albumin level of the patient, integer (1: al = 1, otherwise 0)
+#&#39; @param al_2:int The urine albumin level of the patient, integer (1: al = 2, otherwise 0)
+#&#39; @param al_3:int The urine albumin level of the patient, integer (1: al = 3, otherwise 0)
+#&#39; @param al_4:int The urine albumin level of the patient, integer (1: al = 4, otherwise 0)
+#&#39; @param al_5:int The urine albumin level of the patient, integer (1: al = 5, otherwise 0)
+#&#39; @param su_0:int The sugar level of the patient, integer (1: su = 0, otherwise 0)
+#&#39; @param su_1:int The sugar level of the patient, integer (1: su = 1, otherwise 0)
+#&#39; @param su_2:int The sugar level of the patient, integer (1: su = 2, otherwise 0)
+#&#39; @param su_3:int The sugar level of the patient, integer (1: su = 3, otherwise 0)
+#&#39; @param su_4:int The sugar level of the patient, integer (1: su = 4, otherwise 0)
+#&#39; @param su_5:int The sugar level of the patient, integer (1: su = 5, otherwise 0)
+#&#39; @param rbc_normal:int The red blood cell count of the patient, integer (1: rbc = normal, otherwise 0)
+#&#39; @param rbc_abnormal:int The red blood cell count of the patient, integer (1: rbc = abnormal, otherwise 0)
+#&#39; @param pc_normal:int The pus cell level of the patient, integer (1: pc = normal, otherwise 0)
+#&#39; @param pc_abnormal:int The pus cell level of the patient, integer (1: pc = abnormal, otherwise 0)
+#&#39; @param pcc_present:int The puc cell clumps status of the patient, integer (1: pcc = present, otherwise 0)
+#&#39; @param pcc_notpresent:int The puc cell clumps status of the patient, integer (1: pcc = notpresent, otherwise 0)
+#&#39; @param ba_present:int The bacteria status of the patient, integer (1: ba = present, otherwise 0)
+#&#39; @param ba_notpresent:int The bacteria status of the patient, integer (1: ba = notpresent, otherwise 0)
+#&#39; @param bgr:numeric The blood glucose random level of the patient, numeric (scaled and centered to be btw 0 and 1)
+#&#39; @param bu:numeric The blood urea level of the patient, numeric (scaled and centered to be btw 0 and 1)
+#&#39; @param sc:numeric The serum creatinine level of the patient, numeric (scaled and centered to be btw 0 and 1)
+#&#39; @param sod:numeric The sodium level of the patient, numeric (scaled and centered to be btw 0 and 1)
+#&#39; @param pot:numeric The potassium level of the patient, numeric (scaled and centered to be btw 0 and 1)
+#&#39; @param hemo:numeric The hemoglobin level of the patient, numeric (scaled and centered to be btw 0 and 1)
+#&#39; @param pcv:numeric The packed cell volume of the patient, numeric (scaled and centered to be btw 0 and 1)
+#&#39; @param wbcc:numeric The white blood cell count of the patient, numeric (scaled and centered to be btw 0 and 1)
+#&#39; @param rbcc:numeric The red blood cell count of the patient, numeric (scaled and centered to be btw 0 and 1)
+#&#39; @param htn_yes:int The hypertension status of the patient, integer (1: htn = yes, otherwise 0)
+#&#39; @param htn_no:int The hypertension status of the patient, integer (1: htn = no, otherwise 0)
+#&#39; @param dm_yes:int The diabetes mellitus status of the patient, integer (1: dm = yes, otherwise 0)
+#&#39; @param dm_no:int The diabetes mellitus status of the patient, integer (1: dm = no, otherwise 0)
+#&#39; @param cad_yes:int The coronary artery disease status of the patient, integer (1: cad = yes, otherwise 0)
+#&#39; @param cad_no:int The coronary artery disease status of the patient, integer (1: cad = no, otherwise 0)
+#&#39; @param appet_good:int The appetite of the patient, integer (1: appet = good, otherwise 0)
+#&#39; @param appet_poor:int The appetite of the patient, integer (1: appet = poor, otherwise 0)
+#&#39; @param pe_yes:int The pedal edema status of the patient, integer (1: pe = yes, otherwise 0)
+#&#39; @param pe_no:int The pedal edema status of the patient, integer (1: pe = no, otherwise 0)
+#&#39; @param ane_yes:int The anemia status of the patient, integer (1: ane = yes, otherwise 0)
+#&#39; @param ane_no:int The anemia status of the patient, integer (1: ane = no, otherwise 0)
+#&#39; @get /predict
+#&#39; @html
+#&#39; @response 200 Returns the class (ckd or notckd) prediction from the Random Forest model; ckd = Chronic Kidney Disease
+calculate_prediction &lt;- function(age, bp, sg_1.005, sg_1.010, sg_1.015, sg_1.020, sg_1.025, al_0, al_1, al_2, 
+                                al_3, al_4, al_5, su_0, su_1, su_2, su_3, su_4, su_5, rbc_normal, rbc_abnormal, pc_normal, pc_abnormal,
+                                pcc_present, pcc_notpresent, ba_present, ba_notpresent, bgr, bu, sc, sod, pot, hemo, pcv, 
+                                wbcc, rbcc, htn_yes, htn_no, dm_yes, dm_no, cad_yes, cad_no, appet_good, appet_poor, pe_yes, pe_no, 
+                                ane_yes, ane_no) {
+  
+  # make data frame from numeric parameters
+  input_data_num &lt;&lt;- data.frame(age, bp, bgr, bu, sc, sod, pot, hemo, pcv, wbcc, rbcc,
+                     stringsAsFactors = FALSE)
+  # and make sure they really are numeric
+  input_data_num &lt;&lt;- as.data.frame(t(sapply(input_data_num, as.numeric)))
+  
+  # make data frame from (binary) integer parameters
+  input_data_int &lt;&lt;- data.frame(sg_1.005, sg_1.010, sg_1.015, sg_1.020, sg_1.025, al_0, al_1, al_2, 
+                                al_3, al_4, al_5, su_0, su_1, su_2, su_3, su_4, su_5, rbc_normal, rbc_abnormal, pc_normal, pc_abnormal,
+                                pcc_present, pcc_notpresent, ba_present, ba_notpresent, htn_yes, htn_no, dm_yes, dm_no, 
+                                cad_yes, cad_no, appet_good, appet_poor, pe_yes, pe_no, ane_yes, ane_no,
+                                stringsAsFactors = FALSE)
+  # and make sure they really are numeric
+  input_data_int &lt;&lt;- as.data.frame(t(sapply(input_data_int, as.integer)))
+  # combine into one data frame
+  input_data &lt;&lt;- as.data.frame(cbind(input_data_num, input_data_int))
+  
+  # validation for parameter
+  if (any(is.na(input_data))) {
+    res$status &lt;- 400
+    res$body &lt;- &quot;Parameters have to be numeric or integers&quot;
+  }
+  
+  if (any(input_data &lt; 0) || any(input_data &gt; 1)) {
+    res$status &lt;- 400
+    res$body &lt;- &quot;Parameters have to be between 0 and 1&quot;
+  }
+
+  # predict and return result
+  pred_rf &lt;&lt;- predict(model_rf, input_data)
+  paste(&quot;----------------\nTest case predicted to be&quot;, as.character(pred_rf), &quot;\n----------------\n&quot;)
+}
+</code></pre>
+<p>Note that I am using the “double-assignment” operator <code>&lt;&lt;-</code> in my function, because I want to make sure that objects are overwritten at the top level (i.e. globally). This would have been relevant had I set a global parameter, but to show it the example, I decided to use it here as well.</p>
+<p>We can now call our script with the <code>plumb()</code> function, run it with <code>run()</code> and open it on port 800. Calling <code>plumb()</code> creates an environment in which all our functions are evaluated.</p>
+<pre class="r"><code>library(plumber)</code></pre>
+<pre class="r"><code>r &lt;- plumb(&quot;/Users/shiringlander/Documents/Github/shirinsplayground/static/scripts/plumber.R&quot;)
+r$run(port = 8000)</code></pre>
+<p>We will now see the following message in our R console:</p>
+<pre><code>Starting server to listen on port 8000
+Running the swagger UI at http://127.0.0.1:8000/__swagger__/</code></pre>
+<p>If you go to *<a href="http://localhost:8000/__swagger__/*" class="uri">http://localhost:8000/__swagger__/*</a>, you could now try out the function by manually choosing values for all the parameters we defined in the script.</p>
+<p><img src="https://shiring.github.io/netlify_images/swagger1.png" alt="http://localhost:8000/__swagger__/" /> … <img src="https://shiring.github.io/netlify_images/swagger2.png" alt="http://localhost:8000/__swagger__/ continued" /></p>
+<p>Because we annotated the <code>calculate_prediction()</code> function in our script with <code>#' @get /predict</code> we can access it via *<a href="http://localhost:8000/predict*" class="uri">http://localhost:8000/predict*</a>. But because we have no input specified as of yet, we will only see an error on this site. So, we still need to put our JSON formatted input into the function. To do this, we can use <a href="https://en.wikipedia.org/wiki/CURL"><em>curl</em></a> from the terminal and feed in the JSON string from above. If you are using RStudio in the latest version, you have a handy terminal window open in your working directory. You find it right next to the Console.</p>
+<div class="figure">
+<img src="https://shiring.github.io/netlify_images/terminal_rstudio.png" alt="Terminal in RStudio" />
+<p class="caption">Terminal in RStudio</p>
+</div>
+<pre><code>curl -H &quot;Content-Type: application/json&quot; -X GET -d &#39;{&quot;age&quot;:0.511111111111111,&quot;bp&quot;:0.111111111111111,&quot;sg_1.005&quot;:1,&quot;sg_1.010&quot;:0,&quot;sg_1.015&quot;:0,&quot;sg_1.020&quot;:0,&quot;sg_1.025&quot;:0,&quot;al_0&quot;:0,&quot;al_1&quot;:0,&quot;al_2&quot;:0,&quot;al_3&quot;:0,&quot;al_4&quot;:1,&quot;al_5&quot;:0,&quot;su_0&quot;:1,&quot;su_1&quot;:0,&quot;su_2&quot;:0,&quot;su_3&quot;:0,&quot;su_4&quot;:0,&quot;su_5&quot;:0,&quot;rbc_normal&quot;:1,&quot;rbc_abnormal&quot;:0,&quot;pc_normal&quot;:0,&quot;pc_abnormal&quot;:1,&quot;pcc_present&quot;:1,&quot;pcc_notpresent&quot;:0,&quot;ba_present&quot;:0,&quot;ba_notpresent&quot;:1,&quot;bgr&quot;:0.193877551020408,&quot;bu&quot;:0.139386189258312,&quot;sc&quot;:0.0447368421052632,&quot;sod&quot;:0.653374233128834,&quot;pot&quot;:0,&quot;hemo&quot;:0.455056179775281,&quot;pcv&quot;:0.425925925925926,&quot;wbcc&quot;:0.170454545454545,&quot;rbcc&quot;:0.225,&quot;htn_yes&quot;:1,&quot;htn_no&quot;:0,&quot;dm_yes&quot;:0,&quot;dm_no&quot;:1,&quot;cad_yes&quot;:0,&quot;cad_no&quot;:1,&quot;appet_good&quot;:0,&quot;appet_poor&quot;:1,&quot;pe_yes&quot;:1,&quot;pe_no&quot;:0,&quot;ane_yes&quot;:1,&quot;ane_no&quot;:0}&#39; &quot;http://localhost:8000/predict&quot;</code></pre>
+<blockquote>
+<p><strong>-H</strong> defines an extra header to include in the request when sending HTTP to a server (<a href="https://curl.haxx.se/docs/manpage.html#-H" class="uri">https://curl.haxx.se/docs/manpage.html#-H</a>).</p>
+</blockquote>
+<blockquote>
+<p><strong>-X</strong> pecifies a custom request method to use when communicating with the HTTP server (<a href="https://curl.haxx.se/docs/manpage.html#-X" class="uri">https://curl.haxx.se/docs/manpage.html#-X</a>).</p>
+</blockquote>
+<blockquote>
+<p><strong>-d</strong> sends the specified data in a request to the HTTP server, in the same way that a browser does when a user has filled in an HTML form and presses the submit button. This will cause curl to pass the data to the server using the content-type application/x-www-form-urlencoded (<a href="https://curl.haxx.se/docs/manpage.html#-d" class="uri">https://curl.haxx.se/docs/manpage.html#-d</a>).</p>
+</blockquote>
+<p>This will return the following output:</p>
+<ul>
+<li><code>cat()</code> outputs to the R console if you use R interactively; if you use R on a server, it will be included in the server logs.</li>
+</ul>
+<pre><code>System time: 2018-01-15 13:34:32 
+ Request method: GET /predict 
+ HTTP user agent: curl/7.54.0 @ 127.0.0.1 </code></pre>
+<ul>
+<li><code>paste</code> outputs to the terminal</li>
+</ul>
+<pre><code>----------------
+Test case predicted to be ckd 
+----------------</code></pre>
+</div>
+<div id="security" class="section level3">
+<h3>Security</h3>
+<p>This example shows a pretty simply R-script API. But if you plan on deploying your API to production, you should consider the <a href="https://www.rplumber.io/docs/security.html">security section of the plumber documentation</a>. It give additional information about how you can make your code (more) secure.</p>
+</div>
+<div id="finalize" class="section level3">
+<h3>Finalize</h3>
+<p>If you wanted to deploy this API you would need to <a href="https://www.rplumber.io/docs/hosting.html">host</a> it, i.e. provide the model and run an R environment with plumber, ideally on a server. A good way to do this, would be to package everything in a <a href="https://www.rplumber.io/docs/hosting.html#docker">Docker</a> container and run this. Docker will ensure that you have a working snapshot of the system settings, R and package versions that won’t change. For more information on dockerizing your API, check out <a href="https://hub.docker.com/r/trestletech/plumber/" class="uri">https://hub.docker.com/r/trestletech/plumber/</a>.</p>
+<hr />
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 3.4.2 (2017-09-28)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS High Sierra 10.13.2
+## 
+## Matrix products: default
+## BLAS: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] de_DE.UTF-8/de_DE.UTF-8/de_DE.UTF-8/C/de_DE.UTF-8/de_DE.UTF-8
+## 
+## attached base packages:
+## [1] methods   stats     graphics  grDevices utils     datasets  base     
+## 
+## other attached packages:
+##  [1] plumber_0.4.4   rjson_0.2.15    forcats_0.2.0   stringr_1.2.0  
+##  [5] dplyr_0.7.4     purrr_0.2.4     readr_1.1.1     tidyr_0.7.2    
+##  [9] tibble_1.3.4    ggplot2_2.2.1   tidyverse_1.2.1
+## 
+## loaded via a namespace (and not attached):
+##  [1] httr_1.3.1          ddalpha_1.3.1       sfsmisc_1.1-1      
+##  [4] jsonlite_1.5        splines_3.4.2       foreach_1.4.3      
+##  [7] prodlim_1.6.1       modelr_0.1.1        assertthat_0.2.0   
+## [10] stats4_3.4.2        DRR_0.0.2           cellranger_1.1.0   
+## [13] yaml_2.1.15         robustbase_0.92-8   ipred_0.9-6        
+## [16] backports_1.1.1     lattice_0.20-35     glue_1.2.0         
+## [19] digest_0.6.12       randomForest_4.6-12 rvest_0.3.2        
+## [22] colorspace_1.3-2    recipes_0.1.1       httpuv_1.3.5       
+## [25] htmltools_0.3.6     Matrix_1.2-12       plyr_1.8.4         
+## [28] psych_1.7.8         timeDate_3042.101   pkgconfig_2.0.1    
+## [31] CVST_0.2-1          broom_0.4.3         haven_1.1.0        
+## [34] caret_6.0-77        bookdown_0.5        scales_0.5.0       
+## [37] gower_0.1.2         lava_1.5.1          withr_2.1.0        
+## [40] nnet_7.3-12         lazyeval_0.2.1      cli_1.0.0          
+## [43] mnormt_1.5-5        survival_2.41-3     magrittr_1.5       
+## [46] crayon_1.3.4        readxl_1.0.0        evaluate_0.10.1    
+## [49] nlme_3.1-131        MASS_7.3-47         xml2_1.1.1         
+## [52] dimRed_0.1.0        foreign_0.8-69      class_7.3-14       
+## [55] blogdown_0.3        tools_3.4.2         hms_0.4.0          
+## [58] kernlab_0.9-25      munsell_0.4.3       bindrcpp_0.2       
+## [61] compiler_3.4.2      RcppRoll_0.2.2      rlang_0.1.4        
+## [64] grid_3.4.2          iterators_1.0.8     rstudioapi_0.7     
+## [67] rmarkdown_1.8       gtable_0.2.0        ModelMetrics_1.1.0 
+## [70] codetools_0.2-15    reshape2_1.4.2      R6_2.2.2           
+## [73] lubridate_1.7.1     knitr_1.17          bindr_0.1          
+## [76] rprojroot_1.2       stringi_1.1.6       parallel_3.4.2     
+## [79] Rcpp_0.12.14        rpart_4.1-11        tidyselect_0.2.3   
+## [82] DEoptimR_1.0-8</code></pre>
+</div>
+</div>
+]]></content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[Sketchnotes from TWiML&amp;AI #91: Philosophy of Intelligence with Matthew Crosby]]></title>
     <link href="/2018/01/twimlai91/"/>
@@ -44,168 +396,6 @@
 <p>The blog post is <a href="https://blog.codecentric.de/2018/01/vertrauen-und-vorurteile-maschinellem-lernen/">also available in German</a>.</p>
 
 <p><img src="https://blog.codecentric.de/files/2018/01/lime_output_figure.png" alt="" /></p>
-]]></content>
-  </entry>
-  <entry>
-    <title type="html"><![CDATA[Plumber package]]></title>
-    <link href="/2018/01/plumber/"/>
-    <id>/2018/01/plumber/</id>
-    <published>2018-01-10T00:00:00+00:00</published>
-    <updated>2018-01-10T00:00:00+00:00</updated>
-    <content type="html"><![CDATA[<p>The <a href="www.rplumber.io">plumber</a> package for R makes it easy to expose existing R code as a webservice via an API (Trestle Technology, LLC 2017).</p>
-<p>You take an existing R script and make it accessible with <code>plumber</code> by simply adding a few lines of comments. If you have worked with Roxygen before, e.g. when building a package, you will already be familiar with the core concepts. If not, here are the most important things to know:</p>
-<ul>
-<li>you can define every input parameter that will go into your function</li>
-<li>you define the output or endpoint</li>
-</ul>
-<div id="what-are-apis-and-webservices" class="section level2">
-<h2>What are APIs and webservices?</h2>
-<p>With <code>plumber</code>, we can build so called <strong>HTTP APIs</strong>. HTTP stands for Hypertext Transfer Protocol and is used to transmit information on the web; API stands for Application Programming Interface and governs the connection between some software and underlying applications. Software can then communicate via HTTP APIs.</p>
-</div>
-<div id="how-to-convert-your-r-script-into-an-api-with-plumber" class="section level2">
-<h2>How to convert your R script into an API with plumber</h2>
-<p>Let’s say we have trained a machine learning model as in <a href="https://shirinsplayground.netlify.com/2017/12/lime_sketchnotes/">this post about LIME</a>. I loaded a data set on chronic kidney disease, did some preprocessing, split it into training and test data and trained a random forest model with <code>caret</code>. We could now call predictions for one test case with the following code:</p>
-<pre class="r"><code># load test data
-load(&quot;../../data/test_data.RData&quot;)
-
-# load model
-load(&quot;../../data/model_rf.RData&quot;)</code></pre>
-<pre><code>## Warning in as.POSIXlt.POSIXct(Sys.time()): unknown timezone &#39;zone/tz/2017c.
-## 1.0/zoneinfo/Europe/Berlin&#39;</code></pre>
-<pre class="r"><code># take first test case for prediction
-test &lt;- test_data[1, ]
-
-# predict test case using model
-pred &lt;- predict(model_rf, test, type = &quot;prob&quot;)</code></pre>
-<p>I am wrapping the <code>predict()</code> function in a new custom function <code>calculate prediction()</code> because I might want to be able to quickly add additional preprocessing steps later without having to change too much code. With the function as it is right now this is not technically necessary.</p>
-<pre class="r"><code>library(plumber)</code></pre>
-<p>In order to convert this very simple script into an API, we need to define the endpoint(s). Endpoints will return an output, in our case it will return the prediction probabilites from the <code>predict()</code> function. Here, we want to have the predictions returned, so we annotate the <code>predict()</code> function with <code># @get</code>. This endpoint in the API we will give a custom name, so that we can call it later; here we call it <code>predict</code> and therefore write <code>#' @get /predict</code>.</p>
-<blockquote>
-<p>According to the design of the HTTP specification, GET (along with HEAD) requests are used only to read data and not change it. Therefore, when used this way, they are considered safe. That is, they can be called without risk of data modification or corruption—calling it once has the same effect as calling it 10 times, or none at all. Additionally, GET (and HEAD) is idempotent, which means that making multiple identical requests ends up having the same result as a single request. <a href="http://www.restapitutorial.com/lessons/httpmethods.html" class="uri">http://www.restapitutorial.com/lessons/httpmethods.html</a></p>
-</blockquote>
-<pre class="r"><code># predict test case using model
-#&#39; @get /predict
-calculate_prediction &lt;- function(test) {
-  predict(model_rf, test, type = &quot;prob&quot;)
-}</code></pre>
-<p>We need to save the entire script as a <em>.R</em> file like so:</p>
-<pre class="r"><code># plumber.R
-
-# load model
-load(&quot;../../data/model_rf.RData&quot;)
-
-# predict test case using model
-#&#39; @get /predict
-#&#39; #&#39; @html
-calculate_prediction &lt;- function(test) {
-  predict(model_rf, test, type = &quot;prob&quot;)
-}</code></pre>
-<p>However, we still need to define the input, in our case the test data. When we look at the model object, we see that it expects the following parameters:</p>
-<pre class="r"><code>model_rf$finalModel$xNames</code></pre>
-<pre><code>##  [1] &quot;age&quot;            &quot;bp&quot;             &quot;sg_1.005&quot;       &quot;sg_1.010&quot;      
-##  [5] &quot;sg_1.015&quot;       &quot;sg_1.020&quot;       &quot;sg_1.025&quot;       &quot;al_0&quot;          
-##  [9] &quot;al_1&quot;           &quot;al_2&quot;           &quot;al_3&quot;           &quot;al_4&quot;          
-## [13] &quot;al_5&quot;           &quot;su_0&quot;           &quot;su_1&quot;           &quot;su_2&quot;          
-## [17] &quot;su_3&quot;           &quot;su_4&quot;           &quot;su_5&quot;           &quot;rbc_normal&quot;    
-## [21] &quot;rbc_abnormal&quot;   &quot;pc_normal&quot;      &quot;pc_abnormal&quot;    &quot;pcc_present&quot;   
-## [25] &quot;pcc_notpresent&quot; &quot;ba_present&quot;     &quot;ba_notpresent&quot;  &quot;bgr&quot;           
-## [29] &quot;bu&quot;             &quot;sc&quot;             &quot;sod&quot;            &quot;pot&quot;           
-## [33] &quot;hemo&quot;           &quot;pcv&quot;            &quot;wbcc&quot;           &quot;rbcc&quot;          
-## [37] &quot;htn_yes&quot;        &quot;htn_no&quot;         &quot;dm_yes&quot;         &quot;dm_no&quot;         
-## [41] &quot;cad_yes&quot;        &quot;cad_no&quot;         &quot;appet_good&quot;     &quot;appet_poor&quot;    
-## [45] &quot;pe_yes&quot;         &quot;pe_no&quot;          &quot;ane_yes&quot;        &quot;ane_no&quot;</code></pre>
-<p>In order for <code>plumber</code> to work with our input, it needs to be part of the HTTP request, which can then be routed to our R function.</p>
-<p>The <a href="https://www.rplumber.io/docs/quickstart.html#specifying-the-inputs">plumber documentation</a> describes how to use query strings as inputs. But for our case, manually writing query strings is not practical because we have so many parameters. Of course, there are programs that let us generate query strings but the easiest way I found to format the input from a line of data is to use JSON.</p>
-<p>The <code>toJSON()</code> function from the <code>rjson</code> package converts out input line to JSON format:</p>
-<pre class="r"><code>library(rjson)
-test_case_json &lt;- toJSON(test)
-cat(test_case_json)</code></pre>
-<pre><code>## {&quot;class&quot;:&quot;ckd&quot;,&quot;age&quot;:0.511111111111111,&quot;bp&quot;:0.111111111111111,&quot;sg_1.005&quot;:1,&quot;sg_1.010&quot;:0,&quot;sg_1.015&quot;:0,&quot;sg_1.020&quot;:0,&quot;sg_1.025&quot;:0,&quot;al_0&quot;:0,&quot;al_1&quot;:0,&quot;al_2&quot;:0,&quot;al_3&quot;:0,&quot;al_4&quot;:1,&quot;al_5&quot;:0,&quot;su_0&quot;:1,&quot;su_1&quot;:0,&quot;su_2&quot;:0,&quot;su_3&quot;:0,&quot;su_4&quot;:0,&quot;su_5&quot;:0,&quot;rbc_normal&quot;:1,&quot;rbc_abnormal&quot;:0,&quot;pc_normal&quot;:0,&quot;pc_abnormal&quot;:1,&quot;pcc_present&quot;:1,&quot;pcc_notpresent&quot;:0,&quot;ba_present&quot;:0,&quot;ba_notpresent&quot;:1,&quot;bgr&quot;:0.193877551020408,&quot;bu&quot;:0.139386189258312,&quot;sc&quot;:0.0447368421052632,&quot;sod&quot;:0.653374233128834,&quot;pot&quot;:0,&quot;hemo&quot;:0.455056179775281,&quot;pcv&quot;:0.425925925925926,&quot;wbcc&quot;:0.170454545454545,&quot;rbcc&quot;:0.225,&quot;htn_yes&quot;:1,&quot;htn_no&quot;:0,&quot;dm_yes&quot;:0,&quot;dm_no&quot;:1,&quot;cad_yes&quot;:0,&quot;cad_no&quot;:1,&quot;appet_good&quot;:0,&quot;appet_poor&quot;:1,&quot;pe_yes&quot;:1,&quot;pe_no&quot;:0,&quot;ane_yes&quot;:1,&quot;ane_no&quot;:0}</code></pre>
-<p>We can now run our script with the <code>plumb()</code> function and open it on port 800. Because we annotated the <code>calculate_prediction()</code> function in our script with <code>#' @get /predict</code> we could access it via *<a href="http://localhost:8000/predict*" class="uri">http://localhost:8000/predict*</a>.</p>
-<pre class="r"><code>r &lt;- plumb(&quot;/Users/shiringlander/Documents/Github/shirinsplayground/static/scripts/plumber.R&quot;)
-r$run(port=8000)</code></pre>
-<p>But we want to put our JSON formatted input into the function as the <code>test</code> parameter. To do this, we can use <em>curl</em> from the command line and feed in the JSON string from above.</p>
-<pre><code>curl -H &quot;Content-Type: application/json&quot; -X GET -d &#39;{&quot;test&quot;:[{&quot;class&quot;:&quot;ckd&quot;,&quot;age&quot;:0.511111111111111,&quot;bp&quot;:0.111111111111111,&quot;sg_1.005&quot;:1,&quot;sg_1.010&quot;:0,&quot;sg_1.015&quot;:0,&quot;sg_1.020&quot;:0,&quot;sg_1.025&quot;:0,&quot;al_0&quot;:0,&quot;al_1&quot;:0,&quot;al_2&quot;:0,&quot;al_3&quot;:0,&quot;al_4&quot;:1,&quot;al_5&quot;:0,&quot;su_0&quot;:1,&quot;su_1&quot;:0,&quot;su_2&quot;:0,&quot;su_3&quot;:0,&quot;su_4&quot;:0,&quot;su_5&quot;:0,&quot;rbc_normal&quot;:1,&quot;rbc_abnormal&quot;:0,&quot;pc_normal&quot;:0,&quot;pc_abnormal&quot;:1,&quot;pcc_present&quot;:1,&quot;pcc_notpresent&quot;:0,&quot;ba_present&quot;:0,&quot;ba_notpresent&quot;:1,&quot;bgr&quot;:0.193877551020408,&quot;bu&quot;:0.139386189258312,&quot;sc&quot;:0.0447368421052632,&quot;sod&quot;:0.653374233128834,&quot;pot&quot;:0,&quot;hemo&quot;:0.455056179775281,&quot;pcv&quot;:0.425925925925926,&quot;wbcc&quot;:0.170454545454545,&quot;rbcc&quot;:0.225,&quot;htn_yes&quot;:1,&quot;htn_no&quot;:0,&quot;dm_yes&quot;:0,&quot;dm_no&quot;:1,&quot;cad_yes&quot;:0,&quot;cad_no&quot;:1,&quot;appet_good&quot;:0,&quot;appet_poor&quot;:1,&quot;pe_yes&quot;:1,&quot;pe_no&quot;:0,&quot;ane_yes&quot;:1,&quot;ane_no&quot;:0}]}&#39; &quot;http://localhost:8000/predict&quot;</code></pre>
-<p>This will return the following output (also in JSON format):</p>
-<p><em>[{“ckd”:0.984,“notckd”:0.016}]</em></p>
-</div>
-<div id="tweaking-the-output" class="section level2">
-<h2>Tweaking the output</h2>
-<pre class="r"><code># plumber2.R
-
-# load model
-load(&quot;../../data/model_rf.RData&quot;)
-
-# predict test case using model
-#&#39; @get /predict
-calculate_prediction &lt;- function(test) {
-  pred &lt;- predict(model_rf, test)
-  cat(&quot;----------------\nTest case predicted to be&quot;, unlist(pred), &quot;\n----------------&quot;)
-}</code></pre>
-<pre class="r"><code>r2 &lt;- plumb(&quot;/Users/shiringlander/Documents/Github/shirinsplayground/static/scripts/plumber2.R&quot;)
-r2$run(port=8000)</code></pre>
-<p>With the same <em>curl</em> command from above we now get output to our R console:</p>
-<pre><code>----------------
-Test case predicted to be 1 
-----------------</code></pre>
-</div>
-<div id="filters" class="section level2">
-<h2>Filters</h2>
-<pre class="r"><code>r3 &lt;- plumb(&quot;/Users/shiringlander/Documents/Github/shirinsplayground/static/scripts/plumber3.R&quot;)
-r3$run(port=8000)</code></pre>
-<pre><code>2018-01-12 08:12:41 - GET /predict - curl/7.54.0 @ 127.0.0.1 
-----------------
-Test case predicted to be 1 
-----------------</code></pre>
-<hr />
-<p><a href="https://www.r-bloggers.com/initiating-development-of-a-chatbot-with-plumber-and-ngrok/" class="uri">https://www.r-bloggers.com/initiating-development-of-a-chatbot-with-plumber-and-ngrok/</a></p>
-<hr />
-<pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>## R version 3.4.2 (2017-09-28)
-## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-## Running under: macOS High Sierra 10.13.2
-## 
-## Matrix products: default
-## BLAS: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRblas.0.dylib
-## LAPACK: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRlapack.dylib
-## 
-## locale:
-## [1] de_DE.UTF-8/de_DE.UTF-8/de_DE.UTF-8/C/de_DE.UTF-8/de_DE.UTF-8
-## 
-## attached base packages:
-## [1] methods   stats     graphics  grDevices utils     datasets  base     
-## 
-## other attached packages:
-## [1] rjson_0.2.15  plumber_0.4.4
-## 
-## loaded via a namespace (and not attached):
-##  [1] Rcpp_0.12.14        lubridate_1.7.1     lattice_0.20-35    
-##  [4] tidyr_0.7.2         class_7.3-14        assertthat_0.2.0   
-##  [7] rprojroot_1.2       digest_0.6.12       ipred_0.9-6        
-## [10] psych_1.7.8         foreach_1.4.3       R6_2.2.2           
-## [13] plyr_1.8.4          backports_1.1.1     stats4_3.4.2       
-## [16] evaluate_0.10.1     ggplot2_2.2.1       blogdown_0.3       
-## [19] rlang_0.1.4         lazyeval_0.2.1      caret_6.0-77       
-## [22] kernlab_0.9-25      rpart_4.1-11        Matrix_1.2-12      
-## [25] rmarkdown_1.8       splines_3.4.2       CVST_0.2-1         
-## [28] ddalpha_1.3.1       gower_0.1.2         stringr_1.2.0      
-## [31] foreign_0.8-69      munsell_0.4.3       broom_0.4.3        
-## [34] httpuv_1.3.5        compiler_3.4.2      pkgconfig_2.0.1    
-## [37] mnormt_1.5-5        dimRed_0.1.0        htmltools_0.3.6    
-## [40] nnet_7.3-12         tidyselect_0.2.3    tibble_1.3.4       
-## [43] prodlim_1.6.1       DRR_0.0.2           bookdown_0.5       
-## [46] codetools_0.2-15    randomForest_4.6-12 RcppRoll_0.2.2     
-## [49] crayon_1.3.4        withr_2.1.0         dplyr_0.7.4        
-## [52] MASS_7.3-47         recipes_0.1.1       ModelMetrics_1.1.0 
-## [55] grid_3.4.2          jsonlite_1.5        nlme_3.1-131       
-## [58] gtable_0.2.0        magrittr_1.5        scales_0.5.0       
-## [61] stringi_1.1.6       reshape2_1.4.2      bindrcpp_0.2       
-## [64] timeDate_3042.101   robustbase_0.92-8   lava_1.5.1         
-## [67] iterators_1.0.8     tools_3.4.2         glue_1.2.0         
-## [70] DEoptimR_1.0-8      purrr_0.2.4         sfsmisc_1.1-1      
-## [73] parallel_3.4.2      survival_2.41-3     yaml_2.1.15        
-## [76] colorspace_1.3-2    knitr_1.17          bindr_0.1</code></pre>
-</div>
 ]]></content>
   </entry>
   <entry>

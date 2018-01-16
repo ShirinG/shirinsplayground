@@ -1,40 +1,44 @@
 ---
-title: "Plumber package"
-draft: true
+title: "How to make your machine learning model available as an API with the plumber package"
+draft: false
 author: Shirin Glander
-date: '2018-01-10'
+date: '2018-01-16'
 categories: ["R"]
 tags: ["API", "Machine Learning", "plumber"]
 thumbnailImagePosition: left
-thumbnailImage: https://shiring.github.io/netlify_images/
+thumbnailImage: https://d33wubrfki0l68.cloudfront.net/03f3d9156c39a8043be42caeee1507d43d832472/8d968/components/images/plumber.png
 metaAlignment: center
 coverMeta: out
 slug: plumber
 ---
 
+![](https://d33wubrfki0l68.cloudfront.net/03f3d9156c39a8043be42caeee1507d43d832472/8d968/components/images/plumber.png)
+
 The [plumber](www.rplumber.io) package for R makes it easy to expose existing R code as a webservice via an API (Trestle Technology, LLC 2017).
 
 You take an existing R script and make it accessible with `plumber` by simply adding a few lines of comments. If you have worked with Roxygen before, e.g. when building a package, you will already be familiar with the core concepts. If not, here are the most important things to know:
 
-- you can define every input parameter that will go into your function
 - you define the output or endpoint
 - you can add additional annotation to customize your input, output and other functionalities of your API
-- every such annotation will be prepended with either `#' ` or `#* `
+- you can define every input parameter that will go into your function
+- every such annotation will begin with either `#' ` or `#* `
+
+With this setup, we can take a trained machine learning model and make it available as an API. With this API, other programs can access it and use it to make predictions.
 
 ## What are APIs and webservices?
 
-With `plumber`, we can build so called **HTTP APIs**. HTTP stands for Hypertext Transfer Protocol and is used to transmit information on the web; API stands for Application Programming Interface and governs the connection between some software and underlying applications. Software can then communicate via HTTP APIs. This way, our R script can be called from other software, even if it's not written in R.
+With `plumber`, we can build so called **HTTP APIs**. HTTP stands for Hypertext Transfer Protocol and is used to transmit information on the web; API stands for Application Programming Interface and governs the connection between some software and underlying applications. Software can then communicate via HTTP APIs. This way, our R script can be called from other software, even if the other program is not written in R and we have built a tool for machine-to-machine communication, i.e. a webservice.
 
 ## How to convert your R script into an API with plumber
 
 ### Training and saving a model
 
-Let's say we have trained a machine learning model as in [this post about LIME](https://shirinsplayground.netlify.com/2017/12/lime_sketchnotes/). I loaded a data set on chronic kidney disease, did some preprocessing (converting categorical features into dummy variables, scaling and centering), split it into training and test data and trained a random forest model with `caret`. We could now call predictions for one test case with the following code:
+Let's say we have trained a machine learning model as in [this post about LIME](https://shirinsplayground.netlify.com/2017/12/lime_sketchnotes/). I loaded a data set on chronic kidney disease, did some preprocessing (converting categorical features into dummy variables, scaling and centering), split it into training and test data and trained a Random Forest model with `caret`. We can use this trained model to make predictions for one test case with the following code:
 
 ```{r warning=FALSE, message=FALSE}
 library(tidyverse)
 
-# load test data
+# load test and train data
 load("../../data/test_data.RData")
 load("../../data/train_data.RData")
 
@@ -52,14 +56,14 @@ cat("----------------\nTest case predicted to be", as.character(pred), "\n------
 
 ### The input
 
-We also need to define the input, in our case the test data. When we look at the model object, we see that it expects the following parameters:
+For our API to work, we need to define the input, in our case the features of the test data. When we look at the model object, we see that it expects the following parameters:
 
 ```{r}
 var_names <- model_rf$finalModel$xNames
 var_names
 ```
 
-Good practice is to write the parameter definition into you [API Swagger UI](https://swagger.io/swagger-ui/). We do this by annotating them with name and description in our R-script using `@parameter`. Therefore, I want to know the type and min/max values for each of my variables in the training data. Because the data has been converted to dummy variables if categorical and then scaled and centered, these values will all be numeric and between 0 and 1 in this example. If I would build this script for a real case, I'd use the raw data as input and add a preprocessing function to my script! 
+Good practice is to write the input parameter definition into you [API Swagger UI](https://swagger.io/swagger-ui/), but the code would work without these annotations. We define the parameters by annotating them with name and description in our R-script using `@parameter`. For this purpose, I want to know the type and min/max values for each of my variables in the training data. Because categorical data has been converted to dummy variables and then scaled and centered, these values will all be numeric and between 0 and 1 in this example. If I would build this script for a real case, I'd use the raw data as input and add a preprocessing function to my script, though! 
 
 ```{r }
 # show parameter definition for the first three features
@@ -82,13 +86,17 @@ for (i in 1:3) {
 }
 ```
 
-To make sure that the model will perform as expected, it is also advised to add a few validation functions. Here, I will validate
+> Unless otherwise instructed, all parameters passed into plumber endpoints from query strings or dynamic paths will be character strings. https://www.rplumber.io/docs/routing-and-input.html#typed-dynamic-routes
+
+This means that we need to convert numeric values before we process them further. Or we can define the parameter type explicitly, e.g. by writing `variable_1:numeric` if we want to specifiy that *variable_1* is supposed to be numeric. 
+
+To make sure that the model will perform as expected, it is also advisable to add a few validation functions. Here, I will validate
 
 - whether every parameter is numeric/integer by checking for NAs (which would have resulted from `as.numeric()`/`as.integer()` applied to data of character type)
 - whether every parameter is between 0 and 1
 
 In order for `plumber` to work with our input, it needs to be part of the HTTP request, which can then be routed to our R function.
-The [plumber documentation](https://www.rplumber.io/docs/quickstart.html#specifying-the-inputs) describes how to use query strings as inputs. But in our case, manually writing query strings is not practical because we have so many parameters. Of course, there are programs that let us generate query strings but the easiest way to format the input from a line of data I found is to use JSON.
+The [plumber documentation](https://www.rplumber.io/docs/routing-and-input.html#query-strings) describes how to use query strings as inputs. But in our case, manually writing query strings is not practical because we have so many parameters. Of course, there are programs that let us generate query strings but the easiest way to format the input from a line of data I found is to use JSON.
 
 The `toJSON()` function from the `rjson` package converts our input line to JSON format:
 
@@ -100,17 +108,21 @@ cat(test_case_json)
 
 ### Defining the endpoint and output
 
-In order to convert this very simple script into an API, we need to define the endpoint(s). Endpoints will return an output, in our case it will return the output of the `predict()` function. Here, we want to have the predictions returned, so we annotate the `predict()` function with `@get`. This endpoint in the API will get a custom name, so that we can call it later; here we call it `predict` and therefore write `#' @get /predict`.
+In order to convert this very simple script into an API, we need to define the endpoint(s). Endpoints will return an output, in our case it will return the output of the `predict()` function pasted into a line of text (e.g. "Test case predicted to be ckd "). Here, we want to have the predictions returned, so we annotate the entire function with `@get`. This endpoint in the API will get a custom name, so that we can call it later; here we call it `predict` and therefore write `#' @get /predict`.
 
 > According to the design of the HTTP specification, GET (along with HEAD) requests are used only to read data and not change it. Therefore, when used this way, they are considered safe. That is, they can be called without risk of data modification or corruption — calling it once has the same effect as calling it 10 times, or none at all. Additionally, GET (and HEAD) is idempotent, which means that making multiple identical requests ends up having the same result as a single request. http://www.restapitutorial.com/lessons/httpmethods.html
 
-In this case, we could also consider using `@post` to avoid caching issues, but for now I'll leave it as `@get`.
+In this case, we could also consider using `@post` to avoid caching issues, but for this example I'll leave it as `@get`.
 
 > The POST verb is most-often utilized to **create** new resources. In particular, it's used to create subordinate resources. That is, subordinate to some other (e.g. parent) resource. In other words, when creating a new resource, POST to the parent and the service takes care of associating the new resource with the parent, assigning an ID (new resource URI), etc.
 On successful creation, return HTTP status 201, returning a Location header with a link to the newly-created resource with the 201 HTTP status.
 POST is neither safe nor idempotent. It is therefore recommended for non-idempotent resource requests. Making two identical POST requests will most-likely result in two resources containing the same information. http://www.restapitutorial.com/lessons/httpmethods.html
 
-We can also customize the output. By default, the output will be in JSON format. Here, I want to have a text output, so I'll specify `@html`.
+We can also customize the output. Keep in mind though, that the output should be ["serialized"](https://www.rplumber.io/docs/rendering-and-output.html#serializers). By default, the output will be in JSON format. Here, I want to have a text output, so I'll specify `@html` without html formatting specifications, although I could add them if I wanted to display the text on a website. If we were to [store the data in a database](https://www.rplumber.io/docs/runtime.html#external-data-store), however, this would not be a good idea. In that case, it would be better to output the result as a JSON object.
+
+### Logging with filters
+
+It is also useful to provide some sort of logging for your API. Here, I am using the simple example from the [plumber documentation](https://www.rplumber.io/docs/routing-and-input.html#filters) that uses filters and output the logs to the console or your API server logs. You could also [write your logging output to a file](https://www.rplumber.io/docs/runtime.html#file-system). In production, it would be better to use a real logging setup that stores information about each request, e.g. the time stamp, whether any errors or warnings occurred, etc. The `forward()` part of the logging function passes control on to the next handler in the pipeline, here our predict function.
 
 ### Running the plumber script
 
@@ -240,7 +252,9 @@ calculate_prediction <- function(age, bp, sg_1.005, sg_1.010, sg_1.015, sg_1.020
 
 ```
 
-We can now call our script with the `plumb()` function, run it with `run()` and open it on port 800.
+Note that I am using the “double-assignment” operator `<<-` in my function, because I want to make sure that objects are overwritten at the top level (i.e. globally). This would have been relevant had I set a global parameter, but to show it the example, I decided to use it here as well.
+
+We can now call our script with the `plumb()` function, run it with `run()` and open it on port 800. Calling `plumb()` creates an environment in which all our functions are evaluated.
 
 ```{r warning=FALSE, message=FALSE}
 library(plumber)
@@ -280,7 +294,7 @@ curl -H "Content-Type: application/json" -X GET -d '{"age":0.511111111111111,"bp
 
 This will return the following output:
 
-- `cat()` outputs to the R console
+- `cat()` outputs to the R console if you use R interactively; if you use R on a server, it will be included in the server logs.
 
 ```{}
 System time: 2018-01-15 13:34:32 
@@ -295,6 +309,14 @@ System time: 2018-01-15 13:34:32
 Test case predicted to be ckd 
 ----------------
 ```
+
+### Security
+
+This example shows a pretty simply R-script API. But if you plan on deploying your API to production, you should consider the [security section of the plumber documentation](https://www.rplumber.io/docs/security.html). It give additional information about how you can make your code (more) secure.
+
+### Finalize
+
+If you wanted to deploy this API you would need to [host](https://www.rplumber.io/docs/hosting.html) it, i.e. provide the model and run an R environment with plumber, ideally on a server. A good way to do this, would be to package everything in a [Docker](https://www.rplumber.io/docs/hosting.html#docker) container and run this. Docker will ensure that you have a working snapshot of the system settings, R and package versions that won't change. For more information on dockerizing your API, check out https://hub.docker.com/r/trestletech/plumber/.
 
 ---
 
