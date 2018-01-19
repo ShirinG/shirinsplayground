@@ -13,8 +13,9 @@ slug: twimlai91
 ---
 
 These are my sketchnotes for Sam Charrington's podcast **This Week in Machine Learning and AI** about Philosophy of Intelligence with Matthew Crosby:
+https://twimlai.com/twiml-talk-92-learning-state-representations-yael-niv/
 
-![](https://shiring.github.io/netlify_images/twimlai91.jpg)
+![Sketchnotes from TWiMLAI talk #92: Philosophy of Intelligence with Matthew Crosby](https://shiring.github.io/netlify_images/twimlai91.jpg)
 
 You can listen to the podcast [here](https://twimlai.com/twiml-talk-91-philosophy-intelligence-matthew-crosby/).
 
