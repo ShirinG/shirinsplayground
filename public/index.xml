@@ -2,12 +2,29 @@
   <title>Shirin&#39;s playgRound</title>
   <link href="/index.xml" rel="self"/>
   <link href="/"/>
-  <updated>2018-01-16T00:00:00+00:00</updated>
+  <updated>2018-01-19T00:00:00+00:00</updated>
   <id>/</id>
   <author>
     <name>Dr. Shirin Glander</name>
   </author>
   <generator>Hugo -- gohugo.io</generator>
+  <entry>
+    <title type="html"><![CDATA[Sketchnotes from TWiML&amp;AI #92: Learning State Representations with Yael Niv]]></title>
+    <link href="/2018/01/twimlai92/"/>
+    <id>/2018/01/twimlai92/</id>
+    <published>2018-01-19T00:00:00+00:00</published>
+    <updated>2018-01-19T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<p>These are my sketchnotes for Sam Charrington’s podcast <strong>This Week in Machine Learning and AI</strong> about Learning State Representations with Yael Niv: <a href="https://twimlai.com/twiml-talk-92-learning-state-representations-yael-niv/" class="uri">https://twimlai.com/twiml-talk-92-learning-state-representations-yael-niv/</a></p>
+<div class="figure">
+<img src="https://shiring.github.io/netlify_images/twimlai92.jpg" alt="Sketchnotes from TWiMLAI talk #92: Learning State Representations with Yael Niv" />
+<p class="caption">Sketchnotes from TWiMLAI talk #92: Learning State Representations with Yael Niv</p>
+</div>
+<p>You can listen to the podcast <a href="https://twimlai.com/twiml-talk-92-learning-state-representations-yael-niv/">here</a>.</p>
+<blockquote>
+<p>In this interview Yael and I explore the relationship between neuroscience and machine learning. In particular, we discusses the importance of state representations in human learning, some of her experimental results in this area, and how a better understanding of representation learning can lead to insights into machine learning problems such as reinforcement and transfer learning. Did I mention this was a nerd alert show? I really enjoyed this interview and I know you will too. Be sure to send over any thoughts or feedback via the show notes page. <a href="https://twimlai.com/twiml-talk-92-learning-state-representations-yael-niv/" class="uri">https://twimlai.com/twiml-talk-92-learning-state-representations-yael-niv/</a></p>
+</blockquote>
+]]></content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[How to make your machine learning model available as an API with the plumber package]]></title>
     <link href="/2018/01/plumber/"/>
@@ -366,10 +383,10 @@ Test case predicted to be ckd
     <id>/2018/01/twimlai91/</id>
     <published>2018-01-14T00:00:00+00:00</published>
     <updated>2018-01-14T00:00:00+00:00</updated>
-    <content type="html"><![CDATA[<p>These are my sketchnotes for Sam Charrington’s podcast <strong>This Week in Machine Learning and AI</strong> about Philosophy of Intelligence with Matthew Crosby:</p>
+    <content type="html"><![CDATA[<p>These are my sketchnotes for Sam Charrington’s podcast <strong>This Week in Machine Learning and AI</strong> about Philosophy of Intelligence with Matthew Crosby: <a href="https://twimlai.com/twiml-talk-92-learning-state-representations-yael-niv/" class="uri">https://twimlai.com/twiml-talk-92-learning-state-representations-yael-niv/</a></p>
 <div class="figure">
-<img src="https://shiring.github.io/netlify_images/twimlai91.jpg" />
-
+<img src="https://shiring.github.io/netlify_images/twimlai91.jpg" alt="Sketchnotes from TWiMLAI talk #92: Philosophy of Intelligence with Matthew Crosby" />
+<p class="caption">Sketchnotes from TWiMLAI talk #92: Philosophy of Intelligence with Matthew Crosby</p>
 </div>
 <p>You can listen to the podcast <a href="https://twimlai.com/twiml-talk-91-philosophy-intelligence-matthew-crosby/">here</a>.</p>
 <blockquote>
@@ -409,15 +426,6 @@ Test case predicted to be ckd
 <img src="https://shiring.github.io/netlify_images/twimlai88_sketchnotes_vhjzac.jpg" alt="Sketchnotes from TWiMLAI talk #88: Using Deep Learning and Google Street View to Estimate Demographics with Timnit Gebru" />
 <p class="caption">Sketchnotes from TWiMLAI talk #88: Using Deep Learning and Google Street View to Estimate Demographics with Timnit Gebru</p>
 </div>
-]]></content>
-  </entry>
-  <entry>
-    <title type="html"><![CDATA[Twimlai talk 92]]></title>
-    <link href="/2018/01/twimlai92/"/>
-    <id>/2018/01/twimlai92/</id>
-    <published>2018-01-10T00:00:00+00:00</published>
-    <updated>2018-01-10T00:00:00+00:00</updated>
-    <content type="html"><![CDATA[<p><a href="https://twimlai.com/twiml-talk-92-learning-state-representations-yael-niv/" class="uri">https://twimlai.com/twiml-talk-92-learning-state-representations-yael-niv/</a></p>
 ]]></content>
   </entry>
   <entry>
