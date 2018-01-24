@@ -308,7 +308,7 @@ Test case predicted to be ckd
 <p>If you wanted to deploy this API you would need to <a href="https://www.rplumber.io/docs/hosting.html">host</a> it, i.e. provide the model and run an R environment with plumber, ideally on a server. A good way to do this, would be to package everything in a <a href="https://www.rplumber.io/docs/hosting.html#docker">Docker</a> container and run this. Docker will ensure that you have a working snapshot of the system settings, R and package versions that won’t change. For more information on dockerizing your API, check out <a href="https://hub.docker.com/r/trestletech/plumber/" class="uri">https://hub.docker.com/r/trestletech/plumber/</a>.</p>
 <hr />
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>## R version 3.4.2 (2017-09-28)
+<pre><code>## R version 3.4.3 (2017-11-30)
 ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
 ## Running under: macOS High Sierra 10.13.2
 ## 
@@ -325,36 +325,36 @@ Test case predicted to be ckd
 ## other attached packages:
 ##  [1] plumber_0.4.4   rjson_0.2.15    forcats_0.2.0   stringr_1.2.0  
 ##  [5] dplyr_0.7.4     purrr_0.2.4     readr_1.1.1     tidyr_0.7.2    
-##  [9] tibble_1.3.4    ggplot2_2.2.1   tidyverse_1.2.1
+##  [9] tibble_1.4.1    ggplot2_2.2.1   tidyverse_1.2.1
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] httr_1.3.1          ddalpha_1.3.1       sfsmisc_1.1-1      
-##  [4] jsonlite_1.5        splines_3.4.2       foreach_1.4.3      
+##  [4] jsonlite_1.5        splines_3.4.3       foreach_1.4.4      
 ##  [7] prodlim_1.6.1       modelr_0.1.1        assertthat_0.2.0   
-## [10] stats4_3.4.2        DRR_0.0.2           cellranger_1.1.0   
-## [13] yaml_2.1.15         robustbase_0.92-8   ipred_0.9-6        
-## [16] backports_1.1.1     lattice_0.20-35     glue_1.2.0         
-## [19] digest_0.6.12       randomForest_4.6-12 rvest_0.3.2        
-## [22] colorspace_1.3-2    recipes_0.1.1       httpuv_1.3.5       
-## [25] htmltools_0.3.6     Matrix_1.2-12       plyr_1.8.4         
-## [28] psych_1.7.8         timeDate_3042.101   pkgconfig_2.0.1    
-## [31] CVST_0.2-1          broom_0.4.3         haven_1.1.0        
-## [34] caret_6.0-77        bookdown_0.5        scales_0.5.0       
-## [37] gower_0.1.2         lava_1.5.1          withr_2.1.0        
-## [40] nnet_7.3-12         lazyeval_0.2.1      cli_1.0.0          
-## [43] mnormt_1.5-5        survival_2.41-3     magrittr_1.5       
-## [46] crayon_1.3.4        readxl_1.0.0        evaluate_0.10.1    
-## [49] nlme_3.1-131        MASS_7.3-47         xml2_1.1.1         
-## [52] dimRed_0.1.0        foreign_0.8-69      class_7.3-14       
-## [55] blogdown_0.3        tools_3.4.2         hms_0.4.0          
-## [58] kernlab_0.9-25      munsell_0.4.3       bindrcpp_0.2       
-## [61] compiler_3.4.2      RcppRoll_0.2.2      rlang_0.1.4        
-## [64] grid_3.4.2          iterators_1.0.8     rstudioapi_0.7     
-## [67] rmarkdown_1.8       gtable_0.2.0        ModelMetrics_1.1.0 
-## [70] codetools_0.2-15    reshape2_1.4.2      R6_2.2.2           
-## [73] lubridate_1.7.1     knitr_1.17          bindr_0.1          
-## [76] rprojroot_1.2       stringi_1.1.6       parallel_3.4.2     
-## [79] Rcpp_0.12.14        rpart_4.1-11        tidyselect_0.2.3   
-## [82] DEoptimR_1.0-8</code></pre>
+## [10] stats4_3.4.3        DRR_0.0.3           cellranger_1.1.0   
+## [13] yaml_2.1.16         robustbase_0.92-8   ipred_0.9-6        
+## [16] pillar_1.1.0        backports_1.1.2     lattice_0.20-35    
+## [19] glue_1.2.0          digest_0.6.14       randomForest_4.6-12
+## [22] rvest_0.3.2         colorspace_1.3-2    recipes_0.1.2      
+## [25] httpuv_1.3.5        htmltools_0.3.6     Matrix_1.2-12      
+## [28] plyr_1.8.4          psych_1.7.8         timeDate_3042.101  
+## [31] pkgconfig_2.0.1     CVST_0.2-1          broom_0.4.3        
+## [34] haven_1.1.0         caret_6.0-78        bookdown_0.5       
+## [37] scales_0.5.0        gower_0.1.2         lava_1.6           
+## [40] withr_2.1.1         nnet_7.3-12         lazyeval_0.2.1     
+## [43] cli_1.0.0           mnormt_1.5-5        survival_2.41-3    
+## [46] magrittr_1.5        crayon_1.3.4        readxl_1.0.0       
+## [49] evaluate_0.10.1     nlme_3.1-131        MASS_7.3-48        
+## [52] xml2_1.1.1          dimRed_0.1.0        foreign_0.8-69     
+## [55] class_7.3-14        blogdown_0.4        tools_3.4.3        
+## [58] hms_0.4.0           kernlab_0.9-25      munsell_0.4.3      
+## [61] bindrcpp_0.2        compiler_3.4.3      RcppRoll_0.2.2     
+## [64] rlang_0.1.6         grid_3.4.3          iterators_1.0.9    
+## [67] rstudioapi_0.7      rmarkdown_1.8       gtable_0.2.0       
+## [70] ModelMetrics_1.1.0  codetools_0.2-15    reshape2_1.4.3     
+## [73] R6_2.2.2            lubridate_1.7.1     knitr_1.18         
+## [76] bindr_0.1           rprojroot_1.3-2     stringi_1.1.6      
+## [79] parallel_3.4.3      Rcpp_0.12.14        rpart_4.1-12       
+## [82] tidyselect_0.2.3    DEoptimR_1.0-8</code></pre>
 </div>
 </div>
