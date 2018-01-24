@@ -2,12 +2,30 @@
   <title>Shirin&#39;s playgRound</title>
   <link href="/index.xml" rel="self"/>
   <link href="/"/>
-  <updated>2018-01-19T00:00:00+00:00</updated>
+  <updated>2018-01-24T00:00:00+00:00</updated>
   <id>/</id>
   <author>
     <name>Dr. Shirin Glander</name>
   </author>
   <generator>Hugo -- gohugo.io</generator>
+  <entry>
+    <title type="html"><![CDATA[Join MünsteR for our next meetup on obtaining functional implications of gene expression data with R]]></title>
+    <link href="/2018/01/meetup_march18/"/>
+    <id>/2018/01/meetup_march18/</id>
+    <published>2018-01-24T00:00:00+00:00</published>
+    <updated>2018-01-24T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<div class="figure">
+<img src="https://shiring.github.io/r_users_group/2017/05/20/map.png" />
+
+</div>
+<p>In our <a href="http://meetu.ps/e/DDY1B/w54bW/f">next MünsteR R-user group meetup</a> on <strong>March 5th, 2018</strong> Frank Rühle will talk about bioinformatics and how to analyse genome data.</p>
+<p>You can RSVP here: <a href="http://meetu.ps/e/DDY1B/w54bW/f" class="uri">http://meetu.ps/e/DDY1B/w54bW/f</a></p>
+<blockquote>
+<p>Next-Generation sequencing and array-based technologies provided a plethora of gene expression data in the public genomics databases. But how to get meaningful information and functional implications out of this vast amount of data? Various R-packages have been published by the Bioconductor user community for distinct kinds of analysis strategies. Here, several approaches will be presented for functional gene annotation, gene enrichment analysis and co-expression network analysis. A collection of wrapper functions for streamlined analysis of expression data can be found at: <a href="https://github.com/frankRuehle/systemsbio" class="uri">https://github.com/frankRuehle/systemsbio</a>.</p>
+</blockquote>
+<p>Dr. Frank Rühle is a post-doctoral research fellow in the group of genetic epidemiology at the Institute of Human Genetics at the University of Münster. As biologist with focus on computational biology he aims at identifying genomic biomarker for complex cardiovascular diseases by analyzing multiomics data with respect to a systems biology view. Further research interests include the functions of long non-coding RNAs and their impact on gene regulation in heart-related phenotypes.</p>
+]]></content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[Sketchnotes from TWiML&amp;AI #92: Learning State Representations with Yael Niv]]></title>
     <link href="/2018/01/twimlai92/"/>

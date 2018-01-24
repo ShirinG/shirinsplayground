@@ -1,0 +1,23 @@
+---
+title: "Join MünsteR for our next meetup on obtaining functional implications of gene expression data with R"
+draft: false
+author: Shirin Glander
+date: '2018-01-24'
+categories: ["R"]
+tags: ["Meetup", "MünsteR", "Bioinformatics"]
+thumbnailImagePosition: left
+thumbnailImage: https://shiring.github.io/r_users_group/2017/05/20/map.png
+metaAlignment: center
+coverMeta: out
+slug: meetup_march18
+---
+
+![](https://shiring.github.io/r_users_group/2017/05/20/map.png)
+
+In our [next MünsteR R-user group meetup](http://meetu.ps/e/DDY1B/w54bW/f) on **March 5th, 2018** Frank Rühle will talk about bioinformatics and how to analyse genome data.
+
+You can RSVP here: [http://meetu.ps/e/DDY1B/w54bW/f](http://meetu.ps/e/DDY1B/w54bW/f)
+
+> Next-Generation sequencing and array-based technologies provided a plethora of gene expression data in the public genomics databases. But how to get meaningful information and functional implications out of this vast amount of data? Various R-packages have been published by the Bioconductor user community for distinct kinds of analysis strategies. Here, several approaches will be presented for functional gene annotation, gene enrichment analysis and co-expression network analysis. A collection of wrapper functions for streamlined analysis of expression data can be found at: https://github.com/frankRuehle/systemsbio.
+
+Dr. Frank Rühle is a post-doctoral research fellow in the group of genetic epidemiology at the Institute of Human Genetics at the University of Münster. As biologist with focus on computational biology he aims at identifying genomic biomarker for complex cardiovascular diseases by analyzing multiomics data with respect to a systems biology view. Further research interests include the functions of long non-coding RNAs and their impact on gene regulation in heart-related phenotypes.
