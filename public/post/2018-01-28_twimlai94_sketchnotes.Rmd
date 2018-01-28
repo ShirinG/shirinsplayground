@@ -1,0 +1,22 @@
+---
+title: "Sketchnotes from TWiML&AI #94: Neuroevolution: Evolving Novel Neural Network Architectures with Kenneth Stanley"
+draft: false
+author: Shirin Glander
+date: '2018-01-28'
+categories: ["R"]
+tags: ["Fairness", "Machine Learning"]
+thumbnailImagePosition: left
+thumbnailImage: https://shiring.github.io/netlify_images/twimlai94.jpg
+metaAlignment: center
+coverMeta: out
+slug: twimlai94
+---
+
+These are my sketchnotes for Sam Charrington's podcast **This Week in Machine Learning and AI** about *Neuroevolution: Evolving Novel Neural Network Architectures with Kenneth Stanley*:
+
+![Sketchnotes from TWiMLAI talk #94: Neuroevolution: Evolving Novel Neural Network Architectures with Kenneth Stanley](https://shiring.github.io/netlify_images/twimlai94.jpg)
+
+You can listen to the podcast [here](https://twimlai.com/twiml-talk-94-neuroevolution-evolving-novel-neural-network-architectures-kenneth-stanley/).
+
+> Kenneth studied under TWiML Talk #47 guest Risto Miikkulainen at UT Austin, and joined Uber AI Labs after Geometric Intelligence , the company he co-founded with Gary Marcus and others, was acquired in late 2016. Kenneth’s research focus is what he calls Neuroevolution, applies the idea of genetic algorithms to the challenge of evolving neural network architectures. In this conversation, we discuss the Neuroevolution of Augmenting Topologies (or NEAT) paper that Kenneth authored along with Risto, which won the 2017 International Society for Artificial Life’s Award for Outstanding Paper of the Decade 2002 – 2012. We also cover some of the extensions to that approach he’s created since, including, HyperNEAT, which can efficiently evolve very large networks with connectivity patterns that look more like those of the human and that are generally much larger than what prior approaches to neural learning could produce, and novelty search, an approach which unlike most evolutionary algorithms has no defined objective, but rather simply searches for novel behaviors. We also cover concepts like “Complexification” and “Deception”, biology vs computation including differences and similarities, and some of his other work including his book, and NERO, a video game complete with Real-time Neuroevolution. This is a meaty “Nerd Alert” interview that I think you’ll really enjoy.
+https://twimlai.com/twiml-talk-94-neuroevolution-evolving-novel-neural-network-architectures-kenneth-stanley/

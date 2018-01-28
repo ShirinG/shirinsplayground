@@ -1,17 +1,34 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Shirin&#39;s playgRound</title>
-  <link href="https://shirinsplayground.netlify.com/index.xml" rel="self"/>
-  <link href="https://shirinsplayground.netlify.com/"/>
-  <updated>2018-01-24T00:00:00+00:00</updated>
-  <id>https://shirinsplayground.netlify.com/</id>
+  <link href="/index.xml" rel="self"/>
+  <link href="/"/>
+  <updated>2018-01-28T00:00:00+00:00</updated>
+  <id>/</id>
   <author>
     <name>Dr. Shirin Glander</name>
   </author>
   <generator>Hugo -- gohugo.io</generator>
   <entry>
+    <title type="html"><![CDATA[Sketchnotes from TWiML&amp;AI #94: Neuroevolution: Evolving Novel Neural Network Architectures with Kenneth Stanley]]></title>
+    <link href="/2018/01/twimlai94/"/>
+    <id>/2018/01/twimlai94/</id>
+    <published>2018-01-28T00:00:00+00:00</published>
+    <updated>2018-01-28T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<p>These are my sketchnotes for Sam Charrington’s podcast <strong>This Week in Machine Learning and AI</strong> about <em>Neuroevolution: Evolving Novel Neural Network Architectures with Kenneth Stanley</em>:</p>
+<div class="figure">
+<img src="https://shiring.github.io/netlify_images/twimlai94.jpg" alt="Sketchnotes from TWiMLAI talk #94: Neuroevolution: Evolving Novel Neural Network Architectures with Kenneth Stanley" />
+<p class="caption">Sketchnotes from TWiMLAI talk #94: Neuroevolution: Evolving Novel Neural Network Architectures with Kenneth Stanley</p>
+</div>
+<p>You can listen to the podcast <a href="https://twimlai.com/twiml-talk-94-neuroevolution-evolving-novel-neural-network-architectures-kenneth-stanley/">here</a>.</p>
+<blockquote>
+<p>Kenneth studied under TWiML Talk #47 guest Risto Miikkulainen at UT Austin, and joined Uber AI Labs after Geometric Intelligence , the company he co-founded with Gary Marcus and others, was acquired in late 2016. Kenneth’s research focus is what he calls Neuroevolution, applies the idea of genetic algorithms to the challenge of evolving neural network architectures. In this conversation, we discuss the Neuroevolution of Augmenting Topologies (or NEAT) paper that Kenneth authored along with Risto, which won the 2017 International Society for Artificial Life’s Award for Outstanding Paper of the Decade 2002 – 2012. We also cover some of the extensions to that approach he’s created since, including, HyperNEAT, which can efficiently evolve very large networks with connectivity patterns that look more like those of the human and that are generally much larger than what prior approaches to neural learning could produce, and novelty search, an approach which unlike most evolutionary algorithms has no defined objective, but rather simply searches for novel behaviors. We also cover concepts like “Complexification” and “Deception”, biology vs computation including differences and similarities, and some of his other work including his book, and NERO, a video game complete with Real-time Neuroevolution. This is a meaty “Nerd Alert” interview that I think you’ll really enjoy. <a href="https://twimlai.com/twiml-talk-94-neuroevolution-evolving-novel-neural-network-architectures-kenneth-stanley/" class="uri">https://twimlai.com/twiml-talk-94-neuroevolution-evolving-novel-neural-network-architectures-kenneth-stanley/</a></p>
+</blockquote>
+]]></content>
+  </entry>
+  <entry>
     <title type="html"><![CDATA[Join MünsteR for our next meetup on obtaining functional implications of gene expression data with R]]></title>
-    <link href="https://shirinsplayground.netlify.com/2018/01/meetup_march18/"/>
-    <id>https://shirinsplayground.netlify.com/2018/01/meetup_march18/</id>
+    <link href="/2018/01/meetup_march18/"/>
+    <id>/2018/01/meetup_march18/</id>
     <published>2018-01-24T00:00:00+00:00</published>
     <updated>2018-01-24T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<div class="figure">
@@ -28,8 +45,8 @@
   </entry>
   <entry>
     <title type="html"><![CDATA[Sketchnotes from TWiML&amp;AI #92: Learning State Representations with Yael Niv]]></title>
-    <link href="https://shirinsplayground.netlify.com/2018/01/twimlai92/"/>
-    <id>https://shirinsplayground.netlify.com/2018/01/twimlai92/</id>
+    <link href="/2018/01/twimlai92/"/>
+    <id>/2018/01/twimlai92/</id>
     <published>2018-01-19T00:00:00+00:00</published>
     <updated>2018-01-19T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>These are my sketchnotes for Sam Charrington’s podcast <strong>This Week in Machine Learning and AI</strong> about Learning State Representations with Yael Niv: <a href="https://twimlai.com/twiml-talk-92-learning-state-representations-yael-niv/" class="uri">https://twimlai.com/twiml-talk-92-learning-state-representations-yael-niv/</a></p>
@@ -45,8 +62,8 @@
   </entry>
   <entry>
     <title type="html"><![CDATA[How to make your machine learning model available as an API with the plumber package]]></title>
-    <link href="https://shirinsplayground.netlify.com/2018/01/plumber/"/>
-    <id>https://shirinsplayground.netlify.com/2018/01/plumber/</id>
+    <link href="/2018/01/plumber/"/>
+    <id>/2018/01/plumber/</id>
     <published>2018-01-16T00:00:00+00:00</published>
     <updated>2018-01-16T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<div class="figure">
@@ -397,8 +414,8 @@ Test case predicted to be ckd
   </entry>
   <entry>
     <title type="html"><![CDATA[Sketchnotes from TWiML&amp;AI #91: Philosophy of Intelligence with Matthew Crosby]]></title>
-    <link href="https://shirinsplayground.netlify.com/2018/01/twimlai91/"/>
-    <id>https://shirinsplayground.netlify.com/2018/01/twimlai91/</id>
+    <link href="/2018/01/twimlai91/"/>
+    <id>/2018/01/twimlai91/</id>
     <published>2018-01-14T00:00:00+00:00</published>
     <updated>2018-01-14T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>These are my sketchnotes for Sam Charrington’s podcast <strong>This Week in Machine Learning and AI</strong> about Philosophy of Intelligence with Matthew Crosby: <a href="https://twimlai.com/twiml-talk-92-learning-state-representations-yael-niv/" class="uri">https://twimlai.com/twiml-talk-92-learning-state-representations-yael-niv/</a></p>
@@ -414,8 +431,8 @@ Test case predicted to be ckd
   </entry>
   <entry>
     <title type="html"><![CDATA[Looking beyond accuracy to improve trust in machine learning]]></title>
-    <link href="https://shirinsplayground.netlify.com/2018/01/looking_beyond_accuracy_to_improve_trust_in_ml/"/>
-    <id>https://shirinsplayground.netlify.com/2018/01/looking_beyond_accuracy_to_improve_trust_in_ml/</id>
+    <link href="/2018/01/looking_beyond_accuracy_to_improve_trust_in_ml/"/>
+    <id>/2018/01/looking_beyond_accuracy_to_improve_trust_in_ml/</id>
     <published>2018-01-10T00:00:00+00:00</published>
     <updated>2018-01-10T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>I have written another blogpost about <a href="https://blog.codecentric.de/en/2018/01/look-beyond-accuracy-improve-trust-machine-learning/">Looking beyond accuracy to improve trust in machine learning</a> at my company <a href="https://blog.codecentric.de/en/">codecentric</a>&rsquo;s blog:</p>
@@ -435,8 +452,8 @@ Test case predicted to be ckd
   </entry>
   <entry>
     <title type="html"><![CDATA[TWiMLAI talk 88 sketchnotes: Using Deep Learning and Google Street View to Estimate Demographics with Timnit Gebru]]></title>
-    <link href="https://shirinsplayground.netlify.com/2018/01/twimlai88_sketchnotes/"/>
-    <id>https://shirinsplayground.netlify.com/2018/01/twimlai88_sketchnotes/</id>
+    <link href="/2018/01/twimlai88_sketchnotes/"/>
+    <id>/2018/01/twimlai88_sketchnotes/</id>
     <published>2018-01-10T00:00:00+00:00</published>
     <updated>2018-01-10T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>These are my sketchnotes taken from the <a href="https://twimlai.com/twiml-talk-88-using-deep-learning-google-street-view-estimate-demographics-timnit-gebru/">“This week in Machine Learning &amp; AI” podcast number 88 about Using Deep Learning and Google Street View to Estimate Demographics with Timnit Gebru</a>:</p>
@@ -448,8 +465,8 @@ Test case predicted to be ckd
   </entry>
   <entry>
     <title type="html"><![CDATA[Registration now open for workshop on Deep Learning with Keras and TensorFlow using R]]></title>
-    <link href="https://shirinsplayground.netlify.com/2017/12/keras_sketchnotes/"/>
-    <id>https://shirinsplayground.netlify.com/2017/12/keras_sketchnotes/</id>
+    <link href="/2017/12/keras_sketchnotes/"/>
+    <id>/2017/12/keras_sketchnotes/</id>
     <published>2017-12-20T00:00:00+00:00</published>
     <updated>2017-12-20T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>Recently, I announced <a href="https://shirinsplayground.netlify.com/2017/11/deep_learning_keras_tensorflow/">my workshop on Deep Learning with Keras and TensorFlow</a>.</p>
@@ -476,8 +493,8 @@ Test case predicted to be ckd
   </entry>
   <entry>
     <title type="html"><![CDATA[Explaining Predictions of Machine Learning Models with LIME - Münster Data Science Meetup]]></title>
-    <link href="https://shirinsplayground.netlify.com/2017/12/lime_sketchnotes/"/>
-    <id>https://shirinsplayground.netlify.com/2017/12/lime_sketchnotes/</id>
+    <link href="/2017/12/lime_sketchnotes/"/>
+    <id>/2017/12/lime_sketchnotes/</id>
     <published>2017-12-12T00:00:00+00:00</published>
     <updated>2017-12-12T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<div id="slides-from-munster-data-science-meetup" class="section level2">
@@ -798,8 +815,8 @@ test_y &lt;- dplyr::select(test_data, class)</code></pre>
   </entry>
   <entry>
     <title type="html"><![CDATA[MICE (Multiple Imputation by Chained Equations) in R - sketchnotes from MünsteR Meetup]]></title>
-    <link href="https://shirinsplayground.netlify.com/2017/11/mice_sketchnotes/"/>
-    <id>https://shirinsplayground.netlify.com/2017/11/mice_sketchnotes/</id>
+    <link href="/2017/11/mice_sketchnotes/"/>
+    <id>/2017/11/mice_sketchnotes/</id>
     <published>2017-11-28T00:00:00+00:00</published>
     <updated>2017-11-28T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>Last night, the <a href="http://meetu.ps/c/3ffGL/w54bW/f">MünsteR R user-group</a> had <a href="https://www.meetup.com/Munster-R-Users-Group/events/243388360/">another great meetup</a>:</p>
@@ -818,8 +835,8 @@ test_y &lt;- dplyr::select(test_data, class)</code></pre>
   </entry>
   <entry>
     <title type="html"><![CDATA[Workshop on Deep Learning with Keras and TensorFlow in R]]></title>
-    <link href="https://shirinsplayground.netlify.com/2017/11/deep_learning_keras_tensorflow/"/>
-    <id>https://shirinsplayground.netlify.com/2017/11/deep_learning_keras_tensorflow/</id>
+    <link href="/2017/11/deep_learning_keras_tensorflow/"/>
+    <id>/2017/11/deep_learning_keras_tensorflow/</id>
     <published>2017-11-20T00:00:00+00:00</published>
     <updated>2017-11-20T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>You can now book me and my 1-day workshop on <a href="https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/">deep learning with Keras and TensorFlow using R</a>.</p>
@@ -851,8 +868,8 @@ test_y &lt;- dplyr::select(test_data, class)</code></pre>
   </entry>
   <entry>
     <title type="html"><![CDATA[How to combine point and boxplots in timeline charts with ggplot2 facets]]></title>
-    <link href="https://shirinsplayground.netlify.com/2017/11/combine_point_boxplot_ggplot/"/>
-    <id>https://shirinsplayground.netlify.com/2017/11/combine_point_boxplot_ggplot/</id>
+    <link href="/2017/11/combine_point_boxplot_ggplot/"/>
+    <id>/2017/11/combine_point_boxplot_ggplot/</id>
     <published>2017-11-18T00:00:00+00:00</published>
     <updated>2017-11-18T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>In a recent project, I was looking to plot data from different variables along the same time axis. The difficulty was, that some of these variables I wanted to have as point plots, while others I wanted as box-plots.</p>
@@ -944,8 +961,8 @@ head(fake_data_long)</code></pre>
   </entry>
   <entry>
     <title type="html"><![CDATA[Explore Predictive Maintenance with flexdashboard]]></title>
-    <link href="https://shirinsplayground.netlify.com/2017/11/predictive_maintenance_dashboard/"/>
-    <id>https://shirinsplayground.netlify.com/2017/11/predictive_maintenance_dashboard/</id>
+    <link href="/2017/11/predictive_maintenance_dashboard/"/>
+    <id>/2017/11/predictive_maintenance_dashboard/</id>
     <published>2017-11-02T00:00:00+00:00</published>
     <updated>2017-11-02T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>I have written the following post about <a href="https://blog.codecentric.de/en/2017/11/explore-predictive-maintenance-flexdashboard/">Predictive Maintenance and flexdashboard</a> at my company <a href="https://blog.codecentric.de/en/">codecentric</a>’s blog:</p>
@@ -970,8 +987,8 @@ head(fake_data_long)</code></pre>
   </entry>
   <entry>
     <title type="html"><![CDATA[Blockchain &amp; distributed ML - my report from the data2day conference]]></title>
-    <link href="https://shirinsplayground.netlify.com/2017/09/data2day/"/>
-    <id>https://shirinsplayground.netlify.com/2017/09/data2day/</id>
+    <link href="/2017/09/data2day/"/>
+    <id>/2017/09/data2day/</id>
     <published>2017-09-28T00:00:00+00:00</published>
     <updated>2017-09-28T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<div class="figure">
@@ -1034,8 +1051,8 @@ Verteiltes Deep Learning mit TensorFlow und Kubernetes - <a href="https://twitte
   </entry>
   <entry>
     <title type="html"><![CDATA[From Biology to Industry. A Blogger’s Journey to Data Science.]]></title>
-    <link href="https://shirinsplayground.netlify.com/2017/09/from-biology-to-industry.-a-bloggers-journey-to-data-science./"/>
-    <id>https://shirinsplayground.netlify.com/2017/09/from-biology-to-industry.-a-bloggers-journey-to-data-science./</id>
+    <link href="/2017/09/from-biology-to-industry.-a-bloggers-journey-to-data-science./"/>
+    <id>/2017/09/from-biology-to-industry.-a-bloggers-journey-to-data-science./</id>
     <published>2017-09-20T00:00:00+00:00</published>
     <updated>2017-09-20T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>Today, I have given a webinar for the Applied Epidemiology Didactic of the University of Wisconsin - Madison titled “From Biology to Industry. A Blogger’s Journey to Data Science.”</p>
@@ -1045,8 +1062,8 @@ Verteiltes Deep Learning mit TensorFlow und Kubernetes - <a href="https://twitte
   </entry>
   <entry>
     <title type="html"><![CDATA[Why I use R for Data Science - An Ode to R]]></title>
-    <link href="https://shirinsplayground.netlify.com/2017/09/ode_to_r/"/>
-    <id>https://shirinsplayground.netlify.com/2017/09/ode_to_r/</id>
+    <link href="/2017/09/ode_to_r/"/>
+    <id>/2017/09/ode_to_r/</id>
     <published>2017-09-19T00:00:00+00:00</published>
     <updated>2017-09-19T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>Working in Data Science, I often feel like I have to justify using R over Python. And while I do use Python for running scripts in production, I am much more comfortable with the R environment. Basically, whenever I can, I use R for prototyping, testing, visualizing and teaching. But because personal gut-feeling preference isn’t a very good reason to give to (scientifically minded) people, I’ve thought a lot about the pros and cons of using R. This is what I came up with why I still prefer R…</p>
@@ -1071,8 +1088,8 @@ Verteiltes Deep Learning mit TensorFlow und Kubernetes - <a href="https://twitte
   </entry>
   <entry>
     <title type="html"><![CDATA[Welcome to my page!]]></title>
-    <link href="https://shirinsplayground.netlify.com/page/about/"/>
-    <id>https://shirinsplayground.netlify.com/page/about/</id>
+    <link href="/page/about/"/>
+    <id>/page/about/</id>
     <published>2017-09-12T16:06:06+02:00</published>
     <updated>2017-09-12T16:06:06+02:00</updated>
     <content type="html"><![CDATA[
@@ -1112,8 +1129,8 @@ Verteiltes Deep Learning mit TensorFlow und Kubernetes - <a href="https://twitte
   </entry>
   <entry>
     <title type="html"><![CDATA[Moving my blog to blogdown]]></title>
-    <link href="https://shirinsplayground.netlify.com/2017/09/moving-my-blog-to-blogdown/"/>
-    <id>https://shirinsplayground.netlify.com/2017/09/moving-my-blog-to-blogdown/</id>
+    <link href="/2017/09/moving-my-blog-to-blogdown/"/>
+    <id>/2017/09/moving-my-blog-to-blogdown/</id>
     <published>2017-09-12T00:00:00+00:00</published>
     <updated>2017-09-12T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>It’s been a long time coming but I finally moved my blog from Jekyll/Bootstrap on Github pages to blogdown, Hugo and <a href="https://www.netlify.com/">Netlify</a>! Moreover, I also now have my own domain name <a href="https://www.shirin-glander.de">www.shirin-glander.de</a>. :-)</p>
@@ -1165,8 +1182,8 @@ Figure 1: A fancy pie chart.
   </entry>
   <entry>
     <title type="html"><![CDATA[Data Science for Fraud Detection]]></title>
-    <link href="https://shirinsplayground.netlify.com/2017/09/data-science-fraud-detection/"/>
-    <id>https://shirinsplayground.netlify.com/2017/09/data-science-fraud-detection/</id>
+    <link href="/2017/09/data-science-fraud-detection/"/>
+    <id>/2017/09/data-science-fraud-detection/</id>
     <published>2017-09-06T00:00:00+00:00</published>
     <updated>2017-09-06T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>I have written the following post about <a href="https://blog.codecentric.de/en/2017/09/data-science-fraud-detection/">Data Science for Fraud Detection</a> at my company <a href="https://blog.codecentric.de/en/">codecentric</a>&rsquo;s blog:</p>
@@ -1188,8 +1205,8 @@ Figure 1: A fancy pie chart.
   </entry>
   <entry>
     <title type="html"><![CDATA[Migrating from GitHub to GitLab with RStudio (Tutorial)]]></title>
-    <link href="https://shirinsplayground.netlify.com/2017/09/migrating-github-gitlab/"/>
-    <id>https://shirinsplayground.netlify.com/2017/09/migrating-github-gitlab/</id>
+    <link href="/2017/09/migrating-github-gitlab/"/>
+    <id>/2017/09/migrating-github-gitlab/</id>
     <published>2017-09-04T00:00:00+00:00</published>
     <updated>2017-09-04T00:00:00+00:00</updated>
     <content type="html"><![CDATA[
@@ -1323,8 +1340,8 @@ and the repository exists.
   </entry>
   <entry>
     <title type="html"><![CDATA[Social Network Analysis and Topic Modeling of codecentric’s Twitter friends and followers]]></title>
-    <link href="https://shirinsplayground.netlify.com/2017/07/twitter-analysis-codecentric/"/>
-    <id>https://shirinsplayground.netlify.com/2017/07/twitter-analysis-codecentric/</id>
+    <link href="/2017/07/twitter-analysis-codecentric/"/>
+    <id>/2017/07/twitter-analysis-codecentric/</id>
     <published>2017-07-28T00:00:00+00:00</published>
     <updated>2017-07-28T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>I have written the following post about <a href="https://blog.codecentric.de/en/2017/07/combining-social-network-analysis-topic-modeling-characterize-codecentrics-twitter-friends-followers/">Social Network Analysis and Topic Modeling of codecentric&rsquo;s Twitter friends and followers</a> for <a href="https://blog.codecentric.de/en/">codecentric</a>&rsquo;s blog:</p>
@@ -1348,8 +1365,8 @@ and the repository exists.
   </entry>
   <entry>
     <title type="html"><![CDATA[Find all my other posts on my old website!]]></title>
-    <link href="https://shirinsplayground.netlify.com/2017/07/find-all-my-other-posts-on-my-old-website/"/>
-    <id>https://shirinsplayground.netlify.com/2017/07/find-all-my-other-posts-on-my-old-website/</id>
+    <link href="/2017/07/find-all-my-other-posts-on-my-old-website/"/>
+    <id>/2017/07/find-all-my-other-posts-on-my-old-website/</id>
     <published>2017-07-01T00:00:00+00:00</published>
     <updated>2017-07-01T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>For all my other posts, see my old website:
