@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/2018/01/jax2018/</loc>
+    <lastmod>2018-01-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/2018/01/twimlai94/</loc>
     <lastmod>2018-01-28T00:00:00+00:00</lastmod>
   </url>
@@ -209,7 +214,7 @@
   
   <url>
     <loc>/tags/conference/</loc>
-    <lastmod>2017-09-28T00:00:00+00:00</lastmod>
+    <lastmod>2018-01-30T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -234,6 +239,12 @@
   <url>
     <loc>/categories/data2day/</loc>
     <lastmod>2017-09-28T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/deep-learning/</loc>
+    <lastmod>2018-01-30T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -317,7 +328,7 @@
   
   <url>
     <loc>/tags/machine-learning/</loc>
-    <lastmod>2018-01-28T00:00:00+00:00</lastmod>
+    <lastmod>2018-01-30T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -377,7 +388,7 @@
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2018-01-28T00:00:00+00:00</lastmod>
+    <lastmod>2018-01-30T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -395,7 +406,7 @@
   
   <url>
     <loc>/categories/r/</loc>
-    <lastmod>2018-01-28T00:00:00+00:00</lastmod>
+    <lastmod>2018-01-30T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -419,7 +430,7 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2018-01-28T00:00:00+00:00</lastmod>
+    <lastmod>2018-01-30T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
