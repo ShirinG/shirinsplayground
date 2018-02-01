@@ -4,7 +4,7 @@ draft: false
 author: Shirin Glander
 date: '2018-01-16'
 categories: ["R"]
-tags: ["API", "Machine Learning", "plumber"]
+tags: ["API", "machine learning", "plumber"]
 thumbnailImagePosition: left
 thumbnailImage: https://d33wubrfki0l68.cloudfront.net/03f3d9156c39a8043be42caeee1507d43d832472/8d968/components/images/plumber.png
 metaAlignment: center

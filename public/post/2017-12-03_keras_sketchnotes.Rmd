@@ -3,8 +3,8 @@ title: Registration now open for workshop on Deep Learning with Keras and Tensor
 draft: false
 author: Shirin Glander
 date: '2017-12-20'
-categories: ["R", "Python"]
-tags: ["Keras", "TensorFlow", "Theano", "Data Science", "tensor"]
+categories: ["R", "Python", "sketchnotes"]
+tags: ["Keras", "TensorFlow", "Theano", "data science", "tensor", "sketchnotes"]
 thumbnailImagePosition: left
 thumbnailImage: https://shiring.github.io/netlify_images/keras_sketchnotes_lgrnvo.jpg
 metaAlignment: center

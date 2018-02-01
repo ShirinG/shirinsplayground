@@ -4,7 +4,7 @@ draft: false
 author: Shirin Glander
 date: '2017-11-18'
 categories: ["R"]
-tags: ["ggplot2", "Data Science"]
+tags: ["ggplot2", "data science"]
 thumbnailImagePosition: left
 thumbnailImage: https://shiring.github.io/netlify_images/ggplot_facets_bmudxl.png
 metaAlignment: center

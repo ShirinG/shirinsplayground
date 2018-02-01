@@ -1,0 +1,30 @@
+---
+title: "Announcing my talk about explainability of machine learning models at Minds Mastering Machines conference"
+draft: false
+author: Shirin Glander
+date: '2018-02-01'
+categories: ["conference", "m3"]
+tags: ["LIME", "machine learning", "conference", "m3"]
+thumbnailImagePosition: left
+thumbnailImage: https://www.m3-konferenz.de/common/images/konferenzen/m3.png
+metaAlignment: center
+coverMeta: out
+slug: m3_2018
+---
+
+On Wednesday, April 25th 2018 I am going to [talk about explainability of machine learning models at the Minds Mastering Machines conference in Cologne](https://www.m3-konferenz.de/veranstaltung-6274-erkl%C3%A4rbarkeit-von-machine-learning%3A-wie-k%C3%B6nnen-wir-vertrauen-in-komplexe-modelle-schaffen.html?id=6274). The conference will be in German, though.
+
+> ERKLÄRBARKEIT VON MACHINE LEARNING: WIE KÖNNEN WIR VERTRAUEN IN KOMPLEXE MODELLE SCHAFFEN?
+
+> Mit Machine-Learning getroffene Entscheidungen sind inhärent schwierig – wenn nicht gar unmöglich – nachzuvollziehen. Die Komplexität einiger der besten Modelle, wie Neuronale Netzwerke, ist genau das, was sie so erfolgreich macht. Aber es macht sie gleichzeitig zu einer Black Box. Das kann problematisch sein, denn Geschäftsführer oder Vorstände werden weniger geneigt sein einer Entscheidung zu vertrauen und nach ihr zu handeln, wenn sie sie nicht verstehen. 
+
+> Local Interpretable Model-Agnostic Explanations (LIME) ist ein Versuch, diese komplexen Modelle zumindest teilweise nachvollziehbar zu machen. In diesem Vortrag erkläre ich das Prinzip und zeige Anwendungsbeispiele von LIME.
+
+> Vorkenntnisse
+> Grundkenntnisse Machine Learning & Statistik
+
+> Lernziele
+> * Einblick in Möglichkeit, die komplexe Modelle erklärbar machen
+> * Vertrauen in Entscheidungen durch Machine Learning schaffen
+
+![](https://www.m3-konferenz.de/common/images/konferenzen/m3.png)

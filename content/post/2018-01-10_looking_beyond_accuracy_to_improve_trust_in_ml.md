@@ -7,10 +7,14 @@ coverMeta: out
 date: 2018-01-10
 categories:
 - machine learning
+- codecentric
 tags:
 - codecentric
 - machine learning
-- lime
+- LIME
+- data science
+- bias
+- fairness
 showPagination: true
 showSocial: true
 showTags: true

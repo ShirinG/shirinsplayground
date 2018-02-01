@@ -3,8 +3,8 @@ title: "Sketchnotes from TWiML&AI #92: Learning State Representations with Yael 
 draft: false
 author: Shirin Glander
 date: '2018-01-19'
-categories: ["R"]
-tags: ["Fairness", "Machine Learning"]
+categories: ["sketchnotes", "twimlai"]
+tags: ["sketchnotes", "twimlai", "neuroscience", "state representation", "machine learning"]
 thumbnailImagePosition: left
 thumbnailImage: https://shiring.github.io/netlify_images/twimlai92.jpg
 metaAlignment: center

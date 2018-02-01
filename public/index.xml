@@ -2,12 +2,133 @@
   <title>Shirin&#39;s playgRound</title>
   <link href="/index.xml" rel="self"/>
   <link href="/"/>
-  <updated>2018-01-30T00:00:00+00:00</updated>
+  <updated>2018-02-01T16:06:06+02:00</updated>
   <id>/</id>
   <author>
     <name>Dr. Shirin Glander</name>
   </author>
   <generator>Hugo -- gohugo.io</generator>
+  <entry>
+    <title type="html"><![CDATA[Conferences, webinars, podcasts and the likes]]></title>
+    <link href="/page/conferences_podcasts_webinars/"/>
+    <id>/page/conferences_podcasts_webinars/</id>
+    <published>2018-02-01T16:06:06+02:00</published>
+    <updated>2018-02-01T16:06:06+02:00</updated>
+    <content type="html"><![CDATA[
+
+<p>Here, you can find a list of all the talks I gave at conferences, webinars, podcasts, workshops, and all the other places you can and could hear me talk. :-)</p>
+
+<h2 id="workshops-i-am-giving">Workshops I am giving</h2>
+
+<ul>
+<li><a href="https://shirinsplayground.netlify.com/2017/11/deep_learning_keras_tensorflow/">Workshop on Deep Learning with Keras and TensorFlow in R</a></li>
+</ul>
+
+<blockquote>
+<p>I offer a workshop on deep learning with Keras and TensorFlow using R.
+Date and place depend on who and how many people are interested, so please contact me either directly or via the workshop page: <a href="https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/">https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/</a> (the description is in German but I also offer to give the workshop in English).</p>
+</blockquote>
+
+<h2 id="upcoming-talks-webinars-podcasts-etc">Upcoming talks, webinars, podcasts, etc.</h2>
+
+<ul>
+<li><a href="https://shirinsplayground.netlify.com/2018/02/m3_2018/">Announcing my talk about explainability of machine learning models at Minds Mastering Machines Conference</a></li>
+</ul>
+
+<blockquote>
+<p>On Wednesday, April 25th 2018 I am going to talk about explainability of machine learning models at the Minds Mastering Machines conference in Cologne.</p>
+</blockquote>
+
+<ul>
+<li><a href="JAX 2018 talk announcement: Deep Learning - a Primer">JAX 2018 talk announcement: Deep Learning - a Primer</a></li>
+</ul>
+
+<blockquote>
+<p>Deep Learning is one of the &ldquo;hot&rdquo; topics in the AI area – a lot of hype, a lot of inflated expectation, but also quite some impressive success stories. As some AI experts already predict that Deep Learning will become &ldquo;Software 2.0&rdquo;, it might be a good time to have a closer look at the topic. In this session I will try to give a comprehensive overview of Deep Learning. We will start with a bit of history and some theoretical foundations that we will use to create a little Deep Learning taxonomy. Then we will have a look at current and upcoming application areas: Where can we apply Deep Learning successfully and what does it differentiate from other approaches? Afterwards we will examine the ecosystem: Which tools and libraries are available? What are their strengths and weaknesses? And to complete the session, we will look into some practical code examples and the typical pitfalls of Deep Learning. After this session you will have a much better idea of the why, what and how of Deep Learning, including if and how you might want to apply it to your own work. <a href="https://jax.de/big-data-machine-learning/deep-learning-a-primer/">https://jax.de/big-data-machine-learning/deep-learning-a-primer/</a></p>
+</blockquote>
+
+<h2 id="past-talks-webinars-podcasts-etc">Past talks, webinars, podcasts, etc.</h2>
+
+<ul>
+<li><a href="https://shirinsplayground.netlify.com/2018/02/herr_mies_wills_wissen/">I talk about machine learning with Daniel Mies (Podcast in German, though)</a></li>
+</ul>
+
+<blockquote>
+<p>In January 2018 I was interviewed for a tech podcast where I talked about machine learning, neural nets, why I love R and Rstudio and how I became a Data Scientist.</p>
+</blockquote>
+
+<ul>
+<li><a href="https://shirinsplayground.netlify.com/2017/12/lime_sketchnotes/">Explaining Predictions of Machine Learning Models with LIME - Münster Data Science Meetup</a></li>
+</ul>
+
+<blockquote>
+<p>In December 2017 I talked about Explaining Predictions of Machine Learning Models with LIME at the Münster Data Science Meetup.</p>
+</blockquote>
+
+<ul>
+<li><a href="https://shiring.github.io/blogging/2017/09/20/webinar_biology_to_data_science">From Biology to Industry. A Blogger’s Journey to Data Science</a></li>
+</ul>
+
+<blockquote>
+<p>In September 2017 I gave a webinar for the Applied Epidemiology Didactic of the University of Wisconsin - Madison titled “From Biology to Industry. A Blogger’s Journey to Data Science.”
+I talked about how blogging about R and Data Science helped me become a Data Scientist. I also gave a short introduction to Machine Learning, Big Data and Neural Networks.</p>
+</blockquote>
+
+<ul>
+<li><a href="https://shiring.github.io/machine_learning/2017/03/31/webinar_code">Building meaningful machine learning models for disease prediction</a></li>
+</ul>
+
+<blockquote>
+<p>In March 2017 I gave a webinar for the ISDS R Group about my work on building machine-learning models to predict the course of different diseases. I went over building a model, evaluating its performance, and answering or addressing different disease related questions using machine learning. My talk covered the theory of machine learning as it is applied using R.</p>
+</blockquote>
+]]></content>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[Announcing my talk about explainability of machine learning models at Minds Mastering Machines conference]]></title>
+    <link href="/2018/02/m3_2018/"/>
+    <id>/2018/02/m3_2018/</id>
+    <published>2018-02-01T00:00:00+00:00</published>
+    <updated>2018-02-01T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<p>On Wednesday, April 25th 2018 I am going to <a href="https://www.m3-konferenz.de/veranstaltung-6274-erkl%C3%A4rbarkeit-von-machine-learning%3A-wie-k%C3%B6nnen-wir-vertrauen-in-komplexe-modelle-schaffen.html?id=6274">talk about explainability of machine learning models at the Minds Mastering Machines conference in Cologne</a>. The conference will be in German, though.</p>
+<div class="figure">
+<img src="https://www.m3-konferenz.de/common/images/konferenzen/m3.png" />
+
+</div>
+<blockquote>
+<p>ERKLÄRBARKEIT VON MACHINE LEARNING: WIE KÖNNEN WIR VERTRAUEN IN KOMPLEXE MODELLE SCHAFFEN?</p>
+</blockquote>
+<blockquote>
+<p>Mit Machine-Learning getroffene Entscheidungen sind inhärent schwierig – wenn nicht gar unmöglich – nachzuvollziehen. Die Komplexität einiger der besten Modelle, wie Neuronale Netzwerke, ist genau das, was sie so erfolgreich macht. Aber es macht sie gleichzeitig zu einer Black Box. Das kann problematisch sein, denn Geschäftsführer oder Vorstände werden weniger geneigt sein einer Entscheidung zu vertrauen und nach ihr zu handeln, wenn sie sie nicht verstehen.</p>
+</blockquote>
+<blockquote>
+<p>Local Interpretable Model-Agnostic Explanations (LIME) ist ein Versuch, diese komplexen Modelle zumindest teilweise nachvollziehbar zu machen. In diesem Vortrag erkläre ich das Prinzip und zeige Anwendungsbeispiele von LIME.</p>
+</blockquote>
+<blockquote>
+<p>Vorkenntnisse Grundkenntnisse Machine Learning &amp; Statistik</p>
+</blockquote>
+<blockquote>
+<p>Lernziele * Einblick in Möglichkeit, die komplexe Modelle erklärbar machen * Vertrauen in Entscheidungen durch Machine Learning schaffen</p>
+</blockquote>
+]]></content>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[I talk about machine learning with Daniel Mies (Podcast in German, though)]]></title>
+    <link href="/2018/02/herr_mies_wills_wissen/"/>
+    <id>/2018/02/herr_mies_wills_wissen/</id>
+    <published>2018-02-01T00:00:00+00:00</published>
+    <updated>2018-02-01T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<p>For those of you out there who speak German:</p>
+<p>I was interviewed for a tech podcast where I talked about machine learning, neural nets, why I love R and Rstudio and how I became a Data Scientist.</p>
+<p>You can download and listen to the podcast here: <a href="https://mies.me/2018/01/31/hmww17-machine-learning-mit-dr-shirin-glander/" class="uri">https://mies.me/2018/01/31/hmww17-machine-learning-mit-dr-shirin-glander/</a></p>
+<div class="figure">
+<img src="https://mies.me/wp-content/cache/podlove/09/cad1c2bcc3b506410d277c27cc12fb/herr-mies-wills-wissen_500x500.png" />
+
+</div>
+<blockquote>
+<p>In der aktuellen Episode gibt Dr. Shirin Glander (Twitter, Homepage) uns ein paar Einblicke in das Thema Machine Learning. Wir klären zunächst, was Machine Learning ist und welche Möglichkeiten es bietet bevor wir etwas mehr in die Tiefe gehen. Wir beginnen mit Neuronalen Netzen und Entscheidungsbäumen und wie sich diese unterschieden. Hier kommen wir natürlich auch nicht an Supervised Learning, Unsupervised Learning und Reinforcement Learning vorbei. Wichtig bei der Arbeit mit Machine Learning sind die verwendeten Daten: Hier beginnt man mit Testdaten und Trainingsdaten, welche man mit Hilfe von Feature Engineering für die jeweilige Aufgabe optimieren kann. Shirin erzählt, wie sie mit Daten arbeitet und wie sie die richtigen Algorithmen findet. Eine wichtige Rolle spielen hier R und R Studio, welches sich besonders für statistische Analysen eignet. Gerade die Visualisierung der Daten ist hier hilfreich um selbige besser zu verstehen. Aber auch die Möglichkeiten Reports zu erzeugen und beispielsweise als PDF zu exportieren überzeugen. Wenn ihr R für Machine Learning einsetzen wollt, solltet ihr Euch auch caret ansehen. Shirin organisiert übrigens auch MünsteR, die R Users group in Münster. Wenn ihr Euch näher mit Machine Learning beschäftigen wollt, solltet ihr Euch Datacamp oder Coursera ansehen. Wenn ihr Euch für R interessiert schaut Euch die R Bloggers an Am Ende sprechen wir auch noch kurz über Deep Dreaming. Den passenden Generator hierfür, findet ihr unter deepdreamgenerator.com.</p>
+</blockquote>
+]]></content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[JAX 2018 talk announcement: Deep Learning - a Primer]]></title>
     <link href="/2018/01/jax2018/"/>
@@ -393,7 +514,7 @@ Test case predicted to be ckd
 ## other attached packages:
 ##  [1] plumber_0.4.4   rjson_0.2.15    forcats_0.2.0   stringr_1.2.0  
 ##  [5] dplyr_0.7.4     purrr_0.2.4     readr_1.1.1     tidyr_0.7.2    
-##  [9] tibble_1.4.1    ggplot2_2.2.1   tidyverse_1.2.1
+##  [9] tibble_1.4.2    ggplot2_2.2.1   tidyverse_1.2.1
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] httr_1.3.1          ddalpha_1.3.1       sfsmisc_1.1-1      
@@ -407,7 +528,7 @@ Test case predicted to be ckd
 ## [25] httpuv_1.3.5        htmltools_0.3.6     Matrix_1.2-12      
 ## [28] plyr_1.8.4          psych_1.7.8         timeDate_3042.101  
 ## [31] pkgconfig_2.0.1     CVST_0.2-1          broom_0.4.3        
-## [34] haven_1.1.0         caret_6.0-78        bookdown_0.5       
+## [34] haven_1.1.1         caret_6.0-78        bookdown_0.5       
 ## [37] scales_0.5.0        gower_0.1.2         lava_1.6           
 ## [40] withr_2.1.1         nnet_7.3-12         lazyeval_0.2.1     
 ## [43] cli_1.0.0           mnormt_1.5-5        survival_2.41-3    
@@ -422,7 +543,7 @@ Test case predicted to be ckd
 ## [70] ModelMetrics_1.1.0  codetools_0.2-15    reshape2_1.4.3     
 ## [73] R6_2.2.2            lubridate_1.7.1     knitr_1.18         
 ## [76] bindr_0.1           rprojroot_1.3-2     stringi_1.1.6      
-## [79] parallel_3.4.3      Rcpp_0.12.14        rpart_4.1-12       
+## [79] parallel_3.4.3      Rcpp_0.12.15        rpart_4.1-12       
 ## [82] tidyselect_0.2.3    DEoptimR_1.0-8</code></pre>
 </div>
 </div>
@@ -705,7 +826,7 @@ test_y &lt;- dplyr::select(test_data, class)</code></pre>
 ##  language (EN)                        
 ##  collate  de_DE.UTF-8                 
 ##  tz       Europe/Berlin               
-##  date     2018-01-24</code></pre>
+##  date     2018-02-01</code></pre>
 <pre><code>## Packages -----------------------------------------------------------------</code></pre>
 <pre><code>##  package      * version  date       source        
 ##  assertthat     0.2.0    2017-04-11 CRAN (R 3.4.0)
@@ -750,10 +871,10 @@ test_y &lt;- dplyr::select(test_data, class)</code></pre>
 ##  grDevices    * 3.4.3    2017-12-07 local         
 ##  grid           3.4.3    2017-12-07 local         
 ##  gtable         0.2.0    2016-02-26 CRAN (R 3.4.0)
-##  haven          1.1.0    2017-07-09 CRAN (R 3.4.0)
+##  haven          1.1.1    2018-01-18 CRAN (R 3.4.3)
 ##  hms            0.4.0    2017-11-23 CRAN (R 3.4.3)
 ##  htmltools      0.3.6    2017-04-28 CRAN (R 3.4.0)
-##  htmlwidgets    0.9      2017-07-10 CRAN (R 3.4.1)
+##  htmlwidgets    1.0      2018-01-20 CRAN (R 3.4.3)
 ##  httpuv         1.3.5    2017-07-04 CRAN (R 3.4.1)
 ##  httr           1.3.1    2017-08-20 CRAN (R 3.4.1)
 ##  ipred          0.9-6    2017-03-01 CRAN (R 3.4.0)
@@ -790,7 +911,7 @@ test_y &lt;- dplyr::select(test_data, class)</code></pre>
 ##  purrr        * 0.2.4    2017-10-18 CRAN (R 3.4.2)
 ##  R6             2.2.2    2017-06-17 CRAN (R 3.4.0)
 ##  randomForest * 4.6-12   2015-10-07 CRAN (R 3.4.0)
-##  Rcpp           0.12.14  2017-11-23 CRAN (R 3.4.3)
+##  Rcpp           0.12.15  2018-01-20 CRAN (R 3.4.3)
 ##  RcppRoll       0.2.2    2015-04-05 CRAN (R 3.4.0)
 ##  readr        * 1.1.1    2017-05-16 CRAN (R 3.4.0)
 ##  readxl         1.0.0    2017-04-18 CRAN (R 3.4.0)
@@ -814,7 +935,7 @@ test_y &lt;- dplyr::select(test_data, class)</code></pre>
 ##  stringi        1.1.6    2017-11-17 CRAN (R 3.4.2)
 ##  stringr      * 1.2.0    2017-02-18 CRAN (R 3.4.0)
 ##  survival       2.41-3   2017-04-04 CRAN (R 3.4.3)
-##  tibble       * 1.4.1    2017-12-25 CRAN (R 3.4.3)
+##  tibble       * 1.4.2    2018-01-22 CRAN (R 3.4.3)
 ##  tidyr        * 0.7.2    2017-10-16 CRAN (R 3.4.2)
 ##  tidyselect     0.2.3    2017-11-06 CRAN (R 3.4.2)
 ##  tidyverse    * 1.2.1    2017-11-14 CRAN (R 3.4.2)
@@ -847,6 +968,39 @@ test_y &lt;- dplyr::select(test_data, class)</code></pre>
 <p>“The mice package implements a method to deal with missing data. The package creates multiple imputations (replacement values) for multivariate missing data. The method is based on Fully Conditional Specification, where each incomplete variable is imputed by a separate model. The MICE algorithm can impute mixes of continuous, binary, unordered categorical and ordered categorical data. In addition, MICE can impute continuous two-level data, and maintain consistency between imputations by means of passive imputation. Many diagnostic plots are implemented to inspect the quality of the imputations.”&quot; (<a href="https://cran.r-project.org/web/packages/mice/README.html" class="uri">https://cran.r-project.org/web/packages/mice/README.html</a>)</p>
 </blockquote>
 <p>For more information on the package go to <a href="http://stefvanbuuren.github.io/mice/" class="uri">http://stefvanbuuren.github.io/mice/</a>.</p>
+]]></content>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[April 12th &amp; 13th: workshop on Deep Learning with Keras and TensorFlow in R in Hamburg]]></title>
+    <link href="/2017/11/deep_learning_keras_tensorflow_18_04/"/>
+    <id>/2017/11/deep_learning_keras_tensorflow_18_04/</id>
+    <published>2017-11-20T00:00:00+00:00</published>
+    <updated>2017-11-20T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<p>You can now book my 1.5 - day workshop on <a href="https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/">deep learning with Keras and TensorFlow using R</a>.</p>
+<p>It will take place on <strong>April 12th and 13th</strong> in <strong>Hamburg, Germany</strong>.</p>
+<p>In my workshop, you will learn</p>
+<ul>
+<li>the basics of deep learning</li>
+<li>what cross-entropy and loss is</li>
+<li>about activation functions</li>
+<li>how to optimize weights and biases with backpropagation and gradient descent</li>
+<li>how to build (deep) neural networks with Keras and TensorFlow</li>
+<li>how to save and load models and model weights</li>
+<li>how to visualize models with TensorBoard</li>
+<li>how to make predictions on test data</li>
+</ul>
+<p><br></p>
+<div class="figure">
+<img src="https://shiring.github.io/netlify_images/mlp_r7pv7z.jpg" alt="Neural Network with three densely connected hidden layers" />
+<p class="caption">Neural Network with three densely connected hidden layers</p>
+</div>
+<p>Keras is a high-level API written in Python for building and prototyping neural networks. It can be used on top of TensorFlow, Theano or CNTK. Keras is very convenient for fast and easy prototyping of neural networks. It is highly modular and very flexible, so that you can build basically any type of neural network you want. It supports convolutional neural networks and recurrent neural networks, as well as combinations of both. Due to its layer structure, it is highly extensible and can run on CPU or GPU.</p>
+<p>The <code>keras</code> R package provides an interface to the Python library of Keras, just as the tensorflow package provides an interface to TensorFlow. Basically, R creates a conda instance and runs Keras it it, while you can still use all the functionalities of R for plotting, etc. Almost all function names are the same, so models can easily be recreated in Python for deployment.</p>
+<p><br></p>
+<div class="figure">
+<img src="https://blog.keras.io/img/keras-tensorflow-logo.jpg" />
+
+</div>
 ]]></content>
   </entry>
   <entry>
@@ -902,13 +1056,13 @@ fake_data &lt;- data.frame(time = dates,
                         var2 = runif(length(dates))) %&gt;%
   sample_frac(size = 0.33)
 head(fake_data)</code></pre>
-<pre><code>##                   time    var1_1    var1_2     var1_3      var2
-## 8  2017-10-01 07:21:00 0.2916399 0.7802929 0.91544793 0.3457881
-## 47 2017-10-01 09:18:00 0.1868853 0.6685989 0.83765625 0.8504673
-## 64 2017-10-01 10:09:00 0.2248578 0.1036259 0.23280777 0.9224065
-## 62 2017-10-01 10:03:00 0.1224646 0.8053087 0.02060165 0.9908208
-## 41 2017-10-01 09:00:00 0.5700372 0.6670205 0.36610509 0.6670722
-## 67 2017-10-01 10:18:00 0.8879071 0.7732045 0.81247839 0.5013991</code></pre>
+<pre><code>##                   time    var1_1    var1_2    var1_3      var2
+## 64 2017-10-01 10:09:00 0.6621389 0.5521539 0.9148288 0.6078481
+## 67 2017-10-01 10:18:00 0.2538266 0.1958265 0.8239181 0.5116218
+## 15 2017-10-01 07:42:00 0.6220942 0.9945485 0.9075784 0.7552689
+## 27 2017-10-01 08:18:00 0.9209701 0.7804722 0.1649222 0.9315722
+## 50 2017-10-01 09:27:00 0.2937356 0.2903439 0.1449462 0.2220199
+## 16 2017-10-01 07:45:00 0.2189083 0.4640567 0.3110658 0.8932355</code></pre>
 <p>Here, variable 1 (<code>var1</code>) has three measurements per time point, while variable 2 (<code>var2</code>) has one.</p>
 <p>First, for plotting with ggplot2 we want our data in a tidy long format. I also add another column for faceting that groups the variables from <code>var1</code> together.</p>
 <pre class="r"><code>fake_data_long &lt;- fake_data %&gt;%
@@ -916,12 +1070,12 @@ head(fake_data)</code></pre>
   mutate(facet = ifelse(x %in% c(&quot;var1_1&quot;, &quot;var1_2&quot;, &quot;var1_3&quot;), &quot;var1&quot;, x))
 head(fake_data_long)</code></pre>
 <pre><code>##                  time      x         y facet
-## 1 2017-10-01 07:21:00 var1_1 0.2916399  var1
-## 2 2017-10-01 09:18:00 var1_1 0.1868853  var1
-## 3 2017-10-01 10:09:00 var1_1 0.2248578  var1
-## 4 2017-10-01 10:03:00 var1_1 0.1224646  var1
-## 5 2017-10-01 09:00:00 var1_1 0.5700372  var1
-## 6 2017-10-01 10:18:00 var1_1 0.8879071  var1</code></pre>
+## 1 2017-10-01 10:09:00 var1_1 0.6621389  var1
+## 2 2017-10-01 10:18:00 var1_1 0.2538266  var1
+## 3 2017-10-01 07:42:00 var1_1 0.6220942  var1
+## 4 2017-10-01 08:18:00 var1_1 0.9209701  var1
+## 5 2017-10-01 09:27:00 var1_1 0.2937356  var1
+## 6 2017-10-01 07:45:00 var1_1 0.2189083  var1</code></pre>
 <p>Now, we can plot this the following way:</p>
 <ul>
 <li>facet by variable</li>
@@ -956,17 +1110,17 @@ head(fake_data_long)</code></pre>
 ## 
 ## other attached packages:
 ##  [1] bindrcpp_0.2    forcats_0.2.0   stringr_1.2.0   dplyr_0.7.4    
-##  [5] purrr_0.2.4     readr_1.1.1     tidyr_0.7.2     tibble_1.4.1   
+##  [5] purrr_0.2.4     readr_1.1.1     tidyr_0.7.2     tibble_1.4.2   
 ##  [9] ggplot2_2.2.1   tidyverse_1.2.1
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] tidyselect_0.2.3 reshape2_1.4.3   haven_1.1.0      lattice_0.20-35 
+##  [1] tidyselect_0.2.3 reshape2_1.4.3   haven_1.1.1      lattice_0.20-35 
 ##  [5] colorspace_1.3-2 htmltools_0.3.6  yaml_2.1.16      rlang_0.1.6     
 ##  [9] pillar_1.1.0     foreign_0.8-69   glue_1.2.0       modelr_0.1.1    
 ## [13] readxl_1.0.0     bindr_0.1        plyr_1.8.4       munsell_0.4.3   
 ## [17] blogdown_0.4     gtable_0.2.0     cellranger_1.1.0 rvest_0.3.2     
 ## [21] psych_1.7.8      evaluate_0.10.1  labeling_0.3     knitr_1.18      
-## [25] parallel_3.4.3   broom_0.4.3      Rcpp_0.12.14     backports_1.1.2 
+## [25] parallel_3.4.3   broom_0.4.3      Rcpp_0.12.15     backports_1.1.2 
 ## [29] scales_0.5.0     jsonlite_1.5     mnormt_1.5-5     hms_0.4.0       
 ## [33] digest_0.6.14    stringi_1.1.6    bookdown_0.5     grid_3.4.3      
 ## [37] rprojroot_1.3-2  cli_1.0.0        tools_3.4.3      magrittr_1.5    

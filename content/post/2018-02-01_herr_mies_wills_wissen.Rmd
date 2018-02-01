@@ -1,0 +1,28 @@
+---
+title: "I talk about machine learning with Daniel Mies (Podcast in German, though)"
+draft: false
+author: Shirin Glander
+date: '2018-02-01'
+categories: ["podcast", "machine learning"]
+tags: ["podcast", "machine learning", "deep learning", "neural nets", "AI"]
+thumbnailImagePosition: left
+thumbnailImage: https://mies.me/wp-content/cache/podlove/09/cad1c2bcc3b506410d277c27cc12fb/herr-mies-wills-wissen_500x500.png
+metaAlignment: center
+coverMeta: out
+slug: herr_mies_wills_wissen
+---
+
+For those of you out there who speak German:
+
+I was interviewed for a tech podcast where I talked about machine learning, neural nets, why I love R and Rstudio and how I became a Data Scientist.
+
+You can download and listen to the podcast here: [https://mies.me/2018/01/31/hmww17-machine-learning-mit-dr-shirin-glander/](https://mies.me/2018/01/31/hmww17-machine-learning-mit-dr-shirin-glander/)
+
+![](https://mies.me/wp-content/cache/podlove/09/cad1c2bcc3b506410d277c27cc12fb/herr-mies-wills-wissen_500x500.png)
+
+> In der aktuellen Episode gibt Dr. Shirin Glander (Twitter, Homepage) uns ein paar Einblicke in das Thema Machine Learning.
+Wir klären zunächst, was Machine Learning ist und welche Möglichkeiten es bietet bevor wir etwas mehr in die Tiefe gehen. Wir beginnen mit Neuronalen Netzen und Entscheidungsbäumen und wie sich diese unterschieden. Hier kommen wir natürlich auch nicht an Supervised Learning, Unsupervised Learning und Reinforcement Learning vorbei.
+Wichtig bei der Arbeit mit Machine Learning sind die verwendeten Daten: Hier beginnt man mit Testdaten und Trainingsdaten, welche man mit Hilfe von Feature Engineering für die jeweilige Aufgabe optimieren kann. Shirin erzählt, wie sie mit Daten arbeitet und wie sie die richtigen Algorithmen findet.
+Eine wichtige Rolle spielen hier R und R Studio, welches sich besonders für statistische Analysen eignet. Gerade die Visualisierung der Daten ist hier hilfreich um selbige besser zu verstehen. Aber auch die Möglichkeiten Reports zu erzeugen und beispielsweise als PDF zu exportieren überzeugen. Wenn ihr R für Machine Learning einsetzen wollt, solltet ihr Euch auch caret ansehen. Shirin organisiert übrigens auch MünsteR, die R Users group in Münster.
+Wenn ihr Euch näher mit Machine Learning beschäftigen wollt, solltet ihr Euch Datacamp oder Coursera ansehen. Wenn ihr Euch für R interessiert schaut Euch die R Bloggers an
+Am Ende sprechen wir auch noch kurz über Deep Dreaming. Den passenden Generator hierfür, findet ihr unter deepdreamgenerator.com.

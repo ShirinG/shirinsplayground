@@ -3,8 +3,8 @@ title: Workshop on Deep Learning with Keras and TensorFlow in R
 draft: false
 author: Shirin Glander
 date: '2017-11-20'
-categories: ["R"]
-tags: ["Keras", "TensorFlow", "Data Science", "Workshop"]
+categories: ["R", "workshop"]
+tags: ["Keras", "TensorFlow", "data science", "workshop"]
 thumbnailImagePosition: left
 thumbnailImage: https://upload.wikimedia.org/wikipedia/commons/c/c9/Keras_Logo.jpg
 metaAlignment: center

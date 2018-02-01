@@ -1,0 +1,19 @@
+---
+title: "Announcing my talk about explainability of machine learning models at Minds Mastering Machines Conference"
+draft: true
+author: Shirin Glander
+date: '2018-02-01'
+categories: ["R"]
+tags: ["LIME", "Machine Learning", "Conference"]
+thumbnailImagePosition: left
+thumbnailImage: https://www.m3-konferenz.de/common/images/konferenzen/m3.png
+metaAlignment: center
+coverMeta: out
+slug: m32018
+---
+
+Wednesday, April 25th 2018 in Cologne
+
+https://www.m3-konferenz.de/veranstaltung-6274-erkl%C3%A4rbarkeit-von-machine-learning%3A-wie-k%C3%B6nnen-wir-vertrauen-in-komplexe-modelle-schaffen.html?id=6274
+
+![](https://www.m3-konferenz.de/common/images/konferenzen/m3.png)

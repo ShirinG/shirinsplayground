@@ -3,8 +3,8 @@ title: "Sketchnotes from TWiML&AI #94: Neuroevolution: Evolving Novel Neural Net
 draft: false
 author: Shirin Glander
 date: '2018-01-28'
-categories: ["R"]
-tags: ["Fairness", "Machine Learning"]
+categories: ["sketchnotes", "twimlai"]
+tags: ["sketchnotes", "twimlai", "neuroevolution", "genetic algorithm", "novelty search", "machine learning"]
 thumbnailImagePosition: left
 thumbnailImage: https://shiring.github.io/netlify_images/twimlai94.jpg
 metaAlignment: center

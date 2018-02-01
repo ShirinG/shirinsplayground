@@ -176,6 +176,16 @@ ga('send', 'pageview');
     </a>
   </li>
 
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/page/conferences_podcasts_webinars/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bullhorn"></i>
+      
+      <span class="sidebar-button-desc">Hear me talk</span>
+    </a>
+  </li>
+
 
     </ul>
     <ul class="sidebar-buttons">
@@ -343,13 +353,13 @@ fake_data &lt;- data.frame(time = dates,
                         var2 = runif(length(dates))) %&gt;%
   sample_frac(size = 0.33)
 head(fake_data)</code></pre>
-<pre><code>##                   time    var1_1    var1_2     var1_3      var2
-## 8  2017-10-01 07:21:00 0.2916399 0.7802929 0.91544793 0.3457881
-## 47 2017-10-01 09:18:00 0.1868853 0.6685989 0.83765625 0.8504673
-## 64 2017-10-01 10:09:00 0.2248578 0.1036259 0.23280777 0.9224065
-## 62 2017-10-01 10:03:00 0.1224646 0.8053087 0.02060165 0.9908208
-## 41 2017-10-01 09:00:00 0.5700372 0.6670205 0.36610509 0.6670722
-## 67 2017-10-01 10:18:00 0.8879071 0.7732045 0.81247839 0.5013991</code></pre>
+<pre><code>##                   time    var1_1    var1_2    var1_3      var2
+## 64 2017-10-01 10:09:00 0.6621389 0.5521539 0.9148288 0.6078481
+## 67 2017-10-01 10:18:00 0.2538266 0.1958265 0.8239181 0.5116218
+## 15 2017-10-01 07:42:00 0.6220942 0.9945485 0.9075784 0.7552689
+## 27 2017-10-01 08:18:00 0.9209701 0.7804722 0.1649222 0.9315722
+## 50 2017-10-01 09:27:00 0.2937356 0.2903439 0.1449462 0.2220199
+## 16 2017-10-01 07:45:00 0.2189083 0.4640567 0.3110658 0.8932355</code></pre>
 <p>Here, variable 1 (<code>var1</code>) has three measurements per time point, while variable 2 (<code>var2</code>) has one.</p>
 <p>First, for plotting with ggplot2 we want our data in a tidy long format. I also add another column for faceting that groups the variables from <code>var1</code> together.</p>
 <pre class="r"><code>fake_data_long &lt;- fake_data %&gt;%
@@ -357,12 +367,12 @@ head(fake_data)</code></pre>
   mutate(facet = ifelse(x %in% c(&quot;var1_1&quot;, &quot;var1_2&quot;, &quot;var1_3&quot;), &quot;var1&quot;, x))
 head(fake_data_long)</code></pre>
 <pre><code>##                  time      x         y facet
-## 1 2017-10-01 07:21:00 var1_1 0.2916399  var1
-## 2 2017-10-01 09:18:00 var1_1 0.1868853  var1
-## 3 2017-10-01 10:09:00 var1_1 0.2248578  var1
-## 4 2017-10-01 10:03:00 var1_1 0.1224646  var1
-## 5 2017-10-01 09:00:00 var1_1 0.5700372  var1
-## 6 2017-10-01 10:18:00 var1_1 0.8879071  var1</code></pre>
+## 1 2017-10-01 10:09:00 var1_1 0.6621389  var1
+## 2 2017-10-01 10:18:00 var1_1 0.2538266  var1
+## 3 2017-10-01 07:42:00 var1_1 0.6220942  var1
+## 4 2017-10-01 08:18:00 var1_1 0.9209701  var1
+## 5 2017-10-01 09:27:00 var1_1 0.2937356  var1
+## 6 2017-10-01 07:45:00 var1_1 0.2189083  var1</code></pre>
 <p>Now, we can plot this the following way:</p>
 <ul>
 <li>facet by variable</li>
@@ -397,17 +407,17 @@ head(fake_data_long)</code></pre>
 ## 
 ## other attached packages:
 ##  [1] bindrcpp_0.2    forcats_0.2.0   stringr_1.2.0   dplyr_0.7.4    
-##  [5] purrr_0.2.4     readr_1.1.1     tidyr_0.7.2     tibble_1.4.1   
+##  [5] purrr_0.2.4     readr_1.1.1     tidyr_0.7.2     tibble_1.4.2   
 ##  [9] ggplot2_2.2.1   tidyverse_1.2.1
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] tidyselect_0.2.3 reshape2_1.4.3   haven_1.1.0      lattice_0.20-35 
+##  [1] tidyselect_0.2.3 reshape2_1.4.3   haven_1.1.1      lattice_0.20-35 
 ##  [5] colorspace_1.3-2 htmltools_0.3.6  yaml_2.1.16      rlang_0.1.6     
 ##  [9] pillar_1.1.0     foreign_0.8-69   glue_1.2.0       modelr_0.1.1    
 ## [13] readxl_1.0.0     bindr_0.1        plyr_1.8.4       munsell_0.4.3   
 ## [17] blogdown_0.4     gtable_0.2.0     cellranger_1.1.0 rvest_0.3.2     
 ## [21] psych_1.7.8      evaluate_0.10.1  labeling_0.3     knitr_1.18      
-## [25] parallel_3.4.3   broom_0.4.3      Rcpp_0.12.14     backports_1.1.2 
+## [25] parallel_3.4.3   broom_0.4.3      Rcpp_0.12.15     backports_1.1.2 
 ## [29] scales_0.5.0     jsonlite_1.5     mnormt_1.5-5     hms_0.4.0       
 ## [33] digest_0.6.14    stringi_1.1.6    bookdown_0.5     grid_3.4.3      
 ## [37] rprojroot_1.3-2  cli_1.0.0        tools_3.4.3      magrittr_1.5    
@@ -428,7 +438,7 @@ head(fake_data_long)</code></pre>
                     
   <a class="tag tag--primary tag--small" href="//tags/ggplot2/">ggplot2</a>
 
-  <a class="tag tag--primary tag--small" href="//tags/data-science/">Data Science</a>
+  <a class="tag tag--primary tag--small" href="//tags/data-science/">data science</a>
 
                   </div>
                 
@@ -664,6 +674,45 @@ head(fake_data_long)</code></pre>
           <div class="media">
             
             <div class="media-body">
+              <a class="link-unstyled" href="/2018/02/m3_2018/">
+                <h3 class="media-heading">Announcing my talk about explainability of machine learning models at Minds Mastering Machines conference</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Feb 2, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">On Wednesday, April 25th 2018 I am going to talk about explainability of machine learning models at the Minds Mastering Machines conference in Cologne. The conference will be in German, though.
+  ERKLÄRBARKEIT VON MACHINE LEARNING: WIE KÖNNEN WIR VERTRAUEN IN KOMPLEXE MODELLE SCHAFFEN?
+  Mit Machine-Learning getroffene Entscheidungen sind inhärent schwierig – wenn nicht gar unmöglich – nachzuvollziehen. Die Komplexität einiger der besten Modelle, wie Neuronale Netzwerke, ist genau das, was sie so erfolgreich macht.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/02/herr_mies_wills_wissen/">
+                <h3 class="media-heading">I talk about machine learning with Daniel Mies (Podcast in German, though)</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Feb 2, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">For those of you out there who speak German:
+I was interviewed for a tech podcast where I talked about machine learning, neural nets, why I love R and Rstudio and how I became a Data Scientist.
+You can download and listen to the podcast here: https://mies.me/2018/01/31/hmww17-machine-learning-mit-dr-shirin-glander/
+  In der aktuellen Episode gibt Dr. Shirin Glander (Twitter, Homepage) uns ein paar Einblicke in das Thema Machine Learning. Wir klären zunächst, was Machine Learning ist und welche Möglichkeiten es bietet bevor wir etwas mehr in die Tiefe gehen.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
               <a class="link-unstyled" href="/2018/01/jax2018/">
                 <h3 class="media-heading">JAX 2018 talk announcement: Deep Learning - a Primer</h3>
               </a>
@@ -813,49 +862,6 @@ Sketchnotes from TWiMLAI talk #88: Using Deep Learning and Google Street View to
             <hr>
           </div>
         
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="/2017/12/keras_sketchnotes/">
-                <h3 class="media-heading">Registration now open for workshop on Deep Learning with Keras and TensorFlow using R</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Dec 12, 2017
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">Recently, I announced my workshop on Deep Learning with Keras and TensorFlow.
-The next dates for it are January 18th and 19th in Solingen, Germany.
-You can register now by following this link: https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow
-If any non-German-speaking people want to attend, I’m happy to give the course in English!
-Contact me if you have further questions.
-As a little bonus, I am also sharing my sketch notes from a Podcast I listened to when first getting into Keras:</div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="/2017/12/lime_sketchnotes/">
-                <h3 class="media-heading">Explaining Predictions of Machine Learning Models with LIME - Münster Data Science Meetup</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Dec 12, 2017
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">Slides from Münster Data Science Meetup These are my slides from the Münster Data Science Meetup on December 12th, 2017.
-
-My sketchnotes were collected from these two podcasts:
- https://twimlai.com/twiml-talk-7-carlos-guestrin-explaining-predictions-machine-learning-models/ https://dataskeptic.com/blog/episodes/2016/trusting-machine-learning-models-with-lime  Sketchnotes: TWiML Talk #7 with Carlos Guestrin – Explaining the Predictions of Machine Learning Models &amp; Data Skeptic Podcast - Trusting Machine Learning Models with Lime
-  Example Code  the following libraries were loaded:  library(tidyverse) # for tidy data analysis library(farff) # for reading arff file library(missForest) # for imputing missing values library(dummies) # for creating dummy variables library(caret) # for modeling library(lime) # for explaining predictions Data The Chronic Kidney Disease dataset was downloaded from UC Irvine’s Machine Learning repository: http://archive.</div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
       </div>
     </div>
     <div class="modal-footer">
@@ -863,7 +869,7 @@ My sketchnotes were collected from these two podcasts:
          data-message-zero="no post found"
          data-message-one="1 post found"
          data-message-other="{n} posts found">
-         23 posts found
+         26 posts found
       </p>
     </div>
   </div>

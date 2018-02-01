@@ -3,8 +3,8 @@ title: Explaining Predictions of Machine Learning Models with LIME - Münster Da
 draft: false
 author: Shirin Glander
 date: '2017-12-12'
-categories: ["R", "Python"]
-tags: ["LIME", "Machine Learning", "Data Science"]
+categories: ["R", "Python", "sketchnotes", "twimlai"]
+tags: ["LIME", "machine learning", "data science", "sketchnotes", "twimlai"]
 thumbnailImagePosition: left
 thumbnailImage: https://shiring.github.io/netlify_images/lime_sketchnotes_guq6u5.jpg
 metaAlignment: center

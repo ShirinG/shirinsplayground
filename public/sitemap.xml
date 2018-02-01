@@ -3,6 +3,21 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/page/conferences_podcasts_webinars/</loc>
+    <lastmod>2018-02-01T16:06:06+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2018/02/m3_2018/</loc>
+    <lastmod>2018-02-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2018/02/herr_mies_wills_wissen/</loc>
+    <lastmod>2018-02-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/2018/01/jax2018/</loc>
     <lastmod>2018-01-30T00:00:00+00:00</lastmod>
   </url>
@@ -55,6 +70,11 @@
   <url>
     <loc>/2017/11/mice_sketchnotes/</loc>
     <lastmod>2017-11-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2017/11/deep_learning_keras_tensorflow_18_04/</loc>
+    <lastmod>2017-11-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -115,6 +135,12 @@
   <url>
     <loc>/2017/07/find-all-my-other-posts-on-my-old-website/</loc>
     <lastmod>2017-07-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/ai/</loc>
+    <lastmod>2018-02-01T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
@@ -213,20 +239,26 @@
   </url>
   
   <url>
+    <loc>/categories/codecentric/</loc>
+    <lastmod>2018-01-10T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/tags/conference/</loc>
-    <lastmod>2018-01-30T00:00:00+00:00</lastmod>
+    <lastmod>2018-02-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/conference/</loc>
-    <lastmod>2017-09-28T00:00:00+00:00</lastmod>
+    <lastmod>2018-02-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/tags/data-science/</loc>
-    <lastmod>2017-12-20T00:00:00+00:00</lastmod>
+    <lastmod>2018-01-10T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -244,13 +276,13 @@
   
   <url>
     <loc>/tags/deep-learning/</loc>
-    <lastmod>2018-01-30T00:00:00+00:00</lastmod>
+    <lastmod>2018-02-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/tags/fairness/</loc>
-    <lastmod>2018-01-28T00:00:00+00:00</lastmod>
+    <lastmod>2018-01-10T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -263,6 +295,12 @@
   <url>
     <loc>/tags/fraud-detection/</loc>
     <lastmod>2017-09-06T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/genetic-algorithm/</loc>
+    <lastmod>2018-01-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -315,6 +353,24 @@
   </url>
   
   <url>
+    <loc>/tags/intelligence/</loc>
+    <lastmod>2018-01-14T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/jax/</loc>
+    <lastmod>2018-01-30T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/jax/</loc>
+    <lastmod>2018-01-30T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/tags/keras/</loc>
     <lastmod>2017-12-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -322,24 +378,42 @@
   
   <url>
     <loc>/tags/lime/</loc>
-    <lastmod>2018-01-10T00:00:00+00:00</lastmod>
+    <lastmod>2018-02-01T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/m3/</loc>
+    <lastmod>2018-02-01T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/m3/</loc>
+    <lastmod>2018-02-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/tags/machine-learning/</loc>
-    <lastmod>2018-01-30T00:00:00+00:00</lastmod>
+    <lastmod>2018-02-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/machine-learning/</loc>
-    <lastmod>2018-01-10T00:00:00+00:00</lastmod>
+    <lastmod>2018-02-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/tags/meetup/</loc>
+    <lastmod>2018-01-24T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/meetup/</loc>
     <lastmod>2018-01-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -357,7 +431,19 @@
   </url>
   
   <url>
+    <loc>/tags/moral-patiency/</loc>
+    <lastmod>2018-01-14T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/tags/m%C3%BCnster/</loc>
+    <lastmod>2018-01-24T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/m%C3%BCnster/</loc>
     <lastmod>2018-01-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -369,8 +455,32 @@
   </url>
   
   <url>
+    <loc>/tags/neural-nets/</loc>
+    <lastmod>2018-02-01T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/neuroevolution/</loc>
+    <lastmod>2018-01-28T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/neuroscience/</loc>
+    <lastmod>2018-01-19T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/novelty-search/</loc>
+    <lastmod>2018-01-28T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/page/</loc>
-    <lastmod>2017-09-12T16:06:06+02:00</lastmod>
+    <lastmod>2018-02-01T16:06:06+02:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -387,14 +497,32 @@
   </url>
   
   <url>
+    <loc>/tags/podcast/</loc>
+    <lastmod>2018-02-01T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/podcast/</loc>
+    <lastmod>2018-02-01T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/post/</loc>
-    <lastmod>2018-01-30T00:00:00+00:00</lastmod>
+    <lastmod>2018-02-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/tags/predictive-maintenance/</loc>
     <lastmod>2017-11-02T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/predictive-processing/</loc>
+    <lastmod>2018-01-14T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -406,7 +534,7 @@
   
   <url>
     <loc>/categories/r/</loc>
-    <lastmod>2018-01-30T00:00:00+00:00</lastmod>
+    <lastmod>2018-01-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -430,7 +558,25 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2018-01-30T00:00:00+00:00</lastmod>
+    <lastmod>2018-02-01T16:06:06+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/sketchnotes/</loc>
+    <lastmod>2018-01-28T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/sketchnotes/</loc>
+    <lastmod>2018-01-28T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/state-representation/</loc>
+    <lastmod>2018-01-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -442,7 +588,7 @@
   
   <url>
     <loc>/tags/</loc>
-    <lastmod>2017-09-06T00:00:00+00:00</lastmod>
+    <lastmod>2018-02-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -483,6 +629,18 @@
   </url>
   
   <url>
+    <loc>/tags/twimlai/</loc>
+    <lastmod>2018-01-28T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/twimlai/</loc>
+    <lastmod>2018-01-28T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/tags/twitter/</loc>
     <lastmod>2017-07-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -502,6 +660,12 @@
   
   <url>
     <loc>/tags/workshop/</loc>
+    <lastmod>2017-11-20T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/workshop/</loc>
     <lastmod>2017-11-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>

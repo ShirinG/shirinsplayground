@@ -3,8 +3,8 @@ title: MICE (Multiple Imputation by Chained Equations) in R - sketchnotes from M
 draft: false
 author: Shirin Glander
 date: '2017-11-28'
-categories: ["R"]
-tags: ["MICE", "missing data", "Data Science", "imputation"]
+categories: ["R", "sketchnotes", "meetup", "MünsteR"]
+tags: ["MICE", "missing data", "data science", "imputation", "meetup"]
 thumbnailImagePosition: left
 thumbnailImage: https://shiring.github.io/netlify_images/mice_sketchnote_gxjsgc.jpg
 metaAlignment: center
