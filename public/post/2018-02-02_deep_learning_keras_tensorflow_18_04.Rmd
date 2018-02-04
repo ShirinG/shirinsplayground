@@ -2,7 +2,7 @@
 title: "April 12th & 13th: workshop on Deep Learning with Keras and TensorFlow in R in Hamburg"
 draft: true
 author: Shirin Glander
-date: '2017-11-20'
+date: '2018-02-02'
 categories: ["R", "workshop"]
 tags: ["Keras", "TensorFlow", "data science", "workshop"]
 thumbnailImagePosition: left

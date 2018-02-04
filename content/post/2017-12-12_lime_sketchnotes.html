@@ -17,6 +17,9 @@ slug: lime_sketchnotes
 <div id="slides-from-munster-data-science-meetup" class="section level2">
 <h2>Slides from Münster Data Science Meetup</h2>
 <p><a href="https://shiring.github.io/netlify_images/lime_meetup_slides_wvsh6s.pdf">These are my slides</a> from the <a href="https://www.meetup.com/Data-Science-Meetup-Muenster/events/244173239/">Münster Data Science Meetup on December 12th, 2017</a>.</p>
+<pre class="r"><code>knitr::include_url(&quot;https://shiring.github.io/netlify_images/lime_meetup_slides_wvsh6s.pdf&quot;)</code></pre>
+<iframe src="https://shiring.github.io/netlify_images/lime_meetup_slides_wvsh6s.pdf" width="672" height="400px">
+</iframe>
 <p><br></p>
 <p>My sketchnotes were collected from these two podcasts:</p>
 <ul>
@@ -189,12 +192,12 @@ test_y &lt;- dplyr::select(test_data, class)</code></pre>
 <pre class="r"><code>explanation_df %&gt;%
   ggplot(aes(x = model_r2, fill = label)) +
     geom_density(alpha = 0.5)</code></pre>
-<p><img src="/post/2017-12-12_lime_sketchnotes_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p><img src="/post/2017-12-12_lime_sketchnotes_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <ul>
 <li>plot explanations</li>
 </ul>
 <pre class="r"><code>plot_features(explanation_df[1:24, ], ncol = 1)</code></pre>
-<p><img src="/post/2017-12-12_lime_sketchnotes_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2017-12-12_lime_sketchnotes_files/figure-html/unnamed-chunk-15-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="session-info" class="section level3">
 <h3>Session Info</h3>
@@ -206,7 +209,7 @@ test_y &lt;- dplyr::select(test_data, class)</code></pre>
 ##  language (EN)                        
 ##  collate  de_DE.UTF-8                 
 ##  tz       Europe/Berlin               
-##  date     2018-02-01</code></pre>
+##  date     2018-02-04</code></pre>
 <pre><code>## Packages -----------------------------------------------------------------</code></pre>
 <pre><code>##  package      * version  date       source        
 ##  assertthat     0.2.0    2017-04-11 CRAN (R 3.4.0)
@@ -252,6 +255,7 @@ test_y &lt;- dplyr::select(test_data, class)</code></pre>
 ##  grid           3.4.3    2017-12-07 local         
 ##  gtable         0.2.0    2016-02-26 CRAN (R 3.4.0)
 ##  haven          1.1.1    2018-01-18 CRAN (R 3.4.3)
+##  highr          0.6      2016-05-09 CRAN (R 3.4.0)
 ##  hms            0.4.0    2017-11-23 CRAN (R 3.4.3)
 ##  htmltools      0.3.6    2017-04-28 CRAN (R 3.4.0)
 ##  htmlwidgets    1.0      2018-01-20 CRAN (R 3.4.3)

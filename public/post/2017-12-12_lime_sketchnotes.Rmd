@@ -16,6 +16,10 @@ slug: lime_sketchnotes
 
 [These are my slides](https://shiring.github.io/netlify_images/lime_meetup_slides_wvsh6s.pdf) from the [Münster Data Science Meetup on December 12th, 2017](https://www.meetup.com/Data-Science-Meetup-Muenster/events/244173239/).
 
+```{r}
+knitr::include_url("https://shiring.github.io/netlify_images/lime_meetup_slides_wvsh6s.pdf")
+```
+
 <br>
 
 My sketchnotes were collected from these two podcasts:

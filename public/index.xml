@@ -2,12 +2,45 @@
   <title>Shirin&#39;s playgRound</title>
   <link href="/index.xml" rel="self"/>
   <link href="/"/>
-  <updated>2018-02-01T16:06:06+02:00</updated>
+  <updated>2018-02-02T00:00:00+00:00</updated>
   <id>/</id>
   <author>
     <name>Dr. Shirin Glander</name>
   </author>
   <generator>Hugo -- gohugo.io</generator>
+  <entry>
+    <title type="html"><![CDATA[April 12th &amp; 13th: workshop on Deep Learning with Keras and TensorFlow in R in Hamburg]]></title>
+    <link href="/2018/02/deep_learning_keras_tensorflow_18_04/"/>
+    <id>/2018/02/deep_learning_keras_tensorflow_18_04/</id>
+    <published>2018-02-02T00:00:00+00:00</published>
+    <updated>2018-02-02T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<p>You can now book my 1.5 - day workshop on <a href="https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/">deep learning with Keras and TensorFlow using R</a>.</p>
+<p>It will take place on <strong>April 12th and 13th</strong> in <strong>Hamburg, Germany</strong>.</p>
+<p>In my workshop, you will learn</p>
+<ul>
+<li>the basics of deep learning</li>
+<li>what cross-entropy and loss is</li>
+<li>about activation functions</li>
+<li>how to optimize weights and biases with backpropagation and gradient descent</li>
+<li>how to build (deep) neural networks with Keras and TensorFlow</li>
+<li>how to save and load models and model weights</li>
+<li>how to visualize models with TensorBoard</li>
+<li>how to make predictions on test data</li>
+</ul>
+<p><br></p>
+<div class="figure">
+<img src="https://shiring.github.io/netlify_images/mlp_r7pv7z.jpg" alt="Neural Network with three densely connected hidden layers" />
+<p class="caption">Neural Network with three densely connected hidden layers</p>
+</div>
+<p>Keras is a high-level API written in Python for building and prototyping neural networks. It can be used on top of TensorFlow, Theano or CNTK. Keras is very convenient for fast and easy prototyping of neural networks. It is highly modular and very flexible, so that you can build basically any type of neural network you want. It supports convolutional neural networks and recurrent neural networks, as well as combinations of both. Due to its layer structure, it is highly extensible and can run on CPU or GPU.</p>
+<p>The <code>keras</code> R package provides an interface to the Python library of Keras, just as the tensorflow package provides an interface to TensorFlow. Basically, R creates a conda instance and runs Keras it it, while you can still use all the functionalities of R for plotting, etc. Almost all function names are the same, so models can easily be recreated in Python for deployment.</p>
+<p><br></p>
+<div class="figure">
+<img src="https://blog.keras.io/img/keras-tensorflow-logo.jpg" />
+
+</div>
+]]></content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[Conferences, webinars, podcasts and the likes]]></title>
     <link href="/page/conferences_podcasts_webinars/"/>
@@ -637,6 +670,9 @@ Test case predicted to be ckd
     <content type="html"><![CDATA[<div id="slides-from-munster-data-science-meetup" class="section level2">
 <h2>Slides from Münster Data Science Meetup</h2>
 <p><a href="https://shiring.github.io/netlify_images/lime_meetup_slides_wvsh6s.pdf">These are my slides</a> from the <a href="https://www.meetup.com/Data-Science-Meetup-Muenster/events/244173239/">Münster Data Science Meetup on December 12th, 2017</a>.</p>
+<pre class="r"><code>knitr::include_url(&quot;https://shiring.github.io/netlify_images/lime_meetup_slides_wvsh6s.pdf&quot;)</code></pre>
+<iframe src="https://shiring.github.io/netlify_images/lime_meetup_slides_wvsh6s.pdf" width="672" height="400px">
+</iframe>
 <p><br></p>
 <p>My sketchnotes were collected from these two podcasts:</p>
 <ul>
@@ -809,12 +845,12 @@ test_y &lt;- dplyr::select(test_data, class)</code></pre>
 <pre class="r"><code>explanation_df %&gt;%
   ggplot(aes(x = model_r2, fill = label)) +
     geom_density(alpha = 0.5)</code></pre>
-<p><img src="/post/2017-12-12_lime_sketchnotes_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p><img src="/post/2017-12-12_lime_sketchnotes_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <ul>
 <li>plot explanations</li>
 </ul>
 <pre class="r"><code>plot_features(explanation_df[1:24, ], ncol = 1)</code></pre>
-<p><img src="/post/2017-12-12_lime_sketchnotes_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2017-12-12_lime_sketchnotes_files/figure-html/unnamed-chunk-15-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="session-info" class="section level3">
 <h3>Session Info</h3>
@@ -826,7 +862,7 @@ test_y &lt;- dplyr::select(test_data, class)</code></pre>
 ##  language (EN)                        
 ##  collate  de_DE.UTF-8                 
 ##  tz       Europe/Berlin               
-##  date     2018-02-01</code></pre>
+##  date     2018-02-04</code></pre>
 <pre><code>## Packages -----------------------------------------------------------------</code></pre>
 <pre><code>##  package      * version  date       source        
 ##  assertthat     0.2.0    2017-04-11 CRAN (R 3.4.0)
@@ -872,6 +908,7 @@ test_y &lt;- dplyr::select(test_data, class)</code></pre>
 ##  grid           3.4.3    2017-12-07 local         
 ##  gtable         0.2.0    2016-02-26 CRAN (R 3.4.0)
 ##  haven          1.1.1    2018-01-18 CRAN (R 3.4.3)
+##  highr          0.6      2016-05-09 CRAN (R 3.4.0)
 ##  hms            0.4.0    2017-11-23 CRAN (R 3.4.3)
 ##  htmltools      0.3.6    2017-04-28 CRAN (R 3.4.0)
 ##  htmlwidgets    1.0      2018-01-20 CRAN (R 3.4.3)
@@ -968,39 +1005,6 @@ test_y &lt;- dplyr::select(test_data, class)</code></pre>
 <p>“The mice package implements a method to deal with missing data. The package creates multiple imputations (replacement values) for multivariate missing data. The method is based on Fully Conditional Specification, where each incomplete variable is imputed by a separate model. The MICE algorithm can impute mixes of continuous, binary, unordered categorical and ordered categorical data. In addition, MICE can impute continuous two-level data, and maintain consistency between imputations by means of passive imputation. Many diagnostic plots are implemented to inspect the quality of the imputations.”&quot; (<a href="https://cran.r-project.org/web/packages/mice/README.html" class="uri">https://cran.r-project.org/web/packages/mice/README.html</a>)</p>
 </blockquote>
 <p>For more information on the package go to <a href="http://stefvanbuuren.github.io/mice/" class="uri">http://stefvanbuuren.github.io/mice/</a>.</p>
-]]></content>
-  </entry>
-  <entry>
-    <title type="html"><![CDATA[April 12th &amp; 13th: workshop on Deep Learning with Keras and TensorFlow in R in Hamburg]]></title>
-    <link href="/2017/11/deep_learning_keras_tensorflow_18_04/"/>
-    <id>/2017/11/deep_learning_keras_tensorflow_18_04/</id>
-    <published>2017-11-20T00:00:00+00:00</published>
-    <updated>2017-11-20T00:00:00+00:00</updated>
-    <content type="html"><![CDATA[<p>You can now book my 1.5 - day workshop on <a href="https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/">deep learning with Keras and TensorFlow using R</a>.</p>
-<p>It will take place on <strong>April 12th and 13th</strong> in <strong>Hamburg, Germany</strong>.</p>
-<p>In my workshop, you will learn</p>
-<ul>
-<li>the basics of deep learning</li>
-<li>what cross-entropy and loss is</li>
-<li>about activation functions</li>
-<li>how to optimize weights and biases with backpropagation and gradient descent</li>
-<li>how to build (deep) neural networks with Keras and TensorFlow</li>
-<li>how to save and load models and model weights</li>
-<li>how to visualize models with TensorBoard</li>
-<li>how to make predictions on test data</li>
-</ul>
-<p><br></p>
-<div class="figure">
-<img src="https://shiring.github.io/netlify_images/mlp_r7pv7z.jpg" alt="Neural Network with three densely connected hidden layers" />
-<p class="caption">Neural Network with three densely connected hidden layers</p>
-</div>
-<p>Keras is a high-level API written in Python for building and prototyping neural networks. It can be used on top of TensorFlow, Theano or CNTK. Keras is very convenient for fast and easy prototyping of neural networks. It is highly modular and very flexible, so that you can build basically any type of neural network you want. It supports convolutional neural networks and recurrent neural networks, as well as combinations of both. Due to its layer structure, it is highly extensible and can run on CPU or GPU.</p>
-<p>The <code>keras</code> R package provides an interface to the Python library of Keras, just as the tensorflow package provides an interface to TensorFlow. Basically, R creates a conda instance and runs Keras it it, while you can still use all the functionalities of R for plotting, etc. Almost all function names are the same, so models can easily be recreated in Python for deployment.</p>
-<p><br></p>
-<div class="figure">
-<img src="https://blog.keras.io/img/keras-tensorflow-logo.jpg" />
-
-</div>
 ]]></content>
   </entry>
   <entry>
