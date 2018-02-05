@@ -1,0 +1,42 @@
+---
+title: "April 12th & 13th: workshop on Deep Learning with Keras and TensorFlow in R"
+draft: false
+author: Shirin Glander
+date: '2018-02-05'
+categories: ["R", "workshop"]
+tags: ["Keras", "TensorFlow", "data science", "workshop"]
+thumbnailImagePosition: left
+thumbnailImage: https://shiring.github.io/netlify_images/keras_workshop_april18.png
+metaAlignment: center
+coverMeta: out
+slug: deep_learning_keras_tensorflow_18_04
+---
+
+Registration is now open for my 1.5-day [workshop on deep learning with Keras and TensorFlow using R](https://www.eventbrite.de/e/workshop-deep-learning-mit-keras-und-tensorflow-tickets-42710095044?utm-medium=discovery&utm-campaign=social&utm-content=attendeeshare&aff=escb&utm-source=cp&utm-term=listing).
+
+It will take place on **April 12th and 13th** in **Hamburg, Germany**.
+
+In my workshop, you will learn
+
+- the basics of deep learning
+- what cross-entropy and loss is
+- about activation functions
+- how to optimize weights and biases with backpropagation and gradient descent
+- how to build (deep) neural networks with Keras and TensorFlow
+- how to save and load models and model weights
+- how to visualize models with TensorBoard
+- how to make predictions on test data
+
+[Tickets can be booked via eventbrite](https://www.eventbrite.de/e/workshop-deep-learning-mit-keras-und-tensorflow-tickets-42710095044?utm-medium=discovery&utm-campaign=social&utm-content=attendeeshare&aff=escb&utm-source=cp&utm-term=listing).
+
+<br>
+
+![](https://shiring.github.io/netlify_images/keras_workshop_april18.png)
+
+Keras is a high-level API written in Python for building and prototyping neural networks. It can be used on top of TensorFlow, Theano or CNTK. Keras is very convenient for fast and easy prototyping of neural networks. It is highly modular and very flexible, so that you can build basically any type of neural network you want. It supports convolutional neural networks and recurrent neural networks, as well as combinations of both. Due to its layer structure, it is highly extensible and can run on CPU or GPU.
+
+The `keras` R package provides an interface to the Python library of Keras, just as the tensorflow package provides an interface to TensorFlow. Basically, R creates a conda instance and runs Keras it it, while you can still use all the functionalities of R for plotting, etc. Almost all function names are the same, so models can easily be recreated in Python for deployment.
+
+<br>
+
+![](https://blog.keras.io/img/keras-tensorflow-logo.jpg)

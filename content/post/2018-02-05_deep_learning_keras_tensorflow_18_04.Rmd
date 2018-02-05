@@ -1,18 +1,18 @@
 ---
-title: "April 12th & 13th: workshop on Deep Learning with Keras and TensorFlow in R in Hamburg"
-draft: true
+title: "April 12th & 13th: workshop on Deep Learning with Keras and TensorFlow in R"
+draft: false
 author: Shirin Glander
-date: '2018-02-02'
+date: '2018-02-05'
 categories: ["R", "workshop"]
 tags: ["Keras", "TensorFlow", "data science", "workshop"]
 thumbnailImagePosition: left
-thumbnailImage: https://upload.wikimedia.org/wikipedia/commons/c/c9/Keras_Logo.jpg
+thumbnailImage: https://shiring.github.io/netlify_images/keras_workshop_april18.png
 metaAlignment: center
 coverMeta: out
 slug: deep_learning_keras_tensorflow_18_04
 ---
 
-You can now book my 1.5 - day workshop on [deep learning with Keras and TensorFlow using R](https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/).
+Registration is now open for my 1.5-day [workshop on deep learning with Keras and TensorFlow using R](https://www.eventbrite.de/e/workshop-deep-learning-mit-keras-und-tensorflow-tickets-42710095044?utm-medium=discovery&utm-campaign=social&utm-content=attendeeshare&aff=escb&utm-source=cp&utm-term=listing).
 
 It will take place on **April 12th and 13th** in **Hamburg, Germany**.
 
@@ -27,9 +27,11 @@ In my workshop, you will learn
 - how to visualize models with TensorBoard
 - how to make predictions on test data
 
+[Tickets can be booked via eventbrite](https://www.eventbrite.de/e/workshop-deep-learning-mit-keras-und-tensorflow-tickets-42710095044?utm-medium=discovery&utm-campaign=social&utm-content=attendeeshare&aff=escb&utm-source=cp&utm-term=listing).
+
 <br>
 
-![Neural Network with three densely connected hidden layers](https://shiring.github.io/netlify_images/mlp_r7pv7z.jpg)
+![](https://shiring.github.io/netlify_images/keras_workshop_april18.png)
 
 Keras is a high-level API written in Python for building and prototyping neural networks. It can be used on top of TensorFlow, Theano or CNTK. Keras is very convenient for fast and easy prototyping of neural networks. It is highly modular and very flexible, so that you can build basically any type of neural network you want. It supports convolutional neural networks and recurrent neural networks, as well as combinations of both. Due to its layer structure, it is highly extensible and can run on CPU or GPU.
 

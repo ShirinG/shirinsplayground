@@ -2,19 +2,19 @@
   <title>Shirin&#39;s playgRound</title>
   <link href="/index.xml" rel="self"/>
   <link href="/"/>
-  <updated>2018-02-02T00:00:00+00:00</updated>
+  <updated>2018-02-05T00:00:00+00:00</updated>
   <id>/</id>
   <author>
     <name>Dr. Shirin Glander</name>
   </author>
   <generator>Hugo -- gohugo.io</generator>
   <entry>
-    <title type="html"><![CDATA[April 12th &amp; 13th: workshop on Deep Learning with Keras and TensorFlow in R in Hamburg]]></title>
+    <title type="html"><![CDATA[April 12th &amp; 13th: workshop on Deep Learning with Keras and TensorFlow in R]]></title>
     <link href="/2018/02/deep_learning_keras_tensorflow_18_04/"/>
     <id>/2018/02/deep_learning_keras_tensorflow_18_04/</id>
-    <published>2018-02-02T00:00:00+00:00</published>
-    <updated>2018-02-02T00:00:00+00:00</updated>
-    <content type="html"><![CDATA[<p>You can now book my 1.5 - day workshop on <a href="https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/">deep learning with Keras and TensorFlow using R</a>.</p>
+    <published>2018-02-05T00:00:00+00:00</published>
+    <updated>2018-02-05T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<p>Registration is now open for my 1.5-day <a href="https://www.eventbrite.de/e/workshop-deep-learning-mit-keras-und-tensorflow-tickets-42710095044?utm-medium=discovery&amp;utm-campaign=social&amp;utm-content=attendeeshare&amp;aff=escb&amp;utm-source=cp&amp;utm-term=listing">workshop on deep learning with Keras and TensorFlow using R</a>.</p>
 <p>It will take place on <strong>April 12th and 13th</strong> in <strong>Hamburg, Germany</strong>.</p>
 <p>In my workshop, you will learn</p>
 <ul>
@@ -27,10 +27,11 @@
 <li>how to visualize models with TensorBoard</li>
 <li>how to make predictions on test data</li>
 </ul>
+<p><a href="https://www.eventbrite.de/e/workshop-deep-learning-mit-keras-und-tensorflow-tickets-42710095044?utm-medium=discovery&amp;utm-campaign=social&amp;utm-content=attendeeshare&amp;aff=escb&amp;utm-source=cp&amp;utm-term=listing">Tickets can be booked via eventbrite</a>.</p>
 <p><br></p>
 <div class="figure">
-<img src="https://shiring.github.io/netlify_images/mlp_r7pv7z.jpg" alt="Neural Network with three densely connected hidden layers" />
-<p class="caption">Neural Network with three densely connected hidden layers</p>
+<img src="https://shiring.github.io/netlify_images/keras_workshop_april18.png" />
+
 </div>
 <p>Keras is a high-level API written in Python for building and prototyping neural networks. It can be used on top of TensorFlow, Theano or CNTK. Keras is very convenient for fast and easy prototyping of neural networks. It is highly modular and very flexible, so that you can build basically any type of neural network you want. It supports convolutional neural networks and recurrent neural networks, as well as combinations of both. Due to its layer structure, it is highly extensible and can run on CPU or GPU.</p>
 <p>The <code>keras</code> R package provides an interface to the Python library of Keras, just as the tensorflow package provides an interface to TensorFlow. Basically, R creates a conda instance and runs Keras it it, while you can still use all the functionalities of R for plotting, etc. Almost all function names are the same, so models can easily be recreated in Python for deployment.</p>
@@ -862,7 +863,7 @@ test_y &lt;- dplyr::select(test_data, class)</code></pre>
 ##  language (EN)                        
 ##  collate  de_DE.UTF-8                 
 ##  tz       Europe/Berlin               
-##  date     2018-02-04</code></pre>
+##  date     2018-02-05</code></pre>
 <pre><code>## Packages -----------------------------------------------------------------</code></pre>
 <pre><code>##  package      * version  date       source        
 ##  assertthat     0.2.0    2017-04-11 CRAN (R 3.4.0)
