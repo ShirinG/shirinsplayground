@@ -1,8 +1,8 @@
 ---
-title: "April 12th & 13th: workshop on Deep Learning with Keras and TensorFlow in R"
+title: "April 12th & 13th in Hamburg: Workshop on Deep Learning with Keras and TensorFlow in R"
 draft: false
 author: Shirin Glander
-date: '2018-02-05'
+date: '2018-02-06'
 categories: ["R", "workshop"]
 tags: ["Keras", "TensorFlow", "data science", "workshop"]
 thumbnailImagePosition: left
@@ -16,6 +16,13 @@ Registration is now open for my 1.5-day [workshop on deep learning with Keras an
 
 It will take place on **April 12th and 13th** in **Hamburg, Germany**.
 
+[You can read about one participant's experience in my last workshop:](https://blog.codecentric.de/en/2018/02/deep-learning-workshop-bei-der-codecentric-ag-solingen/)
+
+> Big Data – a buzz word you can find everywhere these days, from nerdy blogs to scientific research papers and even in the news. But how does Big Data Analysis work, exactly? In order to find that out, I attended the workshop on “Deep Learning with Keras and TensorFlow”.
+On a stormy Thursday afternoon, we arrived at the modern and light-flooded codecentric AG headquarters. There, we met performance expert Dieter Dirkes and Data Scientist Dr. Shirin Glander. In the following two days, Shirin gave us a hands-on introduction into the secrets of Deep Learning and helped us to program our first Neural Net. After a short round of introduction of the participants, it became clear that many different areas and domains are interested in Deep Learning: geologists want to classify (satellite) images, energy providers want to analyse time-series, insurers want to predict numbers and I – a humanities major – want to classify text. And codecentric employees were also interested in getting to know the possibilities of Deep Learning, so that a third of the participants were employees from the company itself. 
+
+[Continue reading...](https://blog.codecentric.de/en/2018/02/deep-learning-workshop-bei-der-codecentric-ag-solingen/)
+
 In my workshop, you will learn
 
 - the basics of deep learning
@@ -26,6 +33,8 @@ In my workshop, you will learn
 - how to save and load models and model weights
 - how to visualize models with TensorBoard
 - how to make predictions on test data
+
+My slides and all material is in English, so I'm flexible with the language. If it's all German participants it'll be in German, if some prefer English it'll be English or a mix of German and English so that everybody understands. :-)
 
 [Tickets can be booked via eventbrite](https://www.eventbrite.de/e/workshop-deep-learning-mit-keras-und-tensorflow-tickets-42710095044?utm-medium=discovery&utm-campaign=social&utm-content=attendeeshare&aff=escb&utm-source=cp&utm-term=listing).
 
