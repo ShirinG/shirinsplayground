@@ -2,12 +2,29 @@
   <title>Shirin&#39;s playgRound</title>
   <link href="/index.xml" rel="self"/>
   <link href="/"/>
-  <updated>2018-02-06T00:00:00+00:00</updated>
+  <updated>2018-02-19T00:00:00+00:00</updated>
   <id>/</id>
   <author>
     <name>Dr. Shirin Glander</name>
   </author>
   <generator>Hugo -- gohugo.io</generator>
+  <entry>
+    <title type="html"><![CDATA[Sketchnotes from TWiML&amp;AI #111: Learning “Common Sense” and Physical Concepts with Roland Memisevic]]></title>
+    <link href="/2018/02/twimlai111/"/>
+    <id>/2018/02/twimlai111/</id>
+    <published>2018-02-19T00:00:00+00:00</published>
+    <updated>2018-02-19T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<p>These are my sketchnotes for Sam Charrington’s podcast <strong>This Week in Machine Learning and AI</strong> about <em>Learning “Common Sense” and Physical Concepts with Roland Memisevic</em>:</p>
+<div class="figure">
+<img src="https://shiring.github.io/netlify_images/twimlai111.jpg" alt="Sketchnotes from TWiMLAI talk #111: Learning Common Sense and Physical Concepts with Roland Memisevic" />
+<p class="caption">Sketchnotes from TWiMLAI talk #111: Learning “Common Sense” and Physical Concepts with Roland Memisevic</p>
+</div>
+<p>You can listen to the podcast <a href="https://twimlai.com/twiml-talk-111-learning-common-sense-physical-concepts-roland-memisevic/">here</a>.</p>
+<blockquote>
+<p>In today’s episode, I’m joined by Roland Memisevic, co-founder, CEO, and chief scientist at Twenty Billion Neurons. Roland joined me at the RE•WORK Deep Learning Summit in Montreal to discuss the work his company is doing to train deep neural networks to understand physical actions. In our conversation, we dig into video analysis and understanding, including how data-rich video can help us develop what Roland calls comparative understanding, or AI “common sense”. We briefly touch on the implications of AI/ML systems having comparative understanding, and how Roland and his team are addressing problems like getting properly labeled training data. <a href="https://twimlai.com/twiml-talk-111-learning-common-sense-physical-concepts-roland-memisevic/" class="uri">https://twimlai.com/twiml-talk-111-learning-common-sense-physical-concepts-roland-memisevic/</a></p>
+</blockquote>
+]]></content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[April 12th &amp; 13th in Hamburg: Workshop on Deep Learning with Keras and TensorFlow in R]]></title>
     <link href="/2018/02/deep_learning_keras_tensorflow_18_04/"/>
@@ -32,7 +49,7 @@
 <li>how to visualize models with TensorBoard</li>
 <li>how to make predictions on test data</li>
 </ul>
-<p>My slides and all material is in English, so I’m flexible with the language. If it’s all German participants it’ll be in German, if some prefer English it’ll be English or a mix of German and English so that everybody understands.</p>
+<p>My slides and all material is in English, so I’m flexible with the language. If it’s all German participants it’ll be in German, if some prefer English it’ll be English or a mix of German and English so that everybody understands. :-)</p>
 <p><a href="https://www.eventbrite.de/e/workshop-deep-learning-mit-keras-und-tensorflow-tickets-42710095044?utm-medium=discovery&amp;utm-campaign=social&amp;utm-content=attendeeshare&amp;aff=escb&amp;utm-source=cp&amp;utm-term=listing">Tickets can be booked via eventbrite</a>.</p>
 <p><br></p>
 <div class="figure">
