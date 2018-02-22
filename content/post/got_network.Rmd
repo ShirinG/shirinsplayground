@@ -1,0 +1,89 @@
+---
+title: "Another Game of Thrones Network Analysis"
+draft: true
+author: Shirin Glander
+date: '2018-01-28'
+categories: []
+tags: []
+thumbnailImagePosition: left
+thumbnailImage: 
+metaAlignment: center
+coverMeta: out
+slug: got_network
+---
+
+https://shiring.github.io/networks/2017/05/15/got_final
+
+https://github.com/mathbeveridge/asoiaf
+
+https://www.data-imaginist.com/2017/introducing-tidygraph/
+
+```{r warning=FALSE, message=FALSE, echo=FALSE}
+library(readr)
+library(tidyverse)
+library(tidygraph)
+library(ggraph)
+```
+
+```{r}
+path <- "/Users/shiringlander/Documents/Github/Data/asoiaf/data/"
+files <- list.files(path = path, full.names = TRUE)
+```
+
+```{r}
+cooc <- read_csv(files[1])
+```
+
+```{r}
+main_ch <- cooc %>%
+  group_by(Source) %>%
+  summarise(sum_weight = sum(weight)) %>%
+  arrange(desc(sum_weight))
+```
+
+```{r}
+cooc_f <- cooc %>%
+  filter(Source %in% main_ch$Source[1:100] & Target %in% main_ch$Source[1:100])
+```
+
+```{r echo=FALSE}
+keywords_graph <- as_tbl_graph(cooc_f, directed = FALSE) %>%
+  activate(edges) %>% 
+  filter(!edge_is_multiple()) %>%
+  mutate(centrality_e = centrality_edge_betweenness(),
+         width_e = weight / 10) %>%
+  activate(nodes) %>% 
+  mutate(centrality_n = centrality_authority(),
+         center_n = node_is_center(),
+         keyplayer_n = node_is_keyplayer(k = 3),
+         community = as.factor(group_infomap()),
+         size_n = centrality_n)
+```
+
+```{r echo=FALSE}
+keywords_graph %>%
+  activate(nodes) %>% 
+  as.tibble()
+```
+
+```{r echo=FALSE}
+keywords_graph %>%
+  activate(edges) %>% 
+  as.tibble()
+```
+
+```{r fig.width=30, fig.height=30, warning=FALSE, echo=FALSE}
+myplot <- ggraph(keywords_graph, layout = "nicely") + 
+    geom_edge_link(aes(edge_width = width_e), alpha = 0.2) + 
+    geom_node_point(aes(color = community), size = 10) +
+    geom_node_text(aes(label = name), color = "steelblue", size = 8) +
+  scale_size_area() +
+  theme_graph(foreground = 'steelblue', fg_text_colour = 'white')
+myplot
+```
+
+```{r}
+ggsave('keyword_network.pdf', plot = myplot ,path = '.', device = 'pdf', dpi = 700,
+       width = 600, height = 600, unit = "cm", limitsize = FALSE)
+```
+
