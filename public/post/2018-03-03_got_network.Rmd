@@ -6,7 +6,7 @@ date: '2018-03-03'
 categories: [R, network]
 tags: [R, network, game of thrones, asoiaf, ggraph, tidygraph]
 thumbnailImagePosition: left
-thumbnailImage: https://shirinsplayground.netlify.com/post/2018-03-03_got_network_files/figure-html/unnamed-chunk-18-1.png
+thumbnailImage: post/2018-03-03_got_network_files/figure-html/unnamed-chunk-18-1.png
 metaAlignment: center
 coverMeta: out
 slug: got_network

@@ -6,7 +6,7 @@ date: '2018-03-03'
 categories: [R, network]
 tags: [R, network, game of thrones, asoiaf, ggraph, tidygraph]
 thumbnailImagePosition: left
-thumbnailImage: https://shirinsplayground.netlify.com/post/2018-03-03_got_network_files/figure-html/unnamed-chunk-18-1.png
+thumbnailImage: post/2018-03-03_got_network_files/figure-html/unnamed-chunk-18-1.png
 metaAlignment: center
 coverMeta: out
 slug: got_network
@@ -169,20 +169,20 @@ main_ch_l</code></pre>
 ## # Node Data: 100 x 2 (active)
 ##   name               n_rank_trv
 ##   &lt;chr&gt;                   &lt;int&gt;
-## 1 Oberyn-Martell              1
-## 2 Arianne-Martell             2
-## 3 Doran-Martell               3
-## 4 Myrcella-Baratheon          4
-## 5 Tommen-Baratheon            5
-## 6 Brienne-of-Tarth            6
+## 1 Drogo                       1
+## 2 Daenerys-Targaryen          2
+## 3 Viserys-Targaryen           3
+## 4 Aerys-II-Targaryen          4
+## 5 Jon-Arryn                   5
+## 6 Robert-Arryn                6
 ## # ... with 94 more rows
 ## #
 ## # Edge Data: 798 x 5
 ##    from    to Type          id weight
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;int&gt;  &lt;int&gt;
-## 1    65    67 Undirected    43      7
-## 2    64    67 Undirected    44      4
-## 3    63    67 Undirected    52      3
+## 1    30    74 Undirected    43      7
+## 2    25    74 Undirected    44      4
+## 3    74    76 Undirected    52      3
 ## # ... with 795 more rows</code></pre>
 </div>
 <div id="centrality" class="section level3">
@@ -271,7 +271,7 @@ main_ch_l</code></pre>
 ## 3 Aerys-II-Targaryen              FALSE  FALSE    
 ## 4 Alliser-Thorne                  FALSE  FALSE    
 ## 5 Arianne-Martell                 FALSE  FALSE    
-## 6 Arya-Stark                      FALSE  TRUE     
+## 6 Arya-Stark                      FALSE  FALSE    
 ## # ... with 94 more rows
 ## #
 ## # Edge Data: 798 x 5
@@ -363,16 +363,16 @@ main_ch_l</code></pre>
 <pre><code>## # A tibble: 100 x 7
 ##    name         n_rank_trv neighbors group center dist_to_center keyplayer
 ##    &lt;chr&gt;             &lt;int&gt;     &lt;dbl&gt; &lt;int&gt; &lt;lgl&gt;           &lt;dbl&gt; &lt;lgl&gt;    
-##  1 Aemon-Targa…         86       13.     2 FALSE              1. FALSE    
-##  2 Aeron-Greyj…         10        5.     5 FALSE              2. FALSE    
-##  3 Aerys-II-Ta…          4       12.     1 FALSE              1. FALSE    
-##  4 Alliser-Tho…         97       13.     2 FALSE              1. FALSE    
-##  5 Arianne-Mar…         64        4.     7 FALSE              2. FALSE    
-##  6 Arya-Stark           18       37.     1 FALSE              1. TRUE     
-##  7 Asha-Greyjoy         12        7.     5 FALSE              1. FALSE    
-##  8 Balon-Greyj…          7       11.     5 FALSE              2. FALSE    
-##  9 Barristan-S…          3       23.     3 FALSE              1. FALSE    
-## 10 Belwas               56        6.     3 FALSE              2. FALSE    
+##  1 Aemon-Targa…         10       13.     2 FALSE              1. FALSE    
+##  2 Aeron-Greyj…         60        5.     5 FALSE              2. FALSE    
+##  3 Aerys-II-Ta…         85       12.     1 FALSE              1. FALSE    
+##  4 Alliser-Tho…          6       13.     2 FALSE              1. FALSE    
+##  5 Arianne-Mar…         76        4.     7 FALSE              2. FALSE    
+##  6 Arya-Stark           63       37.     1 FALSE              1. TRUE     
+##  7 Asha-Greyjoy         59        7.     5 FALSE              1. FALSE    
+##  8 Balon-Greyj…         58       11.     5 FALSE              2. FALSE    
+##  9 Barristan-S…         96       23.     3 FALSE              1. FALSE    
+## 10 Belwas              100        6.     3 FALSE              2. FALSE    
 ## # ... with 90 more rows</code></pre>
 <pre class="r"><code>cooc_all_f_graph %&gt;%
   activate(edges) %&gt;% # %E&gt;%
