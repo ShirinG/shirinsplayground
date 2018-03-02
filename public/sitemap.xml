@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/2018/03/got_network/</loc>
+    <lastmod>2018-03-03T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/2018/02/twimlai111/</loc>
     <lastmod>2018-02-19T00:00:00+00:00</lastmod>
   </url>
@@ -149,6 +154,12 @@
   </url>
   
   <url>
+    <loc>/tags/ai-common-sense/</loc>
+    <lastmod>2018-02-19T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/tags/anomaly-detection/</loc>
     <lastmod>2017-09-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -180,6 +191,12 @@
   <url>
     <loc>/tags/artificial-intelligence/</loc>
     <lastmod>2017-09-28T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/asoiaf/</loc>
+    <lastmod>2018-03-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -250,6 +267,12 @@
   </url>
   
   <url>
+    <loc>/tags/comparative-understanding/</loc>
+    <lastmod>2018-02-19T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/tags/conference/</loc>
     <lastmod>2018-02-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -304,8 +327,14 @@
   </url>
   
   <url>
+    <loc>/tags/game-of-thrones/</loc>
+    <lastmod>2018-03-03T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/tags/genetic-algorithm/</loc>
-    <lastmod>2018-02-19T00:00:00+00:00</lastmod>
+    <lastmod>2018-01-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -318,6 +347,12 @@
   <url>
     <loc>/tags/ggplot2/</loc>
     <lastmod>2017-11-18T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/ggraph/</loc>
+    <lastmod>2018-03-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -454,6 +489,18 @@
   </url>
   
   <url>
+    <loc>/tags/network/</loc>
+    <lastmod>2018-03-03T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/network/</loc>
+    <lastmod>2018-03-03T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/tags/network-analysis/</loc>
     <lastmod>2017-07-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -467,7 +514,7 @@
   
   <url>
     <loc>/tags/neuroevolution/</loc>
-    <lastmod>2018-02-19T00:00:00+00:00</lastmod>
+    <lastmod>2018-01-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -479,7 +526,7 @@
   
   <url>
     <loc>/tags/novelty-search/</loc>
-    <lastmod>2018-02-19T00:00:00+00:00</lastmod>
+    <lastmod>2018-01-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -515,7 +562,7 @@
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2018-02-19T00:00:00+00:00</lastmod>
+    <lastmod>2018-03-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -538,8 +585,14 @@
   </url>
   
   <url>
+    <loc>/tags/r/</loc>
+    <lastmod>2018-03-03T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/categories/r/</loc>
-    <lastmod>2018-02-06T00:00:00+00:00</lastmod>
+    <lastmod>2018-03-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -563,7 +616,7 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2018-02-19T00:00:00+00:00</lastmod>
+    <lastmod>2018-03-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -628,6 +681,12 @@
   </url>
   
   <url>
+    <loc>/tags/tidygraph/</loc>
+    <lastmod>2018-03-03T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/tags/tidyverse/</loc>
     <lastmod>2017-09-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -648,6 +707,12 @@
   <url>
     <loc>/tags/twitter/</loc>
     <lastmod>2017-07-28T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/video/</loc>
+    <lastmod>2018-02-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

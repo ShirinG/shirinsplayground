@@ -1,0 +1,378 @@
+---
+title: "Another Game of Thrones network analysis - this time with tidygraph and ggraph"
+draft: true
+author: Shirin Glander
+date: '2018-03-03'
+categories: [R, network]
+tags: [R, network, game of thrones, asoiaf, ggraph, tidygraph]
+thumbnailImagePosition: left
+thumbnailImage: https://shirinsplayground.netlify.com/post/2018-03-03_got_network_files/figure-html/unnamed-chunk-18-1.png
+metaAlignment: center
+coverMeta: out
+slug: got_network
+---
+
+A while back, I did [an analysis of the family network of major characters from the A Song of Ice and Fire books and the Game of Thrones TV show](https://shiring.github.io/networks/2017/05/15/got_final). In that analysis I found out that House Stark (specifically Ned and Sansa) and House Lannister (especially Tyrion) are the most important family connections in Game of Thrones; they also connect many of the storylines and are central parts of the narrative.
+
+I that old post, I used `igraph` for plotting and calculating network metrics.
+
+But there are two packages that integrate network analysis much more nicely with the `tidyverse`: `tidygraph` and `ggraph`. These, I am going to show how to use for analysing yet another network of characters from A Song of Ice and Fire / Game of Thrones.
+
+## What can network analysis tell us?
+
+Network analysis can e.g. be used to explore relationships in social or professional networks. In such cases, we would typically ask questions like:
+
+- How many connections does each person have?
+- Who is the most connected (i.e. influential or “important”) person?
+- Are there clusters of tightly connected people?
+- Are there a few key players that connect clusters of people?
+- etc.
+
+These answers can give us a lot of information about the patterns of how people interact. 
+
+So, how do we find out who the most important characters are in this network?
+We consider a character “important” if he has connections to many other characters. There are a few network properties, that tell us more about this, like node centrality.
+
+```{r warning=FALSE, message=FALSE}
+library(readr)     # fast reading of csv files
+library(tidyverse) # tidy data analysis
+library(tidygraph) # tidy graph analysis
+library(ggraph)    # for plotting
+```
+
+## The Data
+
+I obtained the following data by cloning [this Github repository](https://github.com/mathbeveridge/asoiaf) from Andrew Beveridge:
+
+> Character Interaction Networks for George R. R. Martin's "A Song of Ice and Fire" saga
+These networks were created by connecting two characters whenever their names (or nicknames) appeared within 15 words of one another in one of the books in "A Song of Ice and Fire." The edge weight corresponds to the number of interactions.
+You can use this data to explore the dynamics of the Seven Kingdoms using network science techniques. For example, community detection finds coherent plotlines. Centrality measures uncover the multiple ways in which characters play important roles in the saga.
+
+Andrew already did a great job analysing these character networks and you can read all his conclusions on his site [https://networkofthrones.wordpress.com](https://networkofthrones.wordpress.com). Here, I don't aim to replicate his analyses but I want to show how you could do this or similar analyses with `tidygraph` and `ggraph`. Thus, I am also not going to use all of his node and edge files.
+
+```{r}
+path <- "/Users/shiringlander/Documents/Github/Data/asoiaf/data/"
+files <- list.files(path = path, full.names = TRUE)
+files
+```
+
+## Characters across all books
+
+The first data set I am going to use are the character interactions in all five books. I am not using the node files here, because I find the edge names sufficient for this demonstration. If you wanted to have nice name labels, you could use the node files.
+
+```{r warning=FALSE, message=FALSE}
+cooc_all_edges <- read_csv(files[1])
+```
+
+Because there are so many characters in the books, many of them minor, I am subsetting the data to the 100 characters with the most interactions across all books.The edges are undirected, therefore there are no redundant Source-Target combination; because of this, I gathered Source and Target data before summing up the weights.
+
+```{r warning=FALSE, message=FALSE}
+main_ch <- cooc_all_edges %>%
+  select(-Type) %>%
+  gather(x, name, Source:Target) %>%
+  group_by(name) %>%
+  summarise(sum_weight = sum(weight)) %>%
+  ungroup()
+
+main_ch_l <- main_ch %>%
+  arrange(desc(sum_weight)) %>%
+  top_n(100, sum_weight)
+main_ch_l
+```
+
+```{r warning=FALSE, message=FALSE}
+cooc_all_f <- cooc_all_edges %>%
+  filter(Source %in% main_ch_l$name & Target %in% main_ch_l$name)
+```
+
+## tidygraph and ggraph
+
+Both `tidygraph` and `ggraph` have been developed by [Thomas Lin Pedersen](https://www.data-imaginist.com):
+
+> With tidygraph I set out to make it easier to get your data into a graph and perform common transformations on it, but the aim has expanded since its inception. The goal of tidygraph is to empower the user to formulate complex questions regarding relational data as simple steps, thus enabling them to retrieve insights directly from the data itself. The central idea this all boils down to is this: you don’t have to plot a network to understand it. While I absolutely love the field of network visualisation, it is in many ways overused in data science — especially when it comes to extracting knowledge from a network. Just as you don’t need a plot to tell you which car in a dataset is the fastest, you don’t need a plot to tell you which pair of friends are the closest. What you do need, instead of a plot, is a tool that allow you to formulate your question into a logic sequence of operations. For many people in the world of rectangular data, this tool is increasingly dplyr (and friends), and I do hope that tidygraph can take on the same role in the world of relational data. https://www.data-imaginist.com/2018/tidygraph-1-1-a-tidy-hope/
+
+The first step is to convert our edge table into a `tbl_graph` object structure. Here, we use the `as_tbl_graph()` function from `tidygraph`; it can take many different types of input data, like `data.frame`, `matrix`, `dendrogram`, `igraph`, etc.
+
+> Underneath the hood of tidygraph lies the well-oiled machinery of igraph, ensuring efficient graph manipulation. Rather than keeping the node and edge data in a list and creating igraph objects on the fly when needed, tidygraph subclasses igraph with the tbl_graph class and simply exposes it in a tidy manner. This ensures that all your beloved algorithms that expects igraph objects still works with tbl_graph objects. Further, tidygraph is very careful not to override any of igraphs exports so the two packages can coexist quite happily. https://www.data-imaginist.com/2017/introducing-tidygraph/
+
+A central aspect of `tidygraph` is that you can directly manipulate node and edge data from this `tbl_graph` object by **activating** nodes or edges. When we first create a `tbl_graph` object, the nodes will be activated. We can then directly calculate node or edge metrics, like centrality, using `tidyverse` functions.
+
+```{r}
+as_tbl_graph(cooc_all_f, directed = FALSE)
+```
+
+We can change that with the `activate()` function. We can now, for example, remove multiple edges. When you are using RStudio, start typing `?edge_is_` and wait for the autocomplete function to show you what else is possible (or go to the `tidygraph` manual).
+
+```{r}
+as_tbl_graph(cooc_all_f, directed = FALSE) %>%
+  activate(edges) %>%
+  filter(!edge_is_multiple())
+```
+
+### Node ranking
+
+> Often, especially when visualising networks with certain layouts, the order in which the nodes appear will have a huge influence on the insight you can get out (e.g. matrix plots and arc diagrams). The node_rank_*() family of algorithms have been introduced to provide different ways of sorting nodes so that closely related nodes are positionally close. As there is often not a single correct answer to this endeavor, there’s a lot of different algorithms that may provide different insights into your network. Many of them are based on the seriation package, and the vignette provided therein serves as a nice introduction to the different algorithms. https://www.data-imaginist.com/2018/tidygraph-1-1-a-tidy-hope/
+
+There are many options for node ranking (go to `?node_rank` for a full list); let's try out **Minimize hamiltonian path length using a travelling salesperson solver**.
+
+```{r}
+as_tbl_graph(cooc_all_f, directed = FALSE) %>%
+  activate(nodes) %>% 
+  mutate(n_rank_trv = node_rank_traveller()) %>%
+  arrange(n_rank_trv)
+```
+
+### Centrality
+
+Centrality describes the number of edges that are in- or outgoing to/from nodes. High centrality networks have few nodes with many connections, low centrality networks have many nodes with similar numbers of edges. The centrality of a node measures the importance of it in the network.
+
+> This version adds 19(!) new ways to define the notion of centrality along with a manual version where you can mix and match different distance measures and summation strategies opening up the world to even more centrality scores. All of this wealth of centrality comes from the netrankr package that provides a framework for defining and calculating centrality scores. If you use centrality measures somewhere in your analysis I cannot recommend the vignettes provided by netrankr enough as they provide a fundamental intuition about the nature of such measures and how they can/should be used. https://www.data-imaginist.com/2018/tidygraph-1-1-a-tidy-hope/
+
+Again, type `?centrality` for an overview about all possible centrality measures you can use. Let's try out `centrality_degree()`.
+
+```{r}
+as_tbl_graph(cooc_all_f, directed = FALSE) %>%
+  activate(nodes) %>% 
+  mutate(neighbors = centrality_degree()) %>%
+  arrange(-neighbors)
+```
+
+### Grouping and clustering
+
+> Another common operation is to group nodes based on the graph topology, sometimes referred to as community detection based on its commonality in social network analysis. All clustering algorithms from igraph is available in tidygraph using the group_* prefix. All of these functions return an integer vector with nodes (or edges) sharing the same integer being grouped together. https://www.data-imaginist.com/2017/introducing-tidygraph/
+
+We can use `?group_graph` for an overview about all possible ways to cluster and group nodes. Here I am using `group_infomap()`: **Group nodes by minimizing description length using**.
+
+```{r}
+as_tbl_graph(cooc_all_f, directed = FALSE) %>%
+  activate(nodes) %>% 
+  mutate(group = group_infomap()) %>%
+  arrange(-group)
+```
+
+### Querying node types
+
+`?node_types`
+
+```{r}
+as_tbl_graph(cooc_all_f, directed = FALSE) %>%
+  activate(nodes) %>% 
+  mutate(center = node_is_center(),
+         keyplayer = node_is_keyplayer(k = 10))
+```
+
+## Node pairs
+
+> Some statistics are a measure between two nodes, such as distance or similarity between nodes. In a tidy context one of the ends must always be the node defined by the row, while the other can be any other node. All of the node pair functions are prefixed with node_* and ends with _from/_to if the measure is not symmetric and _with if it is; e.g. there’s both a node_max_flow_to() and node_max_flow_from() function while only a single node_cocitation_with() function. The other part of the node pair can be specified as an integer vector that will get recycled if needed, or a logical vector which will get recycled and converted to indexes with which(). This means that output from node type functions can be used directly in the calls. https://www.data-imaginist.com/2017/introducing-tidygraph/
+
+```{r}
+as_tbl_graph(cooc_all_f, directed = FALSE) %>%
+  activate(nodes) %>% 
+  mutate(dist_to_center = node_distance_to(node_is_center()))
+```
+
+### Edge betweenness
+
+Betweenness describes the shortest paths between nodes. 
+
+```{r}
+as_tbl_graph(cooc_all_f, directed = FALSE) %>%
+  activate(edges) %>% 
+  mutate(centrality_e = centrality_edge_betweenness())
+```
+
+## The complete code
+
+Now let's combine what we've done above:
+
+```{r}
+cooc_all_f_graph <- as_tbl_graph(cooc_all_f, directed = FALSE) %>%
+  mutate(n_rank_trv = node_rank_traveller(),
+         neighbors = centrality_degree(),
+         group = group_infomap(),
+         center = node_is_center(),
+         dist_to_center = node_distance_to(node_is_center()),
+         keyplayer = node_is_keyplayer(k = 10)) %>%
+  activate(edges) %>% 
+  filter(!edge_is_multiple()) %>%
+  mutate(centrality_e = centrality_edge_betweenness())
+```
+
+We can also convert our active node or edge table back to a `tibble`:
+
+```{r}
+cooc_all_f_graph %>%
+  activate(nodes) %>% # %N>%
+  as.tibble()
+```
+
+```{r}
+cooc_all_f_graph %>%
+  activate(edges) %>% # %E>%
+  as.tibble()
+```
+
+### Plotting with ggraph
+
+> ggraph is an extension of ggplot2 aimed at supporting relational data structures such as networks, graphs, and trees. While it builds upon the foundation of ggplot2 and its API it comes with its own self-contained set of geoms, facets, etc., as well as adding the concept of layouts to the grammar. https://github.com/thomasp85/ggraph
+
+There are lots of [options for layouts](https://www.data-imaginist.com/2017/ggraph-introduction-layouts/), here I am using a [Fruchterman-Reingold](http://igraph.org/r/doc/layout_with_fr.html) algorithm.
+
+```{r}
+layout <- create_layout(cooc_all_f_graph, 
+                        layout = "fr")
+```
+
+```{r fig.width=30, fig.height=30, warning=FALSE}
+ggraph(layout) + 
+    geom_edge_density(aes(fill = weight)) +
+    geom_edge_link(aes(width = weight), alpha = 0.2) + 
+    geom_node_point(aes(color = factor(group)), size = 10) +
+    geom_node_text(aes(label = name), size = 8, repel = TRUE) +
+    scale_color_brewer(palette = "Set1") +
+    theme_graph()
+```
+
+```{r fig.width=30, fig.height=30, warning=FALSE}
+cols <- RColorBrewer::brewer.pal(3, "Set1")
+ggraph(layout) + 
+    geom_edge_density(aes(fill = weight)) +
+    geom_edge_link(aes(width = weight), alpha = 0.2) + 
+    geom_node_point(aes(color = factor(center), size = dist_to_center)) +
+    geom_node_text(aes(label = name), size = 8, repel = TRUE) +
+    scale_colour_manual(values = c(cols[2], cols[1])) +
+    theme_graph()
+```
+
+```{r fig.width=30, fig.height=30, warning=FALSE}
+ggraph(layout) + 
+    geom_edge_density(aes(fill = weight)) +
+    geom_edge_link(aes(width = weight), alpha = 0.2) + 
+    geom_node_point(aes(color = factor(keyplayer)), size = 10) +
+    geom_node_text(aes(label = name), size = 8, repel = TRUE) +
+    scale_colour_manual(values = c(cols[2], cols[1])) +
+    theme_graph()
+```
+
+## Characters devided by books
+
+The second data set I am going to use is a comparison of character interactions in the five books. The rest
+
+**A little node on the side:** My original plan was to loop over the separate edge files for each book, concatenate them together with the information from which book they are and then plot them via facetting. This turned out to be a bad solution because I wanted to show the different keyplayers in each of the five books. So, instead of using one joined graph, I created separate graphs for every book and used the `bind_graphs()` and `facet_nodes()` functions to plot them together.
+
+```{r warning=FALSE, message=FALSE}
+for (i in 1:5) {
+  cooc <- read_csv(paste0("/Users/shiringlander/Documents/Github/Data/asoiaf/data//asoiaf-book", i, "-edges.csv")) %>%
+    mutate(book = paste0("book_", i)) %>%
+    filter(Source %in% main_ch_l$name & Target %in% main_ch_l$name)
+  
+  assign(paste0("coocs_book_", i), cooc)
+}
+```
+
+```{r}
+cooc_books_1_graph <- as_tbl_graph(coocs_book_1, directed = FALSE) %>%
+  mutate(book = "Book 1: A Game of Thrones",
+         keyplayer = node_is_keyplayer(k = 10))
+
+cooc_books_2_graph <- as_tbl_graph(coocs_book_2, directed = FALSE) %>%
+  mutate(book = "Book 2: A Clash of Kings",
+         keyplayer = node_is_keyplayer(k = 10))
+
+cooc_books_3_graph <- as_tbl_graph(coocs_book_3, directed = FALSE) %>%
+  mutate(book = "Book 3: A Storm of Swords",
+         keyplayer = node_is_keyplayer(k = 10))
+
+cooc_books_4_graph <- as_tbl_graph(coocs_book_4, directed = FALSE) %>%
+  mutate(book = "Book 4: A Feast for Crows",
+         keyplayer = node_is_keyplayer(k = 10))
+
+cooc_books_5_graph <- as_tbl_graph(coocs_book_5, directed = FALSE) %>%
+  mutate(book = "Book 5: A Dance with Dragons",
+         keyplayer = node_is_keyplayer(k = 10))
+```
+
+```{r fig.width=10, fig.height=50}
+cooc_books_1_graph %>% 
+  bind_graphs(cooc_books_2_graph)  %>%
+  bind_graphs(cooc_books_3_graph)  %>%
+  bind_graphs(cooc_books_4_graph)  %>%
+  bind_graphs(cooc_books_5_graph)  %>%
+  ggraph(layout = "fr") + 
+    facet_nodes( ~ book, scales = "free", ncol = 1) +
+    geom_edge_density(aes(fill = weight)) +
+    geom_edge_link(aes(edge_width = weight), alpha = 0.2) + 
+    geom_node_point(aes(color = factor(keyplayer)), size = 3) +
+    geom_node_text(aes(label = name), color = "black", size = 3, repel = TRUE) +
+    theme_graph() +
+    scale_colour_manual(values = c(cols[2], cols[1]))
+```
+
+```{r fig.width=10, fig.height=10, warning=FALSE, eval=FALSE, echo=FALSE}
+g1 <- cooc_books_1_graph %>%
+  ggraph(layout = "nicely") + 
+    geom_edge_link(aes(edge_width = weight), alpha = 0.2) + 
+    geom_node_point(aes(color = factor(keyplayer)), size = 3) +
+    geom_node_text(aes(label = name), color = "black", size = 3, repel = TRUE) +
+    theme_graph() +
+    scale_colour_manual(values = c(cols[2], cols[1])) +
+    labs(title = "Book 1: A Game of Thrones")
+```
+
+```{r fig.width=10, fig.height=10, warning=FALSE, eval=FALSE, echo=FALSE}
+g2 <- cooc_books_2_graph %>%
+  ggraph(layout = "nicely") + 
+    geom_edge_link(aes(edge_width = weight), alpha = 0.2) + 
+    geom_node_point(aes(color = factor(keyplayer)), size = 3) +
+    geom_node_text(aes(label = name), color = "black", size = 3, repel = TRUE) +
+    theme_graph() +
+    scale_colour_manual(values = c(cols[2], cols[1])) +
+    labs(title = "Book 2: A Clash of Kings")
+```
+
+```{r fig.width=10, fig.height=10, warning=FALSE, eval=FALSE, echo=FALSE}
+g3 <- cooc_books_3_graph %>%
+  ggraph(layout = "nicely") + 
+    geom_edge_link(aes(edge_width = weight), alpha = 0.2) + 
+    geom_node_point(aes(color = factor(keyplayer)), size = 3) +
+    geom_node_text(aes(label = name), color = "black", size = 3, repel = TRUE) +
+    theme_graph() +
+    scale_colour_manual(values = c(cols[2], cols[1])) +
+    labs(title = "Book 3: A Storm of Swords")
+```
+
+```{r fig.width=10, fig.height=10, warning=FALSE, eval=FALSE, echo=FALSE}
+g4 <- cooc_books_4_graph %>%
+  ggraph(layout = "nicely") + 
+    geom_edge_link(aes(edge_width = weight), alpha = 0.2) + 
+    geom_node_point(aes(color = factor(keyplayer)), size = 3) +
+    geom_node_text(aes(label = name), color = "black", size = 3, repel = TRUE) +
+    theme_graph() +
+    scale_colour_manual(values = c(cols[2], cols[1])) +
+    labs(title = "Book 4: A Feast for Crows")
+```
+
+```{r fig.width=10, fig.height=10, warning=FALSE, eval=FALSE, echo=FALSE}
+g5 <- cooc_books_5_graph %>%
+  ggraph(layout = "nicely") + 
+    geom_edge_link(aes(edge_width = weight), alpha = 0.2) + 
+    geom_node_point(aes(color = factor(keyplayer)), size = 3) +
+    geom_node_text(aes(label = name), color = "black", size = 3, repel = TRUE) +
+    theme_graph() +
+    scale_colour_manual(values = c(cols[2], cols[1])) +
+    labs(title = "Book 5: A Dance with Dragons")
+```
+
+```{r fig.width=10, fig.height=50, warning=FALSE, message=FALSE, eval=FALSE, echo=FALSE}
+library(gridExtra)
+library(grid)
+
+grid.arrange(g1, g2, g3, g4, g5, ncol = 1)
+```
+
+---
+
+```{r}
+sessionInfo()
+```
+

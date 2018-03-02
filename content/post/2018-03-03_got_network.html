@@ -1,0 +1,529 @@
+---
+title: "Another Game of Thrones network analysis - this time with tidygraph and ggraph"
+draft: true
+author: Shirin Glander
+date: '2018-03-03'
+categories: [R, network]
+tags: [R, network, game of thrones, asoiaf, ggraph, tidygraph]
+thumbnailImagePosition: left
+thumbnailImage: https://shirinsplayground.netlify.com/post/2018-03-03_got_network_files/figure-html/unnamed-chunk-18-1.png
+metaAlignment: center
+coverMeta: out
+slug: got_network
+---
+
+
+
+<p>A while back, I did <a href="https://shiring.github.io/networks/2017/05/15/got_final">an analysis of the family network of major characters from the A Song of Ice and Fire books and the Game of Thrones TV show</a>. In that analysis I found out that House Stark (specifically Ned and Sansa) and House Lannister (especially Tyrion) are the most important family connections in Game of Thrones; they also connect many of the storylines and are central parts of the narrative.</p>
+<p>I that old post, I used <code>igraph</code> for plotting and calculating network metrics.</p>
+<p>But there are two packages that integrate network analysis much more nicely with the <code>tidyverse</code>: <code>tidygraph</code> and <code>ggraph</code>. These, I am going to show how to use for analysing yet another network of characters from A Song of Ice and Fire / Game of Thrones.</p>
+<div id="what-can-network-analysis-tell-us" class="section level2">
+<h2>What can network analysis tell us?</h2>
+<p>Network analysis can e.g. be used to explore relationships in social or professional networks. In such cases, we would typically ask questions like:</p>
+<ul>
+<li>How many connections does each person have?</li>
+<li>Who is the most connected (i.e. influential or “important”) person?</li>
+<li>Are there clusters of tightly connected people?</li>
+<li>Are there a few key players that connect clusters of people?</li>
+<li>etc.</li>
+</ul>
+<p>These answers can give us a lot of information about the patterns of how people interact.</p>
+<p>So, how do we find out who the most important characters are in this network? We consider a character “important” if he has connections to many other characters. There are a few network properties, that tell us more about this, like node centrality.</p>
+<pre class="r"><code>library(readr)     # fast reading of csv files
+library(tidyverse) # tidy data analysis
+library(tidygraph) # tidy graph analysis
+library(ggraph)    # for plotting</code></pre>
+</div>
+<div id="the-data" class="section level2">
+<h2>The Data</h2>
+<p>I obtained the following data by cloning <a href="https://github.com/mathbeveridge/asoiaf">this Github repository</a> from Andrew Beveridge:</p>
+<blockquote>
+<p>Character Interaction Networks for George R. R. Martin’s “A Song of Ice and Fire” saga These networks were created by connecting two characters whenever their names (or nicknames) appeared within 15 words of one another in one of the books in “A Song of Ice and Fire.” The edge weight corresponds to the number of interactions. You can use this data to explore the dynamics of the Seven Kingdoms using network science techniques. For example, community detection finds coherent plotlines. Centrality measures uncover the multiple ways in which characters play important roles in the saga.</p>
+</blockquote>
+<p>Andrew already did a great job analysing these character networks and you can read all his conclusions on his site <a href="https://networkofthrones.wordpress.com" class="uri">https://networkofthrones.wordpress.com</a>. Here, I don’t aim to replicate his analyses but I want to show how you could do this or similar analyses with <code>tidygraph</code> and <code>ggraph</code>. Thus, I am also not going to use all of his node and edge files.</p>
+<pre class="r"><code>path &lt;- &quot;/Users/shiringlander/Documents/Github/Data/asoiaf/data/&quot;
+files &lt;- list.files(path = path, full.names = TRUE)
+files</code></pre>
+<pre><code>##  [1] &quot;/Users/shiringlander/Documents/Github/Data/asoiaf/data//asoiaf-all-edges.csv&quot;   
+##  [2] &quot;/Users/shiringlander/Documents/Github/Data/asoiaf/data//asoiaf-all-nodes.csv&quot;   
+##  [3] &quot;/Users/shiringlander/Documents/Github/Data/asoiaf/data//asoiaf-book1-edges.csv&quot; 
+##  [4] &quot;/Users/shiringlander/Documents/Github/Data/asoiaf/data//asoiaf-book1-nodes.csv&quot; 
+##  [5] &quot;/Users/shiringlander/Documents/Github/Data/asoiaf/data//asoiaf-book2-edges.csv&quot; 
+##  [6] &quot;/Users/shiringlander/Documents/Github/Data/asoiaf/data//asoiaf-book2-nodes.csv&quot; 
+##  [7] &quot;/Users/shiringlander/Documents/Github/Data/asoiaf/data//asoiaf-book3-edges.csv&quot; 
+##  [8] &quot;/Users/shiringlander/Documents/Github/Data/asoiaf/data//asoiaf-book3-nodes.csv&quot; 
+##  [9] &quot;/Users/shiringlander/Documents/Github/Data/asoiaf/data//asoiaf-book4-edges.csv&quot; 
+## [10] &quot;/Users/shiringlander/Documents/Github/Data/asoiaf/data//asoiaf-book4-nodes.csv&quot; 
+## [11] &quot;/Users/shiringlander/Documents/Github/Data/asoiaf/data//asoiaf-book45-edges.csv&quot;
+## [12] &quot;/Users/shiringlander/Documents/Github/Data/asoiaf/data//asoiaf-book45-nodes.csv&quot;
+## [13] &quot;/Users/shiringlander/Documents/Github/Data/asoiaf/data//asoiaf-book5-edges.csv&quot; 
+## [14] &quot;/Users/shiringlander/Documents/Github/Data/asoiaf/data//asoiaf-book5-nodes.csv&quot;</code></pre>
+</div>
+<div id="characters-across-all-books" class="section level2">
+<h2>Characters across all books</h2>
+<p>The first data set I am going to use are the character interactions in all five books. I am not using the node files here, because I find the edge names sufficient for this demonstration. If you wanted to have nice name labels, you could use the node files.</p>
+<pre class="r"><code>cooc_all_edges &lt;- read_csv(files[1])</code></pre>
+<p>Because there are so many characters in the books, many of them minor, I am subsetting the data to the 100 characters with the most interactions across all books.The edges are undirected, therefore there are no redundant Source-Target combination; because of this, I gathered Source and Target data before summing up the weights.</p>
+<pre class="r"><code>main_ch &lt;- cooc_all_edges %&gt;%
+  select(-Type) %&gt;%
+  gather(x, name, Source:Target) %&gt;%
+  group_by(name) %&gt;%
+  summarise(sum_weight = sum(weight)) %&gt;%
+  ungroup()
+
+main_ch_l &lt;- main_ch %&gt;%
+  arrange(desc(sum_weight)) %&gt;%
+  top_n(100, sum_weight)
+main_ch_l</code></pre>
+<pre><code>## # A tibble: 100 x 2
+##    name               sum_weight
+##    &lt;chr&gt;                   &lt;int&gt;
+##  1 Tyrion-Lannister         2873
+##  2 Jon-Snow                 2757
+##  3 Cersei-Lannister         2232
+##  4 Joffrey-Baratheon        1762
+##  5 Eddard-Stark             1649
+##  6 Daenerys-Targaryen       1608
+##  7 Jaime-Lannister          1569
+##  8 Sansa-Stark              1547
+##  9 Bran-Stark               1508
+## 10 Robert-Baratheon         1488
+## # ... with 90 more rows</code></pre>
+<pre class="r"><code>cooc_all_f &lt;- cooc_all_edges %&gt;%
+  filter(Source %in% main_ch_l$name &amp; Target %in% main_ch_l$name)</code></pre>
+</div>
+<div id="tidygraph-and-ggraph" class="section level2">
+<h2>tidygraph and ggraph</h2>
+<p>Both <code>tidygraph</code> and <code>ggraph</code> have been developed by <a href="https://www.data-imaginist.com">Thomas Lin Pedersen</a>:</p>
+<blockquote>
+<p>With tidygraph I set out to make it easier to get your data into a graph and perform common transformations on it, but the aim has expanded since its inception. The goal of tidygraph is to empower the user to formulate complex questions regarding relational data as simple steps, thus enabling them to retrieve insights directly from the data itself. The central idea this all boils down to is this: you don’t have to plot a network to understand it. While I absolutely love the field of network visualisation, it is in many ways overused in data science — especially when it comes to extracting knowledge from a network. Just as you don’t need a plot to tell you which car in a dataset is the fastest, you don’t need a plot to tell you which pair of friends are the closest. What you do need, instead of a plot, is a tool that allow you to formulate your question into a logic sequence of operations. For many people in the world of rectangular data, this tool is increasingly dplyr (and friends), and I do hope that tidygraph can take on the same role in the world of relational data. <a href="https://www.data-imaginist.com/2018/tidygraph-1-1-a-tidy-hope/" class="uri">https://www.data-imaginist.com/2018/tidygraph-1-1-a-tidy-hope/</a></p>
+</blockquote>
+<p>The first step is to convert our edge table into a <code>tbl_graph</code> object structure. Here, we use the <code>as_tbl_graph()</code> function from <code>tidygraph</code>; it can take many different types of input data, like <code>data.frame</code>, <code>matrix</code>, <code>dendrogram</code>, <code>igraph</code>, etc.</p>
+<blockquote>
+<p>Underneath the hood of tidygraph lies the well-oiled machinery of igraph, ensuring efficient graph manipulation. Rather than keeping the node and edge data in a list and creating igraph objects on the fly when needed, tidygraph subclasses igraph with the tbl_graph class and simply exposes it in a tidy manner. This ensures that all your beloved algorithms that expects igraph objects still works with tbl_graph objects. Further, tidygraph is very careful not to override any of igraphs exports so the two packages can coexist quite happily. <a href="https://www.data-imaginist.com/2017/introducing-tidygraph/" class="uri">https://www.data-imaginist.com/2017/introducing-tidygraph/</a></p>
+</blockquote>
+<p>A central aspect of <code>tidygraph</code> is that you can directly manipulate node and edge data from this <code>tbl_graph</code> object by <strong>activating</strong> nodes or edges. When we first create a <code>tbl_graph</code> object, the nodes will be activated. We can then directly calculate node or edge metrics, like centrality, using <code>tidyverse</code> functions.</p>
+<pre class="r"><code>as_tbl_graph(cooc_all_f, directed = FALSE)</code></pre>
+<pre><code>## # A tbl_graph: 100 nodes and 798 edges
+## #
+## # An undirected simple graph with 1 component
+## #
+## # Node Data: 100 x 1 (active)
+##   name                           
+##   &lt;chr&gt;                          
+## 1 Aemon-Targaryen-(Maester-Aemon)
+## 2 Aeron-Greyjoy                  
+## 3 Aerys-II-Targaryen             
+## 4 Alliser-Thorne                 
+## 5 Arianne-Martell                
+## 6 Arya-Stark                     
+## # ... with 94 more rows
+## #
+## # Edge Data: 798 x 5
+##    from    to Type          id weight
+##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;int&gt;  &lt;int&gt;
+## 1     1     4 Undirected    43      7
+## 2     1    13 Undirected    44      4
+## 3     1    28 Undirected    52      3
+## # ... with 795 more rows</code></pre>
+<p>We can change that with the <code>activate()</code> function. We can now, for example, remove multiple edges. When you are using RStudio, start typing <code>?edge_is_</code> and wait for the autocomplete function to show you what else is possible (or go to the <code>tidygraph</code> manual).</p>
+<pre class="r"><code>as_tbl_graph(cooc_all_f, directed = FALSE) %&gt;%
+  activate(edges) %&gt;%
+  filter(!edge_is_multiple())</code></pre>
+<pre><code>## # A tbl_graph: 100 nodes and 798 edges
+## #
+## # An undirected simple graph with 1 component
+## #
+## # Edge Data: 798 x 5 (active)
+##    from    to Type          id weight
+##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;int&gt;  &lt;int&gt;
+## 1     1     4 Undirected    43      7
+## 2     1    13 Undirected    44      4
+## 3     1    28 Undirected    52      3
+## 4     1    32 Undirected    53     20
+## 5     1    34 Undirected    54      5
+## 6     1    41 Undirected    56      5
+## # ... with 792 more rows
+## #
+## # Node Data: 100 x 1
+##   name                           
+##   &lt;chr&gt;                          
+## 1 Aemon-Targaryen-(Maester-Aemon)
+## 2 Aeron-Greyjoy                  
+## 3 Aerys-II-Targaryen             
+## # ... with 97 more rows</code></pre>
+<div id="node-ranking" class="section level3">
+<h3>Node ranking</h3>
+<blockquote>
+<p>Often, especially when visualising networks with certain layouts, the order in which the nodes appear will have a huge influence on the insight you can get out (e.g. matrix plots and arc diagrams). The node_rank_*() family of algorithms have been introduced to provide different ways of sorting nodes so that closely related nodes are positionally close. As there is often not a single correct answer to this endeavor, there’s a lot of different algorithms that may provide different insights into your network. Many of them are based on the seriation package, and the vignette provided therein serves as a nice introduction to the different algorithms. <a href="https://www.data-imaginist.com/2018/tidygraph-1-1-a-tidy-hope/" class="uri">https://www.data-imaginist.com/2018/tidygraph-1-1-a-tidy-hope/</a></p>
+</blockquote>
+<p>There are many options for node ranking (go to <code>?node_rank</code> for a full list); let’s try out <strong>Minimize hamiltonian path length using a travelling salesperson solver</strong>.</p>
+<pre class="r"><code>as_tbl_graph(cooc_all_f, directed = FALSE) %&gt;%
+  activate(nodes) %&gt;% 
+  mutate(n_rank_trv = node_rank_traveller()) %&gt;%
+  arrange(n_rank_trv)</code></pre>
+<pre><code>## # A tbl_graph: 100 nodes and 798 edges
+## #
+## # An undirected simple graph with 1 component
+## #
+## # Node Data: 100 x 2 (active)
+##   name               n_rank_trv
+##   &lt;chr&gt;                   &lt;int&gt;
+## 1 Oberyn-Martell              1
+## 2 Arianne-Martell             2
+## 3 Doran-Martell               3
+## 4 Myrcella-Baratheon          4
+## 5 Tommen-Baratheon            5
+## 6 Brienne-of-Tarth            6
+## # ... with 94 more rows
+## #
+## # Edge Data: 798 x 5
+##    from    to Type          id weight
+##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;int&gt;  &lt;int&gt;
+## 1    65    67 Undirected    43      7
+## 2    64    67 Undirected    44      4
+## 3    63    67 Undirected    52      3
+## # ... with 795 more rows</code></pre>
+</div>
+<div id="centrality" class="section level3">
+<h3>Centrality</h3>
+<p>Centrality describes the number of edges that are in- or outgoing to/from nodes. High centrality networks have few nodes with many connections, low centrality networks have many nodes with similar numbers of edges. The centrality of a node measures the importance of it in the network.</p>
+<blockquote>
+<p>This version adds 19(!) new ways to define the notion of centrality along with a manual version where you can mix and match different distance measures and summation strategies opening up the world to even more centrality scores. All of this wealth of centrality comes from the netrankr package that provides a framework for defining and calculating centrality scores. If you use centrality measures somewhere in your analysis I cannot recommend the vignettes provided by netrankr enough as they provide a fundamental intuition about the nature of such measures and how they can/should be used. <a href="https://www.data-imaginist.com/2018/tidygraph-1-1-a-tidy-hope/" class="uri">https://www.data-imaginist.com/2018/tidygraph-1-1-a-tidy-hope/</a></p>
+</blockquote>
+<p>Again, type <code>?centrality</code> for an overview about all possible centrality measures you can use. Let’s try out <code>centrality_degree()</code>.</p>
+<pre class="r"><code>as_tbl_graph(cooc_all_f, directed = FALSE) %&gt;%
+  activate(nodes) %&gt;% 
+  mutate(neighbors = centrality_degree()) %&gt;%
+  arrange(-neighbors)</code></pre>
+<pre><code>## # A tbl_graph: 100 nodes and 798 edges
+## #
+## # An undirected simple graph with 1 component
+## #
+## # Node Data: 100 x 2 (active)
+##   name              neighbors
+##   &lt;chr&gt;                 &lt;dbl&gt;
+## 1 Tyrion-Lannister        54.
+## 2 Cersei-Lannister        49.
+## 3 Joffrey-Baratheon       49.
+## 4 Robert-Baratheon        47.
+## 5 Jaime-Lannister         45.
+## 6 Sansa-Stark             44.
+## # ... with 94 more rows
+## #
+## # Edge Data: 798 x 5
+##    from    to Type          id weight
+##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;int&gt;  &lt;int&gt;
+## 1    41    42 Undirected    43      7
+## 2    41    60 Undirected    44      4
+## 3    41    63 Undirected    52      3
+## # ... with 795 more rows</code></pre>
+</div>
+<div id="grouping-and-clustering" class="section level3">
+<h3>Grouping and clustering</h3>
+<blockquote>
+<p>Another common operation is to group nodes based on the graph topology, sometimes referred to as community detection based on its commonality in social network analysis. All clustering algorithms from igraph is available in tidygraph using the group_* prefix. All of these functions return an integer vector with nodes (or edges) sharing the same integer being grouped together. <a href="https://www.data-imaginist.com/2017/introducing-tidygraph/" class="uri">https://www.data-imaginist.com/2017/introducing-tidygraph/</a></p>
+</blockquote>
+<p>We can use <code>?group_graph</code> for an overview about all possible ways to cluster and group nodes. Here I am using <code>group_infomap()</code>: <strong>Group nodes by minimizing description length using</strong>.</p>
+<pre class="r"><code>as_tbl_graph(cooc_all_f, directed = FALSE) %&gt;%
+  activate(nodes) %&gt;% 
+  mutate(group = group_infomap()) %&gt;%
+  arrange(-group)</code></pre>
+<pre><code>## # A tbl_graph: 100 nodes and 798 edges
+## #
+## # An undirected simple graph with 1 component
+## #
+## # Node Data: 100 x 2 (active)
+##   name              group
+##   &lt;chr&gt;             &lt;int&gt;
+## 1 Arianne-Martell       7
+## 2 Doran-Martell         7
+## 3 Davos-Seaworth        6
+## 4 Melisandre            6
+## 5 Selyse-Florent        6
+## 6 Stannis-Baratheon     6
+## # ... with 94 more rows
+## #
+## # Edge Data: 798 x 5
+##    from    to Type          id weight
+##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;int&gt;  &lt;int&gt;
+## 1    32    33 Undirected    43      7
+## 2    32    34 Undirected    44      4
+## 3    32    36 Undirected    52      3
+## # ... with 795 more rows</code></pre>
+</div>
+<div id="querying-node-types" class="section level3">
+<h3>Querying node types</h3>
+<p><code>?node_types</code></p>
+<pre class="r"><code>as_tbl_graph(cooc_all_f, directed = FALSE) %&gt;%
+  activate(nodes) %&gt;% 
+  mutate(center = node_is_center(),
+         keyplayer = node_is_keyplayer(k = 10))</code></pre>
+<pre><code>## # A tbl_graph: 100 nodes and 798 edges
+## #
+## # An undirected simple graph with 1 component
+## #
+## # Node Data: 100 x 3 (active)
+##   name                            center keyplayer
+##   &lt;chr&gt;                           &lt;lgl&gt;  &lt;lgl&gt;    
+## 1 Aemon-Targaryen-(Maester-Aemon) FALSE  FALSE    
+## 2 Aeron-Greyjoy                   FALSE  FALSE    
+## 3 Aerys-II-Targaryen              FALSE  FALSE    
+## 4 Alliser-Thorne                  FALSE  FALSE    
+## 5 Arianne-Martell                 FALSE  FALSE    
+## 6 Arya-Stark                      FALSE  TRUE     
+## # ... with 94 more rows
+## #
+## # Edge Data: 798 x 5
+##    from    to Type          id weight
+##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;int&gt;  &lt;int&gt;
+## 1     1     4 Undirected    43      7
+## 2     1    13 Undirected    44      4
+## 3     1    28 Undirected    52      3
+## # ... with 795 more rows</code></pre>
+</div>
+</div>
+<div id="node-pairs" class="section level2">
+<h2>Node pairs</h2>
+<blockquote>
+<p>Some statistics are a measure between two nodes, such as distance or similarity between nodes. In a tidy context one of the ends must always be the node defined by the row, while the other can be any other node. All of the node pair functions are prefixed with node_* and ends with _from/_to if the measure is not symmetric and _with if it is; e.g. there’s both a node_max_flow_to() and node_max_flow_from() function while only a single node_cocitation_with() function. The other part of the node pair can be specified as an integer vector that will get recycled if needed, or a logical vector which will get recycled and converted to indexes with which(). This means that output from node type functions can be used directly in the calls. <a href="https://www.data-imaginist.com/2017/introducing-tidygraph/" class="uri">https://www.data-imaginist.com/2017/introducing-tidygraph/</a></p>
+</blockquote>
+<pre class="r"><code>as_tbl_graph(cooc_all_f, directed = FALSE) %&gt;%
+  activate(nodes) %&gt;% 
+  mutate(dist_to_center = node_distance_to(node_is_center()))</code></pre>
+<pre><code>## # A tbl_graph: 100 nodes and 798 edges
+## #
+## # An undirected simple graph with 1 component
+## #
+## # Node Data: 100 x 2 (active)
+##   name                            dist_to_center
+##   &lt;chr&gt;                                    &lt;dbl&gt;
+## 1 Aemon-Targaryen-(Maester-Aemon)             1.
+## 2 Aeron-Greyjoy                               2.
+## 3 Aerys-II-Targaryen                          1.
+## 4 Alliser-Thorne                              1.
+## 5 Arianne-Martell                             2.
+## 6 Arya-Stark                                  1.
+## # ... with 94 more rows
+## #
+## # Edge Data: 798 x 5
+##    from    to Type          id weight
+##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;int&gt;  &lt;int&gt;
+## 1     1     4 Undirected    43      7
+## 2     1    13 Undirected    44      4
+## 3     1    28 Undirected    52      3
+## # ... with 795 more rows</code></pre>
+<div id="edge-betweenness" class="section level3">
+<h3>Edge betweenness</h3>
+<p>Betweenness describes the shortest paths between nodes.</p>
+<pre class="r"><code>as_tbl_graph(cooc_all_f, directed = FALSE) %&gt;%
+  activate(edges) %&gt;% 
+  mutate(centrality_e = centrality_edge_betweenness())</code></pre>
+<pre><code>## # A tbl_graph: 100 nodes and 798 edges
+## #
+## # An undirected simple graph with 1 component
+## #
+## # Edge Data: 798 x 6 (active)
+##    from    to Type          id weight centrality_e
+##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;int&gt;  &lt;int&gt;        &lt;dbl&gt;
+## 1     1     4 Undirected    43      7         1.00
+## 2     1    13 Undirected    44      4        30.2 
+## 3     1    28 Undirected    52      3        42.1 
+## 4     1    32 Undirected    53     20         0.  
+## 5     1    34 Undirected    54      5        35.2 
+## 6     1    41 Undirected    56      5        18.9 
+## # ... with 792 more rows
+## #
+## # Node Data: 100 x 1
+##   name                           
+##   &lt;chr&gt;                          
+## 1 Aemon-Targaryen-(Maester-Aemon)
+## 2 Aeron-Greyjoy                  
+## 3 Aerys-II-Targaryen             
+## # ... with 97 more rows</code></pre>
+</div>
+</div>
+<div id="the-complete-code" class="section level2">
+<h2>The complete code</h2>
+<p>Now let’s combine what we’ve done above:</p>
+<pre class="r"><code>cooc_all_f_graph &lt;- as_tbl_graph(cooc_all_f, directed = FALSE) %&gt;%
+  mutate(n_rank_trv = node_rank_traveller(),
+         neighbors = centrality_degree(),
+         group = group_infomap(),
+         center = node_is_center(),
+         dist_to_center = node_distance_to(node_is_center()),
+         keyplayer = node_is_keyplayer(k = 10)) %&gt;%
+  activate(edges) %&gt;% 
+  filter(!edge_is_multiple()) %&gt;%
+  mutate(centrality_e = centrality_edge_betweenness())</code></pre>
+<p>We can also convert our active node or edge table back to a <code>tibble</code>:</p>
+<pre class="r"><code>cooc_all_f_graph %&gt;%
+  activate(nodes) %&gt;% # %N&gt;%
+  as.tibble()</code></pre>
+<pre><code>## # A tibble: 100 x 7
+##    name         n_rank_trv neighbors group center dist_to_center keyplayer
+##    &lt;chr&gt;             &lt;int&gt;     &lt;dbl&gt; &lt;int&gt; &lt;lgl&gt;           &lt;dbl&gt; &lt;lgl&gt;    
+##  1 Aemon-Targa…         86       13.     2 FALSE              1. FALSE    
+##  2 Aeron-Greyj…         10        5.     5 FALSE              2. FALSE    
+##  3 Aerys-II-Ta…          4       12.     1 FALSE              1. FALSE    
+##  4 Alliser-Tho…         97       13.     2 FALSE              1. FALSE    
+##  5 Arianne-Mar…         64        4.     7 FALSE              2. FALSE    
+##  6 Arya-Stark           18       37.     1 FALSE              1. TRUE     
+##  7 Asha-Greyjoy         12        7.     5 FALSE              1. FALSE    
+##  8 Balon-Greyj…          7       11.     5 FALSE              2. FALSE    
+##  9 Barristan-S…          3       23.     3 FALSE              1. FALSE    
+## 10 Belwas               56        6.     3 FALSE              2. FALSE    
+## # ... with 90 more rows</code></pre>
+<pre class="r"><code>cooc_all_f_graph %&gt;%
+  activate(edges) %&gt;% # %E&gt;%
+  as.tibble()</code></pre>
+<pre><code>## # A tibble: 798 x 6
+##     from    to Type          id weight centrality_e
+##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;int&gt;  &lt;int&gt;        &lt;dbl&gt;
+##  1     1     4 Undirected    43      7         1.00
+##  2     1    13 Undirected    44      4        30.2 
+##  3     1    28 Undirected    52      3        42.1 
+##  4     1    32 Undirected    53     20         0.  
+##  5     1    34 Undirected    54      5        35.2 
+##  6     1    41 Undirected    56      5        18.9 
+##  7     1    42 Undirected    57     25         0.  
+##  8     1    48 Undirected    58    110         0.  
+##  9     1    58 Undirected    60      5        24.5 
+## 10     1    71 Undirected    62      5        17.0 
+## # ... with 788 more rows</code></pre>
+<div id="plotting-with-ggraph" class="section level3">
+<h3>Plotting with ggraph</h3>
+<blockquote>
+<p>ggraph is an extension of ggplot2 aimed at supporting relational data structures such as networks, graphs, and trees. While it builds upon the foundation of ggplot2 and its API it comes with its own self-contained set of geoms, facets, etc., as well as adding the concept of layouts to the grammar. <a href="https://github.com/thomasp85/ggraph" class="uri">https://github.com/thomasp85/ggraph</a></p>
+</blockquote>
+<p>There are lots of <a href="https://www.data-imaginist.com/2017/ggraph-introduction-layouts/">options for layouts</a>, here I am using a <a href="http://igraph.org/r/doc/layout_with_fr.html">Fruchterman-Reingold</a> algorithm.</p>
+<pre class="r"><code>layout &lt;- create_layout(cooc_all_f_graph, 
+                        layout = &quot;fr&quot;)</code></pre>
+<pre class="r"><code>ggraph(layout) + 
+    geom_edge_density(aes(fill = weight)) +
+    geom_edge_link(aes(width = weight), alpha = 0.2) + 
+    geom_node_point(aes(color = factor(group)), size = 10) +
+    geom_node_text(aes(label = name), size = 8, repel = TRUE) +
+    scale_color_brewer(palette = &quot;Set1&quot;) +
+    theme_graph()</code></pre>
+<p><img src="/post/2018-03-03_got_network_files/figure-html/unnamed-chunk-18-1.png" width="2880" /></p>
+<pre class="r"><code>cols &lt;- RColorBrewer::brewer.pal(3, &quot;Set1&quot;)
+ggraph(layout) + 
+    geom_edge_density(aes(fill = weight)) +
+    geom_edge_link(aes(width = weight), alpha = 0.2) + 
+    geom_node_point(aes(color = factor(center), size = dist_to_center)) +
+    geom_node_text(aes(label = name), size = 8, repel = TRUE) +
+    scale_colour_manual(values = c(cols[2], cols[1])) +
+    theme_graph()</code></pre>
+<p><img src="/post/2018-03-03_got_network_files/figure-html/unnamed-chunk-19-1.png" width="2880" /></p>
+<pre class="r"><code>ggraph(layout) + 
+    geom_edge_density(aes(fill = weight)) +
+    geom_edge_link(aes(width = weight), alpha = 0.2) + 
+    geom_node_point(aes(color = factor(keyplayer)), size = 10) +
+    geom_node_text(aes(label = name), size = 8, repel = TRUE) +
+    scale_colour_manual(values = c(cols[2], cols[1])) +
+    theme_graph()</code></pre>
+<p><img src="/post/2018-03-03_got_network_files/figure-html/unnamed-chunk-20-1.png" width="2880" /></p>
+</div>
+</div>
+<div id="characters-devided-by-books" class="section level2">
+<h2>Characters devided by books</h2>
+<p>The second data set I am going to use is a comparison of character interactions in the five books. The rest</p>
+<p><strong>A little node on the side:</strong> My original plan was to loop over the separate edge files for each book, concatenate them together with the information from which book they are and then plot them via facetting. This turned out to be a bad solution because I wanted to show the different keyplayers in each of the five books. So, instead of using one joined graph, I created separate graphs for every book and used the <code>bind_graphs()</code> and <code>facet_nodes()</code> functions to plot them together.</p>
+<pre class="r"><code>for (i in 1:5) {
+  cooc &lt;- read_csv(paste0(&quot;/Users/shiringlander/Documents/Github/Data/asoiaf/data//asoiaf-book&quot;, i, &quot;-edges.csv&quot;)) %&gt;%
+    mutate(book = paste0(&quot;book_&quot;, i)) %&gt;%
+    filter(Source %in% main_ch_l$name &amp; Target %in% main_ch_l$name)
+  
+  assign(paste0(&quot;coocs_book_&quot;, i), cooc)
+}</code></pre>
+<pre class="r"><code>cooc_books_1_graph &lt;- as_tbl_graph(coocs_book_1, directed = FALSE) %&gt;%
+  mutate(book = &quot;Book 1: A Game of Thrones&quot;,
+         keyplayer = node_is_keyplayer(k = 10))
+
+cooc_books_2_graph &lt;- as_tbl_graph(coocs_book_2, directed = FALSE) %&gt;%
+  mutate(book = &quot;Book 2: A Clash of Kings&quot;,
+         keyplayer = node_is_keyplayer(k = 10))
+
+cooc_books_3_graph &lt;- as_tbl_graph(coocs_book_3, directed = FALSE) %&gt;%
+  mutate(book = &quot;Book 3: A Storm of Swords&quot;,
+         keyplayer = node_is_keyplayer(k = 10))
+
+cooc_books_4_graph &lt;- as_tbl_graph(coocs_book_4, directed = FALSE) %&gt;%
+  mutate(book = &quot;Book 4: A Feast for Crows&quot;,
+         keyplayer = node_is_keyplayer(k = 10))
+
+cooc_books_5_graph &lt;- as_tbl_graph(coocs_book_5, directed = FALSE) %&gt;%
+  mutate(book = &quot;Book 5: A Dance with Dragons&quot;,
+         keyplayer = node_is_keyplayer(k = 10))</code></pre>
+<pre class="r"><code>cooc_books_1_graph %&gt;% 
+  bind_graphs(cooc_books_2_graph)  %&gt;%
+  bind_graphs(cooc_books_3_graph)  %&gt;%
+  bind_graphs(cooc_books_4_graph)  %&gt;%
+  bind_graphs(cooc_books_5_graph)  %&gt;%
+  ggraph(layout = &quot;fr&quot;) + 
+    facet_nodes( ~ book, scales = &quot;free&quot;, ncol = 1) +
+    geom_edge_density(aes(fill = weight)) +
+    geom_edge_link(aes(edge_width = weight), alpha = 0.2) + 
+    geom_node_point(aes(color = factor(keyplayer)), size = 3) +
+    geom_node_text(aes(label = name), color = &quot;black&quot;, size = 3, repel = TRUE) +
+    theme_graph() +
+    scale_colour_manual(values = c(cols[2], cols[1]))</code></pre>
+<p><img src="/post/2018-03-03_got_network_files/figure-html/unnamed-chunk-23-1.png" width="960" /></p>
+<hr />
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 3.4.3 (2017-11-30)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS High Sierra 10.13.3
+## 
+## Matrix products: default
+## BLAS: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] de_DE.UTF-8/de_DE.UTF-8/de_DE.UTF-8/C/de_DE.UTF-8/de_DE.UTF-8
+## 
+## attached base packages:
+## [1] methods   stats     graphics  grDevices utils     datasets  base     
+## 
+## other attached packages:
+##  [1] bindrcpp_0.2       ggraph_1.0.1       tidygraph_1.1.0   
+##  [4] forcats_0.3.0      stringr_1.3.0      dplyr_0.7.4       
+##  [7] purrr_0.2.4        tidyr_0.8.0        tibble_1.4.2      
+## [10] ggplot2_2.2.1.9000 tidyverse_1.2.1    readr_1.1.1       
+## 
+## loaded via a namespace (and not attached):
+##  [1] nlme_3.1-131.1     bitops_1.0-6       lubridate_1.7.3   
+##  [4] RColorBrewer_1.1-2 httr_1.3.1         prabclus_2.2-6    
+##  [7] rprojroot_1.3-2    tools_3.4.3        backports_1.1.2   
+## [10] utf8_1.1.3         R6_2.2.2           KernSmooth_2.23-15
+## [13] lazyeval_0.2.1     colorspace_1.3-2   trimcluster_0.1-2 
+## [16] nnet_7.3-12        withr_2.1.1.9000   tidyselect_0.2.4  
+## [19] gridExtra_2.3      mnormt_1.5-5       compiler_3.4.3    
+## [22] cli_1.0.0          rvest_0.3.2        TSP_1.1-5         
+## [25] influenceR_0.1.0   xml2_1.2.0         labeling_0.3      
+## [28] bookdown_0.7       diptest_0.75-7     caTools_1.17.1    
+## [31] scales_0.5.0.9000  DEoptimR_1.0-8     robustbase_0.92-8 
+## [34] mvtnorm_1.0-7      psych_1.7.8        digest_0.6.15     
+## [37] foreign_0.8-69     rmarkdown_1.8      pkgconfig_2.0.1   
+## [40] htmltools_0.3.6    rlang_0.2.0.9000   readxl_1.0.0      
+## [43] rstudioapi_0.7     bindr_0.1          jsonlite_1.5      
+## [46] mclust_5.4         gtools_3.5.0       dendextend_1.7.0  
+## [49] magrittr_1.5       modeltools_0.2-21  Rcpp_0.12.15      
+## [52] munsell_0.4.3      viridis_0.5.0      stringi_1.1.6     
+## [55] whisker_0.3-2      yaml_2.1.17        MASS_7.3-49       
+## [58] flexmix_2.3-14     gplots_3.0.1       plyr_1.8.4        
+## [61] grid_3.4.3         parallel_3.4.3     gdata_2.18.0      
+## [64] ggrepel_0.7.0      crayon_1.3.4       udunits2_0.13     
+## [67] lattice_0.20-35    haven_1.1.1        hms_0.4.1         
+## [70] knitr_1.20         pillar_1.2.1       igraph_1.1.2      
+## [73] fpc_2.1-11         stats4_3.4.3       reshape2_1.4.3    
+## [76] codetools_0.2-15   glue_1.2.0         gclus_1.3.1       
+## [79] evaluate_0.10.1    blogdown_0.5       modelr_0.1.1      
+## [82] tweenr_0.1.5       foreach_1.4.4      cellranger_1.1.0  
+## [85] gtable_0.2.0       kernlab_0.9-25     assertthat_0.2.0  
+## [88] xfun_0.1           ggforce_0.1.1      broom_0.4.3       
+## [91] class_7.3-14       viridisLite_0.3.0  seriation_1.2-3   
+## [94] iterators_1.0.9    registry_0.5       units_0.5-1       
+## [97] cluster_2.0.6</code></pre>
+</div>
