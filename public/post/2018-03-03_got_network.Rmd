@@ -1,6 +1,6 @@
 ---
 title: "Another Game of Thrones network analysis - this time with tidygraph and ggraph"
-draft: true
+draft: false
 author: Shirin Glander
 date: '2018-03-04'
 categories: [R, network]
@@ -12,11 +12,11 @@ coverMeta: out
 slug: got_network
 ---
 
-A while back, I did [an analysis of the family network of major characters from the A Song of Ice and Fire books and the Game of Thrones TV show](https://shiring.github.io/networks/2017/05/15/got_final). In that analysis I found out that House Stark (specifically Ned and Sansa) and House Lannister (especially Tyrion) are the most important family connections in Game of Thrones; they also connect many of the storylines and are central parts of the narrative.
+A while back, I did [an analysis of the family network of major characters from the A Song of Ice and Fire books and the Game of Thrones TV show](https://shiring.github.io/networks/2017/05/15/got_final). In that analysis I found out that House Stark (specifically Ned and Sansa) and House Lannister (especially Tyrion) are the most important family connections in Game of Thrones; they also connect many of the story lines and are central parts of the narrative.
 
 I that old post, I used `igraph` for plotting and calculating network metrics.
 
-But there are two packages that integrate network analysis much more nicely with the `tidyverse`: `tidygraph` and `ggraph`. These, I am going to show how to use for analysing yet another network of characters from **A Song of Ice and Fire** / **Game of Thrones** (to be correct, this new network here is strictly based on the **A Song of Ice and Fire** books, NOT on the TV show).
+But there are two packages that integrate network analysis much more nicely with the `tidyverse`: `tidygraph` and `ggraph`. These, I am going to show how to use for analyzing yet another network of characters from **A Song of Ice and Fire** / **Game of Thrones** (to be correct, this new network here is strictly based on the **A Song of Ice and Fire** books, NOT on the TV show).
 
 ## What can network analysis tell us?
 
@@ -31,7 +31,7 @@ Network analysis can e.g. be used to explore relationships in social or professi
 These answers can give us a lot of information about the patterns of how people interact. 
 
 So, how do we find out who the most important characters are in this network?
-We consider a character “important” if he has connections to many other characters. There are a few network properties, that tell us more about this, like node centrality and which characters are keyplayers in the books.
+We consider a character “important” if he has connections to many other characters. There are a few network properties, that tell us more about this, like node centrality and which characters are key-players in the books.
 
 **A word of caution before you read on: BEWARE of SPOILERS for all books!**
 
@@ -52,7 +52,7 @@ I obtained the following data by cloning [this Github repository](https://github
 These networks were created by connecting two characters whenever their names (or nicknames) appeared within 15 words of one another in one of the books in "A Song of Ice and Fire." The edge weight corresponds to the number of interactions.
 You can use this data to explore the dynamics of the Seven Kingdoms using network science techniques. For example, community detection finds coherent plotlines. Centrality measures uncover the multiple ways in which characters play important roles in the saga.
 
-Andrew already did a great job analysing these character networks and you can read all his conclusions on his site [https://networkofthrones.wordpress.com](https://networkofthrones.wordpress.com). Here, I don't aim to replicate his analyses but I want to show how you could do this or similar analyses with `tidygraph` and `ggraph`. Thus, I am also not going to use all of his node and edge files.
+Andrew already did a great job analyzing these character networks and you can read all his conclusions on his site [https://networkofthrones.wordpress.com](https://networkofthrones.wordpress.com). Here, I don't aim to replicate his analyses but I want to show how you could do this or similar analyses with `tidygraph` and `ggraph`. Thus, I am also not going to use all of his node and edge files.
 
 ```{r}
 path <- "/Users/shiringlander/Documents/Github/Data/asoiaf/data/"
@@ -156,11 +156,11 @@ as_tbl_graph(cooc_all_f, directed = FALSE) %>%
 
 ### Querying node types
 
-We can also query different nodetypes (`?node_types` gives us a list of options):
+We can also query different node types (`?node_types` gives us a list of options):
 
 > These functions all lets the user query whether each node is of a certain type. All of the functions returns a logical vector indicating whether the node is of the type in question. Do note that the types are not mutually exclusive and that nodes can thus be of multiple types.
 
-Here, I am trying out `node_is_center()` (does the node have the minimal eccentricity in the graph) and `node_is_keyplayer()` to identify the top 10 keyplayers in the network. You can read more about the `node_is_keyplayer()` function in the manual for the `influenceR` package:
+Here, I am trying out `node_is_center()` (does the node have the minimal eccentricity in the graph) and `node_is_keyplayer()` to identify the top 10 key-players in the network. You can read more about the `node_is_keyplayer()` function in the manual for the `influenceR` package:
 
 > The "Key Player" family of node importance algorithms (Borgatti 2006) involves the selection of a
 metric of node importance and a combinatorial optimization strategy to choose the set S of vertices
@@ -227,7 +227,7 @@ cooc_all_f_graph %>%
 
 ### Plotting with ggraph
 
-For plotting our graph object, we can make good ues of the `ggraph` package:
+For plotting our graph object, we can make good use of the `ggraph` package:
 
 > ggraph is an extension of ggplot2 aimed at supporting relational data structures such as networks, graphs, and trees. While it builds upon the foundation of ggplot2 and its API it comes with its own self-contained set of geoms, facets, etc., as well as adding the concept of layouts to the grammar. https://github.com/thomasp85/ggraph
 
@@ -274,13 +274,13 @@ ggraph(layout) +
          subtitle = "Nodes are colored by centeredness")
 ```
 
-In the next graph I plotted the center-most characters in red and the distance to center as node size. The two center characters across all books are Robert Baratheon and Tyrion Lannister. I had not expected Robert, since he dies pretty much right aways but I guess he and his rebellion following Lyanna's "abduction" is the main trigger for most of what happens in the books, so why not... And that Tyrion is the best character (and George RR Martin's favorite) is a given, anyways! ;-)
+In the next graph I plotted the center-most characters in red and the distance to center as node size. The two center characters across all books are Robert Baratheon and Tyrion Lannister. I had not expected Robert, since he dies pretty much right away but I guess he and his rebellion following Lyanna's "abduction" is the main trigger for most of what happens in the books, so why not... And that Tyrion is the best character (and George RR Martin's favorite) is a given, anyways! ;-)
 
 ## Characters devided by books
 
 The second data set I am going to use is a comparison of character interactions in the five books.
 
-**A little node on the side:** My original plan was to loop over the separate edge files for each book, concatenate them together with the information from which book they are and then plot them via facetting. This turned out to be a bad solution because I wanted to show the different keyplayers in each of the five books. So, instead of using one joined graph, I created separate graphs for every book and used the `bind_graphs()` and `facet_nodes()` functions to plot them together.
+**A little node on the side:** My original plan was to loop over the separate edge files for each book, concatenate them together with the information from which book they are and then plot them via faceting. This turned out to be a bad solution because I wanted to show the different key-players in each of the five books. So, instead of using one joined graph, I created separate graphs for every book and used the `bind_graphs()` and `facet_nodes()` functions to plot them together.
 
 ```{r warning=FALSE, message=FALSE}
 for (i in 1:5) {
@@ -292,7 +292,7 @@ for (i in 1:5) {
 }
 ```
 
-The concepts are the same as above, here I want to know the keyplayers in each book:
+The concepts are the same as above, here I want to know the key-players in each book:
 
 ```{r}
 cooc_books_1_graph <- as_tbl_graph(coocs_book_1, directed = FALSE) %>%
@@ -316,7 +316,7 @@ cooc_books_5_graph <- as_tbl_graph(coocs_book_5, directed = FALSE) %>%
          keyplayer = node_is_keyplayer(k = 10))
 ```
 
-And let's combine and plot the keyplayers:
+And let's combine and plot the key-players:
 
 ```{r fig.width=10, fig.height=50}
 cooc_books_1_graph %>% 
@@ -334,7 +334,7 @@ cooc_books_1_graph %>%
     scale_colour_manual(values = c(cols[2], cols[1]))
 ```
 
-The networks and keyplayers of the five different books also offer a few surprises but also a lot that reflects the narrative quite well. I'm not going to go into details here as that would go a bit too far for an R-related blog - but if you are interested in in-depth discussions about the books, email me... ;-)
+The networks and key-players of the five different books also offer a few surprises but also a lot that reflects the narrative quite well. I'm not going to go into details here as that would go a bit too far for an R-related blog - but if you are interested in in-depth discussions about the books, email me... ;-)
 
 ```{r fig.width=10, fig.height=10, warning=FALSE, eval=FALSE, echo=FALSE}
 g1 <- cooc_books_1_graph %>%

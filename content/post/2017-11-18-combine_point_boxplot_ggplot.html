@@ -28,13 +28,13 @@ fake_data &lt;- data.frame(time = dates,
                         var2 = runif(length(dates))) %&gt;%
   sample_frac(size = 0.33)
 head(fake_data)</code></pre>
-<pre><code>##                   time    var1_1    var1_2    var1_3      var2
-## 64 2017-10-01 10:09:00 0.6621389 0.5521539 0.9148288 0.6078481
-## 67 2017-10-01 10:18:00 0.2538266 0.1958265 0.8239181 0.5116218
-## 15 2017-10-01 07:42:00 0.6220942 0.9945485 0.9075784 0.7552689
-## 27 2017-10-01 08:18:00 0.9209701 0.7804722 0.1649222 0.9315722
-## 50 2017-10-01 09:27:00 0.2937356 0.2903439 0.1449462 0.2220199
-## 16 2017-10-01 07:45:00 0.2189083 0.4640567 0.3110658 0.8932355</code></pre>
+<pre><code>##                   time    var1_1     var1_2    var1_3      var2
+## 53 2017-10-01 09:36:00 0.1984466 0.04188588 0.3464290 0.5583152
+## 38 2017-10-01 08:51:00 0.7057563 0.22779574 0.2382634 0.7954228
+## 34 2017-10-01 08:39:00 0.5239017 0.75149639 0.3942653 0.4908962
+## 13 2017-10-01 07:36:00 0.8838265 0.22154491 0.9388426 0.2199565
+## 6  2017-10-01 07:15:00 0.7729077 0.45930575 0.1749513 0.6661809
+## 36 2017-10-01 08:45:00 0.9434972 0.40341611 0.4926815 0.8377908</code></pre>
 <p>Here, variable 1 (<code>var1</code>) has three measurements per time point, while variable 2 (<code>var2</code>) has one.</p>
 <p>First, for plotting with ggplot2 we want our data in a tidy long format. I also add another column for faceting that groups the variables from <code>var1</code> together.</p>
 <pre class="r"><code>fake_data_long &lt;- fake_data %&gt;%
@@ -42,12 +42,12 @@ head(fake_data)</code></pre>
   mutate(facet = ifelse(x %in% c(&quot;var1_1&quot;, &quot;var1_2&quot;, &quot;var1_3&quot;), &quot;var1&quot;, x))
 head(fake_data_long)</code></pre>
 <pre><code>##                  time      x         y facet
-## 1 2017-10-01 10:09:00 var1_1 0.6621389  var1
-## 2 2017-10-01 10:18:00 var1_1 0.2538266  var1
-## 3 2017-10-01 07:42:00 var1_1 0.6220942  var1
-## 4 2017-10-01 08:18:00 var1_1 0.9209701  var1
-## 5 2017-10-01 09:27:00 var1_1 0.2937356  var1
-## 6 2017-10-01 07:45:00 var1_1 0.2189083  var1</code></pre>
+## 1 2017-10-01 09:36:00 var1_1 0.1984466  var1
+## 2 2017-10-01 08:51:00 var1_1 0.7057563  var1
+## 3 2017-10-01 08:39:00 var1_1 0.5239017  var1
+## 4 2017-10-01 07:36:00 var1_1 0.8838265  var1
+## 5 2017-10-01 07:15:00 var1_1 0.7729077  var1
+## 6 2017-10-01 08:45:00 var1_1 0.9434972  var1</code></pre>
 <p>Now, we can plot this the following way:</p>
 <ul>
 <li>facet by variable</li>
@@ -68,7 +68,7 @@ head(fake_data_long)</code></pre>
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>## R version 3.4.3 (2017-11-30)
 ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-## Running under: macOS High Sierra 10.13.2
+## Running under: macOS High Sierra 10.13.3
 ## 
 ## Matrix products: default
 ## BLAS: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRblas.0.dylib
@@ -81,21 +81,27 @@ head(fake_data_long)</code></pre>
 ## [1] methods   stats     graphics  grDevices utils     datasets  base     
 ## 
 ## other attached packages:
-##  [1] bindrcpp_0.2    forcats_0.2.0   stringr_1.2.0   dplyr_0.7.4    
-##  [5] purrr_0.2.4     readr_1.1.1     tidyr_0.7.2     tibble_1.4.2   
-##  [9] ggplot2_2.2.1   tidyverse_1.2.1
+##  [1] bindrcpp_0.2       forcats_0.3.0      stringr_1.3.0     
+##  [4] dplyr_0.7.4        purrr_0.2.4        readr_1.1.1       
+##  [7] tidyr_0.8.0        tibble_1.4.2       ggplot2_2.2.1.9000
+## [10] tidyverse_1.2.1   
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] tidyselect_0.2.3 reshape2_1.4.3   haven_1.1.1      lattice_0.20-35 
-##  [5] colorspace_1.3-2 htmltools_0.3.6  yaml_2.1.16      rlang_0.1.6     
-##  [9] pillar_1.1.0     foreign_0.8-69   glue_1.2.0       modelr_0.1.1    
-## [13] readxl_1.0.0     bindr_0.1        plyr_1.8.4       munsell_0.4.3   
-## [17] blogdown_0.4     gtable_0.2.0     cellranger_1.1.0 rvest_0.3.2     
-## [21] psych_1.7.8      evaluate_0.10.1  labeling_0.3     knitr_1.18      
-## [25] parallel_3.4.3   broom_0.4.3      Rcpp_0.12.15     backports_1.1.2 
-## [29] scales_0.5.0     jsonlite_1.5     mnormt_1.5-5     hms_0.4.0       
-## [33] digest_0.6.14    stringi_1.1.6    bookdown_0.5     grid_3.4.3      
-## [37] rprojroot_1.3-2  cli_1.0.0        tools_3.4.3      magrittr_1.5    
-## [41] lazyeval_0.2.1   crayon_1.3.4     pkgconfig_2.0.1  xml2_1.1.1      
-## [45] lubridate_1.7.1  assertthat_0.2.0 rmarkdown_1.8    httr_1.3.1      
-## [49] rstudioapi_0.7   R6_2.2.2         nlme_3.1-131     compiler_3.4.3</code></pre>
+##  [1] tidyselect_0.2.4  xfun_0.1          reshape2_1.4.3   
+##  [4] haven_1.1.1       lattice_0.20-35   colorspace_1.3-2 
+##  [7] htmltools_0.3.6   yaml_2.1.17       rlang_0.2.0.9000 
+## [10] pillar_1.2.1      withr_2.1.1.9000  foreign_0.8-69   
+## [13] glue_1.2.0        modelr_0.1.1      readxl_1.0.0     
+## [16] bindr_0.1         plyr_1.8.4        munsell_0.4.3    
+## [19] blogdown_0.5      gtable_0.2.0      cellranger_1.1.0 
+## [22] rvest_0.3.2       psych_1.7.8       evaluate_0.10.1  
+## [25] labeling_0.3      knitr_1.20        parallel_3.4.3   
+## [28] broom_0.4.3       Rcpp_0.12.15      backports_1.1.2  
+## [31] scales_0.5.0.9000 jsonlite_1.5      mnormt_1.5-5     
+## [34] hms_0.4.1         digest_0.6.15     stringi_1.1.6    
+## [37] bookdown_0.7      grid_3.4.3        rprojroot_1.3-2  
+## [40] cli_1.0.0         tools_3.4.3       magrittr_1.5     
+## [43] lazyeval_0.2.1    crayon_1.3.4      pkgconfig_2.0.1  
+## [46] xml2_1.2.0        lubridate_1.7.3   assertthat_0.2.0 
+## [49] rmarkdown_1.8     httr_1.3.1        rstudioapi_0.7   
+## [52] R6_2.2.2          nlme_3.1-131.1    compiler_3.4.3</code></pre>

@@ -1,22 +1,22 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Shirin&#39;s playgRound</title>
-  <link href="/index.xml" rel="self"/>
-  <link href="/"/>
+  <link href="https://shirinsplayground.netlify.com/index.xml" rel="self"/>
+  <link href="https://shirinsplayground.netlify.com/"/>
   <updated>2018-03-04T00:00:00+00:00</updated>
-  <id>/</id>
+  <id>https://shirinsplayground.netlify.com/</id>
   <author>
     <name>Dr. Shirin Glander</name>
   </author>
   <generator>Hugo -- gohugo.io</generator>
   <entry>
     <title type="html"><![CDATA[Another Game of Thrones network analysis - this time with tidygraph and ggraph]]></title>
-    <link href="/2018/03/got_network/"/>
-    <id>/2018/03/got_network/</id>
+    <link href="https://shirinsplayground.netlify.com/2018/03/got_network/"/>
+    <id>https://shirinsplayground.netlify.com/2018/03/got_network/</id>
     <published>2018-03-04T00:00:00+00:00</published>
     <updated>2018-03-04T00:00:00+00:00</updated>
-    <content type="html"><![CDATA[<p>A while back, I did <a href="https://shiring.github.io/networks/2017/05/15/got_final">an analysis of the family network of major characters from the A Song of Ice and Fire books and the Game of Thrones TV show</a>. In that analysis I found out that House Stark (specifically Ned and Sansa) and House Lannister (especially Tyrion) are the most important family connections in Game of Thrones; they also connect many of the storylines and are central parts of the narrative.</p>
+    <content type="html"><![CDATA[<p>A while back, I did <a href="https://shiring.github.io/networks/2017/05/15/got_final">an analysis of the family network of major characters from the A Song of Ice and Fire books and the Game of Thrones TV show</a>. In that analysis I found out that House Stark (specifically Ned and Sansa) and House Lannister (especially Tyrion) are the most important family connections in Game of Thrones; they also connect many of the story lines and are central parts of the narrative.</p>
 <p>I that old post, I used <code>igraph</code> for plotting and calculating network metrics.</p>
-<p>But there are two packages that integrate network analysis much more nicely with the <code>tidyverse</code>: <code>tidygraph</code> and <code>ggraph</code>. These, I am going to show how to use for analysing yet another network of characters from <strong>A Song of Ice and Fire</strong> / <strong>Game of Thrones</strong> (to be correct, this new network here is strictly based on the <strong>A Song of Ice and Fire</strong> books, NOT on the TV show).</p>
+<p>But there are two packages that integrate network analysis much more nicely with the <code>tidyverse</code>: <code>tidygraph</code> and <code>ggraph</code>. These, I am going to show how to use for analyzing yet another network of characters from <strong>A Song of Ice and Fire</strong> / <strong>Game of Thrones</strong> (to be correct, this new network here is strictly based on the <strong>A Song of Ice and Fire</strong> books, NOT on the TV show).</p>
 <div id="what-can-network-analysis-tell-us" class="section level2">
 <h2>What can network analysis tell us?</h2>
 <p>Network analysis can e.g. be used to explore relationships in social or professional networks. In such cases, we would typically ask questions like:</p>
@@ -28,7 +28,7 @@
 <li>etc.</li>
 </ul>
 <p>These answers can give us a lot of information about the patterns of how people interact.</p>
-<p>So, how do we find out who the most important characters are in this network? We consider a character “important” if he has connections to many other characters. There are a few network properties, that tell us more about this, like node centrality and which characters are keyplayers in the books.</p>
+<p>So, how do we find out who the most important characters are in this network? We consider a character “important” if he has connections to many other characters. There are a few network properties, that tell us more about this, like node centrality and which characters are key-players in the books.</p>
 <p><strong>A word of caution before you read on: BEWARE of SPOILERS for all books!</strong></p>
 <div class="figure">
 <img src="https://shirinsplayground.netlify.com/post/2018-03-03_got_network_files/figure-html/unnamed-chunk-18-1.png" alt="A Song of Ice and Fire character network across all five books; find out how I made it by following the code below…" />
@@ -45,7 +45,7 @@ library(ggraph)    # for plotting</code></pre>
 <blockquote>
 <p>Character Interaction Networks for George R. R. Martin’s “A Song of Ice and Fire” saga These networks were created by connecting two characters whenever their names (or nicknames) appeared within 15 words of one another in one of the books in “A Song of Ice and Fire.” The edge weight corresponds to the number of interactions. You can use this data to explore the dynamics of the Seven Kingdoms using network science techniques. For example, community detection finds coherent plotlines. Centrality measures uncover the multiple ways in which characters play important roles in the saga.</p>
 </blockquote>
-<p>Andrew already did a great job analysing these character networks and you can read all his conclusions on his site <a href="https://networkofthrones.wordpress.com" class="uri">https://networkofthrones.wordpress.com</a>. Here, I don’t aim to replicate his analyses but I want to show how you could do this or similar analyses with <code>tidygraph</code> and <code>ggraph</code>. Thus, I am also not going to use all of his node and edge files.</p>
+<p>Andrew already did a great job analyzing these character networks and you can read all his conclusions on his site <a href="https://networkofthrones.wordpress.com" class="uri">https://networkofthrones.wordpress.com</a>. Here, I don’t aim to replicate his analyses but I want to show how you could do this or similar analyses with <code>tidygraph</code> and <code>ggraph</code>. Thus, I am also not going to use all of his node and edge files.</p>
 <pre class="r"><code>path &lt;- &quot;/Users/shiringlander/Documents/Github/Data/asoiaf/data/&quot;
 files &lt;- list.files(path = path, full.names = TRUE)
 files</code></pre>
@@ -172,22 +172,22 @@ main_ch_l</code></pre>
 ## # An undirected simple graph with 1 component
 ## #
 ## # Node Data: 100 x 2 (active)
-##   name             n_rank_trv
-##   &lt;chr&gt;                 &lt;int&gt;
-## 1 Gendry                    1
-## 2 Hot-Pie                   2
-## 3 Lem                       3
-## 4 Beric-Dondarrion          4
-## 5 Sandor-Clegane            5
-## 6 Ilyn-Payne                6
+##   name                            n_rank_trv
+##   &lt;chr&gt;                                &lt;int&gt;
+## 1 Janos-Slynt                              1
+## 2 Aemon-Targaryen-(Maester-Aemon)          2
+## 3 Jeor-Mormont                             3
+## 4 Samwell-Tarly                            4
+## 5 Qhorin-Halfhand                          5
+## 6 Ygritte                                  6
 ## # ... with 94 more rows
 ## #
 ## # Edge Data: 798 x 5
 ##    from    to Type          id weight
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;int&gt;  &lt;int&gt;
-## 1    58    64 Undirected    43      7
-## 2    28    58 Undirected    44      4
-## 3    58    59 Undirected    52      3
+## 1     2    75 Undirected    43      7
+## 2     2    76 Undirected    44      4
+## 3     2    73 Undirected    52      3
 ## # ... with 795 more rows</code></pre>
 </div>
 <div id="centrality" class="section level3">
@@ -259,11 +259,11 @@ main_ch_l</code></pre>
 </div>
 <div id="querying-node-types" class="section level3">
 <h3>Querying node types</h3>
-<p>We can also query different nodetypes (<code>?node_types</code> gives us a list of options):</p>
+<p>We can also query different node types (<code>?node_types</code> gives us a list of options):</p>
 <blockquote>
 <p>These functions all lets the user query whether each node is of a certain type. All of the functions returns a logical vector indicating whether the node is of the type in question. Do note that the types are not mutually exclusive and that nodes can thus be of multiple types.</p>
 </blockquote>
-<p>Here, I am trying out <code>node_is_center()</code> (does the node have the minimal eccentricity in the graph) and <code>node_is_keyplayer()</code> to identify the top 10 keyplayers in the network. You can read more about the <code>node_is_keyplayer()</code> function in the manual for the <code>influenceR</code> package:</p>
+<p>Here, I am trying out <code>node_is_center()</code> (does the node have the minimal eccentricity in the graph) and <code>node_is_keyplayer()</code> to identify the top 10 key-players in the network. You can read more about the <code>node_is_keyplayer()</code> function in the manual for the <code>influenceR</code> package:</p>
 <blockquote>
 <p>The “Key Player” family of node importance algorithms (Borgatti 2006) involves the selection of a metric of node importance and a combinatorial optimization strategy to choose the set S of vertices of size k that maximize that metric. This function implements KPP-Pos, a metric intended to identify k nodes which optimize resource diffusion through the net … <a href="https://cran.r-project.org/web/packages/influenceR/" class="uri">https://cran.r-project.org/web/packages/influenceR/</a></p>
 </blockquote>
@@ -282,7 +282,7 @@ main_ch_l</code></pre>
 ## 2 Aeron-Greyjoy                   FALSE  FALSE    
 ## 3 Aerys-II-Targaryen              FALSE  FALSE    
 ## 4 Alliser-Thorne                  FALSE  FALSE    
-## 5 Arianne-Martell                 FALSE  TRUE     
+## 5 Arianne-Martell                 FALSE  FALSE    
 ## 6 Arya-Stark                      FALSE  FALSE    
 ## # ... with 94 more rows
 ## #
@@ -375,16 +375,16 @@ main_ch_l</code></pre>
 <pre><code>## # A tibble: 100 x 7
 ##    name         n_rank_trv neighbors group center dist_to_center keyplayer
 ##    &lt;chr&gt;             &lt;int&gt;     &lt;dbl&gt; &lt;int&gt; &lt;lgl&gt;           &lt;dbl&gt; &lt;lgl&gt;    
-##  1 Aemon-Targa…         97       13.     2 FALSE              1. FALSE    
-##  2 Aeron-Greyj…         59        5.     5 FALSE              2. TRUE     
-##  3 Aerys-II-Ta…         31       12.     1 FALSE              1. FALSE    
-##  4 Alliser-Tho…         96       13.     2 FALSE              1. FALSE    
-##  5 Arianne-Mar…         55        4.     7 FALSE              2. FALSE    
-##  6 Arya-Stark           90       37.     1 FALSE              1. TRUE     
-##  7 Asha-Greyjoy         61        7.     5 FALSE              1. FALSE    
-##  8 Balon-Greyj…         62       11.     5 FALSE              2. FALSE    
-##  9 Barristan-S…         75       23.     3 FALSE              1. FALSE    
-## 10 Belwas               73        6.     3 FALSE              2. FALSE    
+##  1 Aemon-Targa…         45       13.     2 FALSE              1. FALSE    
+##  2 Aeron-Greyj…         21        5.     5 FALSE              2. FALSE    
+##  3 Aerys-II-Ta…         11       12.     1 FALSE              1. FALSE    
+##  4 Alliser-Tho…         48       13.     2 FALSE              1. FALSE    
+##  5 Arianne-Mar…         29        4.     7 FALSE              2. FALSE    
+##  6 Arya-Stark           79       37.     1 FALSE              1. FALSE    
+##  7 Asha-Greyjoy         20        7.     5 FALSE              1. FALSE    
+##  8 Balon-Greyj…         18       11.     5 FALSE              2. FALSE    
+##  9 Barristan-S…         54       23.     3 FALSE              1. FALSE    
+## 10 Belwas               52        6.     3 FALSE              2. FALSE    
 ## # ... with 90 more rows</code></pre>
 <pre class="r"><code>cooc_all_f_graph %&gt;%
   activate(edges) %&gt;% # %E&gt;%
@@ -405,7 +405,7 @@ main_ch_l</code></pre>
 ## # ... with 788 more rows</code></pre>
 <div id="plotting-with-ggraph" class="section level3">
 <h3>Plotting with ggraph</h3>
-<p>For plotting our graph object, we can make good ues of the <code>ggraph</code> package:</p>
+<p>For plotting our graph object, we can make good use of the <code>ggraph</code> package:</p>
 <blockquote>
 <p>ggraph is an extension of ggplot2 aimed at supporting relational data structures such as networks, graphs, and trees. While it builds upon the foundation of ggplot2 and its API it comes with its own self-contained set of geoms, facets, etc., as well as adding the concept of layouts to the grammar. <a href="https://github.com/thomasp85/ggraph" class="uri">https://github.com/thomasp85/ggraph</a></p>
 </blockquote>
@@ -437,13 +437,13 @@ main_ch_l</code></pre>
     labs(title = &quot;A Song of Ice and Fire character network&quot;,
          subtitle = &quot;Nodes are colored by centeredness&quot;)</code></pre>
 <p><img src="/post/2018-03-03_got_network_files/figure-html/unnamed-chunk-20-1.png" width="2880" /></p>
-<p>In the next graph I plotted the center-most characters in red and the distance to center as node size. The two center characters across all books are Robert Baratheon and Tyrion Lannister. I had not expected Robert, since he dies pretty much right aways but I guess he and his rebellion following Lyanna’s “abduction” is the main trigger for most of what happens in the books, so why not… And that Tyrion is the best character (and George RR Martin’s favorite) is a given, anyways! ;-)</p>
+<p>In the next graph I plotted the center-most characters in red and the distance to center as node size. The two center characters across all books are Robert Baratheon and Tyrion Lannister. I had not expected Robert, since he dies pretty much right away but I guess he and his rebellion following Lyanna’s “abduction” is the main trigger for most of what happens in the books, so why not… And that Tyrion is the best character (and George RR Martin’s favorite) is a given, anyways! ;-)</p>
 </div>
 </div>
 <div id="characters-devided-by-books" class="section level2">
 <h2>Characters devided by books</h2>
 <p>The second data set I am going to use is a comparison of character interactions in the five books.</p>
-<p><strong>A little node on the side:</strong> My original plan was to loop over the separate edge files for each book, concatenate them together with the information from which book they are and then plot them via facetting. This turned out to be a bad solution because I wanted to show the different keyplayers in each of the five books. So, instead of using one joined graph, I created separate graphs for every book and used the <code>bind_graphs()</code> and <code>facet_nodes()</code> functions to plot them together.</p>
+<p><strong>A little node on the side:</strong> My original plan was to loop over the separate edge files for each book, concatenate them together with the information from which book they are and then plot them via faceting. This turned out to be a bad solution because I wanted to show the different key-players in each of the five books. So, instead of using one joined graph, I created separate graphs for every book and used the <code>bind_graphs()</code> and <code>facet_nodes()</code> functions to plot them together.</p>
 <pre class="r"><code>for (i in 1:5) {
   cooc &lt;- read_csv(paste0(&quot;/Users/shiringlander/Documents/Github/Data/asoiaf/data//asoiaf-book&quot;, i, &quot;-edges.csv&quot;)) %&gt;%
     mutate(book = paste0(&quot;book_&quot;, i)) %&gt;%
@@ -451,7 +451,7 @@ main_ch_l</code></pre>
   
   assign(paste0(&quot;coocs_book_&quot;, i), cooc)
 }</code></pre>
-<p>The concepts are the same as above, here I want to know the keyplayers in each book:</p>
+<p>The concepts are the same as above, here I want to know the key-players in each book:</p>
 <pre class="r"><code>cooc_books_1_graph &lt;- as_tbl_graph(coocs_book_1, directed = FALSE) %&gt;%
   mutate(book = &quot;Book 1: A Game of Thrones&quot;,
          keyplayer = node_is_keyplayer(k = 10))
@@ -471,7 +471,7 @@ cooc_books_4_graph &lt;- as_tbl_graph(coocs_book_4, directed = FALSE) %&gt;%
 cooc_books_5_graph &lt;- as_tbl_graph(coocs_book_5, directed = FALSE) %&gt;%
   mutate(book = &quot;Book 5: A Dance with Dragons&quot;,
          keyplayer = node_is_keyplayer(k = 10))</code></pre>
-<p>And let’s combine and plot the keyplayers:</p>
+<p>And let’s combine and plot the key-players:</p>
 <pre class="r"><code>cooc_books_1_graph %&gt;% 
   bind_graphs(cooc_books_2_graph)  %&gt;%
   bind_graphs(cooc_books_3_graph)  %&gt;%
@@ -486,7 +486,7 @@ cooc_books_5_graph &lt;- as_tbl_graph(coocs_book_5, directed = FALSE) %&gt;%
     theme_graph() +
     scale_colour_manual(values = c(cols[2], cols[1]))</code></pre>
 <p><img src="/post/2018-03-03_got_network_files/figure-html/unnamed-chunk-23-1.png" width="960" /></p>
-<p>The networks and keyplayers of the five different books also offer a few surprises but also a lot that reflects the narrative quite well. I’m not going to go into details here as that would go a bit too far for an R-related blog - but if you are interested in in-depth discussions about the books, email me… ;-)</p>
+<p>The networks and key-players of the five different books also offer a few surprises but also a lot that reflects the narrative quite well. I’m not going to go into details here as that would go a bit too far for an R-related blog - but if you are interested in in-depth discussions about the books, email me… ;-)</p>
 </div>
 <div id="more-info" class="section level2">
 <h2>More info</h2>
@@ -558,8 +558,8 @@ cooc_books_5_graph &lt;- as_tbl_graph(coocs_book_5, directed = FALSE) %&gt;%
   </entry>
   <entry>
     <title type="html"><![CDATA[Sketchnotes from TWiML&amp;AI #111: Learning “Common Sense” and Physical Concepts with Roland Memisevic]]></title>
-    <link href="/2018/02/twimlai111/"/>
-    <id>/2018/02/twimlai111/</id>
+    <link href="https://shirinsplayground.netlify.com/2018/02/twimlai111/"/>
+    <id>https://shirinsplayground.netlify.com/2018/02/twimlai111/</id>
     <published>2018-02-19T00:00:00+00:00</published>
     <updated>2018-02-19T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>These are my sketchnotes for Sam Charrington’s podcast <strong>This Week in Machine Learning and AI</strong> about <em>Learning “Common Sense” and Physical Concepts with Roland Memisevic</em>:</p>
@@ -575,8 +575,8 @@ cooc_books_5_graph &lt;- as_tbl_graph(coocs_book_5, directed = FALSE) %&gt;%
   </entry>
   <entry>
     <title type="html"><![CDATA[April 12th &amp; 13th in Hamburg: Workshop on Deep Learning with Keras and TensorFlow in R]]></title>
-    <link href="/2018/02/deep_learning_keras_tensorflow_18_04/"/>
-    <id>/2018/02/deep_learning_keras_tensorflow_18_04/</id>
+    <link href="https://shirinsplayground.netlify.com/2018/02/deep_learning_keras_tensorflow_18_04/"/>
+    <id>https://shirinsplayground.netlify.com/2018/02/deep_learning_keras_tensorflow_18_04/</id>
     <published>2018-02-06T00:00:00+00:00</published>
     <updated>2018-02-06T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>Registration is now open for my 1.5-day <a href="https://www.eventbrite.de/e/workshop-deep-learning-mit-keras-und-tensorflow-tickets-42710095044?utm-medium=discovery&amp;utm-campaign=social&amp;utm-content=attendeeshare&amp;aff=escb&amp;utm-source=cp&amp;utm-term=listing">workshop on deep learning with Keras and TensorFlow using R</a>.</p>
@@ -615,8 +615,8 @@ cooc_books_5_graph &lt;- as_tbl_graph(coocs_book_5, directed = FALSE) %&gt;%
   </entry>
   <entry>
     <title type="html"><![CDATA[Conferences, webinars, podcasts and the likes]]></title>
-    <link href="/page/conferences_podcasts_webinars/"/>
-    <id>/page/conferences_podcasts_webinars/</id>
+    <link href="https://shirinsplayground.netlify.com/page/conferences_podcasts_webinars/"/>
+    <id>https://shirinsplayground.netlify.com/page/conferences_podcasts_webinars/</id>
     <published>2018-02-01T16:06:06+02:00</published>
     <updated>2018-02-01T16:06:06+02:00</updated>
     <content type="html"><![CDATA[
@@ -690,8 +690,8 @@ I talked about how blogging about R and Data Science helped me become a Data Sci
   </entry>
   <entry>
     <title type="html"><![CDATA[Announcing my talk about explainability of machine learning models at Minds Mastering Machines conference]]></title>
-    <link href="/2018/02/m3_2018/"/>
-    <id>/2018/02/m3_2018/</id>
+    <link href="https://shirinsplayground.netlify.com/2018/02/m3_2018/"/>
+    <id>https://shirinsplayground.netlify.com/2018/02/m3_2018/</id>
     <published>2018-02-01T00:00:00+00:00</published>
     <updated>2018-02-01T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>On Wednesday, April 25th 2018 I am going to <a href="https://www.m3-konferenz.de/veranstaltung-6274-erkl%C3%A4rbarkeit-von-machine-learning%3A-wie-k%C3%B6nnen-wir-vertrauen-in-komplexe-modelle-schaffen.html?id=6274">talk about explainability of machine learning models at the Minds Mastering Machines conference in Cologne</a>. The conference will be in German, though.</p>
@@ -718,8 +718,8 @@ I talked about how blogging about R and Data Science helped me become a Data Sci
   </entry>
   <entry>
     <title type="html"><![CDATA[I talk about machine learning with Daniel Mies (Podcast in German, though)]]></title>
-    <link href="/2018/02/herr_mies_wills_wissen/"/>
-    <id>/2018/02/herr_mies_wills_wissen/</id>
+    <link href="https://shirinsplayground.netlify.com/2018/02/herr_mies_wills_wissen/"/>
+    <id>https://shirinsplayground.netlify.com/2018/02/herr_mies_wills_wissen/</id>
     <published>2018-02-01T00:00:00+00:00</published>
     <updated>2018-02-01T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>For those of you out there who speak German:</p>
@@ -736,8 +736,8 @@ I talked about how blogging about R and Data Science helped me become a Data Sci
   </entry>
   <entry>
     <title type="html"><![CDATA[JAX 2018 talk announcement: Deep Learning - a Primer]]></title>
-    <link href="/2018/01/jax2018/"/>
-    <id>/2018/01/jax2018/</id>
+    <link href="https://shirinsplayground.netlify.com/2018/01/jax2018/"/>
+    <id>https://shirinsplayground.netlify.com/2018/01/jax2018/</id>
     <published>2018-01-30T00:00:00+00:00</published>
     <updated>2018-01-30T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>I am happy to announce that on Tuesday, April 24th 2018 Uwe Friedrichsen and I will give a talk about <a href="https://jax.de/big-data-machine-learning/deep-learning-a-primer/">Deep Learning - a Primer</a> at the JAX conference in Mainz, Germany.</p>
@@ -752,8 +752,8 @@ I talked about how blogging about R and Data Science helped me become a Data Sci
   </entry>
   <entry>
     <title type="html"><![CDATA[Sketchnotes from TWiML&amp;AI #94: Neuroevolution: Evolving Novel Neural Network Architectures with Kenneth Stanley]]></title>
-    <link href="/2018/01/twimlai94/"/>
-    <id>/2018/01/twimlai94/</id>
+    <link href="https://shirinsplayground.netlify.com/2018/01/twimlai94/"/>
+    <id>https://shirinsplayground.netlify.com/2018/01/twimlai94/</id>
     <published>2018-01-28T00:00:00+00:00</published>
     <updated>2018-01-28T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>These are my sketchnotes for Sam Charrington’s podcast <strong>This Week in Machine Learning and AI</strong> about <em>Neuroevolution: Evolving Novel Neural Network Architectures with Kenneth Stanley</em>:</p>
@@ -769,8 +769,8 @@ I talked about how blogging about R and Data Science helped me become a Data Sci
   </entry>
   <entry>
     <title type="html"><![CDATA[Join MünsteR for our next meetup on obtaining functional implications of gene expression data with R]]></title>
-    <link href="/2018/01/meetup_march18/"/>
-    <id>/2018/01/meetup_march18/</id>
+    <link href="https://shirinsplayground.netlify.com/2018/01/meetup_march18/"/>
+    <id>https://shirinsplayground.netlify.com/2018/01/meetup_march18/</id>
     <published>2018-01-24T00:00:00+00:00</published>
     <updated>2018-01-24T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<div class="figure">
@@ -787,8 +787,8 @@ I talked about how blogging about R and Data Science helped me become a Data Sci
   </entry>
   <entry>
     <title type="html"><![CDATA[Sketchnotes from TWiML&amp;AI #92: Learning State Representations with Yael Niv]]></title>
-    <link href="/2018/01/twimlai92/"/>
-    <id>/2018/01/twimlai92/</id>
+    <link href="https://shirinsplayground.netlify.com/2018/01/twimlai92/"/>
+    <id>https://shirinsplayground.netlify.com/2018/01/twimlai92/</id>
     <published>2018-01-19T00:00:00+00:00</published>
     <updated>2018-01-19T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>These are my sketchnotes for Sam Charrington’s podcast <strong>This Week in Machine Learning and AI</strong> about Learning State Representations with Yael Niv: <a href="https://twimlai.com/twiml-talk-92-learning-state-representations-yael-niv/" class="uri">https://twimlai.com/twiml-talk-92-learning-state-representations-yael-niv/</a></p>
@@ -804,8 +804,8 @@ I talked about how blogging about R and Data Science helped me become a Data Sci
   </entry>
   <entry>
     <title type="html"><![CDATA[How to make your machine learning model available as an API with the plumber package]]></title>
-    <link href="/2018/01/plumber/"/>
-    <id>/2018/01/plumber/</id>
+    <link href="https://shirinsplayground.netlify.com/2018/01/plumber/"/>
+    <id>https://shirinsplayground.netlify.com/2018/01/plumber/</id>
     <published>2018-01-16T00:00:00+00:00</published>
     <updated>2018-01-16T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<div class="figure">
@@ -1104,7 +1104,7 @@ Test case predicted to be ckd
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>## R version 3.4.3 (2017-11-30)
 ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-## Running under: macOS High Sierra 10.13.2
+## Running under: macOS High Sierra 10.13.3
 ## 
 ## Matrix products: default
 ## BLAS: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRblas.0.dylib
@@ -1117,47 +1117,48 @@ Test case predicted to be ckd
 ## [1] methods   stats     graphics  grDevices utils     datasets  base     
 ## 
 ## other attached packages:
-##  [1] plumber_0.4.4   rjson_0.2.15    forcats_0.2.0   stringr_1.2.0  
-##  [5] dplyr_0.7.4     purrr_0.2.4     readr_1.1.1     tidyr_0.7.2    
-##  [9] tibble_1.4.2    ggplot2_2.2.1   tidyverse_1.2.1
+##  [1] plumber_0.4.4      rjson_0.2.15       forcats_0.3.0     
+##  [4] stringr_1.3.0      dplyr_0.7.4        purrr_0.2.4       
+##  [7] readr_1.1.1        tidyr_0.8.0        tibble_1.4.2      
+## [10] ggplot2_2.2.1.9000 tidyverse_1.2.1   
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] httr_1.3.1          ddalpha_1.3.1       sfsmisc_1.1-1      
-##  [4] jsonlite_1.5        splines_3.4.3       foreach_1.4.4      
-##  [7] prodlim_1.6.1       modelr_0.1.1        assertthat_0.2.0   
-## [10] stats4_3.4.3        DRR_0.0.3           cellranger_1.1.0   
-## [13] yaml_2.1.16         robustbase_0.92-8   ipred_0.9-6        
-## [16] pillar_1.1.0        backports_1.1.2     lattice_0.20-35    
-## [19] glue_1.2.0          digest_0.6.14       randomForest_4.6-12
-## [22] rvest_0.3.2         colorspace_1.3-2    recipes_0.1.2      
-## [25] httpuv_1.3.5        htmltools_0.3.6     Matrix_1.2-12      
-## [28] plyr_1.8.4          psych_1.7.8         timeDate_3042.101  
-## [31] pkgconfig_2.0.1     CVST_0.2-1          broom_0.4.3        
-## [34] haven_1.1.1         caret_6.0-78        bookdown_0.5       
-## [37] scales_0.5.0        gower_0.1.2         lava_1.6           
-## [40] withr_2.1.1         nnet_7.3-12         lazyeval_0.2.1     
-## [43] cli_1.0.0           mnormt_1.5-5        survival_2.41-3    
-## [46] magrittr_1.5        crayon_1.3.4        readxl_1.0.0       
-## [49] evaluate_0.10.1     nlme_3.1-131        MASS_7.3-48        
-## [52] xml2_1.1.1          dimRed_0.1.0        foreign_0.8-69     
-## [55] class_7.3-14        blogdown_0.4        tools_3.4.3        
-## [58] hms_0.4.0           kernlab_0.9-25      munsell_0.4.3      
-## [61] bindrcpp_0.2        compiler_3.4.3      RcppRoll_0.2.2     
-## [64] rlang_0.1.6         grid_3.4.3          iterators_1.0.9    
-## [67] rstudioapi_0.7      rmarkdown_1.8       gtable_0.2.0       
-## [70] ModelMetrics_1.1.0  codetools_0.2-15    reshape2_1.4.3     
-## [73] R6_2.2.2            lubridate_1.7.1     knitr_1.18         
-## [76] bindr_0.1           rprojroot_1.3-2     stringi_1.1.6      
-## [79] parallel_3.4.3      Rcpp_0.12.15        rpart_4.1-12       
-## [82] tidyselect_0.2.3    DEoptimR_1.0-8</code></pre>
+##  [1] nlme_3.1-131.1      lubridate_1.7.3     dimRed_0.1.0       
+##  [4] httr_1.3.1          rprojroot_1.3-2     tools_3.4.3        
+##  [7] backports_1.1.2     R6_2.2.2            rpart_4.1-13       
+## [10] lazyeval_0.2.1      colorspace_1.3-2    nnet_7.3-12        
+## [13] withr_2.1.1.9000    tidyselect_0.2.4    mnormt_1.5-5       
+## [16] compiler_3.4.3      cli_1.0.0           rvest_0.3.2        
+## [19] xml2_1.2.0          bookdown_0.7        scales_0.5.0.9000  
+## [22] sfsmisc_1.1-1       DEoptimR_1.0-8      psych_1.7.8        
+## [25] robustbase_0.92-8   randomForest_4.6-12 digest_0.6.15      
+## [28] foreign_0.8-69      rmarkdown_1.8       pkgconfig_2.0.1    
+## [31] htmltools_0.3.6     rlang_0.2.0.9000    readxl_1.0.0       
+## [34] ddalpha_1.3.1.1     rstudioapi_0.7      bindr_0.1          
+## [37] jsonlite_1.5        ModelMetrics_1.1.0  magrittr_1.5       
+## [40] Matrix_1.2-12       Rcpp_0.12.15        munsell_0.4.3      
+## [43] stringi_1.1.6       yaml_2.1.17         MASS_7.3-49        
+## [46] plyr_1.8.4          recipes_0.1.2       grid_3.4.3         
+## [49] parallel_3.4.3      crayon_1.3.4        lattice_0.20-35    
+## [52] haven_1.1.1         splines_3.4.3       hms_0.4.1          
+## [55] knitr_1.20          pillar_1.2.1        reshape2_1.4.3     
+## [58] codetools_0.2-15    stats4_3.4.3        CVST_0.2-1         
+## [61] glue_1.2.0          evaluate_0.10.1     blogdown_0.5       
+## [64] modelr_0.1.1        httpuv_1.3.6.1      foreach_1.4.4      
+## [67] cellranger_1.1.0    gtable_0.2.0        kernlab_0.9-25     
+## [70] assertthat_0.2.0    DRR_0.0.3           xfun_0.1           
+## [73] gower_0.1.2         prodlim_1.6.1       broom_0.4.3        
+## [76] class_7.3-14        survival_2.41-3     timeDate_3043.102  
+## [79] RcppRoll_0.2.2      iterators_1.0.9     bindrcpp_0.2       
+## [82] lava_1.6            caret_6.0-78        ipred_0.9-6</code></pre>
 </div>
 </div>
 ]]></content>
   </entry>
   <entry>
     <title type="html"><![CDATA[Sketchnotes from TWiML&amp;AI #91: Philosophy of Intelligence with Matthew Crosby]]></title>
-    <link href="/2018/01/twimlai91/"/>
-    <id>/2018/01/twimlai91/</id>
+    <link href="https://shirinsplayground.netlify.com/2018/01/twimlai91/"/>
+    <id>https://shirinsplayground.netlify.com/2018/01/twimlai91/</id>
     <published>2018-01-14T00:00:00+00:00</published>
     <updated>2018-01-14T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>These are my sketchnotes for Sam Charrington’s podcast <strong>This Week in Machine Learning and AI</strong> about Philosophy of Intelligence with Matthew Crosby: <a href="https://twimlai.com/twiml-talk-92-learning-state-representations-yael-niv/" class="uri">https://twimlai.com/twiml-talk-92-learning-state-representations-yael-niv/</a></p>
@@ -1173,8 +1174,8 @@ Test case predicted to be ckd
   </entry>
   <entry>
     <title type="html"><![CDATA[Looking beyond accuracy to improve trust in machine learning]]></title>
-    <link href="/2018/01/looking_beyond_accuracy_to_improve_trust_in_ml/"/>
-    <id>/2018/01/looking_beyond_accuracy_to_improve_trust_in_ml/</id>
+    <link href="https://shirinsplayground.netlify.com/2018/01/looking_beyond_accuracy_to_improve_trust_in_ml/"/>
+    <id>https://shirinsplayground.netlify.com/2018/01/looking_beyond_accuracy_to_improve_trust_in_ml/</id>
     <published>2018-01-10T00:00:00+00:00</published>
     <updated>2018-01-10T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>I have written another blogpost about <a href="https://blog.codecentric.de/en/2018/01/look-beyond-accuracy-improve-trust-machine-learning/">Looking beyond accuracy to improve trust in machine learning</a> at my company <a href="https://blog.codecentric.de/en/">codecentric</a>&rsquo;s blog:</p>
@@ -1194,8 +1195,8 @@ Test case predicted to be ckd
   </entry>
   <entry>
     <title type="html"><![CDATA[TWiMLAI talk 88 sketchnotes: Using Deep Learning and Google Street View to Estimate Demographics with Timnit Gebru]]></title>
-    <link href="/2018/01/twimlai88_sketchnotes/"/>
-    <id>/2018/01/twimlai88_sketchnotes/</id>
+    <link href="https://shirinsplayground.netlify.com/2018/01/twimlai88_sketchnotes/"/>
+    <id>https://shirinsplayground.netlify.com/2018/01/twimlai88_sketchnotes/</id>
     <published>2018-01-10T00:00:00+00:00</published>
     <updated>2018-01-10T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>These are my sketchnotes taken from the <a href="https://twimlai.com/twiml-talk-88-using-deep-learning-google-street-view-estimate-demographics-timnit-gebru/">“This week in Machine Learning &amp; AI” podcast number 88 about Using Deep Learning and Google Street View to Estimate Demographics with Timnit Gebru</a>:</p>
@@ -1207,8 +1208,8 @@ Test case predicted to be ckd
   </entry>
   <entry>
     <title type="html"><![CDATA[Registration now open for workshop on Deep Learning with Keras and TensorFlow using R]]></title>
-    <link href="/2017/12/keras_sketchnotes/"/>
-    <id>/2017/12/keras_sketchnotes/</id>
+    <link href="https://shirinsplayground.netlify.com/2017/12/keras_sketchnotes/"/>
+    <id>https://shirinsplayground.netlify.com/2017/12/keras_sketchnotes/</id>
     <published>2017-12-20T00:00:00+00:00</published>
     <updated>2017-12-20T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>Recently, I announced <a href="https://shirinsplayground.netlify.com/2017/11/deep_learning_keras_tensorflow/">my workshop on Deep Learning with Keras and TensorFlow</a>.</p>
@@ -1235,8 +1236,8 @@ Test case predicted to be ckd
   </entry>
   <entry>
     <title type="html"><![CDATA[Explaining Predictions of Machine Learning Models with LIME - Münster Data Science Meetup]]></title>
-    <link href="/2017/12/lime_sketchnotes/"/>
-    <id>/2017/12/lime_sketchnotes/</id>
+    <link href="https://shirinsplayground.netlify.com/2017/12/lime_sketchnotes/"/>
+    <id>https://shirinsplayground.netlify.com/2017/12/lime_sketchnotes/</id>
     <published>2017-12-12T00:00:00+00:00</published>
     <updated>2017-12-12T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<div id="slides-from-munster-data-science-meetup" class="section level2">
@@ -1434,135 +1435,136 @@ test_y &lt;- dplyr::select(test_data, class)</code></pre>
 ##  language (EN)                        
 ##  collate  de_DE.UTF-8                 
 ##  tz       Europe/Berlin               
-##  date     2018-02-05</code></pre>
+##  date     2018-03-04</code></pre>
 <pre><code>## Packages -----------------------------------------------------------------</code></pre>
-<pre><code>##  package      * version  date       source        
-##  assertthat     0.2.0    2017-04-11 CRAN (R 3.4.0)
-##  backports      1.1.2    2017-12-13 CRAN (R 3.4.3)
-##  base         * 3.4.3    2017-12-07 local         
-##  BBmisc         1.11     2017-03-10 CRAN (R 3.4.0)
-##  bindr          0.1      2016-11-13 CRAN (R 3.4.0)
-##  bindrcpp     * 0.2      2017-06-17 CRAN (R 3.4.0)
-##  blogdown       0.4      2017-12-12 CRAN (R 3.4.3)
-##  bookdown       0.5      2017-08-20 CRAN (R 3.4.1)
-##  broom          0.4.3    2017-11-20 CRAN (R 3.4.2)
-##  caret        * 6.0-78   2017-12-10 CRAN (R 3.4.3)
-##  cellranger     1.1.0    2016-07-27 CRAN (R 3.4.0)
-##  checkmate      1.8.5    2017-10-24 CRAN (R 3.4.2)
-##  class          7.3-14   2015-08-30 CRAN (R 3.4.3)
-##  cli            1.0.0    2017-11-05 CRAN (R 3.4.2)
-##  codetools      0.2-15   2016-10-05 CRAN (R 3.4.3)
-##  colorspace     1.3-2    2016-12-14 CRAN (R 3.4.0)
-##  compiler       3.4.3    2017-12-07 local         
-##  crayon         1.3.4    2017-09-16 cran (@1.3.4) 
-##  CVST           0.2-1    2013-12-10 CRAN (R 3.4.0)
-##  datasets     * 3.4.3    2017-12-07 local         
-##  ddalpha        1.3.1    2017-09-27 CRAN (R 3.4.2)
-##  DEoptimR       1.0-8    2016-11-19 CRAN (R 3.4.0)
-##  devtools       1.13.4   2017-11-09 CRAN (R 3.4.2)
-##  digest         0.6.14   2018-01-14 CRAN (R 3.4.3)
-##  dimRed         0.1.0    2017-05-04 CRAN (R 3.4.0)
-##  dplyr        * 0.7.4    2017-09-28 CRAN (R 3.4.2)
-##  DRR            0.0.3    2018-01-06 CRAN (R 3.4.3)
-##  dummies      * 1.5.6    2012-06-14 CRAN (R 3.4.0)
-##  e1071          1.6-8    2017-02-02 CRAN (R 3.4.0)
-##  evaluate       0.10.1   2017-06-24 CRAN (R 3.4.0)
-##  farff        * 1.0      2016-09-11 CRAN (R 3.4.0)
-##  forcats      * 0.2.0    2017-01-23 CRAN (R 3.4.0)
-##  foreach      * 1.4.4    2017-12-12 CRAN (R 3.4.3)
-##  foreign        0.8-69   2017-06-22 CRAN (R 3.4.3)
-##  ggplot2      * 2.2.1    2016-12-30 CRAN (R 3.4.0)
-##  glmnet         2.0-13   2017-09-22 CRAN (R 3.4.2)
-##  glue           1.2.0    2017-10-29 CRAN (R 3.4.2)
-##  gower          0.1.2    2017-02-23 CRAN (R 3.4.0)
-##  graphics     * 3.4.3    2017-12-07 local         
-##  grDevices    * 3.4.3    2017-12-07 local         
-##  grid           3.4.3    2017-12-07 local         
-##  gtable         0.2.0    2016-02-26 CRAN (R 3.4.0)
-##  haven          1.1.1    2018-01-18 CRAN (R 3.4.3)
-##  highr          0.6      2016-05-09 CRAN (R 3.4.0)
-##  hms            0.4.0    2017-11-23 CRAN (R 3.4.3)
-##  htmltools      0.3.6    2017-04-28 CRAN (R 3.4.0)
-##  htmlwidgets    1.0      2018-01-20 CRAN (R 3.4.3)
-##  httpuv         1.3.5    2017-07-04 CRAN (R 3.4.1)
-##  httr           1.3.1    2017-08-20 CRAN (R 3.4.1)
-##  ipred          0.9-6    2017-03-01 CRAN (R 3.4.0)
-##  iterators    * 1.0.9    2017-12-12 CRAN (R 3.4.3)
-##  itertools    * 0.1-3    2014-03-12 CRAN (R 3.4.0)
-##  jsonlite       1.5      2017-06-01 CRAN (R 3.4.0)
-##  kernlab        0.9-25   2016-10-03 CRAN (R 3.4.0)
-##  knitr          1.18     2017-12-27 CRAN (R 3.4.3)
-##  labeling       0.3      2014-08-23 CRAN (R 3.4.0)
-##  lattice      * 0.20-35  2017-03-25 CRAN (R 3.4.3)
-##  lava           1.6      2018-01-13 CRAN (R 3.4.3)
-##  lazyeval       0.2.1    2017-10-29 CRAN (R 3.4.2)
-##  lime         * 0.3.1    2017-11-24 CRAN (R 3.4.3)
-##  lubridate      1.7.1    2017-11-03 CRAN (R 3.4.2)
-##  magrittr       1.5      2014-11-22 CRAN (R 3.4.0)
-##  MASS           7.3-48   2017-12-25 CRAN (R 3.4.3)
-##  Matrix         1.2-12   2017-11-20 CRAN (R 3.4.3)
-##  memoise        1.1.0    2017-04-21 CRAN (R 3.4.0)
-##  methods      * 3.4.3    2017-12-07 local         
-##  mime           0.5      2016-07-07 CRAN (R 3.4.0)
-##  missForest   * 1.4      2013-12-31 CRAN (R 3.4.0)
-##  mnormt         1.5-5    2016-10-15 CRAN (R 3.4.0)
-##  ModelMetrics   1.1.0    2016-08-26 CRAN (R 3.4.0)
-##  modelr         0.1.1    2017-07-24 CRAN (R 3.4.1)
-##  munsell        0.4.3    2016-02-13 CRAN (R 3.4.0)
-##  nlme           3.1-131  2017-02-06 CRAN (R 3.4.3)
-##  nnet           7.3-12   2016-02-02 CRAN (R 3.4.3)
-##  parallel       3.4.3    2017-12-07 local         
-##  pillar         1.1.0    2018-01-14 CRAN (R 3.4.3)
-##  pkgconfig      2.0.1    2017-03-21 CRAN (R 3.4.0)
-##  plyr           1.8.4    2016-06-08 CRAN (R 3.4.0)
-##  prodlim        1.6.1    2017-03-06 CRAN (R 3.4.0)
-##  psych          1.7.8    2017-09-09 CRAN (R 3.4.1)
-##  purrr        * 0.2.4    2017-10-18 CRAN (R 3.4.2)
-##  R6             2.2.2    2017-06-17 CRAN (R 3.4.0)
-##  randomForest * 4.6-12   2015-10-07 CRAN (R 3.4.0)
-##  Rcpp           0.12.15  2018-01-20 CRAN (R 3.4.3)
-##  RcppRoll       0.2.2    2015-04-05 CRAN (R 3.4.0)
-##  readr        * 1.1.1    2017-05-16 CRAN (R 3.4.0)
-##  readxl         1.0.0    2017-04-18 CRAN (R 3.4.0)
-##  recipes        0.1.2    2018-01-11 CRAN (R 3.4.3)
-##  reshape2       1.4.3    2017-12-11 CRAN (R 3.4.3)
-##  rlang          0.1.6    2017-12-21 CRAN (R 3.4.3)
-##  rmarkdown      1.8      2017-11-17 CRAN (R 3.4.2)
-##  robustbase     0.92-8   2017-11-01 CRAN (R 3.4.2)
-##  rpart          4.1-12   2018-01-12 CRAN (R 3.4.3)
-##  rprojroot      1.3-2    2018-01-03 CRAN (R 3.4.3)
-##  rstudioapi     0.7      2017-09-07 CRAN (R 3.4.1)
-##  rvest          0.3.2    2016-06-17 CRAN (R 3.4.0)
-##  scales         0.5.0    2017-08-24 CRAN (R 3.4.1)
-##  sfsmisc        1.1-1    2017-06-08 CRAN (R 3.4.0)
-##  shiny          1.0.5    2017-08-23 CRAN (R 3.4.1)
-##  shinythemes    1.1.1    2016-10-12 CRAN (R 3.4.0)
-##  splines        3.4.3    2017-12-07 local         
-##  stats        * 3.4.3    2017-12-07 local         
-##  stats4         3.4.3    2017-12-07 local         
-##  stringdist     0.9.4.6  2017-07-31 CRAN (R 3.4.1)
-##  stringi        1.1.6    2017-11-17 CRAN (R 3.4.2)
-##  stringr      * 1.2.0    2017-02-18 CRAN (R 3.4.0)
-##  survival       2.41-3   2017-04-04 CRAN (R 3.4.3)
-##  tibble       * 1.4.2    2018-01-22 CRAN (R 3.4.3)
-##  tidyr        * 0.7.2    2017-10-16 CRAN (R 3.4.2)
-##  tidyselect     0.2.3    2017-11-06 CRAN (R 3.4.2)
-##  tidyverse    * 1.2.1    2017-11-14 CRAN (R 3.4.2)
-##  timeDate       3042.101 2017-11-16 CRAN (R 3.4.2)
-##  tools          3.4.3    2017-12-07 local         
-##  utils        * 3.4.3    2017-12-07 local         
-##  withr          2.1.1    2017-12-19 CRAN (R 3.4.3)
-##  xml2           1.1.1    2017-01-24 CRAN (R 3.4.0)
-##  xtable         1.8-2    2016-02-05 CRAN (R 3.4.0)
-##  yaml           2.1.16   2017-12-12 CRAN (R 3.4.3)</code></pre>
+<pre><code>##  package      * version    date       source                            
+##  assertthat     0.2.0      2017-04-11 CRAN (R 3.4.0)                    
+##  backports      1.1.2      2017-12-13 CRAN (R 3.4.3)                    
+##  base         * 3.4.3      2017-12-07 local                             
+##  BBmisc         1.11       2017-03-10 CRAN (R 3.4.0)                    
+##  bindr          0.1        2016-11-13 CRAN (R 3.4.0)                    
+##  bindrcpp     * 0.2        2017-06-17 CRAN (R 3.4.0)                    
+##  blogdown       0.5        2018-01-24 CRAN (R 3.4.3)                    
+##  bookdown       0.7        2018-02-18 CRAN (R 3.4.3)                    
+##  broom          0.4.3      2017-11-20 CRAN (R 3.4.2)                    
+##  caret        * 6.0-78     2017-12-10 CRAN (R 3.4.3)                    
+##  cellranger     1.1.0      2016-07-27 CRAN (R 3.4.0)                    
+##  checkmate      1.8.5      2017-10-24 CRAN (R 3.4.2)                    
+##  class          7.3-14     2015-08-30 CRAN (R 3.4.3)                    
+##  cli            1.0.0      2017-11-05 CRAN (R 3.4.2)                    
+##  codetools      0.2-15     2016-10-05 CRAN (R 3.4.3)                    
+##  colorspace     1.3-2      2016-12-14 CRAN (R 3.4.0)                    
+##  compiler       3.4.3      2017-12-07 local                             
+##  crayon         1.3.4      2017-09-16 CRAN (R 3.4.1)                    
+##  CVST           0.2-1      2013-12-10 CRAN (R 3.4.0)                    
+##  datasets     * 3.4.3      2017-12-07 local                             
+##  ddalpha        1.3.1.1    2018-02-02 CRAN (R 3.4.3)                    
+##  DEoptimR       1.0-8      2016-11-19 CRAN (R 3.4.0)                    
+##  devtools       1.13.5     2018-02-18 CRAN (R 3.4.3)                    
+##  digest         0.6.15     2018-01-28 CRAN (R 3.4.3)                    
+##  dimRed         0.1.0      2017-05-04 CRAN (R 3.4.0)                    
+##  dplyr        * 0.7.4      2017-09-28 CRAN (R 3.4.2)                    
+##  DRR            0.0.3      2018-01-06 CRAN (R 3.4.3)                    
+##  dummies      * 1.5.6      2012-06-14 CRAN (R 3.4.0)                    
+##  e1071          1.6-8      2017-02-02 CRAN (R 3.4.0)                    
+##  evaluate       0.10.1     2017-06-24 CRAN (R 3.4.1)                    
+##  farff        * 1.0        2016-09-11 CRAN (R 3.4.0)                    
+##  forcats      * 0.3.0      2018-02-19 CRAN (R 3.4.3)                    
+##  foreach      * 1.4.4      2017-12-12 CRAN (R 3.4.3)                    
+##  foreign        0.8-69     2017-06-22 CRAN (R 3.4.3)                    
+##  ggplot2      * 2.2.1.9000 2018-02-28 Github (thomasp85/ggplot2@7859a29)
+##  glmnet         2.0-13     2017-09-22 CRAN (R 3.4.2)                    
+##  glue           1.2.0      2017-10-29 CRAN (R 3.4.2)                    
+##  gower          0.1.2      2017-02-23 CRAN (R 3.4.0)                    
+##  graphics     * 3.4.3      2017-12-07 local                             
+##  grDevices    * 3.4.3      2017-12-07 local                             
+##  grid           3.4.3      2017-12-07 local                             
+##  gtable         0.2.0      2016-02-26 CRAN (R 3.4.0)                    
+##  haven          1.1.1      2018-01-18 CRAN (R 3.4.3)                    
+##  highr          0.6        2016-05-09 CRAN (R 3.4.0)                    
+##  hms            0.4.1      2018-01-24 CRAN (R 3.4.3)                    
+##  htmltools      0.3.6      2017-04-28 CRAN (R 3.4.0)                    
+##  htmlwidgets    1.0        2018-01-20 CRAN (R 3.4.3)                    
+##  httpuv         1.3.6.1    2018-02-28 CRAN (R 3.4.3)                    
+##  httr           1.3.1      2017-08-20 CRAN (R 3.4.1)                    
+##  ipred          0.9-6      2017-03-01 CRAN (R 3.4.0)                    
+##  iterators    * 1.0.9      2017-12-12 CRAN (R 3.4.3)                    
+##  itertools    * 0.1-3      2014-03-12 CRAN (R 3.4.0)                    
+##  jsonlite       1.5        2017-06-01 CRAN (R 3.4.0)                    
+##  kernlab        0.9-25     2016-10-03 CRAN (R 3.4.0)                    
+##  knitr          1.20       2018-02-20 CRAN (R 3.4.3)                    
+##  labeling       0.3        2014-08-23 CRAN (R 3.4.0)                    
+##  lattice      * 0.20-35    2017-03-25 CRAN (R 3.4.3)                    
+##  lava           1.6        2018-01-13 CRAN (R 3.4.3)                    
+##  lazyeval       0.2.1      2017-10-29 CRAN (R 3.4.2)                    
+##  lime         * 0.3.1      2017-11-24 CRAN (R 3.4.3)                    
+##  lubridate      1.7.3      2018-02-27 CRAN (R 3.4.3)                    
+##  magrittr       1.5        2014-11-22 CRAN (R 3.4.0)                    
+##  MASS           7.3-49     2018-02-23 CRAN (R 3.4.3)                    
+##  Matrix         1.2-12     2017-11-20 CRAN (R 3.4.3)                    
+##  memoise        1.1.0      2017-04-21 CRAN (R 3.4.0)                    
+##  methods      * 3.4.3      2017-12-07 local                             
+##  mime           0.5        2016-07-07 CRAN (R 3.4.0)                    
+##  missForest   * 1.4        2013-12-31 CRAN (R 3.4.0)                    
+##  mnormt         1.5-5      2016-10-15 CRAN (R 3.4.0)                    
+##  ModelMetrics   1.1.0      2016-08-26 CRAN (R 3.4.0)                    
+##  modelr         0.1.1      2017-07-24 CRAN (R 3.4.1)                    
+##  munsell        0.4.3      2016-02-13 CRAN (R 3.4.0)                    
+##  nlme           3.1-131.1  2018-02-16 CRAN (R 3.4.3)                    
+##  nnet           7.3-12     2016-02-02 CRAN (R 3.4.3)                    
+##  parallel       3.4.3      2017-12-07 local                             
+##  pillar         1.2.1      2018-02-27 CRAN (R 3.4.3)                    
+##  pkgconfig      2.0.1      2017-03-21 CRAN (R 3.4.0)                    
+##  plyr           1.8.4      2016-06-08 CRAN (R 3.4.0)                    
+##  prodlim        1.6.1      2017-03-06 CRAN (R 3.4.0)                    
+##  psych          1.7.8      2017-09-09 CRAN (R 3.4.1)                    
+##  purrr        * 0.2.4      2017-10-18 CRAN (R 3.4.2)                    
+##  R6             2.2.2      2017-06-17 CRAN (R 3.4.0)                    
+##  randomForest * 4.6-12     2015-10-07 CRAN (R 3.4.0)                    
+##  Rcpp           0.12.15    2018-01-20 CRAN (R 3.4.3)                    
+##  RcppRoll       0.2.2      2015-04-05 CRAN (R 3.4.0)                    
+##  readr        * 1.1.1      2017-05-16 CRAN (R 3.4.0)                    
+##  readxl         1.0.0      2017-04-18 CRAN (R 3.4.0)                    
+##  recipes        0.1.2      2018-01-11 CRAN (R 3.4.3)                    
+##  reshape2       1.4.3      2017-12-11 CRAN (R 3.4.3)                    
+##  rlang          0.2.0.9000 2018-02-28 Github (tidyverse/rlang@9ea33dd)  
+##  rmarkdown      1.8        2017-11-17 CRAN (R 3.4.2)                    
+##  robustbase     0.92-8     2017-11-01 CRAN (R 3.4.2)                    
+##  rpart          4.1-13     2018-02-23 CRAN (R 3.4.3)                    
+##  rprojroot      1.3-2      2018-01-03 CRAN (R 3.4.3)                    
+##  rstudioapi     0.7        2017-09-07 CRAN (R 3.4.1)                    
+##  rvest          0.3.2      2016-06-17 CRAN (R 3.4.0)                    
+##  scales         0.5.0.9000 2018-02-28 Github (hadley/scales@d767915)    
+##  sfsmisc        1.1-1      2017-06-08 CRAN (R 3.4.0)                    
+##  shiny          1.0.5      2017-08-23 CRAN (R 3.4.1)                    
+##  shinythemes    1.1.1      2016-10-12 CRAN (R 3.4.0)                    
+##  splines        3.4.3      2017-12-07 local                             
+##  stats        * 3.4.3      2017-12-07 local                             
+##  stats4         3.4.3      2017-12-07 local                             
+##  stringdist     0.9.4.6    2017-07-31 CRAN (R 3.4.1)                    
+##  stringi        1.1.6      2017-11-17 CRAN (R 3.4.2)                    
+##  stringr      * 1.3.0      2018-02-19 CRAN (R 3.4.3)                    
+##  survival       2.41-3     2017-04-04 CRAN (R 3.4.3)                    
+##  tibble       * 1.4.2      2018-01-22 CRAN (R 3.4.3)                    
+##  tidyr        * 0.8.0      2018-01-29 CRAN (R 3.4.3)                    
+##  tidyselect     0.2.4      2018-02-26 CRAN (R 3.4.3)                    
+##  tidyverse    * 1.2.1      2017-11-14 CRAN (R 3.4.2)                    
+##  timeDate       3043.102   2018-02-21 CRAN (R 3.4.3)                    
+##  tools          3.4.3      2017-12-07 local                             
+##  utils        * 3.4.3      2017-12-07 local                             
+##  withr          2.1.1.9000 2018-02-28 Github (jimhester/withr@5d05571)  
+##  xfun           0.1        2018-01-22 CRAN (R 3.4.3)                    
+##  xml2           1.2.0      2018-01-24 CRAN (R 3.4.3)                    
+##  xtable         1.8-2      2016-02-05 CRAN (R 3.4.0)                    
+##  yaml           2.1.17     2018-02-27 CRAN (R 3.4.3)</code></pre>
 </div>
 </div>
 ]]></content>
   </entry>
   <entry>
     <title type="html"><![CDATA[MICE (Multiple Imputation by Chained Equations) in R - sketchnotes from MünsteR Meetup]]></title>
-    <link href="/2017/11/mice_sketchnotes/"/>
-    <id>/2017/11/mice_sketchnotes/</id>
+    <link href="https://shirinsplayground.netlify.com/2017/11/mice_sketchnotes/"/>
+    <id>https://shirinsplayground.netlify.com/2017/11/mice_sketchnotes/</id>
     <published>2017-11-28T00:00:00+00:00</published>
     <updated>2017-11-28T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>Last night, the <a href="http://meetu.ps/c/3ffGL/w54bW/f">MünsteR R user-group</a> had <a href="https://www.meetup.com/Munster-R-Users-Group/events/243388360/">another great meetup</a>:</p>
@@ -1581,8 +1583,8 @@ test_y &lt;- dplyr::select(test_data, class)</code></pre>
   </entry>
   <entry>
     <title type="html"><![CDATA[Workshop on Deep Learning with Keras and TensorFlow in R]]></title>
-    <link href="/2017/11/deep_learning_keras_tensorflow/"/>
-    <id>/2017/11/deep_learning_keras_tensorflow/</id>
+    <link href="https://shirinsplayground.netlify.com/2017/11/deep_learning_keras_tensorflow/"/>
+    <id>https://shirinsplayground.netlify.com/2017/11/deep_learning_keras_tensorflow/</id>
     <published>2017-11-20T00:00:00+00:00</published>
     <updated>2017-11-20T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>You can now book me and my 1-day workshop on <a href="https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/">deep learning with Keras and TensorFlow using R</a>.</p>
@@ -1614,8 +1616,8 @@ test_y &lt;- dplyr::select(test_data, class)</code></pre>
   </entry>
   <entry>
     <title type="html"><![CDATA[How to combine point and boxplots in timeline charts with ggplot2 facets]]></title>
-    <link href="/2017/11/combine_point_boxplot_ggplot/"/>
-    <id>/2017/11/combine_point_boxplot_ggplot/</id>
+    <link href="https://shirinsplayground.netlify.com/2017/11/combine_point_boxplot_ggplot/"/>
+    <id>https://shirinsplayground.netlify.com/2017/11/combine_point_boxplot_ggplot/</id>
     <published>2017-11-18T00:00:00+00:00</published>
     <updated>2017-11-18T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>In a recent project, I was looking to plot data from different variables along the same time axis. The difficulty was, that some of these variables I wanted to have as point plots, while others I wanted as box-plots.</p>
@@ -1632,13 +1634,13 @@ fake_data &lt;- data.frame(time = dates,
                         var2 = runif(length(dates))) %&gt;%
   sample_frac(size = 0.33)
 head(fake_data)</code></pre>
-<pre><code>##                   time    var1_1    var1_2    var1_3      var2
-## 64 2017-10-01 10:09:00 0.6621389 0.5521539 0.9148288 0.6078481
-## 67 2017-10-01 10:18:00 0.2538266 0.1958265 0.8239181 0.5116218
-## 15 2017-10-01 07:42:00 0.6220942 0.9945485 0.9075784 0.7552689
-## 27 2017-10-01 08:18:00 0.9209701 0.7804722 0.1649222 0.9315722
-## 50 2017-10-01 09:27:00 0.2937356 0.2903439 0.1449462 0.2220199
-## 16 2017-10-01 07:45:00 0.2189083 0.4640567 0.3110658 0.8932355</code></pre>
+<pre><code>##                   time    var1_1     var1_2    var1_3      var2
+## 53 2017-10-01 09:36:00 0.1984466 0.04188588 0.3464290 0.5583152
+## 38 2017-10-01 08:51:00 0.7057563 0.22779574 0.2382634 0.7954228
+## 34 2017-10-01 08:39:00 0.5239017 0.75149639 0.3942653 0.4908962
+## 13 2017-10-01 07:36:00 0.8838265 0.22154491 0.9388426 0.2199565
+## 6  2017-10-01 07:15:00 0.7729077 0.45930575 0.1749513 0.6661809
+## 36 2017-10-01 08:45:00 0.9434972 0.40341611 0.4926815 0.8377908</code></pre>
 <p>Here, variable 1 (<code>var1</code>) has three measurements per time point, while variable 2 (<code>var2</code>) has one.</p>
 <p>First, for plotting with ggplot2 we want our data in a tidy long format. I also add another column for faceting that groups the variables from <code>var1</code> together.</p>
 <pre class="r"><code>fake_data_long &lt;- fake_data %&gt;%
@@ -1646,12 +1648,12 @@ head(fake_data)</code></pre>
   mutate(facet = ifelse(x %in% c(&quot;var1_1&quot;, &quot;var1_2&quot;, &quot;var1_3&quot;), &quot;var1&quot;, x))
 head(fake_data_long)</code></pre>
 <pre><code>##                  time      x         y facet
-## 1 2017-10-01 10:09:00 var1_1 0.6621389  var1
-## 2 2017-10-01 10:18:00 var1_1 0.2538266  var1
-## 3 2017-10-01 07:42:00 var1_1 0.6220942  var1
-## 4 2017-10-01 08:18:00 var1_1 0.9209701  var1
-## 5 2017-10-01 09:27:00 var1_1 0.2937356  var1
-## 6 2017-10-01 07:45:00 var1_1 0.2189083  var1</code></pre>
+## 1 2017-10-01 09:36:00 var1_1 0.1984466  var1
+## 2 2017-10-01 08:51:00 var1_1 0.7057563  var1
+## 3 2017-10-01 08:39:00 var1_1 0.5239017  var1
+## 4 2017-10-01 07:36:00 var1_1 0.8838265  var1
+## 5 2017-10-01 07:15:00 var1_1 0.7729077  var1
+## 6 2017-10-01 08:45:00 var1_1 0.9434972  var1</code></pre>
 <p>Now, we can plot this the following way:</p>
 <ul>
 <li>facet by variable</li>
@@ -1672,7 +1674,7 @@ head(fake_data_long)</code></pre>
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>## R version 3.4.3 (2017-11-30)
 ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-## Running under: macOS High Sierra 10.13.2
+## Running under: macOS High Sierra 10.13.3
 ## 
 ## Matrix products: default
 ## BLAS: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRblas.0.dylib
@@ -1685,30 +1687,36 @@ head(fake_data_long)</code></pre>
 ## [1] methods   stats     graphics  grDevices utils     datasets  base     
 ## 
 ## other attached packages:
-##  [1] bindrcpp_0.2    forcats_0.2.0   stringr_1.2.0   dplyr_0.7.4    
-##  [5] purrr_0.2.4     readr_1.1.1     tidyr_0.7.2     tibble_1.4.2   
-##  [9] ggplot2_2.2.1   tidyverse_1.2.1
+##  [1] bindrcpp_0.2       forcats_0.3.0      stringr_1.3.0     
+##  [4] dplyr_0.7.4        purrr_0.2.4        readr_1.1.1       
+##  [7] tidyr_0.8.0        tibble_1.4.2       ggplot2_2.2.1.9000
+## [10] tidyverse_1.2.1   
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] tidyselect_0.2.3 reshape2_1.4.3   haven_1.1.1      lattice_0.20-35 
-##  [5] colorspace_1.3-2 htmltools_0.3.6  yaml_2.1.16      rlang_0.1.6     
-##  [9] pillar_1.1.0     foreign_0.8-69   glue_1.2.0       modelr_0.1.1    
-## [13] readxl_1.0.0     bindr_0.1        plyr_1.8.4       munsell_0.4.3   
-## [17] blogdown_0.4     gtable_0.2.0     cellranger_1.1.0 rvest_0.3.2     
-## [21] psych_1.7.8      evaluate_0.10.1  labeling_0.3     knitr_1.18      
-## [25] parallel_3.4.3   broom_0.4.3      Rcpp_0.12.15     backports_1.1.2 
-## [29] scales_0.5.0     jsonlite_1.5     mnormt_1.5-5     hms_0.4.0       
-## [33] digest_0.6.14    stringi_1.1.6    bookdown_0.5     grid_3.4.3      
-## [37] rprojroot_1.3-2  cli_1.0.0        tools_3.4.3      magrittr_1.5    
-## [41] lazyeval_0.2.1   crayon_1.3.4     pkgconfig_2.0.1  xml2_1.1.1      
-## [45] lubridate_1.7.1  assertthat_0.2.0 rmarkdown_1.8    httr_1.3.1      
-## [49] rstudioapi_0.7   R6_2.2.2         nlme_3.1-131     compiler_3.4.3</code></pre>
+##  [1] tidyselect_0.2.4  xfun_0.1          reshape2_1.4.3   
+##  [4] haven_1.1.1       lattice_0.20-35   colorspace_1.3-2 
+##  [7] htmltools_0.3.6   yaml_2.1.17       rlang_0.2.0.9000 
+## [10] pillar_1.2.1      withr_2.1.1.9000  foreign_0.8-69   
+## [13] glue_1.2.0        modelr_0.1.1      readxl_1.0.0     
+## [16] bindr_0.1         plyr_1.8.4        munsell_0.4.3    
+## [19] blogdown_0.5      gtable_0.2.0      cellranger_1.1.0 
+## [22] rvest_0.3.2       psych_1.7.8       evaluate_0.10.1  
+## [25] labeling_0.3      knitr_1.20        parallel_3.4.3   
+## [28] broom_0.4.3       Rcpp_0.12.15      backports_1.1.2  
+## [31] scales_0.5.0.9000 jsonlite_1.5      mnormt_1.5-5     
+## [34] hms_0.4.1         digest_0.6.15     stringi_1.1.6    
+## [37] bookdown_0.7      grid_3.4.3        rprojroot_1.3-2  
+## [40] cli_1.0.0         tools_3.4.3       magrittr_1.5     
+## [43] lazyeval_0.2.1    crayon_1.3.4      pkgconfig_2.0.1  
+## [46] xml2_1.2.0        lubridate_1.7.3   assertthat_0.2.0 
+## [49] rmarkdown_1.8     httr_1.3.1        rstudioapi_0.7   
+## [52] R6_2.2.2          nlme_3.1-131.1    compiler_3.4.3</code></pre>
 ]]></content>
   </entry>
   <entry>
     <title type="html"><![CDATA[Explore Predictive Maintenance with flexdashboard]]></title>
-    <link href="/2017/11/predictive_maintenance_dashboard/"/>
-    <id>/2017/11/predictive_maintenance_dashboard/</id>
+    <link href="https://shirinsplayground.netlify.com/2017/11/predictive_maintenance_dashboard/"/>
+    <id>https://shirinsplayground.netlify.com/2017/11/predictive_maintenance_dashboard/</id>
     <published>2017-11-02T00:00:00+00:00</published>
     <updated>2017-11-02T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>I have written the following post about <a href="https://blog.codecentric.de/en/2017/11/explore-predictive-maintenance-flexdashboard/">Predictive Maintenance and flexdashboard</a> at my company <a href="https://blog.codecentric.de/en/">codecentric</a>’s blog:</p>
@@ -1733,8 +1741,8 @@ head(fake_data_long)</code></pre>
   </entry>
   <entry>
     <title type="html"><![CDATA[Blockchain &amp; distributed ML - my report from the data2day conference]]></title>
-    <link href="/2017/09/data2day/"/>
-    <id>/2017/09/data2day/</id>
+    <link href="https://shirinsplayground.netlify.com/2017/09/data2day/"/>
+    <id>https://shirinsplayground.netlify.com/2017/09/data2day/</id>
     <published>2017-09-28T00:00:00+00:00</published>
     <updated>2017-09-28T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<div class="figure">
@@ -1797,8 +1805,8 @@ Verteiltes Deep Learning mit TensorFlow und Kubernetes - <a href="https://twitte
   </entry>
   <entry>
     <title type="html"><![CDATA[From Biology to Industry. A Blogger’s Journey to Data Science.]]></title>
-    <link href="/2017/09/from-biology-to-industry.-a-bloggers-journey-to-data-science./"/>
-    <id>/2017/09/from-biology-to-industry.-a-bloggers-journey-to-data-science./</id>
+    <link href="https://shirinsplayground.netlify.com/2017/09/from-biology-to-industry.-a-bloggers-journey-to-data-science./"/>
+    <id>https://shirinsplayground.netlify.com/2017/09/from-biology-to-industry.-a-bloggers-journey-to-data-science./</id>
     <published>2017-09-20T00:00:00+00:00</published>
     <updated>2017-09-20T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>Today, I have given a webinar for the Applied Epidemiology Didactic of the University of Wisconsin - Madison titled “From Biology to Industry. A Blogger’s Journey to Data Science.”</p>
@@ -1808,8 +1816,8 @@ Verteiltes Deep Learning mit TensorFlow und Kubernetes - <a href="https://twitte
   </entry>
   <entry>
     <title type="html"><![CDATA[Why I use R for Data Science - An Ode to R]]></title>
-    <link href="/2017/09/ode_to_r/"/>
-    <id>/2017/09/ode_to_r/</id>
+    <link href="https://shirinsplayground.netlify.com/2017/09/ode_to_r/"/>
+    <id>https://shirinsplayground.netlify.com/2017/09/ode_to_r/</id>
     <published>2017-09-19T00:00:00+00:00</published>
     <updated>2017-09-19T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>Working in Data Science, I often feel like I have to justify using R over Python. And while I do use Python for running scripts in production, I am much more comfortable with the R environment. Basically, whenever I can, I use R for prototyping, testing, visualizing and teaching. But because personal gut-feeling preference isn’t a very good reason to give to (scientifically minded) people, I’ve thought a lot about the pros and cons of using R. This is what I came up with why I still prefer R…</p>
@@ -1834,8 +1842,8 @@ Verteiltes Deep Learning mit TensorFlow und Kubernetes - <a href="https://twitte
   </entry>
   <entry>
     <title type="html"><![CDATA[Welcome to my page!]]></title>
-    <link href="/page/about/"/>
-    <id>/page/about/</id>
+    <link href="https://shirinsplayground.netlify.com/page/about/"/>
+    <id>https://shirinsplayground.netlify.com/page/about/</id>
     <published>2017-09-12T16:06:06+02:00</published>
     <updated>2017-09-12T16:06:06+02:00</updated>
     <content type="html"><![CDATA[
@@ -1875,8 +1883,8 @@ Verteiltes Deep Learning mit TensorFlow und Kubernetes - <a href="https://twitte
   </entry>
   <entry>
     <title type="html"><![CDATA[Moving my blog to blogdown]]></title>
-    <link href="/2017/09/moving-my-blog-to-blogdown/"/>
-    <id>/2017/09/moving-my-blog-to-blogdown/</id>
+    <link href="https://shirinsplayground.netlify.com/2017/09/moving-my-blog-to-blogdown/"/>
+    <id>https://shirinsplayground.netlify.com/2017/09/moving-my-blog-to-blogdown/</id>
     <published>2017-09-12T00:00:00+00:00</published>
     <updated>2017-09-12T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>It’s been a long time coming but I finally moved my blog from Jekyll/Bootstrap on Github pages to blogdown, Hugo and <a href="https://www.netlify.com/">Netlify</a>! Moreover, I also now have my own domain name <a href="https://www.shirin-glander.de">www.shirin-glander.de</a>. :-)</p>
@@ -1928,8 +1936,8 @@ Figure 1: A fancy pie chart.
   </entry>
   <entry>
     <title type="html"><![CDATA[Data Science for Fraud Detection]]></title>
-    <link href="/2017/09/data-science-fraud-detection/"/>
-    <id>/2017/09/data-science-fraud-detection/</id>
+    <link href="https://shirinsplayground.netlify.com/2017/09/data-science-fraud-detection/"/>
+    <id>https://shirinsplayground.netlify.com/2017/09/data-science-fraud-detection/</id>
     <published>2017-09-06T00:00:00+00:00</published>
     <updated>2017-09-06T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>I have written the following post about <a href="https://blog.codecentric.de/en/2017/09/data-science-fraud-detection/">Data Science for Fraud Detection</a> at my company <a href="https://blog.codecentric.de/en/">codecentric</a>&rsquo;s blog:</p>
@@ -1951,8 +1959,8 @@ Figure 1: A fancy pie chart.
   </entry>
   <entry>
     <title type="html"><![CDATA[Migrating from GitHub to GitLab with RStudio (Tutorial)]]></title>
-    <link href="/2017/09/migrating-github-gitlab/"/>
-    <id>/2017/09/migrating-github-gitlab/</id>
+    <link href="https://shirinsplayground.netlify.com/2017/09/migrating-github-gitlab/"/>
+    <id>https://shirinsplayground.netlify.com/2017/09/migrating-github-gitlab/</id>
     <published>2017-09-04T00:00:00+00:00</published>
     <updated>2017-09-04T00:00:00+00:00</updated>
     <content type="html"><![CDATA[
@@ -2086,8 +2094,8 @@ and the repository exists.
   </entry>
   <entry>
     <title type="html"><![CDATA[Social Network Analysis and Topic Modeling of codecentric’s Twitter friends and followers]]></title>
-    <link href="/2017/07/twitter-analysis-codecentric/"/>
-    <id>/2017/07/twitter-analysis-codecentric/</id>
+    <link href="https://shirinsplayground.netlify.com/2017/07/twitter-analysis-codecentric/"/>
+    <id>https://shirinsplayground.netlify.com/2017/07/twitter-analysis-codecentric/</id>
     <published>2017-07-28T00:00:00+00:00</published>
     <updated>2017-07-28T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>I have written the following post about <a href="https://blog.codecentric.de/en/2017/07/combining-social-network-analysis-topic-modeling-characterize-codecentrics-twitter-friends-followers/">Social Network Analysis and Topic Modeling of codecentric&rsquo;s Twitter friends and followers</a> for <a href="https://blog.codecentric.de/en/">codecentric</a>&rsquo;s blog:</p>
@@ -2111,8 +2119,8 @@ and the repository exists.
   </entry>
   <entry>
     <title type="html"><![CDATA[Find all my other posts on my old website!]]></title>
-    <link href="/2017/07/find-all-my-other-posts-on-my-old-website/"/>
-    <id>/2017/07/find-all-my-other-posts-on-my-old-website/</id>
+    <link href="https://shirinsplayground.netlify.com/2017/07/find-all-my-other-posts-on-my-old-website/"/>
+    <id>https://shirinsplayground.netlify.com/2017/07/find-all-my-other-posts-on-my-old-website/</id>
     <published>2017-07-01T00:00:00+00:00</published>
     <updated>2017-07-01T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>For all my other posts, see my old website:
