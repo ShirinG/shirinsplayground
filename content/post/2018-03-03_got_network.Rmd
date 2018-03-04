@@ -14,7 +14,7 @@ slug: got_network
 
 A while back, I did [an analysis of the family network of major characters from the A Song of Ice and Fire books and the Game of Thrones TV show](https://shiring.github.io/networks/2017/05/15/got_final). In that analysis I found out that House Stark (specifically Ned and Sansa) and House Lannister (especially Tyrion) are the most important family connections in Game of Thrones; they also connect many of the story lines and are central parts of the narrative.
 
-I that old post, I used `igraph` for plotting and calculating network metrics.
+In that old post, I used `igraph` for plotting and calculating network metrics.
 
 But there are two packages that integrate network analysis much more nicely with the `tidyverse`: `tidygraph` and `ggraph`. These, I am going to show how to use for analyzing yet another network of characters from **A Song of Ice and Fire** / **Game of Thrones** (to be correct, this new network here is strictly based on the **A Song of Ice and Fire** books, NOT on the TV show).
 
@@ -68,7 +68,7 @@ The first data set I am going to use are the character interactions in all five 
 cooc_all_edges <- read_csv(files[1])
 ```
 
-Because there are so many characters in the books, many of them minor, I am subsetting the data to the 100 characters with the most interactions across all books.The edges are undirected, therefore there are no redundant Source-Target combination; because of this, I gathered Source and Target data before summing up the weights.
+Because there are so many characters in the books, many of them minor, I am subsetting the data to the 100 characters with the most interactions across all books. The edges are undirected, therefore there are no redundant Source-Target combinations; because of this, I gathered Source and Target data before summing up the weights.
 
 ```{r warning=FALSE, message=FALSE}
 main_ch <- cooc_all_edges %>%
