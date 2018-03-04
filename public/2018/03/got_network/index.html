@@ -314,9 +314,9 @@ ga('send', 'pageview');
   
   <div class="postShorten-meta post-meta">
     
-      <time itemprop="datePublished" datetime="2018-03-03T00:00:00Z">
+      <time itemprop="datePublished" datetime="2018-03-04T00:00:00Z">
         
-  March 3, 2018
+  March 4, 2018
 
       </time>
     
@@ -340,7 +340,7 @@ ga('send', 'pageview');
             <div class="main-content-wrap">
               <p>A while back, I did <a href="https://shiring.github.io/networks/2017/05/15/got_final">an analysis of the family network of major characters from the A Song of Ice and Fire books and the Game of Thrones TV show</a>. In that analysis I found out that House Stark (specifically Ned and Sansa) and House Lannister (especially Tyrion) are the most important family connections in Game of Thrones; they also connect many of the storylines and are central parts of the narrative.</p>
 <p>I that old post, I used <code>igraph</code> for plotting and calculating network metrics.</p>
-<p>But there are two packages that integrate network analysis much more nicely with the <code>tidyverse</code>: <code>tidygraph</code> and <code>ggraph</code>. These, I am going to show how to use for analysing yet another network of characters from A Song of Ice and Fire / Game of Thrones.</p>
+<p>But there are two packages that integrate network analysis much more nicely with the <code>tidyverse</code>: <code>tidygraph</code> and <code>ggraph</code>. These, I am going to show how to use for analysing yet another network of characters from <strong>A Song of Ice and Fire</strong> / <strong>Game of Thrones</strong> (to be correct, this new network here is strictly based on the <strong>A Song of Ice and Fire</strong> books, NOT on the TV show).</p>
 <div id="what-can-network-analysis-tell-us" class="section level2">
 <h2>What can network analysis tell us?</h2>
 <p>Network analysis can e.g. be used to explore relationships in social or professional networks. In such cases, we would typically ask questions like:</p>
@@ -352,7 +352,12 @@ ga('send', 'pageview');
 <li>etc.</li>
 </ul>
 <p>These answers can give us a lot of information about the patterns of how people interact.</p>
-<p>So, how do we find out who the most important characters are in this network? We consider a character “important” if he has connections to many other characters. There are a few network properties, that tell us more about this, like node centrality.</p>
+<p>So, how do we find out who the most important characters are in this network? We consider a character “important” if he has connections to many other characters. There are a few network properties, that tell us more about this, like node centrality and which characters are keyplayers in the books.</p>
+<p><strong>A word of caution before you read on: BEWARE of SPOILERS for all books!</strong></p>
+<div class="figure">
+<img src="https://shirinsplayground.netlify.com/post/2018-03-03_got_network_files/figure-html/unnamed-chunk-18-1.png" alt="A Song of Ice and Fire character network across all five books; find out how I made it by following the code below…" />
+<p class="caption">A Song of Ice and Fire character network across all five books; find out how I made it by following the code below…</p>
+</div>
 <pre class="r"><code>library(readr)     # fast reading of csv files
 library(tidyverse) # tidy data analysis
 library(tidygraph) # tidy graph analysis
@@ -491,22 +496,22 @@ main_ch_l</code></pre>
 ## # An undirected simple graph with 1 component
 ## #
 ## # Node Data: 100 x 2 (active)
-##   name               n_rank_trv
-##   &lt;chr&gt;                   &lt;int&gt;
-## 1 Drogo                       1
-## 2 Daenerys-Targaryen          2
-## 3 Viserys-Targaryen           3
-## 4 Aerys-II-Targaryen          4
-## 5 Jon-Arryn                   5
-## 6 Robert-Arryn                6
+##   name             n_rank_trv
+##   &lt;chr&gt;                 &lt;int&gt;
+## 1 Gendry                    1
+## 2 Hot-Pie                   2
+## 3 Lem                       3
+## 4 Beric-Dondarrion          4
+## 5 Sandor-Clegane            5
+## 6 Ilyn-Payne                6
 ## # ... with 94 more rows
 ## #
 ## # Edge Data: 798 x 5
 ##    from    to Type          id weight
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;int&gt;  &lt;int&gt;
-## 1    30    74 Undirected    43      7
-## 2    25    74 Undirected    44      4
-## 3    74    76 Undirected    52      3
+## 1    58    64 Undirected    43      7
+## 2    28    58 Undirected    44      4
+## 3    58    59 Undirected    52      3
 ## # ... with 795 more rows</code></pre>
 </div>
 <div id="centrality" class="section level3">
@@ -578,7 +583,14 @@ main_ch_l</code></pre>
 </div>
 <div id="querying-node-types" class="section level3">
 <h3>Querying node types</h3>
-<p><code>?node_types</code></p>
+<p>We can also query different nodetypes (<code>?node_types</code> gives us a list of options):</p>
+<blockquote>
+<p>These functions all lets the user query whether each node is of a certain type. All of the functions returns a logical vector indicating whether the node is of the type in question. Do note that the types are not mutually exclusive and that nodes can thus be of multiple types.</p>
+</blockquote>
+<p>Here, I am trying out <code>node_is_center()</code> (does the node have the minimal eccentricity in the graph) and <code>node_is_keyplayer()</code> to identify the top 10 keyplayers in the network. You can read more about the <code>node_is_keyplayer()</code> function in the manual for the <code>influenceR</code> package:</p>
+<blockquote>
+<p>The “Key Player” family of node importance algorithms (Borgatti 2006) involves the selection of a metric of node importance and a combinatorial optimization strategy to choose the set S of vertices of size k that maximize that metric. This function implements KPP-Pos, a metric intended to identify k nodes which optimize resource diffusion through the net … <a href="https://cran.r-project.org/web/packages/influenceR/" class="uri">https://cran.r-project.org/web/packages/influenceR/</a></p>
+</blockquote>
 <pre class="r"><code>as_tbl_graph(cooc_all_f, directed = FALSE) %&gt;%
   activate(nodes) %&gt;% 
   mutate(center = node_is_center(),
@@ -594,7 +606,7 @@ main_ch_l</code></pre>
 ## 2 Aeron-Greyjoy                   FALSE  FALSE    
 ## 3 Aerys-II-Targaryen              FALSE  FALSE    
 ## 4 Alliser-Thorne                  FALSE  FALSE    
-## 5 Arianne-Martell                 FALSE  FALSE    
+## 5 Arianne-Martell                 FALSE  TRUE     
 ## 6 Arya-Stark                      FALSE  FALSE    
 ## # ... with 94 more rows
 ## #
@@ -639,7 +651,7 @@ main_ch_l</code></pre>
 ## # ... with 795 more rows</code></pre>
 <div id="edge-betweenness" class="section level3">
 <h3>Edge betweenness</h3>
-<p>Betweenness describes the shortest paths between nodes.</p>
+<p>Similarly to node metrics, we can calculate all kinds of edge metrics. Betweenness, for example, describes the shortest paths between nodes. More about what you can do with edges can be found with <code>?edge_types</code> and in the <a href="https://cran.r-project.org/web/packages/tidygraph/tidygraph.pdf">tidygraph manual</a>.</p>
 <pre class="r"><code>as_tbl_graph(cooc_all_f, directed = FALSE) %&gt;%
   activate(edges) %&gt;% 
   mutate(centrality_e = centrality_edge_betweenness())</code></pre>
@@ -669,7 +681,7 @@ main_ch_l</code></pre>
 </div>
 <div id="the-complete-code" class="section level2">
 <h2>The complete code</h2>
-<p>Now let’s combine what we’ve done above:</p>
+<p>Now let’s combine what we’ve done above in true tidyverse fashion:</p>
 <pre class="r"><code>cooc_all_f_graph &lt;- as_tbl_graph(cooc_all_f, directed = FALSE) %&gt;%
   mutate(n_rank_trv = node_rank_traveller(),
          neighbors = centrality_degree(),
@@ -687,16 +699,16 @@ main_ch_l</code></pre>
 <pre><code>## # A tibble: 100 x 7
 ##    name         n_rank_trv neighbors group center dist_to_center keyplayer
 ##    &lt;chr&gt;             &lt;int&gt;     &lt;dbl&gt; &lt;int&gt; &lt;lgl&gt;           &lt;dbl&gt; &lt;lgl&gt;    
-##  1 Aemon-Targa…         10       13.     2 FALSE              1. FALSE    
-##  2 Aeron-Greyj…         60        5.     5 FALSE              2. FALSE    
-##  3 Aerys-II-Ta…         85       12.     1 FALSE              1. FALSE    
-##  4 Alliser-Tho…          6       13.     2 FALSE              1. FALSE    
-##  5 Arianne-Mar…         76        4.     7 FALSE              2. FALSE    
-##  6 Arya-Stark           63       37.     1 FALSE              1. TRUE     
-##  7 Asha-Greyjoy         59        7.     5 FALSE              1. FALSE    
-##  8 Balon-Greyj…         58       11.     5 FALSE              2. FALSE    
-##  9 Barristan-S…         96       23.     3 FALSE              1. FALSE    
-## 10 Belwas              100        6.     3 FALSE              2. FALSE    
+##  1 Aemon-Targa…         97       13.     2 FALSE              1. FALSE    
+##  2 Aeron-Greyj…         59        5.     5 FALSE              2. TRUE     
+##  3 Aerys-II-Ta…         31       12.     1 FALSE              1. FALSE    
+##  4 Alliser-Tho…         96       13.     2 FALSE              1. FALSE    
+##  5 Arianne-Mar…         55        4.     7 FALSE              2. FALSE    
+##  6 Arya-Stark           90       37.     1 FALSE              1. TRUE     
+##  7 Asha-Greyjoy         61        7.     5 FALSE              1. FALSE    
+##  8 Balon-Greyj…         62       11.     5 FALSE              2. FALSE    
+##  9 Barristan-S…         75       23.     3 FALSE              1. FALSE    
+## 10 Belwas               73        6.     3 FALSE              2. FALSE    
 ## # ... with 90 more rows</code></pre>
 <pre class="r"><code>cooc_all_f_graph %&gt;%
   activate(edges) %&gt;% # %E&gt;%
@@ -717,42 +729,44 @@ main_ch_l</code></pre>
 ## # ... with 788 more rows</code></pre>
 <div id="plotting-with-ggraph" class="section level3">
 <h3>Plotting with ggraph</h3>
+<p>For plotting our graph object, we can make good ues of the <code>ggraph</code> package:</p>
 <blockquote>
 <p>ggraph is an extension of ggplot2 aimed at supporting relational data structures such as networks, graphs, and trees. While it builds upon the foundation of ggplot2 and its API it comes with its own self-contained set of geoms, facets, etc., as well as adding the concept of layouts to the grammar. <a href="https://github.com/thomasp85/ggraph" class="uri">https://github.com/thomasp85/ggraph</a></p>
 </blockquote>
-<p>There are lots of <a href="https://www.data-imaginist.com/2017/ggraph-introduction-layouts/">options for layouts</a>, here I am using a <a href="http://igraph.org/r/doc/layout_with_fr.html">Fruchterman-Reingold</a> algorithm.</p>
+<p>First, I am going to define a layout. There are lots of <a href="https://www.data-imaginist.com/2017/ggraph-introduction-layouts/">options for layouts</a>, here I am using a <a href="http://igraph.org/r/doc/layout_with_fr.html">Fruchterman-Reingold</a> algorithm.</p>
 <pre class="r"><code>layout &lt;- create_layout(cooc_all_f_graph, 
                         layout = &quot;fr&quot;)</code></pre>
+<p>The rest works like any <code>ggplot2</code> function call, just that we use special geoms for our network, like <code>geom_edge_density()</code> to draw a shadow where the edge density is higher, <code>geom_edge_link()</code> to connect edges with a straight line, <code>geom_node_point()</code> to draw node points and <code>geom_node_text()</code> to draw the labels. More options can be found <a href="https://github.com/thomasp85/ggraph">here</a>.</p>
+<p>Here are three options of plotting the network with the metrics we just calculated:</p>
 <pre class="r"><code>ggraph(layout) + 
     geom_edge_density(aes(fill = weight)) +
     geom_edge_link(aes(width = weight), alpha = 0.2) + 
     geom_node_point(aes(color = factor(group)), size = 10) +
     geom_node_text(aes(label = name), size = 8, repel = TRUE) +
     scale_color_brewer(palette = &quot;Set1&quot;) +
-    theme_graph()</code></pre>
+    theme_graph() +
+    labs(title = &quot;A Song of Ice and Fire character network&quot;,
+         subtitle = &quot;Nodes are colored by group&quot;)</code></pre>
 <p><img src="/post/2018-03-03_got_network_files/figure-html/unnamed-chunk-18-1.png" width="2880" /></p>
-<pre class="r"><code>cols &lt;- RColorBrewer::brewer.pal(3, &quot;Set1&quot;)
-ggraph(layout) + 
+<p>Interestingly, many of the groups reflect the narrative perfectly: the men from the Night’s Watch are grouped together with the Wildlings, Stannis, Davos, Selyse and Melisandre form another group, the Greyjoys, Bran’s group in Winterfell before they left for the North, Dany and her squad and the Martells (except for Quentyn, who “belongs” to Dany - just like in the books ;-)). The big group around the remaining characters is the only one that’s not split up very well.</p>
+<p>For the next graphs, I want specific colors form the <code>RColorBrewer</code> palette “Set1”:</p>
+<pre class="r"><code>cols &lt;- RColorBrewer::brewer.pal(3, &quot;Set1&quot;)</code></pre>
+<pre class="r"><code>ggraph(layout) + 
     geom_edge_density(aes(fill = weight)) +
     geom_edge_link(aes(width = weight), alpha = 0.2) + 
     geom_node_point(aes(color = factor(center), size = dist_to_center)) +
     geom_node_text(aes(label = name), size = 8, repel = TRUE) +
     scale_colour_manual(values = c(cols[2], cols[1])) +
-    theme_graph()</code></pre>
-<p><img src="/post/2018-03-03_got_network_files/figure-html/unnamed-chunk-19-1.png" width="2880" /></p>
-<pre class="r"><code>ggraph(layout) + 
-    geom_edge_density(aes(fill = weight)) +
-    geom_edge_link(aes(width = weight), alpha = 0.2) + 
-    geom_node_point(aes(color = factor(keyplayer)), size = 10) +
-    geom_node_text(aes(label = name), size = 8, repel = TRUE) +
-    scale_colour_manual(values = c(cols[2], cols[1])) +
-    theme_graph()</code></pre>
+    theme_graph() +
+    labs(title = &quot;A Song of Ice and Fire character network&quot;,
+         subtitle = &quot;Nodes are colored by centeredness&quot;)</code></pre>
 <p><img src="/post/2018-03-03_got_network_files/figure-html/unnamed-chunk-20-1.png" width="2880" /></p>
+<p>In the next graph I plotted the center-most characters in red and the distance to center as node size. The two center characters across all books are Robert Baratheon and Tyrion Lannister. I had not expected Robert, since he dies pretty much right aways but I guess he and his rebellion following Lyanna’s “abduction” is the main trigger for most of what happens in the books, so why not… And that Tyrion is the best character (and George RR Martin’s favorite) is a given, anyways! ;-)</p>
 </div>
 </div>
 <div id="characters-devided-by-books" class="section level2">
 <h2>Characters devided by books</h2>
-<p>The second data set I am going to use is a comparison of character interactions in the five books. The rest</p>
+<p>The second data set I am going to use is a comparison of character interactions in the five books.</p>
 <p><strong>A little node on the side:</strong> My original plan was to loop over the separate edge files for each book, concatenate them together with the information from which book they are and then plot them via facetting. This turned out to be a bad solution because I wanted to show the different keyplayers in each of the five books. So, instead of using one joined graph, I created separate graphs for every book and used the <code>bind_graphs()</code> and <code>facet_nodes()</code> functions to plot them together.</p>
 <pre class="r"><code>for (i in 1:5) {
   cooc &lt;- read_csv(paste0(&quot;/Users/shiringlander/Documents/Github/Data/asoiaf/data//asoiaf-book&quot;, i, &quot;-edges.csv&quot;)) %&gt;%
@@ -761,6 +775,7 @@ ggraph(layout) +
   
   assign(paste0(&quot;coocs_book_&quot;, i), cooc)
 }</code></pre>
+<p>The concepts are the same as above, here I want to know the keyplayers in each book:</p>
 <pre class="r"><code>cooc_books_1_graph &lt;- as_tbl_graph(coocs_book_1, directed = FALSE) %&gt;%
   mutate(book = &quot;Book 1: A Game of Thrones&quot;,
          keyplayer = node_is_keyplayer(k = 10))
@@ -780,6 +795,7 @@ cooc_books_4_graph &lt;- as_tbl_graph(coocs_book_4, directed = FALSE) %&gt;%
 cooc_books_5_graph &lt;- as_tbl_graph(coocs_book_5, directed = FALSE) %&gt;%
   mutate(book = &quot;Book 5: A Dance with Dragons&quot;,
          keyplayer = node_is_keyplayer(k = 10))</code></pre>
+<p>And let’s combine and plot the keyplayers:</p>
 <pre class="r"><code>cooc_books_1_graph %&gt;% 
   bind_graphs(cooc_books_2_graph)  %&gt;%
   bind_graphs(cooc_books_3_graph)  %&gt;%
@@ -794,6 +810,17 @@ cooc_books_5_graph &lt;- as_tbl_graph(coocs_book_5, directed = FALSE) %&gt;%
     theme_graph() +
     scale_colour_manual(values = c(cols[2], cols[1]))</code></pre>
 <p><img src="/post/2018-03-03_got_network_files/figure-html/unnamed-chunk-23-1.png" width="960" /></p>
+<p>The networks and keyplayers of the five different books also offer a few surprises but also a lot that reflects the narrative quite well. I’m not going to go into details here as that would go a bit too far for an R-related blog - but if you are interested in in-depth discussions about the books, email me… ;-)</p>
+</div>
+<div id="more-info" class="section level2">
+<h2>More info</h2>
+<p>You can find more info about</p>
+<ul>
+<li><code>tidygraph</code> <a href="https://cran.r-project.org/web/packages/tidygraph">here</a></li>
+<li><code>ggraph</code> <a href="https://cran.r-project.org/web/packages/ggraph">here</a></li>
+<li><code>influenceR</code> <a href="https://cran.r-project.org/web/packages/influenceR">here</a></li>
+<li>and DataCamp has a Python project for the same data set <a href="https://www.datacamp.com/projects/76?utm_campaign=broadcast&amp;utm_medium=broadcast_8&amp;utm_source=main">here</a></li>
+</ul>
 <hr />
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>## R version 3.4.3 (2017-11-30)
