@@ -15,7 +15,7 @@ slug: got_network
 
 
 <p>A while back, I did <a href="https://shiring.github.io/networks/2017/05/15/got_final">an analysis of the family network of major characters from the A Song of Ice and Fire books and the Game of Thrones TV show</a>. In that analysis I found out that House Stark (specifically Ned and Sansa) and House Lannister (especially Tyrion) are the most important family connections in Game of Thrones; they also connect many of the story lines and are central parts of the narrative.</p>
-<p>I that old post, I used <code>igraph</code> for plotting and calculating network metrics.</p>
+<p>In that old post, I used <code>igraph</code> for plotting and calculating network metrics.</p>
 <p>But there are two packages that integrate network analysis much more nicely with the <code>tidyverse</code>: <code>tidygraph</code> and <code>ggraph</code>. These, I am going to show how to use for analyzing yet another network of characters from <strong>A Song of Ice and Fire</strong> / <strong>Game of Thrones</strong> (to be correct, this new network here is strictly based on the <strong>A Song of Ice and Fire</strong> books, NOT on the TV show).</p>
 <div id="what-can-network-analysis-tell-us" class="section level2">
 <h2>What can network analysis tell us?</h2>
@@ -68,7 +68,7 @@ files</code></pre>
 <h2>Characters across all books</h2>
 <p>The first data set I am going to use are the character interactions in all five books. I am not using the node files here, because I find the edge names sufficient for this demonstration. If you wanted to have nice name labels, you could use the node files.</p>
 <pre class="r"><code>cooc_all_edges &lt;- read_csv(files[1])</code></pre>
-<p>Because there are so many characters in the books, many of them minor, I am subsetting the data to the 100 characters with the most interactions across all books.The edges are undirected, therefore there are no redundant Source-Target combination; because of this, I gathered Source and Target data before summing up the weights.</p>
+<p>Because there are so many characters in the books, many of them minor, I am subsetting the data to the 100 characters with the most interactions across all books. The edges are undirected, therefore there are no redundant Source-Target combinations; because of this, I gathered Source and Target data before summing up the weights.</p>
 <pre class="r"><code>main_ch &lt;- cooc_all_edges %&gt;%
   select(-Type) %&gt;%
   gather(x, name, Source:Target) %&gt;%
@@ -172,22 +172,22 @@ main_ch_l</code></pre>
 ## # An undirected simple graph with 1 component
 ## #
 ## # Node Data: 100 x 2 (active)
-##   name                            n_rank_trv
-##   &lt;chr&gt;                                &lt;int&gt;
-## 1 Janos-Slynt                              1
-## 2 Aemon-Targaryen-(Maester-Aemon)          2
-## 3 Jeor-Mormont                             3
-## 4 Samwell-Tarly                            4
-## 5 Qhorin-Halfhand                          5
-## 6 Ygritte                                  6
+##   name            n_rank_trv
+##   &lt;chr&gt;                &lt;int&gt;
+## 1 Arianne-Martell          1
+## 2 Doran-Martell            2
+## 3 Oberyn-Martell           3
+## 4 Tywin-Lannister          4
+## 5 Varys                    5
+## 6 Shae                     6
 ## # ... with 94 more rows
 ## #
 ## # Edge Data: 798 x 5
 ##    from    to Type          id weight
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;int&gt;  &lt;int&gt;
-## 1     2    75 Undirected    43      7
-## 2     2    76 Undirected    44      4
-## 3     2    73 Undirected    52      3
+## 1    41    46 Undirected    43      7
+## 2    39    41 Undirected    44      4
+## 3    41    43 Undirected    52      3
 ## # ... with 795 more rows</code></pre>
 </div>
 <div id="centrality" class="section level3">
@@ -283,7 +283,7 @@ main_ch_l</code></pre>
 ## 3 Aerys-II-Targaryen              FALSE  FALSE    
 ## 4 Alliser-Thorne                  FALSE  FALSE    
 ## 5 Arianne-Martell                 FALSE  FALSE    
-## 6 Arya-Stark                      FALSE  FALSE    
+## 6 Arya-Stark                      FALSE  TRUE     
 ## # ... with 94 more rows
 ## #
 ## # Edge Data: 798 x 5
@@ -375,16 +375,16 @@ main_ch_l</code></pre>
 <pre><code>## # A tibble: 100 x 7
 ##    name         n_rank_trv neighbors group center dist_to_center keyplayer
 ##    &lt;chr&gt;             &lt;int&gt;     &lt;dbl&gt; &lt;int&gt; &lt;lgl&gt;           &lt;dbl&gt; &lt;lgl&gt;    
-##  1 Aemon-Targa…         45       13.     2 FALSE              1. FALSE    
-##  2 Aeron-Greyj…         21        5.     5 FALSE              2. FALSE    
-##  3 Aerys-II-Ta…         11       12.     1 FALSE              1. FALSE    
-##  4 Alliser-Tho…         48       13.     2 FALSE              1. FALSE    
-##  5 Arianne-Mar…         29        4.     7 FALSE              2. FALSE    
-##  6 Arya-Stark           79       37.     1 FALSE              1. FALSE    
-##  7 Asha-Greyjoy         20        7.     5 FALSE              1. FALSE    
-##  8 Balon-Greyj…         18       11.     5 FALSE              2. FALSE    
-##  9 Barristan-S…         54       23.     3 FALSE              1. FALSE    
-## 10 Belwas               52        6.     3 FALSE              2. FALSE    
+##  1 Aemon-Targa…         48       13.     2 FALSE              1. FALSE    
+##  2 Aeron-Greyj…         94        5.     5 FALSE              2. FALSE    
+##  3 Aerys-II-Ta…         74       12.     1 FALSE              1. FALSE    
+##  4 Alliser-Tho…         50       13.     2 FALSE              1. FALSE    
+##  5 Arianne-Mar…         85        4.     7 FALSE              2. FALSE    
+##  6 Arya-Stark           63       37.     1 FALSE              1. FALSE    
+##  7 Asha-Greyjoy         93        7.     5 FALSE              1. FALSE    
+##  8 Balon-Greyj…         92       11.     5 FALSE              2. FALSE    
+##  9 Barristan-S…         83       23.     3 FALSE              1. FALSE    
+## 10 Belwas               77        6.     3 FALSE              2. FALSE    
 ## # ... with 90 more rows</code></pre>
 <pre class="r"><code>cooc_all_f_graph %&gt;%
   activate(edges) %&gt;% # %E&gt;%
