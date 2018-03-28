@@ -1,0 +1,885 @@
+
+
+  
+    
+  
+
+
+  
+
+
+
+
+  
+
+
+  
+
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hugo 0.27 with theme Tranquilpeak 0.4.1-BETA">
+    <title>My upcoming meetup talks about Deep Learning with Keras and explaining complex Machine Learning Models with LIME</title>
+    <meta name="author" content="Dr. Shirin Glander">
+    <meta name="keywords" content=", R">
+
+    <link rel="icon" href="img/favicon.png">
+    
+
+    
+    <meta name="description" content="I’ll be talking about Deep Learning with Keras in R and Python at the following upcoming meetup:
+ Ruhr.Py 2018 on Wednesday, April 4th   Introducing Deep Learning with Keras and Python Keras is a high-level API written in Python for building and prototyping neural networks. It can be used on top of TensorFlow, Theano or CNTK. In this talk we build, train and visualize a Model using Python and Keras - all interactive with Jupyter Notebooks!">
+    <meta property="og:description" content="I’ll be talking about Deep Learning with Keras in R and Python at the following upcoming meetup:
+ Ruhr.Py 2018 on Wednesday, April 4th   Introducing Deep Learning with Keras and Python Keras is a high-level API written in Python for building and prototyping neural networks. It can be used on top of TensorFlow, Theano or CNTK. In this talk we build, train and visualize a Model using Python and Keras - all interactive with Jupyter Notebooks!">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="My upcoming meetup talks about Deep Learning with Keras and explaining complex Machine Learning Models with LIME">
+    <meta property="og:url" content="/2018/03/meetup_talk_ruhrpy_april_18/">
+    <meta property="og:site_name" content="Shirin&#39;s playgRound">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Shirin&#39;s playgRound">
+    <meta name="twitter:description" content="I’ll be talking about Deep Learning with Keras in R and Python at the following upcoming meetup:
+ Ruhr.Py 2018 on Wednesday, April 4th   Introducing Deep Learning with Keras and Python Keras is a high-level API written in Python for building and prototyping neural networks. It can be used on top of TensorFlow, Theano or CNTK. In this talk we build, train and visualize a Model using Python and Keras - all interactive with Jupyter Notebooks!">
+    
+      <meta name="twitter:creator" content="@ShirinGlander">
+    
+    
+
+    
+    
+
+    
+      <meta property="og:image" content="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=640">
+    
+
+    
+      <meta property="og:image" content="https://secure.meetupstatic.com/s/img/5455565085016210254/logo/svg/logo--script.svg">
+    
+    
+    
+
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="/css/style-hbs5om8csx9a8yrv5hnhpi2qqdv4ykuslajwbramhqxvleqbfklxgek50hye.min.css" />
+    
+    
+
+    
+      
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-86119417-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="/">Shirin&#39;s playgRound</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <h1 class="sidebar-profile-title">My upcoming meetup talks about Deep Learning with Keras and explaining complex Machine Learning Models with LIME</h1>
+        <a href="/#about">
+          <img class="sidebar-profile-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Dr. Shirin Glander</h4>
+        
+          <h5 class="sidebar-profile-bio">Biologist turned Bioinformatician turned Data Scientist</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/archives/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/categories/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/tags/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/page/about/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/page/conferences_podcasts_webinars/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bullhorn"></i>
+      
+      <span class="sidebar-button-desc">Hear me talk</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://shiring.github.io/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">My old R-blog</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/ShirinG">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.linkedin.com/in/shirin-glander-01120881/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-linkedin"></i>
+      
+      <span class="sidebar-button-desc">LinkedIn</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://stackoverflow.com/users/6623620/shirin-glander">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-stack-overflow"></i>
+      
+      <span class="sidebar-button-desc">Stack Overflow</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/ShirinGlander">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.xing.com/profile/Shirin_Glander">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-xing"></i>
+      
+      <span class="sidebar-button-desc">Xing</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.meetup.com/Munster-R-Users-Group">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-meetup"></i>
+      
+      <span class="sidebar-button-desc">MünsteR</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.r-bloggers.com/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-book"></i>
+      
+      <span class="sidebar-button-desc">R-bloggers</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.r-users.com/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-book"></i>
+      
+      <span class="sidebar-button-desc">R-users</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaOut
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-center">
+  
+    <h1 class="post-title" itemprop="headline">
+      My upcoming meetup talks about Deep Learning with Keras and explaining complex Machine Learning Models with LIME
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2018-03-28T00:00:00Z">
+        
+  March 28, 2018
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="/categories/r">R</a>, 
+    
+      <a class="category-link" href="/categories/meetup">meetup</a>, 
+    
+      <a class="category-link" href="/categories/keras">keras</a>
+    
+  
+
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>I’ll be talking about Deep Learning with Keras in R and Python at the following upcoming meetup:</p>
+<ul>
+<li><a href="https://www.meetup.com/Ruhr-py/events/248093628/">Ruhr.Py 2018</a> on Wednesday, April 4th</li>
+</ul>
+<blockquote>
+<p>Introducing Deep Learning with Keras and Python Keras is a high-level API written in Python for building and prototyping neural networks. It can be used on top of TensorFlow, Theano or CNTK. In this talk we build, train and visualize a Model using Python and Keras - all interactive with Jupyter Notebooks!</p>
+</blockquote>
+<hr />
+<p>And I’ll be talking about explaining complex Machine Learning Models with LIME at this upcoming meetup:</p>
+<ul>
+<li><a href="https://www.meetup.com/Hamburg-Data-Science-Meetup/events/244145443/">Data Science Meetup Hamburg</a> on Thursday, April 12th</li>
+</ul>
+<blockquote>
+<p>Traditional machine learning workflows focus heavily on model training and optimization; the best model is usually chosen via performance measures like accuracy or error and we tend to assume that a model is good enough for deployment if it passes certain thresholds of these performance criteria. Why a model makes the predictions it makes, however, is generally neglected. But being able to understand and interpret such models can be immensely important for improving model quality, increasing trust and transparency and for reducing bias. Because complex machine learning models are essentially black boxes and too complicated to understand, we need to use approximations to get a better sense of how they work. One such approach is LIME, which stands for Local Interpretable Model-agnostic Explanations and is a tool that helps understand and explain the decisions made by complex machine learning models.</p>
+</blockquote>
+<blockquote>
+<p>Dr. Shirin Glander is Data Scientist at codecentric AG. She has received a PhD in Bioinformatics and applies methods of analysis and visualization from different areas - for instance, machine learning, classical statistics, text mining, etc. -to extract and leverage information from data.</p>
+</blockquote>
+<div class="figure">
+<img src="https://secure.meetupstatic.com/s/img/5455565085016210254/logo/svg/logo--script.svg" />
+
+</div>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="//tags/r/">R</a>
+
+  <a class="tag tag--primary tag--small" href="//tags/meetup/">meetup</a>
+
+  <a class="tag tag--primary tag--small" href="//tags/keras/">keras</a>
+
+  <a class="tag tag--primary tag--small" href="//tags/deep-learning/">deep learning</a>
+
+  <a class="tag tag--primary tag--small" href="//tags/machine-learning/">machine learning</a>
+
+  <a class="tag tag--primary tag--small" href="//tags/neural-nets/">neural nets</a>
+
+                  </div>
+                
+              
+            
+            
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2018/03/meetup_april18/" data-tooltip="Join MünsteR for our next meetup on deep learning with Keras and R">
+              
+                <i class="fa fa-angle-left"></i>
+                <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+              </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2018/03/twimlai115/" data-tooltip="Sketchnotes from TWiML&amp;AI #115: Scaling Machine Learning at Uber with Mike Del Balso">
+              
+                <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2018/03/meetup_talk_ruhrpy_april_18/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2018/03/meetup_talk_ruhrpy_april_18/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2018/03/meetup_talk_ruhrpy_april_18/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2018 Dr. Shirin Glander. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2018/03/meetup_april18/" data-tooltip="Join MünsteR for our next meetup on deep learning with Keras and R">
+              
+                <i class="fa fa-angle-left"></i>
+                <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+              </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2018/03/twimlai115/" data-tooltip="Sketchnotes from TWiML&amp;AI #115: Scaling Machine Learning at Uber with Mike Del Balso">
+              
+                <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2018/03/meetup_talk_ruhrpy_april_18/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2018/03/meetup_talk_ruhrpy_april_18/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2018/03/meetup_talk_ruhrpy_april_18/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=%2F2018%2F03%2Fmeetup_talk_ruhrpy_april_18%2F">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=%2F2018%2F03%2Fmeetup_talk_ruhrpy_april_18%2F">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=%2F2018%2F03%2Fmeetup_talk_ruhrpy_april_18%2F">
+          <i class="fa fa-google-plus"></i><span>Share on Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Dr. Shirin Glander</h4>
+    
+      <div id="about-card-bio">Biologist turned Bioinformatician turned Data Scientist</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Data Scientist
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Münster, Germany
+      </div>
+    
+  </div>
+</div>
+
+    <div id="algolia-search-modal" class="modal-container">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="close-button"><i class="fa fa-close"></i></span>
+      <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
+        <span class="searchby-algolia-text text-color-light text-small">by</span>
+        <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
+      </a>
+      <i class="search-icon fa fa-search"></i>
+      <form id="algolia-search-form">
+        <input type="text" id="algolia-search-input" name="search"
+          class="form-control input--large search-input" placeholder="Search" />
+      </form>
+    </div>
+    <div class="modal-body">
+      <div class="no-result text-color-light text-center">no post found</div>
+      <div class="results">
+        
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/03/meetup_april18/">
+                <h3 class="media-heading">Join MünsteR for our next meetup on deep learning with Keras and R</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Mar 3, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">In our next MünsteR R-user group meetup on Tuesday, April 17th, 2018 Kai Lichtenberg will talk about deep learning with Keras. You can RSVP here: http://meetu.ps/e/DDY1B/w54bW/f
+ Although neural networks have been around for quite a while now, deep learning really just took of a few years ago. It pretty much all started when Alex Krizhevsky and Geoffrey Hinton utterly crushed classic image recognition in the 2012 ImageNet Large Scale Visual Recognition Challenge by implementing a deep neural network with CUDA on graphics cards.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/03/meetup_talk_ruhrpy_april_18/">
+                <h3 class="media-heading">My upcoming meetup talks about Deep Learning with Keras and explaining complex Machine Learning Models with LIME</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Mar 3, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">I’ll be talking about Deep Learning with Keras in R and Python at the following upcoming meetup:
+ Ruhr.Py 2018 on Wednesday, April 4th   Introducing Deep Learning with Keras and Python Keras is a high-level API written in Python for building and prototyping neural networks. It can be used on top of TensorFlow, Theano or CNTK. In this talk we build, train and visualize a Model using Python and Keras - all interactive with Jupyter Notebooks!</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/03/twimlai115/">
+                <h3 class="media-heading">Sketchnotes from TWiML&amp;AI #115: Scaling Machine Learning at Uber with Mike Del Balso</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Mar 3, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">These are my sketchnotes for Sam Charrington’s podcast This Week in Machine Learning and AI about Scaling Machine Learning at Uber with Mike Del Balso:
+Sketchnotes from TWiMLAI talk #115: Scaling Machine Learning at Uber with Mike Del Balso
+ You can listen to the podcast here.
+ In this episode, I speak with Mike Del Balso, Product Manager for Machine Learning Platforms at Uber. Mike and I sat down last fall at the Georgian Partners Portfolio conference to discuss his presentation “Finding success with machine learning in your company.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/03/got_network/">
+                <h3 class="media-heading">Another Game of Thrones network analysis - this time with tidygraph and ggraph</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Mar 3, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">A while back, I did an analysis of the family network of major characters from the A Song of Ice and Fire books and the Game of Thrones TV show. In that analysis I found out that House Stark (specifically Ned and Sansa) and House Lannister (especially Tyrion) are the most important family connections in Game of Thrones; they also connect many of the story lines and are central parts of the narrative.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/02/twimlai111/">
+                <h3 class="media-heading">Sketchnotes from TWiML&amp;AI #111: Learning “Common Sense” and Physical Concepts with Roland Memisevic</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Feb 2, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">These are my sketchnotes for Sam Charrington’s podcast This Week in Machine Learning and AI about Learning “Common Sense” and Physical Concepts with Roland Memisevic:
+Sketchnotes from TWiMLAI talk #111: Learning “Common Sense” and Physical Concepts with Roland Memisevic
+ You can listen to the podcast here.
+ In today’s episode, I’m joined by Roland Memisevic, co-founder, CEO, and chief scientist at Twenty Billion Neurons. Roland joined me at the RE•WORK Deep Learning Summit in Montreal to discuss the work his company is doing to train deep neural networks to understand physical actions.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/02/deep_learning_keras_tensorflow_18_04/">
+                <h3 class="media-heading">April 12th &amp; 13th in Hamburg: Workshop on Deep Learning with Keras and TensorFlow in R</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Feb 2, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Registration is now open for my 1.5-day workshop on deep learning with Keras and TensorFlow using R.
+It will take place on April 12th and 13th in Hamburg, Germany.
+You can read about one participant’s experience in my last workshop:
+ Big Data – a buzz word you can find everywhere these days, from nerdy blogs to scientific research papers and even in the news. But how does Big Data Analysis work, exactly?</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/02/m3_2018/">
+                <h3 class="media-heading">Announcing my talk about explainability of machine learning models at Minds Mastering Machines conference</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Feb 2, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">On Wednesday, April 25th 2018 I am going to talk about explainability of machine learning models at the Minds Mastering Machines conference in Cologne. The conference will be in German, though.
+  ERKLÄRBARKEIT VON MACHINE LEARNING: WIE KÖNNEN WIR VERTRAUEN IN KOMPLEXE MODELLE SCHAFFEN?
+  Mit Machine-Learning getroffene Entscheidungen sind inhärent schwierig – wenn nicht gar unmöglich – nachzuvollziehen. Die Komplexität einiger der besten Modelle, wie Neuronale Netzwerke, ist genau das, was sie so erfolgreich macht.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/02/herr_mies_wills_wissen/">
+                <h3 class="media-heading">I talk about machine learning with Daniel Mies (Podcast in German, though)</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Feb 2, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">For those of you out there who speak German:
+I was interviewed for a tech podcast where I talked about machine learning, neural nets, why I love R and Rstudio and how I became a Data Scientist.
+You can download and listen to the podcast here: https://mies.me/2018/01/31/hmww17-machine-learning-mit-dr-shirin-glander/
+  In der aktuellen Episode gibt Dr. Shirin Glander (Twitter, Homepage) uns ein paar Einblicke in das Thema Machine Learning. Wir klären zunächst, was Machine Learning ist und welche Möglichkeiten es bietet bevor wir etwas mehr in die Tiefe gehen.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/01/jax2018/">
+                <h3 class="media-heading">JAX 2018 talk announcement: Deep Learning - a Primer</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jan 1, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">I am happy to announce that on Tuesday, April 24th 2018 Uwe Friedrichsen and I will give a talk about Deep Learning - a Primer at the JAX conference in Mainz, Germany.
+ Deep Learning is one of the “hot” topics in the AI area – a lot of hype, a lot of inflated expectation, but also quite some impressive success stories. As some AI experts already predict that Deep Learning will become “Software 2.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/01/twimlai94/">
+                <h3 class="media-heading">Sketchnotes from TWiML&amp;AI #94: Neuroevolution: Evolving Novel Neural Network Architectures with Kenneth Stanley</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jan 1, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">These are my sketchnotes for Sam Charrington’s podcast This Week in Machine Learning and AI about Neuroevolution: Evolving Novel Neural Network Architectures with Kenneth Stanley:
+Sketchnotes from TWiMLAI talk #94: Neuroevolution: Evolving Novel Neural Network Architectures with Kenneth Stanley
+ You can listen to the podcast here.
+ Kenneth studied under TWiML Talk #47 guest Risto Miikkulainen at UT Austin, and joined Uber AI Labs after Geometric Intelligence , the company he co-founded with Gary Marcus and others, was acquired in late 2016.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+      </div>
+    </div>
+    <div class="modal-footer">
+      <p class="results-count text-medium"
+         data-message-zero="no post found"
+         data-message-one="1 post found"
+         data-message-other="{n} posts found">
+         31 posts found
+      </p>
+    </div>
+  </div>
+</div>
+    
+  
+    
+    <div id="cover" style="background-image:url('/images/autumn-2789234_1920.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" integrity="sha256-IFHWFEbU2/+wNycDECKgjIRSirRNIDp2acEB5fvdVRU=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js" integrity="sha256-+mpyNVJsNt4rVXCw0F+pAOiB3YxmHgrbJsx4ecPuUaI=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.js" integrity="sha256-vMxgR/7FtLovVA+IPrR7+xTgIgARH7y9VZQnmmi0HDI=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.js" integrity="sha256-N0qFUh7/9vLvia87dDndewmsgsyYoNkdA212tPc+2NI=" crossorigin="anonymous"></script>
+
+
+<script src="/js/script-kr8dyqj6rb6ortyib7whfo9x9p6td6zo8t1v4fdz4ecx5kwybsdlmk1slygn.min.js"></script>
+
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = '\/2018\/03\/meetup_talk_ruhrpy_april_18\/';
+          
+            this.page.identifier = '\/2018\/03\/meetup_talk_ruhrpy_april_18\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'shirinsplayground';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+    
+  </body>
+</html>
+
