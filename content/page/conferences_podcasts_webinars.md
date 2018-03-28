@@ -9,6 +9,8 @@ thumbnailImage: /img/Bewerbungsfoto.jpg
 
 Here, you can find a list of all the talks I gave at conferences, webinars, podcasts, workshops, and all the other places you can and could hear me talk. :-)
 
+![](https://secure.meetupstatic.com/s/img/5455565085016210254/logo/svg/logo--script.svg)
+
 ## Workshops I am giving
 
 - [Workshop on Deep Learning with Keras and TensorFlow in R](https://shirinsplayground.netlify.com/2017/11/deep_learning_keras_tensorflow/)
@@ -18,11 +20,21 @@ Date and place depend on who and how many people are interested, so please conta
 
 ## Upcoming talks, webinars, podcasts, etc.
 
+- [I'll be talking about explaining complex Machine Learning Models with LIME](https://shirinsplayground.netlify.com/2018/03/meetup_talk_ruhrpy_april_18/) at this upcoming meetup: [Data Science Meetup Hamburg](https://www.meetup.com/Hamburg-Data-Science-Meetup/events/244145443/) on Thursday, April 12th 2018
+
+> Traditional machine learning workflows focus heavily on model training and optimization; the best model is usually chosen via performance measures like accuracy or error and we tend to assume that a model is good enough for deployment if it passes certain thresholds of these performance criteria. Why a model makes the predictions it makes, however, is generally neglected. But being able to understand and interpret such models can be immensely important for improving model quality, increasing trust and transparency and for reducing bias. Because complex machine learning models are essentially black boxes and too complicated to understand, we need to use approximations to get a better sense of how they work. One such approach is LIME, which stands for Local Interpretable Model-agnostic Explanations and is a tool that helps understand and explain the decisions made by complex machine learning models.
+Dr. Shirin Glander is Data Scientist at codecentric AG. She has received a PhD in Bioinformatics and applies methods of analysis and visualization from different areas - for instance, machine learning, classical statistics, text mining, etc. -to extract and leverage information from data.
+
+- [I'll be talking about Deep Learning with Keras in R and Python](https://shirinsplayground.netlify.com/2018/03/meetup_talk_ruhrpy_april_18/) at the following upcoming meetup: [Ruhr.Py 2018](https://www.meetup.com/Ruhr-py/events/248093628/) on Wednesday, April 4th 2018
+
+> Introducing Deep Learning with Keras and Python
+Keras is a high-level API written in Python for building and prototyping neural networks. It can be used on top of TensorFlow, Theano or CNTK. In this talk we build, train and visualize a Model using Python and Keras - all interactive with Jupyter Notebooks!
+
 - [Announcing my talk about explainability of machine learning models at Minds Mastering Machines Conference](https://shirinsplayground.netlify.com/2018/02/m3_2018/)
 
 > On Wednesday, April 25th 2018 I am going to talk about explainability of machine learning models at the Minds Mastering Machines conference in Cologne.
 
-- [JAX 2018 talk announcement: Deep Learning - a Primer](JAX 2018 talk announcement: Deep Learning - a Primer)
+- [JAX 2018 talk announcement: Deep Learning - a Primer](https://shirinsplayground.netlify.com/2018/01/jax2018/)
 
 > Deep Learning is one of the "hot" topics in the AI area – a lot of hype, a lot of inflated expectation, but also quite some impressive success stories. As some AI experts already predict that Deep Learning will become "Software 2.0", it might be a good time to have a closer look at the topic. In this session I will try to give a comprehensive overview of Deep Learning. We will start with a bit of history and some theoretical foundations that we will use to create a little Deep Learning taxonomy. Then we will have a look at current and upcoming application areas: Where can we apply Deep Learning successfully and what does it differentiate from other approaches? Afterwards we will examine the ecosystem: Which tools and libraries are available? What are their strengths and weaknesses? And to complete the session, we will look into some practical code examples and the typical pitfalls of Deep Learning. After this session you will have a much better idea of the why, what and how of Deep Learning, including if and how you might want to apply it to your own work. https://jax.de/big-data-machine-learning/deep-learning-a-primer/
 
