@@ -1,0 +1,45 @@
+---
+title: "Join MünsteR for our next meetup on deep learning with Keras and R"
+draft: false
+author: Shirin Glander
+date: '2018-03-28'
+categories: ["R", "meetup", "MünsteR"]
+tags: ["meetup", "MünsteR", "keras", "deep learning"]
+thumbnailImagePosition: left
+thumbnailImage: https://shiring.github.io/r_users_group/2017/05/20/map.png
+metaAlignment: center
+coverMeta: out
+slug: meetup_april18
+---
+
+![](https://shiring.github.io/r_users_group/2017/05/20/map.png)
+
+In our [next MünsteR R-user group meetup](http://meetu.ps/e/DVFrp/w54bW/f) on **Tuesday, April 17th, 2018** Kai Lichtenberg will talk about deep learning with Keras.
+You can RSVP here: [http://meetu.ps/e/DDY1B/w54bW/f](http://meetu.ps/e/DDY1B/w54bW/f)
+
+> Although neural networks have been around for quite a while now, deep
+learning really just took of a few years ago. It pretty much all started
+when Alex Krizhevsky and Geoffrey Hinton utterly crushed classic image
+recognition in the 2012 ImageNet Large Scale Visual Recognition
+Challenge by implementing a deep neural network with CUDA on graphics
+cards. A lot has changed since that time: The toolchain to do deep
+learning has rapidly evolved into API's with a very high level of
+abstraction. Nowadays everyone can train complex neural networks with
+billions of free parameters. Just last year RStudio announced the Keras
+for R package. Keras is a high level neural network API that makes it
+really easy to define the architecture of a neural network. In this talk
+we will rush through an explanation of convolutional neural networks for
+image recognition, learn how easy it has become to do production ready
+deep learning with the use of docker and why R's syntax is even better
+suited to define a neural network than python's. (Hint: Probably this is
+not a pipe ;-)
+
+Kai Lichtenberg is a PhD student in the Bosch PhD Program working on
+models to predict the reliability of components in drive trains by
+leveraging the ever more available high dimensional data in the era of
+the Internet of Things. Coming from the field of mechanical engineering
+and technical reliability (which has a lot to do with stochastic
+processes) he found his destination in data science. As a long time
+computer enthusiast he is always keen to use the newest technologies. To
+bear the pain of getting a toolchain up and running is probably his
+super power.
