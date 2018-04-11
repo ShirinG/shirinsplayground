@@ -31,13 +31,6 @@ Dr. Shirin Glander is Data Scientist at codecentric AG. She has received a PhD i
 
 <br>
 
-- [I'll be talking about Deep Learning with Keras in R and Python](https://shirinsplayground.netlify.com/2018/03/meetup_talk_ruhrpy_april_18/) at the following upcoming meetup: [Ruhr.Py 2018](https://www.meetup.com/Ruhr-py/events/248093628/) on Wednesday, April 4th 2018
-
-> Introducing Deep Learning with Keras and Python
-Keras is a high-level API written in Python for building and prototyping neural networks. It can be used on top of TensorFlow, Theano or CNTK. In this talk we build, train and visualize a Model using Python and Keras - all interactive with Jupyter Notebooks!
-
-<br>
-
 - [Announcing my talk about explainability of machine learning models at Minds Mastering Machines Conference](https://shirinsplayground.netlify.com/2018/02/m3_2018/)
 
 > On Wednesday, April 25th 2018 I am going to talk about explainability of machine learning models at the Minds Mastering Machines conference in Cologne.
@@ -53,6 +46,15 @@ Keras is a high-level API written in Python for building and prototyping neural 
 <br>
 
 ## Past talks, webinars, podcasts, etc.
+
+- [I talk about Deep Learning with Keras in R and Python](https://shirinsplayground.netlify.com/2018/03/meetup_talk_ruhrpy_april_18/) at the following upcoming meetup: [Ruhr.Py 2018](https://www.meetup.com/Ruhr-py/events/248093628/) on Wednesday, April 4th 2018
+
+> Introducing Deep Learning with Keras and Python
+Keras is a high-level API written in Python for building and prototyping neural networks. It can be used on top of TensorFlow, Theano or CNTK. In this talk we build, train and visualize a Model using Python and Keras - all interactive with Jupyter Notebooks!
+
+Slides can be found here: https://www.slideshare.net/ShirinGlander/ruhrpy-introducing-deep-learning-with-keras-and-python
+
+<br>
 
 - [I talk about machine learning with Daniel Mies (Podcast in German, though)](https://shirinsplayground.netlify.com/2018/02/herr_mies_wills_wissen/)
 

@@ -2,12 +2,29 @@
   <title>Shirin&#39;s playgRound</title>
   <link href="/index.xml" rel="self"/>
   <link href="/"/>
-  <updated>2018-03-28T00:00:00+00:00</updated>
+  <updated>2018-04-11T00:00:00+00:00</updated>
   <id>/</id>
   <author>
     <name>Dr. Shirin Glander</name>
   </author>
   <generator>Hugo -- gohugo.io</generator>
+  <entry>
+    <title type="html"><![CDATA[Meetup slides: Introducing Deep Learning with Keras]]></title>
+    <link href="/2018/04/ruhrpy_meetup_2018_slides/"/>
+    <id>/2018/04/ruhrpy_meetup_2018_slides/</id>
+    <published>2018-04-11T00:00:00+00:00</published>
+    <updated>2018-04-11T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<p>On April 4th, 2018 I gave a talk about <strong>Deep Learning with Keras</strong> at the Ruhr.Py Meetup in Essen, Germany. The talk was not specific to Python, though - so if you’re intersted: the slides can be found here: <a href="https://www.slideshare.net/ShirinGlander/ruhrpy-introducing-deep-learning-with-keras-and-python" class="uri">https://www.slideshare.net/ShirinGlander/ruhrpy-introducing-deep-learning-with-keras-and-python</a></p>
+<iframe src="//www.slideshare.net/slideshow/embed_code/key/cZz1j6qtlwm62l" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen>
+</iframe>
+<div style="margin-bottom:5px">
+<strong> <a href="//www.slideshare.net/ShirinGlander/ruhrpy-introducing-deep-learning-with-keras-and-python" title="Ruhr.PY - Introducing Deep Learning with Keras and Python" target="_blank">Ruhr.PY - Introducing Deep Learning with Keras and Python</a> </strong> von <strong><a href="//www.slideshare.net/ShirinGlander" target="_blank">Shirin Glander</a></strong>
+</div>
+<p>There is also a video recording of my talk, which you can see here: <a href="https://youtu.be/Q8hVXnpEPmc" class="uri">https://youtu.be/Q8hVXnpEPmc</a></p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Q8hVXnpEPmc?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+</iframe>
+]]></content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[Join MünsteR for our next meetup on deep learning with Keras and R]]></title>
     <link href="/2018/03/meetup_april18/"/>
@@ -53,6 +70,26 @@
 <img src="https://secure.meetupstatic.com/s/img/5455565085016210254/logo/svg/logo--script.svg" />
 
 </div>
+]]></content>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[US Roadtrip Location data mapping]]></title>
+    <link href="/2018/03/roadtrip_2018/"/>
+    <id>/2018/03/roadtrip_2018/</id>
+    <published>2018-03-27T00:00:00+00:00</published>
+    <updated>2018-03-27T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<pre class="r"><code>library(jsonlite)
+system.time(x &lt;- fromJSON(&quot;~/Documents/Github/Data/Takeout/Standortverlauf/Standortverlauf.json&quot;))</code></pre>
+<pre class="r"><code># extracting the locations dataframe
+loc = x$locations
+
+# converting time column from posix milliseconds into a readable time scale
+loc$time = as.POSIXct(as.numeric(x$locations$timestampMs)/1000, origin = &quot;1970-01-01&quot;)
+
+# converting longitude and latitude from E7 to GPS coordinates
+loc$lat = loc$latitudeE7 / 1e7
+loc$lon = loc$longitudeE7 / 1e7</code></pre>
+<pre class="r"><code>usa &lt;- get_map(location = &#39;USA&#39;, zoom = 5)</code></pre>
 ]]></content>
   </entry>
   <entry>
@@ -700,6 +737,10 @@ cooc_books_5_graph &lt;- as_tbl_graph(coocs_book_5, directed = FALSE) %&gt;%
 Date and place depend on who and how many people are interested, so please contact me either directly or via the workshop page: <a href="https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/">https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/</a> (the description is in German but I also offer to give the workshop in English).</p>
 </blockquote>
 
+<hr />
+
+<p><br></p>
+
 <h2 id="upcoming-talks-webinars-podcasts-etc">Upcoming talks, webinars, podcasts, etc.</h2>
 
 <ul>
@@ -711,14 +752,7 @@ Date and place depend on who and how many people are interested, so please conta
 Dr. Shirin Glander is Data Scientist at codecentric AG. She has received a PhD in Bioinformatics and applies methods of analysis and visualization from different areas - for instance, machine learning, classical statistics, text mining, etc. -to extract and leverage information from data.</p>
 </blockquote>
 
-<ul>
-<li><a href="https://shirinsplayground.netlify.com/2018/03/meetup_talk_ruhrpy_april_18/">I&rsquo;ll be talking about Deep Learning with Keras in R and Python</a> at the following upcoming meetup: <a href="https://www.meetup.com/Ruhr-py/events/248093628/">Ruhr.Py 2018</a> on Wednesday, April 4th 2018</li>
-</ul>
-
-<blockquote>
-<p>Introducing Deep Learning with Keras and Python
-Keras is a high-level API written in Python for building and prototyping neural networks. It can be used on top of TensorFlow, Theano or CNTK. In this talk we build, train and visualize a Model using Python and Keras - all interactive with Jupyter Notebooks!</p>
-</blockquote>
+<p><br></p>
 
 <ul>
 <li><a href="https://shirinsplayground.netlify.com/2018/02/m3_2018/">Announcing my talk about explainability of machine learning models at Minds Mastering Machines Conference</a></li>
@@ -728,6 +762,8 @@ Keras is a high-level API written in Python for building and prototyping neural 
 <p>On Wednesday, April 25th 2018 I am going to talk about explainability of machine learning models at the Minds Mastering Machines conference in Cologne.</p>
 </blockquote>
 
+<p><br></p>
+
 <ul>
 <li><a href="https://shirinsplayground.netlify.com/2018/01/jax2018/">JAX 2018 talk announcement: Deep Learning - a Primer</a></li>
 </ul>
@@ -736,7 +772,24 @@ Keras is a high-level API written in Python for building and prototyping neural 
 <p>Deep Learning is one of the &ldquo;hot&rdquo; topics in the AI area – a lot of hype, a lot of inflated expectation, but also quite some impressive success stories. As some AI experts already predict that Deep Learning will become &ldquo;Software 2.0&rdquo;, it might be a good time to have a closer look at the topic. In this session I will try to give a comprehensive overview of Deep Learning. We will start with a bit of history and some theoretical foundations that we will use to create a little Deep Learning taxonomy. Then we will have a look at current and upcoming application areas: Where can we apply Deep Learning successfully and what does it differentiate from other approaches? Afterwards we will examine the ecosystem: Which tools and libraries are available? What are their strengths and weaknesses? And to complete the session, we will look into some practical code examples and the typical pitfalls of Deep Learning. After this session you will have a much better idea of the why, what and how of Deep Learning, including if and how you might want to apply it to your own work. <a href="https://jax.de/big-data-machine-learning/deep-learning-a-primer/">https://jax.de/big-data-machine-learning/deep-learning-a-primer/</a></p>
 </blockquote>
 
+<hr />
+
+<p><br></p>
+
 <h2 id="past-talks-webinars-podcasts-etc">Past talks, webinars, podcasts, etc.</h2>
+
+<ul>
+<li><a href="https://shirinsplayground.netlify.com/2018/03/meetup_talk_ruhrpy_april_18/">I talk about Deep Learning with Keras in R and Python</a> at the following upcoming meetup: <a href="https://www.meetup.com/Ruhr-py/events/248093628/">Ruhr.Py 2018</a> on Wednesday, April 4th 2018</li>
+</ul>
+
+<blockquote>
+<p>Introducing Deep Learning with Keras and Python
+Keras is a high-level API written in Python for building and prototyping neural networks. It can be used on top of TensorFlow, Theano or CNTK. In this talk we build, train and visualize a Model using Python and Keras - all interactive with Jupyter Notebooks!</p>
+</blockquote>
+
+<p>Slides can be found here: <a href="https://www.slideshare.net/ShirinGlander/ruhrpy-introducing-deep-learning-with-keras-and-python">https://www.slideshare.net/ShirinGlander/ruhrpy-introducing-deep-learning-with-keras-and-python</a></p>
+
+<p><br></p>
 
 <ul>
 <li><a href="https://shirinsplayground.netlify.com/2018/02/herr_mies_wills_wissen/">I talk about machine learning with Daniel Mies (Podcast in German, though)</a></li>
@@ -746,6 +799,8 @@ Keras is a high-level API written in Python for building and prototyping neural 
 <p>In January 2018 I was interviewed for a tech podcast where I talked about machine learning, neural nets, why I love R and Rstudio and how I became a Data Scientist.</p>
 </blockquote>
 
+<p><br></p>
+
 <ul>
 <li><a href="https://shirinsplayground.netlify.com/2017/12/lime_sketchnotes/">Explaining Predictions of Machine Learning Models with LIME - Münster Data Science Meetup</a></li>
 </ul>
@@ -753,6 +808,8 @@ Keras is a high-level API written in Python for building and prototyping neural 
 <blockquote>
 <p>In December 2017 I talked about Explaining Predictions of Machine Learning Models with LIME at the Münster Data Science Meetup.</p>
 </blockquote>
+
+<p><br></p>
 
 <ul>
 <li><a href="https://shiring.github.io/blogging/2017/09/20/webinar_biology_to_data_science">From Biology to Industry. A Blogger’s Journey to Data Science</a></li>
@@ -762,6 +819,8 @@ Keras is a high-level API written in Python for building and prototyping neural 
 <p>In September 2017 I gave a webinar for the Applied Epidemiology Didactic of the University of Wisconsin - Madison titled “From Biology to Industry. A Blogger’s Journey to Data Science.”
 I talked about how blogging about R and Data Science helped me become a Data Scientist. I also gave a short introduction to Machine Learning, Big Data and Neural Networks.</p>
 </blockquote>
+
+<p><br></p>
 
 <ul>
 <li><a href="https://shiring.github.io/machine_learning/2017/03/31/webinar_code">Building meaningful machine learning models for disease prediction</a></li>
