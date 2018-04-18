@@ -2,12 +2,29 @@
   <title>Shirin&#39;s playgRound</title>
   <link href="/index.xml" rel="self"/>
   <link href="/"/>
-  <updated>2018-04-11T00:00:00+00:00</updated>
+  <updated>2018-04-18T00:00:00+00:00</updated>
   <id>/</id>
   <author>
     <name>Dr. Shirin Glander</name>
   </author>
   <generator>Hugo -- gohugo.io</generator>
+  <entry>
+    <title type="html"><![CDATA[Sketchnotes from TWiML&amp;AI #124: Systems and Software for Machine Learning at Scale with Jeff Dean]]></title>
+    <link href="/2018/04/twimlai124/"/>
+    <id>/2018/04/twimlai124/</id>
+    <published>2018-04-18T00:00:00+00:00</published>
+    <updated>2018-04-18T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<p>These are my sketchnotes for Sam Charrington’s podcast <strong>This Week in Machine Learning and AI</strong> about <em>Systems and Software for Machine Learning at Scale with Jeff Dean</em>:</p>
+<div class="figure">
+<img src="https://shiring.github.io/netlify_images/twimlai124.jpg" alt="Sketchnotes from TWiMLAI talk #124: Systems and Software for Machine Learning at Scale with Jeff Dean" />
+<p class="caption">Sketchnotes from TWiMLAI talk #124: Systems and Software for Machine Learning at Scale with Jeff Dean</p>
+</div>
+<p>You can listen to the podcast <a href="https://twimlai.com/twiml-talk-124-systems-software-machine-learning-scale-jeff-dean/">here</a>.</p>
+<blockquote>
+<p>n this episode I’m joined by Jeff Dean, Google Senior Fellow and head of the company’s deep learning research team Google Brain, who I had a chance to sit down with last week at the Googleplex in Mountain View. As you’ll hear, I was very excited for this interview, because so many of Jeff’s contributions since he started at Google in ‘99 have touched my life and work. In our conversation, Jeff and I dig into a bunch of the core machine learning innovations we’ve seen from Google. Of course we discuss TensorFlow, and its origins and evolution at Google. We also explore AI acceleration hardware, including TPU v1, v2 and future directions from Google and the broader market in this area. We talk through the machine learning toolchain, including some things that Googlers might take for granted, and where the recently announced Cloud AutoML fits in. We also discuss Google’s process for mapping problems across a variety of domains to deep learning, and much, much more. This was definitely one of my favorite conversations, and I’m pumped to be able to share it with you. <a href="https://twimlai.com/twiml-talk-124-systems-software-machine-learning-scale-jeff-dean/" class="uri">https://twimlai.com/twiml-talk-124-systems-software-machine-learning-scale-jeff-dean/</a></p>
+</blockquote>
+]]></content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[Meetup slides: Introducing Deep Learning with Keras]]></title>
     <link href="/2018/04/ruhrpy_meetup_2018_slides/"/>
