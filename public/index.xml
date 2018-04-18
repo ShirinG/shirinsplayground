@@ -92,7 +92,7 @@
     <published>2018-04-11T00:00:00+00:00</published>
     <updated>2018-04-11T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>On April 4th, 2018 I gave a talk about <strong>Deep Learning with Keras</strong> at the Ruhr.Py Meetup in Essen, Germany. The talk was not specific to Python, though - so if you’re intersted: the slides can be found here: <a href="https://www.slideshare.net/ShirinGlander/ruhrpy-introducing-deep-learning-with-keras-and-python" class="uri">https://www.slideshare.net/ShirinGlander/ruhrpy-introducing-deep-learning-with-keras-and-python</a></p>
-<iframe src="//www.slideshare.net/slideshow/embed_code/key/cZz1j6qtlwm62l" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen>
+<iframe src="//www.slideshare.net/slideshow/embed_code/key/cZz1j6qtlwm62l" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; display: block; margin: auto; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen>
 </iframe>
 <div style="margin-bottom:5px">
 <strong> <a href="//www.slideshare.net/ShirinGlander/ruhrpy-introducing-deep-learning-with-keras-and-python" title="Ruhr.PY - Introducing Deep Learning with Keras and Python" target="_blank">Ruhr.PY - Introducing Deep Learning with Keras and Python</a> </strong> von <strong><a href="//www.slideshare.net/ShirinGlander" target="_blank">Shirin Glander</a></strong>
@@ -821,17 +821,6 @@ Date and place depend on who and how many people are interested, so please conta
 <h2 id="upcoming-talks-webinars-podcasts-etc">Upcoming talks, webinars, podcasts, etc.</h2>
 
 <ul>
-<li><a href="https://shirinsplayground.netlify.com/2018/03/meetup_talk_ruhrpy_april_18/">I&rsquo;ll be talking about explaining complex Machine Learning Models with LIME</a> at this upcoming meetup: <a href="https://www.meetup.com/Hamburg-Data-Science-Meetup/events/244145443/">Data Science Meetup Hamburg</a> on Thursday, April 12th 2018</li>
-</ul>
-
-<blockquote>
-<p>Traditional machine learning workflows focus heavily on model training and optimization; the best model is usually chosen via performance measures like accuracy or error and we tend to assume that a model is good enough for deployment if it passes certain thresholds of these performance criteria. Why a model makes the predictions it makes, however, is generally neglected. But being able to understand and interpret such models can be immensely important for improving model quality, increasing trust and transparency and for reducing bias. Because complex machine learning models are essentially black boxes and too complicated to understand, we need to use approximations to get a better sense of how they work. One such approach is LIME, which stands for Local Interpretable Model-agnostic Explanations and is a tool that helps understand and explain the decisions made by complex machine learning models.
-Dr. Shirin Glander is Data Scientist at codecentric AG. She has received a PhD in Bioinformatics and applies methods of analysis and visualization from different areas - for instance, machine learning, classical statistics, text mining, etc. -to extract and leverage information from data.</p>
-</blockquote>
-
-<p><br></p>
-
-<ul>
 <li><a href="https://shirinsplayground.netlify.com/2018/02/m3_2018/">Announcing my talk about explainability of machine learning models at Minds Mastering Machines Conference</a></li>
 </ul>
 
@@ -856,6 +845,19 @@ Dr. Shirin Glander is Data Scientist at codecentric AG. She has received a PhD i
 <h2 id="past-talks-webinars-podcasts-etc">Past talks, webinars, podcasts, etc.</h2>
 
 <ul>
+<li><a href="https://shirinsplayground.netlify.com/2018/03/meetup_talk_ruhrpy_april_18/">I talked about explaining complex Machine Learning Models with LIME</a> at this upcoming meetup: <a href="https://www.meetup.com/Hamburg-Data-Science-Meetup/events/244145443/">Data Science Meetup Hamburg</a> on Thursday, April 12th 2018</li>
+</ul>
+
+<p>Slides can be found here: <a href="https://shirinsplayground.netlify.com/2018/04/hh_datascience_meetup_2018_slides/">https://shirinsplayground.netlify.com/2018/04/hh_datascience_meetup_2018_slides/</a></p>
+
+<blockquote>
+<p>Traditional machine learning workflows focus heavily on model training and optimization; the best model is usually chosen via performance measures like accuracy or error and we tend to assume that a model is good enough for deployment if it passes certain thresholds of these performance criteria. Why a model makes the predictions it makes, however, is generally neglected. But being able to understand and interpret such models can be immensely important for improving model quality, increasing trust and transparency and for reducing bias. Because complex machine learning models are essentially black boxes and too complicated to understand, we need to use approximations to get a better sense of how they work. One such approach is LIME, which stands for Local Interpretable Model-agnostic Explanations and is a tool that helps understand and explain the decisions made by complex machine learning models.
+Dr. Shirin Glander is Data Scientist at codecentric AG. She has received a PhD in Bioinformatics and applies methods of analysis and visualization from different areas - for instance, machine learning, classical statistics, text mining, etc. -to extract and leverage information from data.</p>
+</blockquote>
+
+<p><br></p>
+
+<ul>
 <li><a href="https://shirinsplayground.netlify.com/2018/03/meetup_talk_ruhrpy_april_18/">I talk about Deep Learning with Keras in R and Python</a> at the following upcoming meetup: <a href="https://www.meetup.com/Ruhr-py/events/248093628/">Ruhr.Py 2018</a> on Wednesday, April 4th 2018</li>
 </ul>
 
@@ -864,7 +866,7 @@ Dr. Shirin Glander is Data Scientist at codecentric AG. She has received a PhD i
 Keras is a high-level API written in Python for building and prototyping neural networks. It can be used on top of TensorFlow, Theano or CNTK. In this talk we build, train and visualize a Model using Python and Keras - all interactive with Jupyter Notebooks!</p>
 </blockquote>
 
-<p>Slides can be found here: <a href="https://www.slideshare.net/ShirinGlander/ruhrpy-introducing-deep-learning-with-keras-and-python">https://www.slideshare.net/ShirinGlander/ruhrpy-introducing-deep-learning-with-keras-and-python</a></p>
+<p>Slides can be found here: <a href="https://shirinsplayground.netlify.com/2018/04/ruhrpy_meetup_2018_slides/">https://shirinsplayground.netlify.com/2018/04/ruhrpy_meetup_2018_slides/</a></p>
 
 <p><br></p>
 
