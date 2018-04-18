@@ -40,7 +40,7 @@ Date and place depend on who and how many people are interested, so please conta
 
 ## Past talks, webinars, podcasts, etc.
 
-- [I talked about explaining complex Machine Learning Models with LIME](https://shirinsplayground.netlify.com/2018/03/meetup_talk_ruhrpy_april_18/) at this upcoming meetup: [Data Science Meetup Hamburg](https://www.meetup.com/Hamburg-Data-Science-Meetup/events/244145443/) on Thursday, April 12th 2018
+- [I talked about explaining complex Machine Learning Models with LIME](https://shirinsplayground.netlify.com/2018/03/meetup_talk_ruhrpy_april_18/) at this meetup: [Data Science Meetup Hamburg](https://www.meetup.com/Hamburg-Data-Science-Meetup/events/244145443/) on Thursday, April 12th 2018
 
 Slides can be found here: https://shirinsplayground.netlify.com/2018/04/hh_datascience_meetup_2018_slides/
 
@@ -49,7 +49,7 @@ Dr. Shirin Glander is Data Scientist at codecentric AG. She has received a PhD i
 
 <br>
 
-- [I talk about Deep Learning with Keras in R and Python](https://shirinsplayground.netlify.com/2018/03/meetup_talk_ruhrpy_april_18/) at the following upcoming meetup: [Ruhr.Py 2018](https://www.meetup.com/Ruhr-py/events/248093628/) on Wednesday, April 4th 2018
+- [I talk about Deep Learning with Keras in R and Python](https://shirinsplayground.netlify.com/2018/03/meetup_talk_ruhrpy_april_18/) at this meetup: [Ruhr.Py 2018](https://www.meetup.com/Ruhr-py/events/248093628/) on Wednesday, April 4th 2018
 
 > Introducing Deep Learning with Keras and Python
 Keras is a high-level API written in Python for building and prototyping neural networks. It can be used on top of TensorFlow, Theano or CNTK. In this talk we build, train and visualize a Model using Python and Keras - all interactive with Jupyter Notebooks!
@@ -58,7 +58,7 @@ Slides can be found here: https://shirinsplayground.netlify.com/2018/04/ruhrpy_m
 
 <br>
 
-- [I talk about machine learning with Daniel Mies (Podcast in German, though)](https://shirinsplayground.netlify.com/2018/02/herr_mies_wills_wissen/)
+- [I talked about machine learning with Daniel Mies (Podcast in German, though)](https://shirinsplayground.netlify.com/2018/02/herr_mies_wills_wissen/)
 
 > In January 2018 I was interviewed for a tech podcast where I talked about machine learning, neural nets, why I love R and Rstudio and how I became a Data Scientist.
 
