@@ -1,0 +1,339 @@
+---
+title: "Update: Can we predict flu outcome with Machine Learning in R?"
+draft: true
+author: Shirin Glander
+date: '2018-04-22'
+categories: [R, machine learning]
+tags: [R, machine learning, caret, tidyverse, random forest, purrr]
+thumbnailImagePosition: left
+thumbnailImage: post/2018-04-22_flu_outcome_ML_post_files/figure-html/main-1.png
+metaAlignment: center
+coverMeta: out
+slug: flu_prediction
+---
+
+Since I migrated my blog from [Github Pages](shiring.github.io) to [blogdown and Netlify](www.shirin-glander.de), I wanted to start migrating (most of) my old posts too - and use that opportunity to update them and make sure the code still works.
+
+Here I am updating my very first machine learning post from 27 Nov 2016: [Can we predict flu deaths with Machine Learning and R?](https://shiring.github.io/machine_learning/2016/11/27/flu_outcome_ML_post). Changes are marked as **bold** comments.
+
+The main changes I made are:
+
+- using the `tidyverse` more consistently throughout the analysis
+- focusing on comparing multiple imputations from the `mice` package, rather than comparing different algorithms
+- using `purrr`, `map()`, `nest()` and `unnest()` to model and predict the machine learning algorithm over the different imputed datasets
+
+---
+
+Among the many nice R packages containing data collections is the [outbreaks](https://mran.microsoft.com/web/packages/outbreaks/outbreaks.pdf
+) package. It contains  a dataset on epidemics and among them is data from the 2013 outbreak of [influenza A H7N9](http://www.who.int/influenza/human_animal_interface/faq_H7N9/en/) in [China](http://www.who.int/influenza/human_animal_interface/influenza_h7n9/ChinaH7N9JointMissionReport2013u.pdf?ua=1) as analysed by Kucharski et al. (2014): 
+
+> A. Kucharski, H. Mills, A. Pinsent, C. Fraser, M. Van Kerkhove, C. A. Donnelly, and S. Riley. 2014. Distinguishing between reservoir exposure and human-to-human transmission for emerging pathogens using case onset data. PLOS Currents Outbreaks. Mar 7, edition 1. doi: 10.1371/currents.outbreaks.e1473d9bfc99d080ca242139a06c455f.
+
+> A. Kucharski, H. Mills, A. Pinsent, C. Fraser, M. Van Kerkhove, C. A. Donnelly, and S. Riley. 2014. Data from: Distinguishing between reservoir exposure and human-to-human transmission for emerging pathogens using case onset data. Dryad Digital Repository. http://dx.doi.org/10.5061/dryad.2g43n.
+
+I will be using their data as an example to show how to use Machine Learning algorithms for predicting disease outcome.
+
+<br>
+
+```{r echo = TRUE, message = FALSE, warning = FALSE, cache=FALSE, fig.width = 6, fig.height = 5, fig.align = "center"}
+library(outbreaks)
+library(tidyverse)
+library(plyr)
+library(mice)
+library(caret)
+library(purrr)
+```
+
+# The data
+
+The dataset contains case ID, date of onset, date of hospitalization, date of outcome, gender, age, province and of course outcome: Death or Recovery.
+
+## Pre-processing
+
+**Change: variable names (i.e. column names) have been renamed, dots have been replaced with underscores, letters are all lower case now.**
+
+**Change: I am using the tidyverse notation more consistently.**
+
+First, I'm doing some preprocessing, including:
+
+- renaming missing data as NA
+- adding an ID column
+- setting column types
+- gathering date columns
+- changing factor names of dates (to make them look nicer in plots) and of `province` (to combine provinces with few cases)
+
+```{r echo = TRUE, message = FALSE, warning = FALSE, cache=FALSE, fig.width = 6, fig.height = 5, fig.align = "center"}
+fluH7N9_china_2013$age[which(fluH7N9_china_2013$age == "?")] <- NA
+fluH7N9_china_2013_gather <- fluH7N9_china_2013 %>%
+  mutate(case_id = paste("case", case_id, sep = "_"),
+         age = as.numeric(age)) %>%
+  gather(Group, Date, date_of_onset:date_of_outcome) %>%
+  mutate(Group = as.factor(mapvalues(Group, from = c("date_of_onset", "date_of_hospitalisation", "date_of_outcome"), 
+          to = c("date of onset", "date of hospitalisation", "date of outcome"))),
+         province = mapvalues(province, from = c("Anhui", "Beijing", "Fujian", "Guangdong", "Hebei", "Henan", "Hunan", "Jiangxi", "Shandong", "Taiwan"), to = rep("Other", 10)))
+```
+
+I'm also
+
+- adding a third gender level for unknown gender
+
+```{r echo = TRUE, message = FALSE, warning = FALSE, cache=FALSE, fig.width = 10, fig.height = 10, fig.align = "center"}
+levels(fluH7N9_china_2013_gather$gender) <- c(levels(fluH7N9_china_2013_gather$gender), "unknown")
+fluH7N9_china_2013_gather$gender[is.na(fluH7N9_china_2013_gather$gender)] <- "unknown"
+head(fluH7N9_china_2013_gather)
+```
+
+For plotting, I am defining a custom `ggplot2` theme:
+
+```{r echo = TRUE, message = FALSE, warning = FALSE, cache=FALSE, fig.width = 10, fig.height = 10, fig.align = "center"}
+my_theme <- function(base_size = 12, base_family = "sans"){
+  theme_minimal(base_size = base_size, base_family = base_family) +
+  theme(
+    axis.text = element_text(size = 12),
+    axis.text.x = element_text(angle = 45, vjust = 0.5, hjust = 0.5),
+    axis.title = element_text(size = 14),
+    panel.grid.major = element_line(color = "grey"),
+    panel.grid.minor = element_blank(),
+    panel.background = element_rect(fill = "aliceblue"),
+    strip.background = element_rect(fill = "lightgrey", color = "grey", size = 1),
+    strip.text = element_text(face = "bold", size = 12, color = "black"),
+    legend.position = "bottom",
+    legend.justification = "top", 
+    legend.box = "horizontal",
+    legend.box.background = element_rect(colour = "grey50"),
+    legend.background = element_blank(),
+    panel.border = element_rect(color = "grey", fill = NA, size = 0.5)
+  )
+}
+```
+
+And use that theme to visualize the data:
+
+```{r main, echo = TRUE, message = FALSE, warning = FALSE, cache=FALSE, fig.width = 12, fig.height = 8, fig.align = "center"}
+ggplot(data = fluH7N9_china_2013_gather, aes(x = Date, y = age, fill = outcome)) +
+  stat_density2d(aes(alpha = ..level..), geom = "polygon") +
+  geom_jitter(aes(color = outcome, shape = gender), size = 1.5) +
+  geom_rug(aes(color = outcome)) +
+  scale_y_continuous(limits = c(0, 90)) +
+  labs(
+    fill = "Outcome",
+    color = "Outcome",
+    alpha = "Level",
+    shape = "Gender",
+    x = "Date in 2013",
+    y = "Age",
+    title = "2013 Influenza A H7N9 cases in China",
+    subtitle = "Dataset from 'outbreaks' package (Kucharski et al. 2014)",
+    caption = ""
+  ) +
+  facet_grid(Group ~ province) +
+  my_theme() +
+  scale_shape_manual(values = c(15, 16, 17)) +
+  scale_color_brewer(palette="Set1", na.value = "grey50") +
+  scale_fill_brewer(palette="Set1")
+```
+
+```{r echo = TRUE, message = FALSE, warning = FALSE, cache=FALSE, fig.width = 8, fig.height = 8, fig.align = "center"}
+ggplot(data = fluH7N9_china_2013_gather, aes(x = Date, y = age, color = outcome)) +
+  geom_point(aes(color = outcome, shape = gender), size = 1.5, alpha = 0.6) +
+  geom_path(aes(group = case_id)) +
+  facet_wrap( ~ province, ncol = 2) +
+  my_theme() +
+  scale_shape_manual(values = c(15, 16, 17)) +
+  scale_color_brewer(palette="Set1", na.value = "grey50") +
+  scale_fill_brewer(palette="Set1") +
+  labs(
+    color = "Outcome",
+    shape = "Gender",
+    x = "Date in 2013",
+    y = "Age",
+    title = "2013 Influenza A H7N9 cases in China",
+    subtitle = "Dataset from 'outbreaks' package (Kucharski et al. 2014)",
+    caption = "\nTime from onset of flu to outcome."
+  )
+```
+
+<br>
+
+# Features
+
+In machine learning-speak features are what we call the variables used for model training. Using the right features dramatically influences the accuracy and success of your model.
+
+For this example, I am keeping age, but I am also generating new features from the date information and converting gender and province into numerical values.
+
+```{r echo = TRUE, message = FALSE, warning = FALSE, cache=FALSE, fig.width = 6, fig.height = 5, fig.align = "center"}
+dataset <- fluH7N9_china_2013 %>%
+  mutate(hospital = as.factor(ifelse(is.na(date_of_hospitalisation), 0, 1)),
+         gender_f = as.factor(ifelse(gender == "f", 1, 0)),
+         province_Jiangsu = as.factor(ifelse(province == "Jiangsu", 1, 0)),
+         province_Shanghai = as.factor(ifelse(province == "Shanghai", 1, 0)),
+         province_Zhejiang = as.factor(ifelse(province == "Zhejiang", 1, 0)),
+         province_other = as.factor(ifelse(province == "Zhejiang" | province == "Jiangsu" | province == "Shanghai", 0, 1)),
+         days_onset_to_outcome = as.numeric(as.character(gsub(" days", "",
+                                      as.Date(as.character(date_of_outcome), format = "%Y-%m-%d") - 
+                                        as.Date(as.character(date_of_onset), format = "%Y-%m-%d")))),
+         days_onset_to_hospital = as.numeric(as.character(gsub(" days", "",
+                                      as.Date(as.character(date_of_hospitalisation), format = "%Y-%m-%d") - 
+                                        as.Date(as.character(date_of_onset), format = "%Y-%m-%d")))),
+         age = age,
+         early_onset = as.factor(ifelse(date_of_onset < summary(fluH7N9_china_2013$date_of_onset)[[3]], 1, 0)),
+         early_outcome = as.factor(ifelse(date_of_outcome < summary(fluH7N9_china_2013$date_of_outcome)[[3]], 1, 0))) %>%
+  subset(select = -c(2:4, 6, 8))
+rownames(dataset) <- dataset$case_id
+dataset[, -2] <- as.numeric(as.matrix(dataset[, -2]))
+head(dataset)
+```
+
+```{r echo = TRUE, message = FALSE, warning = FALSE, cache=FALSE, fig.width = 6, fig.height = 5, fig.align = "center"}
+summary(dataset$outcome)
+```
+
+<br>
+
+## Imputing missing values
+
+I am using the [`mice` package for imputing missing values](https://gerkovink.github.io/miceVignettes/Ad_hoc_and_mice/Ad_hoc_methods.html)
+
+**Note: Since publishing this blogpost I learned that the idea behind using `mice` is to compare different imputations to see how stable they are, instead of picking one imputed set as fixed for the remainder of the analysis. Therefore, I changed the focus of this post a little bit: in the old post I compared many different algorithms and their outcome; in this updated version I am only showing the Random Forest algorithm and focus on comparing the different imputed datasets. I am ignoring feature importance and feature plots because nothing changed compared to the old post.**
+
+<br>
+
+- `md.pattern()` shows the pattern of missingness in the data:
+
+```{r}
+md.pattern(dataset)
+```
+
+- `mice()` generates the imputations
+
+```{r echo = TRUE, message = FALSE, warning = FALSE, cache=FALSE, fig.width = 6, fig.height = 5, fig.align = "center"}
+dataset_impute <- mice(data = dataset[, -2],  print = FALSE)
+```
+
+- by default, `mice()` calculates five (m = 5) imputed data sets
+- we can combine them all in one output with the `complete("long")` function
+- I did not want to impute missing values in the `outcome` column, so I have to merge it back in with the imputed data
+
+```{r}
+datasets_complete <- right_join(dataset[, c(1, 2)], 
+                           complete(dataset_impute, "long"),
+                           by = "case_id") %>%
+  select(-.id)
+```
+
+```{r}
+head(datasets_complete)
+```
+
+Let's compare the distributions of the five different imputed datasets:
+
+```{r fig.width=8, fig.height=8, fig.align = "center"}
+datasets_complete %>%
+  gather(x, y, age:early_outcome) %>%
+  ggplot(aes(x = y, fill = .imp, color = .imp)) +
+    facet_wrap(~ x, ncol = 3, scales = "free") +
+    geom_density(alpha = 0.4) +
+    scale_fill_brewer(palette="Set1", na.value = "grey50") +
+    scale_color_brewer(palette="Set1", na.value = "grey50") +
+    my_theme()
+```
+
+<br>
+
+# Test, train and validation data sets
+
+Now, we can go ahead with machine learning!
+
+The dataset contains a few missing values in the `outcome` column; those will be the test set used for final predictions (see the old blog post for this).
+
+```{r}
+train_index <- which(is.na(datasets_complete$outcome))
+train_data <- datasets_complete[-train_index, ]
+test_data  <- datasets_complete[train_index, -2]
+```
+
+The remainder of the data will be used for modeling. Here, I am splitting the data into 70% training and 30% test data. 
+
+Because I want to model each imputed dataset separately, I am using the `nest()` and `map()` functions.
+
+```{r}
+set.seed(42)
+val_data <- train_data %>%
+  group_by(.imp) %>%
+  nest() %>%
+  mutate(val_index = map(data, ~ createDataPartition(.$outcome, p = 0.7, list = FALSE)),
+         val_train_data = map2(data, val_index, ~ .x[.y, ]),
+         val_test_data = map2(data, val_index, ~ .x[-.y, ]))
+```
+
+<br>
+
+# Machine Learning algorithms
+
+## Random Forest
+
+To make the code tidier, I am first defining the modeling function with the parameters I want.
+
+```{r}
+model_function <- function(df) {
+  caret::train(outcome ~ .,
+               data = df,
+               method = "rf",
+               preProcess = c("scale", "center"),
+               trControl = trainControl(method = "repeatedcv", number = 5, repeats = 3, verboseIter = FALSE))
+}
+```
+
+Next, I am using the nested tibble from before to `map()` the model function, predict the outcome and calculate confusion matrices.
+
+```{r echo = TRUE, message = FALSE, warning = FALSE, cache=FALSE, fig.width = 6, fig.height = 5, fig.align = "center"}
+set.seed(42)
+val_data_model <- val_data %>%
+  mutate(model = map(val_train_data, ~ model_function(.x)),
+         predict = map2(model, val_test_data, ~ data.frame(prediction = predict(.x, .y[, -2]))),
+         predict_prob = map2(model, val_test_data, ~ data.frame(outcome = .y[, 2],
+                                                                prediction = predict(.x, .y[, -2], type = "prob"))),
+         confusion_matrix = map2(val_test_data, predict, ~ confusionMatrix(.x$outcome, .y$prediction)),
+         confusion_matrix_tbl = map(confusion_matrix, ~ as.tibble(.x$table)))
+```
+
+<br>
+
+## Comparing accuracy of models
+
+To compare how the different imputations did, I am plotting
+
+- the confusion matrices:
+
+```{r fig.width=15, fig.height=3, fig.align = "center"}
+val_data_model %>%
+  unnest(confusion_matrix_tbl) %>%
+  ggplot(aes(x = Prediction, y = Reference, fill = n)) +
+    facet_wrap(~ .imp, ncol = 5, scales = "free") +
+    geom_tile() +
+    scale_fill_viridis_c() +
+    my_theme()
+```
+
+- and the prediction probabilities for correct and wrong predictions:
+
+```{r fig.width=15, fig.height=5, fig.align = "center"}
+val_data_model %>%
+  unnest(predict_prob) %>%
+  gather(x, y, prediction.Death:prediction.Recover) %>%
+  ggplot(aes(x = x, y = y, fill = outcome)) +
+    facet_wrap(~ .imp, ncol = 5, scales = "free") +
+    geom_boxplot() +
+    scale_fill_brewer(palette="Set1", na.value = "grey50") +
+    my_theme()
+```
+
+Hope, you found that example interesting and helpful!
+
+<br>
+
+-----------------
+
+```{r echo = TRUE, message = FALSE, warning = FALSE, cache=FALSE, fig.width = 6, fig.height = 5, fig.align = "center"}
+sessionInfo()
+```

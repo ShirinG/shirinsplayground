@@ -1,0 +1,406 @@
+---
+title: "Update: Can we predict flu outcome with Machine Learning in R?"
+draft: true
+author: Shirin Glander
+date: '2018-04-22'
+categories: [R, machine learning]
+tags: [R, machine learning, caret, tidyverse, random forest, purrr]
+thumbnailImagePosition: left
+thumbnailImage: post/2018-04-22_flu_outcome_ML_post_files/figure-html/main-1.png
+metaAlignment: center
+coverMeta: out
+slug: flu_prediction
+---
+
+
+
+<p>Since I migrated my blog from <a href="shiring.github.io">Github Pages</a> to <a href="www.shirin-glander.de">blogdown and Netlify</a>, I wanted to start migrating (most of) my old posts too - and use that opportunity to update them and make sure the code still works.</p>
+<p>Here I am updating my very first machine learning post from 27 Nov 2016: <a href="https://shiring.github.io/machine_learning/2016/11/27/flu_outcome_ML_post">Can we predict flu deaths with Machine Learning and R?</a>. Changes are marked as <strong>bold</strong> comments.</p>
+<p>The main changes I made are:</p>
+<ul>
+<li>using the <code>tidyverse</code> more consistently throughout the analysis</li>
+<li>focusing on comparing multiple imputations from the <code>mice</code> package, rather than comparing different algorithms</li>
+<li>using <code>purrr</code>, <code>map()</code>, <code>nest()</code> and <code>unnest()</code> to model and predict the machine learning algorithm over the different imputed datasets</li>
+</ul>
+<hr />
+<p>Among the many nice R packages containing data collections is the <a href="https://mran.microsoft.com/web/packages/outbreaks/outbreaks.pdf">outbreaks</a> package. It contains a dataset on epidemics and among them is data from the 2013 outbreak of <a href="http://www.who.int/influenza/human_animal_interface/faq_H7N9/en/">influenza A H7N9</a> in <a href="http://www.who.int/influenza/human_animal_interface/influenza_h7n9/ChinaH7N9JointMissionReport2013u.pdf?ua=1">China</a> as analysed by Kucharski et al. (2014):</p>
+<blockquote>
+<p>A. Kucharski, H. Mills, A. Pinsent, C. Fraser, M. Van Kerkhove, C. A. Donnelly, and S. Riley. 2014. Distinguishing between reservoir exposure and human-to-human transmission for emerging pathogens using case onset data. PLOS Currents Outbreaks. Mar 7, edition 1. doi: 10.1371/currents.outbreaks.e1473d9bfc99d080ca242139a06c455f.</p>
+</blockquote>
+<blockquote>
+<p>A. Kucharski, H. Mills, A. Pinsent, C. Fraser, M. Van Kerkhove, C. A. Donnelly, and S. Riley. 2014. Data from: Distinguishing between reservoir exposure and human-to-human transmission for emerging pathogens using case onset data. Dryad Digital Repository. <a href="http://dx.doi.org/10.5061/dryad.2g43n" class="uri">http://dx.doi.org/10.5061/dryad.2g43n</a>.</p>
+</blockquote>
+<p>I will be using their data as an example to show how to use Machine Learning algorithms for predicting disease outcome.</p>
+<p><br></p>
+<pre class="r"><code>library(outbreaks)
+library(tidyverse)
+library(plyr)
+library(mice)
+library(caret)
+library(purrr)</code></pre>
+<div id="the-data" class="section level1">
+<h1>The data</h1>
+<p>The dataset contains case ID, date of onset, date of hospitalization, date of outcome, gender, age, province and of course outcome: Death or Recovery.</p>
+<div id="pre-processing" class="section level2">
+<h2>Pre-processing</h2>
+<p><strong>Change: variable names (i.e. column names) have been renamed, dots have been replaced with underscores, letters are all lower case now.</strong></p>
+<p><strong>Change: I am using the tidyverse notation more consistently.</strong></p>
+<p>First, I’m doing some preprocessing, including:</p>
+<ul>
+<li>renaming missing data as NA</li>
+<li>adding an ID column</li>
+<li>setting column types</li>
+<li>gathering date columns</li>
+<li>changing factor names of dates (to make them look nicer in plots) and of <code>province</code> (to combine provinces with few cases)</li>
+</ul>
+<pre class="r"><code>fluH7N9_china_2013$age[which(fluH7N9_china_2013$age == &quot;?&quot;)] &lt;- NA
+fluH7N9_china_2013_gather &lt;- fluH7N9_china_2013 %&gt;%
+  mutate(case_id = paste(&quot;case&quot;, case_id, sep = &quot;_&quot;),
+         age = as.numeric(age)) %&gt;%
+  gather(Group, Date, date_of_onset:date_of_outcome) %&gt;%
+  mutate(Group = as.factor(mapvalues(Group, from = c(&quot;date_of_onset&quot;, &quot;date_of_hospitalisation&quot;, &quot;date_of_outcome&quot;), 
+          to = c(&quot;date of onset&quot;, &quot;date of hospitalisation&quot;, &quot;date of outcome&quot;))),
+         province = mapvalues(province, from = c(&quot;Anhui&quot;, &quot;Beijing&quot;, &quot;Fujian&quot;, &quot;Guangdong&quot;, &quot;Hebei&quot;, &quot;Henan&quot;, &quot;Hunan&quot;, &quot;Jiangxi&quot;, &quot;Shandong&quot;, &quot;Taiwan&quot;), to = rep(&quot;Other&quot;, 10)))</code></pre>
+<p>I’m also</p>
+<ul>
+<li>adding a third gender level for unknown gender</li>
+</ul>
+<pre class="r"><code>levels(fluH7N9_china_2013_gather$gender) &lt;- c(levels(fluH7N9_china_2013_gather$gender), &quot;unknown&quot;)
+fluH7N9_china_2013_gather$gender[is.na(fluH7N9_china_2013_gather$gender)] &lt;- &quot;unknown&quot;
+head(fluH7N9_china_2013_gather)</code></pre>
+<pre><code>##   case_id outcome gender age province         Group       Date
+## 1  case_1   Death      m  58 Shanghai date of onset 2013-02-19
+## 2  case_2   Death      m   7 Shanghai date of onset 2013-02-27
+## 3  case_3   Death      f  11    Other date of onset 2013-03-09
+## 4  case_4    &lt;NA&gt;      f  18  Jiangsu date of onset 2013-03-19
+## 5  case_5 Recover      f  20  Jiangsu date of onset 2013-03-19
+## 6  case_6   Death      f   9  Jiangsu date of onset 2013-03-21</code></pre>
+<p>For plotting, I am defining a custom <code>ggplot2</code> theme:</p>
+<pre class="r"><code>my_theme &lt;- function(base_size = 12, base_family = &quot;sans&quot;){
+  theme_minimal(base_size = base_size, base_family = base_family) +
+  theme(
+    axis.text = element_text(size = 12),
+    axis.text.x = element_text(angle = 45, vjust = 0.5, hjust = 0.5),
+    axis.title = element_text(size = 14),
+    panel.grid.major = element_line(color = &quot;grey&quot;),
+    panel.grid.minor = element_blank(),
+    panel.background = element_rect(fill = &quot;aliceblue&quot;),
+    strip.background = element_rect(fill = &quot;lightgrey&quot;, color = &quot;grey&quot;, size = 1),
+    strip.text = element_text(face = &quot;bold&quot;, size = 12, color = &quot;black&quot;),
+    legend.position = &quot;bottom&quot;,
+    legend.justification = &quot;top&quot;, 
+    legend.box = &quot;horizontal&quot;,
+    legend.box.background = element_rect(colour = &quot;grey50&quot;),
+    legend.background = element_blank(),
+    panel.border = element_rect(color = &quot;grey&quot;, fill = NA, size = 0.5)
+  )
+}</code></pre>
+<p>And use that theme to visualize the data:</p>
+<pre class="r"><code>ggplot(data = fluH7N9_china_2013_gather, aes(x = Date, y = age, fill = outcome)) +
+  stat_density2d(aes(alpha = ..level..), geom = &quot;polygon&quot;) +
+  geom_jitter(aes(color = outcome, shape = gender), size = 1.5) +
+  geom_rug(aes(color = outcome)) +
+  scale_y_continuous(limits = c(0, 90)) +
+  labs(
+    fill = &quot;Outcome&quot;,
+    color = &quot;Outcome&quot;,
+    alpha = &quot;Level&quot;,
+    shape = &quot;Gender&quot;,
+    x = &quot;Date in 2013&quot;,
+    y = &quot;Age&quot;,
+    title = &quot;2013 Influenza A H7N9 cases in China&quot;,
+    subtitle = &quot;Dataset from &#39;outbreaks&#39; package (Kucharski et al. 2014)&quot;,
+    caption = &quot;&quot;
+  ) +
+  facet_grid(Group ~ province) +
+  my_theme() +
+  scale_shape_manual(values = c(15, 16, 17)) +
+  scale_color_brewer(palette=&quot;Set1&quot;, na.value = &quot;grey50&quot;) +
+  scale_fill_brewer(palette=&quot;Set1&quot;)</code></pre>
+<p><img src="/post/2018-04-22_flu_outcome_ML_post_files/figure-html/main-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(data = fluH7N9_china_2013_gather, aes(x = Date, y = age, color = outcome)) +
+  geom_point(aes(color = outcome, shape = gender), size = 1.5, alpha = 0.6) +
+  geom_path(aes(group = case_id)) +
+  facet_wrap( ~ province, ncol = 2) +
+  my_theme() +
+  scale_shape_manual(values = c(15, 16, 17)) +
+  scale_color_brewer(palette=&quot;Set1&quot;, na.value = &quot;grey50&quot;) +
+  scale_fill_brewer(palette=&quot;Set1&quot;) +
+  labs(
+    color = &quot;Outcome&quot;,
+    shape = &quot;Gender&quot;,
+    x = &quot;Date in 2013&quot;,
+    y = &quot;Age&quot;,
+    title = &quot;2013 Influenza A H7N9 cases in China&quot;,
+    subtitle = &quot;Dataset from &#39;outbreaks&#39; package (Kucharski et al. 2014)&quot;,
+    caption = &quot;\nTime from onset of flu to outcome.&quot;
+  )</code></pre>
+<p><img src="/post/2018-04-22_flu_outcome_ML_post_files/figure-html/unnamed-chunk-5-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p><br></p>
+</div>
+</div>
+<div id="features" class="section level1">
+<h1>Features</h1>
+<p>In machine learning-speak features are what we call the variables used for model training. Using the right features dramatically influences the accuracy and success of your model.</p>
+<p>For this example, I am keeping age, but I am also generating new features from the date information and converting gender and province into numerical values.</p>
+<pre class="r"><code>dataset &lt;- fluH7N9_china_2013 %&gt;%
+  mutate(hospital = as.factor(ifelse(is.na(date_of_hospitalisation), 0, 1)),
+         gender_f = as.factor(ifelse(gender == &quot;f&quot;, 1, 0)),
+         province_Jiangsu = as.factor(ifelse(province == &quot;Jiangsu&quot;, 1, 0)),
+         province_Shanghai = as.factor(ifelse(province == &quot;Shanghai&quot;, 1, 0)),
+         province_Zhejiang = as.factor(ifelse(province == &quot;Zhejiang&quot;, 1, 0)),
+         province_other = as.factor(ifelse(province == &quot;Zhejiang&quot; | province == &quot;Jiangsu&quot; | province == &quot;Shanghai&quot;, 0, 1)),
+         days_onset_to_outcome = as.numeric(as.character(gsub(&quot; days&quot;, &quot;&quot;,
+                                      as.Date(as.character(date_of_outcome), format = &quot;%Y-%m-%d&quot;) - 
+                                        as.Date(as.character(date_of_onset), format = &quot;%Y-%m-%d&quot;)))),
+         days_onset_to_hospital = as.numeric(as.character(gsub(&quot; days&quot;, &quot;&quot;,
+                                      as.Date(as.character(date_of_hospitalisation), format = &quot;%Y-%m-%d&quot;) - 
+                                        as.Date(as.character(date_of_onset), format = &quot;%Y-%m-%d&quot;)))),
+         age = age,
+         early_onset = as.factor(ifelse(date_of_onset &lt; summary(fluH7N9_china_2013$date_of_onset)[[3]], 1, 0)),
+         early_outcome = as.factor(ifelse(date_of_outcome &lt; summary(fluH7N9_china_2013$date_of_outcome)[[3]], 1, 0))) %&gt;%
+  subset(select = -c(2:4, 6, 8))
+rownames(dataset) &lt;- dataset$case_id
+dataset[, -2] &lt;- as.numeric(as.matrix(dataset[, -2]))
+head(dataset)</code></pre>
+<pre><code>##   case_id outcome age hospital gender_f province_Jiangsu province_Shanghai
+## 1       1   Death  87        0        0                0                 1
+## 2       2   Death  27        1        0                0                 1
+## 3       3   Death  35        1        1                0                 0
+## 4       4    &lt;NA&gt;  45        1        1                1                 0
+## 5       5 Recover  48        1        1                1                 0
+## 6       6   Death  32        1        1                1                 0
+##   province_Zhejiang province_other days_onset_to_outcome
+## 1                 0              0                    13
+## 2                 0              0                    11
+## 3                 0              1                    31
+## 4                 0              0                    NA
+## 5                 0              0                    57
+## 6                 0              0                    36
+##   days_onset_to_hospital early_onset early_outcome
+## 1                     NA           1             1
+## 2                      4           1             1
+## 3                     10           1             1
+## 4                      8           1            NA
+## 5                     11           1             0
+## 6                      7           1             1</code></pre>
+<pre class="r"><code>summary(dataset$outcome)</code></pre>
+<pre><code>##   Death Recover    NA&#39;s 
+##      32      47      57</code></pre>
+<p><br></p>
+<div id="imputing-missing-values" class="section level2">
+<h2>Imputing missing values</h2>
+<p>I am using the <a href="https://gerkovink.github.io/miceVignettes/Ad_hoc_and_mice/Ad_hoc_methods.html"><code>mice</code> package for imputing missing values</a></p>
+<p><strong>Note: Since publishing this blogpost I learned that the idea behind using <code>mice</code> is to compare different imputations to see how stable they are, instead of picking one imputed set as fixed for the remainder of the analysis. Therefore, I changed the focus of this post a little bit: in the old post I compared many different algorithms and their outcome; in this updated version I am only showing the Random Forest algorithm and focus on comparing the different imputed datasets. I am ignoring feature importance and feature plots because nothing changed compared to the old post.</strong></p>
+<p><br></p>
+<ul>
+<li><code>md.pattern()</code> shows the pattern of missingness in the data:</li>
+</ul>
+<pre class="r"><code>md.pattern(dataset)</code></pre>
+<pre><code>##    case_id hospital province_Jiangsu province_Shanghai province_Zhejiang
+## 42       1        1                1                 1                 1
+## 27       1        1                1                 1                 1
+##  2       1        1                1                 1                 1
+##  2       1        1                1                 1                 1
+## 18       1        1                1                 1                 1
+##  1       1        1                1                 1                 1
+## 36       1        1                1                 1                 1
+##  3       1        1                1                 1                 1
+##  3       1        1                1                 1                 1
+##  2       1        1                1                 1                 1
+##          0        0                0                 0                 0
+##    province_other age gender_f early_onset outcome early_outcome
+## 42              1   1        1           1       1             1
+## 27              1   1        1           1       1             1
+##  2              1   1        1           1       1             0
+##  2              1   1        1           0       1             1
+## 18              1   1        1           1       0             0
+##  1              1   1        1           1       1             0
+## 36              1   1        1           1       0             0
+##  3              1   1        1           0       1             0
+##  3              1   1        1           0       0             0
+##  2              1   0        0           0       1             0
+##                 0   2        2          10      57            65
+##    days_onset_to_outcome days_onset_to_hospital    
+## 42                     1                      1   0
+## 27                     1                      0   1
+##  2                     0                      1   2
+##  2                     0                      0   3
+## 18                     0                      1   3
+##  1                     0                      0   3
+## 36                     0                      0   4
+##  3                     0                      0   4
+##  3                     0                      0   5
+##  2                     0                      0   6
+##                       67                     74 277</code></pre>
+<ul>
+<li><code>mice()</code> generates the imputations</li>
+</ul>
+<pre class="r"><code>dataset_impute &lt;- mice(data = dataset[, -2],  print = FALSE)</code></pre>
+<ul>
+<li>by default, <code>mice()</code> calculates five (m = 5) imputed data sets</li>
+<li>we can combine them all in one output with the <code>complete(&quot;long&quot;)</code> function</li>
+<li>I did not want to impute missing values in the <code>outcome</code> column, so I have to merge it back in with the imputed data</li>
+</ul>
+<pre class="r"><code>datasets_complete &lt;- right_join(dataset[, c(1, 2)], 
+                           complete(dataset_impute, &quot;long&quot;),
+                           by = &quot;case_id&quot;) %&gt;%
+  select(-.id)</code></pre>
+<pre class="r"><code>head(datasets_complete)</code></pre>
+<pre><code>##   case_id outcome .imp age hospital gender_f province_Jiangsu
+## 1       1   Death    1  87        0        0                0
+## 2       2   Death    1  27        1        0                0
+## 3       3   Death    1  35        1        1                0
+## 4       4    &lt;NA&gt;    1  45        1        1                1
+## 5       5 Recover    1  48        1        1                1
+## 6       6   Death    1  32        1        1                1
+##   province_Shanghai province_Zhejiang province_other days_onset_to_outcome
+## 1                 1                 0              0                    13
+## 2                 1                 0              0                    11
+## 3                 0                 0              1                    31
+## 4                 0                 0              0                    22
+## 5                 0                 0              0                    57
+## 6                 0                 0              0                    36
+##   days_onset_to_hospital early_onset early_outcome
+## 1                      1           1             1
+## 2                      4           1             1
+## 3                     10           1             1
+## 4                      8           1             1
+## 5                     11           1             0
+## 6                      7           1             1</code></pre>
+<p>Let’s compare the distributions of the five different imputed datasets:</p>
+<pre class="r"><code>datasets_complete %&gt;%
+  gather(x, y, age:early_outcome) %&gt;%
+  ggplot(aes(x = y, fill = .imp, color = .imp)) +
+    facet_wrap(~ x, ncol = 3, scales = &quot;free&quot;) +
+    geom_density(alpha = 0.4) +
+    scale_fill_brewer(palette=&quot;Set1&quot;, na.value = &quot;grey50&quot;) +
+    scale_color_brewer(palette=&quot;Set1&quot;, na.value = &quot;grey50&quot;) +
+    my_theme()</code></pre>
+<p><img src="/post/2018-04-22_flu_outcome_ML_post_files/figure-html/unnamed-chunk-12-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p><br></p>
+</div>
+</div>
+<div id="test-train-and-validation-data-sets" class="section level1">
+<h1>Test, train and validation data sets</h1>
+<p>Now, we can go ahead with machine learning!</p>
+<p>The dataset contains a few missing values in the <code>outcome</code> column; those will be the test set used for final predictions (see the old blog post for this).</p>
+<pre class="r"><code>train_index &lt;- which(is.na(datasets_complete$outcome))
+train_data &lt;- datasets_complete[-train_index, ]
+test_data  &lt;- datasets_complete[train_index, -2]</code></pre>
+<p>The remainder of the data will be used for modeling. Here, I am splitting the data into 70% training and 30% test data.</p>
+<p>Because I want to model each imputed dataset separately, I am using the <code>nest()</code> and <code>map()</code> functions.</p>
+<pre class="r"><code>set.seed(42)
+val_data &lt;- train_data %&gt;%
+  group_by(.imp) %&gt;%
+  nest() %&gt;%
+  mutate(val_index = map(data, ~ createDataPartition(.$outcome, p = 0.7, list = FALSE)),
+         val_train_data = map2(data, val_index, ~ .x[.y, ]),
+         val_test_data = map2(data, val_index, ~ .x[-.y, ]))</code></pre>
+<p><br></p>
+</div>
+<div id="machine-learning-algorithms" class="section level1">
+<h1>Machine Learning algorithms</h1>
+<div id="random-forest" class="section level2">
+<h2>Random Forest</h2>
+<p>To make the code tidier, I am first defining the modeling function with the parameters I want.</p>
+<pre class="r"><code>model_function &lt;- function(df) {
+  caret::train(outcome ~ .,
+               data = df,
+               method = &quot;rf&quot;,
+               preProcess = c(&quot;scale&quot;, &quot;center&quot;),
+               trControl = trainControl(method = &quot;repeatedcv&quot;, number = 5, repeats = 3, verboseIter = FALSE))
+}</code></pre>
+<p>Next, I am using the nested tibble from before to <code>map()</code> the model function, predict the outcome and calculate confusion matrices.</p>
+<pre class="r"><code>set.seed(42)
+val_data_model &lt;- val_data %&gt;%
+  mutate(model = map(val_train_data, ~ model_function(.x)),
+         predict = map2(model, val_test_data, ~ data.frame(prediction = predict(.x, .y[, -2]))),
+         predict_prob = map2(model, val_test_data, ~ data.frame(outcome = .y[, 2],
+                                                                prediction = predict(.x, .y[, -2], type = &quot;prob&quot;))),
+         confusion_matrix = map2(val_test_data, predict, ~ confusionMatrix(.x$outcome, .y$prediction)),
+         confusion_matrix_tbl = map(confusion_matrix, ~ as.tibble(.x$table)))</code></pre>
+<p><br></p>
+</div>
+<div id="comparing-accuracy-of-models" class="section level2">
+<h2>Comparing accuracy of models</h2>
+<p>To compare how the different imputations did, I am plotting</p>
+<ul>
+<li>the confusion matrices:</li>
+</ul>
+<pre class="r"><code>val_data_model %&gt;%
+  unnest(confusion_matrix_tbl) %&gt;%
+  ggplot(aes(x = Prediction, y = Reference, fill = n)) +
+    facet_wrap(~ .imp, ncol = 5, scales = &quot;free&quot;) +
+    geom_tile() +
+    scale_fill_viridis_c() +
+    my_theme()</code></pre>
+<p><img src="/post/2018-04-22_flu_outcome_ML_post_files/figure-html/unnamed-chunk-17-1.png" width="1440" style="display: block; margin: auto;" /></p>
+<ul>
+<li>and the prediction probabilities for correct and wrong predictions:</li>
+</ul>
+<pre class="r"><code>val_data_model %&gt;%
+  unnest(predict_prob) %&gt;%
+  gather(x, y, prediction.Death:prediction.Recover) %&gt;%
+  ggplot(aes(x = x, y = y, fill = outcome)) +
+    facet_wrap(~ .imp, ncol = 5, scales = &quot;free&quot;) +
+    geom_boxplot() +
+    scale_fill_brewer(palette=&quot;Set1&quot;, na.value = &quot;grey50&quot;) +
+    my_theme()</code></pre>
+<p><img src="/post/2018-04-22_flu_outcome_ML_post_files/figure-html/unnamed-chunk-18-1.png" width="1440" style="display: block; margin: auto;" /></p>
+<p>Hope, you found that example interesting and helpful!</p>
+<p><br></p>
+<hr />
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 3.4.3 (2017-11-30)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS High Sierra 10.13.4
+## 
+## Matrix products: default
+## BLAS: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] de_DE.UTF-8/de_DE.UTF-8/de_DE.UTF-8/C/de_DE.UTF-8/de_DE.UTF-8
+## 
+## attached base packages:
+## [1] methods   stats     graphics  grDevices utils     datasets  base     
+## 
+## other attached packages:
+##  [1] bindrcpp_0.2       caret_6.0-78       mice_2.46.0       
+##  [4] lattice_0.20-35    plyr_1.8.4         forcats_0.3.0     
+##  [7] stringr_1.3.0      dplyr_0.7.4        purrr_0.2.4       
+## [10] readr_1.1.1        tidyr_0.8.0        tibble_1.4.2      
+## [13] ggplot2_2.2.1.9000 tidyverse_1.2.1    outbreaks_1.3.0   
+## 
+## loaded via a namespace (and not attached):
+##  [1] nlme_3.1-131.1      lubridate_1.7.3     dimRed_0.1.0       
+##  [4] RColorBrewer_1.1-2  httr_1.3.1          rprojroot_1.3-2    
+##  [7] tools_3.4.3         backports_1.1.2     R6_2.2.2           
+## [10] rpart_4.1-13        lazyeval_0.2.1      colorspace_1.3-2   
+## [13] nnet_7.3-12         withr_2.1.1.9000    tidyselect_0.2.4   
+## [16] mnormt_1.5-5        compiler_3.4.3      cli_1.0.0          
+## [19] rvest_0.3.2         xml2_1.2.0          labeling_0.3       
+## [22] bookdown_0.7        scales_0.5.0.9000   sfsmisc_1.1-1      
+## [25] DEoptimR_1.0-8      psych_1.7.8         robustbase_0.92-8  
+## [28] randomForest_4.6-12 digest_0.6.15       foreign_0.8-69     
+## [31] rmarkdown_1.8       pkgconfig_2.0.1     htmltools_0.3.6    
+## [34] rlang_0.2.0.9000    readxl_1.0.0        ddalpha_1.3.1.1    
+## [37] rstudioapi_0.7      bindr_0.1           jsonlite_1.5       
+## [40] ModelMetrics_1.1.0  magrittr_1.5        Matrix_1.2-12      
+## [43] Rcpp_0.12.15        munsell_0.4.3       stringi_1.1.6      
+## [46] yaml_2.1.17         MASS_7.3-49         recipes_0.1.2      
+## [49] grid_3.4.3          parallel_3.4.3      crayon_1.3.4       
+## [52] haven_1.1.1         splines_3.4.3       hms_0.4.1          
+## [55] knitr_1.20          pillar_1.2.1        reshape2_1.4.3     
+## [58] codetools_0.2-15    stats4_3.4.3        CVST_0.2-1         
+## [61] glue_1.2.0          evaluate_0.10.1     blogdown_0.5       
+## [64] modelr_0.1.1        foreach_1.4.4       cellranger_1.1.0   
+## [67] gtable_0.2.0        kernlab_0.9-25      assertthat_0.2.0   
+## [70] DRR_0.0.3           xfun_0.1            gower_0.1.2        
+## [73] prodlim_1.6.1       broom_0.4.3         e1071_1.6-8        
+## [76] class_7.3-14        survival_2.41-3     viridisLite_0.3.0  
+## [79] timeDate_3043.102   RcppRoll_0.2.2      iterators_1.0.9    
+## [82] lava_1.6            ipred_0.9-6</code></pre>
+</div>
+</div>
