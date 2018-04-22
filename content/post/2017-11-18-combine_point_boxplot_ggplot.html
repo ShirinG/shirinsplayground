@@ -28,13 +28,13 @@ fake_data &lt;- data.frame(time = dates,
                         var2 = runif(length(dates))) %&gt;%
   sample_frac(size = 0.33)
 head(fake_data)</code></pre>
-<pre><code>##                   time    var1_1     var1_2    var1_3      var2
-## 53 2017-10-01 09:36:00 0.1984466 0.04188588 0.3464290 0.5583152
-## 38 2017-10-01 08:51:00 0.7057563 0.22779574 0.2382634 0.7954228
-## 34 2017-10-01 08:39:00 0.5239017 0.75149639 0.3942653 0.4908962
-## 13 2017-10-01 07:36:00 0.8838265 0.22154491 0.9388426 0.2199565
-## 6  2017-10-01 07:15:00 0.7729077 0.45930575 0.1749513 0.6661809
-## 36 2017-10-01 08:45:00 0.9434972 0.40341611 0.4926815 0.8377908</code></pre>
+<pre><code>##                   time    var1_1    var1_2     var1_3      var2
+## 51 2017-10-01 09:30:00 0.4534363 0.9947001 0.07223936 0.8891859
+## 35 2017-10-01 08:42:00 0.4260230 0.5613454 0.77475368 0.5780837
+## 3  2017-10-01 07:06:00 0.0871770 0.2824280 0.97726978 0.4705974
+## 59 2017-10-01 09:54:00 0.6824320 0.9735636 0.67654248 0.4235517
+## 5  2017-10-01 07:12:00 0.7979666 0.5857256 0.03911439 0.6918448
+## 52 2017-10-01 09:33:00 0.7537796 0.3054030 0.61354248 0.5045606</code></pre>
 <p>Here, variable 1 (<code>var1</code>) has three measurements per time point, while variable 2 (<code>var2</code>) has one.</p>
 <p>First, for plotting with ggplot2 we want our data in a tidy long format. I also add another column for faceting that groups the variables from <code>var1</code> together.</p>
 <pre class="r"><code>fake_data_long &lt;- fake_data %&gt;%
@@ -42,12 +42,12 @@ head(fake_data)</code></pre>
   mutate(facet = ifelse(x %in% c(&quot;var1_1&quot;, &quot;var1_2&quot;, &quot;var1_3&quot;), &quot;var1&quot;, x))
 head(fake_data_long)</code></pre>
 <pre><code>##                  time      x         y facet
-## 1 2017-10-01 09:36:00 var1_1 0.1984466  var1
-## 2 2017-10-01 08:51:00 var1_1 0.7057563  var1
-## 3 2017-10-01 08:39:00 var1_1 0.5239017  var1
-## 4 2017-10-01 07:36:00 var1_1 0.8838265  var1
-## 5 2017-10-01 07:15:00 var1_1 0.7729077  var1
-## 6 2017-10-01 08:45:00 var1_1 0.9434972  var1</code></pre>
+## 1 2017-10-01 09:30:00 var1_1 0.4534363  var1
+## 2 2017-10-01 08:42:00 var1_1 0.4260230  var1
+## 3 2017-10-01 07:06:00 var1_1 0.0871770  var1
+## 4 2017-10-01 09:54:00 var1_1 0.6824320  var1
+## 5 2017-10-01 07:12:00 var1_1 0.7979666  var1
+## 6 2017-10-01 09:33:00 var1_1 0.7537796  var1</code></pre>
 <p>Now, we can plot this the following way:</p>
 <ul>
 <li>facet by variable</li>
@@ -68,7 +68,7 @@ head(fake_data_long)</code></pre>
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>## R version 3.4.3 (2017-11-30)
 ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-## Running under: macOS High Sierra 10.13.3
+## Running under: macOS High Sierra 10.13.4
 ## 
 ## Matrix products: default
 ## BLAS: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRblas.0.dylib

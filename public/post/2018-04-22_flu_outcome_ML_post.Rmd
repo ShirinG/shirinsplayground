@@ -1,6 +1,6 @@
 ---
 title: "Update: Can we predict flu outcome with Machine Learning in R?"
-draft: true
+draft: false
 author: Shirin Glander
 date: '2018-04-22'
 categories: [R, machine learning]

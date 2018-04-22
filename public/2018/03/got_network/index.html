@@ -496,22 +496,22 @@ main_ch_l</code></pre>
 ## # An undirected simple graph with 1 component
 ## #
 ## # Node Data: 100 x 2 (active)
-##   name            n_rank_trv
-##   &lt;chr&gt;                &lt;int&gt;
-## 1 Arianne-Martell          1
-## 2 Doran-Martell            2
-## 3 Oberyn-Martell           3
-## 4 Tywin-Lannister          4
-## 5 Varys                    5
-## 6 Shae                     6
+##   name             n_rank_trv
+##   &lt;chr&gt;                 &lt;int&gt;
+## 1 Gendry                    1
+## 2 Hot-Pie                   2
+## 3 Lem                       3
+## 4 Beric-Dondarrion          4
+## 5 Eddard-Stark              5
+## 6 Ramsay-Snow               6
 ## # ... with 94 more rows
 ## #
 ## # Edge Data: 798 x 5
 ##    from    to Type          id weight
 ##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;int&gt;  &lt;int&gt;
-## 1    41    46 Undirected    43      7
-## 2    39    41 Undirected    44      4
-## 3    41    43 Undirected    52      3
+## 1    44    46 Undirected    43      7
+## 2    44    45 Undirected    44      4
+## 3    44    92 Undirected    52      3
 ## # ... with 795 more rows</code></pre>
 </div>
 <div id="centrality" class="section level3">
@@ -607,7 +607,7 @@ main_ch_l</code></pre>
 ## 3 Aerys-II-Targaryen              FALSE  FALSE    
 ## 4 Alliser-Thorne                  FALSE  FALSE    
 ## 5 Arianne-Martell                 FALSE  FALSE    
-## 6 Arya-Stark                      FALSE  TRUE     
+## 6 Arya-Stark                      FALSE  FALSE    
 ## # ... with 94 more rows
 ## #
 ## # Edge Data: 798 x 5
@@ -699,16 +699,16 @@ main_ch_l</code></pre>
 <pre><code>## # A tibble: 100 x 7
 ##    name         n_rank_trv neighbors group center dist_to_center keyplayer
 ##    &lt;chr&gt;             &lt;int&gt;     &lt;dbl&gt; &lt;int&gt; &lt;lgl&gt;           &lt;dbl&gt; &lt;lgl&gt;    
-##  1 Aemon-Targa…         48       13.     2 FALSE              1. FALSE    
-##  2 Aeron-Greyj…         94        5.     5 FALSE              2. FALSE    
-##  3 Aerys-II-Ta…         74       12.     1 FALSE              1. FALSE    
-##  4 Alliser-Tho…         50       13.     2 FALSE              1. FALSE    
-##  5 Arianne-Mar…         85        4.     7 FALSE              2. FALSE    
-##  6 Arya-Stark           63       37.     1 FALSE              1. FALSE    
-##  7 Asha-Greyjoy         93        7.     5 FALSE              1. FALSE    
-##  8 Balon-Greyj…         92       11.     5 FALSE              2. FALSE    
-##  9 Barristan-S…         83       23.     3 FALSE              1. FALSE    
-## 10 Belwas               77        6.     3 FALSE              2. FALSE    
+##  1 Aemon-Targa…          7       13.     2 FALSE              1. FALSE    
+##  2 Aeron-Greyj…         85        5.     5 FALSE              2. FALSE    
+##  3 Aerys-II-Ta…         59       12.     1 FALSE              1. FALSE    
+##  4 Alliser-Tho…          6       13.     2 FALSE              1. FALSE    
+##  5 Arianne-Mar…         95        4.     7 FALSE              2. FALSE    
+##  6 Arya-Stark           34       37.     1 FALSE              1. FALSE    
+##  7 Asha-Greyjoy         87        7.     5 FALSE              1. FALSE    
+##  8 Balon-Greyj…         86       11.     5 FALSE              2. FALSE    
+##  9 Barristan-S…         91       23.     3 FALSE              1. FALSE    
+## 10 Belwas               42        6.     3 FALSE              2. FALSE    
 ## # ... with 90 more rows</code></pre>
 <pre class="r"><code>cooc_all_f_graph %&gt;%
   activate(edges) %&gt;% # %E&gt;%
@@ -825,7 +825,7 @@ cooc_books_5_graph &lt;- as_tbl_graph(coocs_book_5, directed = FALSE) %&gt;%
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>## R version 3.4.3 (2017-11-30)
 ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-## Running under: macOS High Sierra 10.13.3
+## Running under: macOS High Sierra 10.13.4
 ## 
 ## Matrix products: default
 ## BLAS: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRblas.0.dylib
