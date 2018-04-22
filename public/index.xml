@@ -9,6 +9,23 @@
   </author>
   <generator>Hugo -- gohugo.io</generator>
   <entry>
+    <title type="html"><![CDATA[Sketchnotes from TWiML&amp;AI #121: Reproducibility and the Philosophy of Data with Clare Gollnick]]></title>
+    <link href="/2018/04/twimlai121/"/>
+    <id>/2018/04/twimlai121/</id>
+    <published>2018-04-22T00:00:00+00:00</published>
+    <updated>2018-04-22T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<p>These are my sketchnotes for Sam Charrington’s podcast <strong>This Week in Machine Learning and AI</strong> about <em>Reproducibility and the Philosophy of Data with Clare Gollnick</em>:</p>
+<div class="figure">
+<img src="https://shiring.github.io/netlify_images/twimlai121.jpg" alt="Sketchnotes from TWiMLAI talk #121: Reproducibility and the Philosophy of Data with Clare Gollnick" />
+<p class="caption">Sketchnotes from TWiMLAI talk #121: Reproducibility and the Philosophy of Data with Clare Gollnick</p>
+</div>
+<p>You can listen to the podcast <a href="https://twimlai.com/twiml-talk-121-reproducibility-philosophy-data-clare-gollnick/">here</a>.</p>
+<blockquote>
+<p>In this episode, i’m joined by Clare Gollnick, CTO of Terbium Labs, to discuss her thoughts on the “reproducibility crisis” currently haunting the scientific landscape. For a little background, a “Nature” survey in 2016 showed that more than 70% of researchers have tried and failed to reproduce another scientist’s experiments, and more than half have failed to reproduce their own experiments. Clare gives us her take on the situation, and how it applies to data science, along with some great nuggets about the philosophy of data and a few interesting use cases as well. We also cover her thoughts on Bayesian vs Frequentist techniques and while we’re at it, the Vim vs Emacs debate. No, actually I’m just kidding on that last one. But this was indeed a very fun conversation that I think you’ll enjoy! <a href="https://twimlai.com/twiml-talk-121-reproducibility-philosophy-data-clare-gollnick/" class="uri">https://twimlai.com/twiml-talk-121-reproducibility-philosophy-data-clare-gollnick/</a></p>
+</blockquote>
+]]></content>
+  </entry>
+  <entry>
     <title type="html"><![CDATA[Update: Can we predict flu outcome with Machine Learning in R?]]></title>
     <link href="/2018/04/flu_prediction/"/>
     <id>/2018/04/flu_prediction/</id>
@@ -479,7 +496,7 @@ val_data_model &lt;- val_data %&gt;%
 </div>
 <p>You can listen to the podcast <a href="https://twimlai.com/twiml-talk-124-systems-software-machine-learning-scale-jeff-dean/">here</a>.</p>
 <blockquote>
-<p>n this episode I’m joined by Jeff Dean, Google Senior Fellow and head of the company’s deep learning research team Google Brain, who I had a chance to sit down with last week at the Googleplex in Mountain View. As you’ll hear, I was very excited for this interview, because so many of Jeff’s contributions since he started at Google in ‘99 have touched my life and work. In our conversation, Jeff and I dig into a bunch of the core machine learning innovations we’ve seen from Google. Of course we discuss TensorFlow, and its origins and evolution at Google. We also explore AI acceleration hardware, including TPU v1, v2 and future directions from Google and the broader market in this area. We talk through the machine learning toolchain, including some things that Googlers might take for granted, and where the recently announced Cloud AutoML fits in. We also discuss Google’s process for mapping problems across a variety of domains to deep learning, and much, much more. This was definitely one of my favorite conversations, and I’m pumped to be able to share it with you. <a href="https://twimlai.com/twiml-talk-124-systems-software-machine-learning-scale-jeff-dean/" class="uri">https://twimlai.com/twiml-talk-124-systems-software-machine-learning-scale-jeff-dean/</a></p>
+<p>In this episode I’m joined by Jeff Dean, Google Senior Fellow and head of the company’s deep learning research team Google Brain, who I had a chance to sit down with last week at the Googleplex in Mountain View. As you’ll hear, I was very excited for this interview, because so many of Jeff’s contributions since he started at Google in ‘99 have touched my life and work. In our conversation, Jeff and I dig into a bunch of the core machine learning innovations we’ve seen from Google. Of course we discuss TensorFlow, and its origins and evolution at Google. We also explore AI acceleration hardware, including TPU v1, v2 and future directions from Google and the broader market in this area. We talk through the machine learning toolchain, including some things that Googlers might take for granted, and where the recently announced Cloud AutoML fits in. We also discuss Google’s process for mapping problems across a variety of domains to deep learning, and much, much more. This was definitely one of my favorite conversations, and I’m pumped to be able to share it with you. <a href="https://twimlai.com/twiml-talk-124-systems-software-machine-learning-scale-jeff-dean/" class="uri">https://twimlai.com/twiml-talk-124-systems-software-machine-learning-scale-jeff-dean/</a></p>
 </blockquote>
 ]]></content>
   </entry>
