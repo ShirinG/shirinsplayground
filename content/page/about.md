@@ -7,9 +7,7 @@ showActions:    false
 thumbnailImage: /img/Bewerbungsfoto.jpg
 ---
 
-![](/img/Bewerbungsfoto_klein.jpg)
-
-I'm Shirin, a biologist turned bioinformatician turned data scientist. 
+I'm Shirin, a biologist turned bioinformatician turned data scientist. ![](/img/Bewerbungsfoto_klein.jpg)
 
 I'm especially interested in machine learning and data visualization. While I am using R most every day at work, I wanted to have an incentive to regularly explore other types of analyses and other types of data that I don't normally work with. I have also very often benefited from other people's published code in that it gave me ideas for my own work; and I hope that sharing my own analyses will inspire others as much as I often am by what can be be done with data.  It's amazing to me what can be learned from analyzing and visualizing data!
 

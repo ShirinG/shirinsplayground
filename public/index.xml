@@ -2485,9 +2485,7 @@ Verteiltes Deep Learning mit TensorFlow und Kubernetes - <a href="https://twitte
     <updated>2017-09-12T16:06:06+02:00</updated>
     <content type="html"><![CDATA[
 
-<p><img src="/img/Bewerbungsfoto_klein.jpg" alt="" /></p>
-
-<p>I&rsquo;m Shirin, a biologist turned bioinformatician turned data scientist.</p>
+<p>I&rsquo;m Shirin, a biologist turned bioinformatician turned data scientist. <img src="/img/Bewerbungsfoto_klein.jpg" alt="" /></p>
 
 <p>I&rsquo;m especially interested in machine learning and data visualization. While I am using R most every day at work, I wanted to have an incentive to regularly explore other types of analyses and other types of data that I don&rsquo;t normally work with. I have also very often benefited from other people&rsquo;s published code in that it gave me ideas for my own work; and I hope that sharing my own analyses will inspire others as much as I often am by what can be be done with data.  It&rsquo;s amazing to me what can be learned from analyzing and visualizing data!</p>
 
