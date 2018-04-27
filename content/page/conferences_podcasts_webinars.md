@@ -24,21 +24,27 @@ Date and place depend on who and how many people are interested, so please conta
 
 ## Upcoming talks, webinars, podcasts, etc.
 
-- [Announcing my talk about explainability of machine learning models at Minds Mastering Machines Conference](https://shirinsplayground.netlify.com/2018/02/m3_2018/)
-
-> On Wednesday, April 25th 2018 I am going to talk about explainability of machine learning models at the Minds Mastering Machines conference in Cologne.
-
-<br>
-
-- [JAX 2018 talk announcement: Deep Learning - a Primer](https://shirinsplayground.netlify.com/2018/01/jax2018/)
-
-> Deep Learning is one of the "hot" topics in the AI area – a lot of hype, a lot of inflated expectation, but also quite some impressive success stories. As some AI experts already predict that Deep Learning will become "Software 2.0", it might be a good time to have a closer look at the topic. In this session I will try to give a comprehensive overview of Deep Learning. We will start with a bit of history and some theoretical foundations that we will use to create a little Deep Learning taxonomy. Then we will have a look at current and upcoming application areas: Where can we apply Deep Learning successfully and what does it differentiate from other approaches? Afterwards we will examine the ecosystem: Which tools and libraries are available? What are their strengths and weaknesses? And to complete the session, we will look into some practical code examples and the typical pitfalls of Deep Learning. After this session you will have a much better idea of the why, what and how of Deep Learning, including if and how you might want to apply it to your own work. https://jax.de/big-data-machine-learning/deep-learning-a-primer/
+- In May 2018 I'll be at the [ROpenSci unconference in Seattle, WA](http://unconf18.ropensci.org/)
 
 ---
 
 <br>
 
 ## Past talks, webinars, podcasts, etc.
+
+- [I talked about explaining complex machine learning models at Minds Mastering Machines Conference](https://shirinsplayground.netlify.com/2018/02/m3_2018/) on Wednesday, April 25th 2018 in Colone
+
+The presentation was in German but the slides were similar to those: https://shirinsplayground.netlify.com/2018/04/hh_datascience_meetup_2018_slides/
+
+<br>
+
+- My colleague Uwe Friedrichsen and I gave a talk at the [JAX conference 2018: Deep Learning - a Primer](https://shirinsplayground.netlify.com/2018/01/jax2018/) on April 24th 2018 in Mainz
+
+Slides can be found here: https://www.slideshare.net/ShirinGlander/deep-learning-a-primer-95197733
+
+> Deep Learning is one of the "hot" topics in the AI area – a lot of hype, a lot of inflated expectation, but also quite some impressive success stories. As some AI experts already predict that Deep Learning will become "Software 2.0", it might be a good time to have a closer look at the topic. In this session I will try to give a comprehensive overview of Deep Learning. We will start with a bit of history and some theoretical foundations that we will use to create a little Deep Learning taxonomy. Then we will have a look at current and upcoming application areas: Where can we apply Deep Learning successfully and what does it differentiate from other approaches? Afterwards we will examine the ecosystem: Which tools and libraries are available? What are their strengths and weaknesses? And to complete the session, we will look into some practical code examples and the typical pitfalls of Deep Learning. After this session you will have a much better idea of the why, what and how of Deep Learning, including if and how you might want to apply it to your own work. https://jax.de/big-data-machine-learning/deep-learning-a-primer/
+
+<br>
 
 - [I talked about explaining complex Machine Learning Models with LIME](https://shirinsplayground.netlify.com/2018/03/meetup_talk_ruhrpy_april_18/) at this meetup: [Data Science Meetup Hamburg](https://www.meetup.com/Hamburg-Data-Science-Meetup/events/244145443/) on Thursday, April 12th 2018
 
@@ -49,7 +55,7 @@ Dr. Shirin Glander is Data Scientist at codecentric AG. She has received a PhD i
 
 <br>
 
-- [I talk about Deep Learning with Keras in R and Python](https://shirinsplayground.netlify.com/2018/03/meetup_talk_ruhrpy_april_18/) at this meetup: [Ruhr.Py 2018](https://www.meetup.com/Ruhr-py/events/248093628/) on Wednesday, April 4th 2018
+- [I talked about Deep Learning with Keras in R and Python](https://shirinsplayground.netlify.com/2018/03/meetup_talk_ruhrpy_april_18/) at this meetup: [Ruhr.Py 2018](https://www.meetup.com/Ruhr-py/events/248093628/) on Wednesday, April 4th 2018
 
 > Introducing Deep Learning with Keras and Python
 Keras is a high-level API written in Python for building and prototyping neural networks. It can be used on top of TensorFlow, Theano or CNTK. In this talk we build, train and visualize a Model using Python and Keras - all interactive with Jupyter Notebooks!
