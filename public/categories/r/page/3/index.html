@@ -316,6 +316,74 @@ ga('send', 'pageview');
     
     <div class="postShorten-header">
       <h1 class="postShorten-title" itemprop="headline">
+        <a class="link-unstyled" href="/2017/11/mice_sketchnotes/">
+          MICE (Multiple Imputation by Chained Equations) in R - sketchnotes from MünsteR Meetup
+        </a>
+      </h1>
+      
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2017-11-28T00:00:00Z">
+        
+  November 28, 2017
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="/categories/r">R</a>, 
+    
+      <a class="category-link" href="/categories/sketchnotes">sketchnotes</a>, 
+    
+      <a class="category-link" href="/categories/meetup">meetup</a>, 
+    
+      <a class="category-link" href="/categories/m%c3%bcnster">MünsteR</a>
+    
+  
+
+
+  </div>
+
+    </div>
+    <div class="postShorten-excerpt" itemprop="articleBody">
+      Last night, the MünsteR R user-group had another great meetup:
+Karin Groothuis-Oudshoorn, Assistant Professor at the University of Twente, presented her R package mice about Multivariate Imputation by Chained Equations.
+It was a very interesting talk and here are my sketchnotes that I took during it:
+MICE talk sketchnotes
+ Here is the link to the paper referenced in my notes: https://www.jstatsoft.org/article/view/v045i03
+ “The mice package implements a method to deal with missing data.
+      <p>
+        <a href="/2017/11/mice_sketchnotes/" class="postShorten-excerpt_link link">Continue reading</a>
+        
+      </p>
+    </div>
+  </div>
+  
+    <a href="/2017/11/mice_sketchnotes/">
+      <div class="postShorten-thumbnailimg">
+        <img alt="" itemprop="image" src="https://shiring.github.io/netlify_images/mice_sketchnote_gxjsgc.jpg"/>
+      </div>
+    </a>
+  
+</article>
+
+            
+              
+  
+    
+  
+
+
+  
+
+<article class="postShorten postShorten--thumbnailimg-left" itemscope itemType="http://schema.org/BlogPosting">
+  <div class="postShorten-wrap">
+    
+    <div class="postShorten-header">
+      <h1 class="postShorten-title" itemprop="headline">
         <a class="link-unstyled" href="/2017/11/deep_learning_keras_tensorflow/">
           Workshop on Deep Learning with Keras and TensorFlow in R
         </a>
@@ -616,6 +684,25 @@ Because I work with the tidyverse, I wanted to produce these plots with ggplot2.
           <div class="media">
             
             <div class="media-body">
+              <a class="link-unstyled" href="/2018/04/pkgnet/">
+                <h3 class="media-heading">Comparing dependencies of popular machine learning packages with `pkgnet`</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Apr 4, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">When looking through the CRAN list of packages, I stumbled upon this little gem:
+ pkgnet is an R library designed for the analysis of R libraries! The goal of the package is to build a graph representation of a package and its dependencies.
+ And I thought it would be fun to play around with it. The little analysis I ended up doing was to compare dependencies of popular machine learning packages.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
               <a class="link-unstyled" href="/2018/04/jax2018_slides/">
                 <h3 class="media-heading">Slides from my JAX 2018 talk: Deep Learning - a Primer</h3>
               </a>
@@ -781,23 +868,6 @@ Sketchnotes from TWiMLAI talk #124: Systems and Software for Machine Learning at
             <hr>
           </div>
         
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="/2018/03/roadtrip_2018/">
-                <h3 class="media-heading">US Roadtrip Location data mapping</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Mar 3, 2018
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">library(jsonlite) system.time(x &lt;- fromJSON(&quot;~/Documents/Github/Data/Takeout/Standortverlauf/Standortverlauf.json&quot;)) # extracting the locations dataframe loc = x$locations # converting time column from posix milliseconds into a readable time scale loc$time = as.POSIXct(as.numeric(x$locations$timestampMs)/1000, origin = &quot;1970-01-01&quot;) # converting longitude and latitude from E7 to GPS coordinates loc$lat = loc$latitudeE7 / 1e7 loc$lon = loc$longitudeE7 / 1e7 usa &lt;- get_map(location = &#39;USA&#39;, zoom = 5) </div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
       </div>
     </div>
     <div class="modal-footer">
@@ -805,7 +875,7 @@ Sketchnotes from TWiMLAI talk #124: Systems and Software for Machine Learning at
          data-message-zero="no post found"
          data-message-one="1 post found"
          data-message-other="{n} posts found">
-         39 posts found
+         40 posts found
       </p>
     </div>
   </div>

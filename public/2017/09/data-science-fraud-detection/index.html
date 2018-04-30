@@ -617,6 +617,25 @@ ga('send', 'pageview');
           <div class="media">
             
             <div class="media-body">
+              <a class="link-unstyled" href="/2018/04/pkgnet/">
+                <h3 class="media-heading">Comparing dependencies of popular machine learning packages with `pkgnet`</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Apr 4, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">When looking through the CRAN list of packages, I stumbled upon this little gem:
+ pkgnet is an R library designed for the analysis of R libraries! The goal of the package is to build a graph representation of a package and its dependencies.
+ And I thought it would be fun to play around with it. The little analysis I ended up doing was to compare dependencies of popular machine learning packages.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
               <a class="link-unstyled" href="/2018/04/jax2018_slides/">
                 <h3 class="media-heading">Slides from my JAX 2018 talk: Deep Learning - a Primer</h3>
               </a>
@@ -782,23 +801,6 @@ Sketchnotes from TWiMLAI talk #124: Systems and Software for Machine Learning at
             <hr>
           </div>
         
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="/2018/03/roadtrip_2018/">
-                <h3 class="media-heading">US Roadtrip Location data mapping</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Mar 3, 2018
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">library(jsonlite) system.time(x &lt;- fromJSON(&quot;~/Documents/Github/Data/Takeout/Standortverlauf/Standortverlauf.json&quot;)) # extracting the locations dataframe loc = x$locations # converting time column from posix milliseconds into a readable time scale loc$time = as.POSIXct(as.numeric(x$locations$timestampMs)/1000, origin = &quot;1970-01-01&quot;) # converting longitude and latitude from E7 to GPS coordinates loc$lat = loc$latitudeE7 / 1e7 loc$lon = loc$longitudeE7 / 1e7 usa &lt;- get_map(location = &#39;USA&#39;, zoom = 5) </div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
       </div>
     </div>
     <div class="modal-footer">
@@ -806,7 +808,7 @@ Sketchnotes from TWiMLAI talk #124: Systems and Software for Machine Learning at
          data-message-zero="no post found"
          data-message-one="1 post found"
          data-message-other="{n} posts found">
-         39 posts found
+         40 posts found
       </p>
     </div>
   </div>
