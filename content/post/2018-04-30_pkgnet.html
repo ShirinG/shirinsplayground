@@ -6,7 +6,7 @@ date: '2018-04-30'
 categories: ["R", "machine learning"]
 tags: ["R", "machine learning", "pkgnet", "ggraph", "tidygraph"]
 thumbnailImagePosition: left
-thumbnailImage: post/pkgnet_files/figure-html/graph-1.png
+thumbnailImage: post/2018-04-30_pkgnet_files/figure-html/graph-1.png
 metaAlignment: center
 coverMeta: out
 slug: pkgnet
@@ -92,7 +92,7 @@ library(tidygraph)</code></pre>
     geom_node_label(aes(label = name, fill = color, size = centrality), show.legend = FALSE, repel = TRUE) +
     theme_graph() +
     scale_fill_brewer(palette = &quot;Set1&quot;)</code></pre>
-<p><img src="/post/pkgnet_files/figure-html/graph-1.png" width="960" /></p>
+<p><img src="/post/2018-04-30_pkgnet_files/figure-html/graph-1.png" width="960" /></p>
 <ul>
 <li>Because the complete network is a bit hard to make sense of, I plotted it again with only the packages I wanted to analyze plus dependencies that had at least 1 outgoing edge; now it is easier to see shared dependencies.</li>
 </ul>
@@ -105,7 +105,7 @@ library(tidygraph)</code></pre>
     geom_node_label(aes(label = name, fill = color, size = centrality), show.legend = FALSE, repel = TRUE) +
     theme_graph() +
     scale_fill_brewer(palette = &quot;Set1&quot;)</code></pre>
-<p><img src="/post/pkgnet_files/figure-html/graph_subset-1.png" width="576" /></p>
+<p><img src="/post/2018-04-30_pkgnet_files/figure-html/graph_subset-1.png" width="576" /></p>
 <p>It would of course be interesting to analyse a bigger network with more packages. Maybe someone knows how to get these other packages to work with <code>pkgnet</code>?</p>
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>## R version 3.5.0 (2018-04-23)

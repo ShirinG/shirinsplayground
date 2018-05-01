@@ -1,0 +1,138 @@
+---
+title: "Comparing dependencies of popular machine learning packages with `pkgnet`"
+draft: false
+author: Shirin Glander
+date: '2018-04-30'
+categories: ["R", "machine learning"]
+tags: ["R", "machine learning", "pkgnet", "ggraph", "tidygraph"]
+thumbnailImagePosition: left
+thumbnailImage: post/2018-04-30_pkgnet_files/figure-html/graph-1.png
+metaAlignment: center
+coverMeta: out
+slug: pkgnet
+---
+
+When looking through the CRAN list of packages, I stumbled upon [this little gem](https://cran.r-project.org/web/packages/pkgnet/vignettes/pkgnet-intro.html):
+
+> pkgnet is an R library designed for the analysis of R libraries! The goal of the package is to build a graph representation of a package and its dependencies.
+
+And I thought it would be fun to play around with it. The little analysis I ended up doing was to compare dependencies of popular machine learning packages.
+
+**Update:** An alternative package to use would be [`cranly`](https://cran.r-project.org/web/packages/cranly/vignettes/cranly.html).
+---
+
+- I first loaded the packages:
+
+```{r}
+library(pkgnet)
+library(tidygraph)
+library(ggraph)
+```
+
+- I then created a function that will 
+
+1. create the package report with `pkgnet::CreatePackageReport`
+2. convert the edge (`report$DependencyReporter$edges`) and node (`report$DependencyReporter$nodes`) data into a graph object with `tidygraph::as_tbl_graph`
+
+```{r}
+create_pkg_graph <- function(package_name, DependencyReporter = TRUE) {
+  
+  report <- CreatePackageReport(pkg_name = package_name)
+  
+  if (DependencyReporter) {
+    graph <- as_tbl_graph(report$DependencyReporter$edges,
+                      directed = TRUE,
+                      nodes = as.data.frame(report$DependencyReporter$nodes))
+  } else {
+    graph <- as_tbl_graph(report$FunctionReporter$edges,
+                      directed = TRUE,
+                      nodes = as.data.frame(report$FunctionReporter$nodes))
+  }
+  
+  return(graph)
+}
+```
+
+- To create a vector of machine learning packages from R I looked at [CRAN's machine learning task view](https://cran.r-project.org/web/views/MachineLearning.html)
+
+- These are the packages I ended up including:
+
+```{r}
+pkg_list <- c("caret", "h2o", "e1071", "mlr")
+```
+
+*Note*: I wanted to include other packages, like `tensorflow`, `randomFores`, `gbm`, etc. but for those, `pkgnet` threw an error:
+
+> Error in data.table::data.table(node = names(igraph::V(self$pkg_graph)),  : 
+  column or argument 1 is NULL 
+
+- Next, I ran them through my function from before and assigned them each a unique name.
+
+```{r eval=FALSE}
+for (pkg in pkg_list) {
+  graph <- create_pkg_graph(pkg)
+  assign(paste0("graph_", pkg), graph)
+}
+```
+
+```{r echo=FALSE, eval=FALSE}
+save(graph_caret, file = "../../data/graph_caret.RData")
+save(graph_h2o, file = "../../data/graph_h2o.RData")
+save(graph_e1071, file = "../../data/graph_e1071.RData")
+save(graph_mlr, file = "../../data/graph_mlr.RData")
+```
+
+```{r echo=FALSE}
+load("../../data/graph_caret.RData")
+load("../../data/graph_h2o.RData")
+load("../../data/graph_e1071.RData")
+load("../../data/graph_mlr.RData")
+```
+
+- These individual objects I combined with [`tidygraph`](https://cran.r-project.org/web/packages/tidygraph/index.html) and calculated node centrality as the number of outgoing edges.
+
+```{r}
+graph <- graph_caret %>% 
+  graph_join(graph_h2o, by = "name") %>%
+  graph_join(graph_e1071, by = "name") %>%
+  graph_join(graph_mlr, by = "name") %>%
+  mutate(color = ifelse(name %in% pkg_list, "a", "b"),
+         centrality = centrality_degree(mode = "out"))
+```
+
+- Finally, I plotted the dependency network with [`ggraph`](https://github.com/thomasp85/ggraph):
+
+The bigger the node labels (package names), the higher their centrality. Seems like the more basic utilitarian packages have the highest centrality (not really a surprise...).
+
+```{r graph, fig.width=10, fig.height=10}
+graph %>%
+  ggraph(layout = 'nicely') + 
+    geom_edge_link(arrow = arrow()) + 
+    geom_node_point() +
+    geom_node_label(aes(label = name, fill = color, size = centrality), show.legend = FALSE, repel = TRUE) +
+    theme_graph() +
+    scale_fill_brewer(palette = "Set1")
+```
+
+- Because the complete network is a bit hard to make sense of, I plotted it again with only the packages I wanted to analyze plus dependencies that had at least 1 outgoing edge; now it is easier to see shared dependencies.
+
+For example, `methods` and `stats` are dependencies of `caret`, `mlr` and `e1071` but not `h2o`, while `utils` is a dependency of all four.
+
+```{r graph_subset, fig.width=6, fig.height=6}
+graph %>%
+  filter(centrality > 1 | color == "a") %>%
+  ggraph(layout = 'nicely') + 
+    geom_edge_link(arrow = arrow()) + 
+    geom_node_point() +
+    geom_node_label(aes(label = name, fill = color, size = centrality), show.legend = FALSE, repel = TRUE) +
+    theme_graph() +
+    scale_fill_brewer(palette = "Set1")
+```
+
+It would of course be interesting to analyse a bigger network with more packages.
+Maybe someone knows how to get these other packages to work with `pkgnet`?
+
+```{r}
+sessionInfo()
+```
+
