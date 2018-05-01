@@ -18,6 +18,7 @@ When looking through the CRAN list of packages, I stumbled upon [this little gem
 
 And I thought it would be fun to play around with it. The little analysis I ended up doing was to compare dependencies of popular machine learning packages.
 
+**Update:** An alternative package to use would be [`cranly`](https://cran.r-project.org/web/packages/cranly/vignettes/cranly.html).
 ---
 
 - I first loaded the packages:
