@@ -311,7 +311,6 @@ val_data_model %>%
   ggplot(aes(x = Prediction, y = Reference, fill = n)) +
     facet_wrap(~ .imp, ncol = 5, scales = "free") +
     geom_tile() +
-    scale_fill_viridis_c() +
     my_theme()
 ```
 
