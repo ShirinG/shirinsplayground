@@ -32,6 +32,10 @@ Date and place depend on who and how many people are interested, so please conta
 
 ## Past talks, webinars, podcasts, etc.
 
+- At the [Amazon AWS AI & Machine Learning Web Day on May 8th](https://aws.amazon.com/de/events/web-days-2018/), I gave a presentation on how to get started with Amazon SageMaker. The recording can be found on [YouTube](https://youtu.be/lQmcXAN7GJ4); slides are on [Slideshare](https://www.slideshare.net/AWSAktuell/ai-machine-learning-web-day-wie-gelingt-der-einstieg-in-amazon-sagemaker-prsentiert-von-codecentric)
+
+<br>
+
 - [I talked about explaining complex machine learning models at Minds Mastering Machines Conference](https://shirinsplayground.netlify.com/2018/02/m3_2018/) on Wednesday, April 25th 2018 in Colone
 
 The presentation was in German but the slides were similar to those: https://shirinsplayground.netlify.com/2018/04/hh_datascience_meetup_2018_slides/
