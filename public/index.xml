@@ -2,12 +2,44 @@
   <title>Shirin&#39;s playgRound</title>
   <link href="/index.xml" rel="self"/>
   <link href="/"/>
-  <updated>2018-04-30T00:00:00+00:00</updated>
+  <updated>2018-05-14T00:00:00+00:00</updated>
   <id>/</id>
   <author>
     <name>Dr. Shirin Glander</name>
   </author>
   <generator>Hugo -- gohugo.io</generator>
+  <entry>
+    <title type="html"><![CDATA[Sketchnotes from TWiML&amp;AI: Adversarial Attacks Against Reinforcement Learning Agents with Ian Goodfellow &amp; Sandy Huang]]></title>
+    <link href="/2018/05/twimlai121/"/>
+    <id>/2018/05/twimlai121/</id>
+    <published>2018-05-14T00:00:00+00:00</published>
+    <updated>2018-05-14T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<p>These are my sketchnotes for Sam Charrington’s podcast <strong>This Week in Machine Learning and AI</strong> about <em>Adversarial Attacks Against Reinforcement Learning Agents with Ian Goodfellow &amp; Sandy Huang</em>:</p>
+<div class="figure">
+<img src="https://shiring.github.io/netlify_images/twimlai_adversarial_attacks.jpg" alt="Sketchnotes from TWiMLAI talk: Adversarial Attacks Against Reinforcement Learning Agents with Ian Goodfellow &amp; Sandy Huang" />
+<p class="caption">Sketchnotes from TWiMLAI talk: Adversarial Attacks Against Reinforcement Learning Agents with Ian Goodfellow &amp; Sandy Huang</p>
+</div>
+<p>You can listen to the podcast <a href="https://twimlai.com/twiml-talk-119-adversarial-attacks-reinforcement-learning-agents-ian-goodfellow-sandy-huang/">here</a>.</p>
+<blockquote>
+<p>In this episode, I’m joined by Ian Goodfellow, Staff Research Scientist at Google Brain and Sandy Huang, Phd Student in the EECS department at UC Berkeley, to discuss their work on the paper Adversarial Attacks on Neural Network Policies. If you’re a regular listener here you’ve probably heard of adversarial attacks, and have seen examples of deep learning based object detectors that can be fooled into thinking that, for example, a giraffe is actually a school bus, by injecting some imperceptible noise into the image. Well, Sandy and Ian’s paper sits at the intersection of adversarial attacks and reinforcement learning, another area we’ve discussed quite a bit on the podcast. In their paper, they describe how adversarial attacks can also be effective at targeting neural network policies in reinforcement learning. Sandy gives us an overview of the paper, including how changing a single pixel value can throw off performance of a model trained to play Atari games. We also cover a lot of interesting topics relating to adversarial attacks and RL individually, and some related areas such as hierarchical reward functions and transfer learning. This was a great conversation that I’m really excited to bring to you! <a href="https://twimlai.com/twiml-talk-119-adversarial-attacks-reinforcement-learning-agents-ian-goodfellow-sandy-huang/" class="uri">https://twimlai.com/twiml-talk-119-adversarial-attacks-reinforcement-learning-agents-ian-goodfellow-sandy-huang/</a></p>
+</blockquote>
+]]></content>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[AI tongue twister contest - comparison of Text to Speech Systems.]]></title>
+    <link href="/2018/04/cc_tongue_twister_video/"/>
+    <id>/2018/04/cc_tongue_twister_video/</id>
+    <published>2018-04-30T00:00:00+00:00</published>
+    <updated>2018-04-30T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<p><a href="https://www.youtube.com/c/codecentricAI" class="uri">https://www.youtube.com/c/codecentricAI</a></p>
+<p>Phishers Fritz phished frische Credentials, Frische Credentials phished Fischers Fritz!</p>
+<p>In diesem Video vergleichen wir aktuelle TTS bzw. Text to Speech Systeme mit Hilfe von Zungenbrechern. Wir veranstalten einen kleinen Wettbewerb zwischen Polly, Alexa, Siri und Co und hören uns einmal an, wie die aktuellen Systeme so klingen. Wir vergleichen deutsche und englische Stimmen/Modelle und versuchen auch selbst ein paar Zungenbrecher aufzusagen.</p>
+<p>Mit Hilfe von neuronalen Netzen und Deep Learning sind Text to Speech Systeme in den vergangenen Jahren immer besser geworden. Heute gibt es Modelle, die schon sehr natürlich klingen und teilweise kaum noch von einem Menschen zu unterscheiden sind.</p>
+<p>Zusätzlich bieten die großen Cloud Anbieter wie Amazon, Google, IBM und Microsoft Text-to-Speech Systeme as a Service, so dass man mit wenig Aufwand Sprachausgabe in seine eigenen Programme integrieren kann. Auch diese Systeme hören wir uns kurz an.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/2EEMSsVBE8w" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+</iframe>
+]]></content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[Comparing dependencies of popular machine learning packages with `pkgnet`]]></title>
     <link href="/2018/04/pkgnet/"/>
@@ -147,6 +179,18 @@ library(tidygraph)</code></pre>
 ## [52] labeling_0.3         stringi_1.1.7        visNetwork_2.0.3    
 ## [55] lazyeval_0.2.1       munsell_0.4.3</code></pre>
 </div>
+]]></content>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[Object Detection Demo - Detectron Drone Flight]]></title>
+    <link href="/2018/04/cc_drone_video/"/>
+    <id>/2018/04/cc_drone_video/</id>
+    <published>2018-04-30T00:00:00+00:00</published>
+    <updated>2018-04-30T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<p><a href="https://www.youtube.com/c/codecentricAI" class="uri">https://www.youtube.com/c/codecentricAI</a></p>
+<p>In diesem Video fliegen wir mit einer Drohne durch unser Firmengebäude. Wir verwenden ein Neuronales Netz (genauer Mask R-CNN) um Objekte zu erkennen (Object Detection bzw. Object Recognition) und mit einer Maske zu markieren (Object Segmentation).</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/tXCPXXiMrsU" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+</iframe>
 ]]></content>
   </entry>
   <entry>
