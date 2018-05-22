@@ -589,14 +589,14 @@ head(dataset)</code></pre>
 ## 1                 1                 0              0                    13
 ## 2                 1                 0              0                    11
 ## 3                 0                 0              1                    31
-## 4                 0                 0              0                    86
+## 4                 0                 0              0                    28
 ## 5                 0                 0              0                    57
 ## 6                 0                 0              0                    36
 ##   days_onset_to_hospital early_onset early_outcome
-## 1                      1           1             1
+## 1                      5           1             1
 ## 2                      4           1             1
 ## 3                     10           1             1
-## 4                      8           1             0
+## 4                      8           1             1
 ## 5                     11           1             0
 ## 6                      7           1             1</code></pre>
 <p>Let’s compare the distributions of the five different imputed datasets:</p>
@@ -664,7 +664,6 @@ val_data_model &lt;- val_data %&gt;%
   ggplot(aes(x = Prediction, y = Reference, fill = n)) +
     facet_wrap(~ .imp, ncol = 5, scales = &quot;free&quot;) +
     geom_tile() +
-    scale_fill_viridis_c() +
     my_theme()</code></pre>
 <p><img src="/post/2018-04-22_flu_outcome_ML_post_files/figure-html/unnamed-chunk-17-1.png" width="1440" style="display: block; margin: auto;" /></p>
 <ul>
@@ -683,56 +682,56 @@ val_data_model &lt;- val_data %&gt;%
 <p><br></p>
 <hr />
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>## R version 3.4.3 (2017-11-30)
+<pre><code>## R version 3.5.0 (2018-04-23)
 ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
 ## Running under: macOS High Sierra 10.13.4
 ## 
 ## Matrix products: default
-## BLAS: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRblas.0.dylib
-## LAPACK: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRlapack.dylib
+## BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
 ## 
 ## locale:
 ## [1] de_DE.UTF-8/de_DE.UTF-8/de_DE.UTF-8/C/de_DE.UTF-8/de_DE.UTF-8
 ## 
 ## attached base packages:
-## [1] methods   stats     graphics  grDevices utils     datasets  base     
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] bindrcpp_0.2       caret_6.0-78       mice_2.46.0       
-##  [4] lattice_0.20-35    plyr_1.8.4         forcats_0.3.0     
-##  [7] stringr_1.3.0      dplyr_0.7.4        purrr_0.2.4       
-## [10] readr_1.1.1        tidyr_0.8.0        tibble_1.4.2      
-## [13] ggplot2_2.2.1.9000 tidyverse_1.2.1    outbreaks_1.3.0   
+##  [1] bindrcpp_0.2.2  caret_6.0-79    mice_2.46.0     lattice_0.20-35
+##  [5] plyr_1.8.4      forcats_0.3.0   stringr_1.3.1   dplyr_0.7.4    
+##  [9] purrr_0.2.4     readr_1.1.1     tidyr_0.8.0     tibble_1.4.2   
+## [13] ggplot2_2.2.1   tidyverse_1.2.1 outbreaks_1.3.0
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] nlme_3.1-131.1      lubridate_1.7.3     dimRed_0.1.0       
+##  [1] nlme_3.1-137        lubridate_1.7.4     dimRed_0.1.0       
 ##  [4] RColorBrewer_1.1-2  httr_1.3.1          rprojroot_1.3-2    
-##  [7] tools_3.4.3         backports_1.1.2     R6_2.2.2           
+##  [7] tools_3.5.0         backports_1.1.2     R6_2.2.2           
 ## [10] rpart_4.1-13        lazyeval_0.2.1      colorspace_1.3-2   
-## [13] nnet_7.3-12         withr_2.1.1.9000    tidyselect_0.2.4   
-## [16] mnormt_1.5-5        compiler_3.4.3      cli_1.0.0          
+## [13] nnet_7.3-12         withr_2.1.2         tidyselect_0.2.4   
+## [16] mnormt_1.5-5        compiler_3.5.0      cli_1.0.0          
 ## [19] rvest_0.3.2         xml2_1.2.0          labeling_0.3       
-## [22] bookdown_0.7        scales_0.5.0.9000   sfsmisc_1.1-1      
-## [25] DEoptimR_1.0-8      psych_1.7.8         robustbase_0.92-8  
-## [28] randomForest_4.6-12 digest_0.6.15       foreign_0.8-69     
-## [31] rmarkdown_1.8       pkgconfig_2.0.1     htmltools_0.3.6    
-## [34] rlang_0.2.0.9000    readxl_1.0.0        ddalpha_1.3.1.1    
-## [37] rstudioapi_0.7      bindr_0.1           jsonlite_1.5       
-## [40] ModelMetrics_1.1.0  magrittr_1.5        Matrix_1.2-12      
-## [43] Rcpp_0.12.15        munsell_0.4.3       stringi_1.1.6      
-## [46] yaml_2.1.17         MASS_7.3-49         recipes_0.1.2      
-## [49] grid_3.4.3          parallel_3.4.3      crayon_1.3.4       
-## [52] haven_1.1.1         splines_3.4.3       hms_0.4.1          
-## [55] knitr_1.20          pillar_1.2.1        reshape2_1.4.3     
-## [58] codetools_0.2-15    stats4_3.4.3        CVST_0.2-1         
-## [61] glue_1.2.0          evaluate_0.10.1     blogdown_0.5       
-## [64] modelr_0.1.1        foreach_1.4.4       cellranger_1.1.0   
-## [67] gtable_0.2.0        kernlab_0.9-25      assertthat_0.2.0   
-## [70] DRR_0.0.3           xfun_0.1            gower_0.1.2        
-## [73] prodlim_1.6.1       broom_0.4.3         e1071_1.6-8        
-## [76] class_7.3-14        survival_2.41-3     viridisLite_0.3.0  
-## [79] timeDate_3043.102   RcppRoll_0.2.2      iterators_1.0.9    
-## [82] lava_1.6            ipred_0.9-6</code></pre>
+## [22] bookdown_0.7        scales_0.5.0        sfsmisc_1.1-2      
+## [25] DEoptimR_1.0-8      psych_1.8.4         robustbase_0.93-0  
+## [28] randomForest_4.6-14 digest_0.6.15       foreign_0.8-70     
+## [31] rmarkdown_1.9       pkgconfig_2.0.1     htmltools_0.3.6    
+## [34] rlang_0.2.0         readxl_1.1.0        ddalpha_1.3.3      
+## [37] rstudioapi_0.7      bindr_0.1.1         jsonlite_1.5       
+## [40] ModelMetrics_1.1.0  magrittr_1.5        Matrix_1.2-14      
+## [43] Rcpp_0.12.17        munsell_0.4.3       abind_1.4-5        
+## [46] stringi_1.2.2       yaml_2.1.19         MASS_7.3-50        
+## [49] recipes_0.1.2       grid_3.5.0          parallel_3.5.0     
+## [52] crayon_1.3.4        haven_1.1.1         splines_3.5.0      
+## [55] hms_0.4.2           knitr_1.20          pillar_1.2.2       
+## [58] reshape2_1.4.3      codetools_0.2-15    stats4_3.5.0       
+## [61] CVST_0.2-1          magic_1.5-8         glue_1.2.0         
+## [64] evaluate_0.10.1     blogdown_0.6        modelr_0.1.2       
+## [67] foreach_1.4.4       cellranger_1.1.0    gtable_0.2.0       
+## [70] kernlab_0.9-26      assertthat_0.2.0    DRR_0.0.3          
+## [73] xfun_0.1            gower_0.1.2         prodlim_2018.04.18 
+## [76] broom_0.4.4         e1071_1.6-8         class_7.3-14       
+## [79] survival_2.42-3     geometry_0.3-6      timeDate_3043.102  
+## [82] RcppRoll_0.2.2      iterators_1.0.9     lava_1.6.1         
+## [85] ipred_0.9-6</code></pre>
 </div>
 </div>
 
@@ -993,6 +992,28 @@ val_data_model &lt;- val_data %&gt;%
           <div class="media">
             
             <div class="media-body">
+              <a class="link-unstyled" href="/2018/05/deep_learning_keras_tensorflow_18_07/">
+                <h3 class="media-heading">July 5th &amp; 6th in Münster: Workshop on Deep Learning with Keras and TensorFlow in R</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  May 5, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Registration is now open for my 1.5-day workshop on deep learning with Keras and TensorFlow using R.
+It will take place on July 5th &amp; 6th in Münster, Germany.
+
+ 
+You can read about one participant’s experience in my last workshop:
+ Big Data – a buzz word you can find everywhere these days, from nerdy blogs to scientific research papers and even in the news. But how does Big Data Analysis work, exactly?</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
               <a class="link-unstyled" href="/2018/05/twimlai121/">
                 <h3 class="media-heading">Sketchnotes from TWiML&amp;AI: Adversarial Attacks Against Reinforcement Learning Agents with Ian Goodfellow &amp; Sandy Huang</h3>
               </a>
@@ -1013,26 +1034,6 @@ Sketchnotes from TWiMLAI talk: Adversarial Attacks Against Reinforcement Learnin
           <div class="media">
             
             <div class="media-body">
-              <a class="link-unstyled" href="/2018/04/cc_tongue_twister_video/">
-                <h3 class="media-heading">AI tongue twister contest - comparison of Text to Speech Systems.</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Apr 4, 2018
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">https://www.youtube.com/c/codecentricAI
-Phishers Fritz phished frische Credentials, Frische Credentials phished Fischers Fritz!
-In diesem Video vergleichen wir aktuelle TTS bzw. Text to Speech Systeme mit Hilfe von Zungenbrechern. Wir veranstalten einen kleinen Wettbewerb zwischen Polly, Alexa, Siri und Co und hören uns einmal an, wie die aktuellen Systeme so klingen. Wir vergleichen deutsche und englische Stimmen/Modelle und versuchen auch selbst ein paar Zungenbrecher aufzusagen.
-Mit Hilfe von neuronalen Netzen und Deep Learning sind Text to Speech Systeme in den vergangenen Jahren immer besser geworden.</div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
               <a class="link-unstyled" href="/2018/04/pkgnet/">
                 <h3 class="media-heading">Comparing dependencies of popular machine learning packages with `pkgnet`</h3>
               </a>
@@ -1044,25 +1045,6 @@ Mit Hilfe von neuronalen Netzen und Deep Learning sind Text to Speech Systeme in
               <div class="media-content hide-xs font-merryweather">When looking through the CRAN list of packages, I stumbled upon this little gem:
  pkgnet is an R library designed for the analysis of R libraries! The goal of the package is to build a graph representation of a package and its dependencies.
  And I thought it would be fun to play around with it. The little analysis I ended up doing was to compare dependencies of popular machine learning packages.</div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="/2018/04/cc_drone_video/">
-                <h3 class="media-heading">Object Detection Demo - Detectron Drone Flight</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Apr 4, 2018
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">https://www.youtube.com/c/codecentricAI
-In diesem Video fliegen wir mit einer Drohne durch unser Firmengebäude. Wir verwenden ein Neuronales Netz (genauer Mask R-CNN) um Objekte zu erkennen (Object Detection bzw. Object Recognition) und mit einer Maske zu markieren (Object Segmentation).
- </div>
             </div>
             <div style="clear:both;"></div>
             <hr>
@@ -1182,6 +1164,24 @@ Sketchnotes from TWiMLAI talk #124: Systems and Software for Machine Learning at
             <hr>
           </div>
         
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/04/ruhrpy_meetup_2018_slides/">
+                <h3 class="media-heading">Meetup slides: Introducing Deep Learning with Keras</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Apr 4, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">On April 4th, 2018 I gave a talk about Deep Learning with Keras at the Ruhr.Py Meetup in Essen, Germany. The talk was not specific to Python, though - so if you’re intersted: the slides can be found here: https://www.slideshare.net/ShirinGlander/ruhrpy-introducing-deep-learning-with-keras-and-python
+  Ruhr.PY - Introducing Deep Learning with Keras and Python  von Shirin Glander  There is also a video recording of my talk, which you can see here: https://youtu.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
       </div>
     </div>
     <div class="modal-footer">
@@ -1189,7 +1189,7 @@ Sketchnotes from TWiMLAI talk #124: Systems and Software for Machine Learning at
          data-message-zero="no post found"
          data-message-one="1 post found"
          data-message-other="{n} posts found">
-         43 posts found
+         41 posts found
       </p>
     </div>
   </div>

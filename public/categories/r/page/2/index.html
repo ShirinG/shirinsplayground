@@ -306,30 +306,26 @@ ga('send', 'pageview');
               
   
     
-      
-        
-      
-    
   
 
 
   
 
-<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+<article class="postShorten postShorten--thumbnailimg-left" itemscope itemType="http://schema.org/BlogPosting">
   <div class="postShorten-wrap">
     
     <div class="postShorten-header">
       <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="/2018/03/roadtrip_2018/">
-          US Roadtrip Location data mapping
+        <a class="link-unstyled" href="/2018/03/meetup_talk_ruhrpy_april_18/">
+          My upcoming meetup talks about Deep Learning with Keras and explaining complex Machine Learning Models with LIME
         </a>
       </h1>
       
   <div class="postShorten-meta post-meta">
     
-      <time itemprop="datePublished" datetime="2018-03-27T00:00:00Z">
+      <time itemprop="datePublished" datetime="2018-03-28T00:00:00Z">
         
-  March 27, 2018
+  March 28, 2018
 
       </time>
     
@@ -338,7 +334,11 @@ ga('send', 'pageview');
   
     <span>in</span>
     
-      <a class="category-link" href="/categories/r">R</a>
+      <a class="category-link" href="/categories/r">R</a>, 
+    
+      <a class="category-link" href="/categories/meetup">meetup</a>, 
+    
+      <a class="category-link" href="/categories/keras">keras</a>
     
   
 
@@ -347,13 +347,20 @@ ga('send', 'pageview');
 
     </div>
     <div class="postShorten-excerpt" itemprop="articleBody">
-      library(jsonlite) system.time(x &lt;- fromJSON(&quot;~/Documents/Github/Data/Takeout/Standortverlauf/Standortverlauf.json&quot;)) # extracting the locations dataframe loc = x$locations # converting time column from posix milliseconds into a readable time scale loc$time = as.POSIXct(as.numeric(x$locations$timestampMs)/1000, origin = &quot;1970-01-01&quot;) # converting longitude and latitude from E7 to GPS coordinates loc$lat = loc$latitudeE7 / 1e7 loc$lon = loc$longitudeE7 / 1e7 usa &lt;- get_map(location = &#39;USA&#39;, zoom = 5) 
+      I’ll be talking about Deep Learning with Keras in R and Python at the following upcoming meetup:
+ Ruhr.Py 2018 on Wednesday, April 4th   Introducing Deep Learning with Keras and Python Keras is a high-level API written in Python for building and prototyping neural networks. It can be used on top of TensorFlow, Theano or CNTK. In this talk we build, train and visualize a Model using Python and Keras - all interactive with Jupyter Notebooks!
       <p>
-        <a href="/2018/03/roadtrip_2018/" class="postShorten-excerpt_link link">Continue reading</a>
+        <a href="/2018/03/meetup_talk_ruhrpy_april_18/" class="postShorten-excerpt_link link">Continue reading</a>
         
       </p>
     </div>
   </div>
+  
+    <a href="/2018/03/meetup_talk_ruhrpy_april_18/">
+      <div class="postShorten-thumbnailimg">
+        <img alt="" itemprop="image" src="https://secure.meetupstatic.com/s/img/5455565085016210254/logo/svg/logo--script.svg"/>
+      </div>
+    </a>
   
 </article>
 
@@ -819,6 +826,28 @@ My sketchnotes were collected from these two podcasts:
           <div class="media">
             
             <div class="media-body">
+              <a class="link-unstyled" href="/2018/05/deep_learning_keras_tensorflow_18_07/">
+                <h3 class="media-heading">July 5th &amp; 6th in Münster: Workshop on Deep Learning with Keras and TensorFlow in R</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  May 5, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Registration is now open for my 1.5-day workshop on deep learning with Keras and TensorFlow using R.
+It will take place on July 5th &amp; 6th in Münster, Germany.
+
+ 
+You can read about one participant’s experience in my last workshop:
+ Big Data – a buzz word you can find everywhere these days, from nerdy blogs to scientific research papers and even in the news. But how does Big Data Analysis work, exactly?</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
               <a class="link-unstyled" href="/2018/05/twimlai121/">
                 <h3 class="media-heading">Sketchnotes from TWiML&amp;AI: Adversarial Attacks Against Reinforcement Learning Agents with Ian Goodfellow &amp; Sandy Huang</h3>
               </a>
@@ -839,26 +868,6 @@ Sketchnotes from TWiMLAI talk: Adversarial Attacks Against Reinforcement Learnin
           <div class="media">
             
             <div class="media-body">
-              <a class="link-unstyled" href="/2018/04/cc_tongue_twister_video/">
-                <h3 class="media-heading">AI tongue twister contest - comparison of Text to Speech Systems.</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Apr 4, 2018
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">https://www.youtube.com/c/codecentricAI
-Phishers Fritz phished frische Credentials, Frische Credentials phished Fischers Fritz!
-In diesem Video vergleichen wir aktuelle TTS bzw. Text to Speech Systeme mit Hilfe von Zungenbrechern. Wir veranstalten einen kleinen Wettbewerb zwischen Polly, Alexa, Siri und Co und hören uns einmal an, wie die aktuellen Systeme so klingen. Wir vergleichen deutsche und englische Stimmen/Modelle und versuchen auch selbst ein paar Zungenbrecher aufzusagen.
-Mit Hilfe von neuronalen Netzen und Deep Learning sind Text to Speech Systeme in den vergangenen Jahren immer besser geworden.</div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
               <a class="link-unstyled" href="/2018/04/pkgnet/">
                 <h3 class="media-heading">Comparing dependencies of popular machine learning packages with `pkgnet`</h3>
               </a>
@@ -870,25 +879,6 @@ Mit Hilfe von neuronalen Netzen und Deep Learning sind Text to Speech Systeme in
               <div class="media-content hide-xs font-merryweather">When looking through the CRAN list of packages, I stumbled upon this little gem:
  pkgnet is an R library designed for the analysis of R libraries! The goal of the package is to build a graph representation of a package and its dependencies.
  And I thought it would be fun to play around with it. The little analysis I ended up doing was to compare dependencies of popular machine learning packages.</div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="/2018/04/cc_drone_video/">
-                <h3 class="media-heading">Object Detection Demo - Detectron Drone Flight</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Apr 4, 2018
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">https://www.youtube.com/c/codecentricAI
-In diesem Video fliegen wir mit einer Drohne durch unser Firmengebäude. Wir verwenden ein Neuronales Netz (genauer Mask R-CNN) um Objekte zu erkennen (Object Detection bzw. Object Recognition) und mit einer Maske zu markieren (Object Segmentation).
- </div>
             </div>
             <div style="clear:both;"></div>
             <hr>
@@ -1008,6 +998,24 @@ Sketchnotes from TWiMLAI talk #124: Systems and Software for Machine Learning at
             <hr>
           </div>
         
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/04/ruhrpy_meetup_2018_slides/">
+                <h3 class="media-heading">Meetup slides: Introducing Deep Learning with Keras</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Apr 4, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">On April 4th, 2018 I gave a talk about Deep Learning with Keras at the Ruhr.Py Meetup in Essen, Germany. The talk was not specific to Python, though - so if you’re intersted: the slides can be found here: https://www.slideshare.net/ShirinGlander/ruhrpy-introducing-deep-learning-with-keras-and-python
+  Ruhr.PY - Introducing Deep Learning with Keras and Python  von Shirin Glander  There is also a video recording of my talk, which you can see here: https://youtu.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
       </div>
     </div>
     <div class="modal-footer">
@@ -1015,7 +1023,7 @@ Sketchnotes from TWiMLAI talk #124: Systems and Software for Machine Learning at
          data-message-zero="no post found"
          data-message-one="1 post found"
          data-message-other="{n} posts found">
-         43 posts found
+         41 posts found
       </p>
     </div>
   </div>
