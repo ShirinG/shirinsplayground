@@ -1,0 +1,206 @@
+---
+title: "rOpenSci unconference 2018 + introduction to TensorFlow Probability & the 'greta' package"
+draft: true
+author: Shirin Glander
+date: '2018-05-23'
+categories: ["R"]
+tags: ["R", "tensorflow", "greta"]
+thumbnailImagePosition: left
+thumbnailImage: 
+metaAlignment: center
+coverMeta: out
+slug: 
+---
+
+<center>
+![](https://shiring.github.io/netlify_images/rOpenSci/IMG_3637.jpg)
+<\center>
+
+## What is rOpenSci and what is its unconference?
+
+[rOpenSci](https://ropensci.org/) [packages](https://ropensci.org/packages/)
+
+rOpenSci fosters a culture that values open and reproducible research using shared data and reusable software.
+We do this by: 
+Creating technical infrastructure in the form of carefully vetted, staff- and community-contributed R software tools that lower barriers to working with scientific data sources on the web
+
+Creating social infrastructure through a welcoming and diverse community
+
+Making the right data, tools and best practices more discoverable
+
+Building capacity of software users and developers and fostering a sense of pride in their work
+
+Promoting advocacy for a culture of data sharing and reusable software.
+
+rOpenSci is a non-profit initiative founded in 2011 by Karthik Ram, Scott Chamberlain, and Carl Boettiger to make scientific data retrieval reproducible. Over the past six years we have developed an ecosystem of open source tools, we run annual unconferences, and review community developed software.
+
+[community](https://ropensci.org/community/)
+We are building a welcoming and diverse global community of software users and developers from a range of research domains. We aim to build capacity of novices, experts, and the “nexperts” in between. We welcome participation and civil conversations that adhere to our code of conduct. There are many ways to get involved.
+
+
+[This year's rOpenSci unconference](http://unconf18.ropensci.org/) was held at the Microsoft Reactor in Seattle.
+
+The rOpenSci unconference is our annual event loosely modeled on Foo Camp. This event is unlike many other unconferences in that it is mostly invite-only (past attendees often recommend new ones) with a few spots set aside for self-nominations from the community at large. The agenda is mostly decided during the conference itself. Nominations are now closed..
+
+For a fifth year running, rOpenSci is excited to announce our unconference 2018, this time in Downtown Seattle in the verdant Pacific Northwest. We're organizing this event to bring together scientists, developers, and open data enthusiasts from academia, industry, government, and non-profits to get together for a few days and hack on various projects. rOpenSci unconferences have a rich history. Past projects have related to open data, data visualization, data publication and open science using R. To ensure a safe, enjoyable, and friendly experience for everyone who participates, we follow a strict code of conduct and terms and conditions. We are assembling an exciting team of developers and enthusiasts representing academia, industry, government, and various open source projects.
+
+<center>
+![](https://shiring.github.io/netlify_images/rOpenSci/IMG_3716.jpg)
+<\center>
+
+
+## Working on `greta`
+
+At this year's rOpenSci unconference in Seattle, there were again [many interesting, amazing and cool projects being worked on](https://github.com/ropenscilabs/runconf18-projects/blob/master/index.Rmd)!
+
+The group I joined originally wanted to bring **TensorFlow Probability** to R.
+
+> TensorFlow Probability is a library for probabilistic reasoning and statistical analysis in TensorFlow. As part of the TensorFlow ecosystem, TensorFlow Probability provides integration of probabilistic methods with deep networks, gradient-based inference via automatic differentiation, and scalability to large datasets and models via hardware acceleration (e.g., GPUs) and distributed computation.
+https://github.com/tensorflow/probability
+
+In the end, we - that is [Michael Quinn](https://github.com/michaelquinn32), [David Smith](https://github.com/revodavid), [Tiphaine Martin](https://github.com/TiphaineCMartin), [Matt Mulvahill](https://github.com/mmulvahill) and I - ended up mainly working with the R package `greta`, which has similar functionalities as TensorFlow Probabilities. We recreated some of the examples from the TensorFlow Probability package tutorials in `greta` and we also added a few additional examples for using `greta`.
+
+Check out [the README repo for an overview and links to everything we've contributed](https://github.com/ropenscilabs/greta/tree/unconf/README.md); it is a forked repo from the [original package repo of `greta`](https://github.com/greta-dev/greta).
+
+<center>
+![](https://shiring.github.io/netlify_images/rOpenSci/IMG_3715.jpg)
+<\center>
+
+<center>
+![](https://shiring.github.io/netlify_images/rOpenSci/IMG_3717.jpg)
+<\center>
+
+<center>
+![](https://shiring.github.io/netlify_images/rOpenSci/IMG_3724.jpg)
+<\center>
+
+
+### Where does `greta` come in?
+
+[`greta`](https://greta-dev.github.io/greta) offers a number of functions that make it easy to define statistical models, particularly for Bayesian statistics and uses Google's TensorFlow backend to compute the defined models. Because TensorFlow has been optimized for large-scale computing, multi-core and GPU calculations are supported as well, making `greta` partiuclarly efficient and useful for working with complex models. `greta` has been created by [Nick Golding](https://github.com/goldingn). 
+
+> greta lets us build statistical models interactively in R, and then sample from them by MCMC. We build greta models with greta array objects, which behave much like R’s array, matrix and vector objects for numeric data. Like those numeric data objects, greta arrays can be manipulated with functions and mathematical operators to create new greta arrays.
+The key difference between greta arrays and numeric data objects is that when you do something to a greta array, greta doesn’t calculate the values of the new greta array. Instead, it just remembers what operation to do, and works out the size and shape of the result.
+https://greta-dev.github.io/greta/get_started.html#how_greta_works
+
+Because TensorFlow is not natively an R package, `greta` makes use of Rstudio’s [reticulate](https://rstudio.github.io/reticulate/articles/python_packages.html) and [tensorflow](https://tensorflow.rstudio.com/) packages to connect with the TensorFlow backend.
+
+With the `tensorflow` R package, we can work with all the TensorFlow Python functions directly from within R.
+
+### How does `greta` work?
+
+> There are three layers to how greta defines a model: users manipulate greta arrays, these define nodes, and nodes then define Tensors. https://greta-dev.github.io/greta/technical_details.html
+
+This is the minimum working example of the linear mixed model based on an example from a TensorFlow Probability Jupyter notebook. Full example can be found [here](https://github.com/ropenscilabs/greta/blob/unconf/vignettes/8_schools_example_model.Rmd).
+
+```{r 8_schools_data, highlight = FALSE}
+dat_n <- letters[1:8]
+dat_y <- c(28.39, 7.94, -2.75 , 6.82, -0.64, 0.63, 18.01, 12.16)
+dat_sigma <- c(14.9, 10.2, 16.3, 11.0, 9.4, 11.4, 10.4, 17.6)
+```
+
+```{r 8_schools_greta}
+# variables and priors
+avg_effect <- normal(0, 10)
+avg_stddev <- normal(5, 1)
+theta_prime <- normal(0, 1, dim = length(N))
+school_effects <- mu + exp(logtau) * theta_prime
+
+# likelihood
+distribution(y) <- normal(school_effects, sigma_y)
+
+# defining the model
+m <- model(mu, logtau, theta_prime)
+```
+
+```{r eval=FALSE}
+plot(m)
+```
+
+```{r echo=FALSE}
+# plotting
+DiagrammeR::render_graph(plot(m))
+```
+
+```{r}
+# sampling
+draws <- greta::mcmc(m)
+plot(draws)
+```
+
+> The only list element of a greta array is node, an R6 object inheriting from the R6 class ‘node’, as well as one of the three node types: ‘data’, ‘operation’ or ‘variable’.
+These R6 node objects are where the magic happens. When created, each node points to its ‘child’ nodes - the nodes for the greta arrays that were used to create this one.
+Each node also has a list of its parents, the nodes that have been created from this one.
+When model() is called, that inheritance information is used to construct the directed acyclic graph (DAG) that defines the model. The inheritance also preserves intermediate nodes, such as those creates in multi-part operations, but not assigned as greta arrays.
+Nodes also have a value member, which is an array for data nodes or an ‘unknowns’ object for other node types. The unknowns class is a thin wrapper around arrays, which prints the question marks. Generic functions for working on arrays (e.g. dim, length, print) make use these node values to return something familiar to the user.
+In addition to remembering their shape and size and where they are in the DAG, each node has methods to define a corresponding TensorFlow Tensor object in a specified environment. That doesn’t happen until the user runs  model(), which creates a ‘dag_class’ object to store the relevant nodes, the environment for the tensors, and methods to talk to the TensorFlow graph.
+The node tf() method takes the dag as an argument, and defines a tensor representing itself in the tensorflow environment, with a name determined by the dag object.
+Because R6 objects are pass-by-reference (rather than pass-by-value), the dag accumulates all of the defined tensors, rather than being re-written each time. Similarly, because nodes are R6 objects and know which are their children, they can make sure those children are defined as tensors before they are. The define_tf() member function ensures that that happens, enabling operation nodes to use the tensors for their children when defining their own tensor.
+Hamiltonian Monte Carlo (HMC) requires all of the parameters to be transformed to a continuous scale for sampling. Variable nodes are therefore converted to tensors by first defining a ‘free’ (unconstrained) version of themselves as a tensor, and then applying a transformation function to convert them back to the scale of interest.
+distribution nodes are node objects just like the others, but they are not directly associated with greta arrays. Instead, greta arrays may have a distribution node in their distribution slot to indicate that their values are assumed to follow that distribution. The distribution node will also be listed as a parent node, and likewise the ‘target node’ will be listed as a child of the distribution. Distribution nodes also have child nodes (data, variables or operations) representing their parameters.
+When they define themselves as tensors, distribution nodes define the log density of their target node/tensor given the tensors representing their parameters.
+Those log-densities for these distributions are summed on the TensorFlow graph to create a Tensor for the joint log-density of the model. TensorFlow’s automatic gradient capabilities are then used to define a Tensor for the gradient of the log-density with respect to each parameter in the model.
+The dag R6 object contained within the model then exposes methods to send parameters to the TensorFlow graph and return the joint density and gradient.
+
+> Create greta arrays represent observed data or fixed values.
+
+You can [create `greta` arrays](https://greta-dev.github.io/greta/structures.html) or [convert R objects, like data frames into `greta` arrays](https://greta-dev.github.io/greta/as_data.html).
+
+> variable() creates greta arrays representing unknown parameters, to be learned during model fitting. These parameters are not associated with a probability distribution. To create a variable greta array following a specific probability distribution, see distributions.
+
+> probability distributions can be used to define random variables in a greta model. They return a variable greta array that follows the specified distribution. This variable greta array can be used to represent a parameter with prior distribution, or used with distribution to define a distribution over a data greta array.
+
+> distribution defines probability distributions over observed data, e.g. to set a model likelihood.
+
+> greta’s operators are used just like R’s the standard arithmetic, logical and relational operators, but they return other greta arrays. Since the operations are only carried during sampling, the greta array objects have unknown values.
+
+> functions in base R that are currently implemented to transform greta arrays. 
+transformations for greta arrays, which may also be used as inverse link functions.
+
+
+
+### TensorFlow Probability
+
+TensorFlow Probability isn't part of the core TensorFlow package, though, so we won't have it loaded with `library(tensorflow)`. But we can use the `reticulate` package instead to import any Python module (aka library) into R and use it there. This way, we could use the original functions from the `tensorflow_probability` Python package in R.
+
+We could, for example, work with the Edward2 functionalities from TensorFlow probabilities. 
+
+> Edward is a Python library for probabilistic modeling, inference, and criticism. It is a testbed for fast experimentation and research with probabilistic models, ranging from classical hierarchical models on small data sets to complex deep probabilistic models on large data sets. Edward fuses three fields: Bayesian statistics and machine learning, deep learning, and probabilistic programming. [...] Edward is built on TensorFlow. It enables features such as computational graphs, distributed training, CPU/GPU integration, automatic differentiation, and visualization with TensorBoard.
+http://edwardlib.org/
+
+```{r eval=FALSE}
+library(reticulate)
+tf <- import("tensorflow")
+tfp <- import("tensorflow_probability")
+ed <- tfp$edward2
+```
+
+### Note on installing a working version of TensorFlow Probability for R
+
+As TensorFlow Probability isn't part of the core TensorFlow package, we need to install the nightly bleeding edge version. However, we had a few problems installing a working version of TensorFlow Probability that had all the necessary submodules we wanted to use (like `edward2`). So, this is the version that worked in the end (as of today): 
+
+- TensorFlow Probability version 0.0.1.dev20180515
+- TensorFlow version 1.9.0.dev20180515
+
+For full disclosure: I worked from within the R virtualenv **r-tensorflow** that was created when I ran `install_tensorflow()` from within R.
+In this environment I installed:
+
+```
+pip install tfp-nightly==0.0.1.dev20180515
+pip install tf-nightly==1.9.0.dev20180515
+```
+
+I used Python 3.6 on a Mac OS High Sierra version 10.13.4.
+
+## Thanks
+
+Huge thanks go out to my amazing `greta` team and to rOpenSci - particularly Stefanie Butland - for organizing auch a wonderful event!
+
+Thank you also to all [sponsors](http://unconf18.ropensci.org/#sponsors), who made it possible for me to fly all the way over to the Pacific Northwest and attend the unconf!
+
+## Session Information
+
+```{r}
+sessionInfo()
+```
+
