@@ -2,12 +2,191 @@
   <title>Shirin&#39;s playgRound</title>
   <link href="/index.xml" rel="self"/>
   <link href="/"/>
-  <updated>2018-05-22T00:00:00+00:00</updated>
+  <updated>2018-05-30T00:00:00+00:00</updated>
   <id>/</id>
   <author>
     <name>Dr. Shirin Glander</name>
   </author>
   <generator>Hugo -- gohugo.io</generator>
+  <entry>
+    <title type="html"><![CDATA[rOpenSci unconference 2018 &#43; introduction to TensorFlow Probability &amp; the &#39;greta&#39; package]]></title>
+    <link href="/2018/05/ropensci_unconf18/"/>
+    <id>/2018/05/ropensci_unconf18/</id>
+    <published>2018-05-30T00:00:00+00:00</published>
+    <updated>2018-05-30T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="/rmarkdown-libs/viz/viz.js"></script>
+<link href="/rmarkdown-libs/DiagrammeR-styles/styles.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/grViz-binding/grViz.js"></script>
+
+
+<p>On May 21st and 2nd, I had the honor of having been chosen to attend the rOpenSci unconference 2018 in Seattle. It was a great event and I got to meet many amazing people!</p>
+<div id="ropensci" class="section level2">
+<h2>rOpenSci</h2>
+<p><a href="https://ropensci.org/">rOpenSci</a> is a non-profit organisation that maintains a number of widely used R <a href="https://ropensci.org/packages/">packages</a> and is very active in promoting a <a href="https://ropensci.org/community/">community</a> spirit around the R-world. Their core values are to have open and reproducible research, shared data and easy-to-use tools and to make all this accessible to a large number of people.</p>
+<div class="figure">
+<img src="https://shiring.github.io/netlify_images/rOpenSci/IMG_3637.jpg" />
+
+</div>
+</div>
+<div id="ropensci-unconference" class="section level2">
+<h2>rOpenSci unconference</h2>
+<p>Part of creating a welcoming community infrastructure is their yearly unconference. At the unconference, about 60 invited R users from around the world get together to work on small projects that are relevant to the R community at the time. Project ideas are collected and discussed in Github issues during the weeks before the unconference but the final decision which projects will be worked on is made by the participants on the first morning of the unconference.</p>
+<p><a href="http://unconf18.ropensci.org/">This year’s rOpenSci unconference</a> was held at the Microsoft Reactor in Seattle.</p>
+<div class="figure">
+<img src="https://shiring.github.io/netlify_images/rOpenSci/IMG_3716.jpg" />
+
+</div>
+<p>The whole organizing team - most and foremost Stefanie Butland - did a wonderful job hosting this event. Everybody made sure that the spirit of the unconference was inclusive and very welcoming to everybody, from long-established fixtures in the R-world to newbies and anyone in between.</p>
+<p>We were a pretty diverse group of social scientists, bioinformaticians, ecologists, historians, data scientists, developers, people working with Google, Microsoft or RStudio and R enthusiasts from many other fields. Some people already knew a few others, many knew each other from Twitter, R-Ladies, or other online communities but most of us (including me) had never met in person.</p>
+<p>Therefore, the official part of the unconference was started on Monday morning with a few “ice breaker”: Stefanie would ask a question or make a statement and we would position ourselves in the room according to our answer and discuss with the people close to us. Starting with “Are you a dog or a cat person?” and finishing with “I know my place in the R community”, we all quickly had a lot to talk about! It was a great way to meet many of the people we would spend the next two days with.</p>
+<p>It was a great experience working with so many talented and motivated people who share my passion for the R language - particularly because in my line of work as a data scientist R is often considered inferior to Python and the majority of the active R community is situated in the Pacific Northwest and California. It was a whole new experience to work together with other people on an R project and I absolutely loved it!</p>
+<div class="figure">
+<img src="https://shiring.github.io/netlify_images/rOpenSci/IMG_3717.jpg" />
+
+</div>
+</div>
+<div id="working-on-greta" class="section level2">
+<h2>Working on <code>greta</code></h2>
+<p>During the 2 days of the unconference, people worked on many interesting, useful and cool projects <a href="https://github.com/ropenscilabs/runconf18-projects/blob/master/index.Rmd">(click here for a complete list with links to the Github repos for every project!)</a>!</p>
+<p>The group I joined originally wanted to bring <strong>TensorFlow Probability</strong> to R.</p>
+<blockquote>
+<p>TensorFlow Probability is a library for probabilistic reasoning and statistical analysis in TensorFlow. As part of the TensorFlow ecosystem, TensorFlow Probability provides integration of probabilistic methods with deep networks, gradient-based inference via automatic differentiation, and scalability to large datasets and models via hardware acceleration (e.g., GPUs) and distributed computation. <a href="https://github.com/tensorflow/probability" class="uri">https://github.com/tensorflow/probability</a></p>
+</blockquote>
+<p>In the end, we - that is <a href="https://github.com/michaelquinn32">Michael Quinn</a>, <a href="https://github.com/revodavid">David Smith</a>, <a href="https://github.com/TiphaineCMartin">Tiphaine Martin</a>, <a href="https://github.com/mmulvahill">Matt Mulvahill</a> and I - ended up working with the R package <code>greta</code>, which has similar functionalities as TensorFlow Probability. We recreated some of the examples from the TensorFlow Probability package tutorials in <code>greta</code> and we also added a few additional examples that show how you can use <code>greta</code>.</p>
+<p>Check out <a href="https://github.com/ropenscilabs/greta/tree/unconf/README.md">the README repo for an overview and links to everything we’ve contributed</a>; it is a forked repo from the <a href="https://github.com/greta-dev/greta">original package repo of <code>greta</code></a> and the vignettes will hopefully get included in the main repo at some point in the near future.</p>
+<div class="figure">
+<img src="https://shiring.github.io/netlify_images/rOpenSci/IMG_3715.jpg" />
+
+</div>
+<div class="figure">
+<img src="https://shiring.github.io/netlify_images/rOpenSci/IMG_3724.jpg" />
+
+</div>
+<div id="what-is-greta" class="section level3">
+<h3>What is <code>greta</code>?</h3>
+<p><a href="https://greta-dev.github.io/greta"><code>greta</code></a> is an R package that has been created by <a href="https://github.com/goldingn">Nick Golding</a> for implementing Markov-Chain Monte-Carlo (MCMC) models, e.g. a Hamiltonian Monte Carlo (HMC) method. It offers a number of functions that make it easy to define these models, particularly for Bayesian statistics (similar to Stan).</p>
+<blockquote>
+<p>greta lets us build statistical models interactively in R, and then sample from them by MCMC. <a href="https://greta-dev.github.io/greta/get_started.html#how_greta_works" class="uri">https://greta-dev.github.io/greta/get_started.html#how_greta_works</a></p>
+</blockquote>
+<p>Google’s TensorFlow is used as a backend to compute the defined models. Because TensorFlow has been optimized for large-scale computing, multi-core and GPU calculations are supported as well, <code>greta</code> is particularly efficient and useful for working with complex models. Because TensorFlow is not natively an R package, <code>greta</code> makes use of RStudio’s <a href="https://rstudio.github.io/reticulate/articles/python_packages.html">reticulate</a> and <a href="https://tensorflow.rstudio.com/">tensorflow</a> packages to connect with the TensorFlow backend. This way, we can work with all the TensorFlow functions directly from within R.</p>
+</div>
+<div id="how-does-greta-work" class="section level3">
+<h3>How does <code>greta</code> work?</h3>
+<blockquote>
+<p>There are three layers to how greta defines a model: users manipulate greta arrays, these define nodes, and nodes then define Tensors. <a href="https://greta-dev.github.io/greta/technical_details.html" class="uri">https://greta-dev.github.io/greta/technical_details.html</a></p>
+</blockquote>
+<p>This is the minimum working example of the linear mixed model that we developed in <code>greta</code> based on an example from a TensorFlow Probability Jupyter notebook. The full example with explanations can be found <a href="https://github.com/ropenscilabs/greta/blob/unconf/vignettes/8_schools_example_model.Rmd">here</a>.</p>
+<pre class="r"><code>library(greta)</code></pre>
+<pre class="text"><code># data
+N &lt;- letters[1:8]
+treatment_effects &lt;- c(28.39, 7.94, -2.75 , 6.82, -0.64, 0.63, 18.01, 12.16)
+treatment_stddevs &lt;- c(14.9, 10.2, 16.3, 11.0, 9.4, 11.4, 10.4, 17.6)</code></pre>
+<pre class="r"><code># variables and priors
+avg_effect &lt;- normal(mean = 0, sd = 10)
+avg_stddev &lt;- normal(5, 1)
+school_effects_standard &lt;- normal(0, 1, dim = length(N))
+school_effects &lt;- avg_effect + exp(avg_stddev) * school_effects_standard
+
+# likelihood
+distribution(treatment_effects) &lt;- normal(school_effects, treatment_stddevs)
+
+# defining the hierarchical model
+m &lt;- model(avg_effect, avg_stddev, school_effects_standard)
+m</code></pre>
+<pre><code>## greta model</code></pre>
+<pre class="r"><code>plot(m)</code></pre>
+<div id="htmlwidget-1" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"diagram":"digraph {\n\ngraph [layout = \"dot\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\",\n       rankdir = \"LR\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"avg_effect\n\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"#E0D2EE\", width = \"0.6\", height = \"0.48\", fillcolor = \"#F4F0F9\"] \n  \"2\" [label = \"normal\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"diamond\", color = \"#B797D7\", width = \"1\", height = \"0.8\", fillcolor = \"#E0D2EE\"] \n  \"3\" [label = \"0\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"4\" [label = \"10\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"5\" [label = \"school_effects\n\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"lightgray\", width = \"0.2\", height = \"0.16\", fillcolor = \"#D3D3D3\"] \n  \"6\" [label = \"normal\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"diamond\", color = \"#B797D7\", width = \"1\", height = \"0.8\", fillcolor = \"#E0D2EE\"] \n  \"7\" [label = \"\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"8\" [label = \"\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"9\" [label = \"\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"lightgray\", width = \"0.2\", height = \"0.16\", fillcolor = \"#D3D3D3\"] \n  \"10\" [label = \"\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"lightgray\", width = \"0.2\", height = \"0.16\", fillcolor = \"#D3D3D3\"] \n  \"11\" [label = \"avg_stddev\n\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"#E0D2EE\", width = \"0.6\", height = \"0.48\", fillcolor = \"#F4F0F9\"] \n  \"12\" [label = \"normal\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"diamond\", color = \"#B797D7\", width = \"1\", height = \"0.8\", fillcolor = \"#E0D2EE\"] \n  \"13\" [label = \"5\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"14\" [label = \"1\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"15\" [label = \"school_effects_standard\n\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"#E0D2EE\", width = \"0.6\", height = \"0.48\", fillcolor = \"#F4F0F9\"] \n  \"16\" [label = \"normal\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"diamond\", color = \"#B797D7\", width = \"1\", height = \"0.8\", fillcolor = \"#E0D2EE\"] \n  \"17\" [label = \"0\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"18\" [label = \"1\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n\"1\"->\"5\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"add\", style = \"solid\"] \n\"2\"->\"1\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", penwidth = \"3\", style = \"dashed\"] \n\"3\"->\"2\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"mean\", style = \"solid\"] \n\"4\"->\"2\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"sd\", style = \"solid\"] \n\"5\"->\"6\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"mean\", style = \"solid\"] \n\"6\"->\"8\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", penwidth = \"3\", style = \"dashed\"] \n\"7\"->\"6\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"sd\", style = \"solid\"] \n\"9\"->\"5\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"add\", style = \"solid\"] \n\"10\"->\"9\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"multiply\", style = \"solid\"] \n\"11\"->\"10\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"exp\", style = \"solid\"] \n\"12\"->\"11\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", penwidth = \"3\", style = \"dashed\"] \n\"13\"->\"12\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"mean\", style = \"solid\"] \n\"14\"->\"12\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"sd\", style = \"solid\"] \n\"15\"->\"9\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"multiply\", style = \"solid\"] \n\"16\"->\"15\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", penwidth = \"3\", style = \"dashed\"] \n\"17\"->\"16\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"mean\", style = \"solid\"] \n\"18\"->\"16\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"sd\", style = \"solid\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code># sampling
+draws &lt;- greta::mcmc(m)
+plot(draws)</code></pre>
+<p>The main type of object you’ll be using in <code>greta</code> is the <strong>greta array</strong>. You can <a href="https://greta-dev.github.io/greta/structures.html">create <code>greta</code> arrays</a> or <a href="https://greta-dev.github.io/greta/as_data.html">convert R objects, like data frames into <code>greta</code> arrays</a>. <code>greta</code> arrays are basically a list with one element: an R6 class object with <code>node</code> + <code>data</code>, <code>operation</code> or <code>variable</code> property. This way, <code>greta</code> makes use of the graph-based organisation of modeling. Every node in our model graph is from a <code>greta</code> array node and thus connects variables, data and operations to create a directed acyclic graph (DAG) that defines the model when the <code>model()</code> function is called.</p>
+</div>
+<div id="tensorflow-probability" class="section level3">
+<h3>TensorFlow Probability</h3>
+<p>While <code>greta</code> makes it super easy to build similar models as with TensorFlow Probability, I also tried migrating the example code directly into R using the <code>reticulate</code> package. It’s still a work in progress but for everyone who might want to try as well (and achieve what I couldn’t up until now), here is how I started out.</p>
+<p>TensorFlow Probability isn’t part of the core TensorFlow package, so we won’t have it loaded with <code>library(tensorflow)</code>. But we can use the <code>reticulate</code> package instead to import any Python module (aka library) into R and use it there. This way, we could use the original functions from the <code>tensorflow_probability</code> Python package in R.</p>
+<p>We could, for example, work with the Edward2 functionalities from TensorFlow probabilities.</p>
+<blockquote>
+<p>Edward is a Python library for probabilistic modeling, inference, and criticism. It is a testbed for fast experimentation and research with probabilistic models, ranging from classical hierarchical models on small data sets to complex deep probabilistic models on large data sets. Edward fuses three fields: Bayesian statistics and machine learning, deep learning, and probabilistic programming. […] Edward is built on TensorFlow. It enables features such as computational graphs, distributed training, CPU/GPU integration, automatic differentiation, and visualization with TensorBoard. <a href="http://edwardlib.org/" class="uri">http://edwardlib.org/</a></p>
+</blockquote>
+<pre class="r"><code>library(reticulate)
+tf &lt;- import(&quot;tensorflow&quot;)
+tfp &lt;- import(&quot;tensorflow_probability&quot;)
+ed &lt;- tfp$edward2</code></pre>
+</div>
+<div id="note-on-installing-a-working-version-of-tensorflow-probability-for-r" class="section level3">
+<h3>Note on installing a working version of TensorFlow Probability for R</h3>
+<p>As TensorFlow Probability isn’t part of the core TensorFlow package, we need to install the nightly bleeding edge version. However, we had a few problems installing a working version of TensorFlow Probability that had all the necessary submodules we wanted to use (like <code>edward2</code>). So, this is the version that worked in the end (as of today):</p>
+<ul>
+<li>TensorFlow Probability version 0.0.1.dev20180515</li>
+<li>TensorFlow version 1.9.0.dev20180515</li>
+</ul>
+<p>For full disclosure: I worked from within the R virtualenv <strong>r-tensorflow</strong> that was created when I ran <code>install_tensorflow()</code> from within R. In this environment I installed:</p>
+<pre><code>pip install tfp-nightly==0.0.1.dev20180515
+pip install tf-nightly==1.9.0.dev20180515</code></pre>
+<p>I used Python 3.6 on a Mac OS High Sierra version 10.13.4.</p>
+</div>
+</div>
+<div id="thanks" class="section level2">
+<h2>Thanks</h2>
+<p>Huge thanks go out to my amazing <code>greta</code> team and to rOpenSci - particularly Stefanie Butland - for organizing such a wonderful event!</p>
+<p>Thank you also to all <a href="http://unconf18.ropensci.org/#sponsors">sponsors</a>, who made it possible for me to fly all the way over to the Pacific Northwest and attend the unconf!</p>
+<blockquote class="twitter-tweet" data-lang="en">
+<p lang="en" dir="ltr">
+A sincere thank you to all participants in <a href="https://twitter.com/hashtag/runconf18?src=hash&amp;ref_src=twsrc%5Etfw">#runconf18</a> <br><br>This thread👇includes links to all project repos: <a href="https://t.co/2PhAz4zSuK">https://t.co/2PhAz4zSuK</a><a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> <a href="https://t.co/8SICcWkQ0v">pic.twitter.com/8SICcWkQ0v</a>
+</p>
+— rOpenSci (<span class="citation">@rOpenSci</span>) <a href="https://twitter.com/rOpenSci/status/1000024996876468224?ref_src=twsrc%5Etfw">May 25, 2018</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+<div id="session-information" class="section level2">
+<h2>Session Information</h2>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 3.5.0 (2018-04-23)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS High Sierra 10.13.4
+## 
+## Matrix products: default
+## BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] de_DE.UTF-8/de_DE.UTF-8/de_DE.UTF-8/C/de_DE.UTF-8/de_DE.UTF-8
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+## [1] bindrcpp_0.2.2 greta_0.2.4   
+## 
+## loaded via a namespace (and not attached):
+##  [1] Rcpp_0.12.17       lattice_0.20-35    tidyr_0.8.0       
+##  [4] visNetwork_2.0.3   prettyunits_1.0.2  assertthat_0.2.0  
+##  [7] rprojroot_1.3-2    digest_0.6.15      R6_2.2.2          
+## [10] plyr_1.8.4         backports_1.1.2    evaluate_0.10.1   
+## [13] coda_0.19-1        ggplot2_2.2.1      blogdown_0.6      
+## [16] pillar_1.2.2       tfruns_1.3         rlang_0.2.0       
+## [19] progress_1.1.2     lazyeval_0.2.1     rstudioapi_0.7    
+## [22] whisker_0.3-2      Matrix_1.2-14      reticulate_1.7    
+## [25] rmarkdown_1.9      DiagrammeR_1.0.0   downloader_0.4    
+## [28] readr_1.1.1        stringr_1.3.1      htmlwidgets_1.2   
+## [31] igraph_1.2.1       munsell_0.4.3      compiler_3.5.0    
+## [34] influenceR_0.1.0   rgexf_0.15.3       xfun_0.1          
+## [37] pkgconfig_2.0.1    base64enc_0.1-3    tensorflow_1.5    
+## [40] htmltools_0.3.6    tibble_1.4.2       gridExtra_2.3     
+## [43] bookdown_0.7       XML_3.98-1.11      viridisLite_0.3.0 
+## [46] dplyr_0.7.4        grid_3.5.0         jsonlite_1.5      
+## [49] gtable_0.2.0       magrittr_1.5       scales_0.5.0      
+## [52] stringi_1.2.2      viridis_0.5.1      brew_1.0-6        
+## [55] RColorBrewer_1.1-2 tools_3.5.0        glue_1.2.0        
+## [58] purrr_0.2.4        hms_0.4.2          Rook_1.1-1        
+## [61] parallel_3.5.0     yaml_2.1.19        colorspace_1.3-2  
+## [64] knitr_1.20         bindr_0.1.1</code></pre>
+</div>
+]]></content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[July 5th &amp; 6th in Münster: Workshop on Deep Learning with Keras and TensorFlow in R]]></title>
     <link href="/2018/05/deep_learning_keras_tensorflow_18_07/"/>
