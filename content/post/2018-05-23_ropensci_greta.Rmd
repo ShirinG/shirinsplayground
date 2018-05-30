@@ -12,7 +12,7 @@ coverMeta: out
 slug: ropensci_unconf18
 ---
 
-On May 21st and 2nd, I had the honor of having been chosen to attend the rOpenSci unconference 2018 in Seattle.
+On May 21st and 22nd, I had the honor of having been chosen to attend the rOpenSci unconference 2018 in Seattle.
 It was a great event and I got to meet many amazing people!
 
 ## rOpenSci
@@ -71,7 +71,7 @@ Check out [the README repo for an overview and links to everything we've contrib
 https://greta-dev.github.io/greta/get_started.html#how_greta_works
 
 Google's TensorFlow is used as a backend to compute the defined models. Because TensorFlow has been optimized for large-scale computing, multi-core and GPU calculations are supported as well, `greta` is particularly efficient and useful for working with complex models. 
-Because TensorFlow is not natively an R package, `greta` makes use of RStudio’s [reticulate](https://rstudio.github.io/reticulate/articles/python_packages.html) and [tensorflow](https://tensorflow.rstudio.com/) packages to connect with the TensorFlow backend.
+As TensorFlow is not natively an R package, `greta` makes use of RStudio’s [reticulate](https://rstudio.github.io/reticulate/articles/python_packages.html) and [tensorflow](https://tensorflow.rstudio.com/) packages to connect with the TensorFlow backend.
 This way, we can work with all the TensorFlow functions directly from within R.
 
 ### How does `greta` work?

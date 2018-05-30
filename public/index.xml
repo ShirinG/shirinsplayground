@@ -20,7 +20,7 @@
 <script src="/rmarkdown-libs/grViz-binding/grViz.js"></script>
 
 
-<p>On May 21st and 2nd, I had the honor of having been chosen to attend the rOpenSci unconference 2018 in Seattle. It was a great event and I got to meet many amazing people!</p>
+<p>On May 21st and 22nd, I had the honor of having been chosen to attend the rOpenSci unconference 2018 in Seattle. It was a great event and I got to meet many amazing people!</p>
 <div id="ropensci" class="section level2">
 <h2>rOpenSci</h2>
 <p><a href="https://ropensci.org/">rOpenSci</a> is a non-profit organisation that maintains a number of widely used R <a href="https://ropensci.org/packages/">packages</a> and is very active in promoting a <a href="https://ropensci.org/community/">community</a> spirit around the R-world. Their core values are to have open and reproducible research, shared data and easy-to-use tools and to make all this accessible to a large number of people.</p>
@@ -39,7 +39,7 @@
 </div>
 <p>The whole organizing team - most and foremost Stefanie Butland - did a wonderful job hosting this event. Everybody made sure that the spirit of the unconference was inclusive and very welcoming to everybody, from long-established fixtures in the R-world to newbies and anyone in between.</p>
 <p>We were a pretty diverse group of social scientists, bioinformaticians, ecologists, historians, data scientists, developers, people working with Google, Microsoft or RStudio and R enthusiasts from many other fields. Some people already knew a few others, many knew each other from Twitter, R-Ladies, or other online communities but most of us (including me) had never met in person.</p>
-<p>Therefore, the official part of the unconference was started on Monday morning with a few “ice breaker”: Stefanie would ask a question or make a statement and we would position ourselves in the room according to our answer and discuss with the people close to us. Starting with “Are you a dog or a cat person?” and finishing with “I know my place in the R community”, we all quickly had a lot to talk about! It was a great way to meet many of the people we would spend the next two days with.</p>
+<p>Therefore, the official part of the unconference was started on Monday morning with a few “ice breakers”: Stefanie would ask a question or make a statement and we would position ourselves in the room according to our answer and discuss with the people close to us. Starting with “Are you a dog or a cat person?” and finishing with “I know my place in the R community”, we all quickly had a lot to talk about! It was a great way to meet many of the people we would spend the next two days with.</p>
 <p>It was a great experience working with so many talented and motivated people who share my passion for the R language - particularly because in my line of work as a data scientist R is often considered inferior to Python and the majority of the active R community is situated in the Pacific Northwest and California. It was a whole new experience to work together with other people on an R project and I absolutely loved it!</p>
 <div class="figure">
 <img src="https://shiring.github.io/netlify_images/rOpenSci/IMG_3717.jpg" />
@@ -69,7 +69,7 @@
 <blockquote>
 <p>greta lets us build statistical models interactively in R, and then sample from them by MCMC. <a href="https://greta-dev.github.io/greta/get_started.html#how_greta_works" class="uri">https://greta-dev.github.io/greta/get_started.html#how_greta_works</a></p>
 </blockquote>
-<p>Google’s TensorFlow is used as a backend to compute the defined models. Because TensorFlow has been optimized for large-scale computing, multi-core and GPU calculations are supported as well, <code>greta</code> is particularly efficient and useful for working with complex models. Because TensorFlow is not natively an R package, <code>greta</code> makes use of RStudio’s <a href="https://rstudio.github.io/reticulate/articles/python_packages.html">reticulate</a> and <a href="https://tensorflow.rstudio.com/">tensorflow</a> packages to connect with the TensorFlow backend. This way, we can work with all the TensorFlow functions directly from within R.</p>
+<p>Google’s TensorFlow is used as a backend to compute the defined models. Because TensorFlow has been optimized for large-scale computing, multi-core and GPU calculations are supported as well, <code>greta</code> is particularly efficient and useful for working with complex models. As TensorFlow is not natively an R package, <code>greta</code> makes use of RStudio’s <a href="https://rstudio.github.io/reticulate/articles/python_packages.html">reticulate</a> and <a href="https://tensorflow.rstudio.com/">tensorflow</a> packages to connect with the TensorFlow backend. This way, we can work with all the TensorFlow functions directly from within R.</p>
 </div>
 <div id="how-does-greta-work" class="section level3">
 <h3>How does <code>greta</code> work?</h3>
