@@ -162,12 +162,12 @@ A sincere thank you to all participants in <a href="https://twitter.com/hashtag/
 ## [1] bindrcpp_0.2.2 greta_0.2.4   
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_0.12.17       lattice_0.20-35    tidyr_0.8.0       
+##  [1] Rcpp_0.12.17       lattice_0.20-35    tidyr_0.8.1       
 ##  [4] visNetwork_2.0.3   prettyunits_1.0.2  assertthat_0.2.0  
 ##  [7] rprojroot_1.3-2    digest_0.6.15      R6_2.2.2          
 ## [10] plyr_1.8.4         backports_1.1.2    evaluate_0.10.1   
 ## [13] coda_0.19-1        ggplot2_2.2.1      blogdown_0.6      
-## [16] pillar_1.2.2       tfruns_1.3         rlang_0.2.0       
+## [16] pillar_1.2.3       tfruns_1.3         rlang_0.2.1       
 ## [19] progress_1.1.2     lazyeval_0.2.1     rstudioapi_0.7    
 ## [22] whisker_0.3-2      Matrix_1.2-14      reticulate_1.7    
 ## [25] rmarkdown_1.9      DiagrammeR_1.0.0   downloader_0.4    
@@ -175,15 +175,15 @@ A sincere thank you to all participants in <a href="https://twitter.com/hashtag/
 ## [31] igraph_1.2.1       munsell_0.4.3      compiler_3.5.0    
 ## [34] influenceR_0.1.0   rgexf_0.15.3       xfun_0.1          
 ## [37] pkgconfig_2.0.1    base64enc_0.1-3    tensorflow_1.5    
-## [40] htmltools_0.3.6    tibble_1.4.2       gridExtra_2.3     
-## [43] bookdown_0.7       XML_3.98-1.11      viridisLite_0.3.0 
-## [46] dplyr_0.7.4        grid_3.5.0         jsonlite_1.5      
-## [49] gtable_0.2.0       magrittr_1.5       scales_0.5.0      
-## [52] stringi_1.2.2      viridis_0.5.1      brew_1.0-6        
-## [55] RColorBrewer_1.1-2 tools_3.5.0        glue_1.2.0        
-## [58] purrr_0.2.4        hms_0.4.2          Rook_1.1-1        
-## [61] parallel_3.5.0     yaml_2.1.19        colorspace_1.3-2  
-## [64] knitr_1.20         bindr_0.1.1</code></pre>
+## [40] htmltools_0.3.6    tidyselect_0.2.4   tibble_1.4.2      
+## [43] gridExtra_2.3      bookdown_0.7       XML_3.98-1.11     
+## [46] viridisLite_0.3.0  dplyr_0.7.5        grid_3.5.0        
+## [49] jsonlite_1.5       gtable_0.2.0       magrittr_1.5      
+## [52] scales_0.5.0       stringi_1.2.2      viridis_0.5.1     
+## [55] brew_1.0-6         RColorBrewer_1.1-2 tools_3.5.0       
+## [58] glue_1.2.0         purrr_0.2.5        hms_0.4.2         
+## [61] Rook_1.1-1         parallel_3.5.0     yaml_2.1.19       
+## [64] colorspace_1.3-2   knitr_1.20         bindr_0.1.1</code></pre>
 </div>
 ]]></content>
   </entry>
@@ -1657,7 +1657,8 @@ Date and place depend on who and how many people are interested, so please conta
 <h2 id="upcoming-talks-webinars-podcasts-etc">Upcoming talks, webinars, podcasts, etc.</h2>
 
 <ul>
-<li>In May 2018 I&rsquo;ll be at the <a href="http://unconf18.ropensci.org/">ROpenSci unconference in Seattle, WA</a></li>
+<li>Together with a colleague from codecentric, I&rsquo;ll be giving a workshop about <a href="https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953">&ldquo;END-2-END VOM KERAS TENSORFLOW-MODELL ZUR PRODUKTION&rdquo;</a> at the Data2Day conference, which is being held from September 25th - 27th 2018 in Heidelberg, Germany (German language):
+<a href="https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953">https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953</a></li>
 </ul>
 
 <hr />
@@ -1665,6 +1666,14 @@ Date and place depend on who and how many people are interested, so please conta
 <p><br></p>
 
 <h2 id="past-talks-webinars-podcasts-etc">Past talks, webinars, podcasts, etc.</h2>
+
+<ul>
+<li>In May 2018 I was at the <a href="http://unconf18.ropensci.org/">ROpenSci unconference in Seattle, WA</a></li>
+</ul>
+
+<p>You can read about my experience and the project I worked on <a href="https://shirinsplayground.netlify.com/2018/05/ropensci_unconf18/">here</a>.</p>
+
+<p><br></p>
 
 <ul>
 <li>At the <a href="https://aws.amazon.com/de/events/web-days-2018/">Amazon AWS AI &amp; Machine Learning Web Day on May 8th</a>, I gave a presentation on how to get started with Amazon SageMaker. The recording can be found on <a href="https://youtu.be/lQmcXAN7GJ4">YouTube</a>; slides are on <a href="https://www.slideshare.net/AWSAktuell/ai-machine-learning-web-day-wie-gelingt-der-einstieg-in-amazon-sagemaker-prsentiert-von-codecentric">Slideshare</a></li>

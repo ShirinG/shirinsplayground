@@ -24,13 +24,20 @@ Date and place depend on who and how many people are interested, so please conta
 
 ## Upcoming talks, webinars, podcasts, etc.
 
-- In May 2018 I'll be at the [ROpenSci unconference in Seattle, WA](http://unconf18.ropensci.org/)
+- Together with a colleague from codecentric, I'll be giving a workshop about ["END-2-END VOM KERAS TENSORFLOW-MODELL ZUR PRODUKTION"](https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953) at the Data2Day conference, which is being held from September 25th - 27th 2018 in Heidelberg, Germany (German language):
+https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953
 
 ---
 
 <br>
 
 ## Past talks, webinars, podcasts, etc.
+
+- In May 2018 I was at the [ROpenSci unconference in Seattle, WA](http://unconf18.ropensci.org/)
+
+You can read about my experience and the project I worked on [here](https://shirinsplayground.netlify.com/2018/05/ropensci_unconf18/).
+
+<br>
 
 - At the [Amazon AWS AI & Machine Learning Web Day on May 8th](https://aws.amazon.com/de/events/web-days-2018/), I gave a presentation on how to get started with Amazon SageMaker. The recording can be found on [YouTube](https://youtu.be/lQmcXAN7GJ4); slides are on [Slideshare](https://www.slideshare.net/AWSAktuell/ai-machine-learning-web-day-wie-gelingt-der-einstieg-in-amazon-sagemaker-prsentiert-von-codecentric)
 
