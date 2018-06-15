@@ -1,0 +1,254 @@
+---
+title: "It's that easy! Image classification with keras in roughly 100 lines of code."
+draft: false
+author: Shirin Glander
+date: '2018-06-15'
+categories: ["R", "keras"]
+tags: ["R", "keras", "image classification", "tensorflow"]
+thumbnailImagePosition: left
+thumbnailImage: https://upload.wikimedia.org/wikipedia/en/3/38/Culinary_fruits_top_view.jpg
+metaAlignment: center
+coverMeta: out
+slug: keras_fruits
+---
+
+
+
+<p>I’ve been using keras and TensorFlow for a while now - and love its simplicity and straight-forward way to modeling. As part of the latest update to my <a href="https://shirinsplayground.netlify.com/2018/05/deep_learning_keras_tensorflow_18_07/">Workshop about deep learning with R and keras</a> I’ve added a new example analysis:</p>
+<p><strong>Building an image classifier to differentiate different types of fruits</strong></p>
+<p>And I was (again) suprised how fast and easy it was to build the model; it took not even half an hour and only around 100 lines of code (counting only the main code; for this post I added comments and line breaks to make it easier to read)!</p>
+<iframe src="https://giphy.com/embed/5p2wQFyu8GsFO" width="480" height="271" frameBorder="0" class="giphy-embed" allowFullScreen>
+</iframe>
+<p>
+<a href="https://giphy.com/gifs/5p2wQFyu8GsFO">via GIPHY</a>
+</p>
+<p>That’s why I wanted to share it here and spread the <code>keras</code> love. &lt;3</p>
+<div id="the-code" class="section level2">
+<h2>The code</h2>
+<p>If you haven’t installed keras before, follow the instructions of <a href="https://keras.rstudio.com/">RStudio’s keras site</a></p>
+<pre class="r"><code>library(keras)</code></pre>
+<p>The dataset is the <a href="https://www.kaggle.com/moltean/fruits/data">fruit images dataset from Kaggle</a>. I downloaded it to my computer and unpacked it. Because I don’t want to build a model for all the different fruits, I define a list of fruits (corresponding to the folder names) that I want to include in the model.</p>
+<p>I also define a few other parameters in the beginning to make adapting as easy as possible.</p>
+<pre class="r"><code># list of fruits to modle
+fruit_list &lt;- c(&quot;Kiwi&quot;, &quot;Banana&quot;, &quot;Plum&quot;, &quot;Apricot&quot;, &quot;Avocado&quot;, &quot;Cocos&quot;, &quot;Clementine&quot;, &quot;Mandarine&quot;, &quot;Orange&quot;,
+                &quot;Limes&quot;, &quot;Lemon&quot;, &quot;Peach&quot;, &quot;Plum&quot;, &quot;Raspberry&quot;, &quot;Strawberry&quot;, &quot;Pineapple&quot;, &quot;Pomegranate&quot;)
+
+# number of output classes (i.e. fruits)
+output_n &lt;- length(fruit_list)
+
+# image size to scale down to (original images are 100 x 100 px)
+img_width &lt;- 20
+img_height &lt;- 20
+target_size &lt;- c(img_width, img_height)
+
+# RGB = 3 channels
+channels &lt;- 3
+
+# path to image folders
+train_image_files_path &lt;- &quot;/Users/shiringlander/Documents/Github/DL_AI/Tutti_Frutti/fruits-360/Training/&quot;
+valid_image_files_path &lt;- &quot;/Users/shiringlander/Documents/Github/DL_AI/Tutti_Frutti/fruits-360/Validation/&quot;</code></pre>
+<div id="loading-images" class="section level3">
+<h3>Loading images</h3>
+<p>The handy <code>image_data_generator()</code> and <code>flow_images_from_directory()</code> functions can be used to load images from a directory. If you want to use data augmentation, you can directly define how and in what way you want to augment your images with <code>image_data_generator</code>. Here I am not augmenting the data, I only scale the pixel values to fall between 0 and 1.</p>
+<pre class="r"><code># optional data augmentation
+train_data_gen = image_data_generator(
+  rescale = 1/255 #,
+  #rotation_range = 40,
+  #width_shift_range = 0.2,
+  #height_shift_range = 0.2,
+  #shear_range = 0.2,
+  #zoom_range = 0.2,
+  #horizontal_flip = TRUE,
+  #fill_mode = &quot;nearest&quot;
+)
+
+# Validation data shouldn&#39;t be augmented! But it should also be scaled.
+valid_data_gen &lt;- image_data_generator(
+  rescale = 1/255
+  )  </code></pre>
+<p>Now we load the images into memory and resize them.</p>
+<pre class="r"><code># training images
+train_image_array_gen &lt;- flow_images_from_directory(train_image_files_path, 
+                                          train_data_gen,
+                                          target_size = target_size,
+                                          class_mode = &quot;categorical&quot;,
+                                          classes = fruit_list,
+                                          seed = 42)
+
+# validation images
+valid_image_array_gen &lt;- flow_images_from_directory(valid_image_files_path, 
+                                          valid_data_gen,
+                                          target_size = target_size,
+                                          class_mode = &quot;categorical&quot;,
+                                          classes = fruit_list,
+                                          seed = 42)</code></pre>
+<pre class="r"><code>cat(&quot;Number of images per class:&quot;)</code></pre>
+<pre><code>## Number of images per class:</code></pre>
+<pre class="r"><code>table(factor(train_image_array_gen$classes))</code></pre>
+<pre><code>## 
+##   0   1   3   4   5   6   7   8   9  10  11  12  13  14  15  16 
+## 466 490 492 427 490 490 490 479 490 492 492 894 490 492 490 492</code></pre>
+<pre class="r"><code>cat(&quot;\nClass label vs index mapping:\n&quot;)</code></pre>
+<pre><code>## 
+## Class label vs index mapping:</code></pre>
+<pre class="r"><code>train_image_array_gen$class_indices</code></pre>
+<pre><code>## $Lemon
+## [1] 10
+## 
+## $Peach
+## [1] 11
+## 
+## $Limes
+## [1] 9
+## 
+## $Apricot
+## [1] 3
+## 
+## $Plum
+## [1] 12
+## 
+## $Avocado
+## [1] 4
+## 
+## $Strawberry
+## [1] 14
+## 
+## $Pineapple
+## [1] 15
+## 
+## $Orange
+## [1] 8
+## 
+## $Mandarine
+## [1] 7
+## 
+## $Banana
+## [1] 1
+## 
+## $Clementine
+## [1] 6
+## 
+## $Kiwi
+## [1] 0
+## 
+## $Cocos
+## [1] 5
+## 
+## $Pomegranate
+## [1] 16
+## 
+## $Raspberry
+## [1] 13</code></pre>
+</div>
+<div id="define-model" class="section level3">
+<h3>Define model</h3>
+<p>Next, we define the <code>keras</code> model.</p>
+<pre class="r"><code># number of training samples
+train_samples &lt;- train_image_array_gen$n
+# number of validation samples
+valid_samples &lt;- valid_image_array_gen$n
+
+# define batch size and number of epochs
+batch_size &lt;- 32
+epochs &lt;- 10</code></pre>
+<p>The model I am using here is a very simple sequential convolutional neural net with the following hidden layers: 2 convolutional layers, one pooling layer and one dense layer.</p>
+<pre class="r"><code># initialise model
+model &lt;- keras_model_sequential()
+
+# add layers
+model %&gt;%
+  layer_conv_2d(filter = 32, kernel_size = c(3,3), padding = &quot;same&quot;, input_shape = c(img_width, img_height, channels)) %&gt;%
+  layer_activation(&quot;relu&quot;) %&gt;%
+  
+  # Second hidden layer
+  layer_conv_2d(filter = 16, kernel_size = c(3,3), padding = &quot;same&quot;) %&gt;%
+  layer_activation_leaky_relu(0.5) %&gt;%
+  layer_batch_normalization() %&gt;%
+
+  # Use max pooling
+  layer_max_pooling_2d(pool_size = c(2,2)) %&gt;%
+  layer_dropout(0.25) %&gt;%
+  
+  # Flatten max filtered output into feature vector 
+  # and feed into dense layer
+  layer_flatten() %&gt;%
+  layer_dense(100) %&gt;%
+  layer_activation(&quot;relu&quot;) %&gt;%
+  layer_dropout(0.5) %&gt;%
+
+  # Outputs from dense layer are projected onto output layer
+  layer_dense(output_n) %&gt;% 
+  layer_activation(&quot;softmax&quot;)
+
+# compile
+model %&gt;% compile(
+  loss = &quot;categorical_crossentropy&quot;,
+  optimizer = optimizer_rmsprop(lr = 0.0001, decay = 1e-6),
+  metrics = &quot;accuracy&quot;
+)</code></pre>
+<p>Fit the model; because I used <code>image_data_generator()</code> and <code>flow_images_from_directory()</code> I am now also using the <code>fit_generator()</code> to run the training.</p>
+<pre class="r"><code># fit
+hist &lt;- model %&gt;% fit_generator(
+  # training data
+  train_image_array_gen,
+  
+  # epochs
+  steps_per_epoch = as.integer(train_samples / batch_size), 
+  epochs = epochs, 
+  
+  # validation data
+  validation_data = valid_image_array_gen,
+  validation_steps = as.integer(valid_samples / batch_size),
+  
+  # print progress
+  verbose = 2,
+  callbacks = list(
+    # save best model after every epoch
+    callback_model_checkpoint(&quot;../../data/keras/fruits_checkpoints.h5&quot;, save_best_only = TRUE),
+    # only needed for visualising with TensorBoard
+    callback_tensorboard(log_dir = &quot;../../data/logs/fruits_logs&quot;)
+  )
+)</code></pre>
+<p>In RStudio we are seeing the output as an interactive plot in the “Viewer” pane but we can also plot it:</p>
+<pre class="r"><code>plot(hist)</code></pre>
+<p><img src="/post/2018-06-15_keras_fruits_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>As we can see, the model is quite accurate on the validation data. However, we need to keep in mind that our images are very uniform, they all have the same white background and show the fruits centered and without anything else in the images. Thus, our model will not work with images that don’t look similar as the ones we trained on (that’s also why we can achieve such good results with such a small neural net).</p>
+<p>Finally, I want to have a look at the TensorFlow graph with TensorBoard.</p>
+<pre class="r"><code>tensorboard(&quot;../../data/logs/fruits_logs&quot;)</code></pre>
+<div class="figure">
+<img src="/img/tensorboard.png" />
+
+</div>
+<p>That’s all there is to it!</p>
+<p>Of course, you could now save your model and/or the weights, visualize the hidden layers, run predictions on test data, etc. For now, I’ll leave it at that, though. :-)</p>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 3.5.0 (2018-04-23)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS High Sierra 10.13.5
+## 
+## Matrix products: default
+## BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] de_DE.UTF-8/de_DE.UTF-8/de_DE.UTF-8/C/de_DE.UTF-8/de_DE.UTF-8
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+## [1] keras_2.1.6
+## 
+## loaded via a namespace (and not attached):
+##  [1] Rcpp_0.12.17     compiler_3.5.0   pillar_1.2.3     plyr_1.8.4      
+##  [5] base64enc_0.1-3  tools_3.5.0      zeallot_0.1.0    digest_0.6.15   
+##  [9] jsonlite_1.5     evaluate_0.10.1  tibble_1.4.2     gtable_0.2.0    
+## [13] lattice_0.20-35  rlang_0.2.1      Matrix_1.2-14    yaml_2.1.19     
+## [17] blogdown_0.6     xfun_0.1         stringr_1.3.1    knitr_1.20      
+## [21] rprojroot_1.3-2  grid_3.5.0       reticulate_1.7   R6_2.2.2        
+## [25] rmarkdown_1.9    bookdown_0.7     ggplot2_2.2.1    reshape2_1.4.3  
+## [29] magrittr_1.5     whisker_0.3-2    backports_1.1.2  scales_0.5.0    
+## [33] tfruns_1.3       htmltools_0.3.6  colorspace_1.3-2 labeling_0.3    
+## [37] tensorflow_1.5   stringi_1.2.2    lazyeval_0.2.1   munsell_0.4.3</code></pre>
+</div>
+</div>
