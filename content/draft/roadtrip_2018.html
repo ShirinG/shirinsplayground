@@ -1,0 +1,28 @@
+---
+title: "US Roadtrip Location data mapping"
+draft: true
+author: Shirin Glander
+date: '2018-03-27'
+categories: [R]
+tags: []
+thumbnailImagePosition: left
+thumbnailImage: 
+metaAlignment: center
+coverMeta: out
+slug: roadtrip_2018
+---
+
+
+
+<pre class="r"><code>library(jsonlite)
+system.time(x &lt;- fromJSON(&quot;~/Documents/Github/Data/Takeout/Standortverlauf/Standortverlauf.json&quot;))</code></pre>
+<pre class="r"><code># extracting the locations dataframe
+loc = x$locations
+
+# converting time column from posix milliseconds into a readable time scale
+loc$time = as.POSIXct(as.numeric(x$locations$timestampMs)/1000, origin = &quot;1970-01-01&quot;)
+
+# converting longitude and latitude from E7 to GPS coordinates
+loc$lat = loc$latitudeE7 / 1e7
+loc$lon = loc$longitudeE7 / 1e7</code></pre>
+<pre class="r"><code>usa &lt;- get_map(location = &#39;USA&#39;, zoom = 5)</code></pre>

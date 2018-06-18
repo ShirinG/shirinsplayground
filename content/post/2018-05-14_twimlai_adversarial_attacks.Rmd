@@ -9,7 +9,7 @@ thumbnailImagePosition: left
 thumbnailImage: https://shiring.github.io/netlify_images/twimlai_adversarial_attacks.jpg
 metaAlignment: center
 coverMeta: out
-slug: twimlai121
+slug: twimlai_adversarial_attacks
 ---
 
 These are my sketchnotes for Sam Charrington's podcast **This Week in Machine Learning and AI** about *Adversarial Attacks Against Reinforcement Learning Agents with Ian Goodfellow & Sandy Huang*:
