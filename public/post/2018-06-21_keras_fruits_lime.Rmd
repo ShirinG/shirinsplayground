@@ -1,0 +1,237 @@
+---
+title: "Explaining Keras image classification models with lime"
+draft: false
+author: Shirin Glander
+date: '2018-06-21'
+categories: ["R", "keras"]
+tags: ["R", "keras", "image classification", "tensorflow"]
+thumbnailImagePosition: left
+thumbnailImage: post/2018-06-21_keras_fruits_lime_files/figure-html/banana_explanation-1.png
+metaAlignment: center
+coverMeta: out
+slug: keras_fruits_lime
+---
+
+[Last week I published a blog post about how easy it is to train image classification models with Keras](https://shirinsplayground.netlify.com/2018/06/keras_fruits/).
+
+What I did not show in that post was how to use the model for making predictions. This, I will do here.
+But predictions alone are boring, so I'm adding explanations for the predictions using the `lime` package.
+
+I have already written a few blog posts ([here](https://shirinsplayground.netlify.com/2018/01/looking_beyond_accuracy_to_improve_trust_in_ml/), [here](https://shiring.github.io/machine_learning/2017/04/23/lime) and [here](https://shirinsplayground.netlify.com/2017/12/lime_sketchnotes/)) about LIME and have given talks ([here](https://shirinsplayground.netlify.com/2018/02/m3_2018/) and [here](https://shirinsplayground.netlify.com/2018/04/hh_datascience_meetup_2018_slides/)) about it, too.
+
+Neither of them applies LIME to image classification models, though. And with the new(ish) release from March of [Thomas Lin Pedersen's `lime` package](https://cran.r-project.org/web/packages/lime/index.html), `lime` is now not only on CRAN but it natively supports Keras and image classification models.
+
+Thomas wrote a very nice [article about how to use `keras` and `lime` in R](https://www.data-imaginist.com/2018/lime-v0-4-the-kitten-picture-edition/)! Here, I am following this article to use Imagenet (VGG16) to make and explain predictions of fruit images and then I am extending the analysis to [last week's model](https://shirinsplayground.netlify.com/2018/06/keras_fruits/) and compare it with the pretrained net.
+
+## Loading libraries and models
+
+```{r warning=FALSE, message=FALSE}
+library(keras)   # for working with neural nets
+library(lime)    # for explaining models
+library(magick)  # for preprocessing images
+library(ggplot2) # for additional plotting
+```
+
+- Loading the pretrained Imagenet model
+
+```{r}
+model <- application_vgg16(weights = "imagenet", include_top = TRUE)
+model
+```
+
+- loading my own model from [last week's post](https://shirinsplayground.netlify.com/2018/06/keras_fruits/)
+
+```{r}
+model2 <- load_model_hdf5(filepath = "/Users/shiringlander/Documents/Github/DL_AI/Tutti_Frutti/fruits-360/keras/fruits_checkpoints.h5")
+model2
+```
+
+## Load and prepare images
+
+Here, I am loading and preprocessing two images of fruits (and yes, I am cheating a bit because I am choosing images where I expect my model to work as they are similar to the training images...).
+
+- Banana
+
+```{r}
+test_image_files_path <- "/Users/shiringlander/Documents/Github/DL_AI/Tutti_Frutti/fruits-360/Test"
+
+img <- image_read('https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Banana-Single.jpg/272px-Banana-Single.jpg')
+img_path <- file.path(test_image_files_path, "Banana", 'banana.jpg')
+image_write(img, img_path)
+#plot(as.raster(img))
+```
+
+- Clementine
+
+```{r}
+img2 <- image_read('https://cdn.pixabay.com/photo/2010/12/13/09/51/clementine-1792_1280.jpg')
+img_path2 <- file.path(test_image_files_path, "Clementine", 'clementine.jpg')
+image_write(img2, img_path2)
+#plot(as.raster(img2))
+```
+
+### Superpixels
+
+> The segmentation of an image into superpixels are an important step in generating explanations for image models. It is both important that the segmentation is correct and follows meaningful patterns in the picture, but also that the size/number of superpixels are appropriate. If the important features in the image are chopped into too many segments the permutations will probably damage the picture beyond recognition in almost all cases leading to a poor or failing explanation model. As the size of the object of interest is varying it is impossible to set up hard rules for the number of superpixels to segment into - the larger the object is relative to the size of the image, the fewer superpixels should be generated. Using plot_superpixels it is possible to evaluate the superpixel parameters before starting the time consuming explanation function. (help(plot_superpixels))
+
+```{r}
+plot_superpixels(img_path, n_superpixels = 35, weight = 10)
+```
+
+```{r}
+plot_superpixels(img_path2, n_superpixels = 50, weight = 20)
+```
+
+From the superpixel plots we can see that the clementine image has a higher resolution than the banana image.
+
+## Prepare images for Imagenet
+
+```{r}
+image_prep <- function(x) {
+  arrays <- lapply(x, function(path) {
+    img <- image_load(path, target_size = c(224,224))
+    x <- image_to_array(img)
+    x <- array_reshape(x, c(1, dim(x)))
+    x <- imagenet_preprocess_input(x)
+  })
+  do.call(abind::abind, c(arrays, list(along = 1)))
+}
+```
+
+- test predictions
+
+```{r}
+res <- predict(model, image_prep(c(img_path, img_path2)))
+imagenet_decode_predictions(res)
+```
+
+- load labels and train explainer
+
+```{r}
+model_labels <- readRDS(system.file('extdata', 'imagenet_labels.rds', package = 'lime'))
+explainer <- lime(c(img_path, img_path2), as_classifier(model, model_labels), image_prep)
+```
+
+Training the explainer (`explain()` function) can take pretty long. It will be much faster with the smaller images in my own model but with the bigger Imagenet it takes a few minutes to run.
+
+```{r eval=FALSE}
+explanation <- explain(c(img_path, img_path2), explainer, 
+                       n_labels = 2, n_features = 35,
+                       n_superpixels = 35, weight = 10,
+                       background = "white")
+```
+
+```{r eval=FALSE, echo=FALSE}
+save(explanation, file = "../../data/keras/explanation_vgg16_banana.RData")
+```
+
+```{r echo=FALSE}
+load("../../data/keras/explanation_vgg16_banana.RData")
+```
+
+- `plot_image_explanation()` only supports showing one case at a time
+
+```{r}
+plot_image_explanation(explanation)
+```
+
+```{r}
+clementine <- explanation[explanation$case == "clementine.jpg",]
+plot_image_explanation(clementine)
+```
+
+## Prepare images for my own model
+
+- test predictions (analogous to training and validation images)
+
+```{r}
+test_datagen <- image_data_generator(rescale = 1/255)
+
+test_generator = flow_images_from_directory(
+        test_image_files_path,
+        test_datagen,
+        target_size = c(20, 20),
+        class_mode = 'categorical')
+
+predictions <- as.data.frame(predict_generator(model2, test_generator, steps = 1))
+
+load("/Users/shiringlander/Documents/Github/DL_AI/Tutti_Frutti/fruits-360/fruits_classes_indices.RData")
+fruits_classes_indices_df <- data.frame(indices = unlist(fruits_classes_indices))
+fruits_classes_indices_df <- fruits_classes_indices_df[order(fruits_classes_indices_df$indices), , drop = FALSE]
+colnames(predictions) <- rownames(fruits_classes_indices_df)
+
+t(round(predictions, digits = 2))
+
+for (i in 1:nrow(predictions)) {
+  cat(i, ":")
+  print(unlist(which.max(predictions[i, ])))
+}
+```
+
+This seems to be incompatible with lime, though (or if someone knows how it works, please let me know) - so I prepared the images similarly to the Imagenet images.
+
+```{r}
+image_prep2 <- function(x) {
+  arrays <- lapply(x, function(path) {
+    img <- image_load(path, target_size = c(20, 20))
+    x <- image_to_array(img)
+    x <- reticulate::array_reshape(x, c(1, dim(x)))
+    x <- x / 255
+  })
+  do.call(abind::abind, c(arrays, list(along = 1)))
+}
+```
+
+- prepare labels
+
+```{r}
+fruits_classes_indices_l <- rownames(fruits_classes_indices_df)
+names(fruits_classes_indices_l) <- unlist(fruits_classes_indices)
+fruits_classes_indices_l
+```
+
+- train explainer
+
+```{r eval=FALSE}
+explainer2 <- lime(c(img_path, img_path2), as_classifier(model2, fruits_classes_indices_l), image_prep2)
+explanation2 <- explain(c(img_path, img_path2), explainer2, 
+                        n_labels = 1, n_features = 20,
+                        n_superpixels = 35, weight = 10,
+                        background = "white")
+```
+
+```{r eval=FALSE, echo=FALSE}
+save(explanation2, file = "../../data/keras/explanation_mymodel_banana.RData")
+```
+
+```{r echo=FALSE}
+load("../../data/keras/explanation_mymodel_banana.RData")
+```
+
+- plot feature weights to find a good threshold for plotting `block` (see below)
+
+```{r}
+explanation2 %>%
+  ggplot(aes(x = feature_weight)) +
+    facet_wrap(~ case, scales = "free") +
+    geom_density()
+```
+
+- plot predictions
+
+```{r banana_explanation}
+plot_image_explanation(explanation2, display = 'block', threshold = 5e-07)
+```
+
+```{r}
+clementine2 <- explanation2[explanation2$case == "clementine.jpg",]
+plot_image_explanation(clementine2, display = 'block', threshold = 0.16)
+```
+
+---
+
+```{r}
+sessionInfo()
+```
+
+

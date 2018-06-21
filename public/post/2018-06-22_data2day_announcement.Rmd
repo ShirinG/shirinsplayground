@@ -1,0 +1,15 @@
+---
+title: ""
+draft: false
+author: Shirin Glander
+date: '2018-04-18'
+categories: ["R", "Python", "LIME", "meetup"]
+tags: ["R", "Python", "LIME", "machine learning", "deep learning", "meetup"]
+thumbnailImagePosition: left
+thumbnailImage: https://image.slidesharecdn.com/hhdatasciencemeetup-180418112151/95/hh-data-science-meetup-explaining-complex-machine-learning-models-with-lime-1-638.jpg?cb=1524050654
+metaAlignment: center
+coverMeta: out
+slug: hh_datascience_meetup_2018_slides
+---
+
+https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953

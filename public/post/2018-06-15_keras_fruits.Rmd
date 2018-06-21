@@ -36,7 +36,7 @@ I also define a few other parameters in the beginning to make adapting as easy a
 
 ```{r}
 # list of fruits to modle
-fruit_list <- c("Kiwi", "Banana", "Plum", "Apricot", "Avocado", "Cocos", "Clementine", "Mandarine", "Orange",
+fruit_list <- c("Kiwi", "Banana", "Apricot", "Avocado", "Cocos", "Clementine", "Mandarine", "Orange",
                 "Limes", "Lemon", "Peach", "Plum", "Raspberry", "Strawberry", "Pineapple", "Pomegranate")
 
 # number of output classes (i.e. fruits)
@@ -104,6 +104,11 @@ table(factor(train_image_array_gen$classes))
 
 cat("\nClass label vs index mapping:\n")
 train_image_array_gen$class_indices
+```
+
+```{r eval=FALSE}
+fruits_classes_indices <- train_image_array_gen$class_indices
+save(fruits_classes_indices, file = "/Users/shiringlander/Documents/Github/DL_AI/Tutti_Frutti/fruits-360/fruits_classes_indices.RData")
 ```
 
 ### Define model
@@ -180,9 +185,9 @@ hist <- model %>% fit_generator(
   verbose = 2,
   callbacks = list(
     # save best model after every epoch
-    callback_model_checkpoint("../../data/keras/fruits_checkpoints.h5", save_best_only = TRUE),
+    callback_model_checkpoint("/Users/shiringlander/Documents/Github/DL_AI/Tutti_Frutti/fruits-360/keras/fruits_checkpoints.h5", save_best_only = TRUE),
     # only needed for visualising with TensorBoard
-    callback_tensorboard(log_dir = "../../data/logs/fruits_logs")
+    callback_tensorboard(log_dir = "/Users/shiringlander/Documents/Github/DL_AI/Tutti_Frutti/fruits-360/keras/logs")
   )
 )
 ```
@@ -193,12 +198,16 @@ In RStudio we are seeing the output as an interactive plot in the "Viewer" pane 
 plot(hist)
 ```
 
+```{r echo=FALSE}
+save_model_hdf5(model, filepath = "/Users/shiringlander/Documents/Github/DL_AI/Tutti_Frutti/fruits-360/keras/fruits_final_model.h5")
+```
+
 As we can see, the model is quite accurate on the validation data. However, we need to keep in mind that our images are very uniform, they all have the same white background and show the fruits centered and without anything else in the images. Thus, our model will not work with images that don't look similar as the ones we trained on (that's also why we can achieve such good results with such a small neural net).
 
 Finally, I want to have a look at the TensorFlow graph with TensorBoard.
 
 ```{r eval=FALSE}
-tensorboard("../../data/logs/fruits_logs")
+tensorboard("/Users/shiringlander/Documents/Github/DL_AI/Tutti_Frutti/fruits-360/keras/logs")
 ```
 
 ![](/img/tensorboard.png)

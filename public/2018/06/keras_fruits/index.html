@@ -361,7 +361,7 @@ ga('send', 'pageview');
 <p>The dataset is the <a href="https://www.kaggle.com/moltean/fruits/data">fruit images dataset from Kaggle</a>. I downloaded it to my computer and unpacked it. Because I don’t want to build a model for all the different fruits, I define a list of fruits (corresponding to the folder names) that I want to include in the model.</p>
 <p>I also define a few other parameters in the beginning to make adapting as easy as possible.</p>
 <pre class="r"><code># list of fruits to modle
-fruit_list &lt;- c(&quot;Kiwi&quot;, &quot;Banana&quot;, &quot;Plum&quot;, &quot;Apricot&quot;, &quot;Avocado&quot;, &quot;Cocos&quot;, &quot;Clementine&quot;, &quot;Mandarine&quot;, &quot;Orange&quot;,
+fruit_list &lt;- c(&quot;Kiwi&quot;, &quot;Banana&quot;, &quot;Apricot&quot;, &quot;Avocado&quot;, &quot;Cocos&quot;, &quot;Clementine&quot;, &quot;Mandarine&quot;, &quot;Orange&quot;,
                 &quot;Limes&quot;, &quot;Lemon&quot;, &quot;Peach&quot;, &quot;Plum&quot;, &quot;Raspberry&quot;, &quot;Strawberry&quot;, &quot;Pineapple&quot;, &quot;Pomegranate&quot;)
 
 # number of output classes (i.e. fruits)
@@ -417,59 +417,61 @@ valid_image_array_gen &lt;- flow_images_from_directory(valid_image_files_path,
 <pre><code>## Number of images per class:</code></pre>
 <pre class="r"><code>table(factor(train_image_array_gen$classes))</code></pre>
 <pre><code>## 
-##   0   1   3   4   5   6   7   8   9  10  11  12  13  14  15  16 
-## 466 490 492 427 490 490 490 479 490 492 492 894 490 492 490 492</code></pre>
+##   0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15 
+## 466 490 492 427 490 490 490 479 490 492 492 447 490 492 490 492</code></pre>
 <pre class="r"><code>cat(&quot;\nClass label vs index mapping:\n&quot;)</code></pre>
 <pre><code>## 
 ## Class label vs index mapping:</code></pre>
 <pre class="r"><code>train_image_array_gen$class_indices</code></pre>
 <pre><code>## $Lemon
-## [1] 10
-## 
-## $Peach
-## [1] 11
-## 
-## $Limes
 ## [1] 9
 ## 
-## $Apricot
-## [1] 3
+## $Peach
+## [1] 10
 ## 
-## $Plum
-## [1] 12
-## 
-## $Avocado
-## [1] 4
-## 
-## $Strawberry
-## [1] 14
-## 
-## $Pineapple
-## [1] 15
-## 
-## $Orange
+## $Limes
 ## [1] 8
 ## 
-## $Mandarine
+## $Apricot
+## [1] 2
+## 
+## $Plum
+## [1] 11
+## 
+## $Avocado
+## [1] 3
+## 
+## $Strawberry
+## [1] 13
+## 
+## $Pineapple
+## [1] 14
+## 
+## $Orange
 ## [1] 7
+## 
+## $Mandarine
+## [1] 6
 ## 
 ## $Banana
 ## [1] 1
 ## 
 ## $Clementine
-## [1] 6
+## [1] 5
 ## 
 ## $Kiwi
 ## [1] 0
 ## 
 ## $Cocos
-## [1] 5
+## [1] 4
 ## 
 ## $Pomegranate
-## [1] 16
+## [1] 15
 ## 
 ## $Raspberry
-## [1] 13</code></pre>
+## [1] 12</code></pre>
+<pre class="r"><code>fruits_classes_indices &lt;- train_image_array_gen$class_indices
+save(fruits_classes_indices, file = &quot;/Users/shiringlander/Documents/Github/DL_AI/Tutti_Frutti/fruits-360/fruits_classes_indices.RData&quot;)</code></pre>
 </div>
 <div id="define-model" class="section level3">
 <h3>Define model</h3>
@@ -535,17 +537,17 @@ hist &lt;- model %&gt;% fit_generator(
   verbose = 2,
   callbacks = list(
     # save best model after every epoch
-    callback_model_checkpoint(&quot;../../data/keras/fruits_checkpoints.h5&quot;, save_best_only = TRUE),
+    callback_model_checkpoint(&quot;/Users/shiringlander/Documents/Github/DL_AI/Tutti_Frutti/fruits-360/keras/fruits_checkpoints.h5&quot;, save_best_only = TRUE),
     # only needed for visualising with TensorBoard
-    callback_tensorboard(log_dir = &quot;../../data/logs/fruits_logs&quot;)
+    callback_tensorboard(log_dir = &quot;/Users/shiringlander/Documents/Github/DL_AI/Tutti_Frutti/fruits-360/keras/logs&quot;)
   )
 )</code></pre>
 <p>In RStudio we are seeing the output as an interactive plot in the “Viewer” pane but we can also plot it:</p>
 <pre class="r"><code>plot(hist)</code></pre>
-<p><img src="/post/2018-06-15_keras_fruits_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="/post/2018-06-15_keras_fruits_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <p>As we can see, the model is quite accurate on the validation data. However, we need to keep in mind that our images are very uniform, they all have the same white background and show the fruits centered and without anything else in the images. Thus, our model will not work with images that don’t look similar as the ones we trained on (that’s also why we can achieve such good results with such a small neural net).</p>
 <p>Finally, I want to have a look at the TensorFlow graph with TensorBoard.</p>
-<pre class="r"><code>tensorboard(&quot;../../data/logs/fruits_logs&quot;)</code></pre>
+<pre class="r"><code>tensorboard(&quot;/Users/shiringlander/Documents/Github/DL_AI/Tutti_Frutti/fruits-360/keras/logs&quot;)</code></pre>
 <div class="figure">
 <img src="/img/tensorboard.png" />
 
@@ -575,12 +577,12 @@ hist &lt;- model %&gt;% fit_generator(
 ##  [5] base64enc_0.1-3  tools_3.5.0      zeallot_0.1.0    digest_0.6.15   
 ##  [9] jsonlite_1.5     evaluate_0.10.1  tibble_1.4.2     gtable_0.2.0    
 ## [13] lattice_0.20-35  rlang_0.2.1      Matrix_1.2-14    yaml_2.1.19     
-## [17] blogdown_0.6     xfun_0.1         stringr_1.3.1    knitr_1.20      
-## [21] rprojroot_1.3-2  grid_3.5.0       reticulate_1.7   R6_2.2.2        
-## [25] rmarkdown_1.9    bookdown_0.7     ggplot2_2.2.1    reshape2_1.4.3  
+## [17] blogdown_0.6     xfun_0.2         stringr_1.3.1    knitr_1.20      
+## [21] rprojroot_1.3-2  grid_3.5.0       reticulate_1.8   R6_2.2.2        
+## [25] rmarkdown_1.10   bookdown_0.7     ggplot2_2.2.1    reshape2_1.4.3  
 ## [29] magrittr_1.5     whisker_0.3-2    backports_1.1.2  scales_0.5.0    
 ## [33] tfruns_1.3       htmltools_0.3.6  colorspace_1.3-2 labeling_0.3    
-## [37] tensorflow_1.5   stringi_1.2.2    lazyeval_0.2.1   munsell_0.4.3</code></pre>
+## [37] tensorflow_1.8   stringi_1.2.3    lazyeval_0.2.1   munsell_0.5.0</code></pre>
 </div>
 </div>
 
@@ -837,6 +839,25 @@ hist &lt;- model %&gt;% fit_generator(
           <div class="media">
             
             <div class="media-body">
+              <a class="link-unstyled" href="/2018/06/keras_fruits_lime/">
+                <h3 class="media-heading">Explaining Keras image classification models with lime</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jun 6, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Last week I published a blog post about how easy it is to train image classification models with Keras.
+What I did not show in that post was how to use the model for making predictions. This, I will do here. But predictions alone are boring, so I’m adding explanations for the predictions using the lime package.
+I have already written a few blog posts (here, here and here) about LIME and have given talks (here and here) about it, too.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
               <a class="link-unstyled" href="/2018/06/twimlai138/">
                 <h3 class="media-heading">Sketchnotes from TWiML&amp;AI: Practical Deep Learning with Rachel Thomas</h3>
               </a>
@@ -1010,24 +1031,6 @@ The main changes I made are:</div>
             <hr>
           </div>
         
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="/2018/04/meetup_june18/">
-                <h3 class="media-heading">Look, something shiny: How to use R Shiny to make Münster traffic data accessible. Join MünsteR for our next meetup!</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Apr 4, 2018
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">In our next MünsteR R-user group meetup on Monday, June 11th, 2018 Thomas Kluth and Thorben Jensen will give a talk titled Look, something shiny: How to use R Shiny to make Münster traffic data accessible. You can RSVP here: http://meetu.ps/e/F7zDN/w54bW/f
- About a year ago, we stumbled upon rich datasets on traffic dynamics of Münster: count data of bikes, cars, and bus passengers of high resolution. Since that day we have been crunching, modeling, and visualizing it.</div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
       </div>
     </div>
     <div class="modal-footer">
@@ -1035,7 +1038,7 @@ The main changes I made are:</div>
          data-message-zero="no post found"
          data-message-one="1 post found"
          data-message-other="{n} posts found">
-         44 posts found
+         45 posts found
       </p>
     </div>
   </div>

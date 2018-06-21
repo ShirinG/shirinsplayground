@@ -18,6 +18,8 @@ Here, you can find a list of all the talks I gave at conferences, webinars, podc
 > I offer a workshop on deep learning with Keras and TensorFlow using R.
 Date and place depend on who and how many people are interested, so please contact me either directly or via the workshop page: https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/ (the description is in German but I also offer to give the workshop in English).
 
+[Official link](https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/)
+
 ---
 
 <br>
