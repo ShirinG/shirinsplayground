@@ -216,6 +216,12 @@ That's all there is to it!
 
 Of course, you could now save your model and/or the weights, visualize the hidden layers, run predictions on test data, etc. For now, I'll leave it at that, though. :-)
 
+---
+
+There now is a [second part: Explaining Keras image classification models with lime](https://shirinsplayground.netlify.com/2018/06/keras_fruits_lime/)
+
+---
+
 ```{r}
 sessionInfo()
 ```
