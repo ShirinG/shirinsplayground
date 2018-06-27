@@ -1,0 +1,942 @@
+
+
+  
+    
+  
+
+
+  
+
+
+
+
+  
+
+
+  
+
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hugo 0.27 with theme Tranquilpeak 0.4.1-BETA">
+    <title>Text-to-speech with R</title>
+    <meta name="author" content="Dr. Shirin Glander">
+    <meta name="keywords" content=", R">
+
+    <link rel="icon" href="img/favicon.png">
+    
+
+    
+    <meta name="description" content="Computers started talking to us! They do this with so called Text-to-Speech (TTS) systems. With neural nets, deep learning and lots of training data, these systems have gotten a whole lot better in recent years. In some cases, they are so good that you can’t distinguish between human and machine voice.
+In one of our recent codecentric.AI videos, we compared different Text-to-Speech systems (the video is in German, though - but the text snippets and their voice recordings we show in the video are a mix of German and English).">
+    <meta property="og:description" content="Computers started talking to us! They do this with so called Text-to-Speech (TTS) systems. With neural nets, deep learning and lots of training data, these systems have gotten a whole lot better in recent years. In some cases, they are so good that you can’t distinguish between human and machine voice.
+In one of our recent codecentric.AI videos, we compared different Text-to-Speech systems (the video is in German, though - but the text snippets and their voice recordings we show in the video are a mix of German and English).">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="Text-to-speech with R">
+    <meta property="og:url" content="/2018/06/text_to_speech_r/">
+    <meta property="og:site_name" content="Shirin&#39;s playgRound">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Shirin&#39;s playgRound">
+    <meta name="twitter:description" content="Computers started talking to us! They do this with so called Text-to-Speech (TTS) systems. With neural nets, deep learning and lots of training data, these systems have gotten a whole lot better in recent years. In some cases, they are so good that you can’t distinguish between human and machine voice.
+In one of our recent codecentric.AI videos, we compared different Text-to-Speech systems (the video is in German, though - but the text snippets and their voice recordings we show in the video are a mix of German and English).">
+    
+      <meta name="twitter:creator" content="@ShirinGlander">
+    
+    
+
+    
+    
+
+    
+      <meta property="og:image" content="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=640">
+    
+
+    
+      <meta property="og:image" content="https://shiring.github.io/netlify_images/speech-icon-2797263_1280.png">
+    
+    
+    
+
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="/css/style-hbs5om8csx9a8yrv5hnhpi2qqdv4ykuslajwbramhqxvleqbfklxgek50hye.min.css" />
+    
+    
+
+    
+      
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-86119417-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="/">Shirin&#39;s playgRound</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <h1 class="sidebar-profile-title">Text-to-speech with R</h1>
+        <a href="https://blog.feedspot.com/r_programming_blogs/" rel="nofollow" title="R Programming Blogs"><img alt="R Programming Blogs" src="https://blog.feedspot.com/wp-content/uploads/2018/04/r_program_216px.png?x20694"/></a>
+        <a href="/#about">
+          <img class="sidebar-profile-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Dr. Shirin Glander</h4>
+        
+          <h5 class="sidebar-profile-bio">Biologist turned Bioinformatician turned Data Scientist</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/archives/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/categories/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/tags/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/page/about/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/page/conferences_podcasts_webinars/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bullhorn"></i>
+      
+      <span class="sidebar-button-desc">Hear me talk</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://shiring.github.io/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">My old R-blog</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/ShirinG">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.linkedin.com/in/shirin-glander-01120881/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-linkedin"></i>
+      
+      <span class="sidebar-button-desc">LinkedIn</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://stackoverflow.com/users/6623620/shirin-glander">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-stack-overflow"></i>
+      
+      <span class="sidebar-button-desc">Stack Overflow</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/ShirinGlander">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.xing.com/profile/Shirin_Glander">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-xing"></i>
+      
+      <span class="sidebar-button-desc">Xing</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.meetup.com/Munster-R-Users-Group">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-meetup"></i>
+      
+      <span class="sidebar-button-desc">MünsteR</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.r-bloggers.com/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-book"></i>
+      
+      <span class="sidebar-button-desc">R-bloggers</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.r-users.com/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-book"></i>
+      
+      <span class="sidebar-button-desc">R-users</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaOut
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-center">
+  
+    <h1 class="post-title" itemprop="headline">
+      Text-to-speech with R
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2018-06-27T00:00:00Z">
+        
+  June 27, 2018
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="/categories/r">R</a>
+    
+  
+
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>Computers started talking to us! They do this with so called Text-to-Speech (TTS) systems. With neural nets, deep learning and lots of training data, these systems have gotten a whole lot better in recent years. In some cases, they are so good that you can’t distinguish between human and machine voice.</p>
+<p>In one of our recent <a href="https://blog.codecentric.de/2018/04/kuenstliche-intelligenz-codecentric_ai/">codecentric.AI</a> <a href="https://youtu.be/2EEMSsVBE8w">videos</a>, we compared <a href="https://youtu.be/2EEMSsVBE8w">different Text-to-Speech systems</a> (the video is in German, though - but the text snippets and their voice recordings we show in the video are a mix of German and English). In this video, we had a small contest between Polly, Alexa, Siri And Co to find out who best speaks different tongue twisters.</p>
+<p><br> <iframe width="560" height="315" src="https://www.youtube.com/embed/2EEMSsVBE8w" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></p>
+<p>Here, I want to find out what’s possible with R and Text-to-Speech packages.</p>
+<div id="how-does-tts-work" class="section level2">
+<h2>How does TTS work?</h2>
+<p>Challenges for good TTS systems are the complexity of the human language: we intone words differently, depending on where they are in a sentence, what we want to convey with that sentence, how our mood is, and so on. AI-based TTS systems can take phonemes and intonation into account.</p>
+<p>There are different ways to artificially produce speech. A very important method is Unit Selection synthesis. With this method, text is first normalized and divided into smaller entities that represent sentences, syllables, words, phonemes, etc. The structure (e.g. the pronunciation) of these entities is then learned in context. We call this part Natural Language Processing (NLP). Usually, these learned segments are stored in a database (either as human voice recordings or synthetically generated) that can be searched to find suitable speech parts (Unit Selection). This search is often done with decision trees, neural nets or Hidden-Markov-Models.</p>
+<p>If the speech has been generated by a computer, this is called formant synthesis. It offers more flexibility because the collection of words isn’t limited to what has been pre-recorded by a human. Even imaginary or new words can easily be produced and the voices can be readily exchanged. Until recently, this synthetic voice did not sound anything like a human recorded voice; you could definitely hear that it was “fake”. Most of the TTS systems today still suffer from this, but this is in the process of changing: there are already a few artificial TTS systems that do sound very human.</p>
+</div>
+<div id="what-tts-systems-are-there" class="section level2">
+<h2>What TTS systems are there?</h2>
+<p>We already find TTS systems in many digital devices, like computers, smart phones, etc. Most of the “big players” offer TTS-as-a-service, but there are also many “smaller” and free programs for TTS. Many can be downloaded as software or used from a web browser or as an API. Here is an incomplete list:</p>
+<ul>
+<li>Microsoft/Windows: includes <a href="https://support.microsoft.com/de-de/help/22798/windows-10-narrator-get-started"><strong>Narrator</strong></a> and <a href="https://www.microsoft.com/en-us/download/details.aspx?id=10121"><strong>Microsoft Speech API</strong></a></li>
+<li>Mac: <a href="https://www.apple.com/de/accessibility/mac/vision/"><strong>VoiceOver</strong></a></li>
+<li>Linux: different software can be installed, e.g. <a href="https://sourceforge.net/projects/espeak/files/espeak/"><strong>eSpeak</strong></a></li>
+<li><a href="https://www.ibm.com/watson/services/text-to-speech/">IBM Watson</a></li>
+<li><a href="https://cloud.google.com/text-to-speech/">Google Cloud</a></li>
+<li><a href="https://azure.microsoft.com/de-de/services/cognitive-services/speech/">Microsoft Azure</a></li>
+<li><a href="https://developer.amazon.com/de/alexa">Amazon Alexa</a></li>
+<li><a href="https://9to5mac.com/2017/03/10/how-to-get-siri-to-read-articles-to-you-on-ios-macos/">Siri on iPhone</a></li>
+<li><a href="https://aws.amazon.com/de/polly/">Polly on Amazon AWS</a></li>
+<li><a href="https://support.microsoft.com/de-de/help/17214/windows-10-what-is">Microsoft Cortana</a></li>
+<li><a href="https://freetts.sourceforge.io/docs/">FreeTTS</a></li>
+<li><a href="https://www.ispeech.org/text.to.speech">iSpeech</a></li>
+<li><a href="https://www.naturalreaders.com/online/">Natural Readers</a></li>
+<li><a href="http://www.cross-plus-a.com/balabolka.htm">Balabolka</a></li>
+<li><a href="https://www.panopreter.com/en/products/pb/download.php">Panopreter</a></li>
+<li><a href="https://www.text2speech.org/">text2speech.org</a></li>
+<li><a href="http://text-to-speech-translator.paralink.com/">text-to-speech-translator.paralink.com/</a></li>
+</ul>
+</div>
+<div id="text-to-speech-in-r" class="section level2">
+<h2>Text-to-Speech in R</h2>
+<p>The only package for TTS I found was <code>Rtts</code>. It doesn’t seem very comprehensive but it does the job of converting text to speech. The only API that works right now is **ITRI (<a href="http://tts.itri.org.tw)**" class="uri">http://tts.itri.org.tw)**</a>. And it only supports English and Chinese.</p>
+<p>Let’s try it out!</p>
+<pre class="r"><code>library(Rtts)</code></pre>
+<pre><code>## Lade nötiges Paket: RCurl</code></pre>
+<pre><code>## Lade nötiges Paket: bitops</code></pre>
+<p>Here, I’ll be using a quote from <strong>DOUGLAS ADAMS’ THE HITCHHIKER’S GUIDE TO THE GALAXY</strong>:</p>
+<pre class="r"><code>content &lt;- &quot;A common mistake that people make when trying to design something completely foolproof is to underestimate the ingenuity of complete fools.&quot;</code></pre>
+<p>The main TTS function is <code>tts_ITRI()</code> and I’m going to loop over the different voice options.</p>
+<pre class="r"><code>speakers = c(&quot;Bruce&quot;, &quot;Theresa&quot;, &quot;Angela&quot;, &quot;MCHEN_Bruce&quot;, &quot;MCHEN_Joddess&quot;, &quot;ENG_Bob&quot;, &quot;ENG_Alice&quot;, &quot;ENG_Tracy&quot;)
+lapply(speakers, function(x) tts_ITRI(content, speaker = x,
+         destfile = paste0(&quot;audio_tts_&quot;, x, &quot;.mp3&quot;)))</code></pre>
+<p>I uploaded the results to Soundcloud for you to hear: - <a href="https://soundcloud.com/shirin-glander-729692416/audio-tts-bruce/s-iZC6u?in=shirin-glander-729692416/sets/text-to-speech-blogpost/s-lXYea">audio-tts-bruce</a> - <a href="https://soundcloud.com/shirin-glander-729692416/audio-tts-theresa/s-lYt0R?in=shirin-glander-729692416/sets/text-to-speech-blogpost/s-lXYea">audio-tts-theresa</a> - <a href="https://soundcloud.com/shirin-glander-729692416/audio-tts-angela/s-KVUMS?in=shirin-glander-729692416/sets/text-to-speech-blogpost/s-lXYea">audio-tts-angela</a> - <a href="https://soundcloud.com/shirin-glander-729692416/audio-tts-mchen-bruce/s-KVDeb?in=shirin-glander-729692416/sets/text-to-speech-blogpost/s-lXYea">audio-tts-mchen-bruce</a> - <a href="https://soundcloud.com/shirin-glander-729692416/audio-tts-mchen-joddess/s-mDdik?in=shirin-glander-729692416/sets/text-to-speech-blogpost/s-lXYea">audio-tts-mchen-joddess</a> - <a href="https://soundcloud.com/shirin-glander-729692416/audio-tts-eng-bob/s-520Y2?in=shirin-glander-729692416/sets/text-to-speech-blogpost/s-lXYea">audio-tts-eng-bob</a> - <a href="https://soundcloud.com/shirin-glander-729692416/audio-tts-eng-alice/s-BKTpj?in=shirin-glander-729692416/sets/text-to-speech-blogpost/s-lXYea">audio-tts-eng-alice</a> - <a href="https://soundcloud.com/shirin-glander-729692416/audio-tts-eng-tracy/s-SKVDm?in=shirin-glander-729692416/sets/text-to-speech-blogpost/s-lXYea">audio-tts-eng-tracy</a></p>
+<p>As you can hear, it sounds quite wonky. There are many better alternatives out there, but most of them aren’t free and/or can’t be used (as easily) from R. Noam Ross tried <a href="https://rpubs.com/noamross/153216">IBM Watson’s TTS API in this post</a>, which would be a very good solution. Or you could access the <a href="https://cloud.google.com/text-to-speech/">Google Cloud</a> API from within R.</p>
+<p>The most convenient solution for me was to use <a href="https://sourceforge.net/projects/espeak/files/espeak/"><strong>eSpeak</strong></a> from the command line. The output sounds relatively good, it is free and offers many languages and voices with lots of parameters to tweak. This is how you would produce audio from text with eSpeak:</p>
+<ul>
+<li>English US</li>
+</ul>
+<pre><code>espeak -v english-us -s 150 -w &#39;/Users/shiringlander/Documents/Github/audio_tts_espeak_en_us.wav&#39; &quot;A common mistake that people make when trying to design something completely foolproof is to underestimate the ingenuity of complete fools.&quot;</code></pre>
+<ul>
+<li>just for fun: English Scottish</li>
+</ul>
+<pre><code>espeak -v en-scottish -s 150 -w &#39;/Users/shiringlander/Documents/Github/audio_tts_espeak_en-scottish.wav&#39; &quot;A common mistake that people make when trying to design something completely foolproof is to underestimate the ingenuity of complete fools.&quot;</code></pre>
+<ul>
+<li>even funnier: German</li>
+</ul>
+<pre><code>espeak -v german -s 150 -w &#39;/Users/shiringlander/Documents/Github/audio_tts_espeak_german.wav&#39; &quot;A common mistake that people make when trying to design something completely foolproof is to underestimate the ingenuity of complete fools.&quot;</code></pre>
+<p>The <a href="https://soundcloud.com/shirin-glander-729692416/sets/text-to-speech-blogpost/s-lXYea">playlist</a> contains all audio files I generated in this post.</p>
+<hr />
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 3.5.0 (2018-04-23)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS High Sierra 10.13.5
+## 
+## Matrix products: default
+## BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] de_DE.UTF-8/de_DE.UTF-8/de_DE.UTF-8/C/de_DE.UTF-8/de_DE.UTF-8
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+## [1] Rtts_0.3.3      RCurl_1.95-4.10 bitops_1.0-6   
+## 
+## loaded via a namespace (and not attached):
+##  [1] Rcpp_0.12.17    bookdown_0.7    digest_0.6.15   rprojroot_1.3-2
+##  [5] backports_1.1.2 magrittr_1.5    evaluate_0.10.1 blogdown_0.6   
+##  [9] stringi_1.2.3   rmarkdown_1.10  tools_3.5.0     stringr_1.3.1  
+## [13] xfun_0.2        yaml_2.1.19     compiler_3.5.0  htmltools_0.3.6
+## [17] knitr_1.20</code></pre>
+</div>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="//tags/r/">R</a>
+
+                  </div>
+                
+              
+            
+            
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                <i class="fa fa-angle-left"></i>
+                <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+              </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2018/06/keras_fruits_lime/" data-tooltip="Explaining Keras image classification models with lime">
+              
+                <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2018/06/text_to_speech_r/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2018/06/text_to_speech_r/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2018/06/text_to_speech_r/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2018 Dr. Shirin Glander. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                <i class="fa fa-angle-left"></i>
+                <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+              </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2018/06/keras_fruits_lime/" data-tooltip="Explaining Keras image classification models with lime">
+              
+                <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2018/06/text_to_speech_r/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2018/06/text_to_speech_r/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2018/06/text_to_speech_r/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=%2F2018%2F06%2Ftext_to_speech_r%2F">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=%2F2018%2F06%2Ftext_to_speech_r%2F">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=%2F2018%2F06%2Ftext_to_speech_r%2F">
+          <i class="fa fa-google-plus"></i><span>Share on Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Dr. Shirin Glander</h4>
+    
+      <div id="about-card-bio">Biologist turned Bioinformatician turned Data Scientist</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Data Scientist
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Münster, Germany
+      </div>
+    
+  </div>
+</div>
+
+    <div id="algolia-search-modal" class="modal-container">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="close-button"><i class="fa fa-close"></i></span>
+      <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
+        <span class="searchby-algolia-text text-color-light text-small">by</span>
+        <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
+      </a>
+      <i class="search-icon fa fa-search"></i>
+      <form id="algolia-search-form">
+        <input type="text" id="algolia-search-input" name="search"
+          class="form-control input--large search-input" placeholder="Search" />
+      </form>
+    </div>
+    <div class="modal-body">
+      <div class="no-result text-color-light text-center">no post found</div>
+      <div class="results">
+        
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/06/text_to_speech_r/">
+                <h3 class="media-heading">Text-to-speech with R</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jun 6, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Computers started talking to us! They do this with so called Text-to-Speech (TTS) systems. With neural nets, deep learning and lots of training data, these systems have gotten a whole lot better in recent years. In some cases, they are so good that you can’t distinguish between human and machine voice.
+In one of our recent codecentric.AI videos, we compared different Text-to-Speech systems (the video is in German, though - but the text snippets and their voice recordings we show in the video are a mix of German and English).</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/06/keras_fruits_lime/">
+                <h3 class="media-heading">Explaining Keras image classification models with lime</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jun 6, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Last week I published a blog post about how easy it is to train image classification models with Keras.
+What I did not show in that post was how to use the model for making predictions. This, I will do here. But predictions alone are boring, so I’m adding explanations for the predictions using the lime package.
+I have already written a few blog posts (here, here and here) about LIME and have given talks (here and here) about it, too.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/06/twimlai138/">
+                <h3 class="media-heading">Sketchnotes from TWiML&amp;AI: Practical Deep Learning with Rachel Thomas</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jun 6, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">These are my sketchnotes for Sam Charrington’s podcast This Week in Machine Learning and AI about Practical Deep Learning with Rachel Thomas:
+Sketchnotes from TWiMLAI talk: Practical Deep Learning with Rachel Thomas
+ You can listen to the podcast here.
+ In this episode, i’m joined by Rachel Thomas, founder and researcher at Fast AI. If you’re not familiar with Fast AI, the company offers a series of courses including Practical Deep Learning for Coders, Cutting Edge Deep Learning for Coders and Rachel’s Computational Linear Algebra course.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/06/keras_fruits/">
+                <h3 class="media-heading">It&#39;s that easy! Image classification with keras in roughly 100 lines of code.</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jun 6, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">I’ve been using keras and TensorFlow for a while now - and love its simplicity and straight-forward way to modeling. As part of the latest update to my Workshop about deep learning with R and keras I’ve added a new example analysis:
+Building an image classifier to differentiate different types of fruits
+And I was (again) suprised how fast and easy it was to build the model; it took not even half an hour and only around 100 lines of code (counting only the main code; for this post I added comments and line breaks to make it easier to read)!</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/05/ropensci_unconf18/">
+                <h3 class="media-heading">rOpenSci unconference 2018 &#43; introduction to TensorFlow Probability &amp; the &#39;greta&#39; package</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  May 5, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">On May 21st and 22nd, I had the honor of having been chosen to attend the rOpenSci unconference 2018 in Seattle. It was a great event and I got to meet many amazing people!
+rOpenSci rOpenSci is a non-profit organisation that maintains a number of widely used R packages and is very active in promoting a community spirit around the R-world. Their core values are to have open and reproducible research, shared data and easy-to-use tools and to make all this accessible to a large number of people.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/05/deep_learning_keras_tensorflow_18_07/">
+                <h3 class="media-heading">July 5th &amp; 6th in Münster: Workshop on Deep Learning with Keras and TensorFlow in R</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  May 5, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Registration is now open for my 1.5-day workshop on deep learning with Keras and TensorFlow using R.
+It will take place on July 5th &amp; 6th in Münster, Germany.
+
+ 
+You can read about one participant’s experience in my last workshop:
+ Big Data – a buzz word you can find everywhere these days, from nerdy blogs to scientific research papers and even in the news. But how does Big Data Analysis work, exactly?</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/05/twimlai_adversarial_attacks/">
+                <h3 class="media-heading">Sketchnotes from TWiML&amp;AI: Adversarial Attacks Against Reinforcement Learning Agents with Ian Goodfellow &amp; Sandy Huang</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  May 5, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">These are my sketchnotes for Sam Charrington’s podcast This Week in Machine Learning and AI about Adversarial Attacks Against Reinforcement Learning Agents with Ian Goodfellow &amp; Sandy Huang:
+Sketchnotes from TWiMLAI talk: Adversarial Attacks Against Reinforcement Learning Agents with Ian Goodfellow &amp; Sandy Huang
+ You can listen to the podcast here.
+ In this episode, I’m joined by Ian Goodfellow, Staff Research Scientist at Google Brain and Sandy Huang, Phd Student in the EECS department at UC Berkeley, to discuss their work on the paper Adversarial Attacks on Neural Network Policies.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/04/pkgnet/">
+                <h3 class="media-heading">Comparing dependencies of popular machine learning packages with `pkgnet`</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Apr 4, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">When looking through the CRAN list of packages, I stumbled upon this little gem:
+ pkgnet is an R library designed for the analysis of R libraries! The goal of the package is to build a graph representation of a package and its dependencies.
+ And I thought it would be fun to play around with it. The little analysis I ended up doing was to compare dependencies of popular machine learning packages.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/04/jax2018_slides/">
+                <h3 class="media-heading">Slides from my JAX 2018 talk: Deep Learning - a Primer</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Apr 4, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Here I am sharing the slides for a talk that my colleague Uwe Friedrichsen and I gave about Deep Learning - a Primer at the JAX conference on Tuesday, April 24th 2018 in Mainz, Germany.
+Slides can be found here: https://www.slideshare.net/ShirinGlander/deep-learning-a-primer-95197733
+ Deep Learning is one of the “hot” topics in the AI area – a lot of hype, a lot of inflated expectation, but also quite some impressive success stories.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/04/twimlai121/">
+                <h3 class="media-heading">Sketchnotes from TWiML&amp;AI #121: Reproducibility and the Philosophy of Data with Clare Gollnick</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Apr 4, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">These are my sketchnotes for Sam Charrington’s podcast This Week in Machine Learning and AI about Reproducibility and the Philosophy of Data with Clare Gollnick:
+Sketchnotes from TWiMLAI talk #121: Reproducibility and the Philosophy of Data with Clare Gollnick
+ You can listen to the podcast here.
+ In this episode, i’m joined by Clare Gollnick, CTO of Terbium Labs, to discuss her thoughts on the “reproducibility crisis” currently haunting the scientific landscape.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+      </div>
+    </div>
+    <div class="modal-footer">
+      <p class="results-count text-medium"
+         data-message-zero="no post found"
+         data-message-one="1 post found"
+         data-message-other="{n} posts found">
+         46 posts found
+      </p>
+    </div>
+  </div>
+</div>
+    
+  
+    
+    <div id="cover" style="background-image:url('/images/autumn-2789234_1920.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" integrity="sha256-IFHWFEbU2/+wNycDECKgjIRSirRNIDp2acEB5fvdVRU=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js" integrity="sha256-+mpyNVJsNt4rVXCw0F+pAOiB3YxmHgrbJsx4ecPuUaI=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.js" integrity="sha256-vMxgR/7FtLovVA+IPrR7+xTgIgARH7y9VZQnmmi0HDI=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.js" integrity="sha256-N0qFUh7/9vLvia87dDndewmsgsyYoNkdA212tPc+2NI=" crossorigin="anonymous"></script>
+
+
+<script src="/js/script-kr8dyqj6rb6ortyib7whfo9x9p6td6zo8t1v4fdz4ecx5kwybsdlmk1slygn.min.js"></script>
+
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = '\/2018\/06\/text_to_speech_r\/';
+          
+            this.page.identifier = '\/2018\/06\/text_to_speech_r\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'shirinsplayground';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+    
+  </body>
+</html>
+

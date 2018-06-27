@@ -1,0 +1,13 @@
+---
+title: "Text-to-speech with R"
+draft: true
+author: Shirin Glander
+date: '2018-06-21'
+categories: ["R", "keras"]
+tags: ["R", "keras", "image classification", "tensorflow"]
+thumbnailImagePosition: left
+thumbnailImage: post/2018-06-21_keras_fruits_lime_files/figure-html/banana_explanation-1.png
+metaAlignment: center
+coverMeta: out
+slug: keras_fruits_lime
+---
