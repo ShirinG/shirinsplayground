@@ -1,0 +1,88 @@
+---
+title: "Addendum: Text-to-Speech with the googleLanguageR package"
+draft: false
+author: Shirin Glander
+date: '2018-06-29'
+categories: ["R"]
+tags: ["R"]
+thumbnailImagePosition: left
+thumbnailImage: https://shiring.github.io/netlify_images/speech-icon-2797263_1280.png
+metaAlignment: center
+coverMeta: out
+slug: googlelanguager
+---
+
+After posting my short blog post about [Text-to-speech with R](https://shirinsplayground.netlify.com/2018/06/text_to_speech_r/), I got two very useful tips. One was to use the `googleLanguageR` package, which uses the Google Cloud Text-to-Speech API.
+
+And indeed, it was very easy to use and the resulting audio sounded much better than what I tried before!
+
+Here's a short example of how to use the package for TTS:
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Set up Google Cloud and authentification
+
+You first need to set up a Google Cloud Account and provide credit card information (the first year is free to use, though).
+If you haven't used Google Cloud before, you will need to wait until you activated your account; in my case, I had to wait two days until they sent a small amount of money to my bank account which I then needed to enter in order to verify the information.
+
+Then, you create a project, activate the API(s) you want to use and create the authentication information as a JSON file. More information on how to do this is described [here](http://code.markedmondson.me/googleLanguageR/index.html).
+
+```{r echo=FALSE}
+library(googleLanguageR)
+gl_auth("/Users/shiringlander/Documents/Github/tts-with-r-303153175392.json")
+```
+
+Install and load the library and give the path to the saved authentication JSON file.
+
+```{r eval=FALSE}
+library(googleLanguageR)
+gl_auth("path_to_authentication.json")
+```
+
+### Text-to-Speech with googleLanguageR
+
+Now, we can use the [Google Cloud Text-to-Speech API](http://code.markedmondson.me/googleLanguageR/articles/text-to-speech.html) from R.
+
+> "Google Cloud Text-to-Speech enables developers to synthesize natural-sounding speech with 30 voices, available in multiple languages and variants. It applies DeepMind’s groundbreaking research in WaveNet and Google’s powerful neural networks to deliver the highest fidelity possible. With this easy-to-use API, you can create lifelike interactions with your users, across many applications and devices." http://code.markedmondson.me/googleLanguageR/articles/text-to-speech.html
+
+```{r}
+content <- "A common mistake that people make when trying to design something completely foolproof is to underestimate the ingenuity of complete fools."
+```
+
+We can ask for a list of languages with the `gl_talk_languages()` function; here, I am looking at all English language options:
+
+```{r}
+gl_talk_languages(languageCode = "en")
+```
+
+Let's try with three:
+
+```{r eval=FALSE}
+names <- c("en-US-Wavenet-D", "en-GB-Standard-C", "en-AU-Standard-A")
+```
+
+```{r eval=FALSE}
+for (name in names) {
+  gl_talk(content, 
+        output = paste0("/Users/shiringlander/Documents/Github/output_", name, ".wav"),
+        name = name,
+        speakingRate = 0.9)
+}
+```
+
+The audio files are again [saved on SoundCloud](https://soundcloud.com/shirin-glander-729692416/sets/addendum-text-to-speech-with-the-googlelanguager-package/s-oyaAe).
+
+My verdict:
+Great package! Great API! :-)
+
+---
+
+```{r}
+sessionInfo()
+```
+
+
+
+

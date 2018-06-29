@@ -1,0 +1,943 @@
+
+
+  
+    
+  
+
+
+  
+
+
+
+
+  
+
+
+  
+
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hugo 0.27 with theme Tranquilpeak 0.4.1-BETA">
+    <title>Addendum: Text-to-Speech with the googleLanguageR package</title>
+    <meta name="author" content="Dr. Shirin Glander">
+    <meta name="keywords" content=", R">
+
+    <link rel="icon" href="img/favicon.png">
+    
+
+    
+    <meta name="description" content="After posting my short blog post about Text-to-speech with R, I got two very useful tips. One was to use the googleLanguageR package, which uses the Google Cloud Text-to-Speech API.
+And indeed, it was very easy to use and the resulting audio sounded much better than what I tried before!
+Here’s a short example of how to use the package for TTS:
+Set up Google Cloud and authentification You first need to set up a Google Cloud Account and provide credit card information (the first year is free to use, though).">
+    <meta property="og:description" content="After posting my short blog post about Text-to-speech with R, I got two very useful tips. One was to use the googleLanguageR package, which uses the Google Cloud Text-to-Speech API.
+And indeed, it was very easy to use and the resulting audio sounded much better than what I tried before!
+Here’s a short example of how to use the package for TTS:
+Set up Google Cloud and authentification You first need to set up a Google Cloud Account and provide credit card information (the first year is free to use, though).">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="Addendum: Text-to-Speech with the googleLanguageR package">
+    <meta property="og:url" content="/2018/06/googlelanguager/">
+    <meta property="og:site_name" content="Shirin&#39;s playgRound">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Shirin&#39;s playgRound">
+    <meta name="twitter:description" content="After posting my short blog post about Text-to-speech with R, I got two very useful tips. One was to use the googleLanguageR package, which uses the Google Cloud Text-to-Speech API.
+And indeed, it was very easy to use and the resulting audio sounded much better than what I tried before!
+Here’s a short example of how to use the package for TTS:
+Set up Google Cloud and authentification You first need to set up a Google Cloud Account and provide credit card information (the first year is free to use, though).">
+    
+      <meta name="twitter:creator" content="@ShirinGlander">
+    
+    
+
+    
+    
+
+    
+      <meta property="og:image" content="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=640">
+    
+
+    
+      <meta property="og:image" content="https://shiring.github.io/netlify_images/speech-icon-2797263_1280.png">
+    
+    
+    
+
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="/css/style-hbs5om8csx9a8yrv5hnhpi2qqdv4ykuslajwbramhqxvleqbfklxgek50hye.min.css" />
+    
+    
+
+    
+      
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-86119417-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="/">Shirin&#39;s playgRound</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <h1 class="sidebar-profile-title">Addendum: Text-to-Speech with the googleLanguageR package</h1>
+        <a href="https://blog.feedspot.com/r_programming_blogs/" rel="nofollow" title="R Programming Blogs"><img alt="R Programming Blogs" src="https://blog.feedspot.com/wp-content/uploads/2018/04/r_program_216px.png?x20694"/></a>
+        <a href="/#about">
+          <img class="sidebar-profile-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Dr. Shirin Glander</h4>
+        
+          <h5 class="sidebar-profile-bio">Biologist turned Bioinformatician turned Data Scientist</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/archives/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/categories/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/tags/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/page/about/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/page/conferences_podcasts_webinars/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bullhorn"></i>
+      
+      <span class="sidebar-button-desc">Hear me talk</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://shiring.github.io/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">My old R-blog</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/ShirinG">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.linkedin.com/in/shirin-glander-01120881/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-linkedin"></i>
+      
+      <span class="sidebar-button-desc">LinkedIn</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://stackoverflow.com/users/6623620/shirin-glander">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-stack-overflow"></i>
+      
+      <span class="sidebar-button-desc">Stack Overflow</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/ShirinGlander">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.xing.com/profile/Shirin_Glander">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-xing"></i>
+      
+      <span class="sidebar-button-desc">Xing</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.meetup.com/Munster-R-Users-Group">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-meetup"></i>
+      
+      <span class="sidebar-button-desc">MünsteR</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.r-bloggers.com/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-book"></i>
+      
+      <span class="sidebar-button-desc">R-bloggers</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.r-users.com/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-book"></i>
+      
+      <span class="sidebar-button-desc">R-users</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaOut
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-center">
+  
+    <h1 class="post-title" itemprop="headline">
+      Addendum: Text-to-Speech with the googleLanguageR package
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2018-06-29T00:00:00Z">
+        
+  June 29, 2018
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="/categories/r">R</a>
+    
+  
+
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>After posting my short blog post about <a href="https://shirinsplayground.netlify.com/2018/06/text_to_speech_r/">Text-to-speech with R</a>, I got two very useful tips. One was to use the <code>googleLanguageR</code> package, which uses the Google Cloud Text-to-Speech API.</p>
+<p>And indeed, it was very easy to use and the resulting audio sounded much better than what I tried before!</p>
+<p>Here’s a short example of how to use the package for TTS:</p>
+<div id="set-up-google-cloud-and-authentification" class="section level2">
+<h2>Set up Google Cloud and authentification</h2>
+<p>You first need to set up a Google Cloud Account and provide credit card information (the first year is free to use, though). If you haven’t used Google Cloud before, you will need to wait until you activated your account; in my case, I had to wait two days until they sent a small amount of money to my bank account which I then needed to enter in order to verify the information.</p>
+<p>Then, you create a project, activate the API(s) you want to use and create the authentication information as a JSON file. More information on how to do this is described <a href="http://code.markedmondson.me/googleLanguageR/index.html">here</a>.</p>
+<p>Install and load the library and give the path to the saved authentication JSON file.</p>
+<pre class="r"><code>library(googleLanguageR)
+gl_auth(&quot;path_to_authentication.json&quot;)</code></pre>
+<div id="text-to-speech-with-googlelanguager" class="section level3">
+<h3>Text-to-Speech with googleLanguageR</h3>
+<p>Now, we can use the <a href="http://code.markedmondson.me/googleLanguageR/articles/text-to-speech.html">Google Cloud Text-to-Speech API</a> from R.</p>
+<blockquote>
+<p>“Google Cloud Text-to-Speech enables developers to synthesize natural-sounding speech with 30 voices, available in multiple languages and variants. It applies DeepMind’s groundbreaking research in WaveNet and Google’s powerful neural networks to deliver the highest fidelity possible. With this easy-to-use API, you can create lifelike interactions with your users, across many applications and devices.” <a href="http://code.markedmondson.me/googleLanguageR/articles/text-to-speech.html" class="uri">http://code.markedmondson.me/googleLanguageR/articles/text-to-speech.html</a></p>
+</blockquote>
+<pre class="r"><code>content &lt;- &quot;A common mistake that people make when trying to design something completely foolproof is to underestimate the ingenuity of complete fools.&quot;</code></pre>
+<p>We can ask for a list of languages with the <code>gl_talk_languages()</code> function; here, I am looking at all English language options:</p>
+<pre class="r"><code>gl_talk_languages(languageCode = &quot;en&quot;)</code></pre>
+<pre><code>## # A tibble: 18 x 4
+##    languageCodes name             ssmlGender naturalSampleRateHertz
+##    &lt;chr&gt;         &lt;chr&gt;            &lt;chr&gt;                       &lt;int&gt;
+##  1 en-US         en-US-Wavenet-D  MALE                        24000
+##  2 en-US         en-US-Wavenet-A  MALE                        24000
+##  3 en-US         en-US-Wavenet-B  MALE                        24000
+##  4 en-US         en-US-Wavenet-C  FEMALE                      24000
+##  5 en-US         en-US-Wavenet-E  FEMALE                      24000
+##  6 en-US         en-US-Wavenet-F  FEMALE                      24000
+##  7 en-GB         en-GB-Standard-A FEMALE                      24000
+##  8 en-GB         en-GB-Standard-B MALE                        24000
+##  9 en-GB         en-GB-Standard-C FEMALE                      24000
+## 10 en-GB         en-GB-Standard-D MALE                        24000
+## 11 en-US         en-US-Standard-B MALE                        24000
+## 12 en-US         en-US-Standard-C FEMALE                      24000
+## 13 en-US         en-US-Standard-D MALE                        24000
+## 14 en-US         en-US-Standard-E FEMALE                      24000
+## 15 en-AU         en-AU-Standard-A FEMALE                      24000
+## 16 en-AU         en-AU-Standard-B MALE                        24000
+## 17 en-AU         en-AU-Standard-C FEMALE                      24000
+## 18 en-AU         en-AU-Standard-D MALE                        24000</code></pre>
+<p>Let’s try with three:</p>
+<pre class="r"><code>names &lt;- c(&quot;en-US-Wavenet-D&quot;, &quot;en-GB-Standard-C&quot;, &quot;en-AU-Standard-A&quot;)</code></pre>
+<pre class="r"><code>for (name in names) {
+  gl_talk(content, 
+        output = paste0(&quot;/Users/shiringlander/Documents/Github/output_&quot;, name, &quot;.wav&quot;),
+        name = name,
+        speakingRate = 0.9)
+}</code></pre>
+<p>The audio files are again <a href="https://soundcloud.com/shirin-glander-729692416/sets/addendum-text-to-speech-with-the-googlelanguager-package/s-oyaAe">saved on SoundCloud</a>.</p>
+<p>My verdict: Great package! Great API! :-)</p>
+<hr />
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 3.5.0 (2018-04-23)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS High Sierra 10.13.5
+## 
+## Matrix products: default
+## BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] de_DE.UTF-8/de_DE.UTF-8/de_DE.UTF-8/C/de_DE.UTF-8/de_DE.UTF-8
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+## [1] googleLanguageR_0.2.0
+## 
+## loaded via a namespace (and not attached):
+##  [1] Rcpp_0.12.17      knitr_1.20        magrittr_1.5     
+##  [4] R6_2.2.2          rlang_0.2.1       stringr_1.3.1    
+##  [7] httr_1.3.1        tools_3.5.0       xfun_0.2         
+## [10] utf8_1.1.4        cli_1.0.0         googleAuthR_0.6.3
+## [13] htmltools_0.3.6   openssl_1.0.1     yaml_2.1.19      
+## [16] rprojroot_1.3-2   digest_0.6.15     assertthat_0.2.0 
+## [19] tibble_1.4.2      crayon_1.3.4      bookdown_0.7     
+## [22] purrr_0.2.5       base64enc_0.1-3   curl_3.2         
+## [25] memoise_1.1.0     evaluate_0.10.1   rmarkdown_1.10   
+## [28] blogdown_0.6      stringi_1.2.3     pillar_1.2.3     
+## [31] compiler_3.5.0    backports_1.1.2   jsonlite_1.5</code></pre>
+</div>
+</div>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="//tags/r/">R</a>
+
+                  </div>
+                
+              
+            
+            
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                <i class="fa fa-angle-left"></i>
+                <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+              </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2018/06/intro_to_ml_workshop_heidelberg/" data-tooltip="Code for Workshop: Introduction to Machine Learning with R">
+              
+                <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2018/06/googlelanguager/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2018/06/googlelanguager/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2018/06/googlelanguager/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2018 Dr. Shirin Glander. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                <i class="fa fa-angle-left"></i>
+                <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+              </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2018/06/intro_to_ml_workshop_heidelberg/" data-tooltip="Code for Workshop: Introduction to Machine Learning with R">
+              
+                <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2018/06/googlelanguager/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2018/06/googlelanguager/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2018/06/googlelanguager/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=%2F2018%2F06%2Fgooglelanguager%2F">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=%2F2018%2F06%2Fgooglelanguager%2F">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=%2F2018%2F06%2Fgooglelanguager%2F">
+          <i class="fa fa-google-plus"></i><span>Share on Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Dr. Shirin Glander</h4>
+    
+      <div id="about-card-bio">Biologist turned Bioinformatician turned Data Scientist</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Data Scientist
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Münster, Germany
+      </div>
+    
+  </div>
+</div>
+
+    <div id="algolia-search-modal" class="modal-container">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="close-button"><i class="fa fa-close"></i></span>
+      <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
+        <span class="searchby-algolia-text text-color-light text-small">by</span>
+        <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
+      </a>
+      <i class="search-icon fa fa-search"></i>
+      <form id="algolia-search-form">
+        <input type="text" id="algolia-search-input" name="search"
+          class="form-control input--large search-input" placeholder="Search" />
+      </form>
+    </div>
+    <div class="modal-body">
+      <div class="no-result text-color-light text-center">no post found</div>
+      <div class="results">
+        
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/06/googlelanguager/">
+                <h3 class="media-heading">Addendum: Text-to-Speech with the googleLanguageR package</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jun 6, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">After posting my short blog post about Text-to-speech with R, I got two very useful tips. One was to use the googleLanguageR package, which uses the Google Cloud Text-to-Speech API.
+And indeed, it was very easy to use and the resulting audio sounded much better than what I tried before!
+Here’s a short example of how to use the package for TTS:
+Set up Google Cloud and authentification You first need to set up a Google Cloud Account and provide credit card information (the first year is free to use, though).</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/06/intro_to_ml_workshop_heidelberg/">
+                <h3 class="media-heading">Code for Workshop: Introduction to Machine Learning with R</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jun 6, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">These are the slides from my workshop: Introduction to Machine Learning with R which I gave at the University of Heidelberg, Germany on June 28th 2018. The entire code accompanying the workshop can be found below the video.
+The workshop covered the basics of machine learning. With an example dataset I went through a standard machine learning workflow in R with the packages caret and h2o:
+ reading in data exploratory data analysis missingness feature engineering training and test split model training with Random Forests, Gradient Boosting, Neural Nets, etc.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/06/text_to_speech_r/">
+                <h3 class="media-heading">Text-to-speech with R</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jun 6, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Computers started talking to us! They do this with so called Text-to-Speech (TTS) systems. With neural nets, deep learning and lots of training data, these systems have gotten a whole lot better in recent years. In some cases, they are so good that you can’t distinguish between human and machine voice.
+In one of our recent codecentric.AI videos, we compared different Text-to-Speech systems (the video is in German, though - but the text snippets and their voice recordings we show in the video are a mix of German and English).</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/06/keras_fruits_lime/">
+                <h3 class="media-heading">Explaining Keras image classification models with lime</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jun 6, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Last week I published a blog post about how easy it is to train image classification models with Keras.
+What I did not show in that post was how to use the model for making predictions. This, I will do here. But predictions alone are boring, so I’m adding explanations for the predictions using the lime package.
+I have already written a few blog posts (here, here and here) about LIME and have given talks (here and here) about it, too.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/06/twimlai138/">
+                <h3 class="media-heading">Sketchnotes from TWiML&amp;AI: Practical Deep Learning with Rachel Thomas</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jun 6, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">These are my sketchnotes for Sam Charrington’s podcast This Week in Machine Learning and AI about Practical Deep Learning with Rachel Thomas:
+Sketchnotes from TWiMLAI talk: Practical Deep Learning with Rachel Thomas
+ You can listen to the podcast here.
+ In this episode, i’m joined by Rachel Thomas, founder and researcher at Fast AI. If you’re not familiar with Fast AI, the company offers a series of courses including Practical Deep Learning for Coders, Cutting Edge Deep Learning for Coders and Rachel’s Computational Linear Algebra course.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/06/keras_fruits/">
+                <h3 class="media-heading">It&#39;s that easy! Image classification with keras in roughly 100 lines of code.</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jun 6, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">I’ve been using keras and TensorFlow for a while now - and love its simplicity and straight-forward way to modeling. As part of the latest update to my Workshop about deep learning with R and keras I’ve added a new example analysis:
+Building an image classifier to differentiate different types of fruits
+And I was (again) suprised how fast and easy it was to build the model; it took not even half an hour and only around 100 lines of code (counting only the main code; for this post I added comments and line breaks to make it easier to read)!</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/05/ropensci_unconf18/">
+                <h3 class="media-heading">rOpenSci unconference 2018 &#43; introduction to TensorFlow Probability &amp; the &#39;greta&#39; package</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  May 5, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">On May 21st and 22nd, I had the honor of having been chosen to attend the rOpenSci unconference 2018 in Seattle. It was a great event and I got to meet many amazing people!
+rOpenSci rOpenSci is a non-profit organisation that maintains a number of widely used R packages and is very active in promoting a community spirit around the R-world. Their core values are to have open and reproducible research, shared data and easy-to-use tools and to make all this accessible to a large number of people.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/05/deep_learning_keras_tensorflow_18_07/">
+                <h3 class="media-heading">July 5th &amp; 6th in Münster: Workshop on Deep Learning with Keras and TensorFlow in R</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  May 5, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Registration is now open for my 1.5-day workshop on deep learning with Keras and TensorFlow using R.
+It will take place on July 5th &amp; 6th in Münster, Germany.
+
+ 
+You can read about one participant’s experience in my last workshop:
+ Big Data – a buzz word you can find everywhere these days, from nerdy blogs to scientific research papers and even in the news. But how does Big Data Analysis work, exactly?</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/05/twimlai_adversarial_attacks/">
+                <h3 class="media-heading">Sketchnotes from TWiML&amp;AI: Adversarial Attacks Against Reinforcement Learning Agents with Ian Goodfellow &amp; Sandy Huang</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  May 5, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">These are my sketchnotes for Sam Charrington’s podcast This Week in Machine Learning and AI about Adversarial Attacks Against Reinforcement Learning Agents with Ian Goodfellow &amp; Sandy Huang:
+Sketchnotes from TWiMLAI talk: Adversarial Attacks Against Reinforcement Learning Agents with Ian Goodfellow &amp; Sandy Huang
+ You can listen to the podcast here.
+ In this episode, I’m joined by Ian Goodfellow, Staff Research Scientist at Google Brain and Sandy Huang, Phd Student in the EECS department at UC Berkeley, to discuss their work on the paper Adversarial Attacks on Neural Network Policies.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/04/pkgnet/">
+                <h3 class="media-heading">Comparing dependencies of popular machine learning packages with `pkgnet`</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Apr 4, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">When looking through the CRAN list of packages, I stumbled upon this little gem:
+ pkgnet is an R library designed for the analysis of R libraries! The goal of the package is to build a graph representation of a package and its dependencies.
+ And I thought it would be fun to play around with it. The little analysis I ended up doing was to compare dependencies of popular machine learning packages.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+      </div>
+    </div>
+    <div class="modal-footer">
+      <p class="results-count text-medium"
+         data-message-zero="no post found"
+         data-message-one="1 post found"
+         data-message-other="{n} posts found">
+         48 posts found
+      </p>
+    </div>
+  </div>
+</div>
+    
+  
+    
+    <div id="cover" style="background-image:url('/images/autumn-2789234_1920.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" integrity="sha256-IFHWFEbU2/+wNycDECKgjIRSirRNIDp2acEB5fvdVRU=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js" integrity="sha256-+mpyNVJsNt4rVXCw0F+pAOiB3YxmHgrbJsx4ecPuUaI=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.js" integrity="sha256-vMxgR/7FtLovVA+IPrR7+xTgIgARH7y9VZQnmmi0HDI=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.js" integrity="sha256-N0qFUh7/9vLvia87dDndewmsgsyYoNkdA212tPc+2NI=" crossorigin="anonymous"></script>
+
+
+<script src="/js/script-kr8dyqj6rb6ortyib7whfo9x9p6td6zo8t1v4fdz4ecx5kwybsdlmk1slygn.min.js"></script>
+
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = '\/2018\/06\/googlelanguager\/';
+          
+            this.page.identifier = '\/2018\/06\/googlelanguager\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'shirinsplayground';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+    
+  </body>
+</html>
+

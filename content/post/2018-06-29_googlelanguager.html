@@ -1,0 +1,99 @@
+---
+title: "Addendum: Text-to-Speech with the googleLanguageR package"
+draft: false
+author: Shirin Glander
+date: '2018-06-29'
+categories: ["R"]
+tags: ["R"]
+thumbnailImagePosition: left
+thumbnailImage: https://shiring.github.io/netlify_images/speech-icon-2797263_1280.png
+metaAlignment: center
+coverMeta: out
+slug: googlelanguager
+---
+
+
+
+<p>After posting my short blog post about <a href="https://shirinsplayground.netlify.com/2018/06/text_to_speech_r/">Text-to-speech with R</a>, I got two very useful tips. One was to use the <code>googleLanguageR</code> package, which uses the Google Cloud Text-to-Speech API.</p>
+<p>And indeed, it was very easy to use and the resulting audio sounded much better than what I tried before!</p>
+<p>Here’s a short example of how to use the package for TTS:</p>
+<div id="set-up-google-cloud-and-authentification" class="section level2">
+<h2>Set up Google Cloud and authentification</h2>
+<p>You first need to set up a Google Cloud Account and provide credit card information (the first year is free to use, though). If you haven’t used Google Cloud before, you will need to wait until you activated your account; in my case, I had to wait two days until they sent a small amount of money to my bank account which I then needed to enter in order to verify the information.</p>
+<p>Then, you create a project, activate the API(s) you want to use and create the authentication information as a JSON file. More information on how to do this is described <a href="http://code.markedmondson.me/googleLanguageR/index.html">here</a>.</p>
+<p>Install and load the library and give the path to the saved authentication JSON file.</p>
+<pre class="r"><code>library(googleLanguageR)
+gl_auth(&quot;path_to_authentication.json&quot;)</code></pre>
+<div id="text-to-speech-with-googlelanguager" class="section level3">
+<h3>Text-to-Speech with googleLanguageR</h3>
+<p>Now, we can use the <a href="http://code.markedmondson.me/googleLanguageR/articles/text-to-speech.html">Google Cloud Text-to-Speech API</a> from R.</p>
+<blockquote>
+<p>“Google Cloud Text-to-Speech enables developers to synthesize natural-sounding speech with 30 voices, available in multiple languages and variants. It applies DeepMind’s groundbreaking research in WaveNet and Google’s powerful neural networks to deliver the highest fidelity possible. With this easy-to-use API, you can create lifelike interactions with your users, across many applications and devices.” <a href="http://code.markedmondson.me/googleLanguageR/articles/text-to-speech.html" class="uri">http://code.markedmondson.me/googleLanguageR/articles/text-to-speech.html</a></p>
+</blockquote>
+<pre class="r"><code>content &lt;- &quot;A common mistake that people make when trying to design something completely foolproof is to underestimate the ingenuity of complete fools.&quot;</code></pre>
+<p>We can ask for a list of languages with the <code>gl_talk_languages()</code> function; here, I am looking at all English language options:</p>
+<pre class="r"><code>gl_talk_languages(languageCode = &quot;en&quot;)</code></pre>
+<pre><code>## # A tibble: 18 x 4
+##    languageCodes name             ssmlGender naturalSampleRateHertz
+##    &lt;chr&gt;         &lt;chr&gt;            &lt;chr&gt;                       &lt;int&gt;
+##  1 en-US         en-US-Wavenet-D  MALE                        24000
+##  2 en-US         en-US-Wavenet-A  MALE                        24000
+##  3 en-US         en-US-Wavenet-B  MALE                        24000
+##  4 en-US         en-US-Wavenet-C  FEMALE                      24000
+##  5 en-US         en-US-Wavenet-E  FEMALE                      24000
+##  6 en-US         en-US-Wavenet-F  FEMALE                      24000
+##  7 en-GB         en-GB-Standard-A FEMALE                      24000
+##  8 en-GB         en-GB-Standard-B MALE                        24000
+##  9 en-GB         en-GB-Standard-C FEMALE                      24000
+## 10 en-GB         en-GB-Standard-D MALE                        24000
+## 11 en-US         en-US-Standard-B MALE                        24000
+## 12 en-US         en-US-Standard-C FEMALE                      24000
+## 13 en-US         en-US-Standard-D MALE                        24000
+## 14 en-US         en-US-Standard-E FEMALE                      24000
+## 15 en-AU         en-AU-Standard-A FEMALE                      24000
+## 16 en-AU         en-AU-Standard-B MALE                        24000
+## 17 en-AU         en-AU-Standard-C FEMALE                      24000
+## 18 en-AU         en-AU-Standard-D MALE                        24000</code></pre>
+<p>Let’s try with three:</p>
+<pre class="r"><code>names &lt;- c(&quot;en-US-Wavenet-D&quot;, &quot;en-GB-Standard-C&quot;, &quot;en-AU-Standard-A&quot;)</code></pre>
+<pre class="r"><code>for (name in names) {
+  gl_talk(content, 
+        output = paste0(&quot;/Users/shiringlander/Documents/Github/output_&quot;, name, &quot;.wav&quot;),
+        name = name,
+        speakingRate = 0.9)
+}</code></pre>
+<p>The audio files are again <a href="https://soundcloud.com/shirin-glander-729692416/sets/addendum-text-to-speech-with-the-googlelanguager-package/s-oyaAe">saved on SoundCloud</a>.</p>
+<p>My verdict: Great package! Great API! :-)</p>
+<hr />
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 3.5.0 (2018-04-23)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS High Sierra 10.13.5
+## 
+## Matrix products: default
+## BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] de_DE.UTF-8/de_DE.UTF-8/de_DE.UTF-8/C/de_DE.UTF-8/de_DE.UTF-8
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+## [1] googleLanguageR_0.2.0
+## 
+## loaded via a namespace (and not attached):
+##  [1] Rcpp_0.12.17      knitr_1.20        magrittr_1.5     
+##  [4] R6_2.2.2          rlang_0.2.1       stringr_1.3.1    
+##  [7] httr_1.3.1        tools_3.5.0       xfun_0.2         
+## [10] utf8_1.1.4        cli_1.0.0         googleAuthR_0.6.3
+## [13] htmltools_0.3.6   openssl_1.0.1     yaml_2.1.19      
+## [16] rprojroot_1.3-2   digest_0.6.15     assertthat_0.2.0 
+## [19] tibble_1.4.2      crayon_1.3.4      bookdown_0.7     
+## [22] purrr_0.2.5       base64enc_0.1-3   curl_3.2         
+## [25] memoise_1.1.0     evaluate_0.10.1   rmarkdown_1.10   
+## [28] blogdown_0.6      stringi_1.2.3     pillar_1.2.3     
+## [31] compiler_3.5.0    backports_1.1.2   jsonlite_1.5</code></pre>
+</div>
+</div>
