@@ -21,6 +21,10 @@ In one of our recent [codecentric.AI](https://blog.codecentric.de/2018/04/kuenst
 
 Here, I want to find out what's possible with R and Text-to-Speech packages.
 
+<br>
+
+PS: In a second post I also tried the [googleLanguageR](https://shirinsplayground.netlify.com/2018/06/googlelanguager) package - with much better results!
+
 ## How does TTS work?
 
 Challenges for good TTS systems are the complexity of the human language: we intone words differently, depending on where they are in a sentence, what we want to convey with that sentence, how our mood is, and so on. AI-based TTS systems can take phonemes and intonation into account.
