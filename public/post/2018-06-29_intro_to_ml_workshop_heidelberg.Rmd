@@ -1,0 +1,1193 @@
+---
+title: "Code for Workshop: Introduction to Machine Learning with R"
+draft: false
+author: Shirin Glander
+date: '2018-06-29'
+categories: ["R", "machine learning"]
+tags: ["R", "machine learning", "caret", "h2o", "random forest", "gradient boosting", "neural nets"]
+thumbnailImagePosition: left
+thumbnailImage: https://shiring.github.io/netlify_images/ml_workshop_heidelberg.png
+metaAlignment: center
+coverMeta: out
+slug: intro_to_ml_workshop_heidelberg
+---
+
+These are the slides from my workshop: Introduction to Machine Learning with R which I gave at the University of Heidelberg, Germany on June 28th 2018. The entire code accompanying the workshop can be found below the video.
+
+The workshop covered the basics of machine learning. With an example dataset I went through a standard machine learning workflow in R with the packages caret and h2o: 
+
+- reading in data 
+- exploratory data analysis 
+- missingness 
+- feature engineering 
+- training and test split 
+- model training with Random Forests, Gradient Boosting, Neural Nets, etc. 
+- hyperparameter tuning
+
+<iframe src="//www.slideshare.net/slideshow/embed_code/key/lRX4QJ5TvxgWSv" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/ShirinGlander/workshop-introduction-to-machine-learning-with-r" title="Workshop - Introduction to Machine Learning with R" target="_blank">Workshop - Introduction to Machine Learning with R</a> </strong> from <strong><a href="https://www.slideshare.net/ShirinGlander" target="_blank">Shirin Glander</a></strong> </div>
+
+<br>
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+## Setup
+
+All analyses are done in R using RStudio. For detailed session information including R version, operating system and package versions, see the `sessionInfo()` output at the end of this document.
+
+All figures are produced with ggplot2.
+
+- libraries
+
+```{r}
+library(tidyverse) # for tidy data analysis
+library(readr)     # for fast reading of input files
+library(mice)      # mice package for Multivariate Imputation by Chained Equations (MICE)
+```
+
+<br>
+
+## Data preparation {.tabset .tabset-fade .tabset-pills}
+
+### The dataset
+
+The dataset I am using in these example analyses, is the **Breast Cancer Wisconsin (Diagnostic) Dataset**.
+The data was downloaded from the [UC Irvine Machine Learning Repository](http://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+%28Diagnostic%29). 
+
+The first dataset looks at the predictor classes:
+
+- malignant or
+- benign breast mass.
+
+The features characterise cell nucleus properties and were generated from image analysis of [fine needle aspirates (FNA)](https://en.wikipedia.org/wiki/Fine-needle_aspiration) of breast masses:
+
+- Sample ID (code number)
+- Clump thickness
+- Uniformity of cell size
+- Uniformity of cell shape
+- Marginal adhesion
+- Single epithelial cell size
+- Number of bare nuclei
+- Bland chromatin
+- Number of normal nuclei
+- Mitosis
+- Classes, i.e. diagnosis
+
+```{r}
+bc_data <- read_delim("/Users/shiringlander/Documents/Github/intro_to_ml_workshop/intro_to_ml_uni_heidelberg/datasets/breast-cancer-wisconsin.data.txt",
+                      delim = ",",
+                      col_names = c("sample_code_number", 
+                       "clump_thickness", 
+                       "uniformity_of_cell_size", 
+                       "uniformity_of_cell_shape", 
+                       "marginal_adhesion", 
+                       "single_epithelial_cell_size", 
+                       "bare_nuclei", 
+                       "bland_chromatin", 
+                       "normal_nucleoli", 
+                       "mitosis", 
+                       "classes")) %>%
+  mutate(bare_nuclei = as.numeric(bare_nuclei),
+         classes = ifelse(classes == "2", "benign",
+                          ifelse(classes == "4", "malignant", NA)))
+```
+
+```{r}
+summary(bc_data)
+```
+
+<br>
+
+### Missing data
+
+```{r fig.width=15, fig.height=2}
+# how many NAs are in the data
+md.pattern(bc_data, plot = FALSE)
+```
+
+```{r}
+bc_data <- bc_data %>%
+  drop_na() %>%
+  select(classes, everything(), -sample_code_number)
+head(bc_data)
+```
+
+Missing values can be imputed with the *mice* package.
+
+More info and tutorial with code: https://shirinsplayground.netlify.com/2018/04/flu_prediction/
+
+<br>
+
+### Data exploration
+
+- Response variable for classification
+
+```{r response_classification, fig.width=5, fig.height=3, fig.align='center'}
+ggplot(bc_data, aes(x = classes, fill = classes)) +
+  geom_bar()
+```
+
+More info on dealing with unbalanced classes: https://shiring.github.io/machine_learning/2017/04/02/unbalanced
+
+<br>
+
+- Response variable for regression
+
+```{r response_regression, fig.width=5, fig.height=3, fig.align='center'}
+ggplot(bc_data, aes(x = clump_thickness)) +
+  geom_histogram(bins = 10)
+```
+
+<br>
+
+- Features
+
+```{r features, fig.width=8, fig.height=6, message=FALSE, warning=FALSE, fig.align='center'}
+gather(bc_data, x, y, clump_thickness:mitosis) %>%
+  ggplot(aes(x = y, color = classes, fill = classes)) +
+    geom_density(alpha = 0.3) +
+    facet_wrap( ~ x, scales = "free", ncol = 3)
+```
+
+<br>
+
+- Correlation graphs
+
+```{r warning=FALSE, message=FALSE, fig.width=10, fig.height=5}
+co_mat_benign <- filter(bc_data, classes == "benign") %>%
+  select(-1) %>%
+  cor()
+
+co_mat_malignant <- filter(bc_data, classes == "malignant") %>%
+  select(-1) %>%
+  cor()
+
+library(igraph)
+g_benign <- graph.adjacency(co_mat_benign,
+                         weighted = TRUE,
+                         diag = FALSE,
+                         mode = "upper")
+
+g_malignant <- graph.adjacency(co_mat_malignant,
+                         weighted = TRUE,
+                         diag = FALSE,
+                         mode = "upper")
+
+
+# http://kateto.net/networks-r-igraph
+
+cut.off_b <- mean(E(g_benign)$weight)
+cut.off_m <- mean(E(g_malignant)$weight)
+
+g_benign_2 <- delete_edges(g_benign, E(g_benign)[weight < cut.off_b])
+g_malignant_2 <- delete_edges(g_malignant, E(g_malignant)[weight < cut.off_m])
+
+c_g_benign_2 <- cluster_fast_greedy(g_benign_2) 
+c_g_malignant_2 <- cluster_fast_greedy(g_malignant_2) 
+```
+
+```{r cor_graph, warning=FALSE, message=FALSE, fig.width=12, fig.height=7}
+par(mfrow = c(1,2))
+
+plot(c_g_benign_2, g_benign_2,
+     vertex.size = colSums(co_mat_benign) * 10,
+     vertex.frame.color = NA, 
+     vertex.label.color = "black", 
+     vertex.label.cex = 0.8,
+     edge.width	= E(g_benign_2)$weight * 15,
+     layout = layout_with_fr(g_benign_2),
+     main = "Benign tumors")
+
+plot(c_g_malignant_2, g_malignant_2,
+     vertex.size = colSums(co_mat_malignant) * 10,
+     vertex.frame.color = NA, 
+     vertex.label.color = "black", 
+     vertex.label.cex = 0.8,
+     edge.width	= E(g_malignant_2)$weight * 15,
+     layout = layout_with_fr(g_malignant_2),
+     main = "Malignant tumors")
+```
+
+<br>
+
+### Principal Component Analysis
+
+```{r pca, fig.width=5, fig.height=3, warning=FALSE, message=FALSE, fig.align='center'}
+library(ellipse)
+
+# perform pca and extract scores
+pcaOutput <- prcomp(as.matrix(bc_data[, -1]), scale = TRUE, center = TRUE)
+pcaOutput2 <- as.data.frame(pcaOutput$x)
+  
+# define groups for plotting
+pcaOutput2$groups <- bc_data$classes
+  
+centroids <- aggregate(cbind(PC1, PC2) ~ groups, pcaOutput2, mean)
+
+conf.rgn  <- do.call(rbind, lapply(unique(pcaOutput2$groups), function(t)
+  data.frame(groups = as.character(t),
+             ellipse(cov(pcaOutput2[pcaOutput2$groups == t, 1:2]),
+                   centre = as.matrix(centroids[centroids$groups == t, 2:3]),
+                   level = 0.95),
+             stringsAsFactors = FALSE)))
+    
+ggplot(data = pcaOutput2, aes(x = PC1, y = PC2, group = groups, color = groups)) + 
+    geom_polygon(data = conf.rgn, aes(fill = groups), alpha = 0.2) +
+    geom_point(size = 2, alpha = 0.6) + 
+    labs(color = "",
+         fill = "") 
+```
+
+### Multidimensional Scaling 
+
+```{r mds_plot, fig.align='center'}
+select(bc_data, -1) %>%
+  dist() %>%
+  cmdscale %>%
+  as.data.frame() %>%
+  mutate(group = bc_data$classes) %>%
+  ggplot(aes(x = V1, y = V2, color = group)) +
+    geom_point()
+```
+
+### t-SNE dimensionality reduction 
+
+```{r tsne_plot, fig.align='center', cache=TRUE}
+library(tsne)
+
+select(bc_data, -1) %>%
+  dist() %>%
+  tsne() %>%
+  as.data.frame() %>%
+  mutate(group = bc_data$classes) %>%
+  ggplot(aes(x = V1, y = V2, color = group)) +
+    geom_point()
+```
+
+<br>
+
+## Machine Learning packages for R {.tabset .tabset-fade .tabset-pills}
+
+### [caret](http://topepo.github.io/caret/index.html)
+
+```{r warning=FALSE, message=FALSE}
+# configure multicore
+library(doParallel)
+cl <- makeCluster(detectCores())
+registerDoParallel(cl)
+
+library(caret)
+```
+
+<br>
+
+#### Training, validation and test data
+
+```{r}
+set.seed(42)
+index <- createDataPartition(bc_data$classes, p = 0.7, list = FALSE)
+train_data <- bc_data[index, ]
+test_data  <- bc_data[-index, ]
+```
+
+```{r distribution, fig.height=4, fig.width=8, fig.align="center", warning=FALSE, message=FALSE, fig.align='center'}
+bind_rows(data.frame(group = "train", train_data),
+      data.frame(group = "test", test_data)) %>%
+  gather(x, y, clump_thickness:mitosis) %>%
+  ggplot(aes(x = y, color = group, fill = group)) +
+    geom_density(alpha = 0.3) +
+    facet_wrap( ~ x, scales = "free", ncol = 3)
+```
+
+<br>
+
+#### Regression
+
+```{r eval=FALSE}
+set.seed(42)
+model_glm <- caret::train(clump_thickness ~ .,
+                          data = train_data,
+                          method = "glm",
+                          preProcess = c("scale", "center"),
+                          trControl = trainControl(method = "repeatedcv", 
+                                                  number = 10, 
+                                                  repeats = 10, 
+                                                  savePredictions = TRUE, 
+                                                  verboseIter = FALSE))
+```
+
+```{r echo=FALSE, eval=FALSE}
+save(model_glm, file = "/Users/shiringlander/Documents/Github/intro_to_ml_workshop/intro_to_ml_uni_heidelberg/models/model_glm.RData")
+```
+
+```{r echo=FALSE}
+load("/Users/shiringlander/Documents/Github/intro_to_ml_workshop/intro_to_ml_uni_heidelberg/models/model_glm.RData")
+```
+
+```{r}
+model_glm
+predictions <- predict(model_glm, test_data)
+```
+
+```{r residuals, fig.width=5, fig.height=3, fig.align='center'}
+# model_glm$finalModel$linear.predictors == model_glm$finalModel$fitted.values
+data.frame(residuals = resid(model_glm),
+           predictors = model_glm$finalModel$linear.predictors) %>%
+  ggplot(aes(x = predictors, y = residuals)) +
+    geom_jitter() +
+    geom_smooth(method = "lm")
+
+# y == train_data$clump_thickness
+data.frame(residuals = resid(model_glm),
+           y = model_glm$finalModel$y) %>%
+  ggplot(aes(x = y, y = residuals)) +
+    geom_jitter() +
+    geom_smooth(method = "lm")
+```
+
+```{r regression_result, fig.width=5, fig.height=3, fig.align='center'}
+data.frame(actual = test_data$clump_thickness,
+           predicted = predictions) %>%
+  ggplot(aes(x = actual, y = predicted)) +
+    geom_jitter() +
+    geom_smooth(method = "lm")
+```
+
+<br>
+
+#### Classification
+
+##### Decision trees
+
+[rpart](https://cran.r-project.org/web/packages/rpart/rpart.pdf)
+
+```{r decision_tree, cache=TRUE, fig.height=5, fig.width=10, fig.align="center"}
+library(rpart)
+library(rpart.plot)
+
+set.seed(42)
+fit <- rpart(classes ~ .,
+            data = train_data,
+            method = "class",
+            control = rpart.control(xval = 10, 
+                                    minbucket = 2, 
+                                    cp = 0), 
+             parms = list(split = "information"))
+
+rpart.plot(fit, extra = 100)
+```
+
+<br>
+
+#### Random Forests
+
+[Random Forests](https://www.stat.berkeley.edu/~breiman/RandomForests/cc_home.htm) predictions are based on the generation of multiple classification trees. They can be used for both, classification and regression tasks. Here, I show a classification task.
+
+```{r eval=FALSE}
+set.seed(42)
+model_rf <- caret::train(classes ~ .,
+                         data = train_data,
+                         method = "rf",
+                         preProcess = c("scale", "center"),
+                         trControl = trainControl(method = "repeatedcv", 
+                                                  number = 5, 
+                                                  repeats = 3, 
+                                                  savePredictions = TRUE, 
+                                                  verboseIter = FALSE))
+```
+
+When you specify `savePredictions = TRUE`, you can access the cross-validation resuls with `model_rf$pred`.
+
+```{r echo=FALSE, eval=FALSE}
+save(model_rf, file = "/Users/shiringlander/Documents/Github/intro_to_ml_workshop/intro_to_ml_uni_heidelberg/models/model_rf.RData")
+```
+
+```{r echo=FALSE}
+load("/Users/shiringlander/Documents/Github/intro_to_ml_workshop/intro_to_ml_uni_heidelberg/models/model_rf.RData")
+```
+
+```{r}
+model_rf
+```
+
+```{r echo= FALSE, eval=FALSE, fig.width=20, fig.height=10, warning=FALSE, message=FALSE}
+str(model_rf$finalModel$forest)
+
+tree <- randomForest::getTree(model_rf$finalModel, 
+                              k = 1, 
+                              labelVar = TRUE) %>%
+  tibble::rownames_to_column() %>%
+  mutate(`split point` = ifelse(is.na(prediction), `split point`, NA))
+
+graph_frame <- data.frame(from = rep(tree$rowname, 2),
+                          to = c(tree$`left daughter`, tree$`right daughter`))
+
+library(ggraph)
+library(igraph)
+
+graph <- graph_from_data_frame(graph_frame) %>%
+  delete_vertices("0")
+
+V(graph)$node_label <- gsub("_", " ", as.character(tree$`split var`))
+V(graph)$leaf_label <- as.character(tree$prediction)
+V(graph)$split <- as.character(round(tree$`split point`, digits = 2))
+
+ggraph(graph, 'dendrogram') + 
+  theme_bw() +
+  geom_edge_link() +
+  geom_node_point() +
+  geom_node_text(aes(label = node_label), na.rm = TRUE, repel = TRUE) +
+  geom_node_label(aes(label = split), vjust = 2.5, na.rm = TRUE, fill = "white") +
+  geom_node_label(aes(label = leaf_label, fill = leaf_label), na.rm = TRUE, repel = TRUE, colour = "white", fontface = "bold", show.legend = FALSE) +
+  theme(panel.grid.minor = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.background = element_blank(),
+        plot.background = element_rect(fill = "white"),
+        panel.border = element_blank(),
+        axis.line = element_blank(),
+        axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        plot.title = element_text(size = 18))
+  
+```
+
+```{r}
+model_rf$finalModel$confusion
+```
+
+```{r eval=FALSE, echo=FALSE}
+model_rf$finalModel$forest$xbestsplit
+```
+
+#### Dealing with unbalanced data
+
+Luckily, caret makes it very easy to incorporate over- and under-sampling techniques with cross-validation resampling. We can simply add the sampling option to our trainControl and choose down for under- (also called down-) sampling. The rest stays the same as with our original model.
+
+```{r eval=FALSE}
+set.seed(42)
+model_rf_down <- caret::train(classes ~ .,
+                         data = train_data,
+                         method = "rf",
+                         preProcess = c("scale", "center"),
+                         trControl = trainControl(method = "repeatedcv", 
+                                                  number = 10, 
+                                                  repeats = 10, 
+                                                  savePredictions = TRUE, 
+                                                  verboseIter = FALSE,
+                                                  sampling = "down"))
+```
+
+```{r echo=FALSE, eval=FALSE}
+save(model_rf_down, file = "/Users/shiringlander/Documents/Github/intro_to_ml_workshop/intro_to_ml_uni_heidelberg/models/model_rf_down.RData")
+```
+
+```{r echo=FALSE}
+load("/Users/shiringlander/Documents/Github/intro_to_ml_workshop/intro_to_ml_uni_heidelberg/models/model_rf_down.RData")
+```
+
+```{r}
+model_rf_down
+```
+
+<br>
+
+#### Feature Importance
+
+```{r importance_rf, warning=FALSE, message=FALSE, fig.width=5, fig.height=3, fig.align='center'}
+imp <- model_rf$finalModel$importance
+imp[order(imp, decreasing = TRUE), ]
+
+# estimate variable importance
+importance <- varImp(model_rf, scale = TRUE)
+plot(importance)
+```
+
+<br>
+
+- predicting test data
+
+```{r}
+confusionMatrix(predict(model_rf, test_data), as.factor(test_data$classes))
+```
+
+```{r results_bar_rf, fig.width=5, fig.height=3, fig.align='center'}
+results <- data.frame(actual = test_data$classes,
+                      predict(model_rf, test_data, type = "prob"))
+
+results$prediction <- ifelse(results$benign > 0.5, "benign",
+                             ifelse(results$malignant > 0.5, "malignant", NA))
+
+results$correct <- ifelse(results$actual == results$prediction, TRUE, FALSE)
+
+ggplot(results, aes(x = prediction, fill = correct)) +
+  geom_bar(position = "dodge")
+```
+
+```{r results_jitter_rf, fig.width=5, fig.height=3, fig.align='center'}
+ggplot(results, aes(x = prediction, y = benign, color = correct, shape = correct)) +
+  geom_jitter(size = 3, alpha = 0.6)
+```
+
+<br>
+
+#### Extreme gradient boosting trees
+
+[Extreme gradient boosting (XGBoost)](http://xgboost.readthedocs.io/en/latest/model.html) is a faster and improved implementation of [gradient boosting](https://en.wikipedia.org/wiki/Gradient_boosting) for supervised learning.
+
+> "XGBoost uses a more regularized model formalization to control over-fitting, which gives it better performance." Tianqi Chen, developer of xgboost
+
+XGBoost is a tree ensemble model, which means the sum of predictions from a set of classification and regression trees (CART). In that, XGBoost is similar to Random Forests but it uses a different approach to model training.
+Can be used for classification and regression tasks. Here, I show a classification task.
+
+```{r eval=FALSE}
+set.seed(42)
+model_xgb <- caret::train(classes ~ .,
+                          data = train_data,
+                          method = "xgbTree",
+                          preProcess = c("scale", "center"),
+                          trControl = trainControl(method = "repeatedcv", 
+                                                  number = 5, 
+                                                  repeats = 3, 
+                                                  savePredictions = TRUE, 
+                                                  verboseIter = FALSE))
+```
+
+```{r echo=FALSE, eval=FALSE}
+save(model_xgb, file = "/Users/shiringlander/Documents/Github/intro_to_ml_workshop/intro_to_ml_uni_heidelberg/models/model_xgb.RData")
+```
+
+```{r echo=FALSE}
+load("/Users/shiringlander/Documents/Github/intro_to_ml_workshop/intro_to_ml_uni_heidelberg/models/model_xgb.RData")
+```
+
+```{r}
+model_xgb
+```
+
+<br>
+
+- Feature Importance
+
+```{r importance_xgb, warning=FALSE, message=FALSE, fig.width=5, fig.height=3, fig.align='center'}
+importance <- varImp(model_xgb, scale = TRUE)
+plot(importance)
+```
+
+<br>
+
+- predicting test data
+
+```{r}
+confusionMatrix(predict(model_xgb, test_data), as.factor(test_data$classes))
+```
+
+```{r results_bar_xgb, fig.width=5, fig.height=3, fig.align='center'}
+results <- data.frame(actual = test_data$classes,
+                      predict(model_xgb, test_data, type = "prob"))
+
+results$prediction <- ifelse(results$benign > 0.5, "benign",
+                             ifelse(results$malignant > 0.5, "malignant", NA))
+
+results$correct <- ifelse(results$actual == results$prediction, TRUE, FALSE)
+
+ggplot(results, aes(x = prediction, fill = correct)) +
+  geom_bar(position = "dodge")
+```
+
+```{r results_jitter_xgb, fig.width=5, fig.height=3, fig.align='center'}
+ggplot(results, aes(x = prediction, y = benign, color = correct, shape = correct)) +
+  geom_jitter(size = 3, alpha = 0.6)
+```
+
+## Available models in caret
+
+https://topepo.github.io/caret/available-models.html
+
+<br>
+
+#### Feature Selection
+
+Performing feature selection on the whole dataset would lead to prediction bias, we therefore need to run the whole modeling process on the training data alone!
+
+- Correlation
+
+Correlations between all features are calculated and visualised with the *corrplot* package. I am then removing all features with a correlation higher than 0.7, keeping the feature with the lower mean.
+
+```{r corplot, fig.align='center'}
+library(corrplot)
+
+# calculate correlation matrix
+corMatMy <- cor(train_data[, -1])
+corrplot(corMatMy, order = "hclust")
+
+#Apply correlation filter at 0.70,
+highlyCor <- colnames(train_data[, -1])[findCorrelation(corMatMy, cutoff = 0.7, verbose = TRUE)]
+
+# which variables are flagged for removal?
+highlyCor
+
+#then we remove these variables
+train_data_cor <- train_data[, which(!colnames(train_data) %in% highlyCor)]
+```
+
+<br>
+
+- Recursive Feature Elimination (RFE)
+
+Another way to choose features is with Recursive Feature Elimination. RFE uses a Random Forest algorithm to test combinations of features and rate each with an accuracy score. The combination with the highest score is usually preferential.
+
+```{r echo=TRUE, eval=FALSE}
+set.seed(7)
+results_rfe <- rfe(x = train_data[, -1], 
+                   y = as.factor(train_data$classes), 
+                   sizes = c(1:9), 
+                   rfeControl = rfeControl(functions = rfFuncs, method = "cv", number = 10))
+```
+
+```{r echo=FALSE, eval=FALSE}
+save(results_rfe, file = "/Users/shiringlander/Documents/Github/intro_to_ml_workshop/intro_to_ml_uni_heidelberg/models/results_rfe.RData")
+```
+
+```{r echo=FALSE}
+load("/Users/shiringlander/Documents/Github/intro_to_ml_workshop/intro_to_ml_uni_heidelberg/models/results_rfe.RData")
+```
+
+```{r }
+# chosen features
+predictors(results_rfe)
+
+train_data_rfe <- train_data[, c(1, which(colnames(train_data) %in% predictors(results_rfe)))]
+```
+
+<br> 
+
+- Genetic Algorithm (GA)
+
+The Genetic Algorithm (GA) has been developed based on evolutionary principles of natural selection: It aims to optimize a population of individuals with a given set of genotypes by modeling selection over time. In each generation (i.e. iteration), each individual's fitness is calculated based on their genotypes. Then, the fittest individuals are chosen to produce the next generation. This subsequent generation of individuals will have genotypes resulting from (re-) combinations of the parental alleles. These new genotypes will again determine each individual's fitness. This selection process is iterated for a specified number of generations and (ideally) leads to fixation of the fittest alleles in the gene pool.
+
+This concept of optimization can be applied to non-evolutionary models as well, like feature selection processes in machine learning.
+
+```{r echo=TRUE, eval=FALSE}
+set.seed(27)
+model_ga <- gafs(x = train_data[, -1], 
+                 y = as.factor(train_data$classes),
+                 iters = 10, # generations of algorithm
+                 popSize = 10, # population size for each generation
+                 levels = c("malignant", "benign"),
+                 gafsControl = gafsControl(functions = rfGA, # Assess fitness with RF
+                                           method = "cv",    # 10 fold cross validation
+                                           genParallel = TRUE, # Use parallel programming
+                                           allowParallel = TRUE))
+```
+
+```{r echo=FALSE, eval=FALSE}
+save(model_ga, file = "/Users/shiringlander/Documents/Github/intro_to_ml_workshop/intro_to_ml_uni_heidelberg/models/model_ga.RData")
+```
+
+```{r echo=FALSE}
+load("/Users/shiringlander/Documents/Github/intro_to_ml_workshop/intro_to_ml_uni_heidelberg/models/model_ga.RData")
+```
+
+```{r fig.align='center'}
+plot(model_ga) # Plot mean fitness (AUC) by generation
+
+train_data_ga <- train_data[, c(1, which(colnames(train_data) %in% model_ga$ga$final))]
+```
+
+<br>
+
+### Hyperparameter tuning with caret
+
+- Cartesian Grid
+
+- mtry: Number of variables randomly sampled as candidates at each split.
+
+```{r eval=FALSE}
+set.seed(42)
+grid <- expand.grid(mtry = c(1:10))
+
+model_rf_tune_man <- caret::train(classes ~ .,
+                         data = train_data,
+                         method = "rf",
+                         preProcess = c("scale", "center"),
+                         trControl = trainControl(method = "repeatedcv", 
+                                                  number = 10, 
+                                                  repeats = 10, 
+                                                  savePredictions = TRUE, 
+                                                  verboseIter = FALSE),
+                         tuneGrid = grid)
+```
+
+```{r echo=FALSE, eval=FALSE}
+save(model_rf_tune_man, file = "/Users/shiringlander/Documents/Github/intro_to_ml_workshop/intro_to_ml_uni_heidelberg/models/model_rf_tune_man.RData")
+```
+
+```{r echo=FALSE}
+load("/Users/shiringlander/Documents/Github/intro_to_ml_workshop/intro_to_ml_uni_heidelberg/models/model_rf_tune_man.RData")
+```
+
+```{r fig.align='center'}
+model_rf_tune_man
+plot(model_rf_tune_man)
+```
+
+<br>
+
+- Random Search
+
+```{r eval=FALSE}
+set.seed(42)
+model_rf_tune_auto <- caret::train(classes ~ .,
+                         data = train_data,
+                         method = "rf",
+                         preProcess = c("scale", "center"),
+                         trControl = trainControl(method = "repeatedcv", 
+                                                  number = 10, 
+                                                  repeats = 10, 
+                                                  savePredictions = TRUE, 
+                                                  verboseIter = FALSE,
+                                                  search = "random"),
+                         tuneGrid = grid,
+                         tuneLength = 15)
+```
+
+```{r echo=FALSE, eval=FALSE}
+save(model_rf_tune_auto, file = "/Users/shiringlander/Documents/Github/intro_to_ml_workshop/intro_to_ml_uni_heidelberg/models/model_rf_tune_auto.RData")
+```
+
+```{r echo=FALSE}
+load("/Users/shiringlander/Documents/Github/intro_to_ml_workshop/intro_to_ml_uni_heidelberg/models/model_rf_tune_auto.RData")
+```
+
+```{r fig.align='center'}
+model_rf_tune_auto
+plot(model_rf_tune_auto)
+```
+
+<br>
+
+### Grid search with h2o
+
+The R package h2o provides a convenient interface to [H2O](http://www.h2o.ai/h2o/), which is an open-source machine learning and deep learning platform. H2O distributes a wide range of common machine learning algorithms for classification, regression and deep learning.
+
+```{r warning=FALSE, message=FALSE}
+library(h2o)
+h2o.init(nthreads = -1)
+h2o.no_progress()
+
+bc_data_hf <- as.h2o(bc_data)
+```
+
+```{r h2o_describe, warning=FALSE, message=FALSE, fig.width=6, fig.height=6, fig.align='center', tidy=FALSE}
+h2o.describe(bc_data_hf) %>%
+  gather(x, y, Zeros:Sigma) %>%
+  mutate(group = ifelse(x %in% c("Min", "Max", "Mean"), "min, mean, max", 
+                        ifelse(x %in% c("NegInf", "PosInf"), "Inf", "sigma, zeros"))) %>% 
+  ggplot(aes(x = Label, y = as.numeric(y), color = x)) +
+    geom_point(size = 4, alpha = 0.6) +
+    scale_color_brewer(palette = "Set1") +
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
+    facet_grid(group ~ ., scales = "free") +
+    labs(x = "Feature",
+         y = "Value",
+         color = "")
+```
+
+```{r corr_plot, warning=FALSE, message=FALSE, fig.align='center'}
+library(reshape2) # for melting
+
+bc_data_hf[, 1] <- h2o.asfactor(bc_data_hf[, 1])
+
+cor <- h2o.cor(bc_data_hf)
+rownames(cor) <- colnames(cor)
+
+melt(cor) %>%
+  mutate(Var2 = rep(rownames(cor), nrow(cor))) %>%
+  mutate(Var2 = factor(Var2, levels = colnames(cor))) %>%
+  mutate(variable = factor(variable, levels = colnames(cor))) %>%
+  ggplot(aes(x = variable, y = Var2, fill = value)) + 
+    geom_tile(width = 0.9, height = 0.9) +
+    scale_fill_gradient2(low = "white", high = "red", name = "Cor.") +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+    labs(x = "", 
+         y = "")
+```
+
+<br>
+
+#### Training, validation and test data
+
+```{r tidy=FALSE}
+splits <- h2o.splitFrame(bc_data_hf, 
+                         ratios = c(0.7, 0.15), 
+                         seed = 1)
+
+train <- splits[[1]]
+valid <- splits[[2]]
+test <- splits[[3]]
+
+response <- "classes"
+features <- setdiff(colnames(train), response)
+```
+
+```{r tidy=FALSE}
+summary(as.factor(train$classes), exact_quantiles = TRUE)
+summary(as.factor(valid$classes), exact_quantiles = TRUE)
+summary(as.factor(test$classes), exact_quantiles = TRUE)
+```
+
+```{r pca_features, fig.align='center'}
+pca <- h2o.prcomp(training_frame = train,
+           x = features,
+           validation_frame = valid,
+           transform = "NORMALIZE",
+           impute_missing = TRUE,
+           k = 3,
+           seed = 42)
+
+eigenvec <- as.data.frame(pca@model$eigenvectors)
+eigenvec$label <- features
+
+library(ggrepel)
+ggplot(eigenvec, aes(x = pc1, y = pc2, label = label)) +
+  geom_point(color = "navy", alpha = 0.7) +
+  geom_text_repel()
+```
+
+<br>
+
+#### Classification
+
+##### Random Forest
+
+```{r eval=FALSE}
+hyper_params <- list(
+                     ntrees = c(25, 50, 75, 100),
+                     max_depth = c(10, 20, 30),
+                     min_rows = c(1, 3, 5)
+                     )
+
+search_criteria <- list(
+                        strategy = "RandomDiscrete", 
+                        max_models = 50,
+                        max_runtime_secs = 360,
+                        stopping_rounds = 5,          
+                        stopping_metric = "AUC",      
+                        stopping_tolerance = 0.0005,
+                        seed = 42
+                        )
+```
+
+```{r eval=FALSE}
+rf_grid <- h2o.grid(algorithm = "randomForest", # h2o.randomForest, 
+                                                # alternatively h2o.gbm 
+                                                # for Gradient boosting trees
+                    x = features,
+                    y = response,
+                    grid_id = "rf_grid",
+                    training_frame = train,
+                    validation_frame = valid,
+                    nfolds = 25,                           
+                    fold_assignment = "Stratified",
+                    hyper_params = hyper_params,
+                    search_criteria = search_criteria,
+                    seed = 42
+                    )
+```
+
+```{r eval=FALSE}
+# performance metrics where smaller is better -> order with decreasing = FALSE
+sort_options_1 <- c("mean_per_class_error", "mse", "err", "logloss")
+
+for (sort_by_1 in sort_options_1) {
+  
+  grid <- h2o.getGrid("rf_grid", sort_by = sort_by_1, decreasing = FALSE)
+  
+  model_ids <- grid@model_ids
+  best_model <- h2o.getModel(model_ids[[1]])
+  
+  h2o.saveModel(best_model, path="models", force = TRUE)
+  
+}
+
+
+# performance metrics where bigger is better -> order with decreasing = TRUE
+sort_options_2 <- c("auc", "precision", "accuracy", "recall", "specificity")
+
+for (sort_by_2 in sort_options_2) {
+  
+  grid <- h2o.getGrid("rf_grid", sort_by = sort_by_2, decreasing = TRUE)
+  
+  model_ids <- grid@model_ids
+  best_model <- h2o.getModel(model_ids[[1]])
+  
+  h2o.saveModel(best_model, path = "models", force = TRUE)
+  
+}
+```
+
+```{r auc_mse, fig.height=5, fig.width=8, fig.align='center'}
+files <- list.files(path = "/Users/shiringlander/Documents/Github/intro_to_ml_workshop/intro_to_ml_uni_heidelberg/models")
+rf_models <- files[grep("rf_grid_model", files)]
+
+for (model_id in rf_models) {
+  
+  path <- paste0("/Users/shiringlander/Documents/Github/intro_to_ml_workshop/intro_to_ml_uni_heidelberg", "/models/", model_id)
+  best_model <- h2o.loadModel(path)
+  mse_auc_test <- data.frame(model_id = model_id, 
+                             mse = h2o.mse(h2o.performance(best_model, test)),
+                             auc = h2o.auc(h2o.performance(best_model, test)))
+  
+  if (model_id == rf_models[[1]]) {
+    
+    mse_auc_test_comb <- mse_auc_test
+    
+  } else {
+    
+    mse_auc_test_comb <- rbind(mse_auc_test_comb, mse_auc_test)
+    
+  }
+}
+
+mse_auc_test_comb %>%
+  gather(x, y, mse:auc) %>%
+  ggplot(aes(x = model_id, y = y, fill = model_id)) +
+    facet_grid(x ~ ., scales = "free") +
+    geom_bar(stat = "identity", alpha = 0.8, position = "dodge") +
+    scale_fill_brewer(palette = "Set1") +
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+          plot.margin = unit(c(0.5, 0, 0, 1.5), "cm")) +
+    labs(x = "", y = "value", fill = "")
+```
+
+```{r fig.height=4, fig.width=8, warning=FALSE, message=FALSE}
+for (model_id in rf_models) {
+  
+  best_model <- h2o.getModel(model_id)
+  
+  finalRf_predictions <- data.frame(model_id = rep(best_model@model_id, 
+                                                   nrow(test)),
+                                    actual = as.vector(test$classes), 
+                                    as.data.frame(h2o.predict(object = best_model, 
+                                                              newdata = test)))
+  
+  finalRf_predictions$accurate <- ifelse(finalRf_predictions$actual == 
+                                           finalRf_predictions$predict, 
+                                         "yes", "no")
+  
+  finalRf_predictions$predict_stringent <- ifelse(finalRf_predictions$benign > 0.8, 
+                                                  "benign", 
+                                                  ifelse(finalRf_predictions$malignant 
+                                                         > 0.8, "malignant", "uncertain"))
+  
+  finalRf_predictions$accurate_stringent <- ifelse(finalRf_predictions$actual == 
+                                                     finalRf_predictions$predict_stringent, "yes", 
+                                         ifelse(finalRf_predictions$predict_stringent == 
+                                                  "uncertain", "na", "no"))
+  
+  if (model_id == rf_models[[1]]) {
+    
+    finalRf_predictions_comb <- finalRf_predictions
+    
+  } else {
+    
+    finalRf_predictions_comb <- rbind(finalRf_predictions_comb, finalRf_predictions)
+    
+  }
+}
+```
+
+```{r final_predictions_rf, fig.height=3, fig.width=9, fig.align='center'}
+finalRf_predictions_comb %>%
+  ggplot(aes(x = actual, fill = accurate)) +
+    geom_bar(position = "dodge") +
+    scale_fill_brewer(palette = "Set1") +
+    facet_wrap(~ model_id, ncol = 2) +
+    labs(fill = "Were\npredictions\naccurate?",
+         title = "Default predictions")
+
+finalRf_predictions_comb %>%
+  subset(accurate_stringent != "na") %>%
+  ggplot(aes(x = actual, fill = accurate_stringent)) +
+    geom_bar(position = "dodge") +
+    scale_fill_brewer(palette = "Set1") +
+    facet_wrap(~ model_id, ncol = 2) +
+    labs(fill = "Were\npredictions\naccurate?",
+         title = "Stringent predictions")
+```
+
+```{r }
+rf_model <- h2o.loadModel("/Users/shiringlander/Documents/Github/intro_to_ml_workshop/intro_to_ml_uni_heidelberg/models/rf_grid_model_0")
+```
+
+```{r }
+h2o.varimp_plot(rf_model)
+#h2o.varimp(rf_model)
+```
+
+```{r }
+h2o.mean_per_class_error(rf_model, train = TRUE, valid = TRUE, xval = TRUE)
+```
+
+```{r }
+h2o.confusionMatrix(rf_model, valid = TRUE)
+```
+
+```{r fig.width=8, fig.height=4, fig.align='center'}
+plot(rf_model,
+     timestep = "number_of_trees",
+     metric = "classification_error")
+```
+
+```{r fig.width=8, fig.height=4, fig.align='center'}
+plot(rf_model,
+     timestep = "number_of_trees",
+     metric = "logloss")
+```
+
+```{r fig.width=8, fig.height=4, fig.align='center'}
+plot(rf_model,
+     timestep = "number_of_trees",
+     metric = "AUC")
+```
+
+```{r fig.width=8, fig.height=4, fig.align='center'}
+plot(rf_model,
+     timestep = "number_of_trees",
+     metric = "rmse")
+```
+
+```{r }
+h2o.auc(rf_model, train = TRUE)
+h2o.auc(rf_model, valid = TRUE)
+h2o.auc(rf_model, xval = TRUE)
+```
+
+```{r fig.width=6, fig.height=5, fig.align='center'}
+perf <- h2o.performance(rf_model, test)
+perf
+```
+
+```{r auc_curve, fig.width=6, fig.height=5, fig.align='center'}
+plot(perf)
+```
+
+```{r fig.align='center'}
+perf@metrics$thresholds_and_metric_scores %>%
+  ggplot(aes(x = fpr, y = tpr)) +
+    geom_point() +
+    geom_line() +
+    geom_abline(slope = 1, intercept = 0) +
+    labs(x = "False Positive Rate",
+         y = "True Positive Rate")
+```
+
+```{r }
+h2o.logloss(perf)
+h2o.mse(perf)
+h2o.auc(perf)
+
+head(h2o.metric(perf))
+```
+
+```{r fig.align='center'}
+finalRf_predictions <- data.frame(actual = as.vector(test$classes), 
+                                  as.data.frame(h2o.predict(object = rf_model, 
+                                                            newdata = test)))
+
+finalRf_predictions$accurate <- ifelse(finalRf_predictions$actual == 
+                                         finalRf_predictions$predict, "yes", "no")
+
+finalRf_predictions$predict_stringent <- ifelse(finalRf_predictions$benign > 0.8, "benign", 
+                                                ifelse(finalRf_predictions$malignant 
+                                                       > 0.8, "malignant", "uncertain"))
+finalRf_predictions$accurate_stringent <- ifelse(finalRf_predictions$actual == 
+                                                   finalRf_predictions$predict_stringent, "yes", 
+                                       ifelse(finalRf_predictions$predict_stringent == 
+                                                "uncertain", "na", "no"))
+
+finalRf_predictions %>%
+  group_by(actual, predict) %>%
+  dplyr::summarise(n = n())
+
+finalRf_predictions %>%
+  group_by(actual, predict_stringent) %>%
+  dplyr::summarise(n = n())
+```
+
+```{r default_vs_stringent, fig.align='center'}
+finalRf_predictions %>%
+  ggplot(aes(x = actual, fill = accurate)) +
+    geom_bar(position = "dodge") +
+    scale_fill_brewer(palette = "Set1") +
+    labs(fill = "Were\npredictions\naccurate?",
+         title = "Default predictions")
+
+finalRf_predictions %>%
+  subset(accurate_stringent != "na") %>%
+  ggplot(aes(x = actual, fill = accurate_stringent)) +
+    geom_bar(position = "dodge") +
+    scale_fill_brewer(palette = "Set1") +
+    labs(fill = "Were\npredictions\naccurate?",
+         title = "Stringent predictions")
+```
+
+```{r prop_table, fig.height=3, fig.width=6, fig.align='center'}
+df <- finalRf_predictions[, c(1, 3, 4)]
+
+thresholds <- seq(from = 0, to = 1, by = 0.1)
+
+prop_table <- data.frame(threshold = thresholds, prop_true_b = NA, prop_true_m = NA)
+
+for (threshold in thresholds) {
+  pred <- ifelse(df$benign > threshold, "benign", "malignant")
+  pred_t <- ifelse(pred == df$actual, TRUE, FALSE)
+  
+  group <- data.frame(df, "pred" = pred_t) %>%
+  group_by(actual, pred) %>%
+  dplyr::summarise(n = n())
+  
+  group_b <- filter(group, actual == "benign")
+  
+  prop_b <- sum(filter(group_b, pred == TRUE)$n) / sum(group_b$n)
+  prop_table[prop_table$threshold == threshold, "prop_true_b"] <- prop_b
+  
+  group_m <- filter(group, actual == "malignant")
+  
+  prop_m <- sum(filter(group_m, pred == TRUE)$n) / sum(group_m$n)
+  prop_table[prop_table$threshold == threshold, "prop_true_m"] <- prop_m
+}
+
+prop_table %>%
+  gather(x, y, prop_true_b:prop_true_m) %>%
+  ggplot(aes(x = threshold, y = y, color = x)) +
+    geom_point() +
+    geom_line() +
+    scale_color_brewer(palette = "Set1") +
+    labs(y = "proportion of true predictions",
+         color = "b: benign cases\nm: malignant cases")
+```
+
+
+---
+
+If you are interested in more machine learning posts, check out the category listing for **machine_learning** on my blog
+- https://shirinsplayground.netlify.com/categories/#posts-list-machine-learning
+- https://shiring.github.io/categories.html#machine_learning-ref
+
+------------------
+
+<br>
+
+```{r}
+stopCluster(cl)
+h2o.shutdown()
+
+sessionInfo()
+```
