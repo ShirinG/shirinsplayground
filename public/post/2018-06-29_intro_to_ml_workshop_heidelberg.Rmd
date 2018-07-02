@@ -76,7 +76,26 @@ The features characterise cell nucleus properties and were generated from image 
 - Mitosis
 - Classes, i.e. diagnosis
 
-```{r}
+```{r eval=FALSE}
+bc_data <- read_delim("datasets/breast-cancer-wisconsin.data.txt",
+                      delim = ",",
+                      col_names = c("sample_code_number", 
+                       "clump_thickness", 
+                       "uniformity_of_cell_size", 
+                       "uniformity_of_cell_shape", 
+                       "marginal_adhesion", 
+                       "single_epithelial_cell_size", 
+                       "bare_nuclei", 
+                       "bland_chromatin", 
+                       "normal_nucleoli", 
+                       "mitosis", 
+                       "classes")) %>%
+  mutate(bare_nuclei = as.numeric(bare_nuclei),
+         classes = ifelse(classes == "2", "benign",
+                          ifelse(classes == "4", "malignant", NA)))
+```
+
+```{r echo=FALSE}
 bc_data <- read_delim("/Users/shiringlander/Documents/Github/intro_to_ml_workshop/intro_to_ml_uni_heidelberg/datasets/breast-cancer-wisconsin.data.txt",
                       delim = ",",
                       col_names = c("sample_code_number", 
@@ -932,8 +951,38 @@ for (sort_by_2 in sort_options_2) {
 }
 ```
 
-```{r auc_mse, fig.height=5, fig.width=8, fig.align='center'}
+```{r eval=FALSE}
+files <- list.files(path = "models")
+```
+
+```{r echo=FALSE}
 files <- list.files(path = "/Users/shiringlander/Documents/Github/intro_to_ml_workshop/intro_to_ml_uni_heidelberg/models")
+```
+
+```{r eval=FALSE}
+rf_models <- files[grep("rf_grid_model", files)]
+
+for (model_id in rf_models) {
+  
+  path <- paste0(getwd(), "/models/", model_id)
+  best_model <- h2o.loadModel(path)
+  mse_auc_test <- data.frame(model_id = model_id, 
+                             mse = h2o.mse(h2o.performance(best_model, test)),
+                             auc = h2o.auc(h2o.performance(best_model, test)))
+  
+  if (model_id == rf_models[[1]]) {
+    
+    mse_auc_test_comb <- mse_auc_test
+    
+  } else {
+    
+    mse_auc_test_comb <- rbind(mse_auc_test_comb, mse_auc_test)
+    
+  }
+}
+```
+
+```{r echo=FALSE}
 rf_models <- files[grep("rf_grid_model", files)]
 
 for (model_id in rf_models) {
@@ -954,7 +1003,9 @@ for (model_id in rf_models) {
     
   }
 }
+```
 
+```{r auc_mse, fig.height=5, fig.width=8, fig.align='center'}
 mse_auc_test_comb %>%
   gather(x, y, mse:auc) %>%
   ggplot(aes(x = model_id, y = y, fill = model_id)) +
@@ -1022,7 +1073,11 @@ finalRf_predictions_comb %>%
          title = "Stringent predictions")
 ```
 
-```{r }
+```{r eval=FALSE}
+rf_model <- h2o.loadModel("models/rf_grid_model_0")
+```
+
+```{r echo=FALSE}
 rf_model <- h2o.loadModel("/Users/shiringlander/Documents/Github/intro_to_ml_workshop/intro_to_ml_uni_heidelberg/models/rf_grid_model_0")
 ```
 

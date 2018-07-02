@@ -159,7 +159,7 @@ library(mice)      # mice package for Multivariate Imputation by Chained Equatio
 <li>Mitosis</li>
 <li>Classes, i.e. diagnosis</li>
 </ul>
-<pre class="r"><code>bc_data &lt;- read_delim(&quot;/Users/shiringlander/Documents/Github/intro_to_ml_workshop/intro_to_ml_uni_heidelberg/datasets/breast-cancer-wisconsin.data.txt&quot;,
+<pre class="r"><code>bc_data &lt;- read_delim(&quot;datasets/breast-cancer-wisconsin.data.txt&quot;,
                       delim = &quot;,&quot;,
                       col_names = c(&quot;sample_code_number&quot;, 
                        &quot;clump_thickness&quot;, 
@@ -989,7 +989,7 @@ model_ga &lt;- gafs(x = train_data[, -1],
                                            genParallel = TRUE, # Use parallel programming
                                            allowParallel = TRUE))</code></pre>
 <pre class="r"><code>plot(model_ga) # Plot mean fitness (AUC) by generation</code></pre>
-<p><img src="/post/2018-06-29_intro_to_ml_workshop_heidelberg_files/figure-html/unnamed-chunk-37-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2018-06-29_intro_to_ml_workshop_heidelberg_files/figure-html/unnamed-chunk-38-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>train_data_ga &lt;- train_data[, c(1, which(colnames(train_data) %in% model_ga$ga$final))]</code></pre>
 <p><br></p>
 </div>
@@ -1039,7 +1039,7 @@ model_rf_tune_man &lt;- caret::train(classes ~ .,
 ## Accuracy was used to select the optimal model using the largest value.
 ## The final value used for the model was mtry = 1.</code></pre>
 <pre class="r"><code>plot(model_rf_tune_man)</code></pre>
-<p><img src="/post/2018-06-29_intro_to_ml_workshop_heidelberg_files/figure-html/unnamed-chunk-41-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2018-06-29_intro_to_ml_workshop_heidelberg_files/figure-html/unnamed-chunk-42-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p><br></p>
 <ul>
 <li>Random Search</li>
@@ -1084,7 +1084,7 @@ model_rf_tune_auto &lt;- caret::train(classes ~ .,
 ## Accuracy was used to select the optimal model using the largest value.
 ## The final value used for the model was mtry = 1.</code></pre>
 <pre class="r"><code>plot(model_rf_tune_auto)</code></pre>
-<p><img src="/post/2018-06-29_intro_to_ml_workshop_heidelberg_files/figure-html/unnamed-chunk-45-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2018-06-29_intro_to_ml_workshop_heidelberg_files/figure-html/unnamed-chunk-46-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p><br></p>
 </div>
 <div id="grid-search-with-h2o" class="section level3">
@@ -1095,14 +1095,14 @@ h2o.init(nthreads = -1)</code></pre>
 <pre><code>##  Connection successful!
 ## 
 ## R is connected to the H2O cluster: 
-##     H2O cluster uptime:         26 minutes 45 seconds 
+##     H2O cluster uptime:         3 days 4 minutes 
 ##     H2O cluster timezone:       Europe/Berlin 
 ##     H2O data parsing timezone:  UTC 
 ##     H2O cluster version:        3.20.0.2 
-##     H2O cluster version age:    13 days  
+##     H2O cluster version age:    16 days  
 ##     H2O cluster name:           H2O_started_from_R_shiringlander_jrj894 
 ##     H2O cluster total nodes:    1 
-##     H2O cluster total memory:   3.24 GB 
+##     H2O cluster total memory:   3.27 GB 
 ##     H2O cluster total cores:    8 
 ##     H2O cluster allowed cores:  8 
 ##     H2O cluster healthy:        TRUE 
@@ -1250,12 +1250,12 @@ for (sort_by_2 in sort_options_2) {
   h2o.saveModel(best_model, path = &quot;models&quot;, force = TRUE)
   
 }</code></pre>
-<pre class="r"><code>files &lt;- list.files(path = &quot;/Users/shiringlander/Documents/Github/intro_to_ml_workshop/intro_to_ml_uni_heidelberg/models&quot;)
-rf_models &lt;- files[grep(&quot;rf_grid_model&quot;, files)]
+<pre class="r"><code>files &lt;- list.files(path = &quot;models&quot;)</code></pre>
+<pre class="r"><code>rf_models &lt;- files[grep(&quot;rf_grid_model&quot;, files)]
 
 for (model_id in rf_models) {
   
-  path &lt;- paste0(&quot;/Users/shiringlander/Documents/Github/intro_to_ml_workshop/intro_to_ml_uni_heidelberg&quot;, &quot;/models/&quot;, model_id)
+  path &lt;- paste0(getwd(), &quot;/models/&quot;, model_id)
   best_model &lt;- h2o.loadModel(path)
   mse_auc_test &lt;- data.frame(model_id = model_id, 
                              mse = h2o.mse(h2o.performance(best_model, test)),
@@ -1270,9 +1270,8 @@ for (model_id in rf_models) {
     mse_auc_test_comb &lt;- rbind(mse_auc_test_comb, mse_auc_test)
     
   }
-}
-
-mse_auc_test_comb %&gt;%
+}</code></pre>
+<pre class="r"><code>mse_auc_test_comb %&gt;%
   gather(x, y, mse:auc) %&gt;%
   ggplot(aes(x = model_id, y = y, fill = model_id)) +
     facet_grid(x ~ ., scales = &quot;free&quot;) +
@@ -1333,9 +1332,9 @@ mse_auc_test_comb %&gt;%
     labs(fill = &quot;Were\npredictions\naccurate?&quot;,
          title = &quot;Stringent predictions&quot;)</code></pre>
 <p><img src="/post/2018-06-29_intro_to_ml_workshop_heidelberg_files/figure-html/final_predictions_rf-2.png" width="864" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>rf_model &lt;- h2o.loadModel(&quot;/Users/shiringlander/Documents/Github/intro_to_ml_workshop/intro_to_ml_uni_heidelberg/models/rf_grid_model_0&quot;)</code></pre>
+<pre class="r"><code>rf_model &lt;- h2o.loadModel(&quot;models/rf_grid_model_0&quot;)</code></pre>
 <pre class="r"><code>h2o.varimp_plot(rf_model)</code></pre>
-<p><img src="/post/2018-06-29_intro_to_ml_workshop_heidelberg_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
+<p><img src="/post/2018-06-29_intro_to_ml_workshop_heidelberg_files/figure-html/unnamed-chunk-60-1.png" width="672" /></p>
 <pre class="r"><code>#h2o.varimp(rf_model)</code></pre>
 <pre class="r"><code>h2o.mean_per_class_error(rf_model, train = TRUE, valid = TRUE, xval = TRUE)</code></pre>
 <pre><code>##      train      valid       xval 
@@ -1349,19 +1348,19 @@ mse_auc_test_comb %&gt;%
 <pre class="r"><code>plot(rf_model,
      timestep = &quot;number_of_trees&quot;,
      metric = &quot;classification_error&quot;)</code></pre>
-<p><img src="/post/2018-06-29_intro_to_ml_workshop_heidelberg_files/figure-html/unnamed-chunk-57-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2018-06-29_intro_to_ml_workshop_heidelberg_files/figure-html/unnamed-chunk-63-1.png" width="768" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>plot(rf_model,
      timestep = &quot;number_of_trees&quot;,
      metric = &quot;logloss&quot;)</code></pre>
-<p><img src="/post/2018-06-29_intro_to_ml_workshop_heidelberg_files/figure-html/unnamed-chunk-58-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2018-06-29_intro_to_ml_workshop_heidelberg_files/figure-html/unnamed-chunk-64-1.png" width="768" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>plot(rf_model,
      timestep = &quot;number_of_trees&quot;,
      metric = &quot;AUC&quot;)</code></pre>
-<p><img src="/post/2018-06-29_intro_to_ml_workshop_heidelberg_files/figure-html/unnamed-chunk-59-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2018-06-29_intro_to_ml_workshop_heidelberg_files/figure-html/unnamed-chunk-65-1.png" width="768" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>plot(rf_model,
      timestep = &quot;number_of_trees&quot;,
      metric = &quot;rmse&quot;)</code></pre>
-<p><img src="/post/2018-06-29_intro_to_ml_workshop_heidelberg_files/figure-html/unnamed-chunk-60-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2018-06-29_intro_to_ml_workshop_heidelberg_files/figure-html/unnamed-chunk-66-1.png" width="768" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>h2o.auc(rf_model, train = TRUE)</code></pre>
 <pre><code>## [1] 0.9907214</code></pre>
 <pre class="r"><code>h2o.auc(rf_model, valid = TRUE)</code></pre>
@@ -1408,7 +1407,7 @@ perf</code></pre>
     geom_abline(slope = 1, intercept = 0) +
     labs(x = &quot;False Positive Rate&quot;,
          y = &quot;True Positive Rate&quot;)</code></pre>
-<p><img src="/post/2018-06-29_intro_to_ml_workshop_heidelberg_files/figure-html/unnamed-chunk-63-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2018-06-29_intro_to_ml_workshop_heidelberg_files/figure-html/unnamed-chunk-69-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>h2o.logloss(perf)</code></pre>
 <pre><code>## [1] 0.1072519</code></pre>
 <pre class="r"><code>h2o.mse(perf)</code></pre>
