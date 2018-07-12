@@ -147,7 +147,7 @@ plot_image_explanation(clementine)
 ```{r}
 test_datagen <- image_data_generator(rescale = 1/255)
 
-test_generator = flow_images_from_directory(
+test_generator <- flow_images_from_directory(
         test_image_files_path,
         test_datagen,
         target_size = c(20, 20),

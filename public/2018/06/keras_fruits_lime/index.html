@@ -543,7 +543,7 @@ plot_image_explanation(clementine)</code></pre>
 </ul>
 <pre class="r"><code>test_datagen &lt;- image_data_generator(rescale = 1/255)
 
-test_generator = flow_images_from_directory(
+test_generator &lt;- flow_images_from_directory(
         test_image_files_path,
         test_datagen,
         target_size = c(20, 20),
@@ -558,30 +558,30 @@ colnames(predictions) &lt;- rownames(fruits_classes_indices_df)
 
 t(round(predictions, digits = 2))</code></pre>
 <pre><code>##             [,1] [,2]
-## Kiwi           0 0.00
-## Banana         1 0.11
-## Apricot        0 0.00
-## Avocado        0 0.00
-## Cocos          0 0.00
-## Clementine     0 0.87
-## Mandarine      0 0.00
-## Orange         0 0.00
-## Limes          0 0.00
-## Lemon          0 0.00
-## Peach          0 0.00
-## Plum           0 0.00
-## Raspberry      0 0.00
-## Strawberry     0 0.01
-## Pineapple      0 0.00
-## Pomegranate    0 0.00</code></pre>
+## Kiwi           0    0
+## Banana         0    1
+## Apricot        0    0
+## Avocado        0    0
+## Cocos          0    0
+## Clementine     1    0
+## Mandarine      0    0
+## Orange         0    0
+## Limes          0    0
+## Lemon          0    0
+## Peach          0    0
+## Plum           0    0
+## Raspberry      0    0
+## Strawberry     0    0
+## Pineapple      0    0
+## Pomegranate    0    0</code></pre>
 <pre class="r"><code>for (i in 1:nrow(predictions)) {
   cat(i, &quot;:&quot;)
   print(unlist(which.max(predictions[i, ])))
 }</code></pre>
-<pre><code>## 1 :Banana 
-##      2 
-## 2 :Clementine 
-##          6</code></pre>
+<pre><code>## 1 :Clementine 
+##          6 
+## 2 :Banana 
+##      2</code></pre>
 <p>This seems to be incompatible with lime, though (or if someone knows how it works, please let me know) - so I prepared the images similarly to the Imagenet images.</p>
 <pre class="r"><code>image_prep2 &lt;- function(x) {
   arrays &lt;- lapply(x, function(path) {
@@ -632,9 +632,9 @@ plot_image_explanation(clementine2, display = &#39;block&#39;, threshold = 0.16)
 <p><img src="/post/2018-06-21_keras_fruits_lime_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
 <hr />
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>## R version 3.5.0 (2018-04-23)
+<pre><code>## R version 3.5.1 (2018-07-02)
 ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-## Running under: macOS High Sierra 10.13.5
+## Running under: macOS High Sierra 10.13.6
 ## 
 ## Matrix products: default
 ## BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
@@ -647,28 +647,31 @@ plot_image_explanation(clementine2, display = &#39;block&#39;, threshold = 0.16)
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] ggplot2_2.2.1 magick_1.9    lime_0.4.0    keras_2.1.6  
+## [1] ggplot2_3.0.0 magick_1.9    lime_0.4.0    keras_2.1.6  
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] stringdist_0.9.5.1 reticulate_1.8     xfun_0.2          
-##  [4] lattice_0.20-35    colorspace_1.3-2   htmltools_0.3.6   
-##  [7] yaml_2.1.19        base64enc_0.1-3    rlang_0.2.1       
-## [10] pillar_1.2.3       later_0.7.3        foreach_1.4.4     
-## [13] plyr_1.8.4         tensorflow_1.8     stringr_1.3.1     
-## [16] munsell_0.5.0      blogdown_0.6       gtable_0.2.0      
-## [19] htmlwidgets_1.2    codetools_0.2-15   evaluate_0.10.1   
-## [22] labeling_0.3       knitr_1.20         httpuv_1.4.4.1    
-## [25] tfruns_1.3         parallel_3.5.0     curl_3.2          
-## [28] Rcpp_0.12.17       xtable_1.8-2       scales_0.5.0      
-## [31] backports_1.1.2    promises_1.0.1     jsonlite_1.5      
-## [34] abind_1.4-5        mime_0.5           digest_0.6.15     
-## [37] stringi_1.2.3      bookdown_0.7       shiny_1.1.0       
-## [40] grid_3.5.0         rprojroot_1.3-2    tools_3.5.0       
-## [43] magrittr_1.5       lazyeval_0.2.1     shinythemes_1.1.1 
-## [46] glmnet_2.0-16      tibble_1.4.2       whisker_0.3-2     
-## [49] zeallot_0.1.0      Matrix_1.2-14      gower_0.1.2       
-## [52] assertthat_0.2.0   rmarkdown_1.10     iterators_1.0.9   
-## [55] R6_2.2.2           compiler_3.5.0</code></pre>
+##  [1] stringdist_0.9.5.1    reticulate_1.8.0.9003 tidyselect_0.2.4     
+##  [4] xfun_0.3              purrr_0.2.5           lattice_0.20-35      
+##  [7] colorspace_1.3-2      htmltools_0.3.6       yaml_2.1.19          
+## [10] base64enc_0.1-3       rlang_0.2.1           pillar_1.2.3         
+## [13] later_0.7.3           withr_2.1.2           glue_1.2.0           
+## [16] bindrcpp_0.2.2        foreach_1.4.4         plyr_1.8.4           
+## [19] bindr_0.1.1           tensorflow_1.8        stringr_1.3.1        
+## [22] munsell_0.5.0         blogdown_0.6          gtable_0.2.0         
+## [25] htmlwidgets_1.2       codetools_0.2-15      evaluate_0.10.1      
+## [28] labeling_0.3          knitr_1.20            httpuv_1.4.4.2       
+## [31] tfruns_1.3            curl_3.2              parallel_3.5.1       
+## [34] Rcpp_0.12.17          xtable_1.8-2          scales_0.5.0         
+## [37] backports_1.1.2       promises_1.0.1        jsonlite_1.5         
+## [40] abind_1.4-5           mime_0.5              digest_0.6.15        
+## [43] stringi_1.2.3         bookdown_0.7          dplyr_0.7.6          
+## [46] shiny_1.1.0           grid_3.5.1            rprojroot_1.3-2      
+## [49] tools_3.5.1           magrittr_1.5          shinythemes_1.1.1    
+## [52] lazyeval_0.2.1        glmnet_2.0-16         tibble_1.4.2         
+## [55] whisker_0.3-2         pkgconfig_2.0.1       zeallot_0.1.0        
+## [58] Matrix_1.2-14         gower_0.1.2           assertthat_0.2.0     
+## [61] rmarkdown_1.10        iterators_1.0.9       R6_2.2.2             
+## [64] compiler_3.5.1</code></pre>
 </div>
 
               
@@ -924,6 +927,25 @@ plot_image_explanation(clementine2, display = &#39;block&#39;, threshold = 0.16)
           <div class="media">
             
             <div class="media-body">
+              <a class="link-unstyled" href="/2018/07/mcubed_mlsummit_data2day/">
+                <h3 class="media-heading">My upcoming conference talks &amp; workshops: M-cubed, ML Summit &amp; data2day</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jul 7, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">I’ll be giving talks and workshops at the following three upcoming conferences; hope to meet some of you there!
+
+ From 15th to 17th October 2018, I’ll be in London for the M-cubed conference. My talk about Explaining complex machine learning models with LIME will take place on October 16   Traditional machine learning workflows focus heavily on model training and optimization; the best model is usually chosen via performance measures like accuracy or error and we tend to assume that a model is good enough for deployment if it passes certain thresholds of these performance criteria.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
               <a class="link-unstyled" href="/2018/06/googlelanguager/">
                 <h3 class="media-heading">Addendum: Text-to-Speech with the googleLanguageR package</h3>
               </a>
@@ -1096,25 +1118,6 @@ Sketchnotes from TWiMLAI talk: Adversarial Attacks Against Reinforcement Learnin
             <hr>
           </div>
         
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="/2018/04/pkgnet/">
-                <h3 class="media-heading">Comparing dependencies of popular machine learning packages with `pkgnet`</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Apr 4, 2018
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">When looking through the CRAN list of packages, I stumbled upon this little gem:
- pkgnet is an R library designed for the analysis of R libraries! The goal of the package is to build a graph representation of a package and its dependencies.
- And I thought it would be fun to play around with it. The little analysis I ended up doing was to compare dependencies of popular machine learning packages.</div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
       </div>
     </div>
     <div class="modal-footer">
@@ -1122,7 +1125,7 @@ Sketchnotes from TWiMLAI talk: Adversarial Attacks Against Reinforcement Learnin
          data-message-zero="no post found"
          data-message-one="1 post found"
          data-message-other="{n} posts found">
-         48 posts found
+         49 posts found
       </p>
     </div>
   </div>

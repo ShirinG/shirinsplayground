@@ -26,14 +26,22 @@ Date and place depend on who and how many people are interested, so please conta
 
 ## Upcoming talks, webinars, podcasts, etc.
 
-- Together with a colleague from codecentric, I'll be giving a workshop about ["END-2-END VOM KERAS TENSORFLOW-MODELL ZUR PRODUKTION"](https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953) at the Data2Day conference, which is being held from September 25th - 27th 2018 in Heidelberg, Germany (German language):
+- Together with a colleague from codecentric, I'll be giving a workshop about ["END-2-END VOM KERAS TENSORFLOW-MODELL ZUR PRODUKTION"](https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953) at the data2day conference, which is being held from September 25th - 27th 2018 in Heidelberg, Germany (German language):
 https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953
+
+- At the [ML Summit](www.ml-summit.de) held on October 1st and 2nd in Berlin, Germany, I'll be giving a workshop about [image classification with Keras](https://ml-summit.de/specialized-topics/bildklassifikation-leicht-gemacht-mit-keras-und-tensorflow/): https://ml-summit.de/specialized-topics/bildklassifikation-leicht-gemacht-mit-keras-und-tensorflow/ (German language)
+
+- From 15th to 17th October 2018, I'll be in London for the [M-cubed conference](https://www.mcubed.london/). My talk about [Explaining complex machine learning models with LIME](https://www.mcubed.london/sessions/explaining-complex-machine-learning-models-lime/) will be on October 16
 
 ---
 
 <br>
 
 ## Past talks, webinars, podcasts, etc.
+
+- In June 2018 I gave a 3-hour workshop about the basics of machine learning with R at the University of Heidelberg, Germany. [Slides and workshop code can be found here](https://shirinsplayground.netlify.com/2018/06/intro_to_ml_workshop_heidelberg/).
+
+<br>
 
 - In May 2018 I was at the [ROpenSci unconference in Seattle, WA](http://unconf18.ropensci.org/)
 

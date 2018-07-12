@@ -1,0 +1,52 @@
+---
+title: "My upcoming conference talks & workshops: M-cubed, ML Summit & data2day"
+draft: false
+author: Shirin Glander
+date: '2018-07-12'
+categories: ["conferences"]
+tags: ["conferences"]
+thumbnailImagePosition: left
+thumbnailImage: https://www.mcubed.london/wp-content/uploads/2017/12/M3_Image_v1_b-1024x626.jpg
+metaAlignment: center
+coverMeta: out
+slug: mcubed_mlsummit_data2day
+---
+
+I'll be giving talks and workshops at the following three upcoming conferences; hope to meet some of you there!
+
+<br>
+
+- From 15th to 17th October 2018, I'll be in London for the [M-cubed conference](https://www.mcubed.london/). My talk about [Explaining complex machine learning models with LIME](https://www.mcubed.london/sessions/explaining-complex-machine-learning-models-lime/) will take place on October 16
+
+> Traditional machine learning workflows focus heavily on model training and optimization; the best model is usually chosen via performance measures like accuracy or error and we tend to assume that a model is good enough for deployment if it passes certain thresholds of these performance criteria. Why a model makes the predictions it makes, however, is generally neglected. But being able to understand and interpret such models can be immensely important for improving model quality, increasing trust and transparency and for reducing bias. Because complex machine learning models are essentially black boxes and too complicated to understand, we need to use approximations.
+
+> Required audience experience: Basic knowledge of machine learning
+
+> Objective of the talk: Listeners will get an overview of why understanding machine learning models is important, how it can help us improve models and help gain trust in their decisions. I will explain in detail how one popular approach to explaining complex models – LIME – works and show an example analysis.
+
+![M-cubed banner](https://www.mcubed.london/wp-content/uploads/2017/12/M3_Image_v1_b-1024x626.jpg)
+
+---
+
+<br>
+
+- At the [ML Summit](www.ml-summit.de) held on October 1st and 2nd in Berlin, Germany, I'll be giving a workshop about [image classification with Keras](https://ml-summit.de/specialized-topics/bildklassifikation-leicht-gemacht-mit-keras-und-tensorflow/) (**German language**).
+
+> Bildklassifikation leicht gemacht – mit Keras und TensorFlow
+
+>Tuesday, 2. October 2018 | 10:00 - 13:00
+Lange Zeit galt die automatische Erkennung von Objekten, Menschen und Szenen auf Bildern durch Computer als unmöglich. Die Komplexität schien schlicht zu groß, um sie einem Algorithmus programmatisch beibringen zu können. Doch Neuronale Netze haben dies drastisch verändert! Inzwischen ist Bilderkennung ist ein weit verbreitetes Anwendungsgebiet von Maschinellem Lernen. Häufig werden dafür sogenannte “Convolutional Neuronal Networks”, oder “ConvNets” verwendet. In diesem Workshop werde ich zeigen, wie einfach es ist, solch ein Neuronales Netz selber zu bauen. Dafür werden wir Keras und TensorFlow verwenden. Wir werden zunächst ein komplettes Netz selber trainieren: vom Einlesen der Bilder, über das Definieren des Netzes, hin zum Evaluieren auf Testbildern. Anschließend gucken wir uns an, wie man mit Transfer Learning und vortrainierten Netzen auch mit wenigen eigenen Bildern schnell Erfolge sehen kann. Im letzten Teil des Workshops soll es dann darum gehen, wie wir diese Bilderkennungsmodelle besser verstehen können – zum Beispiel indem wir die Knoten in Zwischenschichten visualisieren; so können wir Muster und für die Klassifikation wichtige Bildbereiche finden und die Klassifikation durch das Modell nachvollziehen.
+Installationshinweise: Wir werden mit Python3 in Google Collaboratory arbeiten.
+
+![ML Summit banner](https://shiring.github.io/netlify_images/MLS_18_Webbanner_300x250_46396_v1.jpg)
+
+---
+
+<br>
+
+- Together with my colleague Mark, I'll be giving a workshop about ["END-2-END VOM KERAS TENSORFLOW-MODELL ZUR PRODUKTION"](https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953) at the data2day conference, which is being held from September 25th - 27th 2018 in Heidelberg, Germany (**German language**).
+
+> Durch das stark wachsende Datenvolumen hat sich das Rollenverständnis von Data Scientists erweitert. Statt Machine-Learning-Modelle für einmalige Analysen zu erstellen, wird häufiger in konkreten Entwicklungsprojekten gearbeitet, in denen Prototypen in produktive Anwendungen überführt werden. 
+Keras ist eine High-Level-Schnittstelle, die ein schnelles, einfaches und flexibles Prototypisieren von Neuronalen Netzwerken mit TensorFlow ermöglicht. Zusammen mit Luigi lassen sich beliebig komplexe Datenverarbeitungs-Workflows in Python erstellen. Das führt dazu, dass auch Nicht-Entwickler den End-2-End-Workflow des Keras-TensorFlow-Modells zur Produktionsreife leicht implementieren können.
+
+![data2day banner](https://www.data2day.de/common/images/konferenzen/data2day2018.svg)
