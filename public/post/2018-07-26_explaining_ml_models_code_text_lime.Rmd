@@ -1,0 +1,345 @@
+---
+title: "Explaining Black-Box Machine Learning Models - Code Part 2: Text classification with LIME"
+draft: false
+author: Shirin Glander
+date: '2018-07-26'
+categories: ["R"]
+tags: ["machine learning", "xgboost", "lime"]
+thumbnailImagePosition: left
+thumbnailImage: https://shiring.github.io/netlify_images/text_explanation_1.png
+metaAlignment: center
+coverMeta: out
+slug: explaining_ml_models_code_text_lime
+---
+
+This is code that will encompany an article that will appear in a special edition of a German IT magazine. The article is about explaining black-box machine learning models. In that article I'm showcasing three practical examples:
+
+<br>
+
+1. Explaining supervised classification models built on tabular data using `caret` and the `iml` package
+2. Explaining image classification models with `keras` and `lime`
+3. Explaining text classification models with `xgboost` and `lime`
+
+<br>
+
+- The first part has been published [here](https://shirinsplayground.netlify.com/2018/07/explaining_ml_models_code_caret_iml/).
+- The second part has been published [here](https://shirinsplayground.netlify.com/2018/06/keras_fruits_lime/).
+
+Below, you will find the code for the third part: Text classification with [lime](https://cran.r-project.org/web/packages/lime/index.html).
+
+```{r libraries, warning=FALSE, message=FALSE}
+# data wrangling
+library(tidyverse)
+library(readr)
+
+# plotting
+library(ggthemes)
+theme_set(theme_minimal())
+
+# text prep
+library(text2vec)
+
+# ml
+library(caret)
+library(xgboost)
+
+# explanation
+library(lime)
+```
+
+## Text classification models
+
+Here I am using another Kaggle dataset: [Women's e-commerce cloting reviews](https://www.kaggle.com/nicapotato/womens-ecommerce-clothing-reviews). The data contains a text review of different items of clothing, as well as some additional information, like rating, division, etc.
+
+In this example, I will use the review title and text in order to classify whether or not the item was liked. I am creating the response variable from the rating: every item rates with 5 stars is considered "liked" (1), the rest as "not liked" (0). I am also combining review title and text.
+
+```{r warning=FALSE}
+clothing_reviews <- read_csv("/Users/shiringlander/Documents/Github/ix_lime_etc/Womens Clothing E-Commerce Reviews.csv") %>%
+  mutate(Liked = as.factor(ifelse(Rating == 5, 1, 0)),
+         text = paste(Title, `Review Text`),
+         text = gsub("NA", "", text))
+glimpse(clothing_reviews)
+```
+
+Whether an item was liked or not will thus be my response variable or label for classification.
+
+```{r}
+clothing_reviews %>%
+  ggplot(aes(x = Liked, fill = Liked)) +
+    geom_bar(alpha = 0.8) +
+    scale_fill_tableau(palette = "tableau20") +
+    guides(fill = FALSE)
+```
+
+Let's split the data into train and test sets:
+
+```{r}
+set.seed(42)
+idx <- createDataPartition(clothing_reviews$Liked, 
+                           p = 0.8, 
+                           list = FALSE, 
+                           times = 1)
+
+clothing_reviews_train <- clothing_reviews[ idx,]
+clothing_reviews_test  <- clothing_reviews[-idx,]
+```
+
+## Let's start simple
+
+The first text model I'm looking at has been built similarly to the example model in the help for `lime::interactive_text_explanations()`.
+
+First, we need to prepare the data for modeling: we will need to convert the text to a document term matrix (dtm). There are different ways to do this. One is be with the `text2vec` package.
+
+> "Because of R’s copy-on-modify semantics, it is not easy to iteratively grow a DTM. Thus constructing a DTM, even for a small collections of documents, can be a serious bottleneck for analysts and researchers. It involves reading the whole collection of text documents into RAM and processing it as single vector, which can easily increase memory use by a factor of 2 to 4. The text2vec package solves this problem by providing a better way of constructing a document-term matrix." https://cran.r-project.org/web/packages/text2vec/vignettes/text-vectorization.html
+
+Alternatives to `text2vec` would be `tm` + `SnowballC` or you could work with the `tidytext` package.
+
+The `itoken()` function creates vocabularies (here stemmed words), from which we can create the dtm with the `create_dtm()` function. 
+
+All preprocessing steps, starting from the raw text, need to be wrapped in a function that can then be pasted into the `lime::lime()` function; this is only necessary if you want to use your model with `lime`.
+
+```{r}
+get_matrix <- function(text) {
+  it <- itoken(text, progressbar = FALSE)
+  create_dtm(it, vectorizer = hash_vectorizer())
+}
+```
+
+Now, this preprocessing function can be applied to both training and test data.
+
+```{r}
+dtm_train <- get_matrix(clothing_reviews_train$text)
+str(dtm_train)
+
+dtm_test <- get_matrix(clothing_reviews_test$text)
+str(dtm_test)
+```
+
+And we use it to train a model with the `xgboost` package (just as in the example of the `lime` package).
+
+```{r}
+xgb_model <- xgb.train(list(max_depth = 7, 
+                            eta = 0.1, 
+                            objective = "binary:logistic",
+                            eval_metric = "error", nthread = 1),
+                       xgb.DMatrix(dtm_train, 
+                                   label = clothing_reviews_train$Liked == "1"),
+                       nrounds = 50)
+```
+
+Let's try it on the test data and see how it performs:
+
+```{r}
+pred <- predict(xgb_model, dtm_test)
+
+confusionMatrix(clothing_reviews_test$Liked,
+                as.factor(round(pred, digits = 0)))
+```
+
+Okay, not a perfect score but good enough for me - right now, I'm more interested in the explanations of the model's predictions. For this, we need to run the `lime()` function and give it
+
+- the text input that was used to construct the model
+- the trained model
+- the preprocessing function
+
+```{r}
+explainer <- lime(clothing_reviews_train$text, 
+                  xgb_model, 
+                  preprocess = get_matrix)
+```
+
+With this, we could right away call the interactive explainer Shiny app, where we can type any text we want into the field on the left and see the explanation on the right: words that are underlined green support the classification, red words contradict them.
+
+```{r eval=FALSE}
+interactive_text_explanations(explainer)
+```
+
+![](https://shiring.github.io/netlify_images/text_explanation_2.png)
+
+What happens in the background in the app, we can do explicitly by calling the `explain()` function and give it
+
+- the test data (here the first four reviews of the test set)
+- the explainer defined with the `lime()` function
+- the number of labels we want to have explanations for (alternatively, you set the label by name)
+- and the number of features (in this case words) that should be included in the explanations
+
+We can plot them either with the `plot_text_explanations()` function, which gives an output like in the Shiny app or we use the regular `plot_features()` function.
+
+```{r}
+explanations <- lime::explain(clothing_reviews_test$text[1:4], explainer, n_labels = 1, n_features = 5)
+plot_text_explanations(explanations)
+```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+```{r lime_text_plot, fig.width=6, fig.height=6}
+plot_features(explanations)
+```
+
+As we can see, our explanations contain a lot of stop-words that don't really make much sense as features in our model. So...
+
+## ... let's try a more complex example
+
+Okay, our model above works but there are still common words and stop words in our model that LIME picks up on. Ideally, we would want to remove them before modeling and keep only relevant words. This we can accomplish by using additional steps and options in our preprocessing function.
+
+Important to know is that whatever preprocessing we do with our text corpus, train and test data has to have the same features (i.e. words)! If we were to incorporate all the steps shown below into one function and call it separately on train and test data, we would end up with different words in our dtm and the `predict()` function won't work any more. In the simple example above, it works [because we have been using the `hash_vectorizer()`](https://cran.r-project.org/web/packages/text2vec/vignettes/text-vectorization.html).
+
+Nevertheless, the `lime::explain()` function expects a preprocessing function that takes a character vector as input.
+
+How do we go about this? First, we will need to create the vocabulary just from the training data. To reduce the number of words to only the most relevant I am performing the following steps:
+
+- stem all words
+- remove step-words
+- prune vocabulary
+- transform into vector space
+
+```{r}
+stem_tokenizer <- function(x) {
+  lapply(word_tokenizer(x), 
+         SnowballC::wordStem, 
+         language = "en")
+}
+
+stop_words = tm::stopwords(kind = "en")
+
+# create prunded vocabulary
+vocab_train <- itoken(clothing_reviews_train$text, 
+                     preprocess_function = tolower, 
+                     tokenizer = stem_tokenizer,
+                     progressbar = FALSE)
+  
+v <- create_vocabulary(vocab_train, 
+                       stopwords = stop_words)
+  
+pruned_vocab <- prune_vocabulary(v, 
+                                  doc_proportion_max = 0.99, 
+                                  doc_proportion_min = 0.01)
+  
+vectorizer_train <- vocab_vectorizer(pruned_vocab)
+```
+
+This vector space can now be added to the preprocessing function, which we can then apply to both train and test data. Here, I am also transforming the word counts to [tfidf](https://en.wikipedia.org/wiki/Tf%E2%80%93idf) values.
+
+```{r}
+# preprocessing function
+create_dtm_mat <- function(text, vectorizer = vectorizer_train) {
+  
+  vocab <- itoken(text, 
+               preprocess_function = tolower, 
+               tokenizer = stem_tokenizer,
+               progressbar = FALSE)
+  
+  dtm <- create_dtm(vocab, 
+             vectorizer = vectorizer)
+  
+  tfidf = TfIdf$new()
+  fit_transform(dtm, tfidf)
+}
+```
+
+```{r}
+dtm_train2 <- create_dtm_mat(clothing_reviews_train$text)
+str(dtm_train2)
+```
+
+```{r}
+dtm_test2 <- create_dtm_mat(clothing_reviews_test$text)
+str(dtm_test2)
+```
+
+And we will train another gradient boosting model:
+
+```{r}
+xgb_model2 <- xgb.train(params = list(max_depth = 10, 
+                            eta = 0.2, 
+                            objective = "binary:logistic",
+                            eval_metric = "error", nthread = 1),
+                       data = xgb.DMatrix(dtm_train2, 
+                                   label = clothing_reviews_train$Liked == "1"),
+                       nrounds = 500)
+```
+
+```{r}
+pred2 <- predict(xgb_model2, dtm_test2)
+
+confusionMatrix(clothing_reviews_test$Liked,
+                as.factor(round(pred2, digits = 0)))
+```
+
+Unfortunately, this didn't really improve the classification accuracy but let's look at the explanations again:
+
+```{r}
+explainer2 <- lime(clothing_reviews_train$text, 
+                  xgb_model2, 
+                  preprocess = create_dtm_mat)
+```
+
+```{r}
+explanations2 <- lime::explain(clothing_reviews_test$text[1:4], explainer2, n_labels = 1, n_features = 4)
+plot_text_explanations(explanations2)
+```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+The words that get picked up now make much more sense! So, even though making my model more complex didn't improve "the numbers", this second model is likely to be much better able to generalize to new reviews because it seems to pick up on words that make intuitive sense.
+
+That's why I'm sold on the benefits of adding explainer functions to most machine learning workflows - and why I love the `lime` package in R!
+
+---
+
+```{r}
+sessionInfo()
+```
+

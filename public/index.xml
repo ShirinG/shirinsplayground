@@ -2,25 +2,416 @@
   <title>Shirin&#39;s playgRound</title>
   <link href="/index.xml" rel="self"/>
   <link href="/"/>
-  <updated>2018-07-20T00:00:00+00:00</updated>
+  <updated>2018-07-26T00:00:00+00:00</updated>
   <id>/</id>
   <author>
     <name>Dr. Shirin Glander</name>
   </author>
   <generator>Hugo -- gohugo.io</generator>
   <entry>
+    <title type="html"><![CDATA[Explaining Black-Box Machine Learning Models - Code Part 2: Text classification with LIME]]></title>
+    <link href="/2018/07/explaining_ml_models_code_text_lime/"/>
+    <id>/2018/07/explaining_ml_models_code_text_lime/</id>
+    <published>2018-07-26T00:00:00+00:00</published>
+    <updated>2018-07-26T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
+<link href="/rmarkdown-libs/plot_text_explanations/plot_text_explanations.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/plot_text_explanations-binding/plot_text_explanations.js"></script>
+
+
+<p>This is code that will encompany an article that will appear in a special edition of a German IT magazine. The article is about explaining black-box machine learning models. In that article I’m showcasing three practical examples:</p>
+<p><br></p>
+<ol style="list-style-type: decimal">
+<li>Explaining supervised classification models built on tabular data using <code>caret</code> and the <code>iml</code> package</li>
+<li>Explaining image classification models with <code>keras</code> and <code>lime</code></li>
+<li>Explaining text classification models with <code>xgboost</code> and <code>lime</code></li>
+</ol>
+<p><br></p>
+<ul>
+<li>The first part has been published <a href="https://shirinsplayground.netlify.com/2018/07/explaining_ml_models_code_caret_iml/">here</a>.</li>
+<li>The second part has been published <a href="https://shirinsplayground.netlify.com/2018/06/keras_fruits_lime/">here</a>.</li>
+</ul>
+<p>Below, you will find the code for the third part: Text classification with <a href="https://cran.r-project.org/web/packages/lime/index.html">lime</a>.</p>
+<pre class="r"><code># data wrangling
+library(tidyverse)
+library(readr)
+
+# plotting
+library(ggthemes)
+theme_set(theme_minimal())
+
+# text prep
+library(text2vec)
+
+# ml
+library(caret)
+library(xgboost)
+
+# explanation
+library(lime)</code></pre>
+<div id="text-classification-models" class="section level2">
+<h2>Text classification models</h2>
+<p>Here I am using another Kaggle dataset: <a href="https://www.kaggle.com/nicapotato/womens-ecommerce-clothing-reviews">Women’s e-commerce cloting reviews</a>. The data contains a text review of different items of clothing, as well as some additional information, like rating, division, etc.</p>
+<p>In this example, I will use the review title and text in order to classify whether or not the item was liked. I am creating the response variable from the rating: every item rates with 5 stars is considered “liked” (1), the rest as “not liked” (0). I am also combining review title and text.</p>
+<pre class="r"><code>clothing_reviews &lt;- read_csv(&quot;/Users/shiringlander/Documents/Github/ix_lime_etc/Womens Clothing E-Commerce Reviews.csv&quot;) %&gt;%
+  mutate(Liked = as.factor(ifelse(Rating == 5, 1, 0)),
+         text = paste(Title, `Review Text`),
+         text = gsub(&quot;NA&quot;, &quot;&quot;, text))</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   X1 = col_integer(),
+##   `Clothing ID` = col_integer(),
+##   Age = col_integer(),
+##   Title = col_character(),
+##   `Review Text` = col_character(),
+##   Rating = col_integer(),
+##   `Recommended IND` = col_integer(),
+##   `Positive Feedback Count` = col_integer(),
+##   `Division Name` = col_character(),
+##   `Department Name` = col_character(),
+##   `Class Name` = col_character()
+## )</code></pre>
+<pre class="r"><code>glimpse(clothing_reviews)</code></pre>
+<pre><code>## Observations: 23,486
+## Variables: 13
+## $ X1                        &lt;int&gt; 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11...
+## $ `Clothing ID`             &lt;int&gt; 767, 1080, 1077, 1049, 847, 1080, 85...
+## $ Age                       &lt;int&gt; 33, 34, 60, 50, 47, 49, 39, 39, 24, ...
+## $ Title                     &lt;chr&gt; NA, NA, &quot;Some major design flaws&quot;, &quot;...
+## $ `Review Text`             &lt;chr&gt; &quot;Absolutely wonderful - silky and se...
+## $ Rating                    &lt;int&gt; 4, 5, 3, 5, 5, 2, 5, 4, 5, 5, 3, 5, ...
+## $ `Recommended IND`         &lt;int&gt; 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, ...
+## $ `Positive Feedback Count` &lt;int&gt; 0, 4, 0, 0, 6, 4, 1, 4, 0, 0, 14, 2,...
+## $ `Division Name`           &lt;chr&gt; &quot;Initmates&quot;, &quot;General&quot;, &quot;General&quot;, &quot;...
+## $ `Department Name`         &lt;chr&gt; &quot;Intimate&quot;, &quot;Dresses&quot;, &quot;Dresses&quot;, &quot;B...
+## $ `Class Name`              &lt;chr&gt; &quot;Intimates&quot;, &quot;Dresses&quot;, &quot;Dresses&quot;, &quot;...
+## $ Liked                     &lt;fct&gt; 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, ...
+## $ text                      &lt;chr&gt; &quot; Absolutely wonderful - silky and s...</code></pre>
+<p>Whether an item was liked or not will thus be my response variable or label for classification.</p>
+<pre class="r"><code>clothing_reviews %&gt;%
+  ggplot(aes(x = Liked, fill = Liked)) +
+    geom_bar(alpha = 0.8) +
+    scale_fill_tableau(palette = &quot;tableau20&quot;) +
+    guides(fill = FALSE)</code></pre>
+<p><img src="/post/2018-07-26_explaining_ml_models_code_text_lime_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>Let’s split the data into train and test sets:</p>
+<pre class="r"><code>set.seed(42)
+idx &lt;- createDataPartition(clothing_reviews$Liked, 
+                           p = 0.8, 
+                           list = FALSE, 
+                           times = 1)
+
+clothing_reviews_train &lt;- clothing_reviews[ idx,]
+clothing_reviews_test  &lt;- clothing_reviews[-idx,]</code></pre>
+</div>
+<div id="lets-start-simple" class="section level2">
+<h2>Let’s start simple</h2>
+<p>The first text model I’m looking at has been built similarly to the example model in the help for <code>lime::interactive_text_explanations()</code>.</p>
+<p>First, we need to prepare the data for modeling: we will need to convert the text to a document term matrix (dtm). There are different ways to do this. One is be with the <code>text2vec</code> package.</p>
+<blockquote>
+<p>“Because of R’s copy-on-modify semantics, it is not easy to iteratively grow a DTM. Thus constructing a DTM, even for a small collections of documents, can be a serious bottleneck for analysts and researchers. It involves reading the whole collection of text documents into RAM and processing it as single vector, which can easily increase memory use by a factor of 2 to 4. The text2vec package solves this problem by providing a better way of constructing a document-term matrix.” <a href="https://cran.r-project.org/web/packages/text2vec/vignettes/text-vectorization.html" class="uri">https://cran.r-project.org/web/packages/text2vec/vignettes/text-vectorization.html</a></p>
+</blockquote>
+<p>Alternatives to <code>text2vec</code> would be <code>tm</code> + <code>SnowballC</code> or you could work with the <code>tidytext</code> package.</p>
+<p>The <code>itoken()</code> function creates vocabularies (here stemmed words), from which we can create the dtm with the <code>create_dtm()</code> function.</p>
+<p>All preprocessing steps, starting from the raw text, need to be wrapped in a function that can then be pasted into the <code>lime::lime()</code> function; this is only necessary if you want to use your model with <code>lime</code>.</p>
+<pre class="r"><code>get_matrix &lt;- function(text) {
+  it &lt;- itoken(text, progressbar = FALSE)
+  create_dtm(it, vectorizer = hash_vectorizer())
+}</code></pre>
+<p>Now, this preprocessing function can be applied to both training and test data.</p>
+<pre class="r"><code>dtm_train &lt;- get_matrix(clothing_reviews_train$text)
+str(dtm_train)</code></pre>
+<pre><code>## Formal class &#39;dgCMatrix&#39; [package &quot;Matrix&quot;] with 6 slots
+##   ..@ i       : int [1:889012] 304 764 786 788 793 794 1228 2799 2819 3041 ...
+##   ..@ p       : int [1:262145] 0 0 0 0 0 0 0 0 0 0 ...
+##   ..@ Dim     : int [1:2] 18789 262144
+##   ..@ Dimnames:List of 2
+##   .. ..$ : chr [1:18789] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; ...
+##   .. ..$ : NULL
+##   ..@ x       : num [1:889012] 1 1 2 1 2 1 1 1 1 1 ...
+##   ..@ factors : list()</code></pre>
+<pre class="r"><code>dtm_test &lt;- get_matrix(clothing_reviews_test$text)
+str(dtm_test)</code></pre>
+<pre><code>## Formal class &#39;dgCMatrix&#39; [package &quot;Matrix&quot;] with 6 slots
+##   ..@ i       : int [1:222314] 2793 400 477 622 2818 2997 3000 4500 3524 2496 ...
+##   ..@ p       : int [1:262145] 0 0 0 0 0 0 0 0 0 0 ...
+##   ..@ Dim     : int [1:2] 4697 262144
+##   ..@ Dimnames:List of 2
+##   .. ..$ : chr [1:4697] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; ...
+##   .. ..$ : NULL
+##   ..@ x       : num [1:222314] 1 1 1 1 1 1 1 1 1 1 ...
+##   ..@ factors : list()</code></pre>
+<p>And we use it to train a model with the <code>xgboost</code> package (just as in the example of the <code>lime</code> package).</p>
+<pre class="r"><code>xgb_model &lt;- xgb.train(list(max_depth = 7, 
+                            eta = 0.1, 
+                            objective = &quot;binary:logistic&quot;,
+                            eval_metric = &quot;error&quot;, nthread = 1),
+                       xgb.DMatrix(dtm_train, 
+                                   label = clothing_reviews_train$Liked == &quot;1&quot;),
+                       nrounds = 50)</code></pre>
+<p>Let’s try it on the test data and see how it performs:</p>
+<pre class="r"><code>pred &lt;- predict(xgb_model, dtm_test)
+
+confusionMatrix(clothing_reviews_test$Liked,
+                as.factor(round(pred, digits = 0)))</code></pre>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction    0    1
+##          0 1370  701
+##          1  421 2205
+##                                           
+##                Accuracy : 0.7611          
+##                  95% CI : (0.7487, 0.7733)
+##     No Information Rate : 0.6187          
+##     P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
+##                                           
+##                   Kappa : 0.5085          
+##  Mcnemar&#39;s Test P-Value : &lt; 2.2e-16       
+##                                           
+##             Sensitivity : 0.7649          
+##             Specificity : 0.7588          
+##          Pos Pred Value : 0.6615          
+##          Neg Pred Value : 0.8397          
+##              Prevalence : 0.3813          
+##          Detection Rate : 0.2917          
+##    Detection Prevalence : 0.4409          
+##       Balanced Accuracy : 0.7619          
+##                                           
+##        &#39;Positive&#39; Class : 0               
+## </code></pre>
+<p>Okay, not a perfect score but good enough for me - right now, I’m more interested in the explanations of the model’s predictions. For this, we need to run the <code>lime()</code> function and give it</p>
+<ul>
+<li>the text input that was used to construct the model</li>
+<li>the trained model</li>
+<li>the preprocessing function</li>
+</ul>
+<pre class="r"><code>explainer &lt;- lime(clothing_reviews_train$text, 
+                  xgb_model, 
+                  preprocess = get_matrix)</code></pre>
+<p>With this, we could right away call the interactive explainer Shiny app, where we can type any text we want into the field on the left and see the explanation on the right: words that are underlined green support the classification, red words contradict them.</p>
+<pre class="r"><code>interactive_text_explanations(explainer)</code></pre>
+<div class="figure">
+<img src="https://shiring.github.io/netlify_images/text_explanation_2.png" />
+
+</div>
+<p>What happens in the background in the app, we can do explicitly by calling the <code>explain()</code> function and give it</p>
+<ul>
+<li>the test data (here the first four reviews of the test set)</li>
+<li>the explainer defined with the <code>lime()</code> function</li>
+<li>the number of labels we want to have explanations for (alternatively, you set the label by name)</li>
+<li>and the number of features (in this case words) that should be included in the explanations</li>
+</ul>
+<p>We can plot them either with the <code>plot_text_explanations()</code> function, which gives an output like in the Shiny app or we use the regular <code>plot_features()</code> function.</p>
+<pre class="r"><code>explanations &lt;- lime::explain(clothing_reviews_test$text[1:4], explainer, n_labels = 1, n_features = 5)
+plot_text_explanations(explanations)</code></pre>
+<div id="htmlwidget-1" style="width:100%;height:auto;" class="plot_text_explanations html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"html":"<div style=\"overflow-y:scroll;font-family:sans-serif;position:absolute;height:100%\"> <p>  <span class='positive_1'>Absolutely<\/span> wonderful - <span class='positive_1'>silky<\/span> <span class='positive_1'>and<\/span> <span class='positive_1'>sexy<\/span> <span class='positive_1'>and<\/span> <span class='positive_5'>comfortable<\/span> <\/br> <sub>Label predicted: 1 (73.17%)<br/>Explainer fit: 1<\/sub> <\/p><br/><p> Some major design flaws I had such high hopes for this dress and really wanted it to work for me. i initially ordered the petite small (my usual size) <span class='positive_2'>but<\/span> i found this to be outrageously small. so small in fact that i could <span class='positive_1'>not<\/span> zip it up! i reordered it in petite medium, which <span class='positive_2'>was<\/span> just ok. overall, the top half <span class='positive_2'>was<\/span> <span class='negative_1'>comfortable<\/span> and fit nicely, <span class='positive_2'>but<\/span> the bottom half had a very tight under layer and several somewhat <span class='positive_2'>cheap<\/span> (net) over layers. imo, a major design flaw <span class='positive_2'>was<\/span> the net over layer sewn directly into the zipper - it c <\/br> <sub>Label predicted: 0 (71.45%)<br/>Explainer fit: 0.84<\/sub> <\/p><br/><p> Flattering shirt This shirt is very <span class='positive_1'>flattering<\/span> to all due to <span class='negative_1'>the<\/span> adjustable front tie. it is <span class='negative_1'>the<\/span> <span class='positive_2'>perfect<\/span> length to wear with leggings and it is sleeveless <span class='positive_1'>so<\/span> it pairs well with any cardigan. <span class='positive_3'>love<\/span> this shirt!!! <\/br> <sub>Label predicted: 1 (84.2%)<br/>Explainer fit: 0.98<\/sub> <\/p><br/><p> <span class='positive_1'>Pretty<\/span> party dress <span class='negative_1'>with<\/span> some issues This is a nice choice for holiday gatherings. i like that the length grazes the knee so it is conservative enough for office related gatherings. the size small fit me well - i am usually a size 2/4 <span class='negative_1'>with<\/span> a small bust. in my opinion it <span class='positive_1'>runs<\/span> small and those <span class='negative_1'>with<\/span> larger busts will definitely have to size up (<span class='positive_3'>but<\/span> then perhaps the waist will be <span class='positive_1'>too<\/span> big). the problem <span class='negative_1'>with<\/span> this dress is the quality. the fabrics are terrible. the delicate netting type fabric on the top layer of skirt got stuck in the zip <\/br> <sub>Label predicted: 0 (56.99%)<br/>Explainer fit: 0.91<\/sub> <\/p> <\/div>"},"evals":[],"jsHooks":[]}</script>
+<p><br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br></p>
+<pre class="r"><code>plot_features(explanations)</code></pre>
+<p><img src="/post/2018-07-26_explaining_ml_models_code_text_lime_files/figure-html/lime_text_plot-1.png" width="576" /></p>
+<p>As we can see, our explanations contain a lot of stop-words that don’t really make much sense as features in our model. So…</p>
+</div>
+<div id="lets-try-a-more-complex-example" class="section level2">
+<h2>… let’s try a more complex example</h2>
+<p>Okay, our model above works but there are still common words and stop words in our model that LIME picks up on. Ideally, we would want to remove them before modeling and keep only relevant words. This we can accomplish by using additional steps and options in our preprocessing function.</p>
+<p>Important to know is that whatever preprocessing we do with our text corpus, train and test data has to have the same features (i.e. words)! If we were to incorporate all the steps shown below into one function and call it separately on train and test data, we would end up with different words in our dtm and the <code>predict()</code> function won’t work any more. In the simple example above, it works <a href="https://cran.r-project.org/web/packages/text2vec/vignettes/text-vectorization.html">because we have been using the <code>hash_vectorizer()</code></a>.</p>
+<p>Nevertheless, the <code>lime::explain()</code> function expects a preprocessing function that takes a character vector as input.</p>
+<p>How do we go about this? First, we will need to create the vocabulary just from the training data. To reduce the number of words to only the most relevant I am performing the following steps:</p>
+<ul>
+<li>stem all words</li>
+<li>remove step-words</li>
+<li>prune vocabulary</li>
+<li>transform into vector space</li>
+</ul>
+<pre class="r"><code>stem_tokenizer &lt;- function(x) {
+  lapply(word_tokenizer(x), 
+         SnowballC::wordStem, 
+         language = &quot;en&quot;)
+}
+
+stop_words = tm::stopwords(kind = &quot;en&quot;)
+
+# create prunded vocabulary
+vocab_train &lt;- itoken(clothing_reviews_train$text, 
+                     preprocess_function = tolower, 
+                     tokenizer = stem_tokenizer,
+                     progressbar = FALSE)
+  
+v &lt;- create_vocabulary(vocab_train, 
+                       stopwords = stop_words)
+  
+pruned_vocab &lt;- prune_vocabulary(v, 
+                                  doc_proportion_max = 0.99, 
+                                  doc_proportion_min = 0.01)
+  
+vectorizer_train &lt;- vocab_vectorizer(pruned_vocab)</code></pre>
+<p>This vector space can now be added to the preprocessing function, which we can then apply to both train and test data. Here, I am also transforming the word counts to <a href="https://en.wikipedia.org/wiki/Tf%E2%80%93idf">tfidf</a> values.</p>
+<pre class="r"><code># preprocessing function
+create_dtm_mat &lt;- function(text, vectorizer = vectorizer_train) {
+  
+  vocab &lt;- itoken(text, 
+               preprocess_function = tolower, 
+               tokenizer = stem_tokenizer,
+               progressbar = FALSE)
+  
+  dtm &lt;- create_dtm(vocab, 
+             vectorizer = vectorizer)
+  
+  tfidf = TfIdf$new()
+  fit_transform(dtm, tfidf)
+}</code></pre>
+<pre class="r"><code>dtm_train2 &lt;- create_dtm_mat(clothing_reviews_train$text)
+str(dtm_train2)</code></pre>
+<pre><code>## Formal class &#39;dgCMatrix&#39; [package &quot;Matrix&quot;] with 6 slots
+##   ..@ i       : int [1:415770] 26 74 169 294 588 693 703 708 727 759 ...
+##   ..@ p       : int [1:506] 0 189 380 574 765 955 1151 1348 1547 1740 ...
+##   ..@ Dim     : int [1:2] 18789 505
+##   ..@ Dimnames:List of 2
+##   .. ..$ : chr [1:18789] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; ...
+##   .. ..$ : chr [1:505] &quot;ad&quot; &quot;sandal&quot; &quot;depend&quot; &quot;often&quot; ...
+##   ..@ x       : num [1:415770] 0.177 0.135 0.121 0.17 0.131 ...
+##   ..@ factors : list()</code></pre>
+<pre class="r"><code>dtm_test2 &lt;- create_dtm_mat(clothing_reviews_test$text)
+str(dtm_test2)</code></pre>
+<pre><code>## Formal class &#39;dgCMatrix&#39; [package &quot;Matrix&quot;] with 6 slots
+##   ..@ i       : int [1:103487] 228 304 360 406 472 518 522 624 732 784 ...
+##   ..@ p       : int [1:506] 0 53 113 151 186 216 252 290 323 360 ...
+##   ..@ Dim     : int [1:2] 4697 505
+##   ..@ Dimnames:List of 2
+##   .. ..$ : chr [1:4697] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; ...
+##   .. ..$ : chr [1:505] &quot;ad&quot; &quot;sandal&quot; &quot;depend&quot; &quot;often&quot; ...
+##   ..@ x       : num [1:103487] 0.263 0.131 0.135 0.109 0.179 ...
+##   ..@ factors : list()</code></pre>
+<p>And we will train another gradient boosting model:</p>
+<pre class="r"><code>xgb_model2 &lt;- xgb.train(params = list(max_depth = 10, 
+                            eta = 0.2, 
+                            objective = &quot;binary:logistic&quot;,
+                            eval_metric = &quot;error&quot;, nthread = 1),
+                       data = xgb.DMatrix(dtm_train2, 
+                                   label = clothing_reviews_train$Liked == &quot;1&quot;),
+                       nrounds = 500)</code></pre>
+<pre class="r"><code>pred2 &lt;- predict(xgb_model2, dtm_test2)
+
+confusionMatrix(clothing_reviews_test$Liked,
+                as.factor(round(pred2, digits = 0)))</code></pre>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction    0    1
+##          0 1441  630
+##          1  426 2200
+##                                         
+##                Accuracy : 0.7752        
+##                  95% CI : (0.763, 0.787)
+##     No Information Rate : 0.6025        
+##     P-Value [Acc &gt; NIR] : &lt; 2.2e-16     
+##                                         
+##                   Kappa : 0.5392        
+##  Mcnemar&#39;s Test P-Value : 4.187e-10     
+##                                         
+##             Sensitivity : 0.7718        
+##             Specificity : 0.7774        
+##          Pos Pred Value : 0.6958        
+##          Neg Pred Value : 0.8378        
+##              Prevalence : 0.3975        
+##          Detection Rate : 0.3068        
+##    Detection Prevalence : 0.4409        
+##       Balanced Accuracy : 0.7746        
+##                                         
+##        &#39;Positive&#39; Class : 0             
+## </code></pre>
+<p>Unfortunately, this didn’t really improve the classification accuracy but let’s look at the explanations again:</p>
+<pre class="r"><code>explainer2 &lt;- lime(clothing_reviews_train$text, 
+                  xgb_model2, 
+                  preprocess = create_dtm_mat)</code></pre>
+<pre class="r"><code>explanations2 &lt;- lime::explain(clothing_reviews_test$text[1:4], explainer2, n_labels = 1, n_features = 4)
+plot_text_explanations(explanations2)</code></pre>
+<div id="htmlwidget-2" style="width:100%;height:auto;" class="plot_text_explanations html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2">{"x":{"html":"<div style=\"overflow-y:scroll;font-family:sans-serif;position:absolute;height:100%\"> <p>  <span class='negative_1'>Absolutely<\/span> <span class='positive_4'>wonderful<\/span> - <span class='negative_1'>silky<\/span> and sexy and <span class='positive_2'>comfortable<\/span> <\/br> <sub>Label predicted: 1 (97.25%)<br/>Explainer fit: 0.94<\/sub> <\/p><br/><p> Some major <span class='positive_2'>design<\/span> flaws I had such high hopes for this dress and really wanted it to work for me. i initially ordered the petite small (my usual size) but i found this to be outrageously small. so small in fact that i could not zip it up! i reordered it in petite medium, which was just ok. <span class='positive_1'>overall<\/span>, the top half was <span class='negative_2'>comfortable<\/span> and fit nicely, but the bottom half had a very tight under layer and several somewhat <span class='positive_2'>cheap<\/span> (net) over layers. imo, a major <span class='positive_2'>design<\/span> flaw was the net over layer sewn directly into the zipper - it c <\/br> <sub>Label predicted: 0 (94.56%)<br/>Explainer fit: 0.34<\/sub> <\/p><br/><p> Flattering shirt This shirt is very <span class='positive_2'>flattering<\/span> to all due to the adjustable front tie. it is the <span class='positive_2'>perfect<\/span> length to <span class='negative_1'>wear<\/span> with leggings and it is sleeveless so it pairs well with any cardigan. <span class='positive_2'>love<\/span> this shirt!!! <\/br> <sub>Label predicted: 1 (98.61%)<br/>Explainer fit: 0.62<\/sub> <\/p><br/><p> <span class='positive_2'>Pretty<\/span> party dress with some <span class='positive_2'>issues<\/span> This is a nice choice for holiday gatherings. i like that the length grazes the knee so it is conservative enough for office related gatherings. the size small fit me well - i am usually a size 2/4 with a small bust. in my opinion it runs small and those with larger busts will definitely have to size up (but then perhaps the waist will be too big). the <span class='positive_2'>problem<\/span> with this dress is the quality. the fabrics are terrible. the <span class='negative_1'>delicate<\/span> netting type fabric on the top layer of skirt got stuck in the zip <\/br> <sub>Label predicted: 0 (98.61%)<br/>Explainer fit: 0.44<\/sub> <\/p> <\/div>"},"evals":[],"jsHooks":[]}</script>
+<p><br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br></p>
+<p>The words that get picked up now make much more sense! So, even though making my model more complex didn’t improve “the numbers”, this second model is likely to be much better able to generalize to new reviews because it seems to pick up on words that make intuitive sense.</p>
+<p>That’s why I’m sold on the benefits of adding explainer functions to most machine learning workflows - and why I love the <code>lime</code> package in R!</p>
+<hr />
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 3.5.1 (2018-07-02)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS High Sierra 10.13.6
+## 
+## Matrix products: default
+## BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] de_DE.UTF-8/de_DE.UTF-8/de_DE.UTF-8/C/de_DE.UTF-8/de_DE.UTF-8
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] bindrcpp_0.2.2  lime_0.4.0      xgboost_0.71.2  caret_6.0-80   
+##  [5] lattice_0.20-35 text2vec_0.5.1  ggthemes_3.5.0  forcats_0.3.0  
+##  [9] stringr_1.3.1   dplyr_0.7.6     purrr_0.2.5     readr_1.1.1    
+## [13] tidyr_0.8.1     tibble_1.4.2    ggplot2_3.0.0   tidyverse_1.2.1
+## 
+## loaded via a namespace (and not attached):
+##   [1] colorspace_1.3-2     class_7.3-14         rprojroot_1.3-2     
+##   [4] futile.logger_1.4.3  pls_2.6-0            rstudioapi_0.7      
+##   [7] DRR_0.0.3            SnowballC_0.5.1      prodlim_2018.04.18  
+##  [10] lubridate_1.7.4      xml2_1.2.0           codetools_0.2-15    
+##  [13] splines_3.5.1        mnormt_1.5-5         robustbase_0.93-1   
+##  [16] knitr_1.20           shinythemes_1.1.1    RcppRoll_0.3.0      
+##  [19] mlapi_0.1.0          jsonlite_1.5         broom_0.4.5         
+##  [22] ddalpha_1.3.4        kernlab_0.9-26       sfsmisc_1.1-2       
+##  [25] shiny_1.1.0          compiler_3.5.1       httr_1.3.1          
+##  [28] backports_1.1.2      assertthat_0.2.0     Matrix_1.2-14       
+##  [31] lazyeval_0.2.1       cli_1.0.0            later_0.7.3         
+##  [34] formatR_1.5          htmltools_0.3.6      tools_3.5.1         
+##  [37] NLP_0.1-11           gtable_0.2.0         glue_1.2.0          
+##  [40] reshape2_1.4.3       Rcpp_0.12.17         slam_0.1-43         
+##  [43] cellranger_1.1.0     nlme_3.1-137         blogdown_0.6        
+##  [46] iterators_1.0.9      psych_1.8.4          timeDate_3043.102   
+##  [49] gower_0.1.2          xfun_0.3             rvest_0.3.2         
+##  [52] mime_0.5             stringdist_0.9.5.1   DEoptimR_1.0-8      
+##  [55] MASS_7.3-50          scales_0.5.0         ipred_0.9-6         
+##  [58] hms_0.4.2            promises_1.0.1       parallel_3.5.1      
+##  [61] lambda.r_1.2.3       yaml_2.1.19          rpart_4.1-13        
+##  [64] stringi_1.2.3        foreach_1.4.4        e1071_1.6-8         
+##  [67] lava_1.6.2           geometry_0.3-6       rlang_0.2.1         
+##  [70] pkgconfig_2.0.1      evaluate_0.10.1      bindr_0.1.1         
+##  [73] labeling_0.3         recipes_0.1.3        htmlwidgets_1.2     
+##  [76] CVST_0.2-2           tidyselect_0.2.4     plyr_1.8.4          
+##  [79] magrittr_1.5         bookdown_0.7         R6_2.2.2            
+##  [82] magick_1.9           dimRed_0.1.0         pillar_1.2.3        
+##  [85] haven_1.1.2          foreign_0.8-70       withr_2.1.2         
+##  [88] survival_2.42-3      abind_1.4-5          nnet_7.3-12         
+##  [91] modelr_0.1.2         crayon_1.3.4         futile.options_1.0.1
+##  [94] rmarkdown_1.10       grid_3.5.1           readxl_1.1.0        
+##  [97] data.table_1.11.4    ModelMetrics_1.1.0   digest_0.6.15       
+## [100] tm_0.7-4             xtable_1.8-2         httpuv_1.4.4.2      
+## [103] RcppParallel_4.4.0   stats4_3.5.1         munsell_0.5.0       
+## [106] glmnet_2.0-16        magic_1.5-8</code></pre>
+</div>
+]]></content>
+  </entry>
+  <entry>
     <title type="html"><![CDATA[Explaining Black-Box Machine Learning Models - Code Part 1: tabular data &#43; caret &#43; iml]]></title>
     <link href="/2018/07/explaining_ml_models_code_caret_iml/"/>
     <id>/2018/07/explaining_ml_models_code_caret_iml/</id>
     <published>2018-07-20T00:00:00+00:00</published>
     <updated>2018-07-20T00:00:00+00:00</updated>
-    <content type="html"><![CDATA[<p>This is code that will accompany an article that will appear in a special edition of a German IT magazine. The article is about explaining black-box machine learning models. In that article I’m showcasing three practical examples:</p>
+    <content type="html"><![CDATA[<p>This is code that will encompany an article that will appear in a special edition of a German IT magazine. The article is about explaining black-box machine learning models. In that article I’m showcasing three practical examples:</p>
+<p><br></p>
 <ol style="list-style-type: decimal">
 <li>Explaining supervised classification models built on tabular data using <code>caret</code> and the <code>iml</code> package</li>
 <li>Explaining image classification models with <code>keras</code> and <code>lime</code></li>
-<li>Explaining text classification models with <code>lime</code></li>
+<li>Explaining text classification models with <code>xgboost</code> and <code>lime</code></li>
 </ol>
-<p>The second part has already been published <a href="https://shirinsplayground.netlify.com/2018/06/keras_fruits_lime/">here</a>.</p>
+<p><br></p>
+<ul>
+<li>The second part has been published <a href="https://shirinsplayground.netlify.com/2018/06/keras_fruits_lime/">here</a>.</li>
+<li>The third part has been published <a href="https://shirinsplayground.netlify.com/2018/07/explaining_ml_models_code_text_lime/">here</a>.</li>
+</ul>
 <p>Below, you will find the code for the first part:</p>
 <pre class="r"><code># data wrangling
 library(tidyverse)

@@ -12,13 +12,18 @@ coverMeta: out
 slug: explaining_ml_models_code_caret_iml
 ---
 
-This is code that will accompany an article that will appear in a special edition of a German IT magazine. The article is about explaining black-box machine learning models. In that article I'm showcasing three practical examples:
+This is code that will encompany an article that will appear in a special edition of a German IT magazine. The article is about explaining black-box machine learning models. In that article I'm showcasing three practical examples:
+
+<br>
 
 1. Explaining supervised classification models built on tabular data using `caret` and the `iml` package
 2. Explaining image classification models with `keras` and `lime`
-3. Explaining text classification models with `lime`
+3. Explaining text classification models with `xgboost` and `lime`
 
-The second part has already been published [here](https://shirinsplayground.netlify.com/2018/06/keras_fruits_lime/).
+<br>
+
+- The second part has been published [here](https://shirinsplayground.netlify.com/2018/06/keras_fruits_lime/).
+- The third part has been published [here](https://shirinsplayground.netlify.com/2018/07/explaining_ml_models_code_text_lime/).
 
 Below, you will find the code for the first part: 
 
