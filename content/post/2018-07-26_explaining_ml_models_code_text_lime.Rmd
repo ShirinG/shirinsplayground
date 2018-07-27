@@ -167,36 +167,13 @@ We can plot them either with the `plot_text_explanations()` function, which give
 
 ```{r}
 explanations <- lime::explain(clothing_reviews_test$text[1:4], explainer, n_labels = 1, n_features = 5)
+```
+
+```{r eval=FALSE}
 plot_text_explanations(explanations)
 ```
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+![](https://shiring.github.io/netlify_images/text_explanation_0.png)
 
 ```{r lime_text_plot, fig.width=6, fig.height=6}
 plot_features(explanations)
@@ -300,38 +277,12 @@ explainer2 <- lime(clothing_reviews_train$text,
                   preprocess = create_dtm_mat)
 ```
 
-```{r}
+```{r eval=FALSE}
 explanations2 <- lime::explain(clothing_reviews_test$text[1:4], explainer2, n_labels = 1, n_features = 4)
 plot_text_explanations(explanations2)
 ```
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+![](https://shiring.github.io/netlify_images/text_explanation_1.png)
 
 The words that get picked up now make much more sense! So, even though making my model more complex didn't improve "the numbers", this second model is likely to be much better able to generalize to new reviews because it seems to pick up on words that make intuitive sense.
 

@@ -14,12 +14,7 @@
     <id>/2018/07/explaining_ml_models_code_text_lime/</id>
     <published>2018-07-26T00:00:00+00:00</published>
     <updated>2018-07-26T00:00:00+00:00</updated>
-    <content type="html"><![CDATA[<script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
-<link href="/rmarkdown-libs/plot_text_explanations/plot_text_explanations.css" rel="stylesheet" />
-<script src="/rmarkdown-libs/plot_text_explanations-binding/plot_text_explanations.js"></script>
-
-
-<p>This is code that will encompany an article that will appear in a special edition of a German IT magazine. The article is about explaining black-box machine learning models. In that article I’m showcasing three practical examples:</p>
+    <content type="html"><![CDATA[<p>This is code that will encompany an article that will appear in a special edition of a German IT magazine. The article is about explaining black-box machine learning models. In that article I’m showcasing three practical examples:</p>
 <p><br></p>
 <ol style="list-style-type: decimal">
 <li>Explaining supervised classification models built on tabular data using <code>caret</code> and the <code>iml</code> package</li>
@@ -203,11 +198,12 @@ confusionMatrix(clothing_reviews_test$Liked,
 <li>and the number of features (in this case words) that should be included in the explanations</li>
 </ul>
 <p>We can plot them either with the <code>plot_text_explanations()</code> function, which gives an output like in the Shiny app or we use the regular <code>plot_features()</code> function.</p>
-<pre class="r"><code>explanations &lt;- lime::explain(clothing_reviews_test$text[1:4], explainer, n_labels = 1, n_features = 5)
-plot_text_explanations(explanations)</code></pre>
-<div id="htmlwidget-1" style="width:100%;height:auto;" class="plot_text_explanations html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1">{"x":{"html":"<div style=\"overflow-y:scroll;font-family:sans-serif;position:absolute;height:100%\"> <p>  <span class='positive_1'>Absolutely<\/span> wonderful - <span class='positive_1'>silky<\/span> <span class='positive_1'>and<\/span> <span class='positive_1'>sexy<\/span> <span class='positive_1'>and<\/span> <span class='positive_5'>comfortable<\/span> <\/br> <sub>Label predicted: 1 (73.17%)<br/>Explainer fit: 1<\/sub> <\/p><br/><p> Some major design flaws I had such high hopes for this dress and really wanted it to work for me. i initially ordered the petite small (my usual size) <span class='positive_2'>but<\/span> i found this to be outrageously small. so small in fact that i could <span class='positive_1'>not<\/span> zip it up! i reordered it in petite medium, which <span class='positive_2'>was<\/span> just ok. overall, the top half <span class='positive_2'>was<\/span> <span class='negative_1'>comfortable<\/span> and fit nicely, <span class='positive_2'>but<\/span> the bottom half had a very tight under layer and several somewhat <span class='positive_2'>cheap<\/span> (net) over layers. imo, a major design flaw <span class='positive_2'>was<\/span> the net over layer sewn directly into the zipper - it c <\/br> <sub>Label predicted: 0 (71.45%)<br/>Explainer fit: 0.84<\/sub> <\/p><br/><p> Flattering shirt This shirt is very <span class='positive_1'>flattering<\/span> to all due to <span class='negative_1'>the<\/span> adjustable front tie. it is <span class='negative_1'>the<\/span> <span class='positive_2'>perfect<\/span> length to wear with leggings and it is sleeveless <span class='positive_1'>so<\/span> it pairs well with any cardigan. <span class='positive_3'>love<\/span> this shirt!!! <\/br> <sub>Label predicted: 1 (84.2%)<br/>Explainer fit: 0.98<\/sub> <\/p><br/><p> <span class='positive_1'>Pretty<\/span> party dress <span class='negative_1'>with<\/span> some issues This is a nice choice for holiday gatherings. i like that the length grazes the knee so it is conservative enough for office related gatherings. the size small fit me well - i am usually a size 2/4 <span class='negative_1'>with<\/span> a small bust. in my opinion it <span class='positive_1'>runs<\/span> small and those <span class='negative_1'>with<\/span> larger busts will definitely have to size up (<span class='positive_3'>but<\/span> then perhaps the waist will be <span class='positive_1'>too<\/span> big). the problem <span class='negative_1'>with<\/span> this dress is the quality. the fabrics are terrible. the delicate netting type fabric on the top layer of skirt got stuck in the zip <\/br> <sub>Label predicted: 0 (56.99%)<br/>Explainer fit: 0.91<\/sub> <\/p> <\/div>"},"evals":[],"jsHooks":[]}</script>
-<p><br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br></p>
+<pre class="r"><code>explanations &lt;- lime::explain(clothing_reviews_test$text[1:4], explainer, n_labels = 1, n_features = 5)</code></pre>
+<pre class="r"><code>plot_text_explanations(explanations)</code></pre>
+<div class="figure">
+<img src="https://shiring.github.io/netlify_images/text_explanation_0.png" />
+
+</div>
 <pre class="r"><code>plot_features(explanations)</code></pre>
 <p><img src="/post/2018-07-26_explaining_ml_models_code_text_lime_files/figure-html/lime_text_plot-1.png" width="576" /></p>
 <p>As we can see, our explanations contain a lot of stop-words that don’t really make much sense as features in our model. So…</p>
@@ -327,9 +323,10 @@ confusionMatrix(clothing_reviews_test$Liked,
                   preprocess = create_dtm_mat)</code></pre>
 <pre class="r"><code>explanations2 &lt;- lime::explain(clothing_reviews_test$text[1:4], explainer2, n_labels = 1, n_features = 4)
 plot_text_explanations(explanations2)</code></pre>
-<div id="htmlwidget-2" style="width:100%;height:auto;" class="plot_text_explanations html-widget"></div>
-<script type="application/json" data-for="htmlwidget-2">{"x":{"html":"<div style=\"overflow-y:scroll;font-family:sans-serif;position:absolute;height:100%\"> <p>  <span class='negative_1'>Absolutely<\/span> <span class='positive_4'>wonderful<\/span> - <span class='negative_1'>silky<\/span> and sexy and <span class='positive_2'>comfortable<\/span> <\/br> <sub>Label predicted: 1 (97.25%)<br/>Explainer fit: 0.94<\/sub> <\/p><br/><p> Some major <span class='positive_2'>design<\/span> flaws I had such high hopes for this dress and really wanted it to work for me. i initially ordered the petite small (my usual size) but i found this to be outrageously small. so small in fact that i could not zip it up! i reordered it in petite medium, which was just ok. <span class='positive_1'>overall<\/span>, the top half was <span class='negative_2'>comfortable<\/span> and fit nicely, but the bottom half had a very tight under layer and several somewhat <span class='positive_2'>cheap<\/span> (net) over layers. imo, a major <span class='positive_2'>design<\/span> flaw was the net over layer sewn directly into the zipper - it c <\/br> <sub>Label predicted: 0 (94.56%)<br/>Explainer fit: 0.34<\/sub> <\/p><br/><p> Flattering shirt This shirt is very <span class='positive_2'>flattering<\/span> to all due to the adjustable front tie. it is the <span class='positive_2'>perfect<\/span> length to <span class='negative_1'>wear<\/span> with leggings and it is sleeveless so it pairs well with any cardigan. <span class='positive_2'>love<\/span> this shirt!!! <\/br> <sub>Label predicted: 1 (98.61%)<br/>Explainer fit: 0.62<\/sub> <\/p><br/><p> <span class='positive_2'>Pretty<\/span> party dress with some <span class='positive_2'>issues<\/span> This is a nice choice for holiday gatherings. i like that the length grazes the knee so it is conservative enough for office related gatherings. the size small fit me well - i am usually a size 2/4 with a small bust. in my opinion it runs small and those with larger busts will definitely have to size up (but then perhaps the waist will be too big). the <span class='positive_2'>problem<\/span> with this dress is the quality. the fabrics are terrible. the <span class='negative_1'>delicate<\/span> netting type fabric on the top layer of skirt got stuck in the zip <\/br> <sub>Label predicted: 0 (98.61%)<br/>Explainer fit: 0.44<\/sub> <\/p> <\/div>"},"evals":[],"jsHooks":[]}</script>
-<p><br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br></p>
+<div class="figure">
+<img src="https://shiring.github.io/netlify_images/text_explanation_1.png" />
+
+</div>
 <p>The words that get picked up now make much more sense! So, even though making my model more complex didn’t improve “the numbers”, this second model is likely to be much better able to generalize to new reviews because it seems to pick up on words that make intuitive sense.</p>
 <p>That’s why I’m sold on the benefits of adding explainer functions to most machine learning workflows - and why I love the <code>lime</code> package in R!</p>
 <hr />
