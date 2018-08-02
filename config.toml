@@ -83,13 +83,19 @@ canonifyurls = true
   name = "Hear me talk"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-bullhorn\"></i>"
   url = "/page/conferences_podcasts_webinars/"
-
-[[menu.links]]
+[[menu.main]]
+  weight = 4
+  identifier = "codecentricai"
+  name = "codecentric.ai"
+  pre = "<i class=\"sidebar-button-icon fa fa-lg fa-angle-double-right\"></i>"
+  url = "https://www.codecentric.de/kuenstliche-intelligenz/"
+[[menu.main]]
   weight = 4
   identifier = "github_playground"
   name = "My old R-blog"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-archive\"></i>"
   url = "https://shiring.github.io/"
+  
 [[menu.links]]
   weight = 5
   identifier = "github"
