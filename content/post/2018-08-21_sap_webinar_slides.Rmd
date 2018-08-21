@@ -1,0 +1,46 @@
+---
+title: "Slides from my SAP webinar: Explaining Keras Image Classification Models with LIME"
+draft: false
+author: Shirin Glander
+date: '2018-08-21'
+categories: ["slides", "webinar"]
+tags: ["deep learning", "machine learning", "keras", "lime"]
+thumbnailImagePosition: left
+thumbnailImage: https://image.slidesharecdn.com/sapwebinar-180821080320/95/sap-webinar-explaining-keras-image-classification-models-with-lime-1-638.jpg?cb=1534839067
+metaAlignment: center
+coverMeta: out
+slug: sap_webinar_slides
+---
+
+Here I am sharing the slides for a webinar I gave for SAP about **Explaining Keras Image Classification Models with LIME**.
+
+Slides can be found here: https://www.slideshare.net/ShirinGlander/sap-webinar-explaining-keras-image-classification-models-with-lime
+
+> Keras is a high-level open-source deep learning framework that by default works on top of TensorFlow. Keras is minimalistic, efficient and highly flexible because it works with a modular layer system to define, compile and fit neural networks. It has been written in Python but can also be used from within R. Because the underlying backend can be changed from TensorFlow to Theano and CNTK (with more options being developed right now) it is designed to be framework-independent. Models can be trained on CPU or GPU, locally or in the cloud.
+
+> I will show an example how to build an image classifier with Keras. We'll be using a convolutional neural net to classify fruits in images. But that's not all! We not only want to judge our black-box model based on accuracy and loss measures - we want to get a better understanding of how the model works. We will use an algorithm called LIME (local interpretable model-agnostic explanations) to find out what part of the different test images contributed most strongly to the classification that was made by our model. I will introduce LIME and explain how it works. And finally, I will show how to apply LIME to the image classifier we built before, as well as to a pretrained Imagenet model.
+
+> You will get:
+
+  *   an introduction to Keras
+  *   an overview about deep learning and neural nets
+  *   a demo how to build an image classifier with Keras
+  *   an introduction to explaining black box models, specifically to the LIME algorithm
+  *   a demo how to apply LIME to explain the predictions of our own Keras image classifier, as well as of a pretrained Imagenet
+
+> Further Information:
+
+  *   [www.shirin-glander.de]( www.shirin-glander.de)
+  *   [https://blog.codecentric.de/author/shirin-glander/](https://blog.codecentric.de/author/shirin-glander/)
+  *   [www.youtube.com/codecentricAI](www.youtube.com/codecentricAI)
+
+> Links mentioned:
+
+  *   [https://shirinsplayground.netlify.com/2018/06/keras_fruits/](https://shirinsplayground.netlify.com/2018/06/keras_fruits/)
+  *   [https://blog.codecentric.de/2018/01/ vertrauen-und-vorurteile-maschinellem-lernen/](https://blog.codecentric.de/2018/01/ vertrauen-und-vorurteile-maschinellem-lernen/)
+  *   [https://shirinsplayground.netlify.com/2018/07/ explaining_ml_models_code_text_lime/](https://shirinsplayground.netlify.com/2018/07/ explaining_ml_models_code_text_lime/)
+  *   [www.codecentric.ai](www.codecentric.ai)
+  *   [https://www.youtube.com/codecentricAI](https://www.youtube.com/codecentricAI)
+
+<iframe src="//www.slideshare.net/slideshow/embed_code/key/M9htTiB6ObhMqI" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/ShirinGlander/sap-webinar-explaining-keras-image-classification-models-with-lime" title="SAP webinar: Explaining Keras Image Classification Models with LIME" target="_blank">SAP webinar: Explaining Keras Image Classification Models with LIME</a> </strong> from <strong><a href="//www.slideshare.net/ShirinGlander" target="_blank">Shirin Glander</a></strong> </div>
+
