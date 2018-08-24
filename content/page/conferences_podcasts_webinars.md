@@ -20,6 +20,14 @@ Date and place depend on who and how many people are interested, so please conta
 
 [Official link](https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/)
 
+<br>
+
+- [Workshop: End-2-End vom Keras TensorFlow-Modell zur Produktion](https://www.codecentric.de/schulung/end-2-end-vom-keras-tensorflow-modell-zur-produktion/#schulung-detail)
+
+> Durch das stark wachsende Datenvolumen hat sich das Rollenverständnis von Data Scientists erweitert. Statt Machine-Learning-Modelle für einmalige Analysen zu erstellen,  wird häufiger in konkreten Entwicklungsprojekten gearbeitet, in denen Prototypen in produktive Anwendungen überführt werden.
+Keras ist eine High-Level-Schnittstelle, die ein schnelles, einfaches und flexibles Prototypisieren von Neuronalen Netzwerken mit TensorFlow ermöglicht. Zusammen mit Luigi lassen sich beliebig komplexe Datenverarbeitungs-Workflows in Python erstellen. Das führt dazu, dass auch Nicht-Entwickler den End-2-End-Workflow des Keras-TensorFlow-Modells zur Produktionsreife leicht
+implementieren können.
+
 ---
 
 <br>
