@@ -28,6 +28,10 @@ Date and place depend on who and how many people are interested, so please conta
 Keras ist eine High-Level-Schnittstelle, die ein schnelles, einfaches und flexibles Prototypisieren von Neuronalen Netzwerken mit TensorFlow ermöglicht. Zusammen mit Luigi lassen sich beliebig komplexe Datenverarbeitungs-Workflows in Python erstellen. Das führt dazu, dass auch Nicht-Entwickler den End-2-End-Workflow des Keras-TensorFlow-Modells zur Produktionsreife leicht
 implementieren können.
 
+<br>
+
+- [Machine Learning Basics in R](https://shirinsplayground.netlify.com/2018/06/intro_to_ml_workshop_heidelberg/)
+
 ---
 
 <br>
