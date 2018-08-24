@@ -39,6 +39,11 @@ https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell
 
 ## Past talks, webinars, podcasts, etc.
 
+- In August 2018 I gave a webinar for SAP about [Explaining Keras Image Classification Models with LIME](https://shirinsplayground.netlify.com/2018/08/sap_webinar_slides/).
+
+
+<br>
+
 - In June 2018 I gave a 3-hour workshop about the basics of machine learning with R at the University of Heidelberg, Germany. [Slides and workshop code can be found here](https://shirinsplayground.netlify.com/2018/06/intro_to_ml_workshop_heidelberg/).
 
 <br>
