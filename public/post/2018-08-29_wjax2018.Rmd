@@ -1,0 +1,26 @@
+---
+title: "W-JAX 2018 talk: Deep Learning - a Primer"
+draft: false
+author: Shirin Glander
+date: '2018-08-29'
+categories: ["conference", "jax"]
+tags: ["deep learning", "machine learning", "conference", "jax"]
+thumbnailImagePosition: left
+thumbnailImage: https://pbs.twimg.com/media/DUt3SXyUQAE3TOv.jpg
+metaAlignment: center
+coverMeta: out
+slug: wjax2018
+---
+
+On November 7th, I'll be in Munich for the W-JAX conference where I'll be giving the talk that my colleague Uwe Friedrichsen and I gave at the JAX conference this April again: [Deep Learning - a Primer](https://jax.de/big-data-machine-learning/deep-learning-a-primer/).
+
+Let me know if any of you here are going to be there and would like to meet up!
+
+<br>
+
+Slides from the original talk can be found here: https://www.slideshare.net/ShirinGlander/deep-learning-a-primer-95197733
+
+> Deep Learning is one of the "hot" topics in the AI area – a lot of hype, a lot of inflated expectation, but also quite some impressive success stories. As some AI experts already predict that Deep Learning will become "Software 2.0", it might be a good time to have a closer look at the topic. In this session I will try to give a comprehensive overview of Deep Learning. We will start with a bit of history and some theoretical foundations that we will use to create a little Deep Learning taxonomy. Then we will have a look at current and upcoming application areas: Where can we apply Deep Learning successfully and what does it differentiate from other approaches? Afterwards we will examine the ecosystem: Which tools and libraries are available? What are their strengths and weaknesses? And to complete the session, we will look into some practical code examples and the typical pitfalls of Deep Learning. After this session you will have a much better idea of the why, what and how of Deep Learning, including if and how you might want to apply it to your own work. https://jax.de/big-data-machine-learning/deep-learning-a-primer/
+
+![https://twitter.com/jaxcon/status/957990506331557890](https://pbs.twimg.com/media/DUt3SXyUQAE3TOv.jpg)
+

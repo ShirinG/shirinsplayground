@@ -849,6 +849,25 @@ explanation &lt;- lime::explain(x = Xtest[1:9, ],
 ]]></content>
   </entry>
   <entry>
+    <title type="html"><![CDATA[W-JAX 2018 talk: Deep Learning - a Primer]]></title>
+    <link href="/2018/08/wjax2018/"/>
+    <id>/2018/08/wjax2018/</id>
+    <published>2018-08-29T00:00:00+00:00</published>
+    <updated>2018-08-29T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<p>On November 7th, I’ll be in Munich for the W-JAX conference where I’ll be giving the talk that my colleague Uwe Friedrichsen and I gave at the JAX conference this April again: <a href="https://jax.de/big-data-machine-learning/deep-learning-a-primer/">Deep Learning - a Primer</a>.</p>
+<p>Let me know if any of you here are going to be there and would like to meet up!</p>
+<p><br></p>
+<p>Slides from the original talk can be found here: <a href="https://www.slideshare.net/ShirinGlander/deep-learning-a-primer-95197733" class="uri">https://www.slideshare.net/ShirinGlander/deep-learning-a-primer-95197733</a></p>
+<blockquote>
+<p>Deep Learning is one of the “hot” topics in the AI area – a lot of hype, a lot of inflated expectation, but also quite some impressive success stories. As some AI experts already predict that Deep Learning will become “Software 2.0”, it might be a good time to have a closer look at the topic. In this session I will try to give a comprehensive overview of Deep Learning. We will start with a bit of history and some theoretical foundations that we will use to create a little Deep Learning taxonomy. Then we will have a look at current and upcoming application areas: Where can we apply Deep Learning successfully and what does it differentiate from other approaches? Afterwards we will examine the ecosystem: Which tools and libraries are available? What are their strengths and weaknesses? And to complete the session, we will look into some practical code examples and the typical pitfalls of Deep Learning. After this session you will have a much better idea of the why, what and how of Deep Learning, including if and how you might want to apply it to your own work. <a href="https://jax.de/big-data-machine-learning/deep-learning-a-primer/" class="uri">https://jax.de/big-data-machine-learning/deep-learning-a-primer/</a></p>
+</blockquote>
+<div class="figure">
+<img src="https://pbs.twimg.com/media/DUt3SXyUQAE3TOv.jpg" alt="https://twitter.com/jaxcon/status/957990506331557890" />
+<p class="caption"><a href="https://twitter.com/jaxcon/status/957990506331557890" class="uri">https://twitter.com/jaxcon/status/957990506331557890</a></p>
+</div>
+]]></content>
+  </entry>
+  <entry>
     <title type="html"><![CDATA[Slides from my SAP webinar: Explaining Keras Image Classification Models with LIME]]></title>
     <link href="/2018/08/sap_webinar_slides/"/>
     <id>/2018/08/sap_webinar_slides/</id>
@@ -5823,9 +5842,11 @@ implementieren können.</p>
 <li><p>Together with a colleague from codecentric, I&rsquo;ll be giving a workshop about <a href="https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953">&ldquo;END-2-END VOM KERAS TENSORFLOW-MODELL ZUR PRODUKTION&rdquo;</a> at the data2day conference, which is being held from September 25th - 27th 2018 in Heidelberg, Germany (German language):
 <a href="https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953">https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953</a></p></li>
 
-<li><p>At the <a href="www.ml-summit.de">ML Summit</a> held on October 1st and 2nd in Berlin, Germany, I&rsquo;ll be giving a workshop about <a href="https://ml-summit.de/specialized-topics/bildklassifikation-leicht-gemacht-mit-keras-und-tensorflow/">image classification with Keras</a>: <a href="https://ml-summit.de/specialized-topics/bildklassifikation-leicht-gemacht-mit-keras-und-tensorflow/">https://ml-summit.de/specialized-topics/bildklassifikation-leicht-gemacht-mit-keras-und-tensorflow/</a> (German language)</p></li>
+<li><p>At the <a href="https://www.ml-summit.de">ML Summit</a> held on October 1st and 2nd in Berlin, Germany, I&rsquo;ll be giving a workshop about <a href="https://ml-summit.de/specialized-topics/bildklassifikation-leicht-gemacht-mit-keras-und-tensorflow/">image classification with Keras</a>: <a href="https://ml-summit.de/specialized-topics/bildklassifikation-leicht-gemacht-mit-keras-und-tensorflow/">https://ml-summit.de/specialized-topics/bildklassifikation-leicht-gemacht-mit-keras-und-tensorflow/</a> (German language)</p></li>
 
 <li><p>From 15th to 17th October 2018, I&rsquo;ll be in London for the <a href="https://www.mcubed.london/">M-cubed conference</a>. My talk about <a href="https://www.mcubed.london/sessions/explaining-complex-machine-learning-models-lime/">Explaining complex machine learning models with LIME</a> will be on October 16</p></li>
+
+<li><p>On November 7th, I&rsquo;ll be giving my talk from the <a href="https://shirinsplayground.netlify.com/2018/01/jax2018/">JAX conference 2018: Deep Learning - a Primer</a> again at the <a href="https://jax.de/big-data-machine-learning/deep-learning-a-primer/">W-JAX</a> in Munich.</p></li>
 </ul>
 
 <hr />
