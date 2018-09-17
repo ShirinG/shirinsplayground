@@ -329,9 +329,9 @@ ga('send', 'pageview');
   
   <div class="postShorten-meta post-meta">
     
-      <time itemprop="datePublished" datetime="2018-09-17T00:00:00Z">
+      <time itemprop="datePublished" datetime="2018-09-30T00:00:00Z">
         
-  September 17, 2018
+  September 30, 2018
 
       </time>
     
@@ -648,27 +648,27 @@ head(test_results)</code></pre>
 <pre><code>## # A tibble: 6 x 4
 ##   actual_yes pred_classes_test    Yes    No
 ##   &lt;fct&gt;      &lt;fct&gt;              &lt;dbl&gt; &lt;dbl&gt;
-## 1 0          0                 0.441  0.559
-## 2 0          0                 0.0326 0.967
-## 3 1          1                 0.658  0.342
-## 4 0          0                 0.454  0.546
-## 5 1          0                 0.198  0.802
-## 6 1          0                 0.367  0.633</code></pre>
+## 1 0          1                 0.528  0.472
+## 2 0          0                 0.0334 0.967
+## 3 1          1                 0.577  0.423
+## 4 0          0                 0.440  0.560
+## 5 1          0                 0.217  0.783
+## 6 1          0                 0.427  0.573</code></pre>
 <pre class="r"><code>test_results %&gt;% 
   conf_mat(actual_yes, pred_classes_test)</code></pre>
 <pre><code>##           Truth
 ## Prediction    0    1
-##          0 1174  228
-##          1  116  239</code></pre>
+##          0 1156  214
+##          1  134  253</code></pre>
 <pre class="r"><code>test_results %&gt;% 
   metrics(actual_yes, pred_classes_test)</code></pre>
 <pre><code>## # A tibble: 1 x 1
 ##   accuracy
 ##      &lt;dbl&gt;
-## 1    0.804</code></pre>
+## 1    0.802</code></pre>
 <pre class="r"><code>test_results %&gt;% 
   roc_auc(actual_yes, Yes)</code></pre>
-<pre><code>## [1] 0.8390908</code></pre>
+<pre><code>## [1] 0.8387804</code></pre>
 <pre class="r"><code>tibble(
     precision = test_results %&gt;% yardstick::precision(actual_yes, pred_classes_test),
     recall    = test_results %&gt;% yardstick::recall(actual_yes, pred_classes_test)
@@ -676,10 +676,10 @@ head(test_results)</code></pre>
 <pre><code>## # A tibble: 1 x 2
 ##   precision recall
 ##       &lt;dbl&gt;  &lt;dbl&gt;
-## 1     0.837  0.910</code></pre>
+## 1     0.844  0.896</code></pre>
 <pre class="r"><code># F1-Statistic
 test_results %&gt;% yardstick::f_meas(actual_yes, pred_classes_test, beta = 1)</code></pre>
-<pre><code>## [1] 0.872214</code></pre>
+<pre><code>## [1] 0.8691729</code></pre>
 </div>
 <div id="h2o" class="section level2">
 <h2>H2O</h2>
@@ -689,18 +689,18 @@ h2o.init(nthreads = -1)</code></pre>
 ## H2O is not running yet, starting it now...
 ## 
 ## Note:  In case of errors look at the following log files:
-##     /var/folders/5j/v30zfr7s14qfhqwqdmqmpxw80000gn/T//Rtmpnak4Ye/h2o_shiringlander_started_from_r.out
-##     /var/folders/5j/v30zfr7s14qfhqwqdmqmpxw80000gn/T//Rtmpnak4Ye/h2o_shiringlander_started_from_r.err
+##     /var/folders/5j/v30zfr7s14qfhqwqdmqmpxw80000gn/T//Rtmp6XmDdW/h2o_shiringlander_started_from_r.out
+##     /var/folders/5j/v30zfr7s14qfhqwqdmqmpxw80000gn/T//Rtmp6XmDdW/h2o_shiringlander_started_from_r.err
 ## 
 ## 
 ## Starting H2O JVM and connecting: .. Connection successful!
 ## 
 ## R is connected to the H2O cluster: 
-##     H2O cluster uptime:         3 seconds 573 milliseconds 
+##     H2O cluster uptime:         5 seconds 214 milliseconds 
 ##     H2O cluster timezone:       Europe/Berlin 
 ##     H2O data parsing timezone:  UTC 
 ##     H2O cluster version:        3.20.0.2 
-##     H2O cluster version age:    2 months and 5 days  
+##     H2O cluster version age:    3 months and 1 day  
 ##     H2O cluster name:           H2O_started_from_R_shiringlander_zvk734 
 ##     H2O cluster total nodes:    1 
 ##     H2O cluster total memory:   3.56 GB 
@@ -758,182 +758,182 @@ test[, response] &lt;- as.factor(test[, response])</code></pre>
 lb &lt;- aml@leaderboard
 lb</code></pre>
 <pre><code>##                                                model_id       auc
-## 1    StackedEnsemble_AllModels_0_AutoML_20180821_101739 0.8384489
-## 2 StackedEnsemble_BestOfFamily_0_AutoML_20180821_101739 0.8380784
-## 3             GBM_grid_0_AutoML_20180821_101739_model_4 0.8358176
-## 4             GLM_grid_0_AutoML_20180821_101739_model_0 0.8341097
-## 5             GBM_grid_0_AutoML_20180821_101739_model_0 0.8333280
-## 6             GBM_grid_0_AutoML_20180821_101739_model_1 0.8286081
+## 1 StackedEnsemble_BestOfFamily_0_AutoML_20180917_091139 0.8379192
+## 2    StackedEnsemble_AllModels_0_AutoML_20180917_091139 0.8374932
+## 3             GBM_grid_0_AutoML_20180917_091139_model_4 0.8345577
+## 4             GLM_grid_0_AutoML_20180917_091139_model_0 0.8341097
+## 5             GBM_grid_0_AutoML_20180917_091139_model_7 0.8336572
+## 6             GBM_grid_0_AutoML_20180917_091139_model_0 0.8333099
 ##     logloss mean_per_class_error      rmse       mse
-## 1 0.4322100            0.2415552 0.3739274 0.1398217
-## 2 0.4321532            0.2350863 0.3739190 0.1398154
-## 3 0.4282520            0.2375987 0.3736850 0.1396405
+## 1 0.4325086            0.2414800 0.3741502 0.1399884
+## 2 0.4283102            0.2384549 0.3733329 0.1393775
+## 3 0.4298172            0.2352870 0.3742564 0.1400678
 ## 4 0.4293852            0.2402290 0.3740019 0.1398774
-## 5 0.4346053            0.2420070 0.3769994 0.1421285
-## 6 0.4426769            0.2438496 0.3794211 0.1439604
+## 5 0.5402003            0.2432827 0.4244760 0.1801798
+## 6 0.4350965            0.2437383 0.3770215 0.1421452
 ## 
-## [13 rows x 6 columns]</code></pre>
+## [14 rows x 6 columns]</code></pre>
 <pre class="r"><code>best_model &lt;- aml@leader
 best_model</code></pre>
 <pre><code>## Model Details:
 ## ==============
 ## 
 ## H2OBinomialModel: stackedensemble
-## Model ID:  StackedEnsemble_AllModels_0_AutoML_20180821_101739 
+## Model ID:  StackedEnsemble_BestOfFamily_0_AutoML_20180917_091139 
 ## NULL
 ## 
 ## 
 ## H2OBinomialMetrics: stackedensemble
 ## ** Reported on training data. **
 ## 
-## MSE:  0.1235994
-## RMSE:  0.351567
-## LogLoss:  0.3893192
-## Mean Per-Class Error:  0.2106229
-## AUC:  0.8791347
-## Gini:  0.7582693
+## MSE:  0.1268568
+## RMSE:  0.3561697
+## LogLoss:  0.3984499
+## Mean Per-Class Error:  0.218845
+## AUC:  0.8697808
+## Gini:  0.7395615
 ## 
 ## Confusion Matrix (vertical: actual; across: predicted) for F1-optimal threshold:
 ##           0    1    Error       Rate
-## 0      1998  493 0.197912  =493/2491
-## 1       201  699 0.223333   =201/900
-## Totals 2199 1192 0.204659  =694/3391
+## 0      2029  462 0.185468  =462/2491
+## 1       227  673 0.252222   =227/900
+## Totals 2256 1135 0.203185  =689/3391
 ## 
 ## Maximum Metrics: Maximum metrics at their respective thresholds
 ##                         metric threshold    value idx
-## 1                       max f1  0.274083 0.668260 248
-## 2                       max f2  0.160300 0.781640 305
-## 3                 max f0point5  0.480116 0.677030 158
-## 4                 max accuracy  0.480116 0.824830 158
-## 5                max precision  0.875054 1.000000   0
-## 6                   max recall  0.065367 1.000000 386
-## 7              max specificity  0.875054 1.000000   0
-## 8             max absolute_mcc  0.215980 0.537548 277
-## 9   max min_per_class_accuracy  0.256202 0.787635 256
-## 10 max mean_per_class_accuracy  0.205745 0.800347 283
+## 1                       max f1  0.287553 0.661425 241
+## 2                       max f2  0.163218 0.775912 304
+## 3                 max f0point5  0.459673 0.669014 166
+## 4                 max accuracy  0.459673 0.821587 166
+## 5                max precision  0.869646 1.000000   0
+## 6                   max recall  0.060279 1.000000 394
+## 7              max specificity  0.869646 1.000000   0
+## 8             max absolute_mcc  0.287553 0.526158 241
+## 9   max min_per_class_accuracy  0.244321 0.783220 260
+## 10 max mean_per_class_accuracy  0.182821 0.792734 293
 ## 
 ## Gains/Lift Table: Extract with `h2o.gainsLift(&lt;model&gt;, &lt;data&gt;)` or `h2o.gainsLift(&lt;model&gt;, valid=&lt;T/F&gt;, xval=&lt;T/F&gt;)`
 ## H2OBinomialMetrics: stackedensemble
 ## ** Reported on validation data. **
 ## 
-## MSE:  0.1269186
-## RMSE:  0.3562564
-## LogLoss:  0.4030923
-## Mean Per-Class Error:  0.2144381
-## AUC:  0.8607345
-## Gini:  0.721469
+## MSE:  0.1274006
+## RMSE:  0.3569322
+## LogLoss:  0.4035714
+## Mean Per-Class Error:  0.2169052
+## AUC:  0.8619977
+## Gini:  0.7239954
 ## 
 ## Confusion Matrix (vertical: actual; across: predicted) for F1-optimal threshold:
 ##          0   1    Error      Rate
-## 0      528  80 0.131579   =80/608
+## 0      525  83 0.136513   =83/608
 ## 1       66 156 0.297297   =66/222
-## Totals 594 236 0.175904  =146/830
+## Totals 591 239 0.179518  =149/830
 ## 
 ## Maximum Metrics: Maximum metrics at their respective thresholds
 ##                         metric threshold    value idx
-## 1                       max f1  0.344425 0.681223 181
-## 2                       max f2  0.182311 0.756735 263
-## 3                 max f0point5  0.555273 0.684597 114
-## 4                 max accuracy  0.463244 0.825301 145
-## 5                max precision  0.855358 1.000000   0
-## 6                   max recall  0.059345 1.000000 397
-## 7              max specificity  0.855358 1.000000   0
-## 8             max absolute_mcc  0.344425 0.560414 181
-## 9   max min_per_class_accuracy  0.232010 0.774775 226
-## 10 max mean_per_class_accuracy  0.318849 0.786955 191
+## 1                       max f1  0.330564 0.676790 183
+## 2                       max f2  0.178313 0.756369 264
+## 3                 max f0point5  0.511384 0.679157 116
+## 4                 max accuracy  0.453364 0.822892 138
+## 5                max precision  0.857855 1.000000   0
+## 6                   max recall  0.058394 1.000000 397
+## 7              max specificity  0.857855 1.000000   0
+## 8             max absolute_mcc  0.330564 0.553474 183
+## 9   max min_per_class_accuracy  0.228866 0.783784 230
+## 10 max mean_per_class_accuracy  0.200622 0.789844 244
 ## 
 ## Gains/Lift Table: Extract with `h2o.gainsLift(&lt;model&gt;, &lt;data&gt;)` or `h2o.gainsLift(&lt;model&gt;, valid=&lt;T/F&gt;, xval=&lt;T/F&gt;)`
 ## H2OBinomialMetrics: stackedensemble
 ## ** Reported on cross-validation data. **
 ## ** 5-fold cross-validation on training data (Metrics computed for combined holdout predictions) **
 ## 
-## MSE:  0.1398217
-## RMSE:  0.3739274
-## LogLoss:  0.43221
-## Mean Per-Class Error:  0.2415552
-## AUC:  0.8384489
-## Gini:  0.6768977
+## MSE:  0.1399884
+## RMSE:  0.3741502
+## LogLoss:  0.4325086
+## Mean Per-Class Error:  0.24148
+## AUC:  0.8379192
+## Gini:  0.6758384
 ## 
 ## Confusion Matrix (vertical: actual; across: predicted) for F1-optimal threshold:
 ##           0    1    Error       Rate
-## 0      1938  553 0.221999  =553/2491
-## 1       235  665 0.261111   =235/900
-## Totals 2173 1218 0.232380  =788/3391
+## 0      1919  572 0.229627  =572/2491
+## 1       228  672 0.253333   =228/900
+## Totals 2147 1244 0.235919  =800/3391
 ## 
 ## Maximum Metrics: Maximum metrics at their respective thresholds
 ##                         metric threshold    value idx
-## 1                       max f1  0.261737 0.627951 248
-## 2                       max f2  0.139831 0.750376 316
-## 3                 max f0point5  0.501019 0.625000 145
-## 4                 max accuracy  0.501019 0.800944 145
-## 5                max precision  0.873181 1.000000   0
-## 6                   max recall  0.055355 1.000000 399
-## 7              max specificity  0.873181 1.000000   0
-## 8             max absolute_mcc  0.186677 0.475864 287
-## 9   max min_per_class_accuracy  0.237597 0.757527 260
-## 10 max mean_per_class_accuracy  0.186677 0.767161 287
+## 1                       max f1  0.251205 0.626866 252
+## 2                       max f2  0.129219 0.749033 323
+## 3                 max f0point5  0.465933 0.621884 164
+## 4                 max accuracy  0.467707 0.799469 163
+## 5                max precision  0.864884 1.000000   0
+## 6                   max recall  0.054293 1.000000 399
+## 7              max specificity  0.864884 1.000000   0
+## 8             max absolute_mcc  0.165281 0.474990 299
+## 9   max min_per_class_accuracy  0.238389 0.758731 259
+## 10 max mean_per_class_accuracy  0.165281 0.768264 299
 ## 
 ## Gains/Lift Table: Extract with `h2o.gainsLift(&lt;model&gt;, &lt;data&gt;)` or `h2o.gainsLift(&lt;model&gt;, valid=&lt;T/F&gt;, xval=&lt;T/F&gt;)`</code></pre>
 <pre class="r"><code>pred &lt;- h2o.predict(best_model, test[, -1])</code></pre>
 <pre class="r"><code>h2o.mean_per_class_error(best_model, train = TRUE, valid = TRUE, xval = TRUE)</code></pre>
 <pre><code>##     train     valid      xval 
-## 0.2106229 0.2144381 0.2415552</code></pre>
+## 0.2188450 0.2169052 0.2414800</code></pre>
 <pre class="r"><code>h2o.confusionMatrix(best_model, valid = TRUE)</code></pre>
-<pre><code>## Confusion Matrix (vertical: actual; across: predicted)  for max f1 @ threshold = 0.344424598963745:
+<pre><code>## Confusion Matrix (vertical: actual; across: predicted)  for max f1 @ threshold = 0.330564056012265:
 ##          0   1    Error      Rate
-## 0      528  80 0.131579   =80/608
+## 0      525  83 0.136513   =83/608
 ## 1       66 156 0.297297   =66/222
-## Totals 594 236 0.175904  =146/830</code></pre>
+## Totals 591 239 0.179518  =149/830</code></pre>
 <pre class="r"><code>h2o.auc(best_model, train = TRUE)</code></pre>
-<pre><code>## [1] 0.8791347</code></pre>
+<pre><code>## [1] 0.8697808</code></pre>
 <pre class="r"><code>h2o.auc(best_model, valid = TRUE)</code></pre>
-<pre><code>## [1] 0.8607345</code></pre>
+<pre><code>## [1] 0.8619977</code></pre>
 <pre class="r"><code>h2o.auc(best_model, xval = TRUE)</code></pre>
-<pre><code>## [1] 0.8384489</code></pre>
+<pre><code>## [1] 0.8379192</code></pre>
 <pre class="r"><code>perf &lt;- h2o.performance(best_model, test)
 h2o.confusionMatrix(perf)</code></pre>
-<pre><code>## Confusion Matrix (vertical: actual; across: predicted)  for max f1 @ threshold = 0.316913182517402:
+<pre><code>## Confusion Matrix (vertical: actual; across: predicted)  for max f1 @ threshold = 0.317566597282093:
 ##           0   1    Error       Rate
-## 0      1070 220 0.170543  =220/1290
-## 1       152 315 0.325482   =152/467
-## Totals 1222 535 0.211725  =372/1757</code></pre>
+## 0      1072 218 0.168992  =218/1290
+## 1       150 317 0.321199   =150/467
+## Totals 1222 535 0.209448  =368/1757</code></pre>
 <pre class="r"><code>plot(perf)</code></pre>
 <pre class="r"><code>h2o.logloss(perf)</code></pre>
-<pre><code>## [1] 0.4249711</code></pre>
+<pre><code>## [1] 0.4246352</code></pre>
 <pre class="r"><code>h2o.mse(perf)</code></pre>
-<pre><code>## [1] 0.1369139</code></pre>
+<pre><code>## [1] 0.136667</code></pre>
 <pre class="r"><code>h2o.auc(perf)</code></pre>
-<pre><code>## [1] 0.845558</code></pre>
+<pre><code>## [1] 0.8453048</code></pre>
 <pre class="r"><code>metrics &lt;- as.data.frame(h2o.metric(perf))
 head(metrics)</code></pre>
 <pre><code>##   threshold          f1          f2   f0point5  accuracy precision
-## 1 0.8604557 0.004273504 0.002675227 0.01061571 0.7347752 1.0000000
-## 2 0.8572855 0.008528785 0.005347594 0.02105263 0.7353443 1.0000000
-## 3 0.8517721 0.012765957 0.008017103 0.03131524 0.7359135 1.0000000
-## 4 0.8485592 0.021186441 0.013347571 0.05133470 0.7370518 1.0000000
-## 5 0.8469450 0.025316456 0.016000000 0.06060606 0.7370518 0.8571429
-## 6 0.8451180 0.033613445 0.021310602 0.07952286 0.7381901 0.8888889
+## 1 0.8496843 0.008528785 0.005347594 0.02105263 0.7353443 1.0000000
+## 2 0.8474660 0.016949153 0.010678057 0.04106776 0.7359135 0.8000000
+## 3 0.8447382 0.021141649 0.013340448 0.05091650 0.7364826 0.8333333
+## 4 0.8396843 0.029473684 0.018656716 0.07014028 0.7376209 0.8750000
+## 5 0.8384522 0.041841004 0.026609899 0.09784736 0.7393284 0.9090909
+## 6 0.8356745 0.045929019 0.029255319 0.10679612 0.7398976 0.9166667
 ##        recall specificity absolute_mcc min_per_class_accuracy
-## 1 0.002141328   1.0000000   0.03966196            0.002141328
-## 2 0.004282655   1.0000000   0.05610646            0.004282655
-## 3 0.006423983   1.0000000   0.06873568            0.006423983
-## 4 0.010706638   1.0000000   0.08878802            0.010706638
-## 5 0.012847966   0.9992248   0.08466273            0.012847966
-## 6 0.017130621   0.9992248   0.10120995            0.017130621
+## 1 0.004282655   1.0000000   0.05610646            0.004282655
+## 2 0.008565310   0.9992248   0.06460189            0.008565310
+## 3 0.010706638   0.9992248   0.07520505            0.010706638
+## 4 0.014989293   0.9992248   0.09326802            0.014989293
+## 5 0.021413276   0.9992248   0.11558572            0.021413276
+## 6 0.023554604   0.9992248   0.12218206            0.023554604
 ##   mean_per_class_accuracy  tns fns fps tps       tnr       fnr
-## 1               0.5010707 1290 466   0   1 1.0000000 0.9978587
-## 2               0.5021413 1290 465   0   2 1.0000000 0.9957173
-## 3               0.5032120 1290 464   0   3 1.0000000 0.9935760
-## 4               0.5053533 1290 462   0   5 1.0000000 0.9892934
-## 5               0.5060364 1289 461   1   6 0.9992248 0.9871520
-## 6               0.5081777 1289 459   1   8 0.9992248 0.9828694
+## 1               0.5021413 1290 465   0   2 1.0000000 0.9957173
+## 2               0.5038951 1289 463   1   4 0.9992248 0.9914347
+## 3               0.5049657 1289 462   1   5 0.9992248 0.9892934
+## 4               0.5071070 1289 460   1   7 0.9992248 0.9850107
+## 5               0.5103190 1289 457   1  10 0.9992248 0.9785867
+## 6               0.5113897 1289 456   1  11 0.9992248 0.9764454
 ##            fpr         tpr idx
-## 1 0.0000000000 0.002141328   0
-## 2 0.0000000000 0.004282655   1
-## 3 0.0000000000 0.006423983   2
-## 4 0.0000000000 0.010706638   3
-## 5 0.0007751938 0.012847966   4
-## 6 0.0007751938 0.017130621   5</code></pre>
+## 1 0.0000000000 0.004282655   0
+## 2 0.0007751938 0.008565310   1
+## 3 0.0007751938 0.010706638   2
+## 4 0.0007751938 0.014989293   3
+## 5 0.0007751938 0.021413276   4
+## 6 0.0007751938 0.023554604   5</code></pre>
 <pre class="r"><code>metrics %&gt;%
   gather(x, y, f1:tpr) %&gt;%
   ggplot(aes(x = threshold, y = y, group = x)) +
@@ -963,10 +963,10 @@ finalRf_predictions %&gt;%
 ## # Groups:   actual [?]
 ##   actual predict     n
 ##   &lt;fct&gt;  &lt;fct&gt;   &lt;int&gt;
-## 1 0      0        1090
-## 2 0      1         200
-## 3 1      0         164
-## 4 1      1         303</code></pre>
+## 1 0      0        1080
+## 2 0      1         210
+## 3 1      0         158
+## 4 1      1         309</code></pre>
 <pre class="r"><code>finalRf_predictions %&gt;%
   group_by(actual, predict_stringent) %&gt;%
   dplyr::summarise(n = n())</code></pre>
@@ -974,10 +974,10 @@ finalRf_predictions %&gt;%
 ## # Groups:   actual [?]
 ##   actual predict_stringent     n
 ##   &lt;fct&gt;  &lt;chr&gt;             &lt;int&gt;
-## 1 0      0                  1161
-## 2 0      1                   129
-## 3 1      0                   210
-## 4 1      1                   257</code></pre>
+## 1 0      0                  1162
+## 2 0      1                   128
+## 3 1      0                   206
+## 4 1      1                   261</code></pre>
 <pre class="r"><code>finalRf_predictions %&gt;%
   gather(x, y, accurate, accurate_stringent) %&gt;%
   mutate(x = ifelse(x == &quot;accurate&quot;, &quot;Default Schwelle: 0.5&quot;, 
@@ -1087,16 +1087,16 @@ net_win_table</code></pre>
 <pre><code>## # A tibble: 11 x 3
 ##    threshold net_win net_win_compared
 ##        &lt;dbl&gt;   &lt;dbl&gt;            &lt;dbl&gt;
-##  1       0.8 2590800           889300
+##  1       0.8 2591600           890100
 ##  2       0.7 2589000           887500
-##  3       0.9 2580000           878500
-##  4       1   2580000           878500
-##  5       0.6 2578800           877300
-##  6       0.5 2559800           858300
-##  7       0.4 2521400           819900
-##  8       0.3 2465800           764300
-##  9       0.2 2347200           645700
-## 10       0.1 2116200           414700
+##  3       0.6 2581800           880300
+##  4       0.9 2580000           878500
+##  5       1   2580000           878500
+##  6       0.5 2567800           866300
+##  7       0.4 2523600           822100
+##  8       0.3 2476400           774900
+##  9       0.2 2358400           656900
+## 10       0.1 2128800           427300
 ## 11       0   1476800          -224700</code></pre>
 </div>
 </div>
@@ -1219,7 +1219,7 @@ explanation &lt;- lime::explain(x = Xtest[1:9, ],
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="/2018/08/wjax2018/" data-tooltip="W-JAX 2018 talk: Deep Learning - a Primer">
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2018/09/rladieslondontalk/" data-tooltip="I&#39;ll be talking at the R-Ladies Meetup about Interpretable Deep Learning with R, Keras and LIME">
               
                 <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
                 <i class="fa fa-angle-right"></i>
@@ -1303,7 +1303,7 @@ explanation &lt;- lime::explain(x = Xtest[1:9, ],
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="/2018/08/wjax2018/" data-tooltip="W-JAX 2018 talk: Deep Learning - a Primer">
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2018/09/rladieslondontalk/" data-tooltip="I&#39;ll be talking at the R-Ladies Meetup about Interpretable Deep Learning with R, Keras and LIME">
               
                 <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
                 <i class="fa fa-angle-right"></i>
@@ -1446,6 +1446,26 @@ explanation &lt;- lime::explain(x = Xtest[1:9, ],
               <div class="media-content hide-xs font-merryweather">This is code that accompanies a book chapter on customer churn that I have written for dpunkt Verlag. The book is in German and will probably appear in December: https://www.dpunkt.de/buecher/13208/9783864906107-data-science.html.
 Inspiration &amp; Sources Thank you to the following people for providing excellent code examples about customer churn:
  Matt Dancho: http://www.business-science.io/business/2017/11/28/customer_churn_analysis_keras.html JJ Allaire: https://github.com/rstudio/keras-customer-churn Susan Li: https://towardsdatascience.com/predict-customer-churn-with-r-9e62357d47b4 John Sullivan: https://jtsulliv.github.io/churn-eda/   Setup All analyses are done in R using RStudio.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/09/rladieslondontalk/">
+                <h3 class="media-heading">I&#39;ll be talking at the R-Ladies Meetup about Interpretable Deep Learning with R, Keras and LIME</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Sep 9, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Today I am very happy to announce that during my stay in London for the m3 conference, I’ll also be giving a talk at the R-Ladies London Meetup on Tuesday, October 16th, about one of my favorite topics: Interpretable Deep Learning with R, Keras and LIME.
+You can register via Eventbrite: https://www.eventbrite.co.uk/e/interpretable-deep-learning-with-r-lime-and-keras-tickets-50118369392
+ ABOUT THE TALK
+  Keras is a high-level open-source deep learning framework that by default works on top of TensorFlow.</div>
             </div>
             <div style="clear:both;"></div>
             <hr>
@@ -1605,24 +1625,6 @@ The workshop covered the basics of machine learning. With an example dataset I w
             <hr>
           </div>
         
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="/2018/06/text_to_speech_r/">
-                <h3 class="media-heading">Text-to-speech with R</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Jun 6, 2018
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">Computers started talking to us! They do this with so called Text-to-Speech (TTS) systems. With neural nets, deep learning and lots of training data, these systems have gotten a whole lot better in recent years. In some cases, they are so good that you can’t distinguish between human and machine voice.
-In one of our recent codecentric.AI videos, we compared different Text-to-Speech systems (the video is in German, though - but the text snippets and their voice recordings we show in the video are a mix of German and English).</div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
       </div>
     </div>
     <div class="modal-footer">
@@ -1630,7 +1632,7 @@ In one of our recent codecentric.AI videos, we compared different Text-to-Speech
          data-message-zero="no post found"
          data-message-one="1 post found"
          data-message-other="{n} posts found">
-         55 posts found
+         56 posts found
       </p>
     </div>
   </div>

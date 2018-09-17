@@ -2,7 +2,7 @@
 title: "Code for case study - Customer Churn with Keras/TensorFlow and H2O"
 draft: true
 author: Shirin Glander
-date: '2018-09-17'
+date: '2018-09-30'
 categories: ["R"]
 tags: ["API", "machine learning", "plumber"]
 thumbnailImagePosition: left
