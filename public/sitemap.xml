@@ -13,6 +13,11 @@
   </url>
   
   <url>
+    <loc>/2018/09/deep_learning_keras_tensorflow_18_09/</loc>
+    <lastmod>2018-09-19T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/2018/09/rladieslondontalk/</loc>
     <lastmod>2018-09-17T00:00:00+00:00</lastmod>
   </url>
@@ -455,7 +460,7 @@
   
   <url>
     <loc>/tags/data-science/</loc>
-    <lastmod>2018-05-22T00:00:00+00:00</lastmod>
+    <lastmod>2018-09-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -623,7 +628,7 @@
   
   <url>
     <loc>/tags/keras/</loc>
-    <lastmod>2018-08-21T00:00:00+00:00</lastmod>
+    <lastmod>2018-09-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -947,7 +952,7 @@
   
   <url>
     <loc>/tags/tensorflow/</loc>
-    <lastmod>2018-06-21T00:00:00+00:00</lastmod>
+    <lastmod>2018-09-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -1031,13 +1036,13 @@
   
   <url>
     <loc>/tags/workshop/</loc>
-    <lastmod>2018-05-22T00:00:00+00:00</lastmod>
+    <lastmod>2018-09-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/workshop/</loc>
-    <lastmod>2018-05-22T00:00:00+00:00</lastmod>
+    <lastmod>2018-09-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

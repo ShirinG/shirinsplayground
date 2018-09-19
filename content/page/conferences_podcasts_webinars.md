@@ -18,7 +18,7 @@ Here, you can find a list of all the talks I gave at conferences, webinars, podc
 > I offer a workshop on deep learning with Keras and TensorFlow using R.
 Date and place depend on who and how many people are interested, so please contact me either directly or via the workshop page: https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/ (the description is in German but I also offer to give the workshop in English).
 
-[Official link](https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/)
+[The next dates for the workshop are: 8th & 9th of November 2018 in Munich](https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/)
 
 <br>
 
@@ -41,7 +41,7 @@ implementieren können.
 - Together with a colleague from codecentric, I'll be giving a workshop about ["END-2-END VOM KERAS TENSORFLOW-MODELL ZUR PRODUKTION"](https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953) at the data2day conference, which is being held from September 25th - 27th 2018 in Heidelberg, Germany (German language):
 https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953
 
-- On Wednesday, October 26th, I'll be talking about ['Decoding The Black Box' at the Frankfurt Data Sciene Meetup](http://meetu.ps/e/DQBZx/w54bW/f).
+- On Wednesday, October 26th, I'll be talking about ['Decoding The Black Box' at the Frankfurt Data Sciene Meetup](https://shirinsplayground.netlify.com/2018/09/ffm_datascience_meetup/).
 
 - At the [ML Summit](https://www.ml-summit.de) held on October 1st and 2nd in Berlin, Germany, I'll be giving a workshop about [image classification with Keras](https://ml-summit.de/specialized-topics/bildklassifikation-leicht-gemacht-mit-keras-und-tensorflow/): https://ml-summit.de/specialized-topics/bildklassifikation-leicht-gemacht-mit-keras-und-tensorflow/ (German language)
 
