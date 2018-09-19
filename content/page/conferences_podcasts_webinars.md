@@ -41,9 +41,13 @@ implementieren können.
 - Together with a colleague from codecentric, I'll be giving a workshop about ["END-2-END VOM KERAS TENSORFLOW-MODELL ZUR PRODUKTION"](https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953) at the data2day conference, which is being held from September 25th - 27th 2018 in Heidelberg, Germany (German language):
 https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953
 
+- On Wednesday, October 26th, I'll be talking about ['Decoding The Black Box' at the Frankfurt Data Sciene Meetup](http://meetu.ps/e/DQBZx/w54bW/f).
+
 - At the [ML Summit](https://www.ml-summit.de) held on October 1st and 2nd in Berlin, Germany, I'll be giving a workshop about [image classification with Keras](https://ml-summit.de/specialized-topics/bildklassifikation-leicht-gemacht-mit-keras-und-tensorflow/): https://ml-summit.de/specialized-topics/bildklassifikation-leicht-gemacht-mit-keras-und-tensorflow/ (German language)
 
 - From 15th to 17th October 2018, I'll be in London for the [M-cubed conference](https://www.mcubed.london/). My talk about [Explaining complex machine learning models with LIME](https://www.mcubed.london/sessions/explaining-complex-machine-learning-models-lime/) will be on October 16
+
+- While in London for the [M-cubed conference](https://www.mcubed.london/sessions/explaining-complex-machine-learning-models-lime/), I’ll also be giving a talk at the R-Ladies London Meetup on Tuesday, October 16th, about [Interpretable Deep Learning with R, Keras and LIME](https://shirinsplayground.netlify.com/2018/09/rladieslondontalk/).
 
 - On November 7th, I'll be giving my talk from the [JAX conference 2018: Deep Learning - a Primer](https://shirinsplayground.netlify.com/2018/01/jax2018/) again at the [W-JAX](https://jax.de/big-data-machine-learning/deep-learning-a-primer/) in Munich.
 
