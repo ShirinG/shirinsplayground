@@ -852,8 +852,8 @@ explanation &lt;- lime::explain(x = Xtest[1:9, ],
     <title type="html"><![CDATA[I&#39;ll be talking about &#39;Decoding The Black Box&#39; at the Frankfurt Data Science Meetup]]></title>
     <link href="/2018/09/ffm_datascience_meetup/"/>
     <id>/2018/09/ffm_datascience_meetup/</id>
-    <published>2018-09-17T00:00:00+00:00</published>
-    <updated>2018-09-17T00:00:00+00:00</updated>
+    <published>2018-09-19T00:00:00+00:00</published>
+    <updated>2018-09-19T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>I have yet another Meetup talk to announce:</p>
 <p>On Wednesday, October 26th, I’ll be talking about <a href="http://meetu.ps/e/DQBZx/w54bW/f">‘Decoding The Black Box’ at the Frankfurt Data Science Meetup</a>.</p>
 <p>Particularly cool with this meetup is that they will livestream the event at <a href="www.youtube.com/c/FrankfurtDataScience" class="uri">www.youtube.com/c/FrankfurtDataScience</a>!</p>

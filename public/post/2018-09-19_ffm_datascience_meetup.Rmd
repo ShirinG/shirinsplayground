@@ -2,7 +2,7 @@
 title: "I'll be talking about 'Decoding The Black Box' at the Frankfurt Data Science Meetup"
 draft: false
 author: Shirin Glander
-date: '2018-09-17'
+date: '2018-09-19'
 categories: ["meetup"]
 tags: ["lime", "machine learning", "meetup"]
 thumbnailImagePosition: left
