@@ -1,0 +1,615 @@
+---
+title: "Code for case study - Customer Churn with Keras/TensorFlow and H2O"
+draft: true
+author: Shirin Glander
+date: '2018-12-12'
+categories: ["R"]
+tags: ["API", "machine learning", "plumber"]
+thumbnailImagePosition: left
+thumbnailImage: 
+metaAlignment: center
+coverMeta: out
+slug: customer_churn_code
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+This is code that accompanies a [book](https://www.dpunkt.de/buecher/13208/9783864906107-data-science.html) chapter on customer churn that I have written for dpunkt Verlag. The book is in German and will probably appear in December: [https://www.dpunkt.de/buecher/13208/9783864906107-data-science.html](https://www.dpunkt.de/buecher/13208/9783864906107-data-science.html).
+
+# Inspiration & Sources
+
+Thank you to the following people for providing excellent code examples about customer churn:
+
+- Matt Dancho: http://www.business-science.io/business/2017/11/28/customer_churn_analysis_keras.html
+- JJ Allaire: https://github.com/rstudio/keras-customer-churn
+- Susan Li: https://towardsdatascience.com/predict-customer-churn-with-r-9e62357d47b4
+- John Sullivan: https://jtsulliv.github.io/churn-eda/
+
+# Setup
+
+All analyses are done in R using RStudio. For detailed session information including R version, operating system and package versions, see the `sessionInfo()` output at the end of this document.
+
+All figures are produced with ggplot2.
+
+- libraries
+
+```{r}
+# Load libraries
+library(tidyverse) # for tidy data analysis
+library(readr)     # for fast reading of input files
+library(caret)     # for convenient splitting
+library(mice)      # mice package for Multivariate Imputation by Chained Equations (MICE)
+library(keras)     # for neural nets
+library(lime)      # for explaining neural nets
+library(rsample)   # for splitting training and test data
+library(recipes)   # for preprocessing
+library(yardstick) # for evaluation
+library(ggthemes)  # for additional plotting themes
+library(corrplot)  # for correlation
+
+theme_set(theme_minimal())
+```
+
+```{r eval=FALSE}
+# Install Keras if you have not installed it before
+# follow instructions if you haven't installed TensorFlow
+install_keras()
+```
+
+<br>
+
+# Data preparation {.tabset .tabset-fade .tabset-pills}
+
+## The dataset
+
+The Telco Customer Churn data set is the same one that Matt Dancho used in his post (see above). It was downloaded from [IBM Watson](https://www.ibm.com/communities/analytics/watson-analytics-blog/predictive-insights-in-the-telco-customer-churn-data-set/)
+
+```{r echo=FALSE}
+churn_data_raw <- read_csv("/Users/shiringlander/Documents/Github/predictive_analytics/Datasets/WA_Fn-UseC_-Telco-Customer-Churn.csv")
+```
+
+```{r eval=FALSE}
+churn_data_raw <- read_csv("WA_Fn-UseC_-Telco-Customer-Churn.csv")
+```
+
+```{r}
+head(churn_data_raw)
+dim(churn_data_raw)
+```
+
+### EDA
+
+- proportion of churn
+
+```{r}
+churn_data_raw %>%
+  count(Churn)
+```
+
+- plot categorical features
+
+```{r eda_chr, fig.width=12, fig.height=12}
+churn_data_raw %>%
+  mutate(SeniorCitizen = as.character(SeniorCitizen)) %>%
+  select(-customerID) %>%
+  select_if(is.character) %>%
+  select(Churn, everything()) %>%
+  gather(x, y, gender:PaymentMethod) %>%
+  count(Churn, x, y) %>%
+  ggplot(aes(x = y, y = n, fill = Churn, color = Churn)) +
+    facet_wrap(~ x, ncol = 4, scales = "free") +
+    geom_bar(stat = "identity", alpha = 0.5) +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1),
+          legend.position = "top") +
+    scale_color_tableau() +
+    scale_fill_tableau()
+```
+
+- plot numerical features
+
+```{r eda_num, fig.width=12, fig.height=3}
+churn_data_raw %>%
+  select(-customerID) %>%
+  #select_if(is.numeric) %>%
+  select(Churn, MonthlyCharges, tenure, TotalCharges) %>%
+  gather(x, y, MonthlyCharges:TotalCharges) %>%
+  ggplot(aes(x = y, fill = Churn, color = Churn)) +
+    facet_wrap(~ x, ncol = 3, scales = "free") +
+    geom_density(alpha = 0.5) +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1),
+          legend.position = "top") +
+    scale_color_tableau() +
+    scale_fill_tableau()
+```
+
+```{r}
+churn_data <- churn_data_raw %>%
+  select(-customerID)
+```
+
+### Dealing with missing values
+
+```{r}
+md.pattern(churn_data, plot = FALSE)
+```
+
+```{r eval=FALSE}
+imp <- mice(data = churn_data,  print = FALSE)
+train_data_impute <- complete(imp, "long")
+```
+
+```{r}
+churn_data <- churn_data %>%
+  drop_na()
+```
+
+## Training and test split
+
+```{r}
+set.seed(42)
+index <- createDataPartition(churn_data$Churn, p = 0.75, list = FALSE)
+```
+
+```{r}
+train_data <- churn_data[index, ]
+test_data  <- churn_data[-index, ]
+
+index2 <- createDataPartition(train_data$Churn, p = 0.8, list = FALSE)
+
+train_data <- train_data[index2, ]
+valid_data <- train_data[-index2, ]
+```
+
+```{r}
+nrow(train_data)
+nrow(valid_data)
+nrow(test_data)
+```
+
+## Pre-Processing
+
+> A recipe is a description of what steps should be applied to a data set in order to get it ready for data analysis.
+
+```{r}
+recipe_churn <- recipe(Churn ~ ., train_data) %>%
+  step_dummy(all_nominal(), -all_outcomes()) %>%
+  step_center(all_predictors(), -all_outcomes()) %>%
+  step_scale(all_predictors(), -all_outcomes()) %>%
+  prep(data = train_data)
+```
+
+```{r}
+train_data <- bake(recipe_churn, newdata = train_data) %>%
+  select(Churn, everything())
+
+valid_data <- bake(recipe_churn, newdata = valid_data) %>%
+  select(Churn, everything())
+
+test_data <- bake(recipe_churn, newdata = test_data) %>%
+  select(Churn, everything())
+```
+
+```{r}
+train_y_drop <- to_categorical(as.integer(train_data$Churn) - 1, 2)
+colnames(train_y_drop) <- c("No", "Yes")
+
+valid_y_drop <- to_categorical(as.integer(valid_data$Churn) - 1, 2)
+colnames(valid_y_drop) <- c("No", "Yes")
+
+test_y_drop <- to_categorical(as.integer(test_data$Churn) - 1, 2)
+colnames(test_y_drop) <- c("No", "Yes")
+```
+
+```{r}
+# if training with binary crossentropy
+train_y_drop <- train_y_drop[, 2, drop = FALSE]
+head(train_y_drop)
+
+valid_y_drop <- valid_y_drop[, 2, drop = FALSE]
+test_y_drop <- test_y_drop[, 2, drop = FALSE]
+```
+
+```{r}
+train_data_bk <- select(train_data, -Churn)
+head(train_data_bk)
+
+valid_data_bk <- select(valid_data, -Churn)
+test_data_bk <- select(test_data, -Churn)
+```
+
+```{r}
+train_data$Churn <- ifelse(train_data$Churn == "Yes", 1, 0)
+valid_data$Churn <- ifelse(valid_data$Churn == "Yes", 1, 0)
+test_data$Churn <- ifelse(test_data$Churn == "Yes", 1, 0)
+```
+
+```{r eval=FALSE}
+# alternative - not run
+train_data_impute_bk <- bake(recipe_churn, newdata = train_data_impute) %>%
+  select(Churn, everything())
+train_data_impute_bk <- cbind(train_data_impute$.imp, train_data_impute_bk)
+```
+
+## Modeling with keras
+
+```{r}
+model_keras <- keras_model_sequential()
+
+model_keras %>% 
+  layer_dense(units = 32, kernel_initializer = "uniform", activation = "relu", 
+              input_shape = ncol(train_data_bk)) %>% 
+  layer_dropout(rate = 0.2) %>%
+  
+  layer_dense(units = 16, kernel_initializer = "uniform", activation = "relu") %>% 
+  layer_dropout(rate = 0.2) %>%
+  
+  layer_dense(units = 8, kernel_initializer = "uniform", activation = "relu") %>% 
+  layer_dropout(rate = 0.2) %>%
+
+  layer_dense(units = 1,
+              kernel_initializer = "uniform", activation = "sigmoid") %>%
+  
+  compile(
+        optimizer = 'adamax',
+        loss      = 'binary_crossentropy',
+        metrics   = c("binary_accuracy", "mse")
+    )
+
+summary(model_keras)
+```
+
+```{r}
+fit_keras <- fit(model_keras, 
+    x = as.matrix(train_data_bk), 
+    y = train_y_drop,
+    batch_size = 32, 
+    epochs = 20,
+    #validation_split = 0.30,
+    validation_data = list(as.matrix(valid_data_bk), valid_y_drop),
+    verbose = 2
+    )
+```
+
+```{r plot_fit_keras, fig.width=10, fig.height=8}
+plot(fit_keras) +
+  scale_color_tableau() +
+  scale_fill_tableau()
+```
+
+## Evaluation
+
+```{r}
+pred_classes_test <- predict_classes(object = model_keras, x = as.matrix(test_data_bk))
+pred_proba_test  <- predict_proba(object = model_keras, x = as.matrix(test_data_bk))
+```
+
+```{r}
+test_results <- tibble(
+  actual_yes = as.factor(as.vector(test_y_drop)),
+  pred_classes_test = as.factor(as.vector(pred_classes_test)),
+  Yes = as.vector(pred_proba_test), 
+  No = 1 - as.vector(pred_proba_test))
+head(test_results)
+```
+
+```{r}
+test_results %>% 
+  conf_mat(actual_yes, pred_classes_test)
+```
+
+```{r}
+test_results %>% 
+  metrics(actual_yes, pred_classes_test)
+```
+
+```{r}
+test_results %>% 
+  roc_auc(actual_yes, Yes)
+```
+
+```{r}
+tibble(
+    precision = test_results %>% yardstick::precision(actual_yes, pred_classes_test),
+    recall    = test_results %>% yardstick::recall(actual_yes, pred_classes_test)
+)
+```
+
+```{r}
+# F1-Statistic
+test_results %>% yardstick::f_meas(actual_yes, pred_classes_test, beta = 1)
+```
+
+## H2O
+
+```{r warning=FALSE, message=FALSE}
+library(h2o)
+h2o.init(nthreads = -1)
+h2o.no_progress()
+
+train_data_hf <- as.h2o(train_data)
+test <- as.h2o(test_data)
+```
+
+```{r tidy=FALSE}
+splits <- h2o.splitFrame(train_data_hf, 
+                         ratios = c(0.8), 
+                         seed = 1)
+
+train <- splits[[1]]
+valid <- splits[[2]]
+
+response <- "Churn"
+features <- setdiff(colnames(train), response)
+
+# For binary classification, response should be a factor
+train[, response] <- as.factor(train[, response])
+valid[, response] <- as.factor(valid[, response])
+test[, response] <- as.factor(test[, response])
+```
+
+```{r tidy=FALSE}
+summary(train$Churn, exact_quantiles = TRUE)
+summary(valid$Churn, exact_quantiles = TRUE)
+summary(test$Churn, exact_quantiles = TRUE)
+```
+
+> "During model training, you might find that the majority of your data belongs in a single class. For example, consider a binary classification model that has 100 rows, with 80 rows labeled as class 1 and the remaining 20 rows labeled as class 2. This is a common scenario, given that machine learning attempts to predict class 1 with the highest accuracy. It can also be an example of an imbalanced dataset, in this case, with a ratio of 4:1.
+The balance_classes option can be used to balance the class distribution. When enabled, H2O will either undersample the majority classes or oversample the minority classes. Note that the resulting model will also correct the final probabilities (“undo the sampling”) using a monotonic transform, so the predicted probabilities of the first model will differ from a second model. However, because AUC only cares about ordering, it won’t be affected.
+If this option is enabled, then you can also specify a value for the class_sampling_factors and max_after_balance_size options."
+http://docs.h2o.ai/h2o/latest-stable/h2o-docs/data-science/algo-params/balance_classes.html
+
+The model was trained with [AutoML](http://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html). The best model was a Best Of Family Stacked Ensemble.
+
+```{r}
+aml <- h2o.automl(x = features, 
+                  y = response,
+                  training_frame = train,
+                  validation_frame = valid,
+                  balance_classes = TRUE,
+                  max_runtime_secs = 30)
+
+# View the AutoML Leaderboard
+lb <- aml@leaderboard
+lb
+
+best_model <- aml@leader
+best_model
+```
+
+```{r}
+pred <- h2o.predict(best_model, test[, -1])
+```
+
+```{r }
+h2o.mean_per_class_error(best_model, train = TRUE, valid = TRUE, xval = TRUE)
+```
+
+```{r }
+h2o.confusionMatrix(best_model, valid = TRUE)
+```
+
+```{r }
+h2o.auc(best_model, train = TRUE)
+h2o.auc(best_model, valid = TRUE)
+h2o.auc(best_model, xval = TRUE)
+```
+
+```{r fig.width=6, fig.height=5, fig.align='center'}
+perf <- h2o.performance(best_model, test)
+h2o.confusionMatrix(perf)
+```
+
+```{r fig.width=6, fig.height=5, fig.align='center', eval=FALSE}
+plot(perf)
+```
+
+```{r }
+h2o.logloss(perf)
+h2o.mse(perf)
+h2o.auc(perf)
+
+metrics <- as.data.frame(h2o.metric(perf))
+head(metrics)
+```
+
+```{r metrics, fig.width=8, fig.height=12}
+metrics %>%
+  gather(x, y, f1:tpr) %>%
+  ggplot(aes(x = threshold, y = y, group = x)) +
+    facet_wrap(~ x, ncol = 2, scales = "free") +
+    geom_line()
+```
+
+```{r fig.align='center'}
+threshold <- metrics[order(-metrics$accuracy), "threshold"][1]
+
+finalRf_predictions <- data.frame(actual = as.vector(test$Churn), 
+                                  as.data.frame(h2o.predict(object = best_model, 
+                                                            newdata = test)))
+
+finalRf_predictions$accurate <- ifelse(finalRf_predictions$actual == 
+                                         finalRf_predictions$predict, "ja", "nein")
+
+finalRf_predictions$predict_stringent <- ifelse(finalRf_predictions$p1 > threshold, 1, 
+                                                ifelse(finalRf_predictions$p0 > threshold, 0, "unsicher"))
+finalRf_predictions$accurate_stringent <- ifelse(finalRf_predictions$actual == 
+                                                   finalRf_predictions$predict_stringent, "ja", 
+                                       ifelse(finalRf_predictions$predict_stringent == 
+                                                "unsicher", "unsicher", "nein"))
+
+finalRf_predictions %>%
+  group_by(actual, predict) %>%
+  dplyr::summarise(n = n())
+
+finalRf_predictions %>%
+  group_by(actual, predict_stringent) %>%
+  dplyr::summarise(n = n())
+```
+
+```{r default_vs_stringent, fig.align='center'}
+finalRf_predictions %>%
+  gather(x, y, accurate, accurate_stringent) %>%
+  mutate(x = ifelse(x == "accurate", "Default Schwelle: 0.5", 
+                    paste("Angepasste Schwelle:", round(threshold, digits = 2)))) %>%
+  ggplot(aes(x = actual, fill = y)) +
+    facet_grid(~ x) +
+    geom_bar(position = "dodge") +
+    scale_fill_tableau()
+```
+
+```{r}
+df <- finalRf_predictions[, c(1, 3, 4)]
+
+thresholds <- seq(from = 0, to = 1, by = 0.1)
+
+prop_table <- data.frame(threshold = thresholds, 
+                         prop_p0_true = NA, prop_p0_false = NA,
+                         prop_p1_true = NA, prop_p1_false = NA)
+
+for (threshold in thresholds) {
+
+  pred_1 <- ifelse(df$p1 > threshold, 1, 0)
+  pred_1_t <- ifelse(pred_1 == df$actual, TRUE, FALSE)
+  
+  group <- data.frame(df, 
+                      "pred_true" = pred_1_t) %>%
+    group_by(actual, pred_true) %>%
+    dplyr::summarise(n = n())
+  
+  group_p0 <- filter(group, actual == "0")
+  
+  prop_p0_t <- sum(filter(group_p0, pred_true == TRUE)$n) / sum(group_p0$n)
+  prop_p0_f <- sum(filter(group_p0, pred_true == FALSE)$n) / sum(group_p0$n)
+  prop_table[prop_table$threshold == threshold, "prop_p0_true"] <- prop_p0_t
+  prop_table[prop_table$threshold == threshold, "prop_p0_false"] <- prop_p0_f
+  
+  group_p1 <- filter(group, actual == "1")
+  
+  prop_p1_t <- sum(filter(group_p1, pred_true == TRUE)$n) / sum(group_p1$n)
+  prop_p1_f <- sum(filter(group_p1, pred_true == FALSE)$n) / sum(group_p1$n)
+  prop_table[prop_table$threshold == threshold, "prop_p1_true"] <- prop_p1_t
+  prop_table[prop_table$threshold == threshold, "prop_p1_false"] <- prop_p1_f
+}
+```
+
+```{r prop_table, fig.height=3, fig.width=6, fig.align='center'}
+prop_table %>%
+  gather(x, y, prop_p0_true, prop_p1_true) %>%
+  rename(Schwellenwert = threshold) %>%
+  mutate(x = ifelse(x == "prop_p0_true", "prop true p0",
+         "prop true p1")) %>%
+  ggplot(aes(x = Schwellenwert, y = y, color = x)) +
+    geom_point() +
+    geom_line() +
+    scale_color_tableau()
+```
+
+### Cost calculation
+
+Let's assume that 
+
+1. a marketing campaign + employee time will cost the company 1000€ per year for every customer that is included in the campaign.
+2. the annual average revenue per customer is 2000€ (in more complex scenarios customers could be further divided into revenue groups to calculate how "valuable" they are and how harmful loosing them would be)
+3. investing into unnecessary marketing doesn't cause churn by itself (i.e. a customer who isn't going to churn isn't reacting negatively to the add campaign - which could happen in more complex scenarios).
+4. without a customer churn model the company would target half of their customer (by chance) for ad-campaigns
+5. without a customer churn model the company would lose about 25% of their customers to churn
+
+This would mean that compared to no intervention we would have
+
+- prop_p0_true == customers who were correctly predicted to not churn did not cost anything (no marketing money was spent): +/-0€
+- prop_p0_false == customers that did not churn who are predicted to churn will be an empty investment: +/-0€ - 1500€
+- prop_p1_false == customer that were predicted to stay but churned: -2000€
+- prop_p1_true == customers that were correctly predicted to churn:
+  - let's say 100% of those could be kept by investing into marketing: +2000€ -1500€
+  - let's say 50% could be kept by investing into marketing: +2000€ * 0.5 -1500€
+  
+```{r}
+# baseline
+
+revenue <- 2000
+cost <- 1000
+
+customers_churn <- filter(test_data, Churn == 1)
+customers_churn_n <- nrow(customers_churn)
+
+customers_no_churn <- filter(filter(test_data, Churn == 0))
+customers_no_churn_n <- nrow(customers_no_churn)
+
+customers <- customers_churn_n + customers_no_churn_n
+
+ad_target_rate <- 0.5
+ad_cost_default <- customers * ad_target_rate * cost
+
+churn_rate_default <- customers_churn_n / customers_no_churn_n
+ann_revenue_default <- customers_no_churn_n * revenue
+
+net_win_default <- ann_revenue_default - ad_cost_default
+net_win_default
+```
+
+How much can we revenue gain from predicting customer churn:
+
+```{r}
+conversion <- 0.7
+
+net_win_table <- prop_table %>%
+  mutate(prop_p0_true_X = prop_p0_true * customers_no_churn_n * revenue,
+         prop_p0_false_X = prop_p0_false * customers_no_churn_n * (revenue -cost),
+         prop_p1_false_X = prop_p1_false * customers_churn_n * 0,
+         prop_p1_true_X = prop_p1_true * customers_churn_n * ((revenue * conversion) - cost)) %>%
+  group_by(threshold) %>%
+  summarise(net_win = sum(prop_p0_true_X + prop_p0_false_X + prop_p1_false_X + prop_p1_true_X),
+            net_win_compared = net_win - net_win_default) %>%
+  arrange(-net_win_compared)
+
+net_win_table
+```
+
+
+## LIME
+
+```{r}
+Xtrain <- as.data.frame(train)
+Xtest <- as.data.frame(test)
+
+# run lime() on training set
+explainer <- lime::lime(x = Xtrain, 
+                        model = best_model)
+
+# run explain() on the explainer
+explanation <- lime::explain(x = Xtest[1:9, ], 
+                             explainer = explainer, 
+                             n_labels = 1,
+                             n_features = 4,
+                             kernel_width = 0.5)
+```
+
+```{r eval=FALSE}
+plot_explanations(explanation)
+```
+
+```{r echo=FALSE}
+explanation %>%
+  filter(feature != "Churn") %>%
+  plot_explanations()
+```
+
+```{r eval=FALSE}
+explanation %>%
+  plot_features(ncol = 3)
+```
+
+```{r fig.width=13, fig.height=8, echo=FALSE}
+explanation %>%
+  filter(feature != "Churn") %>%
+  plot_features(ncol = 3)
+```
+
+---
+
+```{r}
+sessionInfo()
+```
+

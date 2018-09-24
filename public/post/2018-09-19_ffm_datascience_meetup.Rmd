@@ -14,7 +14,7 @@ slug: ffm_datascience_meetup
 
 I have yet another Meetup talk to announce: 
 
-On Wednesday, October 26th, I'll be talking about ['Decoding The Black Box' at the Frankfurt Data Science Meetup](http://meetu.ps/e/DQBZx/w54bW/f).
+On Wednesday, September 26th, I'll be talking about ['Decoding The Black Box' at the Frankfurt Data Science Meetup](http://meetu.ps/e/DQBZx/w54bW/f).
 
 Particularly cool with this meetup is that they will livestream the event at [www.youtube.com/c/FrankfurtDataScience](www.youtube.com/c/FrankfurtDataScience)!
 

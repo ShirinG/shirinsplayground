@@ -2,7 +2,7 @@
   <title>Shirin&#39;s playgRound</title>
   <link href="/index.xml" rel="self"/>
   <link href="/"/>
-  <updated>2018-09-30T00:00:00+00:00</updated>
+  <updated>2018-12-12T00:00:00+00:00</updated>
   <id>/</id>
   <author>
     <name>Dr. Shirin Glander</name>
@@ -10,10 +10,10 @@
   <generator>Hugo -- gohugo.io</generator>
   <entry>
     <title type="html"><![CDATA[Code for case study - Customer Churn with Keras/TensorFlow and H2O]]></title>
-    <link href="/2018/09/customer_churn_code/"/>
-    <id>/2018/09/customer_churn_code/</id>
-    <published>2018-09-30T00:00:00+00:00</published>
-    <updated>2018-09-30T00:00:00+00:00</updated>
+    <link href="/2018/12/customer_churn_code/"/>
+    <id>/2018/12/customer_churn_code/</id>
+    <published>2018-12-12T00:00:00+00:00</published>
+    <updated>2018-12-12T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>This is code that accompanies a <a href="https://www.dpunkt.de/buecher/13208/9783864906107-data-science.html">book</a> chapter on customer churn that I have written for dpunkt Verlag. The book is in German and will probably appear in December: <a href="https://www.dpunkt.de/buecher/13208/9783864906107-data-science.html" class="uri">https://www.dpunkt.de/buecher/13208/9783864906107-data-science.html</a>.</p>
 <div id="inspiration-sources" class="section level1">
 <h1>Inspiration &amp; Sources</h1>
@@ -103,7 +103,7 @@ install_keras()</code></pre>
           legend.position = &quot;top&quot;) +
     scale_color_tableau() +
     scale_fill_tableau()</code></pre>
-<p><img src="/post/2018-09-17_customer_churn_code_files/figure-html/eda_chr-1.png" width="1152" /></p>
+<p><img src="/post/2018-12-12_customer_churn_code_files/figure-html/eda_chr-1.png" width="1152" /></p>
 <ul>
 <li>plot numerical features</li>
 </ul>
@@ -119,7 +119,7 @@ install_keras()</code></pre>
           legend.position = &quot;top&quot;) +
     scale_color_tableau() +
     scale_fill_tableau()</code></pre>
-<p><img src="/post/2018-09-17_customer_churn_code_files/figure-html/eda_num-1.png" width="1152" /></p>
+<p><img src="/post/2018-12-12_customer_churn_code_files/figure-html/eda_num-1.png" width="1152" /></p>
 <pre class="r"><code>churn_data &lt;- churn_data_raw %&gt;%
   select(-customerID)</code></pre>
 </div>
@@ -296,7 +296,7 @@ summary(model_keras)</code></pre>
 <pre class="r"><code>plot(fit_keras) +
   scale_color_tableau() +
   scale_fill_tableau()</code></pre>
-<p><img src="/post/2018-09-17_customer_churn_code_files/figure-html/plot_fit_keras-1.png" width="960" /></p>
+<p><img src="/post/2018-12-12_customer_churn_code_files/figure-html/plot_fit_keras-1.png" width="960" /></p>
 </div>
 <div id="evaluation" class="section level2">
 <h2>Evaluation</h2>
@@ -311,18 +311,18 @@ head(test_results)</code></pre>
 <pre><code>## # A tibble: 6 x 4
 ##   actual_yes pred_classes_test    Yes    No
 ##   &lt;fct&gt;      &lt;fct&gt;              &lt;dbl&gt; &lt;dbl&gt;
-## 1 0          1                 0.528  0.472
-## 2 0          0                 0.0334 0.967
-## 3 1          1                 0.577  0.423
-## 4 0          0                 0.440  0.560
-## 5 1          0                 0.217  0.783
-## 6 1          0                 0.427  0.573</code></pre>
+## 1 0          1                 0.510  0.490
+## 2 0          0                 0.0342 0.966
+## 3 1          1                 0.726  0.274
+## 4 0          0                 0.471  0.529
+## 5 1          0                 0.192  0.808
+## 6 1          0                 0.371  0.629</code></pre>
 <pre class="r"><code>test_results %&gt;% 
   conf_mat(actual_yes, pred_classes_test)</code></pre>
 <pre><code>##           Truth
 ## Prediction    0    1
-##          0 1156  214
-##          1  134  253</code></pre>
+##          0 1165  223
+##          1  125  244</code></pre>
 <pre class="r"><code>test_results %&gt;% 
   metrics(actual_yes, pred_classes_test)</code></pre>
 <pre><code>## # A tibble: 1 x 1
@@ -331,7 +331,7 @@ head(test_results)</code></pre>
 ## 1    0.802</code></pre>
 <pre class="r"><code>test_results %&gt;% 
   roc_auc(actual_yes, Yes)</code></pre>
-<pre><code>## [1] 0.8387804</code></pre>
+<pre><code>## [1] 0.8402146</code></pre>
 <pre class="r"><code>tibble(
     precision = test_results %&gt;% yardstick::precision(actual_yes, pred_classes_test),
     recall    = test_results %&gt;% yardstick::recall(actual_yes, pred_classes_test)
@@ -339,10 +339,10 @@ head(test_results)</code></pre>
 <pre><code>## # A tibble: 1 x 2
 ##   precision recall
 ##       &lt;dbl&gt;  &lt;dbl&gt;
-## 1     0.844  0.896</code></pre>
+## 1     0.839  0.903</code></pre>
 <pre class="r"><code># F1-Statistic
 test_results %&gt;% yardstick::f_meas(actual_yes, pred_classes_test, beta = 1)</code></pre>
-<pre><code>## [1] 0.8691729</code></pre>
+<pre><code>## [1] 0.8700523</code></pre>
 </div>
 <div id="h2o" class="section level2">
 <h2>H2O</h2>
@@ -352,18 +352,18 @@ h2o.init(nthreads = -1)</code></pre>
 ## H2O is not running yet, starting it now...
 ## 
 ## Note:  In case of errors look at the following log files:
-##     /var/folders/5j/v30zfr7s14qfhqwqdmqmpxw80000gn/T//Rtmp6XmDdW/h2o_shiringlander_started_from_r.out
-##     /var/folders/5j/v30zfr7s14qfhqwqdmqmpxw80000gn/T//Rtmp6XmDdW/h2o_shiringlander_started_from_r.err
+##     /var/folders/5j/v30zfr7s14qfhqwqdmqmpxw80000gn/T//RtmpU7M4Vg/h2o_shiringlander_started_from_r.out
+##     /var/folders/5j/v30zfr7s14qfhqwqdmqmpxw80000gn/T//RtmpU7M4Vg/h2o_shiringlander_started_from_r.err
 ## 
 ## 
 ## Starting H2O JVM and connecting: .. Connection successful!
 ## 
 ## R is connected to the H2O cluster: 
-##     H2O cluster uptime:         5 seconds 214 milliseconds 
+##     H2O cluster uptime:         5 seconds 29 milliseconds 
 ##     H2O cluster timezone:       Europe/Berlin 
 ##     H2O data parsing timezone:  UTC 
 ##     H2O cluster version:        3.20.0.2 
-##     H2O cluster version age:    3 months and 1 day  
+##     H2O cluster version age:    3 months and 8 days  
 ##     H2O cluster name:           H2O_started_from_R_shiringlander_zvk734 
 ##     H2O cluster total nodes:    1 
 ##     H2O cluster total memory:   3.56 GB 
@@ -421,188 +421,188 @@ test[, response] &lt;- as.factor(test[, response])</code></pre>
 lb &lt;- aml@leaderboard
 lb</code></pre>
 <pre><code>##                                                model_id       auc
-## 1 StackedEnsemble_BestOfFamily_0_AutoML_20180917_091139 0.8379192
-## 2    StackedEnsemble_AllModels_0_AutoML_20180917_091139 0.8374932
-## 3             GBM_grid_0_AutoML_20180917_091139_model_4 0.8345577
-## 4             GLM_grid_0_AutoML_20180917_091139_model_0 0.8341097
-## 5             GBM_grid_0_AutoML_20180917_091139_model_7 0.8336572
-## 6             GBM_grid_0_AutoML_20180917_091139_model_0 0.8333099
+## 1    StackedEnsemble_AllModels_0_AutoML_20180924_080417 0.8390006
+## 2 StackedEnsemble_BestOfFamily_0_AutoML_20180924_080417 0.8380971
+## 3             GBM_grid_0_AutoML_20180924_080417_model_5 0.8375690
+## 4             GBM_grid_0_AutoML_20180924_080417_model_4 0.8365179
+## 5             GLM_grid_0_AutoML_20180924_080417_model_0 0.8341097
+## 6             GBM_grid_0_AutoML_20180924_080417_model_0 0.8302018
 ##     logloss mean_per_class_error      rmse       mse
-## 1 0.4325086            0.2414800 0.3741502 0.1399884
-## 2 0.4283102            0.2384549 0.3733329 0.1393775
-## 3 0.4298172            0.2352870 0.3742564 0.1400678
-## 4 0.4293852            0.2402290 0.3740019 0.1398774
-## 5 0.5402003            0.2432827 0.4244760 0.1801798
-## 6 0.4350965            0.2437383 0.3770215 0.1421452
+## 1 0.4302326            0.2350645 0.3731759 0.1392603
+## 2 0.4306768            0.2337383 0.3735453 0.1395361
+## 3 0.4304155            0.2353403 0.3746078 0.1403310
+## 4 0.4273302            0.2367815 0.3732200 0.1392931
+## 5 0.4293852            0.2402290 0.3740019 0.1398774
+## 6 0.4381734            0.2437888 0.3781282 0.1429809
 ## 
-## [14 rows x 6 columns]</code></pre>
+## [12 rows x 6 columns]</code></pre>
 <pre class="r"><code>best_model &lt;- aml@leader
 best_model</code></pre>
 <pre><code>## Model Details:
 ## ==============
 ## 
 ## H2OBinomialModel: stackedensemble
-## Model ID:  StackedEnsemble_BestOfFamily_0_AutoML_20180917_091139 
+## Model ID:  StackedEnsemble_AllModels_0_AutoML_20180924_080417 
 ## NULL
 ## 
 ## 
 ## H2OBinomialMetrics: stackedensemble
 ## ** Reported on training data. **
 ## 
-## MSE:  0.1268568
-## RMSE:  0.3561697
-## LogLoss:  0.3984499
-## Mean Per-Class Error:  0.218845
-## AUC:  0.8697808
-## Gini:  0.7395615
+## MSE:  0.128844
+## RMSE:  0.3589485
+## LogLoss:  0.4029882
+## Mean Per-Class Error:  0.2135015
+## AUC:  0.864463
+## Gini:  0.7289259
 ## 
 ## Confusion Matrix (vertical: actual; across: predicted) for F1-optimal threshold:
 ##           0    1    Error       Rate
-## 0      2029  462 0.185468  =462/2491
-## 1       227  673 0.252222   =227/900
-## Totals 2256 1135 0.203185  =689/3391
+## 0      1920  571 0.229225  =571/2491
+## 1       178  722 0.197778   =178/900
+## Totals 2098 1293 0.220879  =749/3391
 ## 
 ## Maximum Metrics: Maximum metrics at their respective thresholds
 ##                         metric threshold    value idx
-## 1                       max f1  0.287553 0.661425 241
-## 2                       max f2  0.163218 0.775912 304
-## 3                 max f0point5  0.459673 0.669014 166
-## 4                 max accuracy  0.459673 0.821587 166
-## 5                max precision  0.869646 1.000000   0
-## 6                   max recall  0.060279 1.000000 394
-## 7              max specificity  0.869646 1.000000   0
-## 8             max absolute_mcc  0.287553 0.526158 241
-## 9   max min_per_class_accuracy  0.244321 0.783220 260
-## 10 max mean_per_class_accuracy  0.182821 0.792734 293
+## 1                       max f1  0.240878 0.658459 260
+## 2                       max f2  0.146718 0.768209 311
+## 3                 max f0point5  0.466968 0.654878 164
+## 4                 max accuracy  0.466968 0.815394 164
+## 5                max precision  0.855263 1.000000   0
+## 6                   max recall  0.056069 1.000000 395
+## 7              max specificity  0.855263 1.000000   0
+## 8             max absolute_mcc  0.240878 0.520905 260
+## 9   max min_per_class_accuracy  0.252481 0.781111 254
+## 10 max mean_per_class_accuracy  0.200769 0.789078 282
 ## 
 ## Gains/Lift Table: Extract with `h2o.gainsLift(&lt;model&gt;, &lt;data&gt;)` or `h2o.gainsLift(&lt;model&gt;, valid=&lt;T/F&gt;, xval=&lt;T/F&gt;)`
 ## H2OBinomialMetrics: stackedensemble
 ## ** Reported on validation data. **
 ## 
-## MSE:  0.1274006
-## RMSE:  0.3569322
-## LogLoss:  0.4035714
-## Mean Per-Class Error:  0.2169052
-## AUC:  0.8619977
-## Gini:  0.7239954
+## MSE:  0.1282443
+## RMSE:  0.3581121
+## LogLoss:  0.405336
+## Mean Per-Class Error:  0.2215505
+## AUC:  0.859538
+## Gini:  0.719076
 ## 
 ## Confusion Matrix (vertical: actual; across: predicted) for F1-optimal threshold:
 ##          0   1    Error      Rate
-## 0      525  83 0.136513   =83/608
-## 1       66 156 0.297297   =66/222
-## Totals 591 239 0.179518  =149/830
+## 0      544  64 0.105263   =64/608
+## 1       75 147 0.337838   =75/222
+## Totals 619 211 0.167470  =139/830
 ## 
 ## Maximum Metrics: Maximum metrics at their respective thresholds
 ##                         metric threshold    value idx
-## 1                       max f1  0.330564 0.676790 183
-## 2                       max f2  0.178313 0.756369 264
-## 3                 max f0point5  0.511384 0.679157 116
-## 4                 max accuracy  0.453364 0.822892 138
-## 5                max precision  0.857855 1.000000   0
-## 6                   max recall  0.058394 1.000000 397
-## 7              max specificity  0.857855 1.000000   0
-## 8             max absolute_mcc  0.330564 0.553474 183
-## 9   max min_per_class_accuracy  0.228866 0.783784 230
-## 10 max mean_per_class_accuracy  0.200622 0.789844 244
+## 1                       max f1  0.415311 0.678984 154
+## 2                       max f2  0.172145 0.755538 266
+## 3                 max f0point5  0.415311 0.689493 154
+## 4                 max accuracy  0.415311 0.832530 154
+## 5                max precision  0.844644 1.000000   0
+## 6                   max recall  0.054401 1.000000 398
+## 7              max specificity  0.844644 1.000000   0
+## 8             max absolute_mcc  0.415311 0.566133 154
+## 9   max min_per_class_accuracy  0.241128 0.774775 226
+## 10 max mean_per_class_accuracy  0.223147 0.785947 239
 ## 
 ## Gains/Lift Table: Extract with `h2o.gainsLift(&lt;model&gt;, &lt;data&gt;)` or `h2o.gainsLift(&lt;model&gt;, valid=&lt;T/F&gt;, xval=&lt;T/F&gt;)`
 ## H2OBinomialMetrics: stackedensemble
 ## ** Reported on cross-validation data. **
 ## ** 5-fold cross-validation on training data (Metrics computed for combined holdout predictions) **
 ## 
-## MSE:  0.1399884
-## RMSE:  0.3741502
-## LogLoss:  0.4325086
-## Mean Per-Class Error:  0.24148
-## AUC:  0.8379192
-## Gini:  0.6758384
+## MSE:  0.1392603
+## RMSE:  0.3731759
+## LogLoss:  0.4302326
+## Mean Per-Class Error:  0.2350645
+## AUC:  0.8390006
+## Gini:  0.6780012
 ## 
 ## Confusion Matrix (vertical: actual; across: predicted) for F1-optimal threshold:
 ##           0    1    Error       Rate
-## 0      1919  572 0.229627  =572/2491
-## 1       228  672 0.253333   =228/900
-## Totals 2147 1244 0.235919  =800/3391
+## 0      1879  612 0.245684  =612/2491
+## 1       202  698 0.224444   =202/900
+## Totals 2081 1310 0.240047  =814/3391
 ## 
 ## Maximum Metrics: Maximum metrics at their respective thresholds
 ##                         metric threshold    value idx
-## 1                       max f1  0.251205 0.626866 252
-## 2                       max f2  0.129219 0.749033 323
-## 3                 max f0point5  0.465933 0.621884 164
-## 4                 max accuracy  0.467707 0.799469 163
-## 5                max precision  0.864884 1.000000   0
-## 6                   max recall  0.054293 1.000000 399
-## 7              max specificity  0.864884 1.000000   0
-## 8             max absolute_mcc  0.165281 0.474990 299
-## 9   max min_per_class_accuracy  0.238389 0.758731 259
-## 10 max mean_per_class_accuracy  0.165281 0.768264 299
+## 1                       max f1  0.233719 0.631674 254
+## 2                       max f2  0.140878 0.751033 311
+## 3                 max f0point5  0.440773 0.621547 169
+## 4                 max accuracy  0.440773 0.799174 169
+## 5                max precision  0.871047 1.000000   0
+## 6                   max recall  0.049679 1.000000 399
+## 7              max specificity  0.871047 1.000000   0
+## 8             max absolute_mcc  0.225112 0.480566 260
+## 9   max min_per_class_accuracy  0.240674 0.760000 251
+## 10 max mean_per_class_accuracy  0.197308 0.767100 277
 ## 
 ## Gains/Lift Table: Extract with `h2o.gainsLift(&lt;model&gt;, &lt;data&gt;)` or `h2o.gainsLift(&lt;model&gt;, valid=&lt;T/F&gt;, xval=&lt;T/F&gt;)`</code></pre>
 <pre class="r"><code>pred &lt;- h2o.predict(best_model, test[, -1])</code></pre>
 <pre class="r"><code>h2o.mean_per_class_error(best_model, train = TRUE, valid = TRUE, xval = TRUE)</code></pre>
 <pre><code>##     train     valid      xval 
-## 0.2188450 0.2169052 0.2414800</code></pre>
+## 0.2135015 0.2215505 0.2350645</code></pre>
 <pre class="r"><code>h2o.confusionMatrix(best_model, valid = TRUE)</code></pre>
-<pre><code>## Confusion Matrix (vertical: actual; across: predicted)  for max f1 @ threshold = 0.330564056012265:
+<pre><code>## Confusion Matrix (vertical: actual; across: predicted)  for max f1 @ threshold = 0.415310953965713:
 ##          0   1    Error      Rate
-## 0      525  83 0.136513   =83/608
-## 1       66 156 0.297297   =66/222
-## Totals 591 239 0.179518  =149/830</code></pre>
+## 0      544  64 0.105263   =64/608
+## 1       75 147 0.337838   =75/222
+## Totals 619 211 0.167470  =139/830</code></pre>
 <pre class="r"><code>h2o.auc(best_model, train = TRUE)</code></pre>
-<pre><code>## [1] 0.8697808</code></pre>
+<pre><code>## [1] 0.864463</code></pre>
 <pre class="r"><code>h2o.auc(best_model, valid = TRUE)</code></pre>
-<pre><code>## [1] 0.8619977</code></pre>
+<pre><code>## [1] 0.859538</code></pre>
 <pre class="r"><code>h2o.auc(best_model, xval = TRUE)</code></pre>
-<pre><code>## [1] 0.8379192</code></pre>
+<pre><code>## [1] 0.8390006</code></pre>
 <pre class="r"><code>perf &lt;- h2o.performance(best_model, test)
 h2o.confusionMatrix(perf)</code></pre>
-<pre><code>## Confusion Matrix (vertical: actual; across: predicted)  for max f1 @ threshold = 0.317566597282093:
+<pre><code>## Confusion Matrix (vertical: actual; across: predicted)  for max f1 @ threshold = 0.276997331622412:
 ##           0   1    Error       Rate
-## 0      1072 218 0.168992  =218/1290
-## 1       150 317 0.321199   =150/467
-## Totals 1222 535 0.209448  =368/1757</code></pre>
+## 0      1032 258 0.200000  =258/1290
+## 1       132 335 0.282655   =132/467
+## Totals 1164 593 0.221969  =390/1757</code></pre>
 <pre class="r"><code>plot(perf)</code></pre>
 <pre class="r"><code>h2o.logloss(perf)</code></pre>
-<pre><code>## [1] 0.4246352</code></pre>
+<pre><code>## [1] 0.4232643</code></pre>
 <pre class="r"><code>h2o.mse(perf)</code></pre>
-<pre><code>## [1] 0.136667</code></pre>
+<pre><code>## [1] 0.1364695</code></pre>
 <pre class="r"><code>h2o.auc(perf)</code></pre>
-<pre><code>## [1] 0.8453048</code></pre>
+<pre><code>## [1] 0.8463373</code></pre>
 <pre class="r"><code>metrics &lt;- as.data.frame(h2o.metric(perf))
 head(metrics)</code></pre>
 <pre><code>##   threshold          f1          f2   f0point5  accuracy precision
-## 1 0.8496843 0.008528785 0.005347594 0.02105263 0.7353443 1.0000000
-## 2 0.8474660 0.016949153 0.010678057 0.04106776 0.7359135 0.8000000
-## 3 0.8447382 0.021141649 0.013340448 0.05091650 0.7364826 0.8333333
-## 4 0.8396843 0.029473684 0.018656716 0.07014028 0.7376209 0.8750000
-## 5 0.8384522 0.041841004 0.026609899 0.09784736 0.7393284 0.9090909
-## 6 0.8356745 0.045929019 0.029255319 0.10679612 0.7398976 0.9166667
+## 1 0.8430345 0.004273504 0.002675227 0.01061571 0.7347752 1.0000000
+## 2 0.8383468 0.012738854 0.008012821 0.03105590 0.7353443 0.7500000
+## 3 0.8327149 0.025316456 0.016000000 0.06060606 0.7370518 0.8571429
+## 4 0.8295517 0.033613445 0.021310602 0.07952286 0.7381901 0.8888889
+## 5 0.8264970 0.050000000 0.031897927 0.11560694 0.7404667 0.9230769
+## 6 0.8245281 0.062111801 0.039808917 0.14124294 0.7421742 0.9375000
 ##        recall specificity absolute_mcc min_per_class_accuracy
-## 1 0.004282655   1.0000000   0.05610646            0.004282655
-## 2 0.008565310   0.9992248   0.06460189            0.008565310
-## 3 0.010706638   0.9992248   0.07520505            0.010706638
-## 4 0.014989293   0.9992248   0.09326802            0.014989293
-## 5 0.021413276   0.9992248   0.11558572            0.021413276
-## 6 0.023554604   0.9992248   0.12218206            0.023554604
+## 1 0.002141328   1.0000000   0.03966196            0.002141328
+## 2 0.006423983   0.9992248   0.05235856            0.006423983
+## 3 0.012847966   0.9992248   0.08466273            0.012847966
+## 4 0.017130621   0.9992248   0.10120995            0.017130621
+## 5 0.025695931   0.9992248   0.12846040            0.025695931
+## 6 0.032119914   0.9992248   0.14576670            0.032119914
 ##   mean_per_class_accuracy  tns fns fps tps       tnr       fnr
-## 1               0.5021413 1290 465   0   2 1.0000000 0.9957173
-## 2               0.5038951 1289 463   1   4 0.9992248 0.9914347
-## 3               0.5049657 1289 462   1   5 0.9992248 0.9892934
-## 4               0.5071070 1289 460   1   7 0.9992248 0.9850107
-## 5               0.5103190 1289 457   1  10 0.9992248 0.9785867
-## 6               0.5113897 1289 456   1  11 0.9992248 0.9764454
+## 1               0.5010707 1290 466   0   1 1.0000000 0.9978587
+## 2               0.5028244 1289 464   1   3 0.9992248 0.9935760
+## 3               0.5060364 1289 461   1   6 0.9992248 0.9871520
+## 4               0.5081777 1289 459   1   8 0.9992248 0.9828694
+## 5               0.5124604 1289 455   1  12 0.9992248 0.9743041
+## 6               0.5156724 1289 452   1  15 0.9992248 0.9678801
 ##            fpr         tpr idx
-## 1 0.0000000000 0.004282655   0
-## 2 0.0007751938 0.008565310   1
-## 3 0.0007751938 0.010706638   2
-## 4 0.0007751938 0.014989293   3
-## 5 0.0007751938 0.021413276   4
-## 6 0.0007751938 0.023554604   5</code></pre>
+## 1 0.0000000000 0.002141328   0
+## 2 0.0007751938 0.006423983   1
+## 3 0.0007751938 0.012847966   2
+## 4 0.0007751938 0.017130621   3
+## 5 0.0007751938 0.025695931   4
+## 6 0.0007751938 0.032119914   5</code></pre>
 <pre class="r"><code>metrics %&gt;%
   gather(x, y, f1:tpr) %&gt;%
   ggplot(aes(x = threshold, y = y, group = x)) +
     facet_wrap(~ x, ncol = 2, scales = &quot;free&quot;) +
     geom_line()</code></pre>
-<p><img src="/post/2018-09-17_customer_churn_code_files/figure-html/metrics-1.png" width="768" /></p>
+<p><img src="/post/2018-12-12_customer_churn_code_files/figure-html/metrics-1.png" width="768" /></p>
 <pre class="r"><code>threshold &lt;- metrics[order(-metrics$accuracy), &quot;threshold&quot;][1]
 
 finalRf_predictions &lt;- data.frame(actual = as.vector(test$Churn), 
@@ -626,10 +626,10 @@ finalRf_predictions %&gt;%
 ## # Groups:   actual [?]
 ##   actual predict     n
 ##   &lt;fct&gt;  &lt;fct&gt;   &lt;int&gt;
-## 1 0      0        1080
-## 2 0      1         210
-## 3 1      0         158
-## 4 1      1         309</code></pre>
+## 1 0      0        1125
+## 2 0      1         165
+## 3 1      0         189
+## 4 1      1         278</code></pre>
 <pre class="r"><code>finalRf_predictions %&gt;%
   group_by(actual, predict_stringent) %&gt;%
   dplyr::summarise(n = n())</code></pre>
@@ -637,10 +637,10 @@ finalRf_predictions %&gt;%
 ## # Groups:   actual [?]
 ##   actual predict_stringent     n
 ##   &lt;fct&gt;  &lt;chr&gt;             &lt;int&gt;
-## 1 0      0                  1162
-## 2 0      1                   128
-## 3 1      0                   206
-## 4 1      1                   261</code></pre>
+## 1 0      0                  1161
+## 2 0      1                   129
+## 3 1      0                   210
+## 4 1      1                   257</code></pre>
 <pre class="r"><code>finalRf_predictions %&gt;%
   gather(x, y, accurate, accurate_stringent) %&gt;%
   mutate(x = ifelse(x == &quot;accurate&quot;, &quot;Default Schwelle: 0.5&quot;, 
@@ -649,7 +649,7 @@ finalRf_predictions %&gt;%
     facet_grid(~ x) +
     geom_bar(position = &quot;dodge&quot;) +
     scale_fill_tableau()</code></pre>
-<p><img src="/post/2018-09-17_customer_churn_code_files/figure-html/default_vs_stringent-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2018-12-12_customer_churn_code_files/figure-html/default_vs_stringent-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>df &lt;- finalRf_predictions[, c(1, 3, 4)]
 
 thresholds &lt;- seq(from = 0, to = 1, by = 0.1)
@@ -691,7 +691,7 @@ for (threshold in thresholds) {
     geom_point() +
     geom_line() +
     scale_color_tableau()</code></pre>
-<p><img src="/post/2018-09-17_customer_churn_code_files/figure-html/prop_table-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2018-12-12_customer_churn_code_files/figure-html/prop_table-1.png" width="576" style="display: block; margin: auto;" /></p>
 <div id="cost-calculation" class="section level3">
 <h3>Cost calculation</h3>
 <p>Let’s assume that</p>
@@ -750,16 +750,16 @@ net_win_table</code></pre>
 <pre><code>## # A tibble: 11 x 3
 ##    threshold net_win net_win_compared
 ##        &lt;dbl&gt;   &lt;dbl&gt;            &lt;dbl&gt;
-##  1       0.8 2591600           890100
-##  2       0.7 2589000           887500
-##  3       0.6 2581800           880300
+##  1       0.8 2592200           890700
+##  2       0.7 2591000           889500
+##  3       0.6 2583400           881900
 ##  4       0.9 2580000           878500
 ##  5       1   2580000           878500
-##  6       0.5 2567800           866300
-##  7       0.4 2523600           822100
-##  8       0.3 2476400           774900
-##  9       0.2 2358400           656900
-## 10       0.1 2128800           427300
+##  6       0.5 2554400           852900
+##  7       0.4 2520000           818500
+##  8       0.3 2470600           769100
+##  9       0.2 2344200           642700
+## 10       0.1 2139400           437900
 ## 11       0   1476800          -224700</code></pre>
 </div>
 </div>
@@ -779,10 +779,10 @@ explanation &lt;- lime::explain(x = Xtest[1:9, ],
                              n_features = 4,
                              kernel_width = 0.5)</code></pre>
 <pre class="r"><code>plot_explanations(explanation)</code></pre>
-<p><img src="/post/2018-09-17_customer_churn_code_files/figure-html/unnamed-chunk-47-1.png" width="672" /></p>
+<p><img src="/post/2018-12-12_customer_churn_code_files/figure-html/unnamed-chunk-47-1.png" width="672" /></p>
 <pre class="r"><code>explanation %&gt;%
   plot_features(ncol = 3)</code></pre>
-<p><img src="/post/2018-09-17_customer_churn_code_files/figure-html/unnamed-chunk-49-1.png" width="1248" /></p>
+<p><img src="/post/2018-12-12_customer_churn_code_files/figure-html/unnamed-chunk-49-1.png" width="1248" /></p>
 <hr />
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>## R version 3.5.1 (2018-07-02)
@@ -800,38 +800,38 @@ explanation &lt;- lime::explain(x = Xtest[1:9, ],
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] h2o_3.20.0.2    bindrcpp_0.2.2  corrplot_0.84   ggthemes_4.0.0 
+##  [1] h2o_3.20.0.2    bindrcpp_0.2.2  corrplot_0.84   ggthemes_4.0.1 
 ##  [5] yardstick_0.0.1 recipes_0.1.3   rsample_0.0.2   broom_0.5.0    
-##  [9] lime_0.4.0      keras_2.1.6     mice_3.3.0      caret_6.0-80   
+##  [9] lime_0.4.0      keras_2.2.0     mice_3.3.0      caret_6.0-80   
 ## [13] lattice_0.20-35 forcats_0.3.0   stringr_1.3.1   dplyr_0.7.6    
 ## [17] purrr_0.2.5     readr_1.1.1     tidyr_0.8.1     tibble_1.4.2   
 ## [21] ggplot2_3.0.0   tidyverse_1.2.1
 ## 
 ## loaded via a namespace (and not attached):
 ##   [1] minqa_1.2.4        colorspace_1.3-2   class_7.3-14      
-##   [4] rprojroot_1.3-2    pls_2.6-0          base64enc_0.1-3   
-##   [7] rstudioapi_0.7     DRR_0.0.3          fansi_0.2.3       
+##   [4] rprojroot_1.3-2    pls_2.7-0          base64enc_0.1-3   
+##   [7] rstudioapi_0.7     DRR_0.0.3          fansi_0.3.0       
 ##  [10] prodlim_2018.04.18 lubridate_1.7.4    xml2_1.2.0        
 ##  [13] codetools_0.2-15   splines_3.5.1      robustbase_0.93-2 
 ##  [16] knitr_1.20         shinythemes_1.1.1  RcppRoll_0.3.0    
 ##  [19] zeallot_0.1.0      jsonlite_1.5       nloptr_1.0.4      
-##  [22] pROC_1.12.1        ddalpha_1.3.4      kernlab_0.9-26    
-##  [25] tfruns_1.3         sfsmisc_1.1-2      shiny_1.1.0       
+##  [22] pROC_1.12.1        ddalpha_1.3.4      kernlab_0.9-27    
+##  [25] tfruns_1.4         sfsmisc_1.1-2      shiny_1.1.0       
 ##  [28] compiler_3.5.1     httr_1.3.1         backports_1.1.2   
 ##  [31] assertthat_0.2.0   Matrix_1.2-14      lazyeval_0.2.1    
-##  [34] cli_1.0.0          later_0.7.3        htmltools_0.3.6   
+##  [34] cli_1.0.0          later_0.7.5        htmltools_0.3.6   
 ##  [37] tools_3.5.1        gtable_0.2.0       glue_1.3.0        
 ##  [40] reshape2_1.4.3     Rcpp_0.12.18       cellranger_1.1.0  
 ##  [43] nlme_3.1-137       blogdown_0.8       iterators_1.0.10  
 ##  [46] timeDate_3043.102  gower_0.1.2        xfun_0.3          
-##  [49] lme4_1.1-17        rvest_0.3.2        mime_0.5          
+##  [49] lme4_1.1-18-1      rvest_0.3.2        mime_0.5          
 ##  [52] stringdist_0.9.5.1 pan_1.6            DEoptimR_1.0-8    
-##  [55] MLmetrics_1.1.1    MASS_7.3-50        scales_0.5.0      
-##  [58] ipred_0.9-6        promises_1.0.1     hms_0.4.2         
-##  [61] parallel_3.5.1     yaml_2.2.0         reticulate_1.9    
-##  [64] rpart_4.1-13       stringi_1.2.4      tensorflow_1.8    
-##  [67] foreach_1.4.4      lava_1.6.2         geometry_0.3-6    
-##  [70] bitops_1.0-6       rlang_0.2.1        pkgconfig_2.0.1   
+##  [55] MLmetrics_1.1.1    MASS_7.3-50        scales_1.0.0      
+##  [58] ipred_0.9-7        promises_1.0.1     hms_0.4.2         
+##  [61] parallel_3.5.1     yaml_2.2.0         reticulate_1.10   
+##  [64] rpart_4.1-13       stringi_1.2.4      tensorflow_1.9    
+##  [67] foreach_1.4.4      lava_1.6.3         geometry_0.3-6    
+##  [70] bitops_1.0-6       rlang_0.2.2        pkgconfig_2.0.2   
 ##  [73] evaluate_0.11      bindr_0.1.1        labeling_0.3      
 ##  [76] htmlwidgets_1.2    CVST_0.2-2         tidyselect_0.2.4  
 ##  [79] plyr_1.8.4         magrittr_1.5       bookdown_0.7      
@@ -839,11 +839,12 @@ explanation &lt;- lime::explain(x = Xtest[1:9, ],
 ##  [85] dimRed_0.1.0       pillar_1.3.0       haven_1.1.2       
 ##  [88] whisker_0.3-2      withr_2.1.2        RCurl_1.95-4.11   
 ##  [91] survival_2.42-6    abind_1.4-5        nnet_7.3-12       
-##  [94] modelr_0.1.2       crayon_1.3.4       jomo_2.6-2        
+##  [94] modelr_0.1.2       crayon_1.3.4       jomo_2.6-4        
 ##  [97] utf8_1.1.4         rmarkdown_1.10     grid_3.5.1        
-## [100] readxl_1.1.0       ModelMetrics_1.1.0 digest_0.6.15     
-## [103] xtable_1.8-2       httpuv_1.4.5       stats4_3.5.1      
-## [106] munsell_0.5.0      glmnet_2.0-16      magic_1.5-8</code></pre>
+## [100] readxl_1.1.0       data.table_1.11.4  ModelMetrics_1.2.0
+## [103] digest_0.6.17      xtable_1.8-3       httpuv_1.4.5      
+## [106] stats4_3.5.1       munsell_0.5.0      glmnet_2.0-16     
+## [109] magic_1.5-9</code></pre>
 </div>
 </div>
 ]]></content>
@@ -855,7 +856,7 @@ explanation &lt;- lime::explain(x = Xtest[1:9, ],
     <published>2018-09-19T00:00:00+00:00</published>
     <updated>2018-09-19T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>I have yet another Meetup talk to announce:</p>
-<p>On Wednesday, October 26th, I’ll be talking about <a href="http://meetu.ps/e/DQBZx/w54bW/f">‘Decoding The Black Box’ at the Frankfurt Data Science Meetup</a>.</p>
+<p>On Wednesday, September 26th, I’ll be talking about <a href="http://meetu.ps/e/DQBZx/w54bW/f">‘Decoding The Black Box’ at the Frankfurt Data Science Meetup</a>.</p>
 <p>Particularly cool with this meetup is that they will livestream the event at <a href="www.youtube.com/c/FrankfurtDataScience" class="uri">www.youtube.com/c/FrankfurtDataScience</a>!</p>
 <blockquote>
 <p>TALK#2: DECODING THE BLACK BOX</p>
