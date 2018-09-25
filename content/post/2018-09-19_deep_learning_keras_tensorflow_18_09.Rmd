@@ -12,7 +12,7 @@ coverMeta: out
 slug: deep_learning_keras_tensorflow_18_09
 ---
 
-Registration is now open for my 1.5-day [workshop on deep learning with Keras and TensorFlow using R](https://www.eventbrite.de/e/workshop-deep-learning-mit-keras-und-tensorflow-tickets-42710095044?utm-medium=discovery&utm-campaign=social&utm-content=attendeeshare&aff=escb&utm-source=cp&utm-term=listing).
+Registration is now open for my 1.5-day [workshop on deep learning with Keras and TensorFlow using R](https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/?utm_content=77252894&utm_medium=social&utm_source=twitter#schulung-detail).
 
 It will take place on **November 8th & 9th** in **Munich, Germany**.
 
