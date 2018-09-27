@@ -1,0 +1,38 @@
+---
+title: "Slides from talk: 'Decoding The Black Box' at the Frankfurt Data Science Meetup"
+draft: false
+author: Shirin Glander
+date: '2018-09-27'
+categories: ["meetup"]
+tags: ["lime", "machine learning", "meetup"]
+thumbnailImagePosition: left
+thumbnailImage: https://secure.meetupstatic.com/photos/event/2/1/a/1/600_464888609.jpeg
+metaAlignment: center
+coverMeta: out
+slug: ffm_datascience_meetup_slides
+---
+
+On Wednesday, September 26th, I gave a talk about ['Decoding The Black Box' at the Frankfurt Data Science Meetup](http://meetu.ps/e/DQBZx/w54bW/f).
+
+My slides were created with [beautiful.ai](https://www.beautiful.ai/) and can be found [here](https://www.beautiful.ai/deck/-LMqJI021mvFKYprvdPr/FFM-Data-Science-Meetup).
+
+<div style="position:relative;width:100%;height:0;padding-bottom:calc(56.25% + 40px);"><iframe allowfullscreen style="position:absolute; width: 100%; height: 100%;border: solid 1px #333;" src="https://www.beautiful.ai/player/-LMqJI021mvFKYprvdPr/FFM-Data-Science-Meetup?utm_source=beautiful_player&utm_medium=embed&utm_campaign=-LMqJI021mvFKYprvdPr"></iframe></div>
+
+
+> DECODING THE BLACK BOX
+
+> And finally we will have with us Dr.Shirin Glander, whom we were inviting for a long time back. Shirin lives in Münster and works as a Data Scientist at codecentric, she has lots of practical experience. Besides crunching data, she trains her creativity by sketching information. Visit her blog and you will find lots of interesting stuff there, like experimenting with Keras, TensorFlow, LIME, caret, lots of R and also her beautiful sketches. We recommend: www.shirin-glander.de Besides all that she is an organiser of MünsteR - R User Group: www.meetup.com/Munster-R-Users-Group
+
+> Traditional ML workflows focus heavily on model training and optimization; the best model is usually chosen via performance measures like accuracy or error and we tend to assume that a model is good enough for deployment if it passes certain thresholds of these performance criteria. Why a model makes the predictions it makes, however, is generally neglected. But being able to understand and interpret such models can be immensely important for improving model quality, increasing trust and transparency and for reducing bias. Because complex ML models are essentially black boxes and too complicated to understand, we need to use approximations, like LIME.
+
+<br>
+
+Here are also some sketchnotes I took during the second talk:
+
+![](https://shiring.github.io/netlify_images/ffm_datascience_meetup.jpg)
+
+> HOW IT REALLY WORKS! ADVANCED STREAMING AND EDGE ANALYTICS METHODS IN INDUSTRY 4.0
+
+> We will have this evening as our guest - Nicole Tschauder, who works as a Manufacturing Analytics Expert at SAS. She focuses on the use of ML in production, logistics and other IoT scenarios. From her background Nicole is a mathematician.
+
+> In order to transform gigantic IoT data flows into usable insights, two things are key: The right technology to obtain sensor data and functioning analytical methods to analyze data either at the edge or in-stream. During this presentation, Nicole will give an introduction to new methods that are specifically tailored to the analysis of sensor data. You’ll learn how that is different from classical analytical methods and how to apply the knowledge in areas like predictive maintenance, anomaly detection or signal processing.
