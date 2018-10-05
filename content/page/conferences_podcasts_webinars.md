@@ -22,11 +22,13 @@ Date and place depend on who and how many people are interested, so please conta
 
 <br>
 
-- [Workshop: End-2-End vom Keras TensorFlow-Modell zur Produktion](https://www.codecentric.de/schulung/end-2-end-vom-keras-tensorflow-modell-zur-produktion/#schulung-detail)
+- [Workshop: End-2-End vom Keras TensorFlow-Modell zur Produktion](https://www.codecentric.de/schulung/end-2-end-vom-keras-tensorflow-modell-zur-produktion/)
 
 > Durch das stark wachsende Datenvolumen hat sich das Rollenverständnis von Data Scientists erweitert. Statt Machine-Learning-Modelle für einmalige Analysen zu erstellen,  wird häufiger in konkreten Entwicklungsprojekten gearbeitet, in denen Prototypen in produktive Anwendungen überführt werden.
 Keras ist eine High-Level-Schnittstelle, die ein schnelles, einfaches und flexibles Prototypisieren von Neuronalen Netzwerken mit TensorFlow ermöglicht. Zusammen mit Luigi lassen sich beliebig komplexe Datenverarbeitungs-Workflows in Python erstellen. Das führt dazu, dass auch Nicht-Entwickler den End-2-End-Workflow des Keras-TensorFlow-Modells zur Produktionsreife leicht
 implementieren können.
+
+[Next dates: 22. to 23.  November 2018 - Berlin](https://www.codecentric.de/schulung/end-2-end-vom-keras-tensorflow-modell-zur-produktion/)
 
 <br>
 
@@ -37,13 +39,6 @@ implementieren können.
 <br>
 
 ## Upcoming talks, webinars, podcasts, etc.
-
-- Together with a colleague from codecentric, I'll be giving a workshop about ["END-2-END VOM KERAS TENSORFLOW-MODELL ZUR PRODUKTION"](https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953) at the data2day conference, which is being held from September 25th - 27th 2018 in Heidelberg, Germany (German language):
-https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953
-
-- On Wednesday, October 26th, I'll be talking about ['Decoding The Black Box' at the Frankfurt Data Sciene Meetup](https://shirinsplayground.netlify.com/2018/09/ffm_datascience_meetup/).
-
-- At the [ML Summit](https://www.ml-summit.de) held on October 1st and 2nd in Berlin, Germany, I'll be giving a workshop about [image classification with Keras](https://ml-summit.de/specialized-topics/bildklassifikation-leicht-gemacht-mit-keras-und-tensorflow/): https://ml-summit.de/specialized-topics/bildklassifikation-leicht-gemacht-mit-keras-und-tensorflow/ (German language)
 
 - From 15th to 17th October 2018, I'll be in London for the [M-cubed conference](https://www.mcubed.london/). My talk about [Explaining complex machine learning models with LIME](https://www.mcubed.london/sessions/explaining-complex-machine-learning-models-lime/) will be on October 16
 
@@ -56,6 +51,21 @@ https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell
 <br>
 
 ## Past talks, webinars, podcasts, etc.
+
+- Together with a colleague from codecentric, I gave a workshop about ["END-2-END VOM KERAS TENSORFLOW-MODELL ZUR PRODUKTION"](https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953) at the data2day conference, which was being held from September 25th - 27th 2018 in Heidelberg, Germany (German language):
+https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953
+
+<br>
+
+- On Wednesday, October 26th, I was talking about ['Decoding The Black Box' at the Frankfurt Data Sciene Meetup](https://shirinsplayground.netlify.com/2018/09/ffm_datascience_meetup/).
+
+Slides can be found [here](https://shirinsplayground.netlify.com/2018/09/ffm_datascience_meetup_slides/).
+
+<br>
+
+- At the [ML Summit](https://www.ml-summit.de) held on October 1st and 2nd in Berlin, Germany, I gave a workshop about [image classification with Keras](https://ml-summit.de/specialized-topics/bildklassifikation-leicht-gemacht-mit-keras-und-tensorflow/): https://ml-summit.de/specialized-topics/bildklassifikation-leicht-gemacht-mit-keras-und-tensorflow/ (German language)
+
+<br>
 
 - In August 2018 I gave a webinar for SAP about [Explaining Keras Image Classification Models with LIME](https://shirinsplayground.netlify.com/2018/08/sap_webinar_slides/).
 
