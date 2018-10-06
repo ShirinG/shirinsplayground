@@ -1,0 +1,218 @@
+---
+title: "Image clustering with Keras and k-Means"
+draft: false
+author: Shirin Glander
+date: '2018-10-06'
+categories: ["R", "keras"]
+tags: ["R", "keras", "image", "clustering", "tensorflow"]
+thumbnailImagePosition: left
+thumbnailImage: post/2018-10-06_keras_fruits_cluster_files/figure-html/unnamed-chunk-16-1.png
+metaAlignment: center
+coverMeta: out
+slug: keras_fruits_cluster
+---
+
+A while ago, I wrote two blogposts about [image classification with Keras](https://shirinsplayground.netlify.com/2018/06/keras_fruits/) and about [how to use your own models or pretrained models for predictions and using LIME to explain to predictions](https://shirinsplayground.netlify.com/2018/06/keras_fruits_lime/).
+
+Recently, I came across [this blogpost](https://medium.com/@franky07724_57962/using-keras-pre-trained-models-for-feature-extraction-in-image-clustering-a142c6cdf5b1) on using Keras to extract learned features from models and use those to cluster images. It is written in Python, though - so I adapted the code to R. You find the results below.
+
+One use-case for image clustering could be that it can make labelling images easier because - ideally - the clusters would pre-sort your images, so that you only need to go over them quickly and check that they make sense.
+
+<br>
+
+## Libraries
+
+Okay, let's get started by loading the packages we need.
+
+```{r warning=FALSE, message=FALSE}
+library(keras)
+library(magick)  # for preprocessing images
+library(tidyverse)
+library(imager)
+```
+
+<br>
+
+## Pretrained model
+
+And we load the VGG16 pretrained model but we exclude the laste layers.
+
+```{r}
+model <- application_vgg16(weights = "imagenet", 
+                           include_top = FALSE)
+model
+```
+
+<br>
+
+## Training images
+
+Next, I am writting a helper function for reading in images and preprocessing them.
+
+```{r}
+image_prep <- function(x) {
+  arrays <- lapply(x, function(path) {
+    img <- image_load(path, target_size = c(224, 224))
+    x <- image_to_array(img)
+    x <- array_reshape(x, c(1, dim(x)))
+    x <- imagenet_preprocess_input(x)
+  })
+  do.call(abind::abind, c(arrays, list(along = 1)))
+}
+```
+
+My images are in the following folder:
+
+```{r}
+image_files_path <- "/Users/shiringlander/Documents/Github/DL_AI/Tutti_Frutti/fruits-360/Training"
+sample_fruits <- sample(list.dirs(image_files_path), 2)
+```
+
+Because running the clustering on all images would take very long, I am randomly sampling 5 image classes.
+
+```{r}
+file_list <- list.files(sample_fruits, full.names = TRUE, recursive = TRUE)
+head(file_list)
+```
+
+For each of these images, I am running the `predict()` function of Keras with the VGG16 model. Because I excluded the last layers of the model, this function will not actually return any class predictions as it would normally do; instead we will get the output of the last layer: `block5_pool (MaxPooling2D)`.
+
+These, we can use as learned features (or abstractions) of the images. Running this part of the code takes several minutes, so I save the output to a RData file (because I samples randomly, the classes you see below might not be the same as in the `sample_fruits` list above).
+
+```{r eval=FALSE}
+vgg16_feature_list <- data.frame()
+
+for (image in file_list) {
+  
+  print(image)
+  cat("Image", which(file_list == image), "from", length(file_list))
+  
+  vgg16_feature <- predict(model, image_prep(image))
+  
+  flatten <- as.data.frame.table(vgg16_feature, responseName = "value") %>%
+    select(value)
+  flatten <- cbind(image, as.data.frame(t(flatten)))
+  
+  vgg16_feature_list <- rbind(vgg16_feature_list, flatten)
+}
+save(vgg16_feature_list, file = "/Users/shiringlander/Documents/Github/DL_AI/Tutti_Frutti/vgg16_feature_list.RData")
+```
+
+```{r}
+load("/Users/shiringlander/Documents/Github/DL_AI/Tutti_Frutti/vgg16_feature_list.RData")
+```
+
+```{r}
+dim(vgg16_feature_list)
+```
+
+## Clustering
+
+Next, I'm comparing two clustering attempts:
+
+1. clustering original data and
+2. clustering first 10 principal components of the data
+
+Here as well, I saved the output to RData because calculation takes some time.
+
+```{r eval=FALSE}
+pca <- prcomp(vgg16_feature_list[, -1],
+              center = TRUE,
+              scale = FALSE)
+save(pca, file = "/Users/shiringlander/Documents/Github/DL_AI/Tutti_Frutti/pca.RData")
+```
+
+```{r}
+load("/Users/shiringlander/Documents/Github/DL_AI/Tutti_Frutti/pca.RData")
+```
+
+Plotting the first two principal components suggests that the images fall into 4 clusters.
+
+```{r}
+data.frame(PC1 = pca$x[, 1], 
+           PC2 = pca$x[, 2]) %>%
+  ggplot(aes(x = PC1, y = PC2)) +
+    geom_point()
+```
+
+The `kMeans` function let's us do [k-Means clustering](https://en.wikipedia.org/wiki/K-means_clustering).
+
+```{r}
+set.seed(50)
+cluster_pca <- kmeans(pca$x[, 1:10], 4)
+cluster_feature <- kmeans(vgg16_feature_list[, -1], 4)
+```
+
+Let's combine the resulting cluster information back with the image information and create a column class (abbreviated with the first three letters).
+
+```{r}
+cluster_list <- data.frame(cluster_pca = cluster_pca$cluster, 
+                           cluster_feature = cluster_feature$cluster,
+                           vgg16_feature_list) %>%
+  select(cluster_pca, cluster_feature, image) %>%
+  mutate(class = gsub("/Users/shiringlander/Documents/Github/DL_AI/Tutti_Frutti/fruits-360/Training/", "", image),
+         class = substr(class, start = 1, stop = 3))
+head(cluster_list)
+```
+
+And let's count the number of images in each cluster, as well their class.
+
+- PCA:
+
+```{r}
+cluster_list %>%
+  count(cluster_pca, class)
+```
+
+- Original feature map:
+
+```{r}
+cluster_list %>%
+  count(cluster_feature, class)
+```
+
+The classes map pretty clearly to the four clusters from the PCA.
+
+```{r}
+cluster_list %>%
+  mutate(PC1 = pca$x[, 1],
+         PC2 = pca$x[, 2]) %>%
+  ggplot(aes(x = PC1, y = PC2, color = class, shape = factor(cluster_pca))) +
+    geom_point()
+```
+
+So, let's plot a few of the images from each cluster so that maybe we'll be able to see a pattern that explains why our fruits fall into four instead of 2 clusters.
+
+```{r}
+plot_random_images <- function(n_img = 49,
+                               cluster = 1,
+                               rows = 7,
+                               cols = 7) {
+  cluster_list_random_cl_1 <- cluster_list %>%
+    filter(cluster_pca == cluster) %>%
+    sample_n(n_img)
+  
+  graphics::layout(matrix(c(1:n_img), rows, cols, byrow = TRUE))
+  for (i in 1:n_img) {
+    path <- as.character(cluster_list_random_cl_1$image[i])
+    img <- load.image(path)
+    plot(img, axes = FALSE)
+    title(main = paste("Cluster PCA", cluster))
+  }
+}
+```
+
+```{r fig.width=20, fig.height=20}
+sapply(c(1:4), function(x) plot_random_images(cluster = x))
+```
+
+Obviously, the clusters reflect the fruits AND the orientation of the fruits. In that way, our clustering represents intuitive patterns in the images that we can understand. 
+
+If we didn't know the classes, labelling our fruits would be much easier now than manually going through each image individually!
+
+---
+
+```{r}
+sessionInfo()
+```
+
