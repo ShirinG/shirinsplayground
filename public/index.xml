@@ -851,8 +851,8 @@ explanation &lt;- lime::explain(x = Xtest[1:9, ],
   </entry>
   <entry>
     <title type="html"><![CDATA[Using R to help plan the future of transport. Join MünsteR for our next meetup!]]></title>
-    <link href="/2018/10/meetup_june18/"/>
-    <id>/2018/10/meetup_june18/</id>
+    <link href="/2018/10/meetup_nov18/"/>
+    <id>/2018/10/meetup_nov18/</id>
     <published>2018-10-10T00:00:00+00:00</published>
     <updated>2018-10-10T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<div class="figure">
