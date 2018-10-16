@@ -1,0 +1,29 @@
+---
+title: "Slides from my m-cubed talk about Explaining complex machine learning models with LIME"
+draft: false
+author: Shirin Glander
+date: '2018-10-16'
+categories: ["conferences"]
+tags: ["conferences"]
+thumbnailImagePosition: left
+thumbnailImage: https://www.mcubed.london/wp-content/uploads/2017/12/M3_Image_v1_b-1024x626.jpg
+metaAlignment: center
+coverMeta: out
+slug: mcubed_slides
+---
+
+The last two days, I was in London for the [M-cubed conference](https://www.mcubed.london/). 
+
+Here are the slides from my talk about [Explaining complex machine learning models with LIME](https://www.mcubed.london/sessions/explaining-complex-machine-learning-models-lime/):
+
+> Traditional machine learning workflows focus heavily on model training and optimization; the best model is usually chosen via performance measures like accuracy or error and we tend to assume that a model is good enough for deployment if it passes certain thresholds of these performance criteria. Why a model makes the predictions it makes, however, is generally neglected. But being able to understand and interpret such models can be immensely important for improving model quality, increasing trust and transparency and for reducing bias. Because complex machine learning models are essentially black boxes and too complicated to understand, we need to use approximations.
+
+<div style="position:relative;width:100%;height:0;padding-bottom:calc(56.25% + 40px);"><iframe allowfullscreen style="position:absolute; width: 100%; height: 100%;border: solid 1px #333;" src="https://www.beautiful.ai/player/-LMb2EcqL2my0oK1uOBw/m3-conference?utm_source=beautiful_player&utm_medium=embed&utm_campaign=-LMb2EcqL2my0oK1uOBw"></iframe></div>
+
+<br>
+
+I also took sketchnotes from the two keynote lectures:
+
+![HUMAN MINDS AND MACHINE INTELLIGENCE – WHO’S THE MASTER? by Dr Joanna Bryson](https://shiring.github.io/netlify_images/mcubed_keynote_1.JPG)
+
+![A QUESTION OF MACHINE INTELLIGENCE – STRONG ARGUMENTS IN SUPPORT OF AND AGAINST DIFFERENT DEFINITIONS by Prof. Dagmar Monett Diaz](https://shiring.github.io/netlify_images/mcubed_keynote_2.JPG)
