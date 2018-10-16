@@ -1,6 +1,6 @@
 ---
 title: "Slides from my talk at the R-Ladies Meetup about Interpretable Deep Learning with R, Keras and LIME"
-draft: true
+draft: false
 author: Shirin Glander
 date: '2018-10-17'
 categories: ["meetup", "R-Ladies"]
