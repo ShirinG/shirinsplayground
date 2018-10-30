@@ -8,6 +8,11 @@
   </url>
   
   <url>
+    <loc>/2018/10/ml_basics_rf/</loc>
+    <lastmod>2018-10-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/2018/10/rladieslondon_slides/</loc>
     <lastmod>2018-10-17T00:00:00+00:00</lastmod>
   </url>
@@ -465,6 +470,12 @@
   </url>
   
   <url>
+    <loc>/tags/codecentric.ai/</loc>
+    <lastmod>2018-10-30T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/tags/comparative-understanding/</loc>
     <lastmod>2018-02-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -718,7 +729,7 @@
   
   <url>
     <loc>/categories/machine-learning/</loc>
-    <lastmod>2018-06-29T00:00:00+00:00</lastmod>
+    <lastmod>2018-10-30T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -928,7 +939,13 @@
   
   <url>
     <loc>/tags/random-forest/</loc>
-    <lastmod>2018-06-29T00:00:00+00:00</lastmod>
+    <lastmod>2018-10-30T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/random-forest/</loc>
+    <lastmod>2018-10-30T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

@@ -850,6 +850,80 @@ explanation &lt;- lime::explain(x = Xtest[1:9, ],
 ]]></content>
   </entry>
   <entry>
+    <title type="html"><![CDATA[Machine Learning Basics - Random Forest]]></title>
+    <link href="/2018/10/ml_basics_rf/"/>
+    <id>/2018/10/ml_basics_rf/</id>
+    <published>2018-10-30T00:00:00+00:00</published>
+    <updated>2018-10-30T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<p>A few colleagues of mine and I from <a href="https://www.codecentric.de/kuenstliche-intelligenz/">codecentric.ai</a> are currently working on developing a free online course about machine learning and deep learning. As part of this course, I am developing a <a href="https://www.youtube.com/codecentricAI">series of videos</a> about machine learning basics - the first video in this series was about Random Forests.</p>
+<p>You can find the video on <a href="https://youtu.be/ieF_QjVUNEQ">YouTube</a> but as of now, it is only available in German. Same goes for the <a href="https://codecentric.slides.com/shiringlander/ml_basics_rf">slides</a>, which are also currently German only.</p>
+<p>I did however translate my script:</p>
+<hr />
+<div class="figure">
+<img src="https://shiring.github.io/netlify_images/ml_basics_rf.png" />
+
+</div>
+<p>Random Forest (RF) is one of the many machine learning algorithms used for supervised learning, this means for learning from labelled data and making predictions based on the learned patterns. RF can be used for both classification and regression tasks.</p>
+<div id="decision-trees" class="section level2">
+<h2>Decision trees</h2>
+<p>RF is based on decision trees. In machine learning decision trees are a technique for creating predictive models. They are called decision <strong>trees</strong> because the prediction follows several branches of “if… then…” decision splits - similar to the branches of a tree. If we imagine that we start with a sample, which we want to predict a class for, we would start at the bottom of a tree and travel up the trunk until we come to the first split-off branch. This split can be thought of as a feature in machine learning, let’s say it would be “age”; we would now make a decision about which branch to follow: “if our sample has an age bigger than 30, continue along the left branch, else continue along the right branch”. This we would do until we come to the next branch and repeat the same decision process until there are no more branches before us. This endpoint is called a leaf and in decision trees would represent the final result: a predicted class or value.</p>
+<p>At each branch, the feature thresholds that best split the (remaining) samples locally is found. The most common metrics for defining the “best split” are <strong>gini impurity</strong> and <strong>information gain</strong> for classification tasks and <strong>variance reduction</strong> for regression.</p>
+<p>Single decision trees are very easy to visualize and understand because they follow a method of decision-making that is very similar to how we humans make decisions: with a chain of simple rules. However, they are not very robust, i.e. they don’t generalize well to unseen samples. Here is where Random Forests come into play.</p>
+</div>
+<div id="ensemble-learning" class="section level2">
+<h2>Ensemble learning</h2>
+<p>RF makes predictions by combining the results from many individual decision trees - so we cal them a <strong>forest</strong> of decision trees. Because RF combines multiple models, it falls under the category of ensemble learning. Other ensemble learning methods are gradient boosting and stacked ensembles.</p>
+</div>
+<div id="combining-decision-trees" class="section level2">
+<h2>Combining decision trees</h2>
+<p>There are two main ways for combining the outputs of multiple decision trees into a random forest:</p>
+<ol style="list-style-type: decimal">
+<li>Bagging, which is also called Bootstrap aggregation (used in Random Forests)</li>
+<li>Boosting (used in Gradient Boosting Machines)</li>
+</ol>
+<p>Bagging works the following way: decision trees are trained on randomly sampled subsets of the data, while sampling is being done with replacement. Bagging is the default method used with Random Forests. A big advantage of bagging over individual trees is that it decrease the variance of the model. Individual trees are very prone to overfitting and are very sensitive to noise in the data. As long as our individual trees are not correlated, combining them with bagging will make them more robust without increasing the bias. The part about correlation is important, though! We remove (most of) the correlation by randomly sampling subsets of data and training the different decision trees on this subsets instead of on the entire dataset. In addition to randomly sampling instances from our data, RF also uses <strong>feature bagging</strong>. With feature bagging, at each split in the decision tree only a random subset of features is considered. This technique reduces correlation even more because it helps reduce the impact of very strong predictor variables (i.e. features that have a very strong influence on predicting the target or response variable).</p>
+<p>Boosting works similarly but with one major difference: the samples are weighted for sampling so that samples, which were predicted incorrectly get a higher weight and are therefore sampled more often. The idea behind this is that difficult cases should be emphasized during learning compared to easy cases. Because of this difference bagging can be easily paralleled, while boosting is performed sequentially.</p>
+<p>The final result of our model is calculated by averaging over all predictions from these sampled trees or by majority vote.</p>
+<div class="figure">
+<img src="https://upload.wikimedia.org/wikipedia/commons/7/76/Random_forest_diagram_complete.png" alt="https://commons.wikimedia.org/wiki/File:Random_forest_diagram_complete.png" />
+<p class="caption"><a href="https://commons.wikimedia.org/wiki/File:Random_forest_diagram_complete.png" class="uri">https://commons.wikimedia.org/wiki/File:Random_forest_diagram_complete.png</a></p>
+</div>
+</div>
+<div id="hyperparameters-to-be-tuned" class="section level2">
+<h2>Hyperparameters to be tuned</h2>
+<p>Hyperparameters are the arguments that can be set before training and which define how the training is done. The main hyperparameters in Random Forests are</p>
+<ul>
+<li>The number of decision trees to be combined</li>
+<li>The maximum depth of the trees</li>
+<li>The maximum number of features considered at each split</li>
+<li>Whether bagging/bootstrapping is performed with or without replacement</li>
+</ul>
+</div>
+<div id="training-random-forest-models" class="section level2">
+<h2>Training Random Forest models</h2>
+<p>Random Forest implementations are available in many machine learning libraries for R and Python, like <code>caret</code> (R, imports the <code>randomForest</code> and other RF packages), Scikit-learn (Python) and H2O (R and Python).</p>
+<p>Examples in R can be found here: <a href="https://shirinsplayground.netlify.com/2018/06/intro_to_ml_workshop_heidelberg/" class="uri">https://shirinsplayground.netlify.com/2018/06/intro_to_ml_workshop_heidelberg/</a>.</p>
+</div>
+<div id="other-tree-based-machine-learning-algorithms" class="section level2">
+<h2>Other tree-based machine learning algorithms</h2>
+<p>The pros of Random Forests are that they are a relatively fast and powerful algorithm for classification and regression learning. Calculations can be parallelized and perform well on many problems, even with small datasets and the output returns prediction probabilities.</p>
+<p>Downsides of Random Forests are that they are black-boxes, meaning that we can’t interpret the decisions made by the model because they are too complex. RF are also somewhat prone to overfitting and they tend to be bad at predicting underrepresented classes in unbalanced datasets.</p>
+<p>Other tree-based algorithms are (Extreme) Gradient Boosting and Rotation Forests.</p>
+<hr />
+</div>
+<div id="video" class="section level1">
+<h1>Video</h1>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ieF_QjVUNEQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+</iframe>
+</div>
+<div id="slides" class="section level1">
+<h1>Slides</h1>
+<iframe src="//codecentric.slides.com/shiringlander/ml_basics_rf/embed" width="576" height="420" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen>
+</iframe>
+</div>
+]]></content>
+  </entry>
+  <entry>
     <title type="html"><![CDATA[Slides from my talk at the R-Ladies Meetup about Interpretable Deep Learning with R, Keras and LIME]]></title>
     <link href="/2018/10/rladieslondon_slides/"/>
     <id>/2018/10/rladieslondon_slides/</id>
