@@ -238,9 +238,9 @@ dl_model <- h2o.deeplearning(x = hf_X,
                              nesterov_accelerated_gradient = TRUE)
 ```
 
-### L1 und L2 Regularisierung
+### L1 and L2 Regularization
 
-In addition to **dropout**, we can apply **regularisation** to improve the generalizability of our neural network. In H2O, we can use L1 and L2 regularization. With L1, many nodes will be set to 0 and with L2 many nodes will get low weights.
+In addition to **dropout**, we can apply **regularization** to improve the generalizability of our neural network. In H2O, we can use L1 and L2 regularization. With L1, many nodes will be set to 0 and with L2 many nodes will get low weights.
 
 ```{r eval=FALSE}
 dl_model <- h2o.deeplearning(x = hf_X,

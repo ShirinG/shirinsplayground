@@ -47,14 +47,14 @@ h2o.init(nthreads = -1)</code></pre>
 <pre><code>##  Connection successful!
 ## 
 ## R is connected to the H2O cluster: 
-##     H2O cluster uptime:         3 hours 7 minutes 
+##     H2O cluster uptime:         3 hours 46 minutes 
 ##     H2O cluster timezone:       Europe/Berlin 
 ##     H2O data parsing timezone:  UTC 
 ##     H2O cluster version:        3.20.0.8 
 ##     H2O cluster version age:    1 month and 16 days  
 ##     H2O cluster name:           H2O_started_from_R_shiringlander_jpa775 
 ##     H2O cluster total nodes:    1 
-##     H2O cluster total memory:   3.17 GB 
+##     H2O cluster total memory:   3.16 GB 
 ##     H2O cluster total cores:    8 
 ##     H2O cluster allowed cores:  8 
 ##     H2O cluster healthy:        TRUE 
@@ -246,9 +246,9 @@ hf_y</code></pre>
                              momentum_stable = 0.99,
                              nesterov_accelerated_gradient = TRUE)</code></pre>
 </div>
-<div id="l1-und-l2-regularisierung" class="section level3">
-<h3>L1 und L2 Regularisierung</h3>
-<p>In addition to <strong>dropout</strong>, we can apply <strong>regularisation</strong> to improve the generalizability of our neural network. In H2O, we can use L1 and L2 regularization. With L1, many nodes will be set to 0 and with L2 many nodes will get low weights.</p>
+<div id="l1-and-l2-regularization" class="section level3">
+<h3>L1 and L2 Regularization</h3>
+<p>In addition to <strong>dropout</strong>, we can apply <strong>regularization</strong> to improve the generalizability of our neural network. In H2O, we can use L1 and L2 regularization. With L1, many nodes will be set to 0 and with L2 many nodes will get low weights.</p>
 <pre class="r"><code>dl_model &lt;- h2o.deeplearning(x = hf_X,
                              y = hf_y,
                              training_frame = hf,
@@ -303,21 +303,21 @@ hf_y</code></pre>
 <p>The crossvalidation predictions can be accessed with <code>h2o.cross_validation_predictions()</code> (returns one data frame for every fold) and <code>h2o.cross_validation_holdout_predictions()</code> (combined in one data frame).</p>
 <pre class="r"><code>h2o.cross_validation_predictions(dl_model)</code></pre>
 <pre><code>## [[1]]
-##   predict        No         Yes
-## 1      No 0.0000000 0.000000000
-## 2      No 0.9873917 0.012608336
-## 3      No 0.0000000 0.000000000
-## 4      No 0.9948792 0.005120786
-## 5     Yes 0.1096676 0.890332380
-## 6     Yes 0.1262154 0.873784601
+##   predict        No        Yes
+## 1      No 0.0000000 0.00000000
+## 2      No 0.9784236 0.02157642
+## 3      No 0.0000000 0.00000000
+## 4      No 0.9808329 0.01916711
+## 5     Yes 0.1512552 0.84874476
+## 6     Yes 0.1590060 0.84099396
 ## 
 ## [7043 rows x 3 columns] 
 ## 
 ## [[2]]
 ##   predict        No       Yes
-## 1     Yes 0.4374671 0.5625329
+## 1     Yes 0.2484017 0.7515983
 ## 2      No 0.0000000 0.0000000
-## 3      No 0.7491482 0.2508518
+## 3      No 0.8107972 0.1892028
 ## 4      No 0.0000000 0.0000000
 ## 5      No 0.0000000 0.0000000
 ## 6      No 0.0000000 0.0000000
@@ -335,13 +335,13 @@ hf_y</code></pre>
 ## 
 ## [7043 rows x 3 columns]</code></pre>
 <pre class="r"><code>h2o.cross_validation_holdout_predictions(dl_model)</code></pre>
-<pre><code>##   predict        No         Yes
-## 1     Yes 0.4374671 0.562532919
-## 2      No 0.9873917 0.012608336
-## 3      No 0.7491482 0.250851769
-## 4      No 0.9948792 0.005120786
-## 5     Yes 0.1096676 0.890332380
-## 6     Yes 0.1262154 0.873784601
+<pre><code>##   predict        No        Yes
+## 1     Yes 0.2484017 0.75159829
+## 2      No 0.9784236 0.02157642
+## 3      No 0.8107972 0.18920283
+## 4      No 0.9808329 0.01916711
+## 5     Yes 0.1512552 0.84874476
+## 6     Yes 0.1590060 0.84099396
 ## 
 ## [7043 rows x 3 columns]</code></pre>
 <hr />
