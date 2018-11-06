@@ -1,0 +1,1242 @@
+
+
+  
+    
+  
+
+
+  
+
+
+
+
+  
+
+
+  
+
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hugo 0.27 with theme Tranquilpeak 0.4.1-BETA">
+    <title>&#39;How do neural nets learn?&#39; A step by step explanation using the H2O Deep Learning algorithm.</title>
+    <meta name="author" content="Dr. Shirin Glander">
+    <meta name="keywords" content=", R">
+
+    <link rel="icon" href="img/favicon.png">
+    
+
+    
+    <meta name="description" content="In my last blogpost about Random Forests I introduced the codecentric.ai Bootcamp. The next part I published was about Neural Networks and Deep Learning. Every video of our bootcamp will have example code and tasks to promote hands-on learning. While the practical parts of the bootcamp will be using Python, below you will find the English R version of this Neural Nets Practical Example, where I explain how neural nets learn and how the concepts and techniques translate to training neural nets in R with the H2O Deep Learning function.">
+    <meta property="og:description" content="In my last blogpost about Random Forests I introduced the codecentric.ai Bootcamp. The next part I published was about Neural Networks and Deep Learning. Every video of our bootcamp will have example code and tasks to promote hands-on learning. While the practical parts of the bootcamp will be using Python, below you will find the English R version of this Neural Nets Practical Example, where I explain how neural nets learn and how the concepts and techniques translate to training neural nets in R with the H2O Deep Learning function.">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="&#39;How do neural nets learn?&#39; A step by step explanation using the H2O Deep Learning algorithm.">
+    <meta property="og:url" content="/2018/11/neural_nets_explained/">
+    <meta property="og:site_name" content="Shirin&#39;s playgRound">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Shirin&#39;s playgRound">
+    <meta name="twitter:description" content="In my last blogpost about Random Forests I introduced the codecentric.ai Bootcamp. The next part I published was about Neural Networks and Deep Learning. Every video of our bootcamp will have example code and tasks to promote hands-on learning. While the practical parts of the bootcamp will be using Python, below you will find the English R version of this Neural Nets Practical Example, where I explain how neural nets learn and how the concepts and techniques translate to training neural nets in R with the H2O Deep Learning function.">
+    
+      <meta name="twitter:creator" content="@ShirinGlander">
+    
+    
+
+    
+    
+
+    
+      <meta property="og:image" content="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=640">
+    
+
+    
+      <meta property="og:image" content="https://shiring.github.io/netlify_images/nn_explained/neural_nets_explained.png">
+    
+    
+    
+
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="/css/style-hbs5om8csx9a8yrv5hnhpi2qqdv4ykuslajwbramhqxvleqbfklxgek50hye.min.css" />
+    
+    
+
+    
+      
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-86119417-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="/">Shirin&#39;s playgRound</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <h1 class="sidebar-profile-title">&#39;How do neural nets learn?&#39; A step by step explanation using the H2O Deep Learning algorithm.</h1>
+        <a href="https://blog.feedspot.com/r_programming_blogs/" rel="nofollow" title="R Programming Blogs"><img alt="R Programming Blogs" src="https://blog.feedspot.com/wp-content/uploads/2018/04/r_program_216px.png?x20694"/></a>
+        <a href="/#about">
+          <img class="sidebar-profile-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Dr. Shirin Glander</h4>
+        
+          <h5 class="sidebar-profile-bio">Biologist turned Bioinformatician turned Data Scientist</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/archives/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/categories/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/tags/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/page/about/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/page/conferences_podcasts_webinars/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bullhorn"></i>
+      
+      <span class="sidebar-button-desc">Hear me talk</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://shiring.github.io/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">My old R-blog</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.codecentric.de/kuenstliche-intelligenz/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-angle-double-right"></i>
+      
+      <span class="sidebar-button-desc">codecentric.ai</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/ShirinG">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.linkedin.com/in/shirin-glander-01120881/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-linkedin"></i>
+      
+      <span class="sidebar-button-desc">LinkedIn</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://stackoverflow.com/users/6623620/shirin-glander">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-stack-overflow"></i>
+      
+      <span class="sidebar-button-desc">Stack Overflow</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/ShirinGlander">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.xing.com/profile/Shirin_Glander">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-xing"></i>
+      
+      <span class="sidebar-button-desc">Xing</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.meetup.com/Munster-R-Users-Group">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-meetup"></i>
+      
+      <span class="sidebar-button-desc">MünsteR</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.r-bloggers.com/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-book"></i>
+      
+      <span class="sidebar-button-desc">R-bloggers</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.r-users.com/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-book"></i>
+      
+      <span class="sidebar-button-desc">R-users</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaOut
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-center">
+  
+    <h1 class="post-title" itemprop="headline">
+      &#39;How do neural nets learn?&#39; A step by step explanation using the H2O Deep Learning algorithm.
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2018-11-06T00:00:00Z">
+        
+  November 6, 2018
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="/categories/machine-learning">machine learning</a>, 
+    
+      <a class="category-link" href="/categories/neural-nets">neural nets</a>
+    
+  
+
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>In my <a href="https://shirinsplayground.netlify.com/2018/10/ml_basics_rf/">last blogpost about Random Forests</a> I introduced the <a href="https://www.codecentric.de/kuenstliche-intelligenz/">codecentric.ai Bootcamp</a>. The next part I published was about <strong>Neural Networks</strong> and <strong>Deep Learning</strong>. Every video of our bootcamp will have example code and tasks to promote hands-on learning. While the practical parts of the bootcamp will be using Python, below you will find the English R version of this <strong>Neural Nets Practical Example</strong>, where I explain how neural nets learn and how the concepts and techniques translate to training neural nets in R with the <a href="http://docs.h2o.ai/h2o/latest-stable/h2o-docs/data-science/deep-learning.html">H2O Deep Learning function</a>.</p>
+<p>You can find the video on <a href="https://youtu.be/Z42fE0MGoDQ">YouTube</a> but as, as before, it is only available in German. Same goes for the <a href="https://codecentric.slides.com/shiringlander/dl_bootcamp_nn">slides</a>, which are also currently German only. See the end of this article for the embedded video and slides.</p>
+<div class="figure">
+<img src="https://shiring.github.io/netlify_images/nn_explained/neural_nets_explained.png" />
+
+</div>
+<hr />
+<div id="neural-nets-and-deep-learning" class="section level2">
+<h2>Neural Nets and Deep Learning</h2>
+<p>Just like <a href="https://shirinsplayground.netlify.com/2018/10/ml_basics_rf/">Random Forests</a>, neural nets are a method for machine learning and can be used for supervised, unsupervised and reinforcement learning. The idea behind neural nets has already been developed back in the 1940s as a way to mimic how our human brain learns. That’s way neural nets in machine learning are also called ANNs (Artificial Neural Networks).</p>
+<p>When we say <strong>Deep Learning</strong>, we talk about big and complex neural nets, which are able to solve complex tasks, like image or language understanding. Deep Learning has gained traction and success particularly with the recent developments in GPUs and TPUs (Tensor Processing Units), the increase in computing power and data in general, as well as the development of easy-to-use frameworks, like Keras and TensorFlow. We find Deep Learning in our everyday lives, e.g. in voice recognition, computer vision, recommender systems, reinforcement learning and many more.</p>
+<p>The easiest type of ANN has only node (also called neuron) and is called <strong>perceptron</strong>. Incoming data flows into this neuron, where a result is calculated, e.g. by summing up all incoming data. Each of the incoming data points is multiplied with a weight; <strong>weights</strong> can basically be any number and are used to modify the results that are calculated by a neuron: if we change the weight, the result will change also. Optionally, we can add a so called bias to the data points to modify the results even further.</p>
+<div class="figure">
+<img src="https://shiring.github.io/netlify_images/nn_explained/perceptron.jpg" />
+
+</div>
+<p>But how do neural nets learn? Below, I will show with an example that uses common techniques and principles.</p>
+</div>
+<div id="libraries" class="section level2">
+<h2>Libraries</h2>
+<p>First, we will load all the packages we need:</p>
+<ul>
+<li><em>tidyverse</em> for data wrangling and plotting</li>
+<li><em>readr</em> for reading in a csv</li>
+<li><em>h2o</em> for Deep Learning (<code>h2o.init</code> initializes the cluster)</li>
+</ul>
+<pre class="r"><code>library(tidyverse)
+library(readr)
+library(h2o)
+h2o.init(nthreads = -1)</code></pre>
+<pre><code>##  Connection successful!
+## 
+## R is connected to the H2O cluster: 
+##     H2O cluster uptime:         3 hours 7 minutes 
+##     H2O cluster timezone:       Europe/Berlin 
+##     H2O data parsing timezone:  UTC 
+##     H2O cluster version:        3.20.0.8 
+##     H2O cluster version age:    1 month and 16 days  
+##     H2O cluster name:           H2O_started_from_R_shiringlander_jpa775 
+##     H2O cluster total nodes:    1 
+##     H2O cluster total memory:   3.17 GB 
+##     H2O cluster total cores:    8 
+##     H2O cluster allowed cores:  8 
+##     H2O cluster healthy:        TRUE 
+##     H2O Connection ip:          localhost 
+##     H2O Connection port:        54321 
+##     H2O Connection proxy:       NA 
+##     H2O Internal Security:      FALSE 
+##     H2O API Extensions:         XGBoost, Algos, AutoML, Core V3, Core V4 
+##     R Version:                  R version 3.5.1 (2018-07-02)</code></pre>
+</div>
+<div id="data" class="section level2">
+<h2>Data</h2>
+<p>The dataset used in this example is a <a href="https://www.kaggle.com/blastchar/telco-customer-churn">customer churn dataset from Kaggle</a>.</p>
+<blockquote>
+<p>Each row represents a customer, each column contains customer’s attributes</p>
+</blockquote>
+<p>We will load the data from a csv file:</p>
+<pre class="r"><code>telco_data &lt;- read_csv(&quot;../../../Data/Churn/WA_Fn-UseC_-Telco-Customer-Churn.csv&quot;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   .default = col_character(),
+##   SeniorCitizen = col_integer(),
+##   tenure = col_integer(),
+##   MonthlyCharges = col_double(),
+##   TotalCharges = col_double()
+## )</code></pre>
+<pre><code>## See spec(...) for full column specifications.</code></pre>
+<pre class="r"><code>head(telco_data)</code></pre>
+<pre><code>## # A tibble: 6 x 21
+##   customerID gender SeniorCitizen Partner Dependents tenure PhoneService
+##   &lt;chr&gt;      &lt;chr&gt;          &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;       
+## 1 7590-VHVEG Female             0 Yes     No              1 No          
+## 2 5575-GNVDE Male               0 No      No             34 Yes         
+## 3 3668-QPYBK Male               0 No      No              2 Yes         
+## 4 7795-CFOCW Male               0 No      No             45 No          
+## 5 9237-HQITU Female             0 No      No              2 Yes         
+## 6 9305-CDSKC Female             0 No      No              8 Yes         
+## # ... with 14 more variables: MultipleLines &lt;chr&gt;, InternetService &lt;chr&gt;,
+## #   OnlineSecurity &lt;chr&gt;, OnlineBackup &lt;chr&gt;, DeviceProtection &lt;chr&gt;,
+## #   TechSupport &lt;chr&gt;, StreamingTV &lt;chr&gt;, StreamingMovies &lt;chr&gt;,
+## #   Contract &lt;chr&gt;, PaperlessBilling &lt;chr&gt;, PaymentMethod &lt;chr&gt;,
+## #   MonthlyCharges &lt;dbl&gt;, TotalCharges &lt;dbl&gt;, Churn &lt;chr&gt;</code></pre>
+<p>Let’s quickly examine the data by plotting density distributions of numeric variables…</p>
+<pre class="r"><code>telco_data %&gt;%
+  select_if(is.numeric) %&gt;%
+  gather() %&gt;%
+  ggplot(aes(x = value)) +
+    facet_wrap(~ key, scales = &quot;free&quot;, ncol = 4) +
+    geom_density()</code></pre>
+<pre><code>## Warning: Removed 11 rows containing non-finite values (stat_density).</code></pre>
+<p><img src="/post/2018-11-06_neural_nets_explained_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>… and barcharts for categorical variables.</p>
+<pre class="r"><code>telco_data %&gt;%
+  select_if(is.character) %&gt;%
+  select(-customerID) %&gt;%
+  gather() %&gt;%
+  ggplot(aes(x = value)) +
+    facet_wrap(~ key, scales = &quot;free&quot;, ncol = 3) +
+    geom_bar()</code></pre>
+<p><img src="/post/2018-11-06_neural_nets_explained_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Before we can work with h2o, we need to convert our data into an h2o frame object. Note, that I am also converting character columns to categorical columns, otherwise h2o will ignore them. Moreover, we will need our response variable to be in categorical format in order to perform classification on this data.</p>
+<pre class="r"><code>hf &lt;- telco_data %&gt;%
+  mutate_if(is.character, as.factor) %&gt;%
+  as.h2o</code></pre>
+<p>Next, I’ll create a vector of the feature names I want to use for modeling (I am leaving out the customer ID because it doesn’t add useful information about customer churn).</p>
+<pre class="r"><code>hf_X &lt;- colnames(telco_data)[2:20]
+hf_X</code></pre>
+<pre><code>##  [1] &quot;gender&quot;           &quot;SeniorCitizen&quot;    &quot;Partner&quot;         
+##  [4] &quot;Dependents&quot;       &quot;tenure&quot;           &quot;PhoneService&quot;    
+##  [7] &quot;MultipleLines&quot;    &quot;InternetService&quot;  &quot;OnlineSecurity&quot;  
+## [10] &quot;OnlineBackup&quot;     &quot;DeviceProtection&quot; &quot;TechSupport&quot;     
+## [13] &quot;StreamingTV&quot;      &quot;StreamingMovies&quot;  &quot;Contract&quot;        
+## [16] &quot;PaperlessBilling&quot; &quot;PaymentMethod&quot;    &quot;MonthlyCharges&quot;  
+## [19] &quot;TotalCharges&quot;</code></pre>
+<p>I am doing the same for the response variable:</p>
+<pre class="r"><code>hf_y &lt;- colnames(telco_data)[21]
+hf_y</code></pre>
+<pre><code>## [1] &quot;Churn&quot;</code></pre>
+<p>Now, we are ready to use the <code>h2o.deeplearning</code> function, which has a number of arguments and hyperparameters, which we can set to define our neural net and the learning process. The most essential arguments are</p>
+<ul>
+<li><code>y</code>: the name of the response variable</li>
+<li><code>training_frame</code>: the training data</li>
+<li><code>x</code>: the vector of features to use is optional and all remaining columns would be used if we don’t specify it, but since we don’t want to include customer id in our model, we need to give this vector here.</li>
+</ul>
+<p>The <a href="http://docs.h2o.ai/h2o/latest-stable/h2o-docs/data-science/deep-learning.html#defining-a-deep-learning-model">H2O documentation for the Deep Learning function</a> gives an overview over all arguments and hyperparameters you can use. I will explain a few of the most important ones.</p>
+<pre class="r"><code>dl_model &lt;- h2o.deeplearning(x = hf_X,
+                             y = hf_y,
+                             training_frame = hf)</code></pre>
+</div>
+<div id="activation-functions" class="section level2">
+<h2>Activation functions</h2>
+<p>Before, when describing the simple <strong>perceptron</strong>, I said that a result is calculated in a neuron, e.g. by summing up all the incoming data multiplied by weights. However, this has one big disadvantage: such an approach would only enable our neural net to learn <strong>linear</strong> relationships between data. In order to be able to learn (you can also say approximate) any mathematical problem - no matter how complex - we use <strong>activation functions</strong>. Activation functions normalize the output of a neuron, e.g. to values between -1 and 1, (Tanh), 0 and 1 (Sigmoid) or by setting negative values to 0 (Rectified Linear Units, ReLU). In H2O we can choose between Tanh, Tanh with Dropout, Rectifier (default), Rectifier with Dropout, Maxout and Maxout with Dropout. Let’s choose Rectifier with Dropout. <strong>Dropout</strong> is used to improve the generalizability of neural nets by randomly setting a given proportion of nodes to 0. The dropout rate in H2O is specified with two arguments: <code>hidden_dropout_ratios</code>, which per default sets 50% of hidden (more on that in a minute) nodes to 0. Here, I want to reduce that proportion to 20% but let’s talk about hidden layers and hidden nodes first. In addition to hidden dropout, H2O let’s us specify a dropout for the input layer with <code>input_dropout_ratio</code>. This argument is deactivated by default and this is how we will leave it.</p>
+<div class="figure">
+<img src="https://shiring.github.io/netlify_images/nn_explained/activation_functions.jpg" />
+
+</div>
+<pre class="r"><code>dl_model &lt;- h2o.deeplearning(x = hf_X,
+                             y = hf_y,
+                             training_frame = hf,
+                             activation = &quot;RectifierWithDropout&quot;)</code></pre>
+</div>
+<div id="hidden-layers" class="section level2">
+<h2>Hidden layers</h2>
+<p>In more complex neural nets, neurons are arranged in layers. The first layer is the input layer with our data that is flowing into the neural net. Then we have a number of <strong>hidden layers</strong> and finally an output layer with the final prediction of our neural net. There are many different types and architectures for neural nets, like LSTMs, CNNs, GANs, etc. A simple architecture is the <strong>Multi-Layer-Perceptron (MLP)</strong> in which every node is connected to all other nodes in the preceding and the following layers; such layers are also called dense layers. We can train such an MLP with H2O by specifying the number hidden layers and the number of nodes in each hidden layer with the <code>hidden</code> argument. Let’s try out three hidden layers with 100, 80 and 100 nodes in each. Now, we can define the <code>hidden_dropout_ratios</code> for every hidden layer with 20% dropout.</p>
+<div class="figure">
+<img src="https://shiring.github.io/netlify_images/mlp_r7pv7z.jpg" />
+
+</div>
+<pre class="r"><code>dl_model &lt;- h2o.deeplearning(x = hf_X,
+                             y = hf_y,
+                             training_frame = hf,
+                             activation = &quot;RectifierWithDropout&quot;,
+                             hidden = c(100, 80, 100),
+                             hidden_dropout_ratios = c(0.2, 0.2, 0.2))</code></pre>
+</div>
+<div id="learning-through-optimisation" class="section level2">
+<h2>Learning through optimisation</h2>
+<p>Just as in the simple perceptron from the beginning, our MLP has <strong>weights</strong> associated with every node. And just as in the simple perceptron, we want to find the most optimal combination of weights in order to get a desired result from the output layer. The desired result in a supervised learning task is for the neural net to calculate predictions that are as close to reality as possible.</p>
+<p>How that works has a lot to do with mathematical optimization and the following concepts:</p>
+<ul>
+<li>difference between prediction and reality</li>
+<li>loss functions</li>
+<li>backpropagation</li>
+<li>optimization methods, like gradient descent</li>
+</ul>
+<div id="difference-between-prediction-and-reality" class="section level3">
+<h3>Difference between prediction and reality</h3>
+<p>When our network calculates a predictions, what the output nodes will return before applying an activation function is a numeric value of any size - this is called the score. Just as before, we will now apply an activation function to this score in order to normalize it. In the output of a classification task, we would like to get values between 0 and 1, that’s why we most commonly use the <strong>softmax</strong> function; this function converts the scores for every possible outcome/class into a probability distribution with values between 0 and 1 and a sum of 1.</p>
+</div>
+<div id="one-hot-encoding" class="section level3">
+<h3>One-Hot-Encoding</h3>
+<p>In order to compare this probability distribution of predictions with the true outcome/class, we use a special format to encode our outcome: <strong>One-Hot-Encoding</strong>. For every instance, we will generate a vector with either 0 or 1 for every possible class: the true class of the instance will get a 1, all other classes will get 0s. This one-hot-encoded vector now looks very similar to a probability distribution: it contains values between 0 and 1 and sums up to 1. In fact, our one-hot-encoded vector looks like the probability distribution if our network had predicted the correct class with 100% certainty!</p>
+<p>We can now use this similarity between probability distribution and one-hot-encoded vector to calculate the difference between the two; this difference tells us how close to reality our network is: if the difference is small, it is close to reality, if the difference is big, it wasn’t very accurate in predicting the outcome. The goal of the learning process is now to find the combination of weights that make the difference between probability distribution and one-hot-encoded vector as small as possible.</p>
+<p>One-Hot-Encoding will also be applied to categorical feature variables, because our neural nets need numeric values to learn from - strings and categories in their raw format are not useful per se. Fortunately, many machine learning packages - H2O being one of them - perform this one-hot-encoding automatically in the background for you. We could still change the <code>categorical_encoding</code> argument to “Enum”, “OneHotInternal”, “OneHotExplicit”, “Binary”, “Eigen”, “LabelEncoder”, “SortByResponse” and “EnumLimited” but we will leave the default setting of “AUTO”.</p>
+</div>
+<div id="loss-functions" class="section level3">
+<h3>Loss-Functions</h3>
+<p>This minimization of the difference between prediction and reality for the entire training set is also called <strong>minimising the loss function</strong>. There are many different loss functions (and in some cases, you will even write your own specific loss function), in H2O we have “CrossEntropy”, “Quadratic”, “Huber”, “Absolute” and “Quantile”. In classification tasks, the loss function we want to minimize is usually <strong>cross-entropy</strong>.</p>
+<div class="figure">
+<img src="https://shiring.github.io/netlify_images/nn_explained/cross-entropy.jpg" />
+
+</div>
+<pre class="r"><code>dl_model &lt;- h2o.deeplearning(x = hf_X,
+                             y = hf_y,
+                             training_frame = hf,
+                             activation = &quot;RectifierWithDropout&quot;,
+                             hidden = c(100, 80, 100),
+                             hidden_dropout_ratios = c(0.2, 0.2, 0.2),
+                             loss = &quot;CrossEntropy&quot;)</code></pre>
+</div>
+<div id="backpropagation" class="section level3">
+<h3>Backpropagation</h3>
+<p>With backpropagation, the calculated error (from the cross entropy in our case) will be propagated back through the network to calculate the proportion of error for every neuron. Based on this proportion of error, we get an error landscape for every neuron. This error landscape can be thought of as a hilly landscape in the Alps, for example. The positions in this landscape are different weights, so that we get weights with high error at the peaks and weights with low error in valleys. In order to minimize the error, we want to find the position in this landscape (i.e. the weight) that is in the deepest valley.</p>
+</div>
+<div id="gradient-descent" class="section level3">
+<h3>Gradient descent</h3>
+<p>Let’s imagine we were a hiker, who is left at a random place in this landscape - while being blindfolded - and we are tasked with finding our way to this valley. We would start by feeling around and looking for the direction with the steepest downward slope. This is also what our neural net does, just that this “feeling around” is called “calculating the <strong>gradient</strong>”. And just as we would then make a step in that direction with the steepest downwards slope, our neural net makes a step in the direction with the steepest gradient. This is called <strong>gradient descent</strong>. This procedure will be repeated until we find a place, where we can’t go any further down. In our neural net, this number of repeated rounds is called the number of <strong>epochs</strong> and we define it in H2O with the <code>epochs</code> argument.</p>
+<div class="figure">
+<img src="https://shiring.github.io/netlify_images/nn_explained/gradient_descent.jpg" />
+
+</div>
+<pre class="r"><code>dl_model &lt;- h2o.deeplearning(x = hf_X,
+                             y = hf_y,
+                             training_frame = hf,
+                             activation = &quot;RectifierWithDropout&quot;,
+                             hidden = c(100, 80, 100),
+                             hidden_dropout_ratios = c(0.2, 0.2, 0.2),
+                             loss = &quot;CrossEntropy&quot;,
+                             epochs = 200)</code></pre>
+</div>
+<div id="adaptive-learning-rate-and-momentum" class="section level3">
+<h3>Adaptive learning rate and momentum</h3>
+<p>One common problem with this simple approach is, that we might end up in a place, where there is no direction to go down any more but the steepest valley in the entire landscape is somewhere else. In our neural net, this would be called getting stuck in local minima or on saddle points. In order to be able to overcome these points and find the <strong>global minimum</strong>, several advanced techniques have been developed in recent years.</p>
+<p>One of them is the <strong>adaptive learning rate</strong>. Learning rate can be though of as the step size of our hiker. In H2O, this is defined with the <code>rate</code> argument. With an adaptive learning rate, we can e.g. start out with a big learning rate reduce it the closer we get to the end of our model training run. If you wanted to have an adaptive learning rate in your neural net, you would use the following functions in H2O: <code>adaptive_rate = TRUE</code>, <code>rho</code> (rate of learning rate decay) and <code>epsilon</code> (a smoothing factor).</p>
+<p>In this example, I am not using adaptive learning rate, however, but something called <strong>momentum</strong>. If you imagine a ball being pushed from some point in the landscape, it will gain momentum that propels it into a general direction and won’t make big jumps into opposing directions. This principle is applied with momentum in neural nets. In our H2O function we define <code>momentum_start</code> (momentum at the beginning of training), <code>momentum_ramp</code> (number of instances for which momentum is supposed to increase) and <code>momentum_stable</code> (final momentum).</p>
+<p>The <strong>Nesterov accelerated gradient</strong> is an addition to momentum in which the next step is guessed before taking it. In this way, the previous error will influence the direction of the next step.</p>
+<pre class="r"><code>dl_model &lt;- h2o.deeplearning(x = hf_X,
+                             y = hf_y,
+                             training_frame = hf,
+                             activation = &quot;RectifierWithDropout&quot;,
+                             hidden = c(100, 80, 100),
+                             hidden_dropout_ratios = c(0.2, 0.2, 0.2),
+                             loss = &quot;CrossEntropy&quot;,
+                             epochs = 200,
+                             rate = 0.005,
+                             adaptive_rate = FALSE,
+                             momentum_start = 0.5,
+                             momentum_ramp = 100,
+                             momentum_stable = 0.99,
+                             nesterov_accelerated_gradient = TRUE)</code></pre>
+</div>
+<div id="l1-und-l2-regularisierung" class="section level3">
+<h3>L1 und L2 Regularisierung</h3>
+<p>In addition to <strong>dropout</strong>, we can apply <strong>regularisation</strong> to improve the generalizability of our neural network. In H2O, we can use L1 and L2 regularization. With L1, many nodes will be set to 0 and with L2 many nodes will get low weights.</p>
+<pre class="r"><code>dl_model &lt;- h2o.deeplearning(x = hf_X,
+                             y = hf_y,
+                             training_frame = hf,
+                             activation = &quot;RectifierWithDropout&quot;,
+                             hidden = c(100, 80, 100),
+                             hidden_dropout_ratios = c(0.2, 0.2, 0.2),
+                             loss = &quot;CrossEntropy&quot;,
+                             epochs = 200,
+                             rate = 0.005,
+                             adaptive_rate = TRUE,
+                             momentum_start = 0.5,
+                             momentum_ramp = 100,
+                             momentum_stable = 0.99,
+                             nesterov_accelerated_gradient = TRUE,
+                             l1 = 0,
+                             l2 = 0)</code></pre>
+</div>
+</div>
+<div id="crossvalidation" class="section level2">
+<h2>Crossvalidation</h2>
+<p>Now you know the main principles of how neural nets learn!</p>
+<p>Before we finally train our model, we want to have a way to judge how well our model learned and if learning improves over the epochs. Here, we want to use validation data, to make these performance measures less biased compared to using the training data. In H2O, we could either give a specific validation set with <code>validation_frame</code> or we use <strong>crossvalidation</strong>. The argument <code>nfolds</code> specifies how many folds shall be generated and with <code>fold_assignment = &quot;Stratified&quot;</code> we tell H2O to make sure to keep the class ratios of our response variable the same in all folds. We also specify to save the cross validation predictions for examination.</p>
+<div class="figure">
+<img src="https://shiring.github.io/netlify_images/nn_explained/validation.jpg" />
+
+</div>
+<pre class="r"><code>dl_model &lt;- h2o.deeplearning(x = hf_X,
+                             y = hf_y,
+                             training_frame = hf,
+                             activation = &quot;RectifierWithDropout&quot;,
+                             hidden = c(100, 80, 100),
+                             hidden_dropout_ratios = c(0.2, 0.2, 0.2),
+                             loss = &quot;CrossEntropy&quot;,
+                             epochs = 200,
+                             rate = 0.005,
+                             adaptive_rate = FALSE,
+                             momentum_start = 0.5,
+                             momentum_ramp = 100,
+                             momentum_stable = 0.99,
+                             nesterov_accelerated_gradient = TRUE,
+                             l1 = 0,
+                             l2 = 0,
+                             nfolds = 3,
+                             fold_assignment = &quot;Stratified&quot;,
+                             keep_cross_validation_predictions = TRUE,
+                             balance_classes = TRUE,
+                             seed = 42)</code></pre>
+<p>Finally, we are balancing the class proportions and we set a seed for pseudo-number-generation - and we train our model!</p>
+<p>The resulting model object can be used just like any other H2O model: for predicting new/test data, for calculating performance metrics, saving it, or plotting the training results:</p>
+<pre class="r"><code>plot(dl_model)</code></pre>
+<p><img src="/post/2018-11-06_neural_nets_explained_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p>The crossvalidation predictions can be accessed with <code>h2o.cross_validation_predictions()</code> (returns one data frame for every fold) and <code>h2o.cross_validation_holdout_predictions()</code> (combined in one data frame).</p>
+<pre class="r"><code>h2o.cross_validation_predictions(dl_model)</code></pre>
+<pre><code>## [[1]]
+##   predict        No         Yes
+## 1      No 0.0000000 0.000000000
+## 2      No 0.9873917 0.012608336
+## 3      No 0.0000000 0.000000000
+## 4      No 0.9948792 0.005120786
+## 5     Yes 0.1096676 0.890332380
+## 6     Yes 0.1262154 0.873784601
+## 
+## [7043 rows x 3 columns] 
+## 
+## [[2]]
+##   predict        No       Yes
+## 1     Yes 0.4374671 0.5625329
+## 2      No 0.0000000 0.0000000
+## 3      No 0.7491482 0.2508518
+## 4      No 0.0000000 0.0000000
+## 5      No 0.0000000 0.0000000
+## 6      No 0.0000000 0.0000000
+## 
+## [7043 rows x 3 columns] 
+## 
+## [[3]]
+##   predict No Yes
+## 1      No  0   0
+## 2      No  0   0
+## 3      No  0   0
+## 4      No  0   0
+## 5      No  0   0
+## 6      No  0   0
+## 
+## [7043 rows x 3 columns]</code></pre>
+<pre class="r"><code>h2o.cross_validation_holdout_predictions(dl_model)</code></pre>
+<pre><code>##   predict        No         Yes
+## 1     Yes 0.4374671 0.562532919
+## 2      No 0.9873917 0.012608336
+## 3      No 0.7491482 0.250851769
+## 4      No 0.9948792 0.005120786
+## 5     Yes 0.1096676 0.890332380
+## 6     Yes 0.1262154 0.873784601
+## 
+## [7043 rows x 3 columns]</code></pre>
+<hr />
+</div>
+<div id="video" class="section level1">
+<h1>Video</h1>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Z42fE0MGoDQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+</div>
+<div id="slides" class="section level1">
+<h1>Slides</h1>
+<iframe src="//codecentric.slides.com/shiringlander/dl_bootcamp_nn/embed" width="576" height="420" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen>
+</iframe>
+<hr />
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 3.5.1 (2018-07-02)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS  10.14
+## 
+## Matrix products: default
+## BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] bindrcpp_0.2.2  h2o_3.20.0.8    forcats_0.3.0   stringr_1.3.1  
+##  [5] dplyr_0.7.7     purrr_0.2.5     readr_1.1.1     tidyr_0.8.1    
+##  [9] tibble_1.4.2    ggplot2_3.1.0   tidyverse_1.2.1
+## 
+## loaded via a namespace (and not attached):
+##  [1] tidyselect_0.2.5 xfun_0.4         haven_1.1.2      lattice_0.20-35 
+##  [5] colorspace_1.3-2 htmltools_0.3.6  yaml_2.2.0       utf8_1.1.4      
+##  [9] rlang_0.3.0.1    pillar_1.3.0     glue_1.3.0       withr_2.1.2     
+## [13] modelr_0.1.2     readxl_1.1.0     bindr_0.1.1      plyr_1.8.4      
+## [17] munsell_0.5.0    blogdown_0.9     gtable_0.2.0     cellranger_1.1.0
+## [21] rvest_0.3.2      evaluate_0.12    labeling_0.3     knitr_1.20      
+## [25] fansi_0.4.0      broom_0.5.0      Rcpp_0.12.19     scales_1.0.0    
+## [29] backports_1.1.2  jsonlite_1.5     hms_0.4.2        digest_0.6.18   
+## [33] stringi_1.2.4    bookdown_0.7     grid_3.5.1       rprojroot_1.3-2 
+## [37] bitops_1.0-6     cli_1.0.1        tools_3.5.1      magrittr_1.5    
+## [41] lazyeval_0.2.1   RCurl_1.95-4.11  crayon_1.3.4     pkgconfig_2.0.2 
+## [45] xml2_1.2.0       lubridate_1.7.4  assertthat_0.2.0 rmarkdown_1.10  
+## [49] httr_1.3.1       rstudioapi_0.8   R6_2.3.0         nlme_3.1-137    
+## [53] compiler_3.5.1</code></pre>
+</div>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="//tags/machine-learning/">machine learning</a>
+
+  <a class="tag tag--primary tag--small" href="//tags/neural-nets/">neural nets</a>
+
+  <a class="tag tag--primary tag--small" href="//tags/deep-learning/">deep learning</a>
+
+  <a class="tag tag--primary tag--small" href="//tags/codecentric.ai/">codecentric.ai</a>
+
+                  </div>
+                
+              
+            
+            
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2018/12/customer_churn_code/" data-tooltip="Code for case study - Customer Churn with Keras/TensorFlow and H2O">
+              
+                <i class="fa fa-angle-left"></i>
+                <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+              </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2018/10/ml_basics_rf/" data-tooltip="Machine Learning Basics - Random Forest">
+              
+                <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2018/11/neural_nets_explained/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2018/11/neural_nets_explained/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2018/11/neural_nets_explained/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2018 Dr. Shirin Glander. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2018/12/customer_churn_code/" data-tooltip="Code for case study - Customer Churn with Keras/TensorFlow and H2O">
+              
+                <i class="fa fa-angle-left"></i>
+                <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+              </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2018/10/ml_basics_rf/" data-tooltip="Machine Learning Basics - Random Forest">
+              
+                <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2018/11/neural_nets_explained/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2018/11/neural_nets_explained/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2018/11/neural_nets_explained/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=%2F2018%2F11%2Fneural_nets_explained%2F">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=%2F2018%2F11%2Fneural_nets_explained%2F">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=%2F2018%2F11%2Fneural_nets_explained%2F">
+          <i class="fa fa-google-plus"></i><span>Share on Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Dr. Shirin Glander</h4>
+    
+      <div id="about-card-bio">Biologist turned Bioinformatician turned Data Scientist</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Data Scientist
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Münster, Germany
+      </div>
+    
+  </div>
+</div>
+
+    <div id="algolia-search-modal" class="modal-container">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="close-button"><i class="fa fa-close"></i></span>
+      <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
+        <span class="searchby-algolia-text text-color-light text-small">by</span>
+        <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
+      </a>
+      <i class="search-icon fa fa-search"></i>
+      <form id="algolia-search-form">
+        <input type="text" id="algolia-search-input" name="search"
+          class="form-control input--large search-input" placeholder="Search" />
+      </form>
+    </div>
+    <div class="modal-body">
+      <div class="no-result text-color-light text-center">no post found</div>
+      <div class="results">
+        
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/12/customer_churn_code/">
+                <h3 class="media-heading">Code for case study - Customer Churn with Keras/TensorFlow and H2O</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Dec 12, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">This is code that accompanies a book chapter on customer churn that I have written for dpunkt Verlag. The book is in German and will probably appear in December: https://www.dpunkt.de/buecher/13208/9783864906107-data-science.html.
+Inspiration &amp; Sources Thank you to the following people for providing excellent code examples about customer churn:
+ Matt Dancho: http://www.business-science.io/business/2017/11/28/customer_churn_analysis_keras.html JJ Allaire: https://github.com/rstudio/keras-customer-churn Susan Li: https://towardsdatascience.com/predict-customer-churn-with-r-9e62357d47b4 John Sullivan: https://jtsulliv.github.io/churn-eda/   Setup All analyses are done in R using RStudio.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/11/neural_nets_explained/">
+                <h3 class="media-heading">&#39;How do neural nets learn?&#39; A step by step explanation using the H2O Deep Learning algorithm.</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Nov 11, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">In my last blogpost about Random Forests I introduced the codecentric.ai Bootcamp. The next part I published was about Neural Networks and Deep Learning. Every video of our bootcamp will have example code and tasks to promote hands-on learning. While the practical parts of the bootcamp will be using Python, below you will find the English R version of this Neural Nets Practical Example, where I explain how neural nets learn and how the concepts and techniques translate to training neural nets in R with the H2O Deep Learning function.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/10/ml_basics_rf/">
+                <h3 class="media-heading">Machine Learning Basics - Random Forest</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Oct 10, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">A few colleagues of mine and I from codecentric.ai are currently working on developing a free online course about machine learning and deep learning. As part of this course, I am developing a series of videos about machine learning basics - the first video in this series was about Random Forests.
+You can find the video on YouTube but as of now, it is only available in German. Same goes for the slides, which are also currently German only.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/10/rladieslondon_slides/">
+                <h3 class="media-heading">Slides from my talk at the R-Ladies Meetup about Interpretable Deep Learning with R, Keras and LIME</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Oct 10, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">During my stay in London for the m3 conference, I also gave a talk at the R-Ladies London Meetup on Tuesday, October 16th, about one of my favorite topics: Interpretable Deep Learning with R, Keras and LIME.
+ Keras is a high-level open-source deep learning framework that by default works on top of TensorFlow. Keras is minimalistic, efficient and highly flexible because it works with a modular layer system to define, compile and fit neural networks.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/10/mcubed_slides/">
+                <h3 class="media-heading">Slides from my m-cubed talk about Explaining complex machine learning models with LIME</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Oct 10, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">The last two days, I was in London for the M-cubed conference.
+Here are the slides from my talk about Explaining complex machine learning models with LIME:
+ Traditional machine learning workflows focus heavily on model training and optimization; the best model is usually chosen via performance measures like accuracy or error and we tend to assume that a model is good enough for deployment if it passes certain thresholds of these performance criteria.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/10/twimlai189/">
+                <h3 class="media-heading">Sketchnotes from TWiML&amp;AI: Evaluating Model Explainability Methods with Sara Hooker</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Oct 10, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">These are my sketchnotes for Sam Charrington’s podcast This Week in Machine Learning and AI about Evaluating Model Explainability Methods with Sara Hooker:
+Sketchnotes from TWiMLAI talk: Evaluating Model Explainability Methods with Sara Hooker
+ You can listen to the podcast here.
+  In this, the first episode of the Deep Learning Indaba series, we’re joined by Sara Hooker, AI Resident at Google Brain. I had the pleasure of speaking with Sara in the run-up to the Indaba about her work on interpretability in deep neural networks.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/10/meetup_nov18/">
+                <h3 class="media-heading">Using R to help plan the future of transport. Join MünsteR for our next meetup!</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Oct 10, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">In our next MünsteR R-user group meetup on Tuesday, November 20th, 2018, titled Using R to help plan the future of transport, Mark Padgham will provide an overview of several inter-related R packages for analysing urban dynamics.
+You can RSVP here: http://meetu.ps/e/F7zDN/w54bW/f
+ The primary motivation for developing these packages has been their use in Active Transport Futures - a group of researchers and coders striving to aid cities to better plan for futures in which active travel, particularly walking and cycling, plays an increasingly prominent role (lots of open source code at github.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/10/keras_fruits_cluster/">
+                <h3 class="media-heading">Image clustering with Keras and k-Means</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Oct 10, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">A while ago, I wrote two blogposts about image classification with Keras and about how to use your own models or pretrained models for predictions and using LIME to explain to predictions.
+Recently, I came across this blogpost on using Keras to extract learned features from models and use those to cluster images. It is written in Python, though - so I adapted the code to R. You find the results below.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/09/ffm_datascience_meetup_slides/">
+                <h3 class="media-heading">Slides from talk: &#39;Decoding The Black Box&#39; at the Frankfurt Data Science Meetup</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Sep 9, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">On Wednesday, September 26th, I gave a talk about ‘Decoding The Black Box’ at the Frankfurt Data Science Meetup.
+My slides were created with beautiful.ai and can be found here.
+   DECODING THE BLACK BOX
+  And finally we will have with us Dr.Shirin Glander, whom we were inviting for a long time back. Shirin lives in Münster and works as a Data Scientist at codecentric, she has lots of practical experience.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/09/ffm_datascience_meetup/">
+                <h3 class="media-heading">I&#39;ll be talking about &#39;Decoding The Black Box&#39; at the Frankfurt Data Science Meetup</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Sep 9, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">I have yet another Meetup talk to announce:
+On Wednesday, September 26th, I’ll be talking about ‘Decoding The Black Box’ at the Frankfurt Data Science Meetup.
+Particularly cool with this meetup is that they will livestream the event at www.youtube.com/c/FrankfurtDataScience!
+ TALK#2: DECODING THE BLACK BOX
+  And finally we will have with us Dr.Shirin Glander, whom we were inviting for a long time back. Shirin lives in Münster and works as a Data Scientist at codecentric, she has lots of practical experience.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+      </div>
+    </div>
+    <div class="modal-footer">
+      <p class="results-count text-medium"
+         data-message-zero="no post found"
+         data-message-one="1 post found"
+         data-message-other="{n} posts found">
+         66 posts found
+      </p>
+    </div>
+  </div>
+</div>
+    
+  
+    
+    <div id="cover" style="background-image:url('/images/autumn-2789234_1920.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" integrity="sha256-IFHWFEbU2/+wNycDECKgjIRSirRNIDp2acEB5fvdVRU=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js" integrity="sha256-+mpyNVJsNt4rVXCw0F+pAOiB3YxmHgrbJsx4ecPuUaI=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.js" integrity="sha256-vMxgR/7FtLovVA+IPrR7+xTgIgARH7y9VZQnmmi0HDI=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.js" integrity="sha256-N0qFUh7/9vLvia87dDndewmsgsyYoNkdA212tPc+2NI=" crossorigin="anonymous"></script>
+
+
+<script src="/js/script-kr8dyqj6rb6ortyib7whfo9x9p6td6zo8t1v4fdz4ecx5kwybsdlmk1slygn.min.js"></script>
+
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = '\/2018\/11\/neural_nets_explained\/';
+          
+            this.page.identifier = '\/2018\/11\/neural_nets_explained\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'shirinsplayground';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+    
+  </body>
+</html>
+
