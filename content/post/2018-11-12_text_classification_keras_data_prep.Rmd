@@ -114,16 +114,20 @@ x_train <- text_seqs %>%
 dim(x_train)
 ```
 
+Our response variable will be encoded with 1s (5-star review) and 0s (not 5-star reviews). Because we have a binary outcome, we only need this one vector.
+
 ```{r}
 y_train <- as.numeric(clothing_reviews$Liked) -1
 length(y_train)
 ```
 
->You can’t feed lists of integers into a neural network. You have to turn your lists into tensors. There are two ways to do that:
-- Pad your lists so that they all have the same length, turn them into an integer tensor of shape (samples, word_indices), and then use as the first layer in your network a layer capable of handling such integer tensors (the “embedding” layer, which we’ll cover in detail later in the book).
-- One-hot-encode your lists to turn them into vectors of 0s and 1s. This would mean, for instance, turning the sequence [3, 5] into a 10,000-dimensional vector that would be all zeros except for indices 3 and 5, which would be ones. Then you could use as the first layer in your network a dense layer, capable of handling floating-point vector data.
+## Embeddings
 
-Another popular and powerful way to associate a vector with a word is the use of dense “word vectors”, also called “word embeddings”. While the vectors obtained through one-hot encoding are binary, sparse (mostly made of zeros) and very high-dimensional (same dimensionality as the number of words in the vocabulary), “word embeddings” are low-dimensional floating point vectors (i.e. “dense” vectors, as opposed to sparse vectors). Unlike word vectors obtained via one-hot encoding, word embeddings are learned from data. It is common to see word embeddings that are 256-dimensional, 512-dimensional, or 1024-dimensional when dealing with very large vocabularies. On the other hand, one-hot encoding words generally leads to vectors that are 20,000-dimensional or higher (capturing a vocabulary of 20,000 token in this case). So, word embeddings pack more information into far fewer dimensions.
+These padded word index matrices now need to be converted into a way that gives information about the features (i.e. words) in a way that can be used for learning. Currently, the state-of-the-art for text models are word embeddings or word vectors, which are learned from the text data. Word embeddings encode the context of words in relatively few dimensions while maximizing the information that is contained in these vectors. Basically, word embeddings are values that are learned by a neural net.
+
+
+
+
 
 word embeddings vs. one hot encoding
 
@@ -244,6 +248,11 @@ https://www.r-bloggers.com/word-embeddings-with-keras/
 
 > Word embedding is a method used to map words of a vocabulary to dense vectors of real numbers where semanticaly similar words are mapped to nearby points. Representing words in this vector space help algorithms achieve better performance in natural language processing tasks like syntatic parsing and sentiment analysis by grouping similar words. For example, we expect that in the embedding space “cats” and “dogs” are mapped to nearby points since they are both animals, mammals, pets, etc.
 In this tutorial we will implement the skip-gram model created by Mikolov et al in R using the keras package. The skip-gram model is a flavor of word2vec, a class of computationally-efficient predictive models for learning word embeddings from raw text. 
+
+>You can’t feed lists of integers into a neural network. You have to turn your lists into tensors. There are two ways to do that:
+- Pad your lists so that they all have the same length, turn them into an integer tensor of shape (samples, word_indices), and then use as the first layer in your network a layer capable of handling such integer tensors (the “embedding” layer, which we’ll cover in detail later in the book).
+- One-hot-encode your lists to turn them into vectors of 0s and 1s. This would mean, for instance, turning the sequence [3, 5] into a 10,000-dimensional vector that would be all zeros except for indices 3 and 5, which would be ones. Then you could use as the first layer in your network a dense layer, capable of handling floating-point vector data.
+
 ---
 
 ```{r}
