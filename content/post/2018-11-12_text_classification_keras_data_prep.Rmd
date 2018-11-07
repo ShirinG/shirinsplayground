@@ -1,0 +1,174 @@
+---
+title: "How to prepare data for NLP (text classification) with Keras and TensorFlow"
+draft: true
+author: Shirin Glander
+date: '2018-11-12'
+categories: ["R", "Keras"]
+tags: ["machine learning", "keras", "tensorflow", "nlp"]
+thumbnailImagePosition: left
+thumbnailImage: 
+metaAlignment: center
+coverMeta: out
+slug: text_classification_keras_data_prep
+---
+
+In the past, I have written and taught quite a bit about image classification with Keras ([e.g. here](https://shirinsplayground.netlify.com/2018/06/keras_fruits/)). Text classification isn't too different in terms of using the Keras principles to train a sequential or function model. You can even use Convolutional Neural Nets (CNNs) for text classification.
+
+What is very different, however, is how to prepare raw text data for modeling. When you look at the [IMDB example from the Deep Learning with R Book](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/3.4-classifying-movie-reviews.nb.html), you get a great explanation of how to train the model. But because the IMDB dataset comes with the `keras` package, it isn't so straight-forward to use what you learned on your own data.
+
+Luckily, Keras offers a few convenience functions that make our lives much easier.
+
+https://github.com/jjallaire/deep-learning-with-r-notebooks/blob/master/notebooks/6.1-one-hot-encoding-of-words-or-characters.Rmd
+
+https://github.com/jjallaire/deep-learning-with-r-notebooks/blob/master/notebooks/6.1-using-word-embeddings.Rmd
+
+```{r message=FALSE, warning=FALSE}
+library(keras)
+library(tidyverse)
+``` 
+
+## Data
+
+Here I am using another Kaggle dataset: [Women's e-commerce cloting reviews](https://www.kaggle.com/nicapotato/womens-ecommerce-clothing-reviews). The data contains a text review of different items of clothing, as well as some additional information, like rating, division, etc.
+
+In this example, I will use the review title and text in order to classify whether or not the item was liked. I am creating the response variable from the rating: every item rates with 5 stars is considered "liked" (1), the rest as "not liked" (0). I am also combining review title and text.
+
+```{r warning=FALSE}
+clothing_reviews <- read_csv("/Users/shiringlander/Documents/Github/ix_lime_etc/Womens Clothing E-Commerce Reviews.csv") %>%
+  mutate(Liked = as.factor(ifelse(Rating == 5, 1, 0)),
+         text = paste(Title, `Review Text`),
+         text = gsub("NA", "", text))
+glimpse(clothing_reviews)
+```
+
+Whether an item was liked or not will thus be my response variable or label for classification.
+
+```{r}
+clothing_reviews %>%
+  ggplot(aes(x = Liked, fill = Liked)) +
+    geom_bar(alpha = 0.8) +
+    guides(fill = FALSE)
+```
+
+https://www.r-bloggers.com/word-embeddings-with-keras/
+
+> Word embedding is a method used to map words of a vocabulary to dense vectors of real numbers where semanticaly similar words are mapped to nearby points. Representing words in this vector space help algorithms achieve better performance in natural language processing tasks like syntatic parsing and sentiment analysis by grouping similar words. For example, we expect that in the embedding space “cats” and “dogs” are mapped to nearby points since they are both animals, mammals, pets, etc.
+In this tutorial we will implement the skip-gram model created by Mikolov et al in R using the keras package. The skip-gram model is a flavor of word2vec, a class of computationally-efficient predictive models for learning word embeddings from raw text. We won’t addres theoretical details about embeddings and the skip-gram model. If you wan’t to get more details you can read the paper linked above. The Tensorflow Vector Representation of Words tutorial includes additional details as does the Deep Learning With R notebook about embeddings.
+There are other ways to create vector representations of words. For example, GloVe Embeddings are implemented in the text2vec package by Dmitriy Selivanov. There’s also a tidy approach described in Julia Silge’s blog post Word Vectors with Tidy Data Principles.
+
+> We’ll begin with some text pre-processing using a keras text_tokenizer(). The tokenizer will be responsible for transforming each review into a sequence of integer tokens (which will subsequently be used as input into the skip-gram model).
+Note that the tokenizer object is modified in place by the call to fit_text_tokenizer(). An integer token will be assigned for each of the 50,000 most common words (the other words will be assigned to token 0).
+
+```{r}
+text <- clothing_reviews$text
+```
+
+```{r}
+max_features <- 1000
+tokenizer <- text_tokenizer(num_words = max_features)
+```
+
+```{r}
+tokenizer %>% 
+  fit_text_tokenizer(text)
+```
+
+```{r}
+tokenizer$document_count
+```
+
+```{r}
+tokenizer$word_index %>%
+  head()
+```
+
+```{r}
+text_seqs <- texts_to_sequences(tokenizer, text)
+text_seqs %>%
+  head()
+```
+
+https://github.com/rstudio/keras/blob/master/vignettes/examples/imdb_cnn.R
+
+```{r}
+# Set parameters:
+maxlen <- 400
+batch_size <- 32
+embedding_dims <- 50
+filters <- 250
+kernel_size <- 3
+hidden_dims <- 250
+epochs <- 2
+```
+
+```{r}
+x_train <- text_seqs %>%
+  pad_sequences(maxlen = maxlen)
+dim(x_train)
+```
+
+```{r}
+y_train <- as.numeric(clothing_reviews$Liked) -1
+length(y_train)
+```
+
+```{r}
+#Initialize model
+model <- keras_model_sequential()
+
+model %>% 
+  # Start off with an efficient embedding layer which maps
+  # the vocab indices into embedding_dims dimensions
+  layer_embedding(max_features, embedding_dims, input_length = maxlen) %>%
+  layer_dropout(0.2) %>%
+
+  # Add a Convolution1D, which will learn filters
+    # Word group filters of size filter_length:
+  layer_conv_1d(
+    filters, kernel_size, 
+    padding = "valid", activation = "relu", strides = 1
+  ) %>%
+  # Apply max pooling:
+  layer_global_max_pooling_1d() %>%
+
+  # Add a vanilla hidden layer:
+  layer_dense(hidden_dims) %>%
+
+  # Apply 20% layer dropout
+  layer_dropout(0.2) %>%
+  layer_activation("relu") %>%
+
+  # Project onto a single unit output layer, and squash it with a sigmoid
+
+  layer_dense(1) %>%
+  layer_activation("sigmoid")
+
+# Compile model
+model %>% compile(
+  loss = "binary_crossentropy",
+  optimizer = "adam",
+  metrics = "accuracy"
+)
+
+```
+
+```{r}
+model %>%
+  fit(
+    x_train,
+    y_train,
+    batch_size = batch_size,
+    epochs = epochs,
+    validation_split = 0.3
+  )
+```
+
+https://github.com/rstudio/keras/blob/master/vignettes/examples/imdb_cnn_lstm.R
+https://github.com/rstudio/keras/blob/master/vignettes/examples/imdb_lstm.R
+
+---
+
+```{r}
+sessionInfo()
+```
+

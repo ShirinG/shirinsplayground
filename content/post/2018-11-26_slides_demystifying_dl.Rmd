@@ -1,0 +1,14 @@
+---
+title: "Slides from my talk about Demystifying Big Data and Deep Learning (and how to get started)"
+draft: true
+author: Shirin Glander
+date: '2018-11-26'
+categories: ["R"]
+tags: 
+thumbnailImagePosition: left
+thumbnailImage: 
+metaAlignment: center
+coverMeta: out
+slug: slides_demystifying_dl
+---
+
