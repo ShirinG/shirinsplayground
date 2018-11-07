@@ -14,13 +14,13 @@ slug: text_classification_keras_data_prep
 
 In the past, I have written and taught quite a bit about image classification with Keras ([e.g. here](https://shirinsplayground.netlify.com/2018/06/keras_fruits/)). Text classification isn't too different in terms of using the Keras principles to train a sequential or function model. You can even use Convolutional Neural Nets (CNNs) for text classification.
 
-What is very different, however, is how to prepare raw text data for modeling. When you look at the [IMDB example from the Deep Learning with R Book](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/3.4-classifying-movie-reviews.nb.html), you get a great explanation of how to train the model. But because the IMDB dataset comes with the `keras` package, it isn't so straight-forward to use what you learned on your own data.
+What is very different, however, is how to prepare raw text data for modeling. When you look at the [IMDB example from the Deep Learning with R Book](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/3.4-classifying-movie-reviews.nb.html), you get a great explanation of how to train the model. But because the **preprocessed** IMDB dataset comes with the `keras` package, it isn't so straight-forward to use what you learned on your own data.
 
-Luckily, Keras offers a few convenience functions that make our lives much easier.
+## How can a computer work with text?
 
-https://github.com/jjallaire/deep-learning-with-r-notebooks/blob/master/notebooks/6.1-one-hot-encoding-of-words-or-characters.Rmd
+As with any neural network, we need to convert our data into a numeric format; in Keras and TensorFlow we work with tensors. The IMDB example data from the `keras` package has been preprocessed to a list of integers, where every integer corresponds to a word arranged by descending word frequency.
 
-https://github.com/jjallaire/deep-learning-with-r-notebooks/blob/master/notebooks/6.1-using-word-embeddings.Rmd
+So, how do we make it from raw text to such a list of integers? Luckily, Keras offers a few convenience functions that make our lives much easier.
 
 ```{r message=FALSE, warning=FALSE}
 library(keras)
@@ -29,9 +29,8 @@ library(tidyverse)
 
 ## Data
 
-Here I am using another Kaggle dataset: [Women's e-commerce cloting reviews](https://www.kaggle.com/nicapotato/womens-ecommerce-clothing-reviews). The data contains a text review of different items of clothing, as well as some additional information, like rating, division, etc.
-
-In this example, I will use the review title and text in order to classify whether or not the item was liked. I am creating the response variable from the rating: every item rates with 5 stars is considered "liked" (1), the rest as "not liked" (0). I am also combining review title and text.
+In the example below, I am using a Kaggle dataset: [Women's e-commerce cloting reviews](https://www.kaggle.com/nicapotato/womens-ecommerce-clothing-reviews). The data contains a text review of different items of clothing, as well as some additional information, like rating, division, etc.
+I will use the review title and text in order to classify whether or not the item was liked. I am creating the response variable from the rating: every item rates with 5 stars is considered "liked" (1), the rest as "not liked" (0). I am also combining review title and text.
 
 ```{r warning=FALSE}
 clothing_reviews <- read_csv("/Users/shiringlander/Documents/Github/ix_lime_etc/Womens Clothing E-Commerce Reviews.csv") %>%
@@ -41,7 +40,7 @@ clothing_reviews <- read_csv("/Users/shiringlander/Documents/Github/ix_lime_etc/
 glimpse(clothing_reviews)
 ```
 
-Whether an item was liked or not will thus be my response variable or label for classification.
+Whether an item was liked or not will be the response variable or label for classification of the reviews.
 
 ```{r}
 clothing_reviews %>%
@@ -50,37 +49,43 @@ clothing_reviews %>%
     guides(fill = FALSE)
 ```
 
-https://www.r-bloggers.com/word-embeddings-with-keras/
+## Tokenizers
 
-> Word embedding is a method used to map words of a vocabulary to dense vectors of real numbers where semanticaly similar words are mapped to nearby points. Representing words in this vector space help algorithms achieve better performance in natural language processing tasks like syntatic parsing and sentiment analysis by grouping similar words. For example, we expect that in the embedding space “cats” and “dogs” are mapped to nearby points since they are both animals, mammals, pets, etc.
-In this tutorial we will implement the skip-gram model created by Mikolov et al in R using the keras package. The skip-gram model is a flavor of word2vec, a class of computationally-efficient predictive models for learning word embeddings from raw text. We won’t addres theoretical details about embeddings and the skip-gram model. If you wan’t to get more details you can read the paper linked above. The Tensorflow Vector Representation of Words tutorial includes additional details as does the Deep Learning With R notebook about embeddings.
-There are other ways to create vector representations of words. For example, GloVe Embeddings are implemented in the text2vec package by Dmitriy Selivanov. There’s also a tidy approach described in Julia Silge’s blog post Word Vectors with Tidy Data Principles.
-
-> We’ll begin with some text pre-processing using a keras text_tokenizer(). The tokenizer will be responsible for transforming each review into a sequence of integer tokens (which will subsequently be used as input into the skip-gram model).
-Note that the tokenizer object is modified in place by the call to fit_text_tokenizer(). An integer token will be assigned for each of the 50,000 most common words (the other words will be assigned to token 0).
+The first step is to tokenize the text. This means, converting our text into a sequence of integers where each integer corresponds to a word in the dictionary. 
 
 ```{r}
 text <- clothing_reviews$text
 ```
+
+The `num_words` argument defines the number of words we want to consider (this will be our feature space). Because the output integers will be sorted according to decreasing word frequency, if we set 1000, we will only get the 1000 most frequent words in our corpus.
 
 ```{r}
 max_features <- 1000
 tokenizer <- text_tokenizer(num_words = max_features)
 ```
 
+Next, we need to fit the tokenizer to our text data. Note, that the `tokenizer` object is modified in place (as are models in Keras)!
+
 ```{r}
 tokenizer %>% 
   fit_text_tokenizer(text)
 ```
 
+After fitting the tokenizer, we can extract the following information: the number of documents ...
+
 ```{r}
 tokenizer$document_count
 ```
+
+... and the word-index list.
 
 ```{r}
 tokenizer$word_index %>%
   head()
 ```
+
+We now have the dictionary of integers and which words they should replace in our text. But we still don't have a list of integers for our reviews. So, now we use the
+`texts_to_sequences` functions, which will do just that! Words, which weren't among the top 1000 were excluded.
 
 ```{r}
 text_seqs <- texts_to_sequences(tokenizer, text)
@@ -88,7 +93,7 @@ text_seqs %>%
   head()
 ```
 
-https://github.com/rstudio/keras/blob/master/vignettes/examples/imdb_cnn.R
+So, there we have it! From here on out, we can simply follow the [IMDB example from the Keras documentation](https://github.com/rstudio/keras/blob/master/vignettes/examples/imdb_cnn.R):
 
 ```{r}
 # Set parameters:
@@ -101,6 +106,8 @@ hidden_dims <- 250
 epochs <- 2
 ```
 
+Because we can't directly use this list of integers in our neural network, there is still some preprocessing to do. In the IMDB example, the lists are padded so that they all have the same length. The `pad_sequences` function will return a matrix, with columns for a given maximum number of words (or the number of words in the longest sequence). Here, we have 400 columns in our matrix. Reviews with fewer words were padded with zeros at the beginning before the indices. Longer reviews are cut after 400 words.
+
 ```{r}
 x_train <- text_seqs %>%
   pad_sequences(maxlen = maxlen)
@@ -111,6 +118,39 @@ dim(x_train)
 y_train <- as.numeric(clothing_reviews$Liked) -1
 length(y_train)
 ```
+
+>You can’t feed lists of integers into a neural network. You have to turn your lists into tensors. There are two ways to do that:
+- Pad your lists so that they all have the same length, turn them into an integer tensor of shape (samples, word_indices), and then use as the first layer in your network a layer capable of handling such integer tensors (the “embedding” layer, which we’ll cover in detail later in the book).
+- One-hot-encode your lists to turn them into vectors of 0s and 1s. This would mean, for instance, turning the sequence [3, 5] into a 10,000-dimensional vector that would be all zeros except for indices 3 and 5, which would be ones. Then you could use as the first layer in your network a dense layer, capable of handling floating-point vector data.
+
+Another popular and powerful way to associate a vector with a word is the use of dense “word vectors”, also called “word embeddings”. While the vectors obtained through one-hot encoding are binary, sparse (mostly made of zeros) and very high-dimensional (same dimensionality as the number of words in the vocabulary), “word embeddings” are low-dimensional floating point vectors (i.e. “dense” vectors, as opposed to sparse vectors). Unlike word vectors obtained via one-hot encoding, word embeddings are learned from data. It is common to see word embeddings that are 256-dimensional, 512-dimensional, or 1024-dimensional when dealing with very large vocabularies. On the other hand, one-hot encoding words generally leads to vectors that are 20,000-dimensional or higher (capturing a vocabulary of 20,000 token in this case). So, word embeddings pack more information into far fewer dimensions.
+
+word embeddings vs. one hot encoding
+
+There are two ways to obtain word embeddings:
+
+Learn word embeddings jointly with the main task you care about (e.g. document classification or sentiment prediction). In this setup, you would start with random word vectors, then learn your word vectors in the same way that you learn the weights of a neural network.
+Load into your model word embeddings that were pre-computed using a different machine learning task than the one you are trying to solve. These are called “pre-trained word embeddings”.
+
+The simplest way to associate a dense vector to a word would be to pick the vector at random. The problem with this approach is that the resulting embedding space would have no structure: for instance, the words “accurate” and “exact” may end up with completely different embeddings, even though they are interchangeable in most sentences. It would be very difficult for a deep neural network to make sense of such a noisy, unstructured embedding space.
+
+To get a bit more abstract: the geometric relationships between word vectors should reflect the semantic relationships between these words. Word embeddings are meant to map human language into a geometric space. For instance, in a reasonable embedding space, we would expect synonyms to be embedded into similar word vectors, and in general we would expect the geometric distance (e.g. L2 distance) between any two word vectors to relate to the semantic distance of the associated words (words meaning very different things would be embedded to points far away from each other, while related words would be closer). Even beyond mere distance, we may want specific directions in the embedding space to be meaningful.
+
+In real-world word embedding spaces, common examples of meaningful geometric transformations are “gender vectors” and “plural vector”. For instance, by adding a “female vector” to the vector “king”, one obtain the vector “queen”. By adding a “plural vector”, one obtain “kings”. Word embedding spaces typically feature thousands of such interpretable and potentially useful vectors.
+
+Is there some “ideal” word embedding space that would perfectly map human language and could be used for any natural language processing task? Possibly, but in any case, we have yet to compute anything of the sort. Also, there isn’t such a thing as “human language”, there are many different languages and they are not isomorphic, as a language is the reflection of a specific culture and a specific context. But more pragmatically, what makes a good word embedding space depends heavily on your task: the perfect word embedding space for an English-language movie review sentiment analysis model may look very different from the perfect embedding space for an English-language legal document classification model, because the importance of certain semantic relationships varies from task to task.
+
+It’s thus reasonable to learn a new embedding space with every new task. Fortunately, backpropagation makes this easy, and Keras makes it even easier. It’s about learning the weights of a layer using layer_embedding()
+
+A layer_embedding() is best understood as a dictionary that maps integer indices (which stand for specific words) to dense vectors. It takes integers as input, it looks up these integers in an internal dictionary, and it returns the associated vectors. It’s effectively a dictionary lookup (see figure 6.4).
+
+An embedding layer takes as input a 2D tensor of integers, of shape (samples, sequence_length), where each entry is a sequence of integers. It can embed sequences of variable lengths: for instance, you could feed into the embedding layer in the previous example batches with shapes (32, 10) (batch of 32 sequences of length 10) or (64, 15) (batch of 64 sequences of length 15). All sequences in a batch must have the same length, though (because you need to pack them into a single tensor), so sequences that are shorter than others should be padded with zeros, and sequences that are longer should be truncated.
+
+This layer returns a 3D floating-point tensor, of shape (samples, sequence_length, embedding_dimensionality). Such a 3D tensor can then be processed by an RNN layer or a 1D convolution layer (both will be introduced in the following sections).
+
+When you instantiate an embedding layer, its weights (its internal dictionary of token vectors) are initially random, just as with any other layer. During training, these word vectors are gradually adjusted via backpropagation, structuring the space into something the downstream model can exploit. Once fully trained, the embedding space will show a lot of structure – a kind of structure specialized for the specific problem for which you were training your model.
+
+Let’s apply this idea to the IMDB movie-review sentiment-prediction task that you’re already familiar with. First, you’ll quickly prepare the data. You’ll restrict the movie reviews to the top 10,000 most common words (as you did the first time you worked with this dataset) and cut off the reviews after only 20 words. The network will learn 8-dimensional embeddings for each of the 10,000 words, turn the input integer sequences (2D integer tensor) into embedded sequences (3D float tensor), flatten the tensor to 2D, and train a single dense layer on top for classification.
 
 ```{r}
 #Initialize model
@@ -166,6 +206,44 @@ model %>%
 https://github.com/rstudio/keras/blob/master/vignettes/examples/imdb_cnn_lstm.R
 https://github.com/rstudio/keras/blob/master/vignettes/examples/imdb_lstm.R
 
+## Alternative preprocessing functions
+
+The above example follows the IMDB example from the Keras documentation, but there are alternative ways to preprocess your text for modeling with Keras.
+
+[one-hot-encoding](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/6.1-one-hot-encoding-of-words-or-characters.nb.html)
+
+```{r}
+one_hot_results <- texts_to_matrix(tokenizer, text, mode = "binary")
+dim(one_hot_results)
+```
+
+A variant of one-hot encoding is the so-called “one-hot hashing trick”, which can be used when the number of unique tokens in your vocabulary is too large to handle explicitly. Instead of explicitly assigning an index to each word and keeping a reference of these indices in a dictionary, one may hash words into vectors of fixed size. This is typically done with a very lightweight hashing function. The main advantage of this method is that it does away with maintaining an explicit word index, which saves memory and allows online encoding of the data (starting to generate token vectors right away, before having seen all of the available data). The one drawback of this method is that it is susceptible to “hash collisions”: two different words may end up with the same hash, and subsequently any machine learning model looking at these hashes won’t be able to tell the difference between these words. The likelihood of hash collisions decreases when the dimensionality of the hashing space is much larger than the total number of unique tokens being hashed.
+
+Word-level one-hot encoding with hashing trick (toy example):
+
+```{r}
+hashing_results <- text_hashing_trick(text[1], n = 100)
+hashing_results
+```
+
+Using pre-trained word embeddings
+Sometimes, you have so little training data available that could never use your data alone to learn an appropriate task-specific embedding of your vocabulary. What to do then?
+
+Instead of learning word embeddings jointly with the problem you want to solve, you could be loading embedding vectors from a pre-computed embedding space known to be highly structured and to exhibit useful properties – that captures generic aspects of language structure. The rationale behind using pre-trained word embeddings in natural language processing is very much the same as for using pre-trained convnets in image classification: we don’t have enough data available to learn truly powerful features on our own, but we expect the features that we need to be fairly generic, i.e. common visual features or semantic features. In this case it makes sense to reuse features learned on a different problem.
+
+Such word embeddings are generally computed using word occurrence statistics (observations about what words co-occur in sentences or documents), using a variety of techniques, some involving neural networks, others not. The idea of a dense, low-dimensional embedding space for words, computed in an unsupervised way, was initially explored by Bengio et al. in the early 2000s, but it only started really taking off in research and industry applications after the release of one of the most famous and successful word embedding scheme: the Word2Vec algorithm, developed by Mikolov at Google in 2013. Word2Vec dimensions capture specific semantic properties, e.g. gender.
+
+There are various pre-computed databases of word embeddings that can download and start using in a Keras embedding layer. Word2Vec is one of them. Another popular one is called “GloVe”, developed by Stanford researchers in 2014. It stands for “Global Vectors for Word Representation”, and it is an embedding technique based on factorizing a matrix of word co-occurrence statistics. Its developers have made available pre-computed embeddings for millions of English tokens, obtained from Wikipedia data or from Common Crawl data.
+
+Let’s take a look at how you can get started using GloVe embeddings in a Keras model. The same method will of course be valid for Word2Vec embeddings or any other word embedding database that you can download. We will also use this example to refresh the text tokenization techniques we introduced a few paragraphs ago: we will start from raw text, and work our way up.
+
+https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/6.1-using-word-embeddings.nb.html
+
+
+https://www.r-bloggers.com/word-embeddings-with-keras/
+
+> Word embedding is a method used to map words of a vocabulary to dense vectors of real numbers where semanticaly similar words are mapped to nearby points. Representing words in this vector space help algorithms achieve better performance in natural language processing tasks like syntatic parsing and sentiment analysis by grouping similar words. For example, we expect that in the embedding space “cats” and “dogs” are mapped to nearby points since they are both animals, mammals, pets, etc.
+In this tutorial we will implement the skip-gram model created by Mikolov et al in R using the keras package. The skip-gram model is a flavor of word2vec, a class of computationally-efficient predictive models for learning word embeddings from raw text. 
 ---
 
 ```{r}
