@@ -34,7 +34,7 @@ I will use the review title and text in order to classify whether or not the ite
 
 ```{r warning=FALSE}
 clothing_reviews <- read_csv("/Users/shiringlander/Documents/Github/ix_lime_etc/Womens Clothing E-Commerce Reviews.csv") %>%
-  mutate(Liked = as.factor(ifelse(Rating == 5, 1, 0)),
+  mutate(Liked = ifelse(Rating == 5, 1, 0),
          text = paste(Title, `Review Text`),
          text = gsub("NA", "", text))
 glimpse(clothing_reviews)
@@ -44,7 +44,7 @@ Whether an item was liked or not will be the response variable or label for clas
 
 ```{r}
 clothing_reviews %>%
-  ggplot(aes(x = Liked, fill = Liked)) +
+  ggplot(aes(x = factor(Liked), fill = Liked)) +
     geom_bar(alpha = 0.8) +
     guides(fill = FALSE)
 ```
@@ -77,7 +77,7 @@ After fitting the tokenizer, we can extract the following information: the numbe
 tokenizer$document_count
 ```
 
-... and the word-index list.
+... and the word-index list. Notice, that even though we set the maximum number of words to 1000, our index contains many more words. In fact, the index will keep all words in the index but when converting our reviews to vectors, the stored value `tokenizer$num_words` will be used to restrict to the most common words.
 
 ```{r}
 tokenizer$word_index %>%
@@ -97,13 +97,13 @@ So, there we have it! From here on out, we can simply follow the [IMDB example f
 
 ```{r}
 # Set parameters:
-maxlen <- 400
+maxlen <- 100
 batch_size <- 32
 embedding_dims <- 50
-filters <- 250
+filters <- 64
 kernel_size <- 3
-hidden_dims <- 250
-epochs <- 2
+hidden_dims <- 50
+epochs <- 5
 ```
 
 Because we can't directly use this list of integers in our neural network, there is still some preprocessing to do. In the IMDB example, the lists are padded so that they all have the same length. The `pad_sequences` function will return a matrix, with columns for a given maximum number of words (or the number of words in the longest sequence). Here, we have 400 columns in our matrix. Reviews with fewer words were padded with zeros at the beginning before the indices. Longer reviews are cut after 400 words.
@@ -117,15 +117,15 @@ dim(x_train)
 Our response variable will be encoded with 1s (5-star review) and 0s (not 5-star reviews). Because we have a binary outcome, we only need this one vector.
 
 ```{r}
-y_train <- as.numeric(clothing_reviews$Liked) -1
+y_train <- clothing_reviews$Liked
 length(y_train)
 ```
 
 ## Embeddings
 
-These padded word index matrices now need to be converted into a way that gives information about the features (i.e. words) in a way that can be used for learning. Currently, the state-of-the-art for text models are word embeddings or word vectors, which are learned from the text data. Word embeddings encode the context of words in relatively few dimensions while maximizing the information that is contained in these vectors. Basically, word embeddings are values that are learned by a neural net.
+These padded word index matrices now need to be converted into something that gives information about the features (i.e. words) in a way that can be used for learning. Currently, the state-of-the-art for text models are word embeddings or word vectors, which are learned from the text data. Word embeddings encode the context of words in relatively few dimensions while maximizing the information that is contained in these vectors. Basically, word embeddings are values that are learned by a neural net.
 
-
+In our model below, we want to learn the word embeddings from our (padded) word vectors and directly use these learned embeddings for classification 
 
 
 
@@ -252,6 +252,53 @@ In this tutorial we will implement the skip-gram model created by Mikolov et al 
 >You can’t feed lists of integers into a neural network. You have to turn your lists into tensors. There are two ways to do that:
 - Pad your lists so that they all have the same length, turn them into an integer tensor of shape (samples, word_indices), and then use as the first layer in your network a layer capable of handling such integer tensors (the “embedding” layer, which we’ll cover in detail later in the book).
 - One-hot-encode your lists to turn them into vectors of 0s and 1s. This would mean, for instance, turning the sequence [3, 5] into a 10,000-dimensional vector that would be all zeros except for indices 3 and 5, which would be ones. Then you could use as the first layer in your network a dense layer, capable of handling floating-point vector data.
+
+## Use pretrained GLove embeddings (separate post)
+
+https://keras.rstudio.com/articles/examples/pretrained_word_embeddings.html
+
+```{r}
+library(keras)
+
+GLOVE_DIR <- '/Users/shiringlander/Documents/Github/Data/glove.6B'
+TEXT_DATA_DIR <- '/Users/shiringlander/Documents/Github/Data/20_newsgroup'
+MAX_SEQUENCE_LENGTH <- 1000
+MAX_NUM_WORDS <- 20000
+EMBEDDING_DIM <- 100
+VALIDATION_SPLIT <- 0.2
+
+# download data if necessary
+download_data <- function(data_dir, url_path, data_file) {
+  if (!dir.exists(data_dir)) {
+    download.file(paste0(url_path, data_file), data_file, mode = "wb")
+    if (tools::file_ext(data_file) == "zip")
+      unzip(data_file, exdir = tools::file_path_sans_ext(data_file))
+    else
+      untar(data_file)
+    unlink(data_file)
+  }
+}
+download_data(GLOVE_DIR, 'http://nlp.stanford.edu/data/', 'glove.6B.zip')
+download_data(TEXT_DATA_DIR, "http://www.cs.cmu.edu/afs/cs.cmu.edu/project/theo-20/www/data/", "news20.tar.gz")
+
+# first, build index mapping words in the embeddings set
+# to their embedding vector
+
+cat('Indexing word vectors.\n')
+
+embeddings_index <- new.env(parent = emptyenv())
+lines <- readLines(file.path(GLOVE_DIR, 'glove.6B.100d.txt'))
+for (line in lines) {
+  values <- strsplit(line, ' ', fixed = TRUE)[[1]]
+  word <- values[[1]]
+  coefs <- as.numeric(values[-1])
+  embeddings_index[[word]] <- coefs
+}
+
+cat(sprintf('Found %s word vectors.\n', length(embeddings_index)))
+
+```
+
 
 ---
 
