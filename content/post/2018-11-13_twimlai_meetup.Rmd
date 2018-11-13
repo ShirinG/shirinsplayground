@@ -1,0 +1,22 @@
+---
+title: "TWIMLAI European Online Meetup about Trust in Predictions of ML Models"
+draft: false
+author: Shirin Glander
+date: '2018-11-13'
+categories: ["meetup"]
+tags: ["meetup"]
+thumbnailImagePosition: left
+thumbnailImage: https://twimlai.com/files/2017/09/TWiML_banner_wide.png
+metaAlignment: center
+coverMeta: out
+slug: twimlai_meetup
+---
+
+At the upcoming [This week in machine learning and AI European online Meetup](https://twimlai.com/meetups/trust-in-predictions-of-ml-models/), I'll be presenting and leading a discussion about the [Anchors paper](https://homes.cs.washington.edu/~marcotcr/aaai18.pdf), the next generation of machine learning interpretability tools. Come and join the fun! :-)
+
+- Date:	Tuesday 4th December 2018
+- Time:	19:00 PM CET/CEST
+
+Join: https://twimlai.com/meetups/trust-in-predictions-of-ml-models/
+
+![](https://twimlai.com/files/2017/09/TWiML_banner_wide.png)

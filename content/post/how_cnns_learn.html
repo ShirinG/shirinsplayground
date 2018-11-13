@@ -1,0 +1,84 @@
+---
+title: "How do Convolutional Neural Nets (CNNs) learn? + Keras example"
+draft: true
+---
+
+
+
+<p><a href="https://www.kaggle.com/sachinpatel21/az-handwritten-alphabets-in-csv-format/kernels" class="uri">https://www.kaggle.com/sachinpatel21/az-handwritten-alphabets-in-csv-format/kernels</a></p>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## ── Attaching packages ────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ✔ ggplot2 3.1.0     ✔ purrr   0.2.5
+## ✔ tibble  1.4.2     ✔ dplyr   0.7.7
+## ✔ tidyr   0.8.2     ✔ stringr 1.3.1
+## ✔ readr   1.1.1     ✔ forcats 0.3.0</code></pre>
+<pre><code>## ── Conflicts ───────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>library(keras)</code></pre>
+<pre class="r"><code>dataset &lt;- read_delim(&quot;/Users/shiringlander/Documents/Github/Data/A_Z Handwritten Data.csv&quot;,
+                      delim = &quot;,&quot;, col_names = FALSE)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   .default = col_integer()
+## )</code></pre>
+<pre><code>## See spec(...) for full column specifications.</code></pre>
+<pre class="r"><code>#head(dataset)</code></pre>
+<pre class="r"><code>X &lt;- as.matrix(dataset[, 1:784])
+Y &lt;- as.matrix(dataset[, 785])</code></pre>
+<pre class="r"><code>summary(Y)</code></pre>
+<pre><code>##       X785        
+##  Min.   :0.0e+00  
+##  1st Qu.:0.0e+00  
+##  Median :0.0e+00  
+##  Mean   :1.1e-05  
+##  3rd Qu.:0.0e+00  
+##  Max.   :4.0e+00</code></pre>
+<pre><code>import numpy as np
+
+dataset = np.loadtxt(&#39;/Users/shiringlander/Documents/Github/Data/A_Z Handwritten Data.csv&#39;, delimiter=&#39;,&#39;)
+
+# split into input and output variables
+X = dataset[:,0:784]
+Y = dataset[:,0]
+Y.summary()</code></pre>
+<pre><code># load dataset
+dataset = np.loadtxt(&#39;your_downloaded_csv.csv&#39;, delimiter=&#39;,&#39;)
+
+# split into input and output variables
+X = dataset[:,0:784]
+Y = dataset[:,0]
+
+# split the data into training (50%) and testing (50%)
+(X_train, X_test, Y_train, Y_test) = train_test_split(X, Y, test_size=0.50, random_state=seed)
+
+X_train = X_train.reshape(X_train.shape[0], 28, 28, 1).astype(&#39;float32&#39;)
+X_test = X_test.reshape(X_test.shape[0], 28, 28, 1).astype(&#39;float32&#39;)
+
+X_train = X_train / 255
+X_test = X_test / 255
+
+# one hot encode outputs
+Y_train = np_utils.to_categorical(Y_train)
+Y_test = np_utils.to_categorical(Y_test)
+
+num_classes = Y_test.shape[1]
+
+
+# create model
+model = Sequential()
+model.add(Conv2D(32, (5, 5), input_shape=(28, 28, 1), activation=&#39;relu&#39;))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Dropout(0.2))
+model.add(Flatten())
+model.add(Dense(128, activation=&#39;relu&#39;))
+model.add(Dense(num_classes, activation=&#39;softmax&#39;))
+
+# Compile model
+model.compile(loss=&#39;categorical_crossentropy&#39;, optimizer=&#39;adam&#39;, metrics=[&#39;accuracy&#39;])
+model.fit(X_train, Y_train, validation_data=(X_test, Y_test), epochs=10, batch_size=200, verbose=2)
+
+# Final evaluation of the model
+scores = model.evaluate(X_test,Y_test, verbose=0)
+print(&quot;CNN Error: %.2f%%&quot; % (100-scores[1]*100))
+</code></pre>
