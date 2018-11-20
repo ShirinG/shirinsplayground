@@ -50,9 +50,15 @@ implementieren können.
 
 - On November 7th, Uwe Friedrichsen and I gave our talk from the [JAX conference 2018: Deep Learning - a Primer](https://shirinsplayground.netlify.com/2018/01/jax2018/) again at the [W-JAX](https://shirinsplayground.netlify.com/2018/01/slides_demystifying_dl/) in Munich.
 
+<br>
+
 - While in London for the [M-cubed conference](https://shirinsplayground.netlify.com/2018/10/mcubed_slides/), I also gave a talk at the R-Ladies London Meetup about [Interpretable Deep Learning with R, Keras and LIME](https://shirinsplayground.netlify.com/2018/09/rladieslondontalk/).
 
+<br>
+
 - From 15th to 17th October 2018, I was in London for the [M-cubed conference](https://www.mcubed.london/) with my talk about [Explaining complex machine learning models with LIME](https://shirinsplayground.netlify.com/2018/10/mcubed_slides/).
+
+<br>
 
 - Together with a colleague from codecentric, I gave a workshop about ["END-2-END VOM KERAS TENSORFLOW-MODELL ZUR PRODUKTION"](https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953) at the data2day conference, which was being held from September 25th - 27th 2018 in Heidelberg, Germany (German language):
 https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953
