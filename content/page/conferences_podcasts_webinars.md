@@ -18,7 +18,7 @@ Here, you can find a list of all the talks I gave at conferences, webinars, podc
 > I offer a workshop on deep learning with Keras and TensorFlow using R.
 Date and place depend on who and how many people are interested, so please contact me either directly or via the workshop page: https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/ (the description is in German but I also offer to give the workshop in English).
 
-[The next dates for the workshop are: 8th & 9th of November 2018 in Munich](https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/)
+[The next dates for the workshop are: tbd](https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/)
 
 <br>
 
@@ -28,7 +28,7 @@ Date and place depend on who and how many people are interested, so please conta
 Keras ist eine High-Level-Schnittstelle, die ein schnelles, einfaches und flexibles Prototypisieren von Neuronalen Netzwerken mit TensorFlow ermöglicht. Zusammen mit Luigi lassen sich beliebig komplexe Datenverarbeitungs-Workflows in Python erstellen. Das führt dazu, dass auch Nicht-Entwickler den End-2-End-Workflow des Keras-TensorFlow-Modells zur Produktionsreife leicht
 implementieren können.
 
-[Next dates: 22. to 23.  November 2018 - Berlin](https://www.codecentric.de/schulung/end-2-end-vom-keras-tensorflow-modell-zur-produktion/)
+[Next dates: tbd](https://www.codecentric.de/schulung/end-2-end-vom-keras-tensorflow-modell-zur-produktion/)
 
 <br>
 
@@ -40,17 +40,19 @@ implementieren können.
 
 ## Upcoming talks, webinars, podcasts, etc.
 
-- From 15th to 17th October 2018, I'll be in London for the [M-cubed conference](https://www.mcubed.london/). My talk about [Explaining complex machine learning models with LIME](https://www.mcubed.london/sessions/explaining-complex-machine-learning-models-lime/) will be on October 16
-
-- While in London for the [M-cubed conference](https://www.mcubed.london/sessions/explaining-complex-machine-learning-models-lime/), I’ll also be giving a talk at the R-Ladies London Meetup on Tuesday, October 16th, about [Interpretable Deep Learning with R, Keras and LIME](https://shirinsplayground.netlify.com/2018/09/rladieslondontalk/).
-
-- On November 7th, I'll be giving my talk from the [JAX conference 2018: Deep Learning - a Primer](https://shirinsplayground.netlify.com/2018/01/jax2018/) again at the [W-JAX](https://jax.de/big-data-machine-learning/deep-learning-a-primer/) in Munich.
+- At the upcoming [This week in machine learning and AI European online Meetup](https://shirinsplayground.netlify.com/2018/11/twimlai_meetup/), I’ll be presenting and leading a discussion about the Anchors paper, the next generation of machine learning interpretability tools. Date: Tuesday 4th December 2018 Time: 19:00 PM CET/CEST
 
 ---
 
 <br>
 
 ## Past talks, webinars, podcasts, etc.
+
+- On November 7th, Uwe Friedrichsen and I gave our talk from the [JAX conference 2018: Deep Learning - a Primer](https://shirinsplayground.netlify.com/2018/01/jax2018/) again at the [W-JAX](https://shirinsplayground.netlify.com/2018/01/slides_demystifying_dl/) in Munich.
+
+- While in London for the [M-cubed conference](https://shirinsplayground.netlify.com/2018/10/mcubed_slides/), I also gave a talk at the R-Ladies London Meetup about [Interpretable Deep Learning with R, Keras and LIME](https://shirinsplayground.netlify.com/2018/09/rladieslondontalk/).
+
+- From 15th to 17th October 2018, I was in London for the [M-cubed conference](https://www.mcubed.london/) with my talk about [Explaining complex machine learning models with LIME](https://shirinsplayground.netlify.com/2018/10/mcubed_slides/).
 
 - Together with a colleague from codecentric, I gave a workshop about ["END-2-END VOM KERAS TENSORFLOW-MODELL ZUR PRODUKTION"](https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953) at the data2day conference, which was being held from September 25th - 27th 2018 in Heidelberg, Germany (German language):
 https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953

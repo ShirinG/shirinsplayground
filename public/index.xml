@@ -850,12 +850,23 @@ explanation &lt;- lime::explain(x = Xtest[1:9, ],
 ]]></content>
   </entry>
   <entry>
-    <title type="html"><![CDATA[Slides from my talk about Demystifying Big Data and Deep Learning (and how to get started)]]></title>
+    <title type="html"><![CDATA[Slides from my talks about Demystifying Big Data and Deep Learning (and how to get started)]]></title>
     <link href="/2018/11/slides_demystifying_dl/"/>
     <id>/2018/11/slides_demystifying_dl/</id>
-    <published>2018-11-26T00:00:00+00:00</published>
-    <updated>2018-11-26T00:00:00+00:00</updated>
-    <content type="html"><![CDATA[]]></content>
+    <published>2018-11-20T00:00:00+00:00</published>
+    <updated>2018-11-20T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<p>On November 7th, Uwe Friedrichsen and I gave our talk from the <a href="https://shirinsplayground.netlify.com/2018/01/jax2018/">JAX conference 2018: Deep Learning - a Primer</a> again at the <a href="https://jax.de/">W-JAX</a> in Munich.</p>
+<p>A few weeks before, I gave a similar talk at two events about <strong>Demystifying Big Data and Deep Learning (and how to get started)</strong>.</p>
+<p>Here are the two very similar presentations from these talks:</p>
+<div style="position:relative;width:100%;height:0;padding-bottom:calc(56.25% + 40px);">
+<iframe allowfullscreen style="position:absolute; width: 100%; height: 100%;border: solid 1px #333;" src="https://www.beautiful.ai/player/-LPyhpe7dzEbn6g70401/Techlabs?utm_source=beautiful_player&amp;utm_medium=embed&amp;utm_campaign=-LPyhpe7dzEbn6g70401">
+</iframe>
+</div>
+<div style="position:relative;width:100%;height:0;padding-bottom:calc(56.25% + 40px);">
+<iframe allowfullscreen style="position:absolute; width: 100%; height: 100%;border: solid 1px #333;" src="https://www.beautiful.ai/player/-LO3lXsKLz_Q6RXNT-Ed/W-JAX2018?utm_source=beautiful_player&amp;utm_medium=embed&amp;utm_campaign=-LO3lXsKLz_Q6RXNT-Ed">
+</iframe>
+</div>
+]]></content>
   </entry>
   <entry>
     <title type="html"><![CDATA[How to use cross-validation with the image data generator in Keras and TensorFlow]]></title>
@@ -7345,7 +7356,7 @@ cooc_books_5_graph &lt;- as_tbl_graph(coocs_book_5, directed = FALSE) %&gt;%
 Date and place depend on who and how many people are interested, so please contact me either directly or via the workshop page: <a href="https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/">https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/</a> (the description is in German but I also offer to give the workshop in English).</p>
 </blockquote>
 
-<p><a href="https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/">The next dates for the workshop are: 8th &amp; 9th of November 2018 in Munich</a></p>
+<p><a href="https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/">The next dates for the workshop are: tbd</a></p>
 
 <p><br></p>
 
@@ -7359,7 +7370,7 @@ Keras ist eine High-Level-Schnittstelle, die ein schnelles, einfaches und flexib
 implementieren können.</p>
 </blockquote>
 
-<p><a href="https://www.codecentric.de/schulung/end-2-end-vom-keras-tensorflow-modell-zur-produktion/">Next dates: 22. to 23.  November 2018 - Berlin</a></p>
+<p><a href="https://www.codecentric.de/schulung/end-2-end-vom-keras-tensorflow-modell-zur-produktion/">Next dates: tbd</a></p>
 
 <p><br></p>
 
@@ -7374,11 +7385,7 @@ implementieren können.</p>
 <h2 id="upcoming-talks-webinars-podcasts-etc">Upcoming talks, webinars, podcasts, etc.</h2>
 
 <ul>
-<li><p>From 15th to 17th October 2018, I&rsquo;ll be in London for the <a href="https://www.mcubed.london/">M-cubed conference</a>. My talk about <a href="https://www.mcubed.london/sessions/explaining-complex-machine-learning-models-lime/">Explaining complex machine learning models with LIME</a> will be on October 16</p></li>
-
-<li><p>While in London for the <a href="https://www.mcubed.london/sessions/explaining-complex-machine-learning-models-lime/">M-cubed conference</a>, I’ll also be giving a talk at the R-Ladies London Meetup on Tuesday, October 16th, about <a href="https://shirinsplayground.netlify.com/2018/09/rladieslondontalk/">Interpretable Deep Learning with R, Keras and LIME</a>.</p></li>
-
-<li><p>On November 7th, I&rsquo;ll be giving my talk from the <a href="https://shirinsplayground.netlify.com/2018/01/jax2018/">JAX conference 2018: Deep Learning - a Primer</a> again at the <a href="https://jax.de/big-data-machine-learning/deep-learning-a-primer/">W-JAX</a> in Munich.</p></li>
+<li>At the upcoming <a href="https://shirinsplayground.netlify.com/2018/11/twimlai_meetup/">This week in machine learning and AI European online Meetup</a>, I’ll be presenting and leading a discussion about the Anchors paper, the next generation of machine learning interpretability tools. Date: Tuesday 4th December 2018 Time: 19:00 PM CET/CEST</li>
 </ul>
 
 <hr />
@@ -7388,8 +7395,14 @@ implementieren können.</p>
 <h2 id="past-talks-webinars-podcasts-etc">Past talks, webinars, podcasts, etc.</h2>
 
 <ul>
-<li>Together with a colleague from codecentric, I gave a workshop about <a href="https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953">&ldquo;END-2-END VOM KERAS TENSORFLOW-MODELL ZUR PRODUKTION&rdquo;</a> at the data2day conference, which was being held from September 25th - 27th 2018 in Heidelberg, Germany (German language):
-<a href="https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953">https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953</a></li>
+<li><p>On November 7th, Uwe Friedrichsen and I gave our talk from the <a href="https://shirinsplayground.netlify.com/2018/01/jax2018/">JAX conference 2018: Deep Learning - a Primer</a> again at the <a href="https://shirinsplayground.netlify.com/2018/01/slides_demystifying_dl/">W-JAX</a> in Munich.</p></li>
+
+<li><p>While in London for the <a href="https://shirinsplayground.netlify.com/2018/10/mcubed_slides/">M-cubed conference</a>, I also gave a talk at the R-Ladies London Meetup about <a href="https://shirinsplayground.netlify.com/2018/09/rladieslondontalk/">Interpretable Deep Learning with R, Keras and LIME</a>.</p></li>
+
+<li><p>From 15th to 17th October 2018, I was in London for the <a href="https://www.mcubed.london/">M-cubed conference</a> with my talk about <a href="https://shirinsplayground.netlify.com/2018/10/mcubed_slides/">Explaining complex machine learning models with LIME</a>.</p></li>
+
+<li><p>Together with a colleague from codecentric, I gave a workshop about <a href="https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953">&ldquo;END-2-END VOM KERAS TENSORFLOW-MODELL ZUR PRODUKTION&rdquo;</a> at the data2day conference, which was being held from September 25th - 27th 2018 in Heidelberg, Germany (German language):
+<a href="https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953">https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953</a></p></li>
 </ul>
 
 <p><br></p>

@@ -1,14 +1,23 @@
 ---
-title: "Slides from my talk about Demystifying Big Data and Deep Learning (and how to get started)"
-draft: true
+title: "Slides from my talks about Demystifying Big Data and Deep Learning (and how to get started)"
+draft: false
 author: Shirin Glander
-date: '2018-11-26'
-categories: ["R"]
-tags: 
+date: '2018-11-20'
+categories: ["slides"]
+tags: ["slides", "deep learning"]
 thumbnailImagePosition: left
-thumbnailImage: 
+thumbnailImage: https://firebasestorage.googleapis.com/v0/b/firebase-beautifulslides.appspot.com/o/thumbnails%2F-LOMwBwrpgTZBZlAiGBY.jpg?alt=media&token=2a26c064-b3a6-4a38-8f41-adfa3c41263a
 metaAlignment: center
 coverMeta: out
 slug: slides_demystifying_dl
 ---
 
+On November 7th, Uwe Friedrichsen and I gave our talk from the [JAX conference 2018: Deep Learning - a Primer](https://shirinsplayground.netlify.com/2018/01/jax2018/) again at the [W-JAX](https://jax.de/) in Munich.
+
+A few weeks before, I gave a similar talk at two events about **Demystifying Big Data and Deep Learning (and how to get started)**.
+
+Here are the two very similar presentations from these talks:
+
+<div style="position:relative;width:100%;height:0;padding-bottom:calc(56.25% + 40px);"><iframe allowfullscreen style="position:absolute; width: 100%; height: 100%;border: solid 1px #333;" src="https://www.beautiful.ai/player/-LPyhpe7dzEbn6g70401/Techlabs?utm_source=beautiful_player&utm_medium=embed&utm_campaign=-LPyhpe7dzEbn6g70401"></iframe></div>
+
+<div style="position:relative;width:100%;height:0;padding-bottom:calc(56.25% + 40px);"><iframe allowfullscreen style="position:absolute; width: 100%; height: 100%;border: solid 1px #333;" src="https://www.beautiful.ai/player/-LO3lXsKLz_Q6RXNT-Ed/W-JAX2018?utm_source=beautiful_player&utm_medium=embed&utm_campaign=-LO3lXsKLz_Q6RXNT-Ed"></iframe></div>
