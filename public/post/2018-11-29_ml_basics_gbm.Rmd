@@ -1,0 +1,66 @@
+---
+title: "Machine Learning Basics - Gradient Boosting & XGBoost"
+draft: true
+author: Shirin Glander
+date: '2018-11-29'
+categories: ["machine learning", "gradient boosting", "xgboost"]
+tags: ["machine learning", "gradient boosting", "xgboost", "codecentric.ai"]
+thumbnailImagePosition: left
+thumbnailImage: https://shiring.github.io/netlify_images/...
+metaAlignment: center
+coverMeta: out
+slug: ml_basics_gbm
+---
+
+In a recent video, I covered [Random Forests](https://shirinsplayground.netlify.com/2018/10/ml_basics_rf/) and [Neural Nets](https://shirinsplayground.netlify.com/2018/11/neural_nets_explained/) as part of the [codecentric.ai Bootcamp](https://bootcamp.codecentric.ai/).
+
+You can find the [video on YouTube](https://youtu.be/..) and the [slides on slides.com](https://codecentric.slides.com/shiringlander/...). Both are again in German with code examples in Python.
+
+But below, you find the English version of the content, plus code examples in R. :-)
+
+---
+
+![](https://shiring.github.io/netlify_images/....png)
+
+Like Random Forest, Gradient Boosting is another technique for performing supervised machine learning tasks, like classification and regression. The implementations of this technique can have different names, most commonly you encounter Gradient Boosting machines (abbreviated GBM) and XGBoost. XGBoost is particularly popular because it has been the winning algorithm in a number of recent [Kaggle](kaggle.com) competitions.
+
+Similar to Random Forests, Gradient Boosting is an ensemble learner. This means it will create a final model based on a collection of individual models. The predictive power of these individual models is weak and prone to overfitting but combining many such weak models in an ensemble will lead to an overall much improved result. In Gradient Boosting machines, the most common type of weak model used is decision trees - another parallel to Random Forests.
+
+## How Gradient Boosting works
+
+Let's look at how Gradient Boosting works. Most of the magic is described in the name: "Gradient" plus "Boosting". 
+
+**Boosting** builds models from individual so called "weak learners" in an iterative way. In the [Random Forests](https://shirinsplayground.netlify.com/2018/10/ml_basics_rf/) part, I had already discussed the differences between **Bagging** and **Boosting** as tree ensemble methods. In boosting, the individual models are not built on completely random subsets of data and features but sequentially by putting more weight on instances with wrong predictions and high errors. The general idea behind this is that instances, which are hard to predict correctly ("difficult" cases) will be focussed on during learning, so that the model learns from past mistakes. When we train each ensemble on a subset of the training set, we also call this **Stochastic Gradient Boosting**, which can help improve generalizability of our model.
+
+The **gradient** is used to minimize a **loss function**, similar to how [Neural Nets](https://shirinsplayground.netlify.com/2018/11/neural_nets_explained/) utilize gradient descent to optimize ("learn") weights. In each round of training, the weak learner is built and its predictions are compared to the correct outcome that we expect. The distance between prediction and truth represents the error rate of our model. These errors can now be used to calculate the gradient. The gradient is nothing fancy, it is basically the partial derivative of our loss function - so it describes the steepness of our error function. The gradient can be used to find the direction in which to change the model parameters in order to (maximally) reduce the error in the next round of training by "descending the gradient".
+
+In Neural nets, gradient descent is used to look for the minimum of the loss function, i.e. learning the model parameters (e.g. weights) for which the prediction error is lowest in **a single model**. In Gradient Boosting we are combining the predictions of **multiple models**, so we are not optimizing the model parameters directly but the boosted model predictions. Therefore, the gradients will be added to the running training process by fitting the next tree also to these values. 
+
+Because we apply gradient descent, we will find **learning rate** (the "step size" with which we descend the gradient), **shrinkage** (reduction of the learning rate) and **loss function** as hyperparameters in Gradient Boosting models - just as with Neural Nets. 
+Other [hyperparameters](https://xgboost.readthedocs.io/en/latest/parameter.html#general-parameters) of Gradient Boosting are similar to those of Random Forests: 
+
+- the number of iterations (i.e. the number of trees to ensemble), 
+- the number of observations in each leaf, 
+- tree complexity and depth, 
+- the proportion of samples and
+- the proportion of features on which to train on.
+
+## Gradient Boosting Machines vs. XGBoost
+
+[XGBoost](https://github.com/dmlc/xgboost) stands for Extreme Gradient Boosting; it is a specific implementation of the Gradient Boosting method which uses more accurate approximations to find the best tree model. It employs a number of nifty tricks that make it exceptionally successful, particularly with structured data. The most important are 
+
+1.) computing **second-order gradients, i.e. second partial derivatives** of the loss function (similar to **Newton's method**), which provides more information about the direction of gradients and how to get to the minimum of our loss function. While regular gradient boosting uses the loss function of our base model (e.g. decision tree) as a proxy for minimizing the error of the overall model, XGBoost uses the 2nd order derivate as an approximation.
+
+2.) And advanced **regularization** (L1 & L2), which improves model generalization. 
+
+XGBoost has additional advantages: training is very fast and can be parallelized and distributed across clusters.
+
+---
+
+# Video
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/..." frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+# Slides
+
+<iframe src="//codecentric.slides.com/shiringlander/..." width="576" height="420" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>

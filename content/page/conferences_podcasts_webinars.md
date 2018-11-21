@@ -1,5 +1,5 @@
 ---
-title: "Conferences, webinars, podcasts and the likes"
+title: "Conferences, webinars, podcasts, workshops, books, articles and the likes"
 date: 2018-02-01T16:06:06+02:00
 comments:       false
 showMeta:       false
@@ -7,7 +7,7 @@ showActions:    false
 thumbnailImage: /img/Bewerbungsfoto.jpg
 ---
 
-Here, you can find a list of all the talks I gave at conferences, webinars, podcasts, workshops, and all the other places you can and could hear me talk. :-)
+Here, you can find a list of all the talks I gave at conferences, webinars, podcasts, workshops, and all the other places you can and could hear me talk. You will also find a section with magazine articles and books I've written. :-)
 
 ![](https://secure.meetupstatic.com/s/img/5455565085016210254/logo/svg/logo--script.svg)
 
@@ -33,6 +33,18 @@ implementieren können.
 <br>
 
 - [Machine Learning Basics in R](https://shirinsplayground.netlify.com/2018/06/intro_to_ml_workshop_heidelberg/)
+
+---
+
+<br>
+
+## Where you find my written word
+
+- iX special edition Machine Learning (German)
+
+- iX 12/2018 (German)
+
+- Book chapter Predictive Analytics (German)
 
 ---
 

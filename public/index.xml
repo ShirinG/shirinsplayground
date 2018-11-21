@@ -850,6 +850,57 @@ explanation &lt;- lime::explain(x = Xtest[1:9, ],
 ]]></content>
   </entry>
   <entry>
+    <title type="html"><![CDATA[Machine Learning Basics - Gradient Boosting &amp; XGBoost]]></title>
+    <link href="/2018/11/ml_basics_gbm/"/>
+    <id>/2018/11/ml_basics_gbm/</id>
+    <published>2018-11-29T00:00:00+00:00</published>
+    <updated>2018-11-29T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<p>In a recent video, I covered <a href="https://shirinsplayground.netlify.com/2018/10/ml_basics_rf/">Random Forests</a> and <a href="https://shirinsplayground.netlify.com/2018/11/neural_nets_explained/">Neural Nets</a> as part of the <a href="https://bootcamp.codecentric.ai/">codecentric.ai Bootcamp</a>.</p>
+<p>You can find the <a href="https://youtu.be/..">video on YouTube</a> and the <a href="https://codecentric.slides.com/shiringlander/...">slides on slides.com</a>. Both are again in German with code examples in Python.</p>
+<p>But below, you find the English version of the content, plus code examples in R. :-)</p>
+<hr />
+<div class="figure">
+<img src="https://shiring.github.io/netlify_images/....png" />
+
+</div>
+<p>Like Random Forest, Gradient Boosting is another technique for performing supervised machine learning tasks, like classification and regression. The implementations of this technique can have different names, most commonly you encounter Gradient Boosting machines (abbreviated GBM) and XGBoost. XGBoost is particularly popular because it has been the winning algorithm in a number of recent <a href="kaggle.com">Kaggle</a> competitions.</p>
+<p>Similar to Random Forests, Gradient Boosting is an ensemble learner. This means it will create a final model based on a collection of individual models. The predictive power of these individual models is weak and prone to overfitting but combining many such weak models in an ensemble will lead to an overall much improved result. In Gradient Boosting machines, the most common type of weak model used is decision trees - another parallel to Random Forests.</p>
+<div id="how-gradient-boosting-works" class="section level2">
+<h2>How Gradient Boosting works</h2>
+<p>Let’s look at how Gradient Boosting works. Most of the magic is described in the name: “Gradient” plus “Boosting”.</p>
+<p><strong>Boosting</strong> builds models from individual so called “weak learners” in an iterative way. In the <a href="https://shirinsplayground.netlify.com/2018/10/ml_basics_rf/">Random Forests</a> part, I had already discussed the differences between <strong>Bagging</strong> and <strong>Boosting</strong> as tree ensemble methods. In boosting, the individual models are not built on completely random subsets of data and features but sequentially by putting more weight on instances with wrong predictions and high errors. The general idea behind this is that instances, which are hard to predict correctly (“difficult” cases) will be focussed on during learning, so that the model learns from past mistakes. When we train each ensemble on a subset of the training set, we also call this <strong>Stochastic Gradient Boosting</strong>, which can help improve generalizability of our model.</p>
+<p>The <strong>gradient</strong> is used to minimize a <strong>loss function</strong>, similar to how <a href="https://shirinsplayground.netlify.com/2018/11/neural_nets_explained/">Neural Nets</a> utilize gradient descent to optimize (“learn”) weights. In each round of training, the weak learner is built and its predictions are compared to the correct outcome that we expect. The distance between prediction and truth represents the error rate of our model. These errors can now be used to calculate the gradient. The gradient is nothing fancy, it is basically the partial derivative of our loss function - so it describes the steepness of our error function. The gradient can be used to find the direction in which to change the model parameters in order to (maximally) reduce the error in the next round of training by “descending the gradient”.</p>
+<p>In Neural nets, gradient descent is used to look for the minimum of the loss function, i.e. learning the model parameters (e.g. weights) for which the prediction error is lowest in <strong>a single model</strong>. In Gradient Boosting we are combining the predictions of <strong>multiple models</strong>, so we are not optimizing the model parameters directly but the boosted model predictions. Therefore, the gradients will be added to the running training process by fitting the next tree also to these values.</p>
+<p>Because we apply gradient descent, we will find <strong>learning rate</strong> (the “step size” with which we descend the gradient), <strong>shrinkage</strong> (reduction of the learning rate) and <strong>loss function</strong> as hyperparameters in Gradient Boosting models - just as with Neural Nets. Other <a href="https://xgboost.readthedocs.io/en/latest/parameter.html#general-parameters">hyperparameters</a> of Gradient Boosting are similar to those of Random Forests:</p>
+<ul>
+<li>the number of iterations (i.e. the number of trees to ensemble),</li>
+<li>the number of observations in each leaf,</li>
+<li>tree complexity and depth,</li>
+<li>the proportion of samples and</li>
+<li>the proportion of features on which to train on.</li>
+</ul>
+</div>
+<div id="gradient-boosting-machines-vs.xgboost" class="section level2">
+<h2>Gradient Boosting Machines vs. XGBoost</h2>
+<p><a href="https://github.com/dmlc/xgboost">XGBoost</a> stands for Extreme Gradient Boosting; it is a specific implementation of the Gradient Boosting method which uses more accurate approximations to find the best tree model. It employs a number of nifty tricks that make it exceptionally successful, particularly with structured data. The most important are</p>
+<p>1.) computing <strong>second-order gradients, i.e. second partial derivatives</strong> of the loss function (similar to <strong>Newton’s method</strong>), which provides more information about the direction of gradients and how to get to the minimum of our loss function. While regular gradient boosting uses the loss function of our base model (e.g. decision tree) as a proxy for minimizing the error of the overall model, XGBoost uses the 2nd order derivate as an approximation.</p>
+<p>2.) And advanced <strong>regularization</strong> (L1 &amp; L2), which improves model generalization.</p>
+<p>XGBoost has additional advantages: training is very fast and can be parallelized and distributed across clusters.</p>
+<hr />
+</div>
+<div id="video" class="section level1">
+<h1>Video</h1>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/..." frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+</iframe>
+</div>
+<div id="slides" class="section level1">
+<h1>Slides</h1>
+<iframe src="//codecentric.slides.com/shiringlander/..." width="576" height="420" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen>
+</iframe>
+</div>
+]]></content>
+  </entry>
+  <entry>
     <title type="html"><![CDATA[Slides from my talks about Demystifying Big Data and Deep Learning (and how to get started)]]></title>
     <link href="/2018/11/slides_demystifying_dl/"/>
     <id>/2018/11/slides_demystifying_dl/</id>
@@ -7334,14 +7385,14 @@ cooc_books_5_graph &lt;- as_tbl_graph(coocs_book_5, directed = FALSE) %&gt;%
 ]]></content>
   </entry>
   <entry>
-    <title type="html"><![CDATA[Conferences, webinars, podcasts and the likes]]></title>
+    <title type="html"><![CDATA[Conferences, webinars, podcasts, workshops, books, articles and the likes]]></title>
     <link href="/page/conferences_podcasts_webinars/"/>
     <id>/page/conferences_podcasts_webinars/</id>
     <published>2018-02-01T16:06:06+02:00</published>
     <updated>2018-02-01T16:06:06+02:00</updated>
     <content type="html"><![CDATA[
 
-<p>Here, you can find a list of all the talks I gave at conferences, webinars, podcasts, workshops, and all the other places you can and could hear me talk. :-)</p>
+<p>Here, you can find a list of all the talks I gave at conferences, webinars, podcasts, workshops, and all the other places you can and could hear me talk. You will also find a section with magazine articles and books I&rsquo;ve written. :-)</p>
 
 <p><img src="https://secure.meetupstatic.com/s/img/5455565085016210254/logo/svg/logo--script.svg" alt="" /></p>
 
@@ -7376,6 +7427,20 @@ implementieren können.</p>
 
 <ul>
 <li><a href="https://shirinsplayground.netlify.com/2018/06/intro_to_ml_workshop_heidelberg/">Machine Learning Basics in R</a></li>
+</ul>
+
+<hr />
+
+<p><br></p>
+
+<h2 id="where-you-find-my-written-word">Where you find my written word</h2>
+
+<ul>
+<li><p>iX special edition Machine Learning (German)</p></li>
+
+<li><p>iX <sup>12</sup>&frasl;<sub>2018</sub> (German)</p></li>
+
+<li><p>Book chapter Predictive Analytics (German)</p></li>
 </ul>
 
 <hr />

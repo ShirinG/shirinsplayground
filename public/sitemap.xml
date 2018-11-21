@@ -8,6 +8,11 @@
   </url>
   
   <url>
+    <loc>/2018/11/ml_basics_gbm/</loc>
+    <lastmod>2018-11-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/2018/11/slides_demystifying_dl/</loc>
     <lastmod>2018-11-20T00:00:00+00:00</lastmod>
   </url>
@@ -496,7 +501,7 @@
   
   <url>
     <loc>/tags/codecentric.ai/</loc>
-    <lastmod>2018-11-06T00:00:00+00:00</lastmod>
+    <lastmod>2018-11-29T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -646,7 +651,13 @@
   
   <url>
     <loc>/tags/gradient-boosting/</loc>
-    <lastmod>2018-06-29T00:00:00+00:00</lastmod>
+    <lastmod>2018-11-29T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/gradient-boosting/</loc>
+    <lastmod>2018-11-29T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -758,7 +769,7 @@
   
   <url>
     <loc>/categories/machine-learning/</loc>
-    <lastmod>2018-11-06T00:00:00+00:00</lastmod>
+    <lastmod>2018-11-29T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -1166,7 +1177,13 @@
   
   <url>
     <loc>/tags/xgboost/</loc>
-    <lastmod>2018-07-26T00:00:00+00:00</lastmod>
+    <lastmod>2018-11-29T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/xgboost/</loc>
+    <lastmod>2018-11-29T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
