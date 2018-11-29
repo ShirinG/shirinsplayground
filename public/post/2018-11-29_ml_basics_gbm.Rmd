@@ -1,12 +1,12 @@
 ---
 title: "Machine Learning Basics - Gradient Boosting & XGBoost"
-draft: true
+draft: false
 author: Shirin Glander
 date: '2018-11-29'
 categories: ["machine learning", "gradient boosting", "xgboost"]
 tags: ["machine learning", "gradient boosting", "xgboost", "codecentric.ai"]
 thumbnailImagePosition: left
-thumbnailImage: https://shiring.github.io/netlify_images/...
+thumbnailImage: https://shiring.github.io/netlify_images/gbm_yt_video.png
 metaAlignment: center
 coverMeta: out
 slug: ml_basics_gbm
@@ -14,23 +14,23 @@ slug: ml_basics_gbm
 
 In a recent video, I covered [Random Forests](https://shirinsplayground.netlify.com/2018/10/ml_basics_rf/) and [Neural Nets](https://shirinsplayground.netlify.com/2018/11/neural_nets_explained/) as part of the [codecentric.ai Bootcamp](https://bootcamp.codecentric.ai/).
 
-You can find the [video on YouTube](https://youtu.be/..) and the [slides on slides.com](https://codecentric.slides.com/shiringlander/...). Both are again in German with code examples in Python.
+You can find the [video on YouTube](https://youtu.be/xXZeVKP74ao) and the [slides on slides.com](https://codecentric.slides.com/shiringlander/ml_basics_gbm). Both are again in German with code examples in Python.
 
-But below, you find the English version of the content, plus code examples in R. :-)
+But below, you find the English version of the content, plus code examples in R for `caret`, `xgboost` and `h2o`. :-)
 
 ---
 
-![](https://shiring.github.io/netlify_images/....png)
+![](https://shiring.github.io/netlify_images/gbm_yt_video.png)
 
 Like Random Forest, Gradient Boosting is another technique for performing supervised machine learning tasks, like classification and regression. The implementations of this technique can have different names, most commonly you encounter Gradient Boosting machines (abbreviated GBM) and XGBoost. XGBoost is particularly popular because it has been the winning algorithm in a number of recent [Kaggle](kaggle.com) competitions.
 
-Similar to Random Forests, Gradient Boosting is an ensemble learner. This means it will create a final model based on a collection of individual models. The predictive power of these individual models is weak and prone to overfitting but combining many such weak models in an ensemble will lead to an overall much improved result. In Gradient Boosting machines, the most common type of weak model used is decision trees - another parallel to Random Forests.
+Similar to Random Forests, Gradient Boosting is an **ensemble learner**. This means it will create a final model based on a collection of individual models. The predictive power of these individual models is weak and prone to overfitting but combining many such weak models in an ensemble will lead to an overall much improved result. In Gradient Boosting machines, the most common type of weak model used is decision trees - another parallel to Random Forests.
 
 ## How Gradient Boosting works
 
 Let's look at how Gradient Boosting works. Most of the magic is described in the name: "Gradient" plus "Boosting". 
 
-**Boosting** builds models from individual so called "weak learners" in an iterative way. In the [Random Forests](https://shirinsplayground.netlify.com/2018/10/ml_basics_rf/) part, I had already discussed the differences between **Bagging** and **Boosting** as tree ensemble methods. In boosting, the individual models are not built on completely random subsets of data and features but sequentially by putting more weight on instances with wrong predictions and high errors. The general idea behind this is that instances, which are hard to predict correctly ("difficult" cases) will be focussed on during learning, so that the model learns from past mistakes. When we train each ensemble on a subset of the training set, we also call this **Stochastic Gradient Boosting**, which can help improve generalizability of our model.
+**Boosting** builds models from individual so called "weak learners" in an iterative way. In the [Random Forests](https://shirinsplayground.netlify.com/2018/10/ml_basics_rf/) part, I had already discussed the differences between **Bagging** and **Boosting** as tree ensemble methods. In boosting, the individual models are not built on completely random subsets of data and features but sequentially by putting more weight on instances with wrong predictions and high errors. The general idea behind this is that instances, which are hard to predict correctly ("difficult" cases) will be focused on during learning, so that the model learns from past mistakes. When we train each ensemble on a subset of the training set, we also call this **Stochastic Gradient Boosting**, which can help improve generalizability of our model.
 
 The **gradient** is used to minimize a **loss function**, similar to how [Neural Nets](https://shirinsplayground.netlify.com/2018/11/neural_nets_explained/) utilize gradient descent to optimize ("learn") weights. In each round of training, the weak learner is built and its predictions are compared to the correct outcome that we expect. The distance between prediction and truth represents the error rate of our model. These errors can now be used to calculate the gradient. The gradient is nothing fancy, it is basically the partial derivative of our loss function - so it describes the steepness of our error function. The gradient can be used to find the direction in which to change the model parameters in order to (maximally) reduce the error in the next round of training by "descending the gradient".
 
@@ -49,18 +49,238 @@ Other [hyperparameters](https://xgboost.readthedocs.io/en/latest/parameter.html#
 
 [XGBoost](https://github.com/dmlc/xgboost) stands for Extreme Gradient Boosting; it is a specific implementation of the Gradient Boosting method which uses more accurate approximations to find the best tree model. It employs a number of nifty tricks that make it exceptionally successful, particularly with structured data. The most important are 
 
-1.) computing **second-order gradients, i.e. second partial derivatives** of the loss function (similar to **Newton's method**), which provides more information about the direction of gradients and how to get to the minimum of our loss function. While regular gradient boosting uses the loss function of our base model (e.g. decision tree) as a proxy for minimizing the error of the overall model, XGBoost uses the 2nd order derivate as an approximation.
+1.) computing **second-order gradients, i.e. second partial derivatives** of the loss function (similar to **Newton's method**), which provides more information about the direction of gradients and how to get to the minimum of our loss function. While regular gradient boosting uses the loss function of our base model (e.g. decision tree) as a proxy for minimizing the error of the overall model, XGBoost uses the 2nd order derivative as an approximation.
 
 2.) And advanced **regularization** (L1 & L2), which improves model generalization. 
 
-XGBoost has additional advantages: training is very fast and can be parallelized and distributed across clusters.
+XGBoost has additional advantages: training is very fast and can be parallelized / distributed across clusters.
+
+---
+
+# Code in R
+
+Here is a very quick run through how to train Gradient Boosting and XGBoost models in R with `caret`, `xgboost` and `h2o`.
+
+## Data
+
+First, data: I'll be using the `ISLR` package, which contains a number of datasets, one of them is `College`.
+
+> Statistics for a large number of US Colleges from the 1995 issue of US News and World Report.
+
+```{r warning=FALSE, message=FALSE}
+library(tidyverse)
+library(ISLR)
+
+ml_data <- College
+ml_data %>%
+  glimpse()
+```
+
+## Gradient Boosting in caret
+
+The most flexible R package for machine learning is `caret`. If you go to the [Available Models section in the online documentation](https://topepo.github.io/caret/available-models.html) and search for "Gradient Boosting", this is what you'll find:
+
+| Model | method Value | Type | Libraries | Tuning Parameters |
+| ----- | ------------ | ---- | --------- | ----------------- |
+| eXtreme Gradient Boosting | xgbDART | Classification, Regression | xgboost, plyr | nrounds, max_depth, eta, gamma, subsample, colsample_bytree, rate_drop, skip_drop, min_child_weight |
+| eXtreme Gradient Boosting | xgbLinear | Classification, Regression | xgboost | nrounds, lambda, alpha, eta |
+| eXtreme Gradient Boosting | xgbTree | Classification, Regression | xgboost, plyr | nrounds, max_depth, eta, gamma, colsample_bytree, min_child_weight, subsample |
+| Gradient Boosting Machines | gbm_h2o | Classification, Regression | h2o | ntrees, max_depth, min_rows, learn_rate, col_sample_rate |
+| Stochastic Gradient Boosting | gbm | Classification, Regression | gbm, plyr | n.trees, interaction.depth, shrinkage, n.minobsinnode |
+
+A table with the different Gradient Boosting implementations, you can use with `caret`. Here I'll show a very simple Stochastic Gradient Boosting example:
+
+```{r warning=FALSE, message=FALSE}
+library(caret)
+
+# Partition into training and test data
+set.seed(42)
+index <- createDataPartition(ml_data$Private, p = 0.7, list = FALSE)
+train_data <- ml_data[index, ]
+test_data  <- ml_data[-index, ]
+
+# Train model with preprocessing & repeated cv
+model_gbm <- caret::train(Private ~ .,
+                          data = train_data,
+                          method = "gbm",
+                          preProcess = c("scale", "center"),
+                          trControl = trainControl(method = "repeatedcv", 
+                                                  number = 5, 
+                                                  repeats = 3, 
+                                                  verboseIter = FALSE),
+                          verbose = 0)
+model_gbm
+```
+
+With `predict()`, we can use this model to make predictions on test data. Here, I'll be feeding this directly to the `confusionMatrix` function:
+
+```{r}
+caret::confusionMatrix(
+  data = predict(model_gbm, test_data),
+  reference = test_data$Private
+  )
+```
+
+## The xgboost library
+
+We can also directly work with the [xgboost](https://xgboost.readthedocs.io/en/latest/R-package/xgboostPresentation.html) package in R. It's a bit more involved but also includes advanced possibilities.
+
+The easiest way to work with `xgboost` is with the `xgboost()` function. The four most important arguments to give are
+
+- `data`: a **matrix** of the training data
+- `label`: the response variable in numeric format (for binary classification 0 & 1)
+- `objective`: defines what learning task should be trained, here binary classification
+- `nrounds`: number of boosting iterations
+
+```{r warning=FALSE, message=FALSE}
+library(xgboost)
+
+xgboost_model <- xgboost(data = as.matrix(train_data[, -1]), 
+                         label = as.numeric(train_data$Private)-1,
+                         max_depth = 3, 
+                         objective = "binary:logistic", 
+                         nrounds = 10, 
+                         verbose = FALSE,
+                         prediction = TRUE)
+xgboost_model
+```
+
+We can again use `predict()`; because here, we will get prediction probabilities, we need to convert them into labels to compare them with the true class:
+
+```{r}
+predict(xgboost_model, 
+        as.matrix(test_data[, -1])) %>%
+  as.tibble() %>%
+  mutate(prediction = round(value),
+         label = as.numeric(test_data$Private)-1) %>%
+  count(prediction, label)
+```
+
+Alternatively, we can use `xgb.train()`, which is more flexible and allows for more advanced settings compared to `xgboost()`.
+Here, we first need to create a so called DMatrix from the data. Optionally, we can define a watchlist for evaluating model performance during the training run. I am also creating a parameter set as a list object, which I am feeding to the `params` argument.
+
+```{r}
+dtrain <- xgb.DMatrix(as.matrix(train_data[, -1]), 
+                      label = as.numeric(train_data$Private)-1)
+dtest <- xgb.DMatrix(as.matrix(test_data[, -1]), 
+                      label = as.numeric(test_data$Private)-1)
+
+params <- list(max_depth = 3, 
+               objective = "binary:logistic",
+               silent = 0)
+
+watchlist <- list(train = dtrain, eval = dtest)
+
+bst_model <- xgb.train(params = params, 
+                       data = dtrain, 
+                       nrounds = 10, 
+                       watchlist = watchlist,
+                       verbose = FALSE,
+                       prediction = TRUE)
+bst_model
+```
+
+The model can be used just as before:
+
+```{r}
+predict(bst_model, 
+        as.matrix(test_data[, -1])) %>%
+  as.tibble() %>%
+  mutate(prediction = round(value),
+         label = as.numeric(test_data$Private)-1) %>%
+  count(prediction, label)
+```
+
+The third option, is to use `xgb.cv`, which will perform cross-validation. This function does not return a model, it is rather used to find optimal hyperparameters, particularly for `nrounds`.
+
+```{r}
+cv_model <- xgb.cv(params = params,
+                   data = dtrain, 
+                   nrounds = 100, 
+                   watchlist = watchlist,
+                   nfold = 5,
+                   verbose = FALSE,
+                   prediction = TRUE) # prediction of cv folds
+```
+
+Here, we can see after how many rounds, we achieved the smallest test error:
+
+```{r}
+cv_model$evaluation_log %>%
+  filter(test_error_mean == min(test_error_mean))
+```
+
+## H2O
+
+H2O is another popular package for machine learning in R. We will first set up the session and create training and test data:
+
+```{r warning=FALSE, message=FALSE}
+library(h2o)
+h2o.init(nthreads = -1)
+h2o.no_progress()
+
+data_hf <- as.h2o(ml_data)
+
+splits <- h2o.splitFrame(data_hf, 
+                         ratios = 0.75, 
+                         seed = 1)
+
+train <- splits[[1]]
+test <- splits[[2]]
+
+response <- "Private"
+features <- setdiff(colnames(train), response)
+```
+
+### Gradient Boosting
+
+The [Gradient Boosting](http://docs.h2o.ai/h2o/latest-stable/h2o-docs/data-science/gbm.html) implementation can be used as such:
+
+```{r}
+h2o_gbm <- h2o.gbm(x = features, 
+                   y = response, 
+                   training_frame = train,
+                   nfolds = 3) # cross-validation
+h2o_gbm
+```
+
+We can calculate performance on test data with `h2o.performance()`:
+
+```{r}
+h2o.performance(h2o_gbm, test)
+```
+
+### XGBoost
+
+Alternatively, we can also use the [XGBoost](http://docs.h2o.ai/h2o/latest-stable/h2o-docs/data-science/xgboost.html) implementation of H2O:
+
+```{r}
+h2o_xgb <- h2o.xgboost(x = features, 
+                       y = response, 
+                       training_frame = train,
+                       nfolds = 3)
+h2o_xgb
+```
+
+And use it just as before:
+
+```{r}
+h2o.performance(h2o_xgb, test)
+```
 
 ---
 
 # Video
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/..." frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/xXZeVKP74ao" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 # Slides
 
-<iframe src="//codecentric.slides.com/shiringlander/..." width="576" height="420" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+<iframe src="//codecentric.slides.com/shiringlander/ml_basics_gbm/embed" width="576" height="420" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+---
+
+```{r}
+sessionInfo()
+```
+

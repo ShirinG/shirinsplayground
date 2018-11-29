@@ -32,11 +32,11 @@
     
     <meta name="description" content="In a recent video, I covered Random Forests and Neural Nets as part of the codecentric.ai Bootcamp.
 You can find the video on YouTube and the slides on slides.com. Both are again in German with code examples in Python.
-But below, you find the English version of the content, plus code examples in R. :-)
+But below, you find the English version of the content, plus code examples in R for caret, xgboost and h2o. :-)
  Like Random Forest, Gradient Boosting is another technique for performing supervised machine learning tasks, like classification and regression.">
     <meta property="og:description" content="In a recent video, I covered Random Forests and Neural Nets as part of the codecentric.ai Bootcamp.
 You can find the video on YouTube and the slides on slides.com. Both are again in German with code examples in Python.
-But below, you find the English version of the content, plus code examples in R. :-)
+But below, you find the English version of the content, plus code examples in R for caret, xgboost and h2o. :-)
  Like Random Forest, Gradient Boosting is another technique for performing supervised machine learning tasks, like classification and regression.">
     <meta property="og:type" content="blog">
     <meta property="og:title" content="Machine Learning Basics - Gradient Boosting &amp; XGBoost">
@@ -46,7 +46,7 @@ But below, you find the English version of the content, plus code examples in R.
     <meta name="twitter:title" content="Shirin&#39;s playgRound">
     <meta name="twitter:description" content="In a recent video, I covered Random Forests and Neural Nets as part of the codecentric.ai Bootcamp.
 You can find the video on YouTube and the slides on slides.com. Both are again in German with code examples in Python.
-But below, you find the English version of the content, plus code examples in R. :-)
+But below, you find the English version of the content, plus code examples in R for caret, xgboost and h2o. :-)
  Like Random Forest, Gradient Boosting is another technique for performing supervised machine learning tasks, like classification and regression.">
     
       <meta name="twitter:creator" content="@ShirinGlander">
@@ -61,7 +61,7 @@ But below, you find the English version of the content, plus code examples in R.
     
 
     
-      <meta property="og:image" content="https://shiring.github.io/netlify_images/...">
+      <meta property="og:image" content="https://shiring.github.io/netlify_images/gbm_yt_video.png">
     
     
     
@@ -361,19 +361,19 @@ ga('send', 'pageview');
           <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
               <p>In a recent video, I covered <a href="https://shirinsplayground.netlify.com/2018/10/ml_basics_rf/">Random Forests</a> and <a href="https://shirinsplayground.netlify.com/2018/11/neural_nets_explained/">Neural Nets</a> as part of the <a href="https://bootcamp.codecentric.ai/">codecentric.ai Bootcamp</a>.</p>
-<p>You can find the <a href="https://youtu.be/..">video on YouTube</a> and the <a href="https://codecentric.slides.com/shiringlander/...">slides on slides.com</a>. Both are again in German with code examples in Python.</p>
-<p>But below, you find the English version of the content, plus code examples in R. :-)</p>
+<p>You can find the <a href="https://youtu.be/xXZeVKP74ao">video on YouTube</a> and the <a href="https://codecentric.slides.com/shiringlander/ml_basics_gbm">slides on slides.com</a>. Both are again in German with code examples in Python.</p>
+<p>But below, you find the English version of the content, plus code examples in R for <code>caret</code>, <code>xgboost</code> and <code>h2o</code>. :-)</p>
 <hr />
 <div class="figure">
-<img src="https://shiring.github.io/netlify_images/....png" />
+<img src="https://shiring.github.io/netlify_images/gbm_yt_video.png" />
 
 </div>
 <p>Like Random Forest, Gradient Boosting is another technique for performing supervised machine learning tasks, like classification and regression. The implementations of this technique can have different names, most commonly you encounter Gradient Boosting machines (abbreviated GBM) and XGBoost. XGBoost is particularly popular because it has been the winning algorithm in a number of recent <a href="kaggle.com">Kaggle</a> competitions.</p>
-<p>Similar to Random Forests, Gradient Boosting is an ensemble learner. This means it will create a final model based on a collection of individual models. The predictive power of these individual models is weak and prone to overfitting but combining many such weak models in an ensemble will lead to an overall much improved result. In Gradient Boosting machines, the most common type of weak model used is decision trees - another parallel to Random Forests.</p>
+<p>Similar to Random Forests, Gradient Boosting is an <strong>ensemble learner</strong>. This means it will create a final model based on a collection of individual models. The predictive power of these individual models is weak and prone to overfitting but combining many such weak models in an ensemble will lead to an overall much improved result. In Gradient Boosting machines, the most common type of weak model used is decision trees - another parallel to Random Forests.</p>
 <div id="how-gradient-boosting-works" class="section level2">
 <h2>How Gradient Boosting works</h2>
 <p>Let’s look at how Gradient Boosting works. Most of the magic is described in the name: “Gradient” plus “Boosting”.</p>
-<p><strong>Boosting</strong> builds models from individual so called “weak learners” in an iterative way. In the <a href="https://shirinsplayground.netlify.com/2018/10/ml_basics_rf/">Random Forests</a> part, I had already discussed the differences between <strong>Bagging</strong> and <strong>Boosting</strong> as tree ensemble methods. In boosting, the individual models are not built on completely random subsets of data and features but sequentially by putting more weight on instances with wrong predictions and high errors. The general idea behind this is that instances, which are hard to predict correctly (“difficult” cases) will be focussed on during learning, so that the model learns from past mistakes. When we train each ensemble on a subset of the training set, we also call this <strong>Stochastic Gradient Boosting</strong>, which can help improve generalizability of our model.</p>
+<p><strong>Boosting</strong> builds models from individual so called “weak learners” in an iterative way. In the <a href="https://shirinsplayground.netlify.com/2018/10/ml_basics_rf/">Random Forests</a> part, I had already discussed the differences between <strong>Bagging</strong> and <strong>Boosting</strong> as tree ensemble methods. In boosting, the individual models are not built on completely random subsets of data and features but sequentially by putting more weight on instances with wrong predictions and high errors. The general idea behind this is that instances, which are hard to predict correctly (“difficult” cases) will be focused on during learning, so that the model learns from past mistakes. When we train each ensemble on a subset of the training set, we also call this <strong>Stochastic Gradient Boosting</strong>, which can help improve generalizability of our model.</p>
 <p>The <strong>gradient</strong> is used to minimize a <strong>loss function</strong>, similar to how <a href="https://shirinsplayground.netlify.com/2018/11/neural_nets_explained/">Neural Nets</a> utilize gradient descent to optimize (“learn”) weights. In each round of training, the weak learner is built and its predictions are compared to the correct outcome that we expect. The distance between prediction and truth represents the error rate of our model. These errors can now be used to calculate the gradient. The gradient is nothing fancy, it is basically the partial derivative of our loss function - so it describes the steepness of our error function. The gradient can be used to find the direction in which to change the model parameters in order to (maximally) reduce the error in the next round of training by “descending the gradient”.</p>
 <p>In Neural nets, gradient descent is used to look for the minimum of the loss function, i.e. learning the model parameters (e.g. weights) for which the prediction error is lowest in <strong>a single model</strong>. In Gradient Boosting we are combining the predictions of <strong>multiple models</strong>, so we are not optimizing the model parameters directly but the boosted model predictions. Therefore, the gradients will be added to the running training process by fitting the next tree also to these values.</p>
 <p>Because we apply gradient descent, we will find <strong>learning rate</strong> (the “step size” with which we descend the gradient), <strong>shrinkage</strong> (reduction of the learning rate) and <strong>loss function</strong> as hyperparameters in Gradient Boosting models - just as with Neural Nets. Other <a href="https://xgboost.readthedocs.io/en/latest/parameter.html#general-parameters">hyperparameters</a> of Gradient Boosting are similar to those of Random Forests:</p>
@@ -388,20 +388,727 @@ ga('send', 'pageview');
 <div id="gradient-boosting-machines-vs.xgboost" class="section level2">
 <h2>Gradient Boosting Machines vs. XGBoost</h2>
 <p><a href="https://github.com/dmlc/xgboost">XGBoost</a> stands for Extreme Gradient Boosting; it is a specific implementation of the Gradient Boosting method which uses more accurate approximations to find the best tree model. It employs a number of nifty tricks that make it exceptionally successful, particularly with structured data. The most important are</p>
-<p>1.) computing <strong>second-order gradients, i.e. second partial derivatives</strong> of the loss function (similar to <strong>Newton’s method</strong>), which provides more information about the direction of gradients and how to get to the minimum of our loss function. While regular gradient boosting uses the loss function of our base model (e.g. decision tree) as a proxy for minimizing the error of the overall model, XGBoost uses the 2nd order derivate as an approximation.</p>
+<p>1.) computing <strong>second-order gradients, i.e. second partial derivatives</strong> of the loss function (similar to <strong>Newton’s method</strong>), which provides more information about the direction of gradients and how to get to the minimum of our loss function. While regular gradient boosting uses the loss function of our base model (e.g. decision tree) as a proxy for minimizing the error of the overall model, XGBoost uses the 2nd order derivative as an approximation.</p>
 <p>2.) And advanced <strong>regularization</strong> (L1 &amp; L2), which improves model generalization.</p>
-<p>XGBoost has additional advantages: training is very fast and can be parallelized and distributed across clusters.</p>
+<p>XGBoost has additional advantages: training is very fast and can be parallelized / distributed across clusters.</p>
 <hr />
+</div>
+<div id="code-in-r" class="section level1">
+<h1>Code in R</h1>
+<p>Here is a very quick run through how to train Gradient Boosting and XGBoost models in R with <code>caret</code>, <code>xgboost</code> and <code>h2o</code>.</p>
+<div id="data" class="section level2">
+<h2>Data</h2>
+<p>First, data: I’ll be using the <code>ISLR</code> package, which contains a number of datasets, one of them is <code>College</code>.</p>
+<blockquote>
+<p>Statistics for a large number of US Colleges from the 1995 issue of US News and World Report.</p>
+</blockquote>
+<pre class="r"><code>library(tidyverse)
+library(ISLR)
+
+ml_data &lt;- College
+ml_data %&gt;%
+  glimpse()</code></pre>
+<pre><code>## Observations: 777
+## Variables: 18
+## $ Private     &lt;fct&gt; Yes, Yes, Yes, Yes, Yes, Yes, Yes, Yes, Yes, Yes, ...
+## $ Apps        &lt;dbl&gt; 1660, 2186, 1428, 417, 193, 587, 353, 1899, 1038, ...
+## $ Accept      &lt;dbl&gt; 1232, 1924, 1097, 349, 146, 479, 340, 1720, 839, 4...
+## $ Enroll      &lt;dbl&gt; 721, 512, 336, 137, 55, 158, 103, 489, 227, 172, 4...
+## $ Top10perc   &lt;dbl&gt; 23, 16, 22, 60, 16, 38, 17, 37, 30, 21, 37, 44, 38...
+## $ Top25perc   &lt;dbl&gt; 52, 29, 50, 89, 44, 62, 45, 68, 63, 44, 75, 77, 64...
+## $ F.Undergrad &lt;dbl&gt; 2885, 2683, 1036, 510, 249, 678, 416, 1594, 973, 7...
+## $ P.Undergrad &lt;dbl&gt; 537, 1227, 99, 63, 869, 41, 230, 32, 306, 78, 110,...
+## $ Outstate    &lt;dbl&gt; 7440, 12280, 11250, 12960, 7560, 13500, 13290, 138...
+## $ Room.Board  &lt;dbl&gt; 3300, 6450, 3750, 5450, 4120, 3335, 5720, 4826, 44...
+## $ Books       &lt;dbl&gt; 450, 750, 400, 450, 800, 500, 500, 450, 300, 660, ...
+## $ Personal    &lt;dbl&gt; 2200, 1500, 1165, 875, 1500, 675, 1500, 850, 500, ...
+## $ PhD         &lt;dbl&gt; 70, 29, 53, 92, 76, 67, 90, 89, 79, 40, 82, 73, 60...
+## $ Terminal    &lt;dbl&gt; 78, 30, 66, 97, 72, 73, 93, 100, 84, 41, 88, 91, 8...
+## $ S.F.Ratio   &lt;dbl&gt; 18.1, 12.2, 12.9, 7.7, 11.9, 9.4, 11.5, 13.7, 11.3...
+## $ perc.alumni &lt;dbl&gt; 12, 16, 30, 37, 2, 11, 26, 37, 23, 15, 31, 41, 21,...
+## $ Expend      &lt;dbl&gt; 7041, 10527, 8735, 19016, 10922, 9727, 8861, 11487...
+## $ Grad.Rate   &lt;dbl&gt; 60, 56, 54, 59, 15, 55, 63, 73, 80, 52, 73, 76, 74...</code></pre>
+</div>
+<div id="gradient-boosting-in-caret" class="section level2">
+<h2>Gradient Boosting in caret</h2>
+<p>The most flexible R package for machine learning is <code>caret</code>. If you go to the <a href="https://topepo.github.io/caret/available-models.html">Available Models section in the online documentation</a> and search for “Gradient Boosting”, this is what you’ll find:</p>
+<table style="width:72%;">
+<colgroup>
+<col width="8%" />
+<col width="18%" />
+<col width="6%" />
+<col width="13%" />
+<col width="25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Model</th>
+<th>method Value</th>
+<th>Type</th>
+<th>Libraries</th>
+<th>Tuning Parameters</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>eXtreme Gradient Boosting</td>
+<td>xgbDART</td>
+<td>Classification, Regression</td>
+<td>xgboost, plyr</td>
+<td>nrounds, max_depth, eta, gamma, subsample, colsample_bytree, rate_drop, skip_drop, min_child_weight</td>
+</tr>
+<tr class="even">
+<td>eXtreme Gradient Boosting</td>
+<td>xgbLinear</td>
+<td>Classification, Regression</td>
+<td>xgboost</td>
+<td>nrounds, lambda, alpha, eta</td>
+</tr>
+<tr class="odd">
+<td>eXtreme Gradient Boosting</td>
+<td>xgbTree</td>
+<td>Classification, Regression</td>
+<td>xgboost, plyr</td>
+<td>nrounds, max_depth, eta, gamma, colsample_bytree, min_child_weight, subsample</td>
+</tr>
+<tr class="even">
+<td>Gradient Boosting Machines</td>
+<td>gbm_h2o</td>
+<td>Classification, Regression</td>
+<td>h2o</td>
+<td>ntrees, max_depth, min_rows, learn_rate, col_sample_rate</td>
+</tr>
+<tr class="odd">
+<td>Stochastic Gradient Boosting</td>
+<td>gbm</td>
+<td>Classification, Regression</td>
+<td>gbm, plyr</td>
+<td>n.trees, interaction.depth, shrinkage, n.minobsinnode</td>
+</tr>
+</tbody>
+</table>
+<p>A table with the different Gradient Boosting implementations, you can use with <code>caret</code>. Here I’ll show a very simple Stochastic Gradient Boosting example:</p>
+<pre class="r"><code>library(caret)
+
+# Partition into training and test data
+set.seed(42)
+index &lt;- createDataPartition(ml_data$Private, p = 0.7, list = FALSE)
+train_data &lt;- ml_data[index, ]
+test_data  &lt;- ml_data[-index, ]
+
+# Train model with preprocessing &amp; repeated cv
+model_gbm &lt;- caret::train(Private ~ .,
+                          data = train_data,
+                          method = &quot;gbm&quot;,
+                          preProcess = c(&quot;scale&quot;, &quot;center&quot;),
+                          trControl = trainControl(method = &quot;repeatedcv&quot;, 
+                                                  number = 5, 
+                                                  repeats = 3, 
+                                                  verboseIter = FALSE),
+                          verbose = 0)
+model_gbm</code></pre>
+<pre><code>## Stochastic Gradient Boosting 
+## 
+## 545 samples
+##  17 predictor
+##   2 classes: &#39;No&#39;, &#39;Yes&#39; 
+## 
+## Pre-processing: scaled (17), centered (17) 
+## Resampling: Cross-Validated (5 fold, repeated 3 times) 
+## Summary of sample sizes: 437, 436, 435, 436, 436, 436, ... 
+## Resampling results across tuning parameters:
+## 
+##   interaction.depth  n.trees  Accuracy   Kappa    
+##   1                   50      0.9217830  0.7940197
+##   1                  100      0.9327980  0.8264864
+##   1                  150      0.9370795  0.8389860
+##   2                   50      0.9352501  0.8321982
+##   2                  100      0.9358337  0.8356107
+##   2                  150      0.9333816  0.8301596
+##   3                   50      0.9364511  0.8357210
+##   3                  100      0.9400927  0.8463975
+##   3                  150      0.9346048  0.8330068
+## 
+## Tuning parameter &#39;shrinkage&#39; was held constant at a value of 0.1
+## 
+## Tuning parameter &#39;n.minobsinnode&#39; was held constant at a value of 10
+## Accuracy was used to select the optimal model using the largest value.
+## The final values used for the model were n.trees = 100,
+##  interaction.depth = 3, shrinkage = 0.1 and n.minobsinnode = 10.</code></pre>
+<p>With <code>predict()</code>, we can use this model to make predictions on test data. Here, I’ll be feeding this directly to the <code>confusionMatrix</code> function:</p>
+<pre class="r"><code>caret::confusionMatrix(
+  data = predict(model_gbm, test_data),
+  reference = test_data$Private
+  )</code></pre>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction  No Yes
+##        No   57   6
+##        Yes   6 163
+##                                          
+##                Accuracy : 0.9483         
+##                  95% CI : (0.9114, 0.973)
+##     No Information Rate : 0.7284         
+##     P-Value [Acc &gt; NIR] : &lt;2e-16         
+##                                          
+##                   Kappa : 0.8693         
+##  Mcnemar&#39;s Test P-Value : 1              
+##                                          
+##             Sensitivity : 0.9048         
+##             Specificity : 0.9645         
+##          Pos Pred Value : 0.9048         
+##          Neg Pred Value : 0.9645         
+##              Prevalence : 0.2716         
+##          Detection Rate : 0.2457         
+##    Detection Prevalence : 0.2716         
+##       Balanced Accuracy : 0.9346         
+##                                          
+##        &#39;Positive&#39; Class : No             
+## </code></pre>
+</div>
+<div id="the-xgboost-library" class="section level2">
+<h2>The xgboost library</h2>
+<p>We can also directly work with the <a href="https://xgboost.readthedocs.io/en/latest/R-package/xgboostPresentation.html">xgboost</a> package in R. It’s a bit more involved but also includes advanced possibilities.</p>
+<p>The easiest way to work with <code>xgboost</code> is with the <code>xgboost()</code> function. The four most important arguments to give are</p>
+<ul>
+<li><code>data</code>: a <strong>matrix</strong> of the training data</li>
+<li><code>label</code>: the response variable in numeric format (for binary classification 0 &amp; 1)</li>
+<li><code>objective</code>: defines what learning task should be trained, here binary classification</li>
+<li><code>nrounds</code>: number of boosting iterations</li>
+</ul>
+<pre class="r"><code>library(xgboost)
+
+xgboost_model &lt;- xgboost(data = as.matrix(train_data[, -1]), 
+                         label = as.numeric(train_data$Private)-1,
+                         max_depth = 3, 
+                         objective = &quot;binary:logistic&quot;, 
+                         nrounds = 10, 
+                         verbose = FALSE,
+                         prediction = TRUE)
+xgboost_model</code></pre>
+<pre><code>## ##### xgb.Booster
+## raw: 6.7 Kb 
+## call:
+##   xgb.train(params = params, data = dtrain, nrounds = nrounds, 
+##     watchlist = watchlist, verbose = verbose, print_every_n = print_every_n, 
+##     early_stopping_rounds = early_stopping_rounds, maximize = maximize, 
+##     save_period = save_period, save_name = save_name, xgb_model = xgb_model, 
+##     callbacks = callbacks, max_depth = 3, objective = &quot;binary:logistic&quot;, 
+##     prediction = TRUE)
+## params (as set within xgb.train):
+##   max_depth = &quot;3&quot;, objective = &quot;binary:logistic&quot;, prediction = &quot;TRUE&quot;, silent = &quot;1&quot;
+## xgb.attributes:
+##   niter
+## callbacks:
+##   cb.evaluation.log()
+## # of features: 17 
+## niter: 10
+## nfeatures : 17 
+## evaluation_log:
+##     iter train_error
+##        1    0.064220
+##        2    0.051376
+## ---                 
+##        9    0.036697
+##       10    0.033028</code></pre>
+<p>We can again use <code>predict()</code>; because here, we will get prediction probabilities, we need to convert them into labels to compare them with the true class:</p>
+<pre class="r"><code>predict(xgboost_model, 
+        as.matrix(test_data[, -1])) %&gt;%
+  as.tibble() %&gt;%
+  mutate(prediction = round(value),
+         label = as.numeric(test_data$Private)-1) %&gt;%
+  count(prediction, label)</code></pre>
+<pre><code>## # A tibble: 4 x 3
+##   prediction label     n
+##        &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
+## 1          0     0    56
+## 2          0     1     6
+## 3          1     0     7
+## 4          1     1   163</code></pre>
+<p>Alternatively, we can use <code>xgb.train()</code>, which is more flexible and allows for more advanced settings compared to <code>xgboost()</code>. Here, we first need to create a so called DMatrix from the data. Optionally, we can define a watchlist for evaluating model performance during the training run. I am also creating a parameter set as a list object, which I am feeding to the <code>params</code> argument.</p>
+<pre class="r"><code>dtrain &lt;- xgb.DMatrix(as.matrix(train_data[, -1]), 
+                      label = as.numeric(train_data$Private)-1)
+dtest &lt;- xgb.DMatrix(as.matrix(test_data[, -1]), 
+                      label = as.numeric(test_data$Private)-1)
+
+params &lt;- list(max_depth = 3, 
+               objective = &quot;binary:logistic&quot;,
+               silent = 0)
+
+watchlist &lt;- list(train = dtrain, eval = dtest)
+
+bst_model &lt;- xgb.train(params = params, 
+                       data = dtrain, 
+                       nrounds = 10, 
+                       watchlist = watchlist,
+                       verbose = FALSE,
+                       prediction = TRUE)
+bst_model</code></pre>
+<pre><code>## ##### xgb.Booster
+## raw: 6.7 Kb 
+## call:
+##   xgb.train(params = params, data = dtrain, nrounds = 10, watchlist = watchlist, 
+##     verbose = FALSE, prediction = TRUE)
+## params (as set within xgb.train):
+##   max_depth = &quot;3&quot;, objective = &quot;binary:logistic&quot;, silent = &quot;0&quot;, prediction = &quot;TRUE&quot;, silent = &quot;1&quot;
+## xgb.attributes:
+##   niter
+## callbacks:
+##   cb.evaluation.log()
+## # of features: 17 
+## niter: 10
+## nfeatures : 17 
+## evaluation_log:
+##     iter train_error eval_error
+##        1    0.064220   0.099138
+##        2    0.051376   0.077586
+## ---                            
+##        9    0.036697   0.060345
+##       10    0.033028   0.056034</code></pre>
+<p>The model can be used just as before:</p>
+<pre class="r"><code>predict(bst_model, 
+        as.matrix(test_data[, -1])) %&gt;%
+  as.tibble() %&gt;%
+  mutate(prediction = round(value),
+         label = as.numeric(test_data$Private)-1) %&gt;%
+  count(prediction, label)</code></pre>
+<pre><code>## # A tibble: 4 x 3
+##   prediction label     n
+##        &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
+## 1          0     0    56
+## 2          0     1     6
+## 3          1     0     7
+## 4          1     1   163</code></pre>
+<p>The third option, is to use <code>xgb.cv</code>, which will perform cross-validation. This function does not return a model, it is rather used to find optimal hyperparameters, particularly for <code>nrounds</code>.</p>
+<pre class="r"><code>cv_model &lt;- xgb.cv(params = params,
+                   data = dtrain, 
+                   nrounds = 100, 
+                   watchlist = watchlist,
+                   nfold = 5,
+                   verbose = FALSE,
+                   prediction = TRUE) # prediction of cv folds</code></pre>
+<p>Here, we can see after how many rounds, we achieved the smallest test error:</p>
+<pre class="r"><code>cv_model$evaluation_log %&gt;%
+  filter(test_error_mean == min(test_error_mean))</code></pre>
+<pre><code>##   iter train_error_mean train_error_std test_error_mean test_error_std
+## 1   17        0.0082568     0.002338999       0.0550458     0.01160461
+## 2   25        0.0018350     0.001716352       0.0550458     0.01004998
+## 3   29        0.0009176     0.001123826       0.0550458     0.01421269
+## 4   32        0.0009176     0.001123826       0.0550458     0.01535140
+## 5   33        0.0004588     0.000917600       0.0550458     0.01535140
+## 6   80        0.0000000     0.000000000       0.0550458     0.01004998</code></pre>
+</div>
+<div id="h2o" class="section level2">
+<h2>H2O</h2>
+<p>H2O is another popular package for machine learning in R. We will first set up the session and create training and test data:</p>
+<pre class="r"><code>library(h2o)
+h2o.init(nthreads = -1)</code></pre>
+<pre><code>##  Connection successful!
+## 
+## R is connected to the H2O cluster: 
+##     H2O cluster uptime:         1 hours 40 minutes 
+##     H2O cluster timezone:       Europe/Berlin 
+##     H2O data parsing timezone:  UTC 
+##     H2O cluster version:        3.20.0.8 
+##     H2O cluster version age:    2 months and 7 days  
+##     H2O cluster name:           H2O_started_from_R_shiringlander_lci733 
+##     H2O cluster total nodes:    1 
+##     H2O cluster total memory:   3.27 GB 
+##     H2O cluster total cores:    8 
+##     H2O cluster allowed cores:  8 
+##     H2O cluster healthy:        TRUE 
+##     H2O Connection ip:          localhost 
+##     H2O Connection port:        54321 
+##     H2O Connection proxy:       NA 
+##     H2O Internal Security:      FALSE 
+##     H2O API Extensions:         XGBoost, Algos, AutoML, Core V3, Core V4 
+##     R Version:                  R version 3.5.1 (2018-07-02)</code></pre>
+<pre class="r"><code>h2o.no_progress()
+
+data_hf &lt;- as.h2o(ml_data)
+
+splits &lt;- h2o.splitFrame(data_hf, 
+                         ratios = 0.75, 
+                         seed = 1)
+
+train &lt;- splits[[1]]
+test &lt;- splits[[2]]
+
+response &lt;- &quot;Private&quot;
+features &lt;- setdiff(colnames(train), response)</code></pre>
+<div id="gradient-boosting" class="section level3">
+<h3>Gradient Boosting</h3>
+<p>The <a href="http://docs.h2o.ai/h2o/latest-stable/h2o-docs/data-science/gbm.html">Gradient Boosting</a> implementation can be used as such:</p>
+<pre class="r"><code>h2o_gbm &lt;- h2o.gbm(x = features, 
+                   y = response, 
+                   training_frame = train,
+                   nfolds = 3) # cross-validation
+h2o_gbm</code></pre>
+<pre><code>## Model Details:
+## ==============
+## 
+## H2OBinomialModel: gbm
+## Model ID:  GBM_model_R_1543499512871_1089 
+## Model Summary: 
+##   number_of_trees number_of_internal_trees model_size_in_bytes min_depth
+## 1              50                       50               12999         5
+##   max_depth mean_depth min_leaves max_leaves mean_leaves
+## 1         5    5.00000          8         21    15.74000
+## 
+## 
+## H2OBinomialMetrics: gbm
+## ** Reported on training data. **
+## 
+## MSE:  0.00244139
+## RMSE:  0.04941043
+## LogLoss:  0.02582422
+## Mean Per-Class Error:  0
+## AUC:  1
+## Gini:  1
+## 
+## Confusion Matrix (vertical: actual; across: predicted) for F1-optimal threshold:
+##         No Yes    Error    Rate
+## No     160   0 0.000000  =0/160
+## Yes      0 419 0.000000  =0/419
+## Totals 160 419 0.000000  =0/579
+## 
+## Maximum Metrics: Maximum metrics at their respective thresholds
+##                         metric threshold    value idx
+## 1                       max f1  0.671121 1.000000 246
+## 2                       max f2  0.671121 1.000000 246
+## 3                 max f0point5  0.671121 1.000000 246
+## 4                 max accuracy  0.671121 1.000000 246
+## 5                max precision  0.996764 1.000000   0
+## 6                   max recall  0.671121 1.000000 246
+## 7              max specificity  0.996764 1.000000   0
+## 8             max absolute_mcc  0.671121 1.000000 246
+## 9   max min_per_class_accuracy  0.671121 1.000000 246
+## 10 max mean_per_class_accuracy  0.671121 1.000000 246
+## 
+## Gains/Lift Table: Extract with `h2o.gainsLift(&lt;model&gt;, &lt;data&gt;)` or `h2o.gainsLift(&lt;model&gt;, valid=&lt;T/F&gt;, xval=&lt;T/F&gt;)`
+## 
+## H2OBinomialMetrics: gbm
+## ** Reported on cross-validation data. **
+## ** 3-fold cross-validation on training data (Metrics computed for combined holdout predictions) **
+## 
+## MSE:  0.06426899
+## RMSE:  0.2535133
+## LogLoss:  0.2357082
+## Mean Per-Class Error:  0.1116498
+## AUC:  0.9615155
+## Gini:  0.923031
+## 
+## Confusion Matrix (vertical: actual; across: predicted) for F1-optimal threshold:
+##         No Yes    Error     Rate
+## No     130  30 0.187500  =30/160
+## Yes     15 404 0.035800  =15/419
+## Totals 145 434 0.077720  =45/579
+## 
+## Maximum Metrics: Maximum metrics at their respective thresholds
+##                         metric threshold    value idx
+## 1                       max f1  0.336780 0.947245 258
+## 2                       max f2  0.142377 0.969029 279
+## 3                 max f0point5  0.969141 0.948787 183
+## 4                 max accuracy  0.336780 0.922280 258
+## 5                max precision  0.997535 1.000000   0
+## 6                   max recall  0.006451 1.000000 395
+## 7              max specificity  0.997535 1.000000   0
+## 8             max absolute_mcc  0.336780 0.801663 258
+## 9   max min_per_class_accuracy  0.850693 0.899761 217
+## 10 max mean_per_class_accuracy  0.821579 0.901529 222
+## 
+## Gains/Lift Table: Extract with `h2o.gainsLift(&lt;model&gt;, &lt;data&gt;)` or `h2o.gainsLift(&lt;model&gt;, valid=&lt;T/F&gt;, xval=&lt;T/F&gt;)`
+## Cross-Validation Metrics Summary: 
+##                                mean           sd  cv_1_valid cv_2_valid
+## accuracy                  0.9260663  0.007598659   0.9395604 0.92537314
+## auc                      0.96213776 0.0049389955   0.9631732  0.9531126
+## err                     0.073933706  0.007598659  0.06043956 0.07462686
+## err_count                 14.333333    1.7638342        11.0       15.0
+## f0point5                   0.936689  0.012146793  0.95665175 0.93869734
+## f1                        0.9500624 0.0054923273   0.9588015  0.9514563
+## f2                       0.96403253 0.0016410206    0.960961 0.96456695
+## lift_top_group            1.3837996   0.03568878   1.3684211  1.3311259
+## logloss                  0.23523612  0.008045044  0.22010882 0.24754758
+## max_per_class_error      0.19611688  0.037585203  0.12244898       0.22
+## mcc                       0.8119256  0.016788272   0.8454889  0.7943277
+## mean_per_class_accuracy  0.88879174  0.015728002   0.9199785 0.87675494
+## mean_per_class_error    0.111208245  0.015728002 0.080021486 0.12324503
+## mse                      0.06411749 0.0041141943 0.057513304  0.0631689
+## precision                 0.9280841  0.016372148  0.95522386 0.93037975
+## r2                       0.67843753  0.014658262   0.7076767 0.66197526
+## recall                    0.9737004 0.0065764696  0.96240604  0.9735099
+## rmse                     0.25295553  0.008092926  0.23981932 0.25133425
+## specificity              0.80388314  0.037585203    0.877551       0.78
+##                         cv_3_valid
+## accuracy                 0.9132653
+## auc                      0.9701275
+## err                      0.0867347
+## err_count                     17.0
+## f0point5                0.91471803
+## f1                       0.9399293
+## f2                       0.9665698
+## lift_top_group           1.4518518
+## logloss                 0.23805195
+## max_per_class_error     0.24590164
+## mcc                     0.79596025
+## mean_per_class_accuracy  0.8696418
+## mean_per_class_error    0.13035823
+## mse                     0.07167027
+## precision                0.8986486
+## r2                      0.66566056
+## recall                   0.9851852
+## rmse                    0.26771304
+## specificity             0.75409836</code></pre>
+<p>We can calculate performance on test data with <code>h2o.performance()</code>:</p>
+<pre class="r"><code>h2o.performance(h2o_gbm, test)</code></pre>
+<pre><code>## H2OBinomialMetrics: gbm
+## 
+## MSE:  0.03509102
+## RMSE:  0.187326
+## LogLoss:  0.1350709
+## Mean Per-Class Error:  0.05216017
+## AUC:  0.9770811
+## Gini:  0.9541623
+## 
+## Confusion Matrix (vertical: actual; across: predicted) for F1-optimal threshold:
+##        No Yes    Error    Rate
+## No     48   4 0.076923   =4/52
+## Yes     4 142 0.027397  =4/146
+## Totals 52 146 0.040404  =8/198
+## 
+## Maximum Metrics: Maximum metrics at their respective thresholds
+##                         metric threshold    value idx
+## 1                       max f1  0.580377 0.972603 136
+## 2                       max f2  0.214459 0.979730 146
+## 3                 max f0point5  0.907699 0.979827 127
+## 4                 max accuracy  0.580377 0.959596 136
+## 5                max precision  0.997449 1.000000   0
+## 6                   max recall  0.006710 1.000000 187
+## 7              max specificity  0.997449 1.000000   0
+## 8             max absolute_mcc  0.580377 0.895680 136
+## 9   max min_per_class_accuracy  0.821398 0.952055 131
+## 10 max mean_per_class_accuracy  0.821398 0.956797 131
+## 
+## Gains/Lift Table: Extract with `h2o.gainsLift(&lt;model&gt;, &lt;data&gt;)` or `h2o.gainsLift(&lt;model&gt;, valid=&lt;T/F&gt;, xval=&lt;T/F&gt;)`</code></pre>
+</div>
+<div id="xgboost" class="section level3">
+<h3>XGBoost</h3>
+<p>Alternatively, we can also use the <a href="http://docs.h2o.ai/h2o/latest-stable/h2o-docs/data-science/xgboost.html">XGBoost</a> implementation of H2O:</p>
+<pre class="r"><code>h2o_xgb &lt;- h2o.xgboost(x = features, 
+                       y = response, 
+                       training_frame = train,
+                       nfolds = 3)
+h2o_xgb</code></pre>
+<pre><code>## Model Details:
+## ==============
+## 
+## H2OBinomialModel: xgboost
+## Model ID:  XGBoost_model_R_1543499512871_1452 
+## Model Summary: 
+##   number_of_trees
+## 1              50
+## 
+## 
+## H2OBinomialMetrics: xgboost
+## ** Reported on training data. **
+## 
+## MSE:  0.25
+## RMSE:  0.5
+## LogLoss:  0.6931472
+## Mean Per-Class Error:  0.5
+## AUC:  0.5
+## Gini:  0
+## 
+## Confusion Matrix (vertical: actual; across: predicted) for F1-optimal threshold:
+##        No Yes    Error      Rate
+## No      0 160 1.000000  =160/160
+## Yes     0 419 0.000000    =0/419
+## Totals  0 579 0.276339  =160/579
+## 
+## Maximum Metrics: Maximum metrics at their respective thresholds
+##                         metric threshold    value idx
+## 1                       max f1  0.500000 0.839679   0
+## 2                       max f2  0.500000 0.929047   0
+## 3                 max f0point5  0.500000 0.765996   0
+## 4                 max accuracy  0.500000 0.723661   0
+## 5                max precision  0.500000 0.723661   0
+## 6                   max recall  0.500000 1.000000   0
+## 7              max specificity  0.500000 0.000000   0
+## 8             max absolute_mcc  0.500000 0.000000   0
+## 9   max min_per_class_accuracy  0.500000 0.000000   0
+## 10 max mean_per_class_accuracy  0.500000 0.500000   0
+## 
+## Gains/Lift Table: Extract with `h2o.gainsLift(&lt;model&gt;, &lt;data&gt;)` or `h2o.gainsLift(&lt;model&gt;, valid=&lt;T/F&gt;, xval=&lt;T/F&gt;)`
+## 
+## H2OBinomialMetrics: xgboost
+## ** Reported on cross-validation data. **
+## ** 3-fold cross-validation on training data (Metrics computed for combined holdout predictions) **
+## 
+## MSE:  0.25
+## RMSE:  0.5
+## LogLoss:  0.6931472
+## Mean Per-Class Error:  0.5
+## AUC:  0.5
+## Gini:  0
+## 
+## Confusion Matrix (vertical: actual; across: predicted) for F1-optimal threshold:
+##        No Yes    Error      Rate
+## No      0 160 1.000000  =160/160
+## Yes     0 419 0.000000    =0/419
+## Totals  0 579 0.276339  =160/579
+## 
+## Maximum Metrics: Maximum metrics at their respective thresholds
+##                         metric threshold    value idx
+## 1                       max f1  0.500000 0.839679   0
+## 2                       max f2  0.500000 0.929047   0
+## 3                 max f0point5  0.500000 0.765996   0
+## 4                 max accuracy  0.500000 0.723661   0
+## 5                max precision  0.500000 0.723661   0
+## 6                   max recall  0.500000 1.000000   0
+## 7              max specificity  0.500000 0.000000   0
+## 8             max absolute_mcc  0.500000 0.000000   0
+## 9   max min_per_class_accuracy  0.500000 0.000000   0
+## 10 max mean_per_class_accuracy  0.500000 0.500000   0
+## 
+## Gains/Lift Table: Extract with `h2o.gainsLift(&lt;model&gt;, &lt;data&gt;)` or `h2o.gainsLift(&lt;model&gt;, valid=&lt;T/F&gt;, xval=&lt;T/F&gt;)`
+## Cross-Validation Metrics Summary: 
+##                                mean            sd  cv_1_valid cv_2_valid
+## accuracy                  0.7205768    0.03529982  0.65217394  0.7699115
+## auc                             0.5           0.0         0.5        0.5
+## err                       0.2794232    0.03529982   0.3478261  0.2300885
+## err_count                 53.333332     5.8118653        64.0       52.0
+## f0point5                  0.7627531    0.03186105   0.7009346  0.8070501
+## f1                        0.8366046   0.024239227   0.7894737       0.87
+## f2                        0.9271485   0.012073953  0.90361446  0.9436009
+## lift_top_group                  1.0           0.0         1.0        1.0
+## logloss                   0.6931472 3.7007435E-17   0.6931472  0.6931472
+## max_per_class_error             1.0           0.0         1.0        1.0
+## mcc                             0.0           NaN         NaN        NaN
+## mean_per_class_accuracy         0.5           0.0         0.5        0.5
+## mean_per_class_error            0.5           0.0         0.5        0.5
+## mse                            0.25           0.0        0.25       0.25
+## precision                 0.7205768    0.03529982  0.65217394  0.7699115
+## r2                      -0.27052057   0.090317816 -0.10208333 -0.4112511
+## recall                          1.0           0.0         1.0        1.0
+## rmse                            0.5           0.0         0.5        0.5
+## specificity                     0.0           0.0         0.0        0.0
+##                          cv_3_valid
+## accuracy                 0.73964494
+## auc                             0.5
+## err                      0.26035503
+## err_count                      44.0
+## f0point5                  0.7802746
+## f1                        0.8503401
+## f2                        0.9342302
+## lift_top_group                  1.0
+## logloss                   0.6931472
+## max_per_class_error             1.0
+## mcc                             NaN
+## mean_per_class_accuracy         0.5
+## mean_per_class_error            0.5
+## mse                            0.25
+## precision                0.73964494
+## r2                      -0.29822728
+## recall                          1.0
+## rmse                            0.5
+## specificity                     0.0</code></pre>
+<p>And use it just as before:</p>
+<pre class="r"><code>h2o.performance(h2o_xgb, test)</code></pre>
+<pre><code>## H2OBinomialMetrics: xgboost
+## 
+## MSE:  0.25
+## RMSE:  0.5
+## LogLoss:  0.6931472
+## Mean Per-Class Error:  0.5
+## AUC:  0.5
+## Gini:  0
+## 
+## Confusion Matrix (vertical: actual; across: predicted) for F1-optimal threshold:
+##        No Yes    Error     Rate
+## No      0  52 1.000000   =52/52
+## Yes     0 146 0.000000   =0/146
+## Totals  0 198 0.262626  =52/198
+## 
+## Maximum Metrics: Maximum metrics at their respective thresholds
+##                         metric threshold    value idx
+## 1                       max f1  0.500000 0.848837   0
+## 2                       max f2  0.500000 0.933504   0
+## 3                 max f0point5  0.500000 0.778252   0
+## 4                 max accuracy  0.500000 0.737374   0
+## 5                max precision  0.500000 0.737374   0
+## 6                   max recall  0.500000 1.000000   0
+## 7              max specificity  0.500000 0.000000   0
+## 8             max absolute_mcc  0.500000 0.000000   0
+## 9   max min_per_class_accuracy  0.500000 0.000000   0
+## 10 max mean_per_class_accuracy  0.500000 0.500000   0
+## 
+## Gains/Lift Table: Extract with `h2o.gainsLift(&lt;model&gt;, &lt;data&gt;)` or `h2o.gainsLift(&lt;model&gt;, valid=&lt;T/F&gt;, xval=&lt;T/F&gt;)`</code></pre>
+<hr />
+</div>
+</div>
 </div>
 <div id="video" class="section level1">
 <h1>Video</h1>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/..." frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/xXZeVKP74ao" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 </div>
 <div id="slides" class="section level1">
 <h1>Slides</h1>
-<iframe src="//codecentric.slides.com/shiringlander/..." width="576" height="420" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen>
+<iframe src="//codecentric.slides.com/shiringlander/ml_basics_gbm/embed" width="576" height="420" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen>
 </iframe>
+<hr />
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 3.5.1 (2018-07-02)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS  10.14.1
+## 
+## Matrix products: default
+## BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] h2o_3.20.0.8    bindrcpp_0.2.2  xgboost_0.71.2  caret_6.0-80   
+##  [5] lattice_0.20-38 ISLR_1.2        forcats_0.3.0   stringr_1.3.1  
+##  [9] dplyr_0.7.7     purrr_0.2.5     readr_1.1.1     tidyr_0.8.2    
+## [13] tibble_1.4.2    ggplot2_3.1.0   tidyverse_1.2.1
+## 
+## loaded via a namespace (and not attached):
+##  [1] nlme_3.1-137       bitops_1.0-6       lubridate_1.7.4   
+##  [4] dimRed_0.1.0       httr_1.3.1         rprojroot_1.3-2   
+##  [7] tools_3.5.1        backports_1.1.2    utf8_1.1.4        
+## [10] R6_2.3.0           rpart_4.1-13       lazyeval_0.2.1    
+## [13] colorspace_1.3-2   nnet_7.3-12        withr_2.1.2       
+## [16] gbm_2.1.4          gridExtra_2.3      tidyselect_0.2.5  
+## [19] compiler_3.5.1     cli_1.0.1          rvest_0.3.2       
+## [22] xml2_1.2.0         bookdown_0.7       scales_1.0.0      
+## [25] sfsmisc_1.1-2      DEoptimR_1.0-8     robustbase_0.93-3 
+## [28] digest_0.6.18      rmarkdown_1.10     pkgconfig_2.0.2   
+## [31] htmltools_0.3.6    rlang_0.3.0.1      readxl_1.1.0      
+## [34] ddalpha_1.3.4      rstudioapi_0.8     bindr_0.1.1       
+## [37] jsonlite_1.5       ModelMetrics_1.2.2 RCurl_1.95-4.11   
+## [40] magrittr_1.5       Matrix_1.2-15      fansi_0.4.0       
+## [43] Rcpp_0.12.19       munsell_0.5.0      abind_1.4-5       
+## [46] stringi_1.2.4      yaml_2.2.0         MASS_7.3-51.1     
+## [49] plyr_1.8.4         recipes_0.1.3      grid_3.5.1        
+## [52] pls_2.7-0          crayon_1.3.4       haven_1.1.2       
+## [55] splines_3.5.1      hms_0.4.2          knitr_1.20        
+## [58] pillar_1.3.0       reshape2_1.4.3     codetools_0.2-15  
+## [61] stats4_3.5.1       CVST_0.2-2         magic_1.5-9       
+## [64] glue_1.3.0         evaluate_0.12      blogdown_0.9      
+## [67] data.table_1.11.8  modelr_0.1.2       foreach_1.4.4     
+## [70] cellranger_1.1.0   gtable_0.2.0       kernlab_0.9-27    
+## [73] assertthat_0.2.0   DRR_0.0.3          xfun_0.4          
+## [76] gower_0.1.2        prodlim_2018.04.18 broom_0.5.0       
+## [79] e1071_1.7-0        class_7.3-14       survival_2.43-1   
+## [82] geometry_0.3-6     timeDate_3043.102  RcppRoll_0.3.0    
+## [85] iterators_1.0.10   lava_1.6.3         ipred_0.9-8</code></pre>
 </div>
 
               
@@ -686,7 +1393,7 @@ Inspiration &amp; Sources Thank you to the following people for providing excell
               </span>
               <div class="media-content hide-xs font-merryweather">In a recent video, I covered Random Forests and Neural Nets as part of the codecentric.ai Bootcamp.
 You can find the video on YouTube and the slides on slides.com. Both are again in German with code examples in Python.
-But below, you find the English version of the content, plus code examples in R. :-)
+But below, you find the English version of the content, plus code examples in R for caret, xgboost and h2o. :-)
  Like Random Forest, Gradient Boosting is another technique for performing supervised machine learning tasks, like classification and regression.</div>
             </div>
             <div style="clear:both;"></div>
