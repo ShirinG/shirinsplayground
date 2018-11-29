@@ -15,6 +15,7 @@ slug: ml_basics_gbm
 
 
 <p>In a recent video, I covered <a href="https://shirinsplayground.netlify.com/2018/10/ml_basics_rf/">Random Forests</a> and <a href="https://shirinsplayground.netlify.com/2018/11/neural_nets_explained/">Neural Nets</a> as part of the <a href="https://bootcamp.codecentric.ai/">codecentric.ai Bootcamp</a>.</p>
+<p>In the most recent video, I covered <strong>Gradient Boosting and XGBoost.</strong></p>
 <p>You can find the <a href="https://youtu.be/xXZeVKP74ao">video on YouTube</a> and the <a href="https://codecentric.slides.com/shiringlander/ml_basics_gbm">slides on slides.com</a>. Both are again in German with code examples in Python.</p>
 <p>But below, you find the English version of the content, plus code examples in R for <code>caret</code>, <code>xgboost</code> and <code>h2o</code>. :-)</p>
 <hr />
@@ -361,14 +362,14 @@ h2o.init(nthreads = -1)</code></pre>
 <pre><code>##  Connection successful!
 ## 
 ## R is connected to the H2O cluster: 
-##     H2O cluster uptime:         1 hours 40 minutes 
+##     H2O cluster uptime:         2 hours 50 minutes 
 ##     H2O cluster timezone:       Europe/Berlin 
 ##     H2O data parsing timezone:  UTC 
 ##     H2O cluster version:        3.20.0.8 
-##     H2O cluster version age:    2 months and 7 days  
+##     H2O cluster version age:    2 months and 8 days  
 ##     H2O cluster name:           H2O_started_from_R_shiringlander_lci733 
 ##     H2O cluster total nodes:    1 
-##     H2O cluster total memory:   3.27 GB 
+##     H2O cluster total memory:   3.31 GB 
 ##     H2O cluster total cores:    8 
 ##     H2O cluster allowed cores:  8 
 ##     H2O cluster healthy:        TRUE 
@@ -403,10 +404,10 @@ h2o_gbm</code></pre>
 ## ==============
 ## 
 ## H2OBinomialModel: gbm
-## Model ID:  GBM_model_R_1543499512871_1089 
+## Model ID:  GBM_model_R_1543499512871_1815 
 ## Model Summary: 
 ##   number_of_trees number_of_internal_trees model_size_in_bytes min_depth
-## 1              50                       50               12999         5
+## 1              50                       50               13001         5
 ##   max_depth mean_depth min_leaves max_leaves mean_leaves
 ## 1         5    5.00000          8         21    15.74000
 ## 
@@ -446,74 +447,74 @@ h2o_gbm</code></pre>
 ## ** Reported on cross-validation data. **
 ## ** 3-fold cross-validation on training data (Metrics computed for combined holdout predictions) **
 ## 
-## MSE:  0.06426899
-## RMSE:  0.2535133
-## LogLoss:  0.2357082
-## Mean Per-Class Error:  0.1116498
-## AUC:  0.9615155
-## Gini:  0.923031
+## MSE:  0.05688845
+## RMSE:  0.238513
+## LogLoss:  0.2007733
+## Mean Per-Class Error:  0.09630817
+## AUC:  0.9668929
+## Gini:  0.9337858
 ## 
 ## Confusion Matrix (vertical: actual; across: predicted) for F1-optimal threshold:
 ##         No Yes    Error     Rate
-## No     130  30 0.187500  =30/160
-## Yes     15 404 0.035800  =15/419
-## Totals 145 434 0.077720  =45/579
+## No     133  27 0.168750  =27/160
+## Yes     10 409 0.023866  =10/419
+## Totals 143 436 0.063903  =37/579
 ## 
 ## Maximum Metrics: Maximum metrics at their respective thresholds
 ##                         metric threshold    value idx
-## 1                       max f1  0.336780 0.947245 258
-## 2                       max f2  0.142377 0.969029 279
-## 3                 max f0point5  0.969141 0.948787 183
-## 4                 max accuracy  0.336780 0.922280 258
-## 5                max precision  0.997535 1.000000   0
-## 6                   max recall  0.006451 1.000000 395
-## 7              max specificity  0.997535 1.000000   0
-## 8             max absolute_mcc  0.336780 0.801663 258
-## 9   max min_per_class_accuracy  0.850693 0.899761 217
-## 10 max mean_per_class_accuracy  0.821579 0.901529 222
+## 1                       max f1  0.400785 0.956725 265
+## 2                       max f2  0.132011 0.972352 287
+## 3                 max f0point5  0.725883 0.953442 229
+## 4                 max accuracy  0.400785 0.936097 265
+## 5                max precision  0.997925 1.000000   0
+## 6                   max recall  0.009298 1.000000 381
+## 7              max specificity  0.997925 1.000000   0
+## 8             max absolute_mcc  0.400785 0.837212 265
+## 9   max min_per_class_accuracy  0.811928 0.906250 224
+## 10 max mean_per_class_accuracy  0.725883 0.912552 229
 ## 
 ## Gains/Lift Table: Extract with `h2o.gainsLift(&lt;model&gt;, &lt;data&gt;)` or `h2o.gainsLift(&lt;model&gt;, valid=&lt;T/F&gt;, xval=&lt;T/F&gt;)`
 ## Cross-Validation Metrics Summary: 
-##                                mean           sd  cv_1_valid cv_2_valid
-## accuracy                  0.9260663  0.007598659   0.9395604 0.92537314
-## auc                      0.96213776 0.0049389955   0.9631732  0.9531126
-## err                     0.073933706  0.007598659  0.06043956 0.07462686
-## err_count                 14.333333    1.7638342        11.0       15.0
-## f0point5                   0.936689  0.012146793  0.95665175 0.93869734
-## f1                        0.9500624 0.0054923273   0.9588015  0.9514563
-## f2                       0.96403253 0.0016410206    0.960961 0.96456695
-## lift_top_group            1.3837996   0.03568878   1.3684211  1.3311259
-## logloss                  0.23523612  0.008045044  0.22010882 0.24754758
-## max_per_class_error      0.19611688  0.037585203  0.12244898       0.22
-## mcc                       0.8119256  0.016788272   0.8454889  0.7943277
-## mean_per_class_accuracy  0.88879174  0.015728002   0.9199785 0.87675494
-## mean_per_class_error    0.111208245  0.015728002 0.080021486 0.12324503
-## mse                      0.06411749 0.0041141943 0.057513304  0.0631689
-## precision                 0.9280841  0.016372148  0.95522386 0.93037975
-## r2                       0.67843753  0.014658262   0.7076767 0.66197526
-## recall                    0.9737004 0.0065764696  0.96240604  0.9735099
-## rmse                     0.25295553  0.008092926  0.23981932 0.25133425
-## specificity              0.80388314  0.037585203    0.877551       0.78
-##                         cv_3_valid
-## accuracy                 0.9132653
-## auc                      0.9701275
-## err                      0.0867347
-## err_count                     17.0
-## f0point5                0.91471803
-## f1                       0.9399293
-## f2                       0.9665698
-## lift_top_group           1.4518518
-## logloss                 0.23805195
-## max_per_class_error     0.24590164
-## mcc                     0.79596025
-## mean_per_class_accuracy  0.8696418
-## mean_per_class_error    0.13035823
-## mse                     0.07167027
-## precision                0.8986486
-## r2                      0.66566056
-## recall                   0.9851852
-## rmse                    0.26771304
-## specificity             0.75409836</code></pre>
+##                                mean           sd  cv_1_valid  cv_2_valid
+## accuracy                   0.939574 6.4933195E-4   0.9390863   0.9408602
+## auc                       0.9701875  0.007612803   0.9708713  0.98301804
+## err                     0.060425993 6.4933195E-4 0.060913704 0.059139784
+## err_count                 11.666667   0.33333334        12.0        11.0
+## f0point5                 0.95418453  0.006589541   0.9537167  0.96582466
+## f1                       0.95859224  4.803105E-4   0.9577465   0.9594096
+## f2                       0.96321476  0.006296414  0.96181047  0.95307916
+## lift_top_group            1.3816328  0.012157884   1.3971632   1.3576642
+## logloss                  0.20019953  0.016917419   0.2080731  0.16776533
+## max_per_class_error      0.12948361  0.029007828       0.125  0.08163265
+## mcc                      0.84875494  0.001501441  0.84894496  0.85125524
+## mean_per_class_accuracy   0.9184681  0.009156114   0.9197695  0.93363625
+## mean_per_class_error     0.08153185  0.009156114   0.0802305 0.066363774
+## mse                     0.056778133 0.0035938106  0.06340453  0.05105359
+## precision                0.95136136  0.010758136    0.951049   0.9701493
+## r2                        0.7161539  0.014445015  0.68836546   0.7368911
+## recall                   0.96641994  0.010696565    0.964539   0.9489051
+## rmse                     0.23804487  0.007509063  0.25180256  0.22595042
+## specificity              0.87051636  0.029007828       0.875   0.9183673
+##                          cv_3_valid
+## accuracy                 0.93877554
+## auc                       0.9566731
+## err                      0.06122449
+## err_count                      12.0
+## f0point5                 0.94301224
+## f1                       0.95862067
+## f2                        0.9747546
+## lift_top_group            1.3900709
+## logloss                  0.22476016
+## max_per_class_error      0.18181819
+## mcc                      0.84606457
+## mean_per_class_accuracy   0.9019987
+## mean_per_class_error     0.09800129
+## mse                     0.055876285
+## precision                 0.9328859
+## r2                       0.72320527
+## recall                    0.9858156
+## rmse                     0.23638165
+## specificity               0.8181818</code></pre>
 <p>We can calculate performance on test data with <code>h2o.performance()</code>:</p>
 <pre class="r"><code>h2o.performance(h2o_gbm, test)</code></pre>
 <pre><code>## H2OBinomialMetrics: gbm
@@ -558,7 +559,7 @@ h2o_xgb</code></pre>
 ## ==============
 ## 
 ## H2OBinomialModel: xgboost
-## Model ID:  XGBoost_model_R_1543499512871_1452 
+## Model ID:  XGBoost_model_R_1543499512871_2178 
 ## Model Summary: 
 ##   number_of_trees
 ## 1              50
@@ -627,46 +628,46 @@ h2o_xgb</code></pre>
 ## 
 ## Gains/Lift Table: Extract with `h2o.gainsLift(&lt;model&gt;, &lt;data&gt;)` or `h2o.gainsLift(&lt;model&gt;, valid=&lt;T/F&gt;, xval=&lt;T/F&gt;)`
 ## Cross-Validation Metrics Summary: 
-##                                mean            sd  cv_1_valid cv_2_valid
-## accuracy                  0.7205768    0.03529982  0.65217394  0.7699115
-## auc                             0.5           0.0         0.5        0.5
-## err                       0.2794232    0.03529982   0.3478261  0.2300885
-## err_count                 53.333332     5.8118653        64.0       52.0
-## f0point5                  0.7627531    0.03186105   0.7009346  0.8070501
-## f1                        0.8366046   0.024239227   0.7894737       0.87
-## f2                        0.9271485   0.012073953  0.90361446  0.9436009
-## lift_top_group                  1.0           0.0         1.0        1.0
-## logloss                   0.6931472 3.7007435E-17   0.6931472  0.6931472
-## max_per_class_error             1.0           0.0         1.0        1.0
-## mcc                             0.0           NaN         NaN        NaN
-## mean_per_class_accuracy         0.5           0.0         0.5        0.5
-## mean_per_class_error            0.5           0.0         0.5        0.5
-## mse                            0.25           0.0        0.25       0.25
-## precision                 0.7205768    0.03529982  0.65217394  0.7699115
-## r2                      -0.27052057   0.090317816 -0.10208333 -0.4112511
-## recall                          1.0           0.0         1.0        1.0
-## rmse                            0.5           0.0         0.5        0.5
-## specificity                     0.0           0.0         0.0        0.0
-##                          cv_3_valid
-## accuracy                 0.73964494
-## auc                             0.5
-## err                      0.26035503
-## err_count                      44.0
-## f0point5                  0.7802746
-## f1                        0.8503401
-## f2                        0.9342302
-## lift_top_group                  1.0
-## logloss                   0.6931472
-## max_per_class_error             1.0
-## mcc                             NaN
-## mean_per_class_accuracy         0.5
-## mean_per_class_error            0.5
-## mse                            0.25
-## precision                0.73964494
-## r2                      -0.29822728
-## recall                          1.0
-## rmse                            0.5
-## specificity                     0.0</code></pre>
+##                               mean            sd  cv_1_valid cv_2_valid
+## accuracy                  0.720723   0.032527234  0.77294683 0.72820514
+## auc                            0.5           0.0         0.5        0.5
+## err                     0.27927703   0.032527234  0.22705314  0.2717949
+## err_count                53.333332      3.756476        47.0       53.0
+## f0point5                 0.7629575   0.029264713   0.8097166 0.77006507
+## f1                      0.83686095   0.022139339   0.8719346    0.84273
+## f2                       0.9273414   0.010952134  0.94451004 0.93053734
+## lift_top_group                 1.0           0.0         1.0        1.0
+## logloss                  0.6931472 4.8956235E-17   0.6931472  0.6931472
+## max_per_class_error            1.0           0.0         1.0        1.0
+## mcc                            0.0           NaN         NaN        NaN
+## mean_per_class_accuracy        0.5           0.0         0.5        0.5
+## mean_per_class_error           0.5           0.0         0.5        0.5
+## mse                           0.25           0.0        0.25       0.25
+## precision                 0.720723   0.032527234  0.77294683 0.72820514
+## r2                      -0.2677759    0.08917216 -0.42450133 -0.2631212
+## recall                         1.0           0.0         1.0        1.0
+## rmse                           0.5           0.0         0.5        0.5
+## specificity                    0.0           0.0         0.0        0.0
+##                           cv_3_valid
+## accuracy                  0.66101694
+## auc                              0.5
+## err                       0.33898306
+## err_count                       60.0
+## f0point5                   0.7090909
+## f1                        0.79591835
+## f2                        0.90697676
+## lift_top_group                   1.0
+## logloss                    0.6931472
+## max_per_class_error              1.0
+## mcc                              NaN
+## mean_per_class_accuracy          0.5
+## mean_per_class_error             0.5
+## mse                             0.25
+## precision                 0.66101694
+## r2                      -0.115705125
+## recall                           1.0
+## rmse                             0.5
+## specificity                      0.0</code></pre>
 <p>And use it just as before:</p>
 <pre class="r"><code>h2o.performance(h2o_xgb, test)</code></pre>
 <pre><code>## H2OBinomialMetrics: xgboost

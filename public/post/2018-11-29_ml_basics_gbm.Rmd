@@ -14,6 +14,8 @@ slug: ml_basics_gbm
 
 In a recent video, I covered [Random Forests](https://shirinsplayground.netlify.com/2018/10/ml_basics_rf/) and [Neural Nets](https://shirinsplayground.netlify.com/2018/11/neural_nets_explained/) as part of the [codecentric.ai Bootcamp](https://bootcamp.codecentric.ai/).
 
+In the most recent video, I covered **Gradient Boosting and XGBoost.**
+
 You can find the [video on YouTube](https://youtu.be/xXZeVKP74ao) and the [slides on slides.com](https://codecentric.slides.com/shiringlander/ml_basics_gbm). Both are again in German with code examples in Python.
 
 But below, you find the English version of the content, plus code examples in R for `caret`, `xgboost` and `h2o`. :-)
