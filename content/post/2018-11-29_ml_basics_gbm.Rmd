@@ -105,7 +105,6 @@ test_data  <- ml_data[-index, ]
 model_gbm <- caret::train(Private ~ .,
                           data = train_data,
                           method = "gbm",
-                          preProcess = c("scale", "center"),
                           trControl = trainControl(method = "repeatedcv", 
                                                   number = 5, 
                                                   repeats = 3, 
