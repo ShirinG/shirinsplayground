@@ -40,7 +40,7 @@ implementieren können.
 
 ## Where you find my written word
 
-- [An article about about **Explaining Black-Box Machine Learning Models* in the **iX Developer Machine Learning**](https://shop.heise.de/katalog/blick-in-die-blackbox) (German)
+- [An article about about **Explaining Black-Box Machine Learning Models** in the **iX Developer Machine Learning**](https://shop.heise.de/katalog/blick-in-die-blackbox) (German)
 
 - [A short version of this article about **Explaining Black-Box Machine Learning Models** in the **iX 12/2018**](https://shop.heise.de/katalog/ix-12-2018) (German)
 
@@ -54,13 +54,17 @@ implementieren können.
 
 ## Upcoming talks, webinars, podcasts, etc.
 
-- At the upcoming [This week in machine learning and AI European online Meetup](https://shirinsplayground.netlify.com/2018/11/twimlai_meetup/), I’ll be presenting and leading a discussion about the Anchors paper, the next generation of machine learning interpretability tools. Date: Tuesday 4th December 2018 Time: 19:00 PM CET/CEST
+- tbd
 
 ---
 
 <br>
 
 ## Past talks, webinars, podcasts, etc.
+
+- At the [This week in machine learning and AI European online Meetup on December 5th, 2018](https://shirinsplayground.netlify.com/2018/11/twimlai_meetup/), I presented and led a discussion about the Anchors paper, the next generation of machine learning interpretability tools. You can find the slides [here](https://shirinsplayground.netlify.com/2018/12/trust_in_ml_slides_ix/).
+
+<br>
 
 - On November 7th, Uwe Friedrichsen and I gave our talk from the [JAX conference 2018: Deep Learning - a Primer](https://shirinsplayground.netlify.com/2018/01/jax2018/) again at the [W-JAX](https://shirinsplayground.netlify.com/2018/01/slides_demystifying_dl/) in Munich.
 
@@ -80,7 +84,6 @@ https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell
 <br>
 
 - On Wednesday, October 26th, I was talking about ['Decoding The Black Box' at the Frankfurt Data Sciene Meetup](https://shirinsplayground.netlify.com/2018/09/ffm_datascience_meetup/).
-
 Slides can be found [here](https://shirinsplayground.netlify.com/2018/09/ffm_datascience_meetup_slides/).
 
 <br>
@@ -99,7 +102,6 @@ Slides can be found [here](https://shirinsplayground.netlify.com/2018/09/ffm_dat
 <br>
 
 - In May 2018 I was at the [ROpenSci unconference in Seattle, WA](http://unconf18.ropensci.org/)
-
 You can read about my experience and the project I worked on [here](https://shirinsplayground.netlify.com/2018/05/ropensci_unconf18/).
 
 <br>
@@ -109,21 +111,18 @@ You can read about my experience and the project I worked on [here](https://shir
 <br>
 
 - [I talked about explaining complex machine learning models at Minds Mastering Machines Conference](https://shirinsplayground.netlify.com/2018/02/m3_2018/) on Wednesday, April 25th 2018 in Colone
-
 The presentation was in German but the slides were similar to those: https://shirinsplayground.netlify.com/2018/04/hh_datascience_meetup_2018_slides/
 
 <br>
 
-- My colleague Uwe Friedrichsen and I gave a talk at the [JAX conference 2018: Deep Learning - a Primer](https://shirinsplayground.netlify.com/2018/01/jax2018/) on April 24th 2018 in Mainz
-
+- My colleague Uwe Friedrichsen and I gave a talk at the [JAX conference 2018: Deep Learning - a Primer](https://shirinsplayground.netlify.com/2018/01/jax2018/) on April 24th 2018 in Mainz.
 Slides can be found here: https://www.slideshare.net/ShirinGlander/deep-learning-a-primer-95197733
 
 > Deep Learning is one of the "hot" topics in the AI area – a lot of hype, a lot of inflated expectation, but also quite some impressive success stories. As some AI experts already predict that Deep Learning will become "Software 2.0", it might be a good time to have a closer look at the topic. In this session I will try to give a comprehensive overview of Deep Learning. We will start with a bit of history and some theoretical foundations that we will use to create a little Deep Learning taxonomy. Then we will have a look at current and upcoming application areas: Where can we apply Deep Learning successfully and what does it differentiate from other approaches? Afterwards we will examine the ecosystem: Which tools and libraries are available? What are their strengths and weaknesses? And to complete the session, we will look into some practical code examples and the typical pitfalls of Deep Learning. After this session you will have a much better idea of the why, what and how of Deep Learning, including if and how you might want to apply it to your own work. https://jax.de/big-data-machine-learning/deep-learning-a-primer/
 
 <br>
 
-- [I talked about explaining complex Machine Learning Models with LIME](https://shirinsplayground.netlify.com/2018/03/meetup_talk_ruhrpy_april_18/) at this meetup: [Data Science Meetup Hamburg](https://www.meetup.com/Hamburg-Data-Science-Meetup/events/244145443/) on Thursday, April 12th 2018
-
+- [I talked about explaining complex Machine Learning Models with LIME](https://shirinsplayground.netlify.com/2018/03/meetup_talk_ruhrpy_april_18/) at this meetup: [Data Science Meetup Hamburg](https://www.meetup.com/Hamburg-Data-Science-Meetup/events/244145443/) on Thursday, April 12th 2018.
 Slides can be found here: https://shirinsplayground.netlify.com/2018/04/hh_datascience_meetup_2018_slides/
 
 > Traditional machine learning workflows focus heavily on model training and optimization; the best model is usually chosen via performance measures like accuracy or error and we tend to assume that a model is good enough for deployment if it passes certain thresholds of these performance criteria. Why a model makes the predictions it makes, however, is generally neglected. But being able to understand and interpret such models can be immensely important for improving model quality, increasing trust and transparency and for reducing bias. Because complex machine learning models are essentially black boxes and too complicated to understand, we need to use approximations to get a better sense of how they work. One such approach is LIME, which stands for Local Interpretable Model-agnostic Explanations and is a tool that helps understand and explain the decisions made by complex machine learning models.
@@ -131,12 +130,11 @@ Dr. Shirin Glander is Data Scientist at codecentric AG. She has received a PhD i
 
 <br>
 
-- [I talked about Deep Learning with Keras in R and Python](https://shirinsplayground.netlify.com/2018/03/meetup_talk_ruhrpy_april_18/) at this meetup: [Ruhr.Py 2018](https://www.meetup.com/Ruhr-py/events/248093628/) on Wednesday, April 4th 2018
+- [I talked about Deep Learning with Keras in R and Python](https://shirinsplayground.netlify.com/2018/03/meetup_talk_ruhrpy_april_18/) at this meetup: [Ruhr.Py 2018](https://www.meetup.com/Ruhr-py/events/248093628/) on Wednesday, April 4th 2018.
+Slides can be found here: https://shirinsplayground.netlify.com/2018/04/ruhrpy_meetup_2018_slides/
 
 > Introducing Deep Learning with Keras and Python
 Keras is a high-level API written in Python for building and prototyping neural networks. It can be used on top of TensorFlow, Theano or CNTK. In this talk we build, train and visualize a Model using Python and Keras - all interactive with Jupyter Notebooks!
-
-Slides can be found here: https://shirinsplayground.netlify.com/2018/04/ruhrpy_meetup_2018_slides/
 
 <br>
 
