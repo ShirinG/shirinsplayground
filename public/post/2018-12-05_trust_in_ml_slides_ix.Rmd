@@ -1,0 +1,37 @@
+---
+title: "Trust in ML models. Slides from TWiML & AI EMEA Meetup + iX Articles"
+draft: false
+author: Shirin Glander
+date: '2018-12-05'
+categories: ["R"]
+tags: ["machine learning", "lime", "anchors", "twimlai"]
+thumbnailImagePosition: left
+thumbnailImage: https://shiring.github.io/netlify_images/ix_article_1.jpeg
+metaAlignment: center
+coverMeta: out
+slug: trust_in_ml_slides_ix
+---
+
+Here you find my slides from last nights [TWiML & AI EMEA Meetup about **Trust in ML models**](https://twimlai.com/meetup/), where I presented the [Anchors paper by Carlos Guestrin et al.](https://homes.cs.washington.edu/~marcotcr/aaai18.pdf).
+
+<div style="position:relative;width:100%;height:0;padding-bottom:calc(56.25% + 40px);"><iframe allowfullscreen style="position:absolute; width: 100%; height: 100%;border: solid 1px #333;" src="https://www.beautiful.ai/player/-LSiZRKH9RqNHKGaj6o1/TWiMLAI-EMEA-Meetup?utm_source=beautiful_player&utm_medium=embed&utm_campaign=-LSiZRKH9RqNHKGaj6o1"></iframe></div>
+
+---
+
+I have also just written two articles for the German IT magazin **iX** about the same topic of **Explaining Black-Box Machine Learning Models**:
+
+- [A short article in the **iX 12/2018**](https://shop.heise.de/katalog/ix-12-2018)
+
+- [The full article in **iX Developer Machine Learning**](https://shop.heise.de/katalog/blick-in-die-blackbox)
+
+![](https://shiring.github.io/netlify_images/ix_article_01.jpeg)
+
+![](https://shiring.github.io/netlify_images/ix_article_2.jpeg)
+
+---
+
+You can find the code for reproducing all plots in the blogposts here:
+
+- [Explaining Black-Box Machine Learning Models - Code Part 1: tabular data + caret + iml](https://shirinsplayground.netlify.com/2018/07/explaining_ml_models_code_caret_iml/)
+- [Explaining Black-Box Machine Learning Models - Code Part 2: Text classification with LIME](https://shirinsplayground.netlify.com/2018/07/explaining_ml_models_code_text_lime/)
+- [Explaining Black-Box Machine Learning Models - Code Part 3: Keras image classification models with LIME](https://shirinsplayground.netlify.com/2018/06/keras_fruits_lime/)

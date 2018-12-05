@@ -850,6 +850,40 @@ explanation &lt;- lime::explain(x = Xtest[1:9, ],
 ]]></content>
   </entry>
   <entry>
+    <title type="html"><![CDATA[Trust in ML models. Slides from TWiML &amp; AI EMEA Meetup &#43; iX Articles]]></title>
+    <link href="/2018/12/trust_in_ml_slides_ix/"/>
+    <id>/2018/12/trust_in_ml_slides_ix/</id>
+    <published>2018-12-05T00:00:00+00:00</published>
+    <updated>2018-12-05T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<p>Here you find my slides from last nights <a href="https://twimlai.com/meetup/">TWiML &amp; AI EMEA Meetup about <strong>Trust in ML models</strong></a>, where I presented the <a href="https://homes.cs.washington.edu/~marcotcr/aaai18.pdf">Anchors paper by Carlos Guestrin et al.</a>.</p>
+<div style="position:relative;width:100%;height:0;padding-bottom:calc(56.25% + 40px);">
+<iframe allowfullscreen style="position:absolute; width: 100%; height: 100%;border: solid 1px #333;" src="https://www.beautiful.ai/player/-LSiZRKH9RqNHKGaj6o1/TWiMLAI-EMEA-Meetup?utm_source=beautiful_player&amp;utm_medium=embed&amp;utm_campaign=-LSiZRKH9RqNHKGaj6o1">
+</iframe>
+</div>
+<hr />
+<p>I have also just written two articles for the German IT magazin <strong>iX</strong> about the same topic of <strong>Explaining Black-Box Machine Learning Models</strong>:</p>
+<ul>
+<li><p><a href="https://shop.heise.de/katalog/ix-12-2018">A short article in the <strong>iX 12/2018</strong></a></p></li>
+<li><p><a href="https://shop.heise.de/katalog/blick-in-die-blackbox">The full article in <strong>iX Developer Machine Learning</strong></a></p></li>
+</ul>
+<div class="figure">
+<img src="https://shiring.github.io/netlify_images/ix_article_01.jpeg" />
+
+</div>
+<div class="figure">
+<img src="https://shiring.github.io/netlify_images/ix_article_2.jpeg" />
+
+</div>
+<hr />
+<p>You can find the code for reproducing all plots in the blogposts here:</p>
+<ul>
+<li><a href="https://shirinsplayground.netlify.com/2018/07/explaining_ml_models_code_caret_iml/">Explaining Black-Box Machine Learning Models - Code Part 1: tabular data + caret + iml</a></li>
+<li><a href="https://shirinsplayground.netlify.com/2018/07/explaining_ml_models_code_text_lime/">Explaining Black-Box Machine Learning Models - Code Part 2: Text classification with LIME</a></li>
+<li><a href="https://shirinsplayground.netlify.com/2018/06/keras_fruits_lime/">Explaining Black-Box Machine Learning Models - Code Part 3: Keras image classification models with LIME</a></li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
     <title type="html"><![CDATA[Machine Learning Basics - Gradient Boosting &amp; XGBoost]]></title>
     <link href="/2018/11/ml_basics_gbm/"/>
     <id>/2018/11/ml_basics_gbm/</id>
@@ -8151,11 +8185,15 @@ implementieren können.</p>
 <h2 id="where-you-find-my-written-word">Where you find my written word</h2>
 
 <ul>
-<li><p>iX special edition Machine Learning (German)</p></li>
+<li><p><a href="https://shop.heise.de/katalog/blick-in-die-blackbox">An article about about *<em>Explaining Black-Box Machine Learning Models</em> in the <strong>iX Developer Machine Learning</strong></a> (German)</p></li>
 
-<li><p>iX <sup>12</sup>&frasl;<sub>2018</sub> (German)</p></li>
+<li><p><a href="https://shop.heise.de/katalog/ix-12-2018">A short version of this article about <strong>Explaining Black-Box Machine Learning Models</strong> in the <strong>iX <sup>12</sup>&frasl;<sub>2018</sub></strong></a> (German)</p></li>
+</ul>
 
-<li><p>Book chapter Predictive Analytics (German)</p></li>
+<p><img src="https://shiring.github.io/netlify_images/ix_article_01.jpeg" alt="" /></p>
+
+<ul>
+<li>Book chapter Predictive Analytics (German)</li>
 </ul>
 
 <hr />
@@ -9768,83 +9806,6 @@ and the repository exists.
     <id>/1/01/how-do-convolutional-neural-nets-cnns-learn---keras-example/</id>
     <published>0001-01-01T00:00:00+00:00</published>
     <updated>0001-01-01T00:00:00+00:00</updated>
-    <content type="html"><![CDATA[<p><a href="https://www.kaggle.com/sachinpatel21/az-handwritten-alphabets-in-csv-format/kernels" class="uri">https://www.kaggle.com/sachinpatel21/az-handwritten-alphabets-in-csv-format/kernels</a></p>
-<pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 3.1.0     ✔ purrr   0.2.5
-## ✔ tibble  1.4.2     ✔ dplyr   0.7.7
-## ✔ tidyr   0.8.2     ✔ stringr 1.3.1
-## ✔ readr   1.1.1     ✔ forcats 0.3.0</code></pre>
-<pre><code>## ── Conflicts ───────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<pre class="r"><code>library(keras)</code></pre>
-<pre class="r"><code>dataset &lt;- read_delim(&quot;/Users/shiringlander/Documents/Github/Data/A_Z Handwritten Data.csv&quot;,
-                      delim = &quot;,&quot;, col_names = FALSE)</code></pre>
-<pre><code>## Parsed with column specification:
-## cols(
-##   .default = col_integer()
-## )</code></pre>
-<pre><code>## See spec(...) for full column specifications.</code></pre>
-<pre class="r"><code>#head(dataset)</code></pre>
-<pre class="r"><code>X &lt;- as.matrix(dataset[, 1:784])
-Y &lt;- as.matrix(dataset[, 785])</code></pre>
-<pre class="r"><code>summary(Y)</code></pre>
-<pre><code>##       X785        
-##  Min.   :0.0e+00  
-##  1st Qu.:0.0e+00  
-##  Median :0.0e+00  
-##  Mean   :1.1e-05  
-##  3rd Qu.:0.0e+00  
-##  Max.   :4.0e+00</code></pre>
-<pre><code>import numpy as np
-
-dataset = np.loadtxt(&#39;/Users/shiringlander/Documents/Github/Data/A_Z Handwritten Data.csv&#39;, delimiter=&#39;,&#39;)
-
-# split into input and output variables
-X = dataset[:,0:784]
-Y = dataset[:,0]
-Y.summary()</code></pre>
-<pre><code># load dataset
-dataset = np.loadtxt(&#39;your_downloaded_csv.csv&#39;, delimiter=&#39;,&#39;)
-
-# split into input and output variables
-X = dataset[:,0:784]
-Y = dataset[:,0]
-
-# split the data into training (50%) and testing (50%)
-(X_train, X_test, Y_train, Y_test) = train_test_split(X, Y, test_size=0.50, random_state=seed)
-
-X_train = X_train.reshape(X_train.shape[0], 28, 28, 1).astype(&#39;float32&#39;)
-X_test = X_test.reshape(X_test.shape[0], 28, 28, 1).astype(&#39;float32&#39;)
-
-X_train = X_train / 255
-X_test = X_test / 255
-
-# one hot encode outputs
-Y_train = np_utils.to_categorical(Y_train)
-Y_test = np_utils.to_categorical(Y_test)
-
-num_classes = Y_test.shape[1]
-
-
-# create model
-model = Sequential()
-model.add(Conv2D(32, (5, 5), input_shape=(28, 28, 1), activation=&#39;relu&#39;))
-model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Dropout(0.2))
-model.add(Flatten())
-model.add(Dense(128, activation=&#39;relu&#39;))
-model.add(Dense(num_classes, activation=&#39;softmax&#39;))
-
-# Compile model
-model.compile(loss=&#39;categorical_crossentropy&#39;, optimizer=&#39;adam&#39;, metrics=[&#39;accuracy&#39;])
-model.fit(X_train, Y_train, validation_data=(X_test, Y_test), epochs=10, batch_size=200, verbose=2)
-
-# Final evaluation of the model
-scores = model.evaluate(X_test,Y_test, verbose=0)
-print(&quot;CNN Error: %.2f%%&quot; % (100-scores[1]*100))
-</code></pre>
-]]></content>
+    <content type="html"><![CDATA[]]></content>
   </entry>
 </feed>

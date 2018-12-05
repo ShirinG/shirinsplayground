@@ -40,9 +40,11 @@ implementieren können.
 
 ## Where you find my written word
 
-- iX special edition Machine Learning (German)
+- [An article about about **Explaining Black-Box Machine Learning Models* in the **iX Developer Machine Learning**](https://shop.heise.de/katalog/blick-in-die-blackbox) (German)
 
-- iX 12/2018 (German)
+- [A short version of this article about **Explaining Black-Box Machine Learning Models** in the **iX 12/2018**](https://shop.heise.de/katalog/ix-12-2018) (German)
+
+![](https://shiring.github.io/netlify_images/ix_article_01.jpeg)
 
 - Book chapter Predictive Analytics (German)
 
