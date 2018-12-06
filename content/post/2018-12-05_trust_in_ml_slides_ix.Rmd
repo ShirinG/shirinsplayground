@@ -2,17 +2,21 @@
 title: "Trust in ML models. Slides from TWiML & AI EMEA Meetup + iX Articles"
 draft: false
 author: Shirin Glander
-date: '2018-12-05'
+date: '2018-12-06'
 categories: ["R"]
 tags: ["machine learning", "lime", "anchors", "twimlai"]
 thumbnailImagePosition: left
-thumbnailImage: https://shiring.github.io/netlify_images/ix_article_1.jpeg
+thumbnailImage: https://shiring.github.io/netlify_images/ix_article_01.jpeg
 metaAlignment: center
 coverMeta: out
 slug: trust_in_ml_slides_ix
 ---
 
-Here you find my slides from last nights [TWiML & AI EMEA Meetup about **Trust in ML models**](https://twimlai.com/meetup/), where I presented the [Anchors paper by Carlos Guestrin et al.](https://homes.cs.washington.edu/~marcotcr/aaai18.pdf).
+**Update:** There is now a recording of the meetup up on [YouTube](https://youtu.be/jTFACgdhpi4).
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/jTFACgdhpi4?start=464" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+Here you find my slides the [TWiML & AI EMEA Meetup about **Trust in ML models**](https://twimlai.com/meetup/), where I presented the [Anchors paper by Carlos Guestrin et al.](https://homes.cs.washington.edu/~marcotcr/aaai18.pdf).
 
 <div style="position:relative;width:100%;height:0;padding-bottom:calc(56.25% + 40px);"><iframe allowfullscreen style="position:absolute; width: 100%; height: 100%;border: solid 1px #333;" src="https://www.beautiful.ai/player/-LSiZRKH9RqNHKGaj6o1/TWiMLAI-EMEA-Meetup?utm_source=beautiful_player&utm_medium=embed&utm_campaign=-LSiZRKH9RqNHKGaj6o1"></iframe></div>
 
