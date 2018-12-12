@@ -21,13 +21,13 @@ One of the most commonly used approaches to teach computers "vision" are **Convo
 
 This lesson builds on top of two other lessons: [Computer Vision Basics](https://youtu.be/JS4E04dJj0I) and [Neural Nets](https://shirinsplayground.netlify.com/2018/11/neural_nets_explained/). In the first video, Oli explains what computer vision is, how images are read by computers and how they can be analyzed with traditional approaches, like **Histograms of Oriented Gradients** and more. He also shows a very cool project, that he and colleagues worked on, where they programmed a small drone to recognize and avoid obstacles, like people. This video is only available in German, though. In the Neural Nets blog post, I show how Neural Nets work by explaining what **Multi-Layer Perceptrons (MLPs)** are and how they learn, using techniques like **gradient descent**, **backpropagation**, **loss** and **activation functions**.
 
-Convolutional Neural Nets are usually abbreviated either **CNNs** or **ConvNets**. They are a specific type of neural network that has very particular differences compared to MLPs. Basically, you can think of CNNs as working similarly to the **receptive fields of photoreceptors** in the human eye. Receptive fields in our eyes are small connected areas on the retina where groups of many photoreceptors stimulate much fewer ganglion cells. Thus, each ganglion cell can be stimulated by a large number of receptors, so that a complex input is condensed into a compressed output before it is further processed in the brain.
+Convolutional Neural Nets are usually abbreviated either **CNNs** or **ConvNets**. They are a specific type of neural network that has very particular differences compared to MLPs. Basically, you can think of CNNs as working similarly to the **receptive fields of photoreceptors** in the human eye. Receptive fields in our eyes are small connected areas on the retina where groups of many photoreceptors stimulate much fewer ganglion cells. Thus, each ganglion cell can be stimulated by a large number of receptors, so that a complex input is condensed into a **compressed output** before it is further processed in the brain.
 
-Before we dive deeper into CNNs, I briefly want to recap how images can take on a numerical format. We need a numerical representation of our image because just like any other machine learning model or neural net, CNNs need data in form of numbers in order to learn! With images, these numbers are pixel values; when we have a greyscale image, these values represent a range of "greyness" from 0 (black) to 255 (white).
+Before we dive deeper into CNNs, I briefly want to recap how images can take on a numerical format. We need a numerical representation of our image because just like any other machine learning model or neural net, CNNs need data in form of numbers in order to learn! With images, these numbers are **pixel values**; when we have a greyscale image, these values represent a range of "greyness" from 0 (black) to 255 (white).
 
-Here is an example image from the fruits datasets, which is used in the [practical example for this lesson](https://shirinsplayground.netlify.com/2018/06/keras_fruits/). In general, data can be represented in different formats, e.g. as vectors, tables or matrices. I am using the `imager` package to read the image and have a look at the pixel values. 
+Here is an example image from the fruits datasets, which is used in the [practical example for this lesson](https://shirinsplayground.netlify.com/2018/06/keras_fruits/). In general, data can be represented in different formats, e.g. as vectors, tables or matrices. I am using the `imager` package to read the image and have a look at the pixel values, which are represented as a **matrix with the dimensions image width x image height**.
 
-```{r}
+```{r warning=FALSE, message=FALSE}
 library(imager)
 im <- load.image("/Users/shiringlander/Documents/Github/codecentric.AI-bootcamp/notebooks/data/fruits-360/Training/Strawberry/100_100.jpg")
 ```
@@ -36,60 +36,44 @@ im <- load.image("/Users/shiringlander/Documents/Github/codecentric.AI-bootcamp/
 plot(im)
 ```
 
+But when we look at the `dim()` function with our image, we see that there are actually four dimensions and only the first two represent image width and image height. The third dimension is for the depth, which means in case of videos the time or order of the frames; with regular images, we don't need this dimension. The third dimension shows the number of **color channels**; in this case, we have a color image, so there are three channels for red, green and blue. The values remain in the same between 0 and 255 but now they don't represent greyscales but color intensity of the respective channel. This 3-dimensional format (a stack of three matrices) is also called a 3-dimensional **array**.
+
 ```{r}
 dim(im)
 ```
 
-```{r}
-as.array(im)[25:75, 25:75, 1, 1] * 255
-```
+Let's see what happens if we convert our image to greyscale:
 
 ```{r}
-as.array(grayscale(im))[25:75, 25:75, 1, 1] * 255
+im_grey <- grayscale(im)
+plot(im_grey)
 ```
+
+Our grey image has only one channel.
 
 ```{r}
-channels(im, drop = TRUE)
+dim(im_grey)
 ```
 
+When we look at the actual matrix of pixel values (below, shown with a subset), we see that our values are not shown as raw values, but as scaled values between 0 and 1.
+
+```{r}
+head(as.array(im_grey)[25:75, 25:75, 1, 1])
+```
+
+The same applies to the color image, which if multiplied with 255 shows raw pixel values:
+
+```{r}
+head(as.array(im)[25:75, 25:75, 1, 1]  * 255)
+```
+
+These pixel arrays of our images are now the input to our CNN, which can now learn to recognize e.g. which fruit is on each image (a classification task). This is accomplished by learning different levels of abstraction of the images. In the first few hidden layers, the CNN ususally detects general patterns, like edges; the deeper we go into the CNN, these learned abstractions become more specific, like textures, patterns and (parts of) objects.
+
+We could also train MLPs on our images but usually, they are not very good at this sort of task. So, what's the magic behind CNNs, that makes them so much more powerful at detecting images and object?
+
+The most important difference is that MLPs consider each pixel position as an independent feature; it does not know neighboring pixels! That's why MLPs will not be able to detect images where the objects have a different orientation, position, etc. Moreover, because we often deal with large images, the sheer number of trainable parameters in an MLP will quickly escalate, so that training such a network isn't exactly efficient. In MLPs, **weights** are learned, e.g. with gradient descent and backpropagation.
 ---
 
-Daten können generell in verschiedenen Formaten angeordnet sein, zum Beispiel als Vektor, als Tabelle oder Matrix. Die Pixelwerte für unser Bild sind hier in so einem Matrixformat zu sehen; aus Platzgründen zeige ich aber nur einen Ausschnitt des Bildes, das eigentlich 100 x 100 Pixel groß ist und deshalb Pixelwerte in einer 100 x 100 Matrix hat. Diese Pixelwerte, die wir hier sehen, können entweder die Rohwerte von 0 bis 255 sein oder normierte Werte zeigen; immer stellen sie aber die Helligkeit des Pixels an einer bestimmten Stelle im Bild dar.
-
-Nun ist unsere Erdbeere auf dem Bild aber eigentlich nicht grau sondern rot. Auch Farbbilder können wir mit Pixelmatrizen darstellen. Hier stellen die Werte dann allerdings keine Helligkeiten oder Graustufen dar sondern Farbintensitäten - und zwar meisten für die drei Farbkanäle 
-rot,
-
-grün
-
-und blau. Diese Anordnung in drei Dimensionen (also Bildbreite x Bildhöhe x Bildkanäle) wird auch 3-dimensionaler Array genannt.
-
-
-
-
-
----
-
-Mit diesen Pixelmatrizen unserer Bilder (dem Input) lernen CNNs nun, die Bilder zu erkennen (zum Beispiel als Klassifikation, d.h. Einordnung in eine Bildkategorie, dem Output). 
-
-Genauer, lernen CNNs 
-
-indem sie verschiedene Abstraktionsebenen der möglichen Klassen finden.
-
-Das heißt, in den ersten versteckten Schichten des neuronalen Netzes werden meistens allgemeine Muster, wie Kanten erkannt.
-
-Je weiter wir in den versteckten Schichten Richtung Output kommen, desto spezifischer werden die erkannten Muster, z.B. Texturen,
-
-grobe Muster,
-
-einzelne Teile der Objekte auf den Bildern
-
-und letztendlich ganze Objekte.
-
----
-
-Bilder könnten auch mit Multi-Layer Perceptronen (den MLPs) klassifiziert werden, aber in den meisten Fällen sind die nicht besonders gut darin. Also, worin besteht der Unterschied zwischen den klassischen MLPs und CNNs, der CNNs so viel besser darin macht, Bilder zu erkennen?
-
-Der wichtigste Unterschied ist, dass bei MLPs alle Pixel unabhängig voneinander gelernt werden. Das heißt, jede Pixelposition auf dem Bild ist ein unabhängiges Feature. Benachbarte Pixelwerte werden nicht in Betracht gezogen. Deshalb können die Objekte, die auf den Bildern gelernt wurden, nur dann richtig erkannt werden, wenn sie die selbe Anordung auf dem Bild, Orientierung, und so weiter, wie die Trainingsbilder haben. Außerdem wird durch die große Anzahl an Pixeln, also Featuren, die bei Bildern entstehen, die Anzahl der Parameter schnell extrem groß und kann nicht mehr effektiv trainiert werden. Durch Optimierung, z.B. mit Gradient Descent, gelernt werden bei MLPs die Gewichte der Neuronen.
 
 Bei CNNs werden dagegen Gruppen aus benachbarten Pixeln betrachtet. Das bezeichnen wir als "Local connectivity", denn in unserem Neuronalen Netz sind Neuronen später zunächst nur mit den lokal entsprechenden Neuronen in den Folgeschichten verbinden. Dadurch kann das Netz effizient und relativ schnell den Kontext von Mustern und Objekten lernen und diese auch in anderen Postionen auf dem Bild erkennen. Konkret funktionert das mit sogenannten Sliding Windows, also Fenstern, die eine Gruppe von Pixeln betrachten und dabei von links oben nach rechts unten das Bild abscannen. Gelernt werden dabei dann auch keine Gewichte, sondern Filter. Was diese Filter sind, erkläre ich im nächsten Schritt.
 Übrigens können wir CNNs nicht nur für Bilder, sondern auch sehr gut für andere Aufgaben, wie Textklassifikation verwenden.
