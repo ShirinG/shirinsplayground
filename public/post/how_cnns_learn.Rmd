@@ -1,5 +1,206 @@
 ---
 title: "How do Convolutional Neural Nets (CNNs) learn? + Keras example"
 draft: true
+author: Shirin Glander
+date: '2018-11-29'
+categories: ["machine learning"]
+tags: ["machine learning", "deep learning", "cnn", "codecentric.ai"]
+thumbnailImagePosition: left
+thumbnailImage: https://shiring.github.io/netlify_images/cnn_yt_video.png
+metaAlignment: center
+coverMeta: out
+slug: how_cnns_learn
 ---
+
+As with the other videos from our [codecentric.ai Bootcamp](https://bootcamp.codecentric.ai/) ([Random Forests](https://shirinsplayground.netlify.com/2018/10/ml_basics_rf/), [Neural Nets](https://shirinsplayground.netlify.com/2018/11/neural_nets_explained/) & [Gradient Boosting](https://shirinsplayground.netlify.com/2018/11/ml_basics_gbm/)), I am again sharing an English version of the script (plus R code) for this most recent addition on [How Convolutional Neural Nets work](https://youtu.be/MWPohcMtFLo).
+
+---
+
+In this lesson, I am going to explain **how computers learn to see**; meaning, how do they learn to recognize images or object on images?
+One of the most commonly used approaches to teach computers "vision" are **Convolutional Neural Nets**.
+
+This lesson builds on top of two other lessons: [Computer Vision Basics](https://youtu.be/JS4E04dJj0I) and [Neural Nets](https://shirinsplayground.netlify.com/2018/11/neural_nets_explained/). In the first video, Oli explains what computer vision is, how images are read by computers and how they can be analyzed with traditional approaches, like **Histograms of Oriented Gradients** and more. He also shows a very cool project, that he and colleagues worked on, where they programmed a small drone to recognize and avoid obstacles, like people. This video is only available in German, though. In the Neural Nets blog post, I show how Neural Nets work by explaining what **Multi-Layer Perceptrons (MLPs)** are and how they learn, using techniques like **gradient descent**, **backpropagation**, **loss** and **activation functions**.
+
+Convolutional Neural Nets are usually abbreviated either **CNNs** or **ConvNets**. They are a specific type of neural network that has very particular differences compared to MLPs. Basically, you can think of CNNs as working similarly to the **receptive fields of photoreceptors** in the human eye. Receptive fields in our eyes are small connected areas on the retina where groups of many photoreceptors stimulate much fewer ganglion cells. Thus, each ganglion cell can be stimulated by a large number of receptors, so that a complex input is condensed into a compressed output before it is further processed in the brain.
+
+Before we dive deeper into CNNs, I briefly want to recap how images can take on a numerical format. We need a numerical representation of our image because just like any other machine learning model or neural net, CNNs need data in form of numbers in order to learn! With images, these numbers are pixel values; when we have a greyscale image, these values represent a range of "greyness" from 0 (black) to 255 (white).
+
+Here is an example image from the fruits datasets, which is used in the [practical example for this lesson](https://shirinsplayground.netlify.com/2018/06/keras_fruits/). In general, data can be represented in different formats, e.g. as vectors, tables or matrices. I am using the `imager` package to read the image and have a look at the pixel values. 
+
+```{r}
+library(imager)
+im <- load.image("/Users/shiringlander/Documents/Github/codecentric.AI-bootcamp/notebooks/data/fruits-360/Training/Strawberry/100_100.jpg")
+```
+
+```{r}
+plot(im)
+```
+
+```{r}
+dim(im)
+```
+
+```{r}
+as.array(im)[25:75, 25:75, 1, 1] * 255
+```
+
+```{r}
+as.array(grayscale(im))[25:75, 25:75, 1, 1] * 255
+```
+
+```{r}
+channels(im, drop = TRUE)
+```
+
+---
+
+Daten können generell in verschiedenen Formaten angeordnet sein, zum Beispiel als Vektor, als Tabelle oder Matrix. Die Pixelwerte für unser Bild sind hier in so einem Matrixformat zu sehen; aus Platzgründen zeige ich aber nur einen Ausschnitt des Bildes, das eigentlich 100 x 100 Pixel groß ist und deshalb Pixelwerte in einer 100 x 100 Matrix hat. Diese Pixelwerte, die wir hier sehen, können entweder die Rohwerte von 0 bis 255 sein oder normierte Werte zeigen; immer stellen sie aber die Helligkeit des Pixels an einer bestimmten Stelle im Bild dar.
+
+Nun ist unsere Erdbeere auf dem Bild aber eigentlich nicht grau sondern rot. Auch Farbbilder können wir mit Pixelmatrizen darstellen. Hier stellen die Werte dann allerdings keine Helligkeiten oder Graustufen dar sondern Farbintensitäten - und zwar meisten für die drei Farbkanäle 
+rot,
+
+grün
+
+und blau. Diese Anordnung in drei Dimensionen (also Bildbreite x Bildhöhe x Bildkanäle) wird auch 3-dimensionaler Array genannt.
+
+
+
+
+
+---
+
+Mit diesen Pixelmatrizen unserer Bilder (dem Input) lernen CNNs nun, die Bilder zu erkennen (zum Beispiel als Klassifikation, d.h. Einordnung in eine Bildkategorie, dem Output). 
+
+Genauer, lernen CNNs 
+
+indem sie verschiedene Abstraktionsebenen der möglichen Klassen finden.
+
+Das heißt, in den ersten versteckten Schichten des neuronalen Netzes werden meistens allgemeine Muster, wie Kanten erkannt.
+
+Je weiter wir in den versteckten Schichten Richtung Output kommen, desto spezifischer werden die erkannten Muster, z.B. Texturen,
+
+grobe Muster,
+
+einzelne Teile der Objekte auf den Bildern
+
+und letztendlich ganze Objekte.
+
+---
+
+Bilder könnten auch mit Multi-Layer Perceptronen (den MLPs) klassifiziert werden, aber in den meisten Fällen sind die nicht besonders gut darin. Also, worin besteht der Unterschied zwischen den klassischen MLPs und CNNs, der CNNs so viel besser darin macht, Bilder zu erkennen?
+
+Der wichtigste Unterschied ist, dass bei MLPs alle Pixel unabhängig voneinander gelernt werden. Das heißt, jede Pixelposition auf dem Bild ist ein unabhängiges Feature. Benachbarte Pixelwerte werden nicht in Betracht gezogen. Deshalb können die Objekte, die auf den Bildern gelernt wurden, nur dann richtig erkannt werden, wenn sie die selbe Anordung auf dem Bild, Orientierung, und so weiter, wie die Trainingsbilder haben. Außerdem wird durch die große Anzahl an Pixeln, also Featuren, die bei Bildern entstehen, die Anzahl der Parameter schnell extrem groß und kann nicht mehr effektiv trainiert werden. Durch Optimierung, z.B. mit Gradient Descent, gelernt werden bei MLPs die Gewichte der Neuronen.
+
+Bei CNNs werden dagegen Gruppen aus benachbarten Pixeln betrachtet. Das bezeichnen wir als "Local connectivity", denn in unserem Neuronalen Netz sind Neuronen später zunächst nur mit den lokal entsprechenden Neuronen in den Folgeschichten verbinden. Dadurch kann das Netz effizient und relativ schnell den Kontext von Mustern und Objekten lernen und diese auch in anderen Postionen auf dem Bild erkennen. Konkret funktionert das mit sogenannten Sliding Windows, also Fenstern, die eine Gruppe von Pixeln betrachten und dabei von links oben nach rechts unten das Bild abscannen. Gelernt werden dabei dann auch keine Gewichte, sondern Filter. Was diese Filter sind, erkläre ich im nächsten Schritt.
+Übrigens können wir CNNs nicht nur für Bilder, sondern auch sehr gut für andere Aufgaben, wie Textklassifikation verwenden.
+
+---
+
+Auf jedem Fenster des Sliding Windows, 
+
+das zu Beispiel eine Größe 
+
+von 3 x 3 Pixeln haben kann,
+
+wird nämlich nun eine bestimmt mathematische Operation durchgeführt, die sogenannte Faltung - oder auf Englisch: convolution. Daher also auch der Name... ;-)
+
+Diese Faltung passiert für jedes Fenster des gesamten Bildes.
+
+...
+
+In diesem Video, das ihr vielleicht schon aus den Computer Vision Basics kennt, ist das einmal animiert gezeigt.
+
+Aber was ist nun diese Faltung? Die Faltung passiert über das Multiplizieren der Pixelwerte in unserem Fenster mit einem sogenannten Filter. Dieser Filter ist nichts anderes als eine Matrix mit den selben Dimensionen des Sliding Windows, hier 3 x 3. Je nachdem, welche Werte in einem Filter stehen, führt die Faltung zu einer bestimmten Transformation des Originalbildes. Hier ist der Filter für das Schärfen von Bildern zu sehen.
+
+Das Ganze läuft nun so ab, wie in dieser großartigen Abbildung von setosa.io zu sehen ist. Das linke Bild ist das Original, das rechte zeigt das transformierte Bild nach Anwendung des Filters. 
+
+Die Pixel des Fensters, das gerade betrachtete wird sind in den Kästchen in der Mitte zu sehen. Jeder Pixelwert in dem Fenster wird nun mit dem Wert an der entprechenden Stelle im Filter multipliziert und mit allen anderen so multiplizierten Werten aufaddiert. Das Ergebnis ist hier -97 und ist der neue Wert für das transformierte Bild.
+
+---
+
+Zwei wichtige Hyperparameter für CNNs sind Padding und die Schrittgröße.
+
+Padding bezeichnet das Hinzufügen von extra Pixelschichten am Rand des Bildes, damit jeder Pixel des eigentlichen Bildes beim scannen des Sliding Windows gleich häufig gefaltet wird. Würden wir kein Padding anwenden, würden die Randpixel weniger häufig betrachtet, als die Pixel in der Mitte des Bildes - und unser Bild würde nach der Transformation kleiner werden. Es gibt mehrere Arten von Padding. Bei "same" werden die Randpixel dupliziert
+
+und an an den Rand 
+
+hinzugefügt. Alternativ könnten wir die Ränder auch mit Nullern auffüllen, dem sogenannten Zero-Padding.
+
+Jetzt kann das Sliding Window oben link starten.
+
+Die Schrittgröße bezeichnet nun, wie weit das Sliding Window bei jedem Schritt vorrückt. Meisten wird eine Schrittgröße von 1 verwendet, d.h. dass das Sliding Window nach jeder Faltung jeweils einen Pixel weiterwandert. Würden wir die Schrittgröße vergrößern, würde die Berechnung des neuronalen Netzes schneller gehen, wir würden aber auch nicht so detaillierte Muster erkennen können. Und unser Bild würde sich im Output verkleinern.
+
+---
+
+Kommen wir aber noch mal zurück zu den Filtern. Manchmal werden Filter, bzw. Fenster auch als Kernel oder Filter Kernel bezeichnet. Tatsächlich sind Filter Sammlungen von Kernels, d.h. wenn wir mit Farbbildern und 3 Kanälen - also 3 Dimensionen - arbeiten, haben wir einen Kernel pro Kanal, aus dem sich ein Filter zusammensetzt. Pro Filter bekommen wir dann EINEN Ergebniswert aus dem Skalarprodukt zurück!
+Beispiele für andere Filter können zum Beispiel das Originalbild verwaschen,
+
+untere 
+
+oder obere horizontale Kanten erkennen.
+
+Im Prinzip können aber beliebige Werte in die Filter eingesetzt werden, 
+
+so dass verschiedenste Muster in dem Bild hervortreten. Jedes Muster stellt eine sogenannte Feature Map oder Activation Map dar. Die Werte, die an den einzelnen Stellen des Filters stehen, sollen jetzt von unserem neuronalen Netz gelernt werden. Das CNN lernt also, welche Transformation es wann durchführen muss, um die richtigen Muster und Objekte in den Bildern zu erkennen. Dafür lernt das CNN nicht nur einen Filter, sondern sehr sehr viele. Es lernt sogar in jeder versteckten SCHICHT mehrere Filter parallel.
+
+Diese unabhängig voneinander parallel gelernten Filter, bzw. die transformierten Output-Bilder nach der Faltung, produzieren die sogenannten 
+
+Stacks of Feature Maps oder Activation Maps. Die Anzahl der zu trainierenden Parameter ist bei Faltungen deutlich geringer als bei voll verknüpften Neuronen in MLPs. In den Beispielen, die ich hier gezeigt habe, haben wir Graustufenbilder und 2-dimensionale Filter gesehen. Bei Farbbildern mit 3 Farbkanälen hätten wir entsprechend 3-dimensionale Filter, die das Ergbenis ebenfalls mit dem Skalarprodukt aus Filter und Bildausschnitt berechnen.
+
+---
+
+Wie CNNs LERNEN Bilder mit Hilfe von Filtern und Faltungen zu erkennen, haben wir jetzt gesehen. CNN-Architekturen bestehen aber nicht nur aus Schichten, in denen Faltung passiert, den Convolutional Layern, sondern sie haben zusätzlich sogenannte Pooling Schichten. In den Pooling Schichten werden die Bilder (also die transformierten Outputs aus vorhergehenden Faltungsschichten) verkleinert.
+
+Dafür wird auch wieder ein Sliding Window verwendet, dieses muss nicht die selbe Größe haben, wie das Sliding Window aus den Faltungsschichten aber hier zeige ich das Prinzip beispielhaft ebenfalls an einem 3 x 3 Fenster. Wichtig ist dabei, dass das Sliding Window beim Pooling meist nicht überlappt, sondern jeder Pixel genau 1x betrachtet wird, damit das Output-Bild entsprechend kleiner wird.
+
+Es gibt mehrere Arten, wie Bilder mit Pooling verkleinert werden können. Die häufigsten sind
+
+Max Pooling, wo nur der größte Wert jedes Fensters behalten wird,
+
+Average Pooling, wo der Durschschnittswert aus jedem Fenster gebildet wird
+
+und Sum Pooling, wo die Summe aller Werte gebildet wird. Pooling arbeitet dabei unabhängig auf jeder einzelnen Feature Map und sorgt nicht nur für eine Reduktion des Bildes und damit an zu optimierenden Parametern, sondern hilft auch dabei, allgemeingültige Feature zu extrahieren, die robust gegenüber kleineren Änderungen des Inputs sind.
+
+---
+
+Okay, setzen wir nun also die Faltungsschichten und Pooling-Schichten zu einer typischen CNN-Architektur zusammen.
+
+Wir starten natürlich wie immer mit dem Input, in unserem Fall Bilder.
+
+Nun kommt in der Regel 1 oder 2 Faltungsschichten (plus Aktivierungsfunktion nach jeder Faltung, z.B. Rectified Linear Units),
+
+gefolgt von einer Pooling-Schicht.
+
+Von diesen Blöcken aus Convolution und Pooling können nun mehrere hintereinander gefügt werden. In der nächsten Lektion werden wir uns konkrete Beispiele mit unterschiedlich vielen Schichten und Weiterentwicklungen, wie AlexNet, VGG, Inception und ResNets, angucken. In dieser Lektion werden wir uns außerdem angucken, wie wir Activation Maps in unserem Modell visualisieren können.
+
+Bevor wir das Endergbnis, zum Beispiel eine Klasse bestimmen lassen, folgen eine oder ein paar wenige Dense Layer, als würden wir ein kleines MLP hinten dran hängen. In den Dense Layern werden deshab wieder Gewichte gelernt. Im Wesentlichen haben die Faltungsschichten in unserem Netz relevante Feature gefunden, und die Pooling-Schichten habe diese Information soweit verdichtet, dass es nun sinnvoll ist ein MLP zu trainieren, dass in der Lage ist die finale Klassifikation zu lernen.
+
+Und zuletzt haben wir eine Output-Schicht, ebenfalls wie bei einem einfachen MLP.
+
+---
+
+Sicher wollt ihr jetzt wissen, wie ihr selber ein CNN bauen und verwenden könnt. Dafür haben wir euch wieder ein Notebook mit einem Beispiel erstellt. In dieser Lektion verwenden wir Keras und TensorFlow um ein CNN zu trainieren, das Bilder von verschiedenen Früchten erkennen kann.
+
+Hier nur ein kleiner Ausschnitt aus dem Code. Vielleicht erkennt ihr schon Teile aus diesem Video, wie Convolution, padding und pooling? 
+
+Die vollständige Erklärung mit Code zum Mitmachen findet ihr in dem Notebook zu diesem Video!
+
+You can find the R version of the Python code, which we provide for this course in [this blog article](https://shirinsplayground.netlify.com/2018/06/keras_fruits/).
+
+---
+
+[Video](https://youtu.be/MWPohcMtFLo):
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/MWPohcMtFLo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+[Slides](https://codecentric.slides.com/shiringlander/intro_cnns):
+
+<iframe src="//codecentric.slides.com/shiringlander/intro_cnns/embed" width="576" height="420" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+---
+
+```{r}
+sessionInfo()
+```
+
 

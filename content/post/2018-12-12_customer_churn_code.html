@@ -1,12 +1,12 @@
 ---
 title: "Code for case study - Customer Churn with Keras/TensorFlow and H2O"
-draft: true
+draft: false
 author: Shirin Glander
 date: '2018-12-12'
 categories: ["R"]
-tags: ["API", "machine learning", "plumber"]
+tags: ["R", "machine learning", "predictive analytics", "customer churn"]
 thumbnailImagePosition: left
-thumbnailImage: 
+thumbnailImage: post/2018-12-12_customer_churn_code_files/figure-html/prop_table-1.png
 metaAlignment: center
 coverMeta: out
 slug: customer_churn_code
@@ -14,7 +14,8 @@ slug: customer_churn_code
 
 
 
-<p>This is code that accompanies a <a href="https://www.dpunkt.de/buecher/13208/9783864906107-data-science.html">book</a> chapter on customer churn that I have written for dpunkt Verlag. The book is in German and will probably appear in December: <a href="https://www.dpunkt.de/buecher/13208/9783864906107-data-science.html" class="uri">https://www.dpunkt.de/buecher/13208/9783864906107-data-science.html</a>.</p>
+<p>This is code that accompanies a <a href="https://www.dpunkt.de/buecher/13208/9783864906107-data-science.html">book</a> chapter on customer churn that I have written for the German dpunkt Verlag. The book is in German and will probably appear in February: <a href="https://www.dpunkt.de/buecher/13208/9783864906107-data-science.html" class="uri">https://www.dpunkt.de/buecher/13208/9783864906107-data-science.html</a>.</p>
+<p>The code you find below can be used to recreate all figures and analyses from this book chapter. Because the content is exclusively for the book, my descriptions around the code had to be minimal. But I’m sure, you can get the gist, even without the book. ;-)</p>
 <div id="inspiration-sources" class="section level1">
 <h1>Inspiration &amp; Sources</h1>
 <p>Thank you to the following people for providing excellent code examples about customer churn:</p>
@@ -30,7 +31,7 @@ slug: customer_churn_code
 <p>All analyses are done in R using RStudio. For detailed session information including R version, operating system and package versions, see the <code>sessionInfo()</code> output at the end of this document.</p>
 <p>All figures are produced with ggplot2.</p>
 <ul>
-<li>libraries</li>
+<li>Libraries</li>
 </ul>
 <pre class="r"><code># Load libraries
 library(tidyverse) # for tidy data analysis
@@ -51,33 +52,40 @@ theme_set(theme_minimal())</code></pre>
 install_keras()</code></pre>
 <p><br></p>
 </div>
-<div id="data-preparation" class="section level1 tabset tabset-fade tabset-pills">
+<div id="data-preparation" class="section level1">
 <h1>Data preparation</h1>
 <div id="the-dataset" class="section level2">
 <h2>The dataset</h2>
 <p>The Telco Customer Churn data set is the same one that Matt Dancho used in his post (see above). It was downloaded from <a href="https://www.ibm.com/communities/analytics/watson-analytics-blog/predictive-insights-in-the-telco-customer-churn-data-set/">IBM Watson</a></p>
 <pre class="r"><code>churn_data_raw &lt;- read_csv(&quot;WA_Fn-UseC_-Telco-Customer-Churn.csv&quot;)</code></pre>
-<pre class="r"><code>head(churn_data_raw)</code></pre>
-<pre><code>## # A tibble: 6 x 21
-##   customerID gender SeniorCitizen Partner Dependents tenure PhoneService
-##   &lt;chr&gt;      &lt;chr&gt;          &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;       
-## 1 7590-VHVEG Female             0 Yes     No              1 No          
-## 2 5575-GNVDE Male               0 No      No             34 Yes         
-## 3 3668-QPYBK Male               0 No      No              2 Yes         
-## 4 7795-CFOCW Male               0 No      No             45 No          
-## 5 9237-HQITU Female             0 No      No              2 Yes         
-## 6 9305-CDSKC Female             0 No      No              8 Yes         
-## # ... with 14 more variables: MultipleLines &lt;chr&gt;, InternetService &lt;chr&gt;,
-## #   OnlineSecurity &lt;chr&gt;, OnlineBackup &lt;chr&gt;, DeviceProtection &lt;chr&gt;,
-## #   TechSupport &lt;chr&gt;, StreamingTV &lt;chr&gt;, StreamingMovies &lt;chr&gt;,
-## #   Contract &lt;chr&gt;, PaperlessBilling &lt;chr&gt;, PaymentMethod &lt;chr&gt;,
-## #   MonthlyCharges &lt;dbl&gt;, TotalCharges &lt;dbl&gt;, Churn &lt;chr&gt;</code></pre>
-<pre class="r"><code>dim(churn_data_raw)</code></pre>
-<pre><code>## [1] 7043   21</code></pre>
+<pre class="r"><code>glimpse(churn_data_raw)</code></pre>
+<pre><code>## Observations: 7,043
+## Variables: 21
+## $ customerID       &lt;chr&gt; &quot;7590-VHVEG&quot;, &quot;5575-GNVDE&quot;, &quot;3668-QPYBK&quot;, &quot;77...
+## $ gender           &lt;chr&gt; &quot;Female&quot;, &quot;Male&quot;, &quot;Male&quot;, &quot;Male&quot;, &quot;Female&quot;, &quot;...
+## $ SeniorCitizen    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ Partner          &lt;chr&gt; &quot;Yes&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;N...
+## $ Dependents       &lt;chr&gt; &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;Yes&quot;, &quot;N...
+## $ tenure           &lt;dbl&gt; 1, 34, 2, 45, 2, 8, 22, 10, 28, 62, 13, 16, 5...
+## $ PhoneService     &lt;chr&gt; &quot;No&quot;, &quot;Yes&quot;, &quot;Yes&quot;, &quot;No&quot;, &quot;Yes&quot;, &quot;Yes&quot;, &quot;Yes&quot;...
+## $ MultipleLines    &lt;chr&gt; &quot;No phone service&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No phone ser...
+## $ InternetService  &lt;chr&gt; &quot;DSL&quot;, &quot;DSL&quot;, &quot;DSL&quot;, &quot;DSL&quot;, &quot;Fiber optic&quot;, &quot;F...
+## $ OnlineSecurity   &lt;chr&gt; &quot;No&quot;, &quot;Yes&quot;, &quot;Yes&quot;, &quot;Yes&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, ...
+## $ OnlineBackup     &lt;chr&gt; &quot;Yes&quot;, &quot;No&quot;, &quot;Yes&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;Yes&quot;, ...
+## $ DeviceProtection &lt;chr&gt; &quot;No&quot;, &quot;Yes&quot;, &quot;No&quot;, &quot;Yes&quot;, &quot;No&quot;, &quot;Yes&quot;, &quot;No&quot;, ...
+## $ TechSupport      &lt;chr&gt; &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;Yes&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;N...
+## $ StreamingTV      &lt;chr&gt; &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;Yes&quot;, &quot;Yes&quot;, &quot;...
+## $ StreamingMovies  &lt;chr&gt; &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;Yes&quot;, &quot;No&quot;, &quot;N...
+## $ Contract         &lt;chr&gt; &quot;Month-to-month&quot;, &quot;One year&quot;, &quot;Month-to-month...
+## $ PaperlessBilling &lt;chr&gt; &quot;Yes&quot;, &quot;No&quot;, &quot;Yes&quot;, &quot;No&quot;, &quot;Yes&quot;, &quot;Yes&quot;, &quot;Yes&quot;...
+## $ PaymentMethod    &lt;chr&gt; &quot;Electronic check&quot;, &quot;Mailed check&quot;, &quot;Mailed c...
+## $ MonthlyCharges   &lt;dbl&gt; 29.85, 56.95, 53.85, 42.30, 70.70, 99.65, 89....
+## $ TotalCharges     &lt;dbl&gt; 29.85, 1889.50, 108.15, 1840.75, 151.65, 820....
+## $ Churn            &lt;chr&gt; &quot;No&quot;, &quot;No&quot;, &quot;Yes&quot;, &quot;No&quot;, &quot;Yes&quot;, &quot;Yes&quot;, &quot;No&quot;, ...</code></pre>
 <div id="eda" class="section level3">
 <h3>EDA</h3>
 <ul>
-<li>proportion of churn</li>
+<li>Proportion of churn</li>
 </ul>
 <pre class="r"><code>churn_data_raw %&gt;%
   count(Churn)</code></pre>
@@ -87,7 +95,7 @@ install_keras()</code></pre>
 ## 1 No     5174
 ## 2 Yes    1869</code></pre>
 <ul>
-<li>plot categorical features</li>
+<li>Plot categorical features</li>
 </ul>
 <pre class="r"><code>churn_data_raw %&gt;%
   mutate(SeniorCitizen = as.character(SeniorCitizen)) %&gt;%
@@ -105,7 +113,7 @@ install_keras()</code></pre>
     scale_fill_tableau()</code></pre>
 <p><img src="/post/2018-12-12_customer_churn_code_files/figure-html/eda_chr-1.png" width="1152" /></p>
 <ul>
-<li>plot numerical features</li>
+<li>Plot numerical features</li>
 </ul>
 <pre class="r"><code>churn_data_raw %&gt;%
   select(-customerID) %&gt;%
@@ -120,11 +128,17 @@ install_keras()</code></pre>
     scale_color_tableau() +
     scale_fill_tableau()</code></pre>
 <p><img src="/post/2018-12-12_customer_churn_code_files/figure-html/eda_num-1.png" width="1152" /></p>
+<ul>
+<li>Remove customer ID as it doesn’t provide information</li>
+</ul>
 <pre class="r"><code>churn_data &lt;- churn_data_raw %&gt;%
   select(-customerID)</code></pre>
 </div>
 <div id="dealing-with-missing-values" class="section level3">
 <h3>Dealing with missing values</h3>
+<ul>
+<li>Pattern of missing data</li>
+</ul>
 <pre class="r"><code>md.pattern(churn_data, plot = FALSE)</code></pre>
 <pre><code>##      gender SeniorCitizen Partner Dependents tenure PhoneService
 ## 7032      1             1       1          1      1            1
@@ -142,32 +156,47 @@ install_keras()</code></pre>
 ## 7032                1             1              1     1            1  0
 ## 11                  1             1              1     1            0  1
 ##                     0             0              0     0           11 11</code></pre>
+<ul>
+<li>Option 1: impute missing data =&gt; NOT done here!</li>
+</ul>
 <pre class="r"><code>imp &lt;- mice(data = churn_data,  print = FALSE)
 train_data_impute &lt;- complete(imp, &quot;long&quot;)</code></pre>
+<ul>
+<li>Option 2: drop missing data =&gt; done here because not too much information is lost by removing it</li>
+</ul>
 <pre class="r"><code>churn_data &lt;- churn_data %&gt;%
   drop_na()</code></pre>
 </div>
 </div>
 <div id="training-and-test-split" class="section level2">
 <h2>Training and test split</h2>
+<ul>
+<li>Partition data into training and test set</li>
+</ul>
 <pre class="r"><code>set.seed(42)
-index &lt;- createDataPartition(churn_data$Churn, p = 0.75, list = FALSE)</code></pre>
+index &lt;- createDataPartition(churn_data$Churn, p = 0.7, list = FALSE)</code></pre>
+<ul>
+<li>Partition test set again into validation and test set</li>
+</ul>
 <pre class="r"><code>train_data &lt;- churn_data[index, ]
 test_data  &lt;- churn_data[-index, ]
 
-index2 &lt;- createDataPartition(train_data$Churn, p = 0.8, list = FALSE)
+index2 &lt;- createDataPartition(test_data$Churn, p = 0.5, list = FALSE)
 
-train_data &lt;- train_data[index2, ]
-valid_data &lt;- train_data[-index2, ]</code></pre>
+valid_data &lt;- test_data[-index2, ]
+test_data &lt;- test_data[index2, ]</code></pre>
 <pre class="r"><code>nrow(train_data)</code></pre>
-<pre><code>## [1] 4221</code></pre>
+<pre><code>## [1] 4924</code></pre>
 <pre class="r"><code>nrow(valid_data)</code></pre>
-<pre><code>## [1] 848</code></pre>
+<pre><code>## [1] 1054</code></pre>
 <pre class="r"><code>nrow(test_data)</code></pre>
-<pre><code>## [1] 1757</code></pre>
+<pre><code>## [1] 1054</code></pre>
 </div>
 <div id="pre-processing" class="section level2">
 <h2>Pre-Processing</h2>
+<ul>
+<li>Create recipe for preprocessing</li>
+</ul>
 <blockquote>
 <p>A recipe is a description of what steps should be applied to a data set in order to get it ready for data analysis.</p>
 </blockquote>
@@ -176,45 +205,57 @@ valid_data &lt;- train_data[-index2, ]</code></pre>
   step_center(all_predictors(), -all_outcomes()) %&gt;%
   step_scale(all_predictors(), -all_outcomes()) %&gt;%
   prep(data = train_data)</code></pre>
-<pre class="r"><code>train_data &lt;- bake(recipe_churn, newdata = train_data) %&gt;%
+<ul>
+<li>Apply recipe to three datasets</li>
+</ul>
+<pre class="r"><code>train_data &lt;- bake(recipe_churn, new_data = train_data) %&gt;%
   select(Churn, everything())
 
-valid_data &lt;- bake(recipe_churn, newdata = valid_data) %&gt;%
+valid_data &lt;- bake(recipe_churn, new_data = valid_data) %&gt;%
   select(Churn, everything())
 
-test_data &lt;- bake(recipe_churn, newdata = test_data) %&gt;%
+test_data &lt;- bake(recipe_churn, new_data = test_data) %&gt;%
   select(Churn, everything())</code></pre>
-<pre class="r"><code>train_y_drop &lt;- to_categorical(as.integer(train_data$Churn) - 1, 2)
+<ul>
+<li>For Keras create response variable as one-hot encoded matrix</li>
+</ul>
+<pre class="r"><code>train_y_drop &lt;- to_categorical(as.integer(as.factor(train_data$Churn)) - 1, 2)
 colnames(train_y_drop) &lt;- c(&quot;No&quot;, &quot;Yes&quot;)
 
-valid_y_drop &lt;- to_categorical(as.integer(valid_data$Churn) - 1, 2)
+valid_y_drop &lt;- to_categorical(as.integer(as.factor(valid_data$Churn)) - 1, 2)
 colnames(valid_y_drop) &lt;- c(&quot;No&quot;, &quot;Yes&quot;)
 
-test_y_drop &lt;- to_categorical(as.integer(test_data$Churn) - 1, 2)
+test_y_drop &lt;- to_categorical(as.integer(as.factor(test_data$Churn)) - 1, 2)
 colnames(test_y_drop) &lt;- c(&quot;No&quot;, &quot;Yes&quot;)</code></pre>
+<ul>
+<li>Because we want to train on a binary outcome, we can delete the “No” column</li>
+</ul>
 <pre class="r"><code># if training with binary crossentropy
 train_y_drop &lt;- train_y_drop[, 2, drop = FALSE]
 head(train_y_drop)</code></pre>
 <pre><code>##      Yes
-## [1,]   1
+## [1,]   0
 ## [2,]   1
-## [3,]   0
-## [4,]   1
-## [5,]   0
+## [3,]   1
+## [4,]   0
+## [5,]   1
 ## [6,]   0</code></pre>
 <pre class="r"><code>valid_y_drop &lt;- valid_y_drop[, 2, drop = FALSE]
 test_y_drop &lt;- test_y_drop[, 2, drop = FALSE]</code></pre>
+<ul>
+<li>Remove response variable from preprocessed data (for Keras)</li>
+</ul>
 <pre class="r"><code>train_data_bk &lt;- select(train_data, -Churn)
 head(train_data_bk)</code></pre>
 <pre><code>## # A tibble: 6 x 30
-##   SeniorCitizen tenure MonthlyCharges TotalCharges gender_Male Partner_Yes
-##           &lt;dbl&gt;  &lt;dbl&gt;          &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
-## 1        -0.439 -1.23          -0.356       -0.956       0.973      -0.965
-## 2        -0.439 -1.23           0.207       -0.937      -1.03       -0.965
-## 3        -0.439 -0.904         -1.16        -0.870      -1.03       -0.965
-## 4        -0.439 -0.167          1.35         0.356      -1.03        1.04 
-## 5        -0.439  1.22          -0.279        0.554       0.973      -0.965
-## 6        -0.439 -0.781         -0.487       -0.742       0.973       1.04 
+##   SeniorCitizen  tenure MonthlyCharges TotalCharges gender_Male Partner_Yes
+##           &lt;dbl&gt;   &lt;dbl&gt;          &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
+## 1        -0.439  0.0765         -0.256       -0.163       0.979      -0.966
+## 2        -0.439 -1.23           -0.359       -0.949       0.979      -0.966
+## 3        -0.439 -0.983           1.17        -0.635      -1.02       -0.966
+## 4        -0.439 -0.901          -1.16        -0.863      -1.02       -0.966
+## 5        -0.439 -0.168           1.34         0.347      -1.02        1.03 
+## 6        -0.439  1.22           -0.282        0.542       0.979      -0.966
 ## # ... with 24 more variables: Dependents_Yes &lt;dbl&gt;,
 ## #   PhoneService_Yes &lt;dbl&gt;, MultipleLines_No.phone.service &lt;dbl&gt;,
 ## #   MultipleLines_Yes &lt;dbl&gt;, InternetService_Fiber.optic &lt;dbl&gt;,
@@ -230,16 +271,18 @@ head(train_data_bk)</code></pre>
 ## #   PaymentMethod_Electronic.check &lt;dbl&gt;, PaymentMethod_Mailed.check &lt;dbl&gt;</code></pre>
 <pre class="r"><code>valid_data_bk &lt;- select(valid_data, -Churn)
 test_data_bk &lt;- select(test_data, -Churn)</code></pre>
+<ul>
+<li>Alternative to above, to convert response variable into numeric format where 1 = Yes and 0 = No</li>
+</ul>
 <pre class="r"><code>train_data$Churn &lt;- ifelse(train_data$Churn == &quot;Yes&quot;, 1, 0)
 valid_data$Churn &lt;- ifelse(valid_data$Churn == &quot;Yes&quot;, 1, 0)
 test_data$Churn &lt;- ifelse(test_data$Churn == &quot;Yes&quot;, 1, 0)</code></pre>
-<pre class="r"><code># alternative - not run
-train_data_impute_bk &lt;- bake(recipe_churn, newdata = train_data_impute) %&gt;%
-  select(Churn, everything())
-train_data_impute_bk &lt;- cbind(train_data_impute$.imp, train_data_impute_bk)</code></pre>
 </div>
 <div id="modeling-with-keras" class="section level2">
-<h2>Modeling with keras</h2>
+<h2>Modeling with Keras</h2>
+<ul>
+<li>Define a simple MLP</li>
+</ul>
 <pre class="r"><code>model_keras &lt;- keras_model_sequential()
 
 model_keras %&gt;% 
@@ -284,6 +327,9 @@ summary(model_keras)</code></pre>
 ## Trainable params: 1,665
 ## Non-trainable params: 0
 ## ___________________________________________________________________________</code></pre>
+<ul>
+<li>Fit model (we could have used validation split on the trainings data instead of creating a validation set =&gt; see #)</li>
+</ul>
 <pre class="r"><code>fit_keras &lt;- fit(model_keras, 
     x = as.matrix(train_data_bk), 
     y = train_y_drop,
@@ -293,6 +339,9 @@ summary(model_keras)</code></pre>
     validation_data = list(as.matrix(valid_data_bk), valid_y_drop),
     verbose = 2
     )</code></pre>
+<ul>
+<li>Plot Keras training results</li>
+</ul>
 <pre class="r"><code>plot(fit_keras) +
   scale_color_tableau() +
   scale_fill_tableau()</code></pre>
@@ -300,8 +349,14 @@ summary(model_keras)</code></pre>
 </div>
 <div id="evaluation" class="section level2">
 <h2>Evaluation</h2>
+<ul>
+<li>Predict classes and probabilities</li>
+</ul>
 <pre class="r"><code>pred_classes_test &lt;- predict_classes(object = model_keras, x = as.matrix(test_data_bk))
 pred_proba_test  &lt;- predict_proba(object = model_keras, x = as.matrix(test_data_bk))</code></pre>
+<ul>
+<li>Create results table</li>
+</ul>
 <pre class="r"><code>test_results &lt;- tibble(
   actual_yes = as.factor(as.vector(test_y_drop)),
   pred_classes_test = as.factor(as.vector(pred_classes_test)),
@@ -309,64 +364,81 @@ pred_proba_test  &lt;- predict_proba(object = model_keras, x = as.matrix(test_da
   No = 1 - as.vector(pred_proba_test))
 head(test_results)</code></pre>
 <pre><code>## # A tibble: 6 x 4
-##   actual_yes pred_classes_test    Yes    No
-##   &lt;fct&gt;      &lt;fct&gt;              &lt;dbl&gt; &lt;dbl&gt;
-## 1 0          1                 0.510  0.490
-## 2 0          0                 0.0342 0.966
-## 3 1          1                 0.726  0.274
-## 4 0          0                 0.471  0.529
-## 5 1          0                 0.192  0.808
-## 6 1          0                 0.371  0.629</code></pre>
+##   actual_yes pred_classes_test     Yes    No
+##   &lt;fct&gt;      &lt;fct&gt;               &lt;dbl&gt; &lt;dbl&gt;
+## 1 0          1                 0.515   0.485
+## 2 0          0                 0.0142  0.986
+## 3 1          1                 0.575   0.425
+## 4 1          0                 0.436   0.564
+## 5 0          0                 0.00362 0.996
+## 6 0          0                 0.0309  0.969</code></pre>
+<ul>
+<li>Calculate confusion matrix</li>
+</ul>
 <pre class="r"><code>test_results %&gt;% 
   conf_mat(actual_yes, pred_classes_test)</code></pre>
 <pre><code>##           Truth
-## Prediction    0    1
-##          0 1165  223
-##          1  125  244</code></pre>
+## Prediction   0   1
+##          0 690 124
+##          1  84 156</code></pre>
+<ul>
+<li>Calculate metrics</li>
+</ul>
 <pre class="r"><code>test_results %&gt;% 
   metrics(actual_yes, pred_classes_test)</code></pre>
-<pre><code>## # A tibble: 1 x 1
-##   accuracy
-##      &lt;dbl&gt;
-## 1    0.802</code></pre>
+<pre><code>## # A tibble: 2 x 3
+##   .metric  .estimator .estimate
+##   &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;
+## 1 accuracy binary         0.803
+## 2 kap      binary         0.470</code></pre>
+<ul>
+<li>Are under the ROC curve</li>
+</ul>
 <pre class="r"><code>test_results %&gt;% 
   roc_auc(actual_yes, Yes)</code></pre>
-<pre><code>## [1] 0.8402146</code></pre>
+<pre><code>## # A tibble: 1 x 3
+##   .metric .estimator .estimate
+##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+## 1 roc_auc binary         0.837</code></pre>
+<ul>
+<li>Precision and recall</li>
+</ul>
 <pre class="r"><code>tibble(
-    precision = test_results %&gt;% yardstick::precision(actual_yes, pred_classes_test),
-    recall    = test_results %&gt;% yardstick::recall(actual_yes, pred_classes_test)
+    precision = test_results %&gt;% yardstick::precision(actual_yes, pred_classes_test) %&gt;% select(.estimate) %&gt;% as.numeric(),
+    recall    = test_results %&gt;% yardstick::recall(actual_yes, pred_classes_test) %&gt;% select(.estimate) %&gt;% as.numeric()
 )</code></pre>
 <pre><code>## # A tibble: 1 x 2
 ##   precision recall
 ##       &lt;dbl&gt;  &lt;dbl&gt;
-## 1     0.839  0.903</code></pre>
-<pre class="r"><code># F1-Statistic
-test_results %&gt;% yardstick::f_meas(actual_yes, pred_classes_test, beta = 1)</code></pre>
-<pre><code>## [1] 0.8700523</code></pre>
+## 1     0.848  0.891</code></pre>
+<ul>
+<li>F1-Statistic</li>
+</ul>
+<pre class="r"><code>test_results %&gt;% yardstick::f_meas(actual_yes, pred_classes_test, beta = 1)</code></pre>
+<pre><code>## # A tibble: 1 x 3
+##   .metric .estimator .estimate
+##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+## 1 f_meas  binary         0.869</code></pre>
 </div>
 <div id="h2o" class="section level2">
 <h2>H2O</h2>
+<p>Shows an alternative to Keras!</p>
+<ul>
+<li>Initialise H2O instance and convert data to h2o frame</li>
+</ul>
 <pre class="r"><code>library(h2o)
 h2o.init(nthreads = -1)</code></pre>
-<pre><code>## 
-## H2O is not running yet, starting it now...
-## 
-## Note:  In case of errors look at the following log files:
-##     /var/folders/5j/v30zfr7s14qfhqwqdmqmpxw80000gn/T//RtmpU7M4Vg/h2o_shiringlander_started_from_r.out
-##     /var/folders/5j/v30zfr7s14qfhqwqdmqmpxw80000gn/T//RtmpU7M4Vg/h2o_shiringlander_started_from_r.err
-## 
-## 
-## Starting H2O JVM and connecting: .. Connection successful!
+<pre><code>##  Connection successful!
 ## 
 ## R is connected to the H2O cluster: 
-##     H2O cluster uptime:         5 seconds 29 milliseconds 
+##     H2O cluster uptime:         1 hours 16 minutes 
 ##     H2O cluster timezone:       Europe/Berlin 
 ##     H2O data parsing timezone:  UTC 
-##     H2O cluster version:        3.20.0.2 
-##     H2O cluster version age:    3 months and 8 days  
-##     H2O cluster name:           H2O_started_from_R_shiringlander_zvk734 
+##     H2O cluster version:        3.20.0.8 
+##     H2O cluster version age:    2 months and 20 days  
+##     H2O cluster name:           H2O_started_from_R_shiringlander_wcd642 
 ##     H2O cluster total nodes:    1 
-##     H2O cluster total memory:   3.56 GB 
+##     H2O cluster total memory:   3.03 GB 
 ##     H2O cluster total cores:    8 
 ##     H2O cluster allowed cores:  8 
 ##     H2O cluster healthy:        TRUE 
@@ -378,236 +450,141 @@ h2o.init(nthreads = -1)</code></pre>
 ##     R Version:                  R version 3.5.1 (2018-07-02)</code></pre>
 <pre class="r"><code>h2o.no_progress()
 
-train_data_hf &lt;- as.h2o(train_data)
-test &lt;- as.h2o(test_data)</code></pre>
-<pre class="r"><code>splits &lt;- h2o.splitFrame(train_data_hf, 
-                         ratios = c(0.8), 
-                         seed = 1)
+train_hf &lt;- as.h2o(train_data)
+valid_hf &lt;- as.h2o(valid_data)
+test_hf &lt;- as.h2o(test_data)
 
-train &lt;- splits[[1]]
-valid &lt;- splits[[2]]
-
-response &lt;- &quot;Churn&quot;
-features &lt;- setdiff(colnames(train), response)
-
-# For binary classification, response should be a factor
-train[, response] &lt;- as.factor(train[, response])
-valid[, response] &lt;- as.factor(valid[, response])
-test[, response] &lt;- as.factor(test[, response])</code></pre>
-<pre class="r"><code>summary(train$Churn, exact_quantiles = TRUE)</code></pre>
+response &lt;- &quot;Churn&quot;</code></pre>
+<pre class="r"><code># For binary classification, response should be a factor
+train_hf[, response] &lt;- as.factor(train_hf[, response])
+valid_hf[, response] &lt;- as.factor(valid_hf[, response])
+test_hf[, response] &lt;- as.factor(test_hf[, response])</code></pre>
+<pre class="r"><code>summary(train_hf$Churn, exact_quantiles = TRUE)</code></pre>
 <pre><code>##  Churn  
-##  0:2491 
-##  1: 900</code></pre>
-<pre class="r"><code>summary(valid$Churn, exact_quantiles = TRUE)</code></pre>
+##  0:3615 
+##  1:1309</code></pre>
+<pre class="r"><code>summary(valid_hf$Churn, exact_quantiles = TRUE)</code></pre>
 <pre><code>##  Churn 
-##  0:608 
-##  1:222</code></pre>
-<pre class="r"><code>summary(test$Churn, exact_quantiles = TRUE)</code></pre>
-<pre><code>##  Churn  
-##  0:1290 
-##  1: 467</code></pre>
+##  0:774 
+##  1:280</code></pre>
+<pre class="r"><code>summary(test_hf$Churn, exact_quantiles = TRUE)</code></pre>
+<pre><code>##  Churn 
+##  0:774 
+##  1:280</code></pre>
+<ul>
+<li>Train model with <a href="http://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html">AutoML</a>.</li>
+</ul>
 <blockquote>
 <p>“During model training, you might find that the majority of your data belongs in a single class. For example, consider a binary classification model that has 100 rows, with 80 rows labeled as class 1 and the remaining 20 rows labeled as class 2. This is a common scenario, given that machine learning attempts to predict class 1 with the highest accuracy. It can also be an example of an imbalanced dataset, in this case, with a ratio of 4:1. The balance_classes option can be used to balance the class distribution. When enabled, H2O will either undersample the majority classes or oversample the minority classes. Note that the resulting model will also correct the final probabilities (“undo the sampling”) using a monotonic transform, so the predicted probabilities of the first model will differ from a second model. However, because AUC only cares about ordering, it won’t be affected. If this option is enabled, then you can also specify a value for the class_sampling_factors and max_after_balance_size options.” <a href="http://docs.h2o.ai/h2o/latest-stable/h2o-docs/data-science/algo-params/balance_classes.html" class="uri">http://docs.h2o.ai/h2o/latest-stable/h2o-docs/data-science/algo-params/balance_classes.html</a></p>
 </blockquote>
-<p>The model was trained with <a href="http://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html">AutoML</a>. The best model was a Best Of Family Stacked Ensemble.</p>
 <pre class="r"><code>aml &lt;- h2o.automl(x = features, 
                   y = response,
-                  training_frame = train,
-                  validation_frame = valid,
+                  training_frame = train_hf,
+                  validation_frame = valid_hf,
                   balance_classes = TRUE,
-                  max_runtime_secs = 30)
+                  max_runtime_secs = 3600)
 
 # View the AutoML Leaderboard
 lb &lt;- aml@leaderboard
-lb</code></pre>
-<pre><code>##                                                model_id       auc
-## 1    StackedEnsemble_AllModels_0_AutoML_20180924_080417 0.8390006
-## 2 StackedEnsemble_BestOfFamily_0_AutoML_20180924_080417 0.8380971
-## 3             GBM_grid_0_AutoML_20180924_080417_model_5 0.8375690
-## 4             GBM_grid_0_AutoML_20180924_080417_model_4 0.8365179
-## 5             GLM_grid_0_AutoML_20180924_080417_model_0 0.8341097
-## 6             GBM_grid_0_AutoML_20180924_080417_model_0 0.8302018
-##     logloss mean_per_class_error      rmse       mse
-## 1 0.4302326            0.2350645 0.3731759 0.1392603
-## 2 0.4306768            0.2337383 0.3735453 0.1395361
-## 3 0.4304155            0.2353403 0.3746078 0.1403310
-## 4 0.4273302            0.2367815 0.3732200 0.1392931
-## 5 0.4293852            0.2402290 0.3740019 0.1398774
-## 6 0.4381734            0.2437888 0.3781282 0.1429809
-## 
-## [12 rows x 6 columns]</code></pre>
-<pre class="r"><code>best_model &lt;- aml@leader
-best_model</code></pre>
-<pre><code>## Model Details:
-## ==============
-## 
-## H2OBinomialModel: stackedensemble
-## Model ID:  StackedEnsemble_AllModels_0_AutoML_20180924_080417 
-## NULL
-## 
-## 
-## H2OBinomialMetrics: stackedensemble
-## ** Reported on training data. **
-## 
-## MSE:  0.128844
-## RMSE:  0.3589485
-## LogLoss:  0.4029882
-## Mean Per-Class Error:  0.2135015
-## AUC:  0.864463
-## Gini:  0.7289259
-## 
-## Confusion Matrix (vertical: actual; across: predicted) for F1-optimal threshold:
-##           0    1    Error       Rate
-## 0      1920  571 0.229225  =571/2491
-## 1       178  722 0.197778   =178/900
-## Totals 2098 1293 0.220879  =749/3391
-## 
-## Maximum Metrics: Maximum metrics at their respective thresholds
-##                         metric threshold    value idx
-## 1                       max f1  0.240878 0.658459 260
-## 2                       max f2  0.146718 0.768209 311
-## 3                 max f0point5  0.466968 0.654878 164
-## 4                 max accuracy  0.466968 0.815394 164
-## 5                max precision  0.855263 1.000000   0
-## 6                   max recall  0.056069 1.000000 395
-## 7              max specificity  0.855263 1.000000   0
-## 8             max absolute_mcc  0.240878 0.520905 260
-## 9   max min_per_class_accuracy  0.252481 0.781111 254
-## 10 max mean_per_class_accuracy  0.200769 0.789078 282
-## 
-## Gains/Lift Table: Extract with `h2o.gainsLift(&lt;model&gt;, &lt;data&gt;)` or `h2o.gainsLift(&lt;model&gt;, valid=&lt;T/F&gt;, xval=&lt;T/F&gt;)`
-## H2OBinomialMetrics: stackedensemble
-## ** Reported on validation data. **
-## 
-## MSE:  0.1282443
-## RMSE:  0.3581121
-## LogLoss:  0.405336
-## Mean Per-Class Error:  0.2215505
-## AUC:  0.859538
-## Gini:  0.719076
-## 
-## Confusion Matrix (vertical: actual; across: predicted) for F1-optimal threshold:
-##          0   1    Error      Rate
-## 0      544  64 0.105263   =64/608
-## 1       75 147 0.337838   =75/222
-## Totals 619 211 0.167470  =139/830
-## 
-## Maximum Metrics: Maximum metrics at their respective thresholds
-##                         metric threshold    value idx
-## 1                       max f1  0.415311 0.678984 154
-## 2                       max f2  0.172145 0.755538 266
-## 3                 max f0point5  0.415311 0.689493 154
-## 4                 max accuracy  0.415311 0.832530 154
-## 5                max precision  0.844644 1.000000   0
-## 6                   max recall  0.054401 1.000000 398
-## 7              max specificity  0.844644 1.000000   0
-## 8             max absolute_mcc  0.415311 0.566133 154
-## 9   max min_per_class_accuracy  0.241128 0.774775 226
-## 10 max mean_per_class_accuracy  0.223147 0.785947 239
-## 
-## Gains/Lift Table: Extract with `h2o.gainsLift(&lt;model&gt;, &lt;data&gt;)` or `h2o.gainsLift(&lt;model&gt;, valid=&lt;T/F&gt;, xval=&lt;T/F&gt;)`
-## H2OBinomialMetrics: stackedensemble
-## ** Reported on cross-validation data. **
-## ** 5-fold cross-validation on training data (Metrics computed for combined holdout predictions) **
-## 
-## MSE:  0.1392603
-## RMSE:  0.3731759
-## LogLoss:  0.4302326
-## Mean Per-Class Error:  0.2350645
-## AUC:  0.8390006
-## Gini:  0.6780012
-## 
-## Confusion Matrix (vertical: actual; across: predicted) for F1-optimal threshold:
-##           0    1    Error       Rate
-## 0      1879  612 0.245684  =612/2491
-## 1       202  698 0.224444   =202/900
-## Totals 2081 1310 0.240047  =814/3391
-## 
-## Maximum Metrics: Maximum metrics at their respective thresholds
-##                         metric threshold    value idx
-## 1                       max f1  0.233719 0.631674 254
-## 2                       max f2  0.140878 0.751033 311
-## 3                 max f0point5  0.440773 0.621547 169
-## 4                 max accuracy  0.440773 0.799174 169
-## 5                max precision  0.871047 1.000000   0
-## 6                   max recall  0.049679 1.000000 399
-## 7              max specificity  0.871047 1.000000   0
-## 8             max absolute_mcc  0.225112 0.480566 260
-## 9   max min_per_class_accuracy  0.240674 0.760000 251
-## 10 max mean_per_class_accuracy  0.197308 0.767100 277
-## 
-## Gains/Lift Table: Extract with `h2o.gainsLift(&lt;model&gt;, &lt;data&gt;)` or `h2o.gainsLift(&lt;model&gt;, valid=&lt;T/F&gt;, xval=&lt;T/F&gt;)`</code></pre>
-<pre class="r"><code>pred &lt;- h2o.predict(best_model, test[, -1])</code></pre>
+
+best_model &lt;- aml@leader
+
+h2o.saveModel(best_model, &quot;/Users/shiringlander/Documents/Github/Data&quot;)</code></pre>
+<ul>
+<li>Prediction</li>
+</ul>
+<pre class="r"><code>pred &lt;- h2o.predict(best_model, test_hf[, -1])</code></pre>
+<ul>
+<li>Mean per class error</li>
+</ul>
 <pre class="r"><code>h2o.mean_per_class_error(best_model, train = TRUE, valid = TRUE, xval = TRUE)</code></pre>
 <pre><code>##     train     valid      xval 
-## 0.2135015 0.2215505 0.2350645</code></pre>
+## 0.1717911 0.2172683 0.2350682</code></pre>
+<ul>
+<li>Confusion matrix on validation data</li>
+</ul>
 <pre class="r"><code>h2o.confusionMatrix(best_model, valid = TRUE)</code></pre>
-<pre><code>## Confusion Matrix (vertical: actual; across: predicted)  for max f1 @ threshold = 0.415310953965713:
+<pre><code>## Confusion Matrix (vertical: actual; across: predicted)  for max f1 @ threshold = 0.258586059604449:
 ##          0   1    Error      Rate
-## 0      544  64 0.105263   =64/608
-## 1       75 147 0.337838   =75/222
-## Totals 619 211 0.167470  =139/830</code></pre>
+## 0      478 130 0.213816  =130/608
+## 1       49 173 0.220721   =49/222
+## Totals 527 303 0.215663  =179/830</code></pre>
 <pre class="r"><code>h2o.auc(best_model, train = TRUE)</code></pre>
-<pre><code>## [1] 0.864463</code></pre>
+<pre><code>## [1] 0.9039696</code></pre>
 <pre class="r"><code>h2o.auc(best_model, valid = TRUE)</code></pre>
-<pre><code>## [1] 0.859538</code></pre>
+<pre><code>## [1] 0.8509068</code></pre>
 <pre class="r"><code>h2o.auc(best_model, xval = TRUE)</code></pre>
-<pre><code>## [1] 0.8390006</code></pre>
-<pre class="r"><code>perf &lt;- h2o.performance(best_model, test)
+<pre><code>## [1] 0.8397085</code></pre>
+<ul>
+<li>Performance and confusion matrix on test data</li>
+</ul>
+<pre class="r"><code>perf &lt;- h2o.performance(best_model, test_hf)
 h2o.confusionMatrix(perf)</code></pre>
-<pre><code>## Confusion Matrix (vertical: actual; across: predicted)  for max f1 @ threshold = 0.276997331622412:
-##           0   1    Error       Rate
-## 0      1032 258 0.200000  =258/1290
-## 1       132 335 0.282655   =132/467
-## Totals 1164 593 0.221969  =390/1757</code></pre>
+<pre><code>## Confusion Matrix (vertical: actual; across: predicted)  for max f1 @ threshold = 0.40790847476229:
+##          0   1    Error       Rate
+## 0      667 107 0.138243   =107/774
+## 1       86 194 0.307143    =86/280
+## Totals 753 301 0.183112  =193/1054</code></pre>
+<ul>
+<li>Plot performance</li>
+</ul>
 <pre class="r"><code>plot(perf)</code></pre>
+<ul>
+<li>More performance metrics extracted</li>
+</ul>
 <pre class="r"><code>h2o.logloss(perf)</code></pre>
-<pre><code>## [1] 0.4232643</code></pre>
+<pre><code>## [1] 0.4008041</code></pre>
 <pre class="r"><code>h2o.mse(perf)</code></pre>
-<pre><code>## [1] 0.1364695</code></pre>
+<pre><code>## [1] 0.1278505</code></pre>
 <pre class="r"><code>h2o.auc(perf)</code></pre>
-<pre><code>## [1] 0.8463373</code></pre>
+<pre><code>## [1] 0.8622301</code></pre>
 <pre class="r"><code>metrics &lt;- as.data.frame(h2o.metric(perf))
 head(metrics)</code></pre>
-<pre><code>##   threshold          f1          f2   f0point5  accuracy precision
-## 1 0.8430345 0.004273504 0.002675227 0.01061571 0.7347752 1.0000000
-## 2 0.8383468 0.012738854 0.008012821 0.03105590 0.7353443 0.7500000
-## 3 0.8327149 0.025316456 0.016000000 0.06060606 0.7370518 0.8571429
-## 4 0.8295517 0.033613445 0.021310602 0.07952286 0.7381901 0.8888889
-## 5 0.8264970 0.050000000 0.031897927 0.11560694 0.7404667 0.9230769
-## 6 0.8245281 0.062111801 0.039808917 0.14124294 0.7421742 0.9375000
+<pre><code>##   threshold         f1          f2   f0point5  accuracy precision
+## 1 0.8278177 0.01418440 0.008912656 0.03472222 0.7362429         1
+## 2 0.8203439 0.02816901 0.017793594 0.06756757 0.7381404         1
+## 3 0.8173635 0.04195804 0.026642984 0.09868421 0.7400380         1
+## 4 0.8160146 0.04878049 0.031055901 0.11363636 0.7409867         1
+## 5 0.8139018 0.05555556 0.035460993 0.12820513 0.7419355         1
+## 6 0.8112067 0.07560137 0.048629531 0.16975309 0.7447818         1
 ##        recall specificity absolute_mcc min_per_class_accuracy
-## 1 0.002141328   1.0000000   0.03966196            0.002141328
-## 2 0.006423983   0.9992248   0.05235856            0.006423983
-## 3 0.012847966   0.9992248   0.08466273            0.012847966
-## 4 0.017130621   0.9992248   0.10120995            0.017130621
-## 5 0.025695931   0.9992248   0.12846040            0.025695931
-## 6 0.032119914   0.9992248   0.14576670            0.032119914
-##   mean_per_class_accuracy  tns fns fps tps       tnr       fnr
-## 1               0.5010707 1290 466   0   1 1.0000000 0.9978587
-## 2               0.5028244 1289 464   1   3 0.9992248 0.9935760
-## 3               0.5060364 1289 461   1   6 0.9992248 0.9871520
-## 4               0.5081777 1289 459   1   8 0.9992248 0.9828694
-## 5               0.5124604 1289 455   1  12 0.9992248 0.9743041
-## 6               0.5156724 1289 452   1  15 0.9992248 0.9678801
-##            fpr         tpr idx
-## 1 0.0000000000 0.002141328   0
-## 2 0.0007751938 0.006423983   1
-## 3 0.0007751938 0.012847966   2
-## 4 0.0007751938 0.017130621   3
-## 5 0.0007751938 0.025695931   4
-## 6 0.0007751938 0.032119914   5</code></pre>
+## 1 0.007142857           1   0.07249342            0.007142857
+## 2 0.014285714           1   0.10261877            0.014285714
+## 3 0.021428571           1   0.12580168            0.021428571
+## 4 0.025000000           1   0.13594622            0.025000000
+## 5 0.028571429           1   0.14540208            0.028571429
+## 6 0.039285714           1   0.17074408            0.039285714
+##   mean_per_class_accuracy tns fns fps tps tnr       fnr fpr         tpr
+## 1               0.5035714 774 278   0   2   1 0.9928571   0 0.007142857
+## 2               0.5071429 774 276   0   4   1 0.9857143   0 0.014285714
+## 3               0.5107143 774 274   0   6   1 0.9785714   0 0.021428571
+## 4               0.5125000 774 273   0   7   1 0.9750000   0 0.025000000
+## 5               0.5142857 774 272   0   8   1 0.9714286   0 0.028571429
+## 6               0.5196429 774 269   0  11   1 0.9607143   0 0.039285714
+##   idx
+## 1   0
+## 2   1
+## 3   2
+## 4   3
+## 5   4
+## 6   5</code></pre>
+<ul>
+<li>Plot performance metrics</li>
+</ul>
 <pre class="r"><code>metrics %&gt;%
   gather(x, y, f1:tpr) %&gt;%
   ggplot(aes(x = threshold, y = y, group = x)) +
     facet_wrap(~ x, ncol = 2, scales = &quot;free&quot;) +
     geom_line()</code></pre>
 <p><img src="/post/2018-12-12_customer_churn_code_files/figure-html/metrics-1.png" width="768" /></p>
+<ul>
+<li>Examine prediction thresholds</li>
+</ul>
 <pre class="r"><code>threshold &lt;- metrics[order(-metrics$accuracy), &quot;threshold&quot;][1]
 
-finalRf_predictions &lt;- data.frame(actual = as.vector(test$Churn), 
+finalRf_predictions &lt;- data.frame(actual = as.vector(test_hf$Churn), 
                                   as.data.frame(h2o.predict(object = best_model, 
-                                                            newdata = test)))
+                                                            newdata = test_hf)))
 
 finalRf_predictions$accurate &lt;- ifelse(finalRf_predictions$actual == 
                                          finalRf_predictions$predict, &quot;ja&quot;, &quot;nein&quot;)
@@ -626,21 +603,23 @@ finalRf_predictions %&gt;%
 ## # Groups:   actual [?]
 ##   actual predict     n
 ##   &lt;fct&gt;  &lt;fct&gt;   &lt;int&gt;
-## 1 0      0        1125
-## 2 0      1         165
-## 3 1      0         189
-## 4 1      1         278</code></pre>
+## 1 0      0         602
+## 2 0      1         172
+## 3 1      0          63
+## 4 1      1         217</code></pre>
 <pre class="r"><code>finalRf_predictions %&gt;%
   group_by(actual, predict_stringent) %&gt;%
   dplyr::summarise(n = n())</code></pre>
-<pre><code>## # A tibble: 4 x 3
+<pre><code>## # A tibble: 6 x 3
 ## # Groups:   actual [?]
 ##   actual predict_stringent     n
 ##   &lt;fct&gt;  &lt;chr&gt;             &lt;int&gt;
-## 1 0      0                  1161
-## 2 0      1                   129
-## 3 1      0                   210
-## 4 1      1                   257</code></pre>
+## 1 0      0                   683
+## 2 0      1                    63
+## 3 0      unsicher             28
+## 4 1      0                   101
+## 5 1      1                   152
+## 6 1      unsicher             27</code></pre>
 <pre class="r"><code>finalRf_predictions %&gt;%
   gather(x, y, accurate, accurate_stringent) %&gt;%
   mutate(x = ifelse(x == &quot;accurate&quot;, &quot;Default Schwelle: 0.5&quot;, 
@@ -692,8 +671,8 @@ for (threshold in thresholds) {
     geom_line() +
     scale_color_tableau()</code></pre>
 <p><img src="/post/2018-12-12_customer_churn_code_files/figure-html/prop_table-1.png" width="576" style="display: block; margin: auto;" /></p>
-<div id="cost-calculation" class="section level3">
-<h3>Cost calculation</h3>
+<div id="costrevenue-calculation" class="section level3">
+<h3>Cost/revenue calculation</h3>
 <p>Let’s assume that</p>
 <ol style="list-style-type: decimal">
 <li>a marketing campaign + employee time will cost the company 1000€ per year for every customer that is included in the campaign.</li>
@@ -711,8 +690,11 @@ for (threshold in thresholds) {
 <li>let’s say 100% of those could be kept by investing into marketing: +2000€ -1500€</li>
 <li>let’s say 50% could be kept by investing into marketing: +2000€ * 0.5 -1500€</li>
 </ul>
-<pre class="r"><code># baseline
-
+<p><br></p>
+<ul>
+<li>Let’s play around with some values:</li>
+</ul>
+<pre class="r"><code># Baseline
 revenue &lt;- 2000
 cost &lt;- 1000
 
@@ -732,8 +714,10 @@ ann_revenue_default &lt;- customers_no_churn_n * revenue
 
 net_win_default &lt;- ann_revenue_default - ad_cost_default
 net_win_default</code></pre>
-<pre><code>## [1] 1701500</code></pre>
-<p>How much can we revenue gain from predicting customer churn:</p>
+<pre><code>## [1] 1021000</code></pre>
+<ul>
+<li>How much revenue can we gain from predicting customer churn (assuming conversionr rate of 0.7):</li>
+</ul>
 <pre class="r"><code>conversion &lt;- 0.7
 
 net_win_table &lt;- prop_table %&gt;%
@@ -750,23 +734,26 @@ net_win_table</code></pre>
 <pre><code>## # A tibble: 11 x 3
 ##    threshold net_win net_win_compared
 ##        &lt;dbl&gt;   &lt;dbl&gt;            &lt;dbl&gt;
-##  1       0.8 2592200           890700
-##  2       0.7 2591000           889500
-##  3       0.6 2583400           881900
-##  4       0.9 2580000           878500
-##  5       1   2580000           878500
-##  6       0.5 2554400           852900
-##  7       0.4 2520000           818500
-##  8       0.3 2470600           769100
-##  9       0.2 2344200           642700
-## 10       0.1 2139400           437900
-## 11       0   1476800          -224700</code></pre>
+##  1       0.7 1558000           537000
+##  2       0.8 1554000           533000
+##  3       0.6 1551000           530000
+##  4       0.9 1548000           527000
+##  5       1   1548000           527000
+##  6       0.5 1534000           513000
+##  7       0.4 1515600           494600
+##  8       0.3 1483400           462400
+##  9       0.2 1417200           396200
+## 10       0.1 1288200           267200
+## 11       0    886000          -135000</code></pre>
 </div>
 </div>
 <div id="lime" class="section level2">
 <h2>LIME</h2>
-<pre class="r"><code>Xtrain &lt;- as.data.frame(train)
-Xtest &lt;- as.data.frame(test)
+<ul>
+<li>Explaining predictions</li>
+</ul>
+<pre class="r"><code>Xtrain &lt;- as.data.frame(train_hf)
+Xtest &lt;- as.data.frame(test_hf)
 
 # run lime() on training set
 explainer &lt;- lime::lime(x = Xtrain, 
@@ -779,71 +766,66 @@ explanation &lt;- lime::explain(x = Xtest[1:9, ],
                              n_features = 4,
                              kernel_width = 0.5)</code></pre>
 <pre class="r"><code>plot_explanations(explanation)</code></pre>
-<p><img src="/post/2018-12-12_customer_churn_code_files/figure-html/unnamed-chunk-47-1.png" width="672" /></p>
+<p><img src="/post/2018-12-12_customer_churn_code_files/figure-html/unnamed-chunk-48-1.png" width="672" /></p>
 <pre class="r"><code>explanation %&gt;%
   plot_features(ncol = 3)</code></pre>
-<p><img src="/post/2018-12-12_customer_churn_code_files/figure-html/unnamed-chunk-49-1.png" width="1248" /></p>
+<p><img src="/post/2018-12-12_customer_churn_code_files/figure-html/unnamed-chunk-50-1.png" width="1248" /></p>
 <hr />
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>## R version 3.5.1 (2018-07-02)
 ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-## Running under: macOS High Sierra 10.13.6
+## Running under: macOS  10.14.1
 ## 
 ## Matrix products: default
 ## BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
 ## LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
 ## 
 ## locale:
-## [1] de_DE.UTF-8/de_DE.UTF-8/de_DE.UTF-8/C/de_DE.UTF-8/de_DE.UTF-8
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
 ## 
 ## attached base packages:
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] h2o_3.20.0.2    bindrcpp_0.2.2  corrplot_0.84   ggthemes_4.0.1 
-##  [5] yardstick_0.0.1 recipes_0.1.3   rsample_0.0.2   broom_0.5.0    
-##  [9] lime_0.4.0      keras_2.2.0     mice_3.3.0      caret_6.0-80   
-## [13] lattice_0.20-35 forcats_0.3.0   stringr_1.3.1   dplyr_0.7.6    
-## [17] purrr_0.2.5     readr_1.1.1     tidyr_0.8.1     tibble_1.4.2   
-## [21] ggplot2_3.0.0   tidyverse_1.2.1
+##  [1] h2o_3.20.0.8    bindrcpp_0.2.2  corrplot_0.84   ggthemes_4.0.1 
+##  [5] yardstick_0.0.2 recipes_0.1.4   rsample_0.0.3   lime_0.4.1     
+##  [9] keras_2.2.4     mice_3.3.0      caret_6.0-81    lattice_0.20-38
+## [13] forcats_0.3.0   stringr_1.3.1   dplyr_0.7.8     purrr_0.2.5    
+## [17] readr_1.2.1     tidyr_0.8.2     tibble_1.4.2    ggplot2_3.1.0  
+## [21] tidyverse_1.2.1
 ## 
 ## loaded via a namespace (and not attached):
-##   [1] minqa_1.2.4        colorspace_1.3-2   class_7.3-14      
-##   [4] rprojroot_1.3-2    pls_2.7-0          base64enc_0.1-3   
-##   [7] rstudioapi_0.7     DRR_0.0.3          fansi_0.3.0       
-##  [10] prodlim_2018.04.18 lubridate_1.7.4    xml2_1.2.0        
-##  [13] codetools_0.2-15   splines_3.5.1      robustbase_0.93-2 
-##  [16] knitr_1.20         shinythemes_1.1.1  RcppRoll_0.3.0    
-##  [19] zeallot_0.1.0      jsonlite_1.5       nloptr_1.0.4      
-##  [22] pROC_1.12.1        ddalpha_1.3.4      kernlab_0.9-27    
-##  [25] tfruns_1.4         sfsmisc_1.1-2      shiny_1.1.0       
-##  [28] compiler_3.5.1     httr_1.3.1         backports_1.1.2   
-##  [31] assertthat_0.2.0   Matrix_1.2-14      lazyeval_0.2.1    
-##  [34] cli_1.0.0          later_0.7.5        htmltools_0.3.6   
-##  [37] tools_3.5.1        gtable_0.2.0       glue_1.3.0        
-##  [40] reshape2_1.4.3     Rcpp_0.12.18       cellranger_1.1.0  
-##  [43] nlme_3.1-137       blogdown_0.8       iterators_1.0.10  
-##  [46] timeDate_3043.102  gower_0.1.2        xfun_0.3          
-##  [49] lme4_1.1-18-1      rvest_0.3.2        mime_0.5          
-##  [52] stringdist_0.9.5.1 pan_1.6            DEoptimR_1.0-8    
-##  [55] MLmetrics_1.1.1    MASS_7.3-50        scales_1.0.0      
-##  [58] ipred_0.9-7        promises_1.0.1     hms_0.4.2         
-##  [61] parallel_3.5.1     yaml_2.2.0         reticulate_1.10   
-##  [64] rpart_4.1-13       stringi_1.2.4      tensorflow_1.9    
-##  [67] foreach_1.4.4      lava_1.6.3         geometry_0.3-6    
-##  [70] bitops_1.0-6       rlang_0.2.2        pkgconfig_2.0.2   
-##  [73] evaluate_0.11      bindr_0.1.1        labeling_0.3      
-##  [76] htmlwidgets_1.2    CVST_0.2-2         tidyselect_0.2.4  
-##  [79] plyr_1.8.4         magrittr_1.5       bookdown_0.7      
-##  [82] R6_2.2.2           magick_1.9         mitml_0.3-6       
-##  [85] dimRed_0.1.0       pillar_1.3.0       haven_1.1.2       
-##  [88] whisker_0.3-2      withr_2.1.2        RCurl_1.95-4.11   
-##  [91] survival_2.42-6    abind_1.4-5        nnet_7.3-12       
-##  [94] modelr_0.1.2       crayon_1.3.4       jomo_2.6-4        
-##  [97] utf8_1.1.4         rmarkdown_1.10     grid_3.5.1        
-## [100] readxl_1.1.0       data.table_1.11.4  ModelMetrics_1.2.0
-## [103] digest_0.6.17      xtable_1.8-3       httpuv_1.4.5      
-## [106] stats4_3.5.1       munsell_0.5.0      glmnet_2.0-16     
-## [109] magic_1.5-9</code></pre>
+##  [1] minqa_1.2.4        colorspace_1.3-2   class_7.3-14      
+##  [4] base64enc_0.1-3    rstudioapi_0.8     prodlim_2018.04.18
+##  [7] fansi_0.4.0        lubridate_1.7.4    xml2_1.2.0        
+## [10] codetools_0.2-15   splines_3.5.1      knitr_1.21        
+## [13] shinythemes_1.1.2  zeallot_0.1.0      jsonlite_1.6      
+## [16] nloptr_1.2.1       pROC_1.13.0        broom_0.5.1       
+## [19] tfruns_1.4         shiny_1.2.0        compiler_3.5.1    
+## [22] httr_1.3.1         backports_1.1.2    assertthat_0.2.0  
+## [25] Matrix_1.2-15      lazyeval_0.2.1     cli_1.0.1         
+## [28] later_0.7.5        htmltools_0.3.6    tools_3.5.1       
+## [31] gtable_0.2.0       glue_1.3.0         reshape2_1.4.3    
+## [34] Rcpp_1.0.0         cellranger_1.1.0   nlme_3.1-137      
+## [37] blogdown_0.9       iterators_1.0.10   timeDate_3043.102 
+## [40] gower_0.1.2        xfun_0.4           lme4_1.1-19       
+## [43] rvest_0.3.2        mime_0.6           pan_1.6           
+## [46] MASS_7.3-51.1      scales_1.0.0       ipred_0.9-8       
+## [49] hms_0.4.2          promises_1.0.1     parallel_3.5.1    
+## [52] yaml_2.2.0         reticulate_1.10    rpart_4.1-13      
+## [55] stringi_1.2.4      tensorflow_1.10    foreach_1.4.4     
+## [58] lava_1.6.4         bitops_1.0-6       rlang_0.3.0.1     
+## [61] pkgconfig_2.0.2    evaluate_0.12      bindr_0.1.1       
+## [64] labeling_0.3       htmlwidgets_1.3    tidyselect_0.2.5  
+## [67] plyr_1.8.4         magrittr_1.5       bookdown_0.8      
+## [70] R6_2.3.0           generics_0.0.2     mitml_0.3-6       
+## [73] pillar_1.3.0       haven_2.0.0        whisker_0.3-2     
+## [76] withr_2.1.2        RCurl_1.95-4.11    survival_2.43-3   
+## [79] nnet_7.3-12        modelr_0.1.2       crayon_1.3.4      
+## [82] jomo_2.6-5         utf8_1.1.4         rmarkdown_1.11    
+## [85] grid_3.5.1         readxl_1.1.0       data.table_1.11.8 
+## [88] ModelMetrics_1.2.2 digest_0.6.18      xtable_1.8-3      
+## [91] httpuv_1.4.5       stats4_3.5.1       munsell_0.5.0     
+## [94] glmnet_2.0-16</code></pre>
 </div>
 </div>

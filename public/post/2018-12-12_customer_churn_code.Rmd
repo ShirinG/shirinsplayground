@@ -1,12 +1,12 @@
 ---
 title: "Code for case study - Customer Churn with Keras/TensorFlow and H2O"
-draft: true
+draft: false
 author: Shirin Glander
 date: '2018-12-12'
 categories: ["R"]
-tags: ["API", "machine learning", "plumber"]
+tags: ["R", "machine learning", "predictive analytics", "customer churn"]
 thumbnailImagePosition: left
-thumbnailImage: 
+thumbnailImage: post/2018-12-12_customer_churn_code_files/figure-html/prop_table-1.png
 metaAlignment: center
 coverMeta: out
 slug: customer_churn_code
@@ -16,7 +16,9 @@ slug: customer_churn_code
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 ```
 
-This is code that accompanies a [book](https://www.dpunkt.de/buecher/13208/9783864906107-data-science.html) chapter on customer churn that I have written for dpunkt Verlag. The book is in German and will probably appear in December: [https://www.dpunkt.de/buecher/13208/9783864906107-data-science.html](https://www.dpunkt.de/buecher/13208/9783864906107-data-science.html).
+This is code that accompanies a [book](https://www.dpunkt.de/buecher/13208/9783864906107-data-science.html) chapter on customer churn that I have written for the German dpunkt Verlag. The book is in German and will probably appear in February: [https://www.dpunkt.de/buecher/13208/9783864906107-data-science.html](https://www.dpunkt.de/buecher/13208/9783864906107-data-science.html).
+
+The code you find below can be used to recreate all figures and analyses from this book chapter. Because the content is exclusively for the book, my descriptions around the code had to be minimal. But I'm sure, you can get the gist, even without the book. ;-)
 
 # Inspiration & Sources
 
@@ -33,7 +35,7 @@ All analyses are done in R using RStudio. For detailed session information inclu
 
 All figures are produced with ggplot2.
 
-- libraries
+- Libraries
 
 ```{r}
 # Load libraries
@@ -60,7 +62,7 @@ install_keras()
 
 <br>
 
-# Data preparation {.tabset .tabset-fade .tabset-pills}
+# Data preparation
 
 ## The dataset
 
@@ -75,20 +77,19 @@ churn_data_raw <- read_csv("WA_Fn-UseC_-Telco-Customer-Churn.csv")
 ```
 
 ```{r}
-head(churn_data_raw)
-dim(churn_data_raw)
+glimpse(churn_data_raw)
 ```
 
 ### EDA
 
-- proportion of churn
+- Proportion of churn
 
 ```{r}
 churn_data_raw %>%
   count(Churn)
 ```
 
-- plot categorical features
+- Plot categorical features
 
 ```{r eda_chr, fig.width=12, fig.height=12}
 churn_data_raw %>%
@@ -107,7 +108,7 @@ churn_data_raw %>%
     scale_fill_tableau()
 ```
 
-- plot numerical features
+- Plot numerical features
 
 ```{r eda_num, fig.width=12, fig.height=3}
 churn_data_raw %>%
@@ -124,6 +125,8 @@ churn_data_raw %>%
     scale_fill_tableau()
 ```
 
+- Remove customer ID as it doesn't provide information
+
 ```{r}
 churn_data <- churn_data_raw %>%
   select(-customerID)
@@ -131,14 +134,20 @@ churn_data <- churn_data_raw %>%
 
 ### Dealing with missing values
 
+- Pattern of missing data
+
 ```{r}
 md.pattern(churn_data, plot = FALSE)
 ```
+
+- Option 1: impute missing data => NOT done here!
 
 ```{r eval=FALSE}
 imp <- mice(data = churn_data,  print = FALSE)
 train_data_impute <- complete(imp, "long")
 ```
+
+- Option 2: drop missing data => done here because not too much information is lost by removing it
 
 ```{r}
 churn_data <- churn_data %>%
@@ -147,19 +156,23 @@ churn_data <- churn_data %>%
 
 ## Training and test split
 
+- Partition data into training and test set
+
 ```{r}
 set.seed(42)
-index <- createDataPartition(churn_data$Churn, p = 0.75, list = FALSE)
+index <- createDataPartition(churn_data$Churn, p = 0.7, list = FALSE)
 ```
+
+- Partition test set again into validation and test set
 
 ```{r}
 train_data <- churn_data[index, ]
 test_data  <- churn_data[-index, ]
 
-index2 <- createDataPartition(train_data$Churn, p = 0.8, list = FALSE)
+index2 <- createDataPartition(test_data$Churn, p = 0.5, list = FALSE)
 
-train_data <- train_data[index2, ]
-valid_data <- train_data[-index2, ]
+valid_data <- test_data[-index2, ]
+test_data <- test_data[index2, ]
 ```
 
 ```{r}
@@ -169,6 +182,8 @@ nrow(test_data)
 ```
 
 ## Pre-Processing
+
+- Create recipe for preprocessing
 
 > A recipe is a description of what steps should be applied to a data set in order to get it ready for data analysis.
 
@@ -180,27 +195,33 @@ recipe_churn <- recipe(Churn ~ ., train_data) %>%
   prep(data = train_data)
 ```
 
+- Apply recipe to three datasets
+
 ```{r}
-train_data <- bake(recipe_churn, newdata = train_data) %>%
+train_data <- bake(recipe_churn, new_data = train_data) %>%
   select(Churn, everything())
 
-valid_data <- bake(recipe_churn, newdata = valid_data) %>%
+valid_data <- bake(recipe_churn, new_data = valid_data) %>%
   select(Churn, everything())
 
-test_data <- bake(recipe_churn, newdata = test_data) %>%
+test_data <- bake(recipe_churn, new_data = test_data) %>%
   select(Churn, everything())
 ```
 
+- For Keras create response variable as one-hot encoded matrix
+
 ```{r}
-train_y_drop <- to_categorical(as.integer(train_data$Churn) - 1, 2)
+train_y_drop <- to_categorical(as.integer(as.factor(train_data$Churn)) - 1, 2)
 colnames(train_y_drop) <- c("No", "Yes")
 
-valid_y_drop <- to_categorical(as.integer(valid_data$Churn) - 1, 2)
+valid_y_drop <- to_categorical(as.integer(as.factor(valid_data$Churn)) - 1, 2)
 colnames(valid_y_drop) <- c("No", "Yes")
 
-test_y_drop <- to_categorical(as.integer(test_data$Churn) - 1, 2)
+test_y_drop <- to_categorical(as.integer(as.factor(test_data$Churn)) - 1, 2)
 colnames(test_y_drop) <- c("No", "Yes")
 ```
+
+- Because we want to train on a binary outcome, we can delete the "No" column
 
 ```{r}
 # if training with binary crossentropy
@@ -211,6 +232,8 @@ valid_y_drop <- valid_y_drop[, 2, drop = FALSE]
 test_y_drop <- test_y_drop[, 2, drop = FALSE]
 ```
 
+- Remove response variable from preprocessed data (for Keras)
+
 ```{r}
 train_data_bk <- select(train_data, -Churn)
 head(train_data_bk)
@@ -219,20 +242,24 @@ valid_data_bk <- select(valid_data, -Churn)
 test_data_bk <- select(test_data, -Churn)
 ```
 
+- Alternative to above, to convert response variable into numeric format where 1 = Yes and 0 = No
+
 ```{r}
 train_data$Churn <- ifelse(train_data$Churn == "Yes", 1, 0)
 valid_data$Churn <- ifelse(valid_data$Churn == "Yes", 1, 0)
 test_data$Churn <- ifelse(test_data$Churn == "Yes", 1, 0)
 ```
 
-```{r eval=FALSE}
+```{r eval=FALSE, echo=FALSE}
 # alternative - not run
 train_data_impute_bk <- bake(recipe_churn, newdata = train_data_impute) %>%
   select(Churn, everything())
 train_data_impute_bk <- cbind(train_data_impute$.imp, train_data_impute_bk)
 ```
 
-## Modeling with keras
+## Modeling with Keras
+
+- Define a simple MLP
 
 ```{r}
 model_keras <- keras_model_sequential()
@@ -260,6 +287,8 @@ model_keras %>%
 summary(model_keras)
 ```
 
+- Fit model (we could have used validation split on the trainings data instead of creating a validation set => see #)
+
 ```{r}
 fit_keras <- fit(model_keras, 
     x = as.matrix(train_data_bk), 
@@ -272,6 +301,8 @@ fit_keras <- fit(model_keras,
     )
 ```
 
+- Plot Keras training results
+
 ```{r plot_fit_keras, fig.width=10, fig.height=8}
 plot(fit_keras) +
   scale_color_tableau() +
@@ -280,10 +311,14 @@ plot(fit_keras) +
 
 ## Evaluation
 
+- Predict classes and probabilities
+
 ```{r}
 pred_classes_test <- predict_classes(object = model_keras, x = as.matrix(test_data_bk))
 pred_proba_test  <- predict_proba(object = model_keras, x = as.matrix(test_data_bk))
 ```
+
+- Create results table
 
 ```{r}
 test_results <- tibble(
@@ -294,97 +329,113 @@ test_results <- tibble(
 head(test_results)
 ```
 
+- Calculate confusion matrix
+
 ```{r}
 test_results %>% 
   conf_mat(actual_yes, pred_classes_test)
 ```
+
+- Calculate metrics
 
 ```{r}
 test_results %>% 
   metrics(actual_yes, pred_classes_test)
 ```
 
+- Are under the ROC curve
+
 ```{r}
 test_results %>% 
   roc_auc(actual_yes, Yes)
 ```
 
+- Precision and recall
+
 ```{r}
 tibble(
-    precision = test_results %>% yardstick::precision(actual_yes, pred_classes_test),
-    recall    = test_results %>% yardstick::recall(actual_yes, pred_classes_test)
+    precision = test_results %>% yardstick::precision(actual_yes, pred_classes_test) %>% select(.estimate) %>% as.numeric(),
+    recall    = test_results %>% yardstick::recall(actual_yes, pred_classes_test) %>% select(.estimate) %>% as.numeric()
 )
 ```
 
+- F1-Statistic
+
 ```{r}
-# F1-Statistic
 test_results %>% yardstick::f_meas(actual_yes, pred_classes_test, beta = 1)
 ```
 
 ## H2O
+
+Shows an alternative to Keras!
+
+- Initialise H2O instance and convert data to h2o frame
 
 ```{r warning=FALSE, message=FALSE}
 library(h2o)
 h2o.init(nthreads = -1)
 h2o.no_progress()
 
-train_data_hf <- as.h2o(train_data)
-test <- as.h2o(test_data)
-```
-
-```{r tidy=FALSE}
-splits <- h2o.splitFrame(train_data_hf, 
-                         ratios = c(0.8), 
-                         seed = 1)
-
-train <- splits[[1]]
-valid <- splits[[2]]
+train_hf <- as.h2o(train_data)
+valid_hf <- as.h2o(valid_data)
+test_hf <- as.h2o(test_data)
 
 response <- "Churn"
-features <- setdiff(colnames(train), response)
-
-# For binary classification, response should be a factor
-train[, response] <- as.factor(train[, response])
-valid[, response] <- as.factor(valid[, response])
-test[, response] <- as.factor(test[, response])
 ```
 
 ```{r tidy=FALSE}
-summary(train$Churn, exact_quantiles = TRUE)
-summary(valid$Churn, exact_quantiles = TRUE)
-summary(test$Churn, exact_quantiles = TRUE)
+# For binary classification, response should be a factor
+train_hf[, response] <- as.factor(train_hf[, response])
+valid_hf[, response] <- as.factor(valid_hf[, response])
+test_hf[, response] <- as.factor(test_hf[, response])
 ```
+
+```{r tidy=FALSE}
+summary(train_hf$Churn, exact_quantiles = TRUE)
+summary(valid_hf$Churn, exact_quantiles = TRUE)
+summary(test_hf$Churn, exact_quantiles = TRUE)
+```
+
+- Train model with [AutoML](http://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html).
 
 > "During model training, you might find that the majority of your data belongs in a single class. For example, consider a binary classification model that has 100 rows, with 80 rows labeled as class 1 and the remaining 20 rows labeled as class 2. This is a common scenario, given that machine learning attempts to predict class 1 with the highest accuracy. It can also be an example of an imbalanced dataset, in this case, with a ratio of 4:1.
 The balance_classes option can be used to balance the class distribution. When enabled, H2O will either undersample the majority classes or oversample the minority classes. Note that the resulting model will also correct the final probabilities (“undo the sampling”) using a monotonic transform, so the predicted probabilities of the first model will differ from a second model. However, because AUC only cares about ordering, it won’t be affected.
 If this option is enabled, then you can also specify a value for the class_sampling_factors and max_after_balance_size options."
 http://docs.h2o.ai/h2o/latest-stable/h2o-docs/data-science/algo-params/balance_classes.html
 
-The model was trained with [AutoML](http://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html). The best model was a Best Of Family Stacked Ensemble.
-
-```{r}
+```{r eval=FALSE}
 aml <- h2o.automl(x = features, 
                   y = response,
-                  training_frame = train,
-                  validation_frame = valid,
+                  training_frame = train_hf,
+                  validation_frame = valid_hf,
                   balance_classes = TRUE,
-                  max_runtime_secs = 30)
+                  max_runtime_secs = 3600)
 
 # View the AutoML Leaderboard
 lb <- aml@leaderboard
-lb
 
 best_model <- aml@leader
-best_model
+
+h2o.saveModel(best_model, "/Users/shiringlander/Documents/Github/Data")
 ```
 
-```{r}
-pred <- h2o.predict(best_model, test[, -1])
+```{r echo=FALSE}
+best_model <- h2o.loadModel("/Users/shiringlander/Documents/Github/Data/StackedEnsemble_AllModels_0_AutoML_20181212_094118")
 ```
+
+- Prediction
+
+```{r}
+pred <- h2o.predict(best_model, test_hf[, -1])
+```
+
+- Mean per class error
 
 ```{r }
 h2o.mean_per_class_error(best_model, train = TRUE, valid = TRUE, xval = TRUE)
 ```
+
+- Confusion matrix on validation data
 
 ```{r }
 h2o.confusionMatrix(best_model, valid = TRUE)
@@ -396,14 +447,20 @@ h2o.auc(best_model, valid = TRUE)
 h2o.auc(best_model, xval = TRUE)
 ```
 
+- Performance and confusion matrix on test data
+
 ```{r fig.width=6, fig.height=5, fig.align='center'}
-perf <- h2o.performance(best_model, test)
+perf <- h2o.performance(best_model, test_hf)
 h2o.confusionMatrix(perf)
 ```
+
+- Plot performance
 
 ```{r fig.width=6, fig.height=5, fig.align='center', eval=FALSE}
 plot(perf)
 ```
+
+- More performance metrics extracted
 
 ```{r }
 h2o.logloss(perf)
@@ -414,6 +471,8 @@ metrics <- as.data.frame(h2o.metric(perf))
 head(metrics)
 ```
 
+- Plot performance metrics
+
 ```{r metrics, fig.width=8, fig.height=12}
 metrics %>%
   gather(x, y, f1:tpr) %>%
@@ -422,12 +481,14 @@ metrics %>%
     geom_line()
 ```
 
+- Examine prediction thresholds
+
 ```{r fig.align='center'}
 threshold <- metrics[order(-metrics$accuracy), "threshold"][1]
 
-finalRf_predictions <- data.frame(actual = as.vector(test$Churn), 
+finalRf_predictions <- data.frame(actual = as.vector(test_hf$Churn), 
                                   as.data.frame(h2o.predict(object = best_model, 
-                                                            newdata = test)))
+                                                            newdata = test_hf)))
 
 finalRf_predictions$accurate <- ifelse(finalRf_predictions$actual == 
                                          finalRf_predictions$predict, "ja", "nein")
@@ -506,7 +567,7 @@ prop_table %>%
     scale_color_tableau()
 ```
 
-### Cost calculation
+### Cost/revenue calculation
 
 Let's assume that 
 
@@ -524,10 +585,13 @@ This would mean that compared to no intervention we would have
 - prop_p1_true == customers that were correctly predicted to churn:
   - let's say 100% of those could be kept by investing into marketing: +2000€ -1500€
   - let's say 50% could be kept by investing into marketing: +2000€ * 0.5 -1500€
+
+<br>
+
+- Let's play around with some values:
   
 ```{r}
-# baseline
-
+# Baseline
 revenue <- 2000
 cost <- 1000
 
@@ -549,7 +613,7 @@ net_win_default <- ann_revenue_default - ad_cost_default
 net_win_default
 ```
 
-How much can we revenue gain from predicting customer churn:
+- How much revenue can we gain from predicting customer churn (assuming conversionr rate of 0.7):
 
 ```{r}
 conversion <- 0.7
@@ -567,12 +631,13 @@ net_win_table <- prop_table %>%
 net_win_table
 ```
 
-
 ## LIME
 
+- Explaining predictions
+
 ```{r}
-Xtrain <- as.data.frame(train)
-Xtest <- as.data.frame(test)
+Xtrain <- as.data.frame(train_hf)
+Xtest <- as.data.frame(test_hf)
 
 # run lime() on training set
 explainer <- lime::lime(x = Xtrain, 
