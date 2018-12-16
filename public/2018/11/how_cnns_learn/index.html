@@ -358,7 +358,7 @@ ga('send', 'pageview');
 <p>Before we dive deeper into CNNs, I briefly want to recap how images can take on a numerical format. We need a numerical representation of our image because just like any other machine learning model or neural net, CNNs need data in form of numbers in order to learn! With images, these numbers are <strong>pixel values</strong>; when we have a greyscale image, these values represent a range of “greyness” from 0 (black) to 255 (white).</p>
 <p>Here is an example image from the fruits datasets, which is used in the <a href="https://shirinsplayground.netlify.com/2018/06/keras_fruits/">practical example for this lesson</a>. In general, data can be represented in different formats, e.g. as vectors, tables or matrices. I am using the <code>imager</code> package to read the image and have a look at the pixel values, which are represented as a <strong>matrix with the dimensions image width x image height</strong>.</p>
 <pre class="r"><code>library(imager)
-im &lt;- load.image(&quot;/Users/shiringlander/Documents/Github/codecentric.AI-bootcamp/notebooks/data/fruits-360/Training/Strawberry/100_100.jpg&quot;)</code></pre>
+im &lt;- load.image(&quot;/Users/shiringlander/Documents/Github/codecentric.AI-bootcamp/data/fruits-360/Training/Strawberry/100_100.jpg&quot;)</code></pre>
 <pre class="r"><code>plot(im)</code></pre>
 <p><img src="/post/how_cnns_learn_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p>But when we look at the <code>dim()</code> function with our image, we see that there are actually four dimensions and only the first two represent image width and image height. The third dimension is for the depth, which means in case of videos the time or order of the frames; with regular images, we don’t need this dimension. The third dimension shows the number of <strong>color channels</strong>; in this case, we have a color image, so there are three channels for red, green and blue. The values remain in the same between 0 and 255 but now they don’t represent greyscales but color intensity of the respective channel. This 3-dimensional format (a stack of three matrices) is also called a 3-dimensional <strong>array</strong>.</p>
@@ -528,7 +528,7 @@ plot(im_grey)</code></pre>
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>## R version 3.5.1 (2018-07-02)
 ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-## Running under: macOS  10.14.1
+## Running under: macOS  10.14.2
 ## 
 ## Matrix products: default
 ## BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib

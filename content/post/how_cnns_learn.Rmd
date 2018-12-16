@@ -29,7 +29,7 @@ Here is an example image from the fruits datasets, which is used in the [practic
 
 ```{r warning=FALSE, message=FALSE}
 library(imager)
-im <- load.image("/Users/shiringlander/Documents/Github/codecentric.AI-bootcamp/notebooks/data/fruits-360/Training/Strawberry/100_100.jpg")
+im <- load.image("/Users/shiringlander/Documents/Github/codecentric.AI-bootcamp/data/fruits-360/Training/Strawberry/100_100.jpg")
 ```
 
 ```{r}

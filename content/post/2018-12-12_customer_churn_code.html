@@ -366,12 +366,12 @@ head(test_results)</code></pre>
 <pre><code>## # A tibble: 6 x 4
 ##   actual_yes pred_classes_test     Yes    No
 ##   &lt;fct&gt;      &lt;fct&gt;               &lt;dbl&gt; &lt;dbl&gt;
-## 1 0          1                 0.515   0.485
-## 2 0          0                 0.0142  0.986
-## 3 1          1                 0.575   0.425
-## 4 1          0                 0.436   0.564
-## 5 0          0                 0.00362 0.996
-## 6 0          0                 0.0309  0.969</code></pre>
+## 1 0          1                 0.567   0.433
+## 2 0          0                 0.0200  0.980
+## 3 1          1                 0.683   0.317
+## 4 1          0                 0.330   0.670
+## 5 0          0                 0.00589 0.994
+## 6 0          0                 0.0459  0.954</code></pre>
 <ul>
 <li>Calculate confusion matrix</li>
 </ul>
@@ -379,8 +379,8 @@ head(test_results)</code></pre>
   conf_mat(actual_yes, pred_classes_test)</code></pre>
 <pre><code>##           Truth
 ## Prediction   0   1
-##          0 690 124
-##          1  84 156</code></pre>
+##          0 694 125
+##          1  80 155</code></pre>
 <ul>
 <li>Calculate metrics</li>
 </ul>
@@ -389,8 +389,8 @@ head(test_results)</code></pre>
 <pre><code>## # A tibble: 2 x 3
 ##   .metric  .estimator .estimate
 ##   &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;
-## 1 accuracy binary         0.803
-## 2 kap      binary         0.470</code></pre>
+## 1 accuracy binary         0.806
+## 2 kap      binary         0.475</code></pre>
 <ul>
 <li>Are under the ROC curve</li>
 </ul>
@@ -399,7 +399,7 @@ head(test_results)</code></pre>
 <pre><code>## # A tibble: 1 x 3
 ##   .metric .estimator .estimate
 ##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
-## 1 roc_auc binary         0.837</code></pre>
+## 1 roc_auc binary         0.839</code></pre>
 <ul>
 <li>Precision and recall</li>
 </ul>
@@ -410,7 +410,7 @@ head(test_results)</code></pre>
 <pre><code>## # A tibble: 1 x 2
 ##   precision recall
 ##       &lt;dbl&gt;  &lt;dbl&gt;
-## 1     0.848  0.891</code></pre>
+## 1     0.847  0.897</code></pre>
 <ul>
 <li>F1-Statistic</li>
 </ul>
@@ -418,7 +418,7 @@ head(test_results)</code></pre>
 <pre><code>## # A tibble: 1 x 3
 ##   .metric .estimator .estimate
 ##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
-## 1 f_meas  binary         0.869</code></pre>
+## 1 f_meas  binary         0.871</code></pre>
 </div>
 <div id="h2o" class="section level2">
 <h2>H2O</h2>
@@ -431,14 +431,14 @@ h2o.init(nthreads = -1)</code></pre>
 <pre><code>##  Connection successful!
 ## 
 ## R is connected to the H2O cluster: 
-##     H2O cluster uptime:         1 hours 16 minutes 
+##     H2O cluster uptime:         4 minutes 37 seconds 
 ##     H2O cluster timezone:       Europe/Berlin 
 ##     H2O data parsing timezone:  UTC 
 ##     H2O cluster version:        3.20.0.8 
-##     H2O cluster version age:    2 months and 20 days  
-##     H2O cluster name:           H2O_started_from_R_shiringlander_wcd642 
+##     H2O cluster version age:    2 months and 24 days  
+##     H2O cluster name:           H2O_started_from_R_shiringlander_bzx929 
 ##     H2O cluster total nodes:    1 
-##     H2O cluster total memory:   3.03 GB 
+##     H2O cluster total memory:   3.39 GB 
 ##     H2O cluster total cores:    8 
 ##     H2O cluster allowed cores:  8 
 ##     H2O cluster healthy:        TRUE 
@@ -454,7 +454,8 @@ train_hf &lt;- as.h2o(train_data)
 valid_hf &lt;- as.h2o(valid_data)
 test_hf &lt;- as.h2o(test_data)
 
-response &lt;- &quot;Churn&quot;</code></pre>
+response &lt;- &quot;Churn&quot;
+features &lt;- setdiff(colnames(train_hf), response)</code></pre>
 <pre class="r"><code># For binary classification, response should be a factor
 train_hf[, response] &lt;- as.factor(train_hf[, response])
 valid_hf[, response] &lt;- as.factor(valid_hf[, response])
@@ -774,7 +775,7 @@ explanation &lt;- lime::explain(x = Xtest[1:9, ],
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>## R version 3.5.1 (2018-07-02)
 ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-## Running under: macOS  10.14.1
+## Running under: macOS  10.14.2
 ## 
 ## Matrix products: default
 ## BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib

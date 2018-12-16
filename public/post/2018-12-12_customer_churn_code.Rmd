@@ -381,6 +381,7 @@ valid_hf <- as.h2o(valid_data)
 test_hf <- as.h2o(test_data)
 
 response <- "Churn"
+features <- setdiff(colnames(train_hf), response)
 ```
 
 ```{r tidy=FALSE}
