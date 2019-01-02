@@ -25,7 +25,7 @@ This blog will showcase some of the analyses I have been doing with different da
 
 ## Contact me:
 - [Codecentric AG](https://www.codecentric.de/team/shirin-glander/)
-- [Email](mailto:shirin.glander@gmail.com)
+- [Email](mailto:shirin.glander@gmail.com) (if you send me an email, please don't add any links - your mail will most likely go directly to my spam folder and I won't see it!)
 - [Xing](http://www.xing.com/profile/Shirin_Glander)
 - [Linkedin](http://de.linkedin.com/in/shirin-glander-01120881)
 - [Twitter](http://twitter.com/ShirinGlander)
