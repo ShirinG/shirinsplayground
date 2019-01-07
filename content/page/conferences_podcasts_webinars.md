@@ -28,7 +28,11 @@ Date and place depend on who and how many people are interested, so please conta
 Keras ist eine High-Level-Schnittstelle, die ein schnelles, einfaches und flexibles Prototypisieren von Neuronalen Netzwerken mit TensorFlow ermöglicht. Zusammen mit Luigi lassen sich beliebig komplexe Datenverarbeitungs-Workflows in Python erstellen. Das führt dazu, dass auch Nicht-Entwickler den End-2-End-Workflow des Keras-TensorFlow-Modells zur Produktionsreife leicht
 implementieren können.
 
-[Next dates: tbd](https://www.codecentric.de/schulung/end-2-end-vom-keras-tensorflow-modell-zur-produktion/)
+Next dates: 
+
+21st & 22nd of February 2019 in Berlin
+
+11th & 12th of April 2019 in Münster
 
 <br>
 

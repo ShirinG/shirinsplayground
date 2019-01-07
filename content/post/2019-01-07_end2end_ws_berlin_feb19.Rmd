@@ -1,0 +1,48 @@
+---
+title: "February 21st & 22nd: End-2-End from a Keras/TensorFlow model to production"
+draft: false
+author: Shirin Glander
+date: '2019-01-07'
+categories: ["R", "workshop"]
+tags: ["Keras", "TensorFlow", "data science", "workshop"]
+thumbnailImagePosition: left
+thumbnailImage: https://pbs.twimg.com/media/DnYlz0XW0AAWB-b.png
+metaAlignment: center
+coverMeta: out
+slug: end2end_ws_berlin_feb19
+---
+
+Registration is now open for my 1.5-day **workshop on how to develop end-2-end from a Keras/TensorFlow model to production**.
+
+It will take place on **February 21st & 22nd** in **Berlin, Germany**.
+
+Please register by sending an email to [shirin.glander@gmail.com](mailto:shirin.glander@gmail.com) with the following information:
+
+- name
+- company/institute/affiliation
+- address for invoice
+- phone number
+- reference to this blog
+
+The course material will be in English and we will speak a mix of German and English, depending on the participants' preferences.
+
+(The same course will also be giving on 11th & 12th of April, 2019 in Münster, Germany.)
+
+<br>
+
+![](https://blog.keras.io/img/keras-tensorflow-logo.jpg)
+
+<br>
+
+In [this workshop](https://www.codecentric.de/schulung/end-2-end-vom-keras-tensorflow-modell-zur-produktion/), you will learn
+
+- the basics of deep learning
+- what cross-entropy and loss is
+- about activation functions
+- how to optimize weights and biases with backpropagation and gradient descent
+- how to build (deep) neural networks with Keras and TensorFlow
+- how to save and load models and model weights
+- how to visualize models with TensorBoard
+- how to make predictions on test data
+- how to deploy models with Spotify Luigi and TensorFlow Serving
+

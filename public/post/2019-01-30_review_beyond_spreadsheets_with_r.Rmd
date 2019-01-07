@@ -1,0 +1,27 @@
+---
+title: "Book review: Beyond Spreadsheets with R"
+draft: true
+author: Shirin Glander
+date: '2019-01-30'
+categories: ["R"]
+tags: ["R"]
+thumbnailImagePosition: left
+thumbnailImage: 
+metaAlignment: center
+coverMeta: out
+slug: review_beyond_spreadsheets_with_r
+---
+
+**Disclaimer**: Manning publications gave me an ebook version of [Beyond Spreadsheets with R - A beginner's guide to R and RStudio](https://www.manning.com/books/beyond-spreadsheets-with-r) for free so that I could review it here.
+
+> Beyond Spreadsheets with R shows you how to take raw data and transform it for use in computations, tables, graphs, and more. You’ll build on simple programming techniques like loops and conditionals to create your own custom functions. You’ll come away with a toolkit of strategies for analyzing and visualizing data of all sorts using R and RStudio.
+
+## Aimed at
+
+This book covers the very basics of getting started with R, so it is useful to beginners but probably won't offer much for users who are already familiar with R.
+
+## What I liked about the book
+
+## What I didn't like about the book
+
+## Verdict

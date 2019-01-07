@@ -2,12 +2,75 @@
   <title>Shirin&#39;s playgRound</title>
   <link href="/index.xml" rel="self"/>
   <link href="/"/>
-  <updated>2018-12-12T00:00:00+00:00</updated>
+  <updated>2019-01-30T00:00:00+00:00</updated>
   <id>/</id>
   <author>
     <name>Dr. Shirin Glander</name>
   </author>
   <generator>Hugo -- gohugo.io</generator>
+  <entry>
+    <title type="html"><![CDATA[Book review: Beyond Spreadsheets with R]]></title>
+    <link href="/2019/01/review_beyond_spreadsheets_with_r/"/>
+    <id>/2019/01/review_beyond_spreadsheets_with_r/</id>
+    <published>2019-01-30T00:00:00+00:00</published>
+    <updated>2019-01-30T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<p><strong>Disclaimer</strong>: Manning publications gave me an ebook version of <a href="https://www.manning.com/books/beyond-spreadsheets-with-r">Beyond Spreadsheets with R - A beginner’s guide to R and RStudio</a> for free so that I could review it here.</p>
+<blockquote>
+<p>Beyond Spreadsheets with R shows you how to take raw data and transform it for use in computations, tables, graphs, and more. You’ll build on simple programming techniques like loops and conditionals to create your own custom functions. You’ll come away with a toolkit of strategies for analyzing and visualizing data of all sorts using R and RStudio.</p>
+</blockquote>
+<div id="aimed-at" class="section level2">
+<h2>Aimed at</h2>
+<p>This book covers the very basics of getting started with R, so it is useful to beginners but probably won’t offer much for users who are already familiar with R.</p>
+</div>
+<div id="what-i-liked-about-the-book" class="section level2">
+<h2>What I liked about the book</h2>
+</div>
+<div id="what-i-didnt-like-about-the-book" class="section level2">
+<h2>What I didn’t like about the book</h2>
+</div>
+<div id="verdict" class="section level2">
+<h2>Verdict</h2>
+</div>
+]]></content>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[February 21st &amp; 22nd: End-2-End from a Keras/TensorFlow model to production]]></title>
+    <link href="/2019/01/end2end_ws_berlin_feb19/"/>
+    <id>/2019/01/end2end_ws_berlin_feb19/</id>
+    <published>2019-01-07T00:00:00+00:00</published>
+    <updated>2019-01-07T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<p>Registration is now open for my 1.5-day <strong>workshop on how to develop end-2-end from a Keras/TensorFlow model to production</strong>.</p>
+<p>It will take place on <strong>February 21st &amp; 22nd</strong> in <strong>Berlin, Germany</strong>.</p>
+<p>Please register by sending an email to <a href="mailto:shirin.glander@gmail.com">shirin.glander@gmail.com</a> with the following information:</p>
+<ul>
+<li>name</li>
+<li>company/institute/affiliation</li>
+<li>address for invoice</li>
+<li>phone number</li>
+<li>reference to this blog</li>
+</ul>
+<p>The course material will be in English and we will speak a mix of German and English, depending on the participants’ preferences.</p>
+<p>(The same course will also be giving on 11th &amp; 12th of April, 2019 in Münster, Germany.)</p>
+<p><br></p>
+<div class="figure">
+<img src="https://blog.keras.io/img/keras-tensorflow-logo.jpg" />
+
+</div>
+<p><br></p>
+<p>In <a href="https://www.codecentric.de/schulung/end-2-end-vom-keras-tensorflow-modell-zur-produktion/">this workshop</a>, you will learn</p>
+<ul>
+<li>the basics of deep learning</li>
+<li>what cross-entropy and loss is</li>
+<li>about activation functions</li>
+<li>how to optimize weights and biases with backpropagation and gradient descent</li>
+<li>how to build (deep) neural networks with Keras and TensorFlow</li>
+<li>how to save and load models and model weights</li>
+<li>how to visualize models with TensorBoard</li>
+<li>how to make predictions on test data</li>
+<li>how to deploy models with Spotify Luigi and TensorFlow Serving</li>
+</ul>
+]]></content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[Code for case study - Customer Churn with Keras/TensorFlow and H2O]]></title>
     <link href="/2018/12/customer_churn_code/"/>
@@ -8365,7 +8428,11 @@ Keras ist eine High-Level-Schnittstelle, die ein schnelles, einfaches und flexib
 implementieren können.</p>
 </blockquote>
 
-<p><a href="https://www.codecentric.de/schulung/end-2-end-vom-keras-tensorflow-modell-zur-produktion/">Next dates: tbd</a></p>
+<p>Next dates:</p>
+
+<p>21st &amp; 22nd of February 2019 in Berlin</p>
+
+<p>11th &amp; 12th of April 2019 in Münster</p>
 
 <p><br></p>
 
@@ -9738,7 +9805,7 @@ Verteiltes Deep Learning mit TensorFlow und Kubernetes - <a href="https://twitte
 
 <ul>
 <li><a href="https://www.codecentric.de/team/shirin-glander/">Codecentric AG</a></li>
-<li><a href="mailto:shirin.glander@gmail.com">Email</a></li>
+<li><a href="mailto:shirin.glander@gmail.com">Email</a> (if you send me an email, please don&rsquo;t add any links - your mail will most likely go directly to my spam folder and I won&rsquo;t see it!)</li>
 <li><a href="http://www.xing.com/profile/Shirin_Glander">Xing</a></li>
 <li><a href="http://de.linkedin.com/in/shirin-glander-01120881">Linkedin</a></li>
 <li><a href="http://twitter.com/ShirinGlander">Twitter</a></li>

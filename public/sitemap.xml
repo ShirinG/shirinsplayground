@@ -3,6 +3,16 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/2019/01/review_beyond_spreadsheets_with_r/</loc>
+    <lastmod>2019-01-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2019/01/end2end_ws_berlin_feb19/</loc>
+    <lastmod>2019-01-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/2018/12/customer_churn_code/</loc>
     <lastmod>2018-12-12T00:00:00+00:00</lastmod>
   </url>
@@ -565,7 +575,7 @@
   
   <url>
     <loc>/tags/data-science/</loc>
-    <lastmod>2018-09-19T00:00:00+00:00</lastmod>
+    <lastmod>2019-01-07T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -751,7 +761,7 @@
   
   <url>
     <loc>/tags/keras/</loc>
-    <lastmod>2018-11-19T00:00:00+00:00</lastmod>
+    <lastmod>2019-01-07T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -943,7 +953,7 @@
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2018-12-12T00:00:00+00:00</lastmod>
+    <lastmod>2019-01-30T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -991,13 +1001,13 @@
   
   <url>
     <loc>/tags/r/</loc>
-    <lastmod>2018-12-12T00:00:00+00:00</lastmod>
+    <lastmod>2019-01-30T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/r/</loc>
-    <lastmod>2018-12-12T00:00:00+00:00</lastmod>
+    <lastmod>2019-01-30T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -1057,7 +1067,7 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2018-12-12T00:00:00+00:00</lastmod>
+    <lastmod>2019-01-30T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -1111,7 +1121,7 @@
   
   <url>
     <loc>/tags/tensorflow/</loc>
-    <lastmod>2018-11-19T00:00:00+00:00</lastmod>
+    <lastmod>2019-01-07T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -1195,13 +1205,13 @@
   
   <url>
     <loc>/tags/workshop/</loc>
-    <lastmod>2018-09-19T00:00:00+00:00</lastmod>
+    <lastmod>2019-01-07T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/workshop/</loc>
-    <lastmod>2018-09-19T00:00:00+00:00</lastmod>
+    <lastmod>2019-01-07T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
