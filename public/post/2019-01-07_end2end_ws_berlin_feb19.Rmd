@@ -6,7 +6,7 @@ date: '2019-01-07'
 categories: ["R", "workshop"]
 tags: ["Keras", "TensorFlow", "data science", "workshop"]
 thumbnailImagePosition: left
-thumbnailImage: https://pbs.twimg.com/media/Dv-mwWVWoAE7jbY.jpg:large
+thumbnailImage: https://pbs.twimg.com/media/DuyAC3_XgAArQXt.jpg
 metaAlignment: center
 coverMeta: out
 slug: end2end_ws_berlin_feb19
@@ -30,7 +30,7 @@ The course material will be in English and we will speak a mix of German and Eng
 
 <br>
 
-![](https://pbs.twimg.com/media/Dv-mwWVWoAE7jbY.jpg:large)
+![](https://pbs.twimg.com/media/DuyAC3_XgAArQXt.jpg)
 
 <br>
 
