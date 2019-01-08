@@ -24,12 +24,41 @@
 </div>
 <div id="what-i-liked-about-the-book" class="section level2">
 <h2>What I liked about the book</h2>
+<ul>
+<li>It introduced <strong>version control</strong> right away in the first chapter. Coming from an academic background where such things as Github and virtual machines were not widely used (at least not in the biology department), I learned about these invaluable tools way too late. Thus, I would always encourage students to start using them as early as possible. It will definitely make your analyses more reproducible, failproof and comprehensible. And it will make it easier to collaborate and keep track of different projects from past and present!</li>
+</ul>
 </div>
 <div id="what-i-didnt-like-about-the-book" class="section level2">
 <h2>What I didn’t like about the book</h2>
 </div>
 <div id="verdict" class="section level2">
 <h2>Verdict</h2>
+</div>
+]]></content>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[Don’t reinvent the wheel: making use of shiny extension packages. Join MünsteR for our next meetup!]]></title>
+    <link href="/2019/01/meetup_feb19/"/>
+    <id>/2019/01/meetup_feb19/</id>
+    <published>2019-01-08T00:00:00+00:00</published>
+    <updated>2019-01-08T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<div class="figure">
+<img src="https://shiring.github.io/r_users_group/2017/05/20/map.png" />
+
+</div>
+<p>In our <a href="http://meetu.ps/e/Gg5th/w54bW/f">next MünsteR R-user group meetup</a> on <strong>Tuesday, February 5th, 2019</strong>, titled <strong>Don’t reinvent the wheel: making use of shiny extension packages.</strong>, Suthira Owlarn will introduce the shiny package and show how she used it to build an interactive web app for her sequencing datasets.</p>
+<p>You can RSVP here: <a href="http://meetu.ps/e/Gg5th/w54bW/f" class="uri">http://meetu.ps/e/Gg5th/w54bW/f</a></p>
+<blockquote>
+<p>Shiny is a popular R package for building interactive web apps and dashboards – no web development knowledge required! It’s ease-of-use and extendability makes it great for quick user-friendly presentations of toy projects as well as production-ready data products in various industries.</p>
+</blockquote>
+<blockquote>
+<p>In our first 2019 meetup, Suthira Owlarn will briefly demo a prototype of BioDEV, a shiny app that addresses a common pain-point in dealing with biological (omics) data sets. It allows interactive and intuitive exploration of user-provided data sets, integration of external data and download of parameterized interactive reports. She will then talk about packages that extend shiny by providing a variety of user interfaces, more advanced user interactions or an application-testing framework. Finally, we will cover some useful tools that aren’t specific to shiny, including an easy way to turn shiny apps into self-contained desktop applications.</p>
+</blockquote>
+<div id="about-the-speaker" class="section level2">
+<h2>About the speaker:</h2>
+<blockquote>
+<p>Suthira Owlarn is a biologist at the Max Planck Institute in Münster. After finishing her PhD, she decided to learn a little R and immediately fell in love! Soon, she waved goodbye to the bench and is now having fun diving into the world of data analysis, exploring R packages and building shiny apps.</p>
+</blockquote>
 </div>
 ]]></content>
   </entry>

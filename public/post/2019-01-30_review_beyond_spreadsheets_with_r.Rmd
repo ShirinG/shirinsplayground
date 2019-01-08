@@ -22,6 +22,8 @@ This book covers the very basics of getting started with R, so it is useful to b
 
 ## What I liked about the book
 
+- It introduced **version control** right away in the first chapter. Coming from an academic background where such things as Github and virtual machines were not widely used (at least not in the biology department), I learned about these invaluable tools way too late. Thus, I would always encourage students to start using them as early as possible. It will definitely make your analyses more reproducible, failproof and comprehensible. And it will make it easier to collaborate and keep track of different projects from past and present!
+
 ## What I didn't like about the book
 
 ## Verdict
