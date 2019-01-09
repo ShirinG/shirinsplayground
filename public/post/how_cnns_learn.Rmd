@@ -89,7 +89,7 @@ By the way, CNNs can not only be used to classify images, they can also be used 
 
 A filter is a matrix with the same dimension as our sliding window, e.g. 3x3. At each position of our sliding window, a mathematical operation is performed, the so called **convolution**. During convolution, each pixel value in our window is multiplied with the value at the respective position in the filter matrix and the sum of all multiplications is calculated. This result is called the **dot product**. Depending on what values the filter contains at which position, the original image will be **transformed** in a certain way, e.g. sharpen, blur or make edges stand out. You can find great visualisations on [setosa.io](http://setosa.io/ev/image-kernels/).
 
-To be precise, **filters are collections of kernels** so that, if we work with color images, we have 3 channels. The 3 dimensions from the channels will all get one kernel, which together create the filter. Each filter will only calculate one output value, the dot product mentioned earlier. The learning part of CNNs comes into play with these filters. Similar to learning weights in a MLP, CNNs will **learn the most optimal filters** for recognizing specific objects and patterns. But a CNN doesn't only learn one filter, it learns multiple filters. In fact, it even learns multiple filters in each layer! Every filter learns a specific pattern, or **feature**. That's why these collections of parallel filters are the so called **stacks of feature maps** or **activation maps**
+To be precise, **filters are collections of kernels** so that, if we work with color images, we have 3 channels. The 3 dimensions from the channels will all get one kernel, which together create the filter. Each filter will only calculate one output value, the dot product mentioned earlier. The learning part of CNNs comes into play with these filters. Similar to learning weights in a MLP, CNNs will **learn the most optimal filters** for recognizing specific objects and patterns. But a CNN doesn't only learn one filter, it learns multiple filters. In fact, it even learns multiple filters in each layer! Every filter learns a specific pattern, or **feature**. That's why these collections of parallel filters are the so called **stacks of feature maps** or **activation maps**. We can visualize these activation maps to help us understand what the CNN learn along the way, but this is a topic for another lesson.
 
 ## Padding and step size
 
@@ -107,30 +107,11 @@ Pooling layers also work with **sliding windows**; they can but don't have to ha
 
 ## Dense layers calculate the output of the CNN
 
+After our desired number of convolution + pooling blocks, there will usually be a few **dense (or fully connected)** layers before the final dense layer that calculates the **output**. These dense layers are nothing else than a simple MLP that learns the classification or regression task, while you can think of the preceding convolutions as the means to **extract the relevant features for this simple MLP**.
+
+Just like in a MLP, we use **activation functions**, like rectified linear units in our CNN; here, they are used with convolutional layers and dense layers. Because pooling only condenses information, we don't need to normalise the output there.
 
 ---
-
-Okay, setzen wir nun also die Faltungsschichten und Pooling-Schichten zu einer typischen CNN-Architektur zusammen.
-
-Wir starten natürlich wie immer mit dem Input, in unserem Fall Bilder.
-
-Nun kommt in der Regel 1 oder 2 Faltungsschichten (plus Aktivierungsfunktion nach jeder Faltung, z.B. Rectified Linear Units),
-
-gefolgt von einer Pooling-Schicht.
-
-Von diesen Blöcken aus Convolution und Pooling können nun mehrere hintereinander gefügt werden. In der nächsten Lektion werden wir uns konkrete Beispiele mit unterschiedlich vielen Schichten und Weiterentwicklungen, wie AlexNet, VGG, Inception und ResNets, angucken. In dieser Lektion werden wir uns außerdem angucken, wie wir Activation Maps in unserem Modell visualisieren können.
-
-Bevor wir das Endergbnis, zum Beispiel eine Klasse bestimmen lassen, folgen eine oder ein paar wenige Dense Layer, als würden wir ein kleines MLP hinten dran hängen. In den Dense Layern werden deshab wieder Gewichte gelernt. Im Wesentlichen haben die Faltungsschichten in unserem Netz relevante Feature gefunden, und die Pooling-Schichten habe diese Information soweit verdichtet, dass es nun sinnvoll ist ein MLP zu trainieren, dass in der Lage ist die finale Klassifikation zu lernen.
-
-Und zuletzt haben wir eine Output-Schicht, ebenfalls wie bei einem einfachen MLP.
-
----
-
-Sicher wollt ihr jetzt wissen, wie ihr selber ein CNN bauen und verwenden könnt. Dafür haben wir euch wieder ein Notebook mit einem Beispiel erstellt. In dieser Lektion verwenden wir Keras und TensorFlow um ein CNN zu trainieren, das Bilder von verschiedenen Früchten erkennen kann.
-
-Hier nur ein kleiner Ausschnitt aus dem Code. Vielleicht erkennt ihr schon Teile aus diesem Video, wie Convolution, padding und pooling? 
-
-Die vollständige Erklärung mit Code zum Mitmachen findet ihr in dem Notebook zu diesem Video!
 
 You can find the R version of the Python code, which we provide for this course in [this blog article](https://shirinsplayground.netlify.com/2018/06/keras_fruits/).
 

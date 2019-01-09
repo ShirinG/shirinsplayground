@@ -1,8 +1,8 @@
 ---
 title: "How do Convolutional Neural Nets (CNNs) learn? + Keras example"
-draft: true
+draft: false
 author: Shirin Glander
-date: '2018-11-29'
+date: '2019-01-09'
 categories: ["machine learning"]
 tags: ["machine learning", "deep learning", "cnn", "codecentric.ai"]
 thumbnailImagePosition: left
@@ -20,23 +20,23 @@ slug: how_cnns_learn
 <p>This lesson builds on top of two other lessons: <a href="https://youtu.be/JS4E04dJj0I">Computer Vision Basics</a> and <a href="https://shirinsplayground.netlify.com/2018/11/neural_nets_explained/">Neural Nets</a>. In the first video, Oli explains what computer vision is, how images are read by computers and how they can be analyzed with traditional approaches, like <strong>Histograms of Oriented Gradients</strong> and more. He also shows a very cool project, that he and colleagues worked on, where they programmed a small drone to recognize and avoid obstacles, like people. This video is only available in German, though. In the Neural Nets blog post, I show how Neural Nets work by explaining what <strong>Multi-Layer Perceptrons (MLPs)</strong> are and how they learn, using techniques like <strong>gradient descent</strong>, <strong>backpropagation</strong>, <strong>loss</strong> and <strong>activation functions</strong>.</p>
 <div id="convolutional-neural-nets" class="section level2">
 <h2>Convolutional Neural Nets</h2>
-<p>Convolutional Neural Nets are usually abbreviated either <strong>CNNs</strong> or <strong>ConvNets</strong>. They are a specific type of neural network that has very particular differences compared to MLPs. Basically, you can think of CNNs as working similarly to the <strong>receptive fields of photoreceptors</strong> in the human eye. Receptive fields in our eyes are small connected areas on the retina where groups of many photoreceptors stimulate much fewer ganglion cells. Thus, each ganglion cell can be stimulated by a large number of receptors, so that a complex input is condensed into a <strong>compressed output</strong> before it is further processed in the brain.</p>
+<p>Convolutional Neural Nets are usually abbreviated either <strong>CNNs</strong> or <strong>ConvNets</strong>. They are a specific type of neural network that has very particular differences compared to MLPs. Basically, you can think of CNNs as working similarly to the <strong>receptive fields of photoreceptors</strong> in the human eye. Receptive fields in our eyes are small connected areas on the retina where groups of many photo-receptors stimulate much fewer ganglion cells. Thus, each ganglion cell can be stimulated by a large number of receptors, so that a complex input is condensed into a <strong>compressed output</strong> before it is further processed in the brain.</p>
 </div>
 <div id="how-does-a-computer-see-images" class="section level2">
 <h2>How does a computer see images</h2>
-<p>Before we dive deeper into CNNs, I briefly want to recap how images can take on a numerical format. We need a numerical representation of our image because just like any other machine learning model or neural net, CNNs need data in form of numbers in order to learn! With images, these numbers are <strong>pixel values</strong>; when we have a greyscale image, these values represent a range of “greyness” from 0 (black) to 255 (white).</p>
+<p>Before we dive deeper into CNNs, I briefly want to recap how images can take on a numerical format. We need a numerical representation of our image because just like any other machine learning model or neural net, CNNs need data in form of numbers in order to learn! With images, these numbers are <strong>pixel values</strong>; when we have a grey-scale image, these values represent a range of “greyness” from 0 (black) to 255 (white).</p>
 <p>Here is an example image from the fruits datasets, which is used in the <a href="https://shirinsplayground.netlify.com/2018/06/keras_fruits/">practical example for this lesson</a>. In general, data can be represented in different formats, e.g. as vectors, tables or matrices. I am using the <code>imager</code> package to read the image and have a look at the pixel values, which are represented as a <strong>matrix with the dimensions image width x image height</strong>.</p>
 <pre class="r"><code>library(imager)
 im &lt;- load.image(&quot;/Users/shiringlander/Documents/Github/codecentric.AI-bootcamp/data/fruits-360/Training/Strawberry/100_100.jpg&quot;)</code></pre>
 <pre class="r"><code>plot(im)</code></pre>
-<p><img src="/post/how_cnns_learn_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<p>But when we look at the <code>dim()</code> function with our image, we see that there are actually four dimensions and only the first two represent image width and image height. The third dimension is for the depth, which means in case of videos the time or order of the frames; with regular images, we don’t need this dimension. The third dimension shows the number of <strong>color channels</strong>; in this case, we have a color image, so there are three channels for red, green and blue. The values remain in the same between 0 and 255 but now they don’t represent greyscales but color intensity of the respective channel. This 3-dimensional format (a stack of three matrices) is also called a 3-dimensional <strong>array</strong>.</p>
+<p><img src="/post/2019-01-09_how_cnns_learn_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>But when we look at the <code>dim()</code> function with our image, we see that there are actually four dimensions and only the first two represent image width and image height. The third dimension is for the depth, which means in case of videos the time or order of the frames; with regular images, we don’t need this dimension. The third dimension shows the number of <strong>color channels</strong>; in this case, we have a color image, so there are three channels for red, green and blue. The values remain in the same between 0 and 255 but now they don’t represent grey-scales but color intensity of the respective channel. This 3-dimensional format (a stack of three matrices) is also called a 3-dimensional <strong>array</strong>.</p>
 <pre class="r"><code>dim(im)</code></pre>
 <pre><code>## [1] 100 100   1   3</code></pre>
 <p>Let’s see what happens if we convert our image to <strong>greyscale</strong>:</p>
 <pre class="r"><code>im_grey &lt;- grayscale(im)
 plot(im_grey)</code></pre>
-<p><img src="/post/how_cnns_learn_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="/post/2019-01-09_how_cnns_learn_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>Our grey image has only <strong>one channel</strong>.</p>
 <pre class="r"><code>dim(im_grey)</code></pre>
 <pre><code>## [1] 100 100   1   1</code></pre>
@@ -138,7 +138,7 @@ plot(im_grey)</code></pre>
 </div>
 <div id="learning-different-levels-of-abstraction" class="section level2">
 <h2>Learning different levels of abstraction</h2>
-<p>These pixel arrays of our images are now the input to our CNN, which can now learn to recognize e.g. which fruit is on each image (a <strong>classification task</strong>). This is accomplished by learning different <a href="https://distill.pub/2017/feature-visualization/"><strong>levels of abstraction</strong></a> of the images. In the first few hidden layers, the CNN ususally detects <strong>general patterns</strong>, like edges; the deeper we go into the CNN, these learned abstractions become more specific, like <strong>textures</strong>, <strong>patterns</strong> and (parts of) <strong>objects</strong>.</p>
+<p>These pixel arrays of our images are now the input to our CNN, which can now learn to recognize e.g. which fruit is on each image (a <strong>classification task</strong>). This is accomplished by learning different <a href="https://distill.pub/2017/feature-visualization/"><strong>levels of abstraction</strong></a> of the images. In the first few hidden layers, the CNN usually detects <strong>general patterns</strong>, like edges; the deeper we go into the CNN, these learned abstractions become more specific, like <strong>textures</strong>, <strong>patterns</strong> and (parts of) <strong>objects</strong>.</p>
 </div>
 <div id="mlps-versus-cnns" class="section level2">
 <h2>MLPs versus CNNs</h2>
@@ -149,8 +149,8 @@ plot(im_grey)</code></pre>
 </div>
 <div id="learning-filter-kernels" class="section level2">
 <h2>Learning filter kernels</h2>
-<p>A filter is a matrix with the same dimension as our sliding window, e.g. 3x3. At each position of our sliding window, a mathematical operation is performed, the so called <strong>convolution</strong>. During convolution, each pixel value in our window is multiplied with the value at the respective position in the filter matrix and the sum of all multiplications is calculated. This result is called the <strong>dot product</strong>. Depending on what values the filter contains at which position, the original image will be <strong>transformed</strong> in a certain way, e.g. sharpen, blur or make edges stand out. You can find great visualisations on <a href="http://setosa.io/ev/image-kernels/">setosa.io</a>.</p>
-<p>To be precise, <strong>filters are collections of kernels</strong> so that, if we work with color images, we have 3 channels. The 3 dimensions from the channels will all get one kernel, which together create the filter. Each filter will only calculate one output value, the dot product mentioned earlier. The learning part of CNNs comes into play with these filters. Similar to learning weights in a MLP, CNNs will <strong>learn the most optimal filters</strong> for recognizing specific objects and patterns. But a CNN doesn’t only learn one filter, it learns multiple filters. In fact, it even learns multiple filters in each layer! Every filter learns a specific pattern, or <strong>feature</strong>. That’s why these collections of parallel filters are the so called <strong>stacks of feature maps</strong> or <strong>activation maps</strong></p>
+<p>A filter is a matrix with the same dimension as our sliding window, e.g. 3x3. At each position of our sliding window, a mathematical operation is performed, the so called <strong>convolution</strong>. During convolution, each pixel value in our window is multiplied with the value at the respective position in the filter matrix and the sum of all multiplications is calculated. This result is called the <strong>dot product</strong>. Depending on what values the filter contains at which position, the original image will be <strong>transformed</strong> in a certain way, e.g. sharpen, blur or make edges stand out. You can find great visualizations on <a href="http://setosa.io/ev/image-kernels/">setosa.io</a>.</p>
+<p>To be precise, <strong>filters are collections of kernels</strong> so that, if we work with color images, we have 3 channels. The 3 dimensions from the channels will all get one kernel, which together create the filter. Each filter will only calculate one output value, the dot product mentioned earlier. The learning part of CNNs comes into play with these filters. Similar to learning weights in a MLP, CNNs will <strong>learn the most optimal filters</strong> for recognizing specific objects and patterns. But a CNN doesn’t only learn one filter, it learns multiple filters. In fact, it even learns multiple filters in each layer! Every filter learns a specific pattern, or <strong>feature</strong>. That’s why these collections of parallel filters are the so called <strong>stacks of feature maps</strong> or <strong>activation maps</strong>. We can visualize these activation maps to help us understand what the CNN learn along the way, but this is a topic for another lesson.</p>
 </div>
 <div id="padding-and-step-size" class="section level2">
 <h2>Padding and step size</h2>
@@ -168,18 +168,9 @@ plot(im_grey)</code></pre>
 </div>
 <div id="dense-layers-calculate-the-output-of-the-cnn" class="section level2">
 <h2>Dense layers calculate the output of the CNN</h2>
+<p>After our desired number of convolution + pooling blocks, there will usually be a few <strong>dense (or fully connected)</strong> layers before the final dense layer that calculates the <strong>output</strong>. These dense layers are nothing else than a simple MLP that learns the classification or regression task, while you can think of the preceding convolutions as the means to <strong>extract the relevant features for this simple MLP</strong>.</p>
+<p>Just like in a MLP, we use <strong>activation functions</strong>, like rectified linear units in our CNN; here, they are used with convolutional layers and dense layers. Because pooling only condenses information, we don’t need to normalize the output there.</p>
 <hr />
-<p>Okay, setzen wir nun also die Faltungsschichten und Pooling-Schichten zu einer typischen CNN-Architektur zusammen.</p>
-<p>Wir starten natürlich wie immer mit dem Input, in unserem Fall Bilder.</p>
-<p>Nun kommt in der Regel 1 oder 2 Faltungsschichten (plus Aktivierungsfunktion nach jeder Faltung, z.B. Rectified Linear Units),</p>
-<p>gefolgt von einer Pooling-Schicht.</p>
-<p>Von diesen Blöcken aus Convolution und Pooling können nun mehrere hintereinander gefügt werden. In der nächsten Lektion werden wir uns konkrete Beispiele mit unterschiedlich vielen Schichten und Weiterentwicklungen, wie AlexNet, VGG, Inception und ResNets, angucken. In dieser Lektion werden wir uns außerdem angucken, wie wir Activation Maps in unserem Modell visualisieren können.</p>
-<p>Bevor wir das Endergbnis, zum Beispiel eine Klasse bestimmen lassen, folgen eine oder ein paar wenige Dense Layer, als würden wir ein kleines MLP hinten dran hängen. In den Dense Layern werden deshab wieder Gewichte gelernt. Im Wesentlichen haben die Faltungsschichten in unserem Netz relevante Feature gefunden, und die Pooling-Schichten habe diese Information soweit verdichtet, dass es nun sinnvoll ist ein MLP zu trainieren, dass in der Lage ist die finale Klassifikation zu lernen.</p>
-<p>Und zuletzt haben wir eine Output-Schicht, ebenfalls wie bei einem einfachen MLP.</p>
-<hr />
-<p>Sicher wollt ihr jetzt wissen, wie ihr selber ein CNN bauen und verwenden könnt. Dafür haben wir euch wieder ein Notebook mit einem Beispiel erstellt. In dieser Lektion verwenden wir Keras und TensorFlow um ein CNN zu trainieren, das Bilder von verschiedenen Früchten erkennen kann.</p>
-<p>Hier nur ein kleiner Ausschnitt aus dem Code. Vielleicht erkennt ihr schon Teile aus diesem Video, wie Convolution, padding und pooling?</p>
-<p>Die vollständige Erklärung mit Code zum Mitmachen findet ihr in dem Notebook zu diesem Video!</p>
 <p>You can find the R version of the Python code, which we provide for this course in <a href="https://shirinsplayground.netlify.com/2018/06/keras_fruits/">this blog article</a>.</p>
 <hr />
 <p><a href="https://youtu.be/MWPohcMtFLo">Video</a>:</p>

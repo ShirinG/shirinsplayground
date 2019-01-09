@@ -1,0 +1,134 @@
+---
+title: "How do Convolutional Neural Nets (CNNs) learn? + Keras example"
+draft: false
+author: Shirin Glander
+date: '2019-01-09'
+categories: ["machine learning"]
+tags: ["machine learning", "deep learning", "cnn", "codecentric.ai"]
+thumbnailImagePosition: left
+thumbnailImage: https://shiring.github.io/netlify_images/cnn_yt_video.png
+metaAlignment: center
+coverMeta: out
+slug: how_cnns_learn
+---
+
+As with the other videos from our [codecentric.ai Bootcamp](https://bootcamp.codecentric.ai/) ([Random Forests](https://shirinsplayground.netlify.com/2018/10/ml_basics_rf/), [Neural Nets](https://shirinsplayground.netlify.com/2018/11/neural_nets_explained/) & [Gradient Boosting](https://shirinsplayground.netlify.com/2018/11/ml_basics_gbm/)), I am again sharing an English version of the script (plus R code) for this most recent addition on [How Convolutional Neural Nets work](https://youtu.be/MWPohcMtFLo).
+
+---
+
+In this lesson, I am going to explain **how computers learn to see**; meaning, how do they learn to recognize images or object on images?
+One of the most commonly used approaches to teach computers "vision" are **Convolutional Neural Nets**.
+
+This lesson builds on top of two other lessons: [Computer Vision Basics](https://youtu.be/JS4E04dJj0I) and [Neural Nets](https://shirinsplayground.netlify.com/2018/11/neural_nets_explained/). In the first video, Oli explains what computer vision is, how images are read by computers and how they can be analyzed with traditional approaches, like **Histograms of Oriented Gradients** and more. He also shows a very cool project, that he and colleagues worked on, where they programmed a small drone to recognize and avoid obstacles, like people. This video is only available in German, though. In the Neural Nets blog post, I show how Neural Nets work by explaining what **Multi-Layer Perceptrons (MLPs)** are and how they learn, using techniques like **gradient descent**, **backpropagation**, **loss** and **activation functions**.
+
+## Convolutional Neural Nets
+
+Convolutional Neural Nets are usually abbreviated either **CNNs** or **ConvNets**. They are a specific type of neural network that has very particular differences compared to MLPs. Basically, you can think of CNNs as working similarly to the **receptive fields of photoreceptors** in the human eye. Receptive fields in our eyes are small connected areas on the retina where groups of many photo-receptors stimulate much fewer ganglion cells. Thus, each ganglion cell can be stimulated by a large number of receptors, so that a complex input is condensed into a **compressed output** before it is further processed in the brain.
+
+## How does a computer see images
+
+Before we dive deeper into CNNs, I briefly want to recap how images can take on a numerical format. We need a numerical representation of our image because just like any other machine learning model or neural net, CNNs need data in form of numbers in order to learn! With images, these numbers are **pixel values**; when we have a grey-scale image, these values represent a range of "greyness" from 0 (black) to 255 (white).
+
+Here is an example image from the fruits datasets, which is used in the [practical example for this lesson](https://shirinsplayground.netlify.com/2018/06/keras_fruits/). In general, data can be represented in different formats, e.g. as vectors, tables or matrices. I am using the `imager` package to read the image and have a look at the pixel values, which are represented as a **matrix with the dimensions image width x image height**.
+
+```{r warning=FALSE, message=FALSE}
+library(imager)
+im <- load.image("/Users/shiringlander/Documents/Github/codecentric.AI-bootcamp/data/fruits-360/Training/Strawberry/100_100.jpg")
+```
+
+```{r}
+plot(im)
+```
+
+But when we look at the `dim()` function with our image, we see that there are actually four dimensions and only the first two represent image width and image height. The third dimension is for the depth, which means in case of videos the time or order of the frames; with regular images, we don't need this dimension. The third dimension shows the number of **color channels**; in this case, we have a color image, so there are three channels for red, green and blue. The values remain in the same between 0 and 255 but now they don't represent grey-scales but color intensity of the respective channel. This 3-dimensional format (a stack of three matrices) is also called a 3-dimensional **array**.
+
+```{r}
+dim(im)
+```
+
+Let's see what happens if we convert our image to **greyscale**:
+
+```{r}
+im_grey <- grayscale(im)
+plot(im_grey)
+```
+
+Our grey image has only **one channel**.
+
+```{r}
+dim(im_grey)
+```
+
+When we look at the actual matrix of pixel values (below, shown with a subset), we see that our values are not shown as raw values, but as **scaled** values between 0 and 1.
+
+```{r}
+head(as.array(im_grey)[25:75, 25:75, 1, 1])
+```
+
+The same applies to the color image, which if multiplied with 255 shows raw pixel values:
+
+```{r}
+head(as.array(im)[25:75, 25:75, 1, 1]  * 255)
+```
+
+## Learning different levels of abstraction
+
+These pixel arrays of our images are now the input to our CNN, which can now learn to recognize e.g. which fruit is on each image (a **classification task**). This is accomplished by learning different [**levels of abstraction**](https://distill.pub/2017/feature-visualization/) of the images. In the first few hidden layers, the CNN usually detects **general patterns**, like edges; the deeper we go into the CNN, these learned abstractions become more specific, like **textures**, **patterns** and (parts of) **objects**.
+
+## MLPs versus CNNs
+
+We could also train MLPs on our images but usually, they are not very good at this sort of task. So, what's the **magic behind CNNs**, that makes them so much more powerful at detecting images and object?
+
+The most important difference is that **MLPs consider each pixel position as an independent features**; it does not know neighboring pixels! That's why MLPs will not be able to detect images where the objects have a different orientation, position, etc. Moreover, because we often deal with large images, the sheer number of trainable parameters in an MLP will quickly escalate, so that training such a network isn't exactly efficient. **CNNs consider groups of neighboring pixels**. In the neural net these groups of neighboring pixels are only connected vertically with each other in the first CNN layers (until we collapse the information); this is called **local connectivity**. Because the CNN looks at pixels in context, it is able to learn patterns and objects and recognizes them even if they are in different positions on the image. These groups of neighboring pixels are scanned with a **sliding window**, which runs across the entire image from the top left corner to the bottom right corner. The size of the sliding window can vary, often we find e.g. 3x3 or 5x5 pixel windows.
+
+In MLPs, **weights** are learned, e.g. with gradient descent and backpropagation. CNNs (convolutional layers to be specific) learn so called **filters** or **kernels** (sometimes also called filter kernels). The number of trainable parameters can be much lower in CNNs than in a MLP!
+
+By the way, CNNs can not only be used to classify images, they can also be used for other tasks, like text classification!
+
+## Learning filter kernels
+
+A filter is a matrix with the same dimension as our sliding window, e.g. 3x3. At each position of our sliding window, a mathematical operation is performed, the so called **convolution**. During convolution, each pixel value in our window is multiplied with the value at the respective position in the filter matrix and the sum of all multiplications is calculated. This result is called the **dot product**. Depending on what values the filter contains at which position, the original image will be **transformed** in a certain way, e.g. sharpen, blur or make edges stand out. You can find great visualizations on [setosa.io](http://setosa.io/ev/image-kernels/).
+
+To be precise, **filters are collections of kernels** so that, if we work with color images, we have 3 channels. The 3 dimensions from the channels will all get one kernel, which together create the filter. Each filter will only calculate one output value, the dot product mentioned earlier. The learning part of CNNs comes into play with these filters. Similar to learning weights in a MLP, CNNs will **learn the most optimal filters** for recognizing specific objects and patterns. But a CNN doesn't only learn one filter, it learns multiple filters. In fact, it even learns multiple filters in each layer! Every filter learns a specific pattern, or **feature**. That's why these collections of parallel filters are the so called **stacks of feature maps** or **activation maps**. We can visualize these activation maps to help us understand what the CNN learn along the way, but this is a topic for another lesson.
+
+## Padding and step size
+
+Two important hyperparameters of CNNs are **padding** and **step size**. Padding means the (optional) adding of "fake" pixel values to the borders of the images. This is done to scan all pixels the same number of times with the sliding window (otherwise the border pixels would get covered less frequently than pixels in the center of the image) and to keep the the size of the image the same between layers (otherwise the output image would be smaller than the input image). There are different options for padding, with "same" the border pixels will be duplicated or you could pad with zeros. Now our sliding window can start "sliding". The step size determines how far the window will proceed between convolutions. Often we find a step size of 1, where the sliding window will advance only 1 pixel to the right and to the bottom while scanning the image. If we increase the step size, we would need to do fewer calculations and our model would train faster. Also, we would reduce the output image size; in modern implementations, this is explicitly done for that purpose, instead of using pooling layers.
+
+## Pooling
+
+As you can probably guess from the previous sentence, **pooling layers** are used to reduce the size of images in a CNN and to compress the information down to a smaller scale. Pooling is applied to every feature map and helps to extract broader and more general patterns that are more robust to small changes in the input. Common CNN architectures combine one or two convolutional layers with one pooling layer in one block. Several of such blocks are then put in a row to form the core of a basic CNN. Several advancements to this basic architecture exist nowadays, like Inception/Xception, ResNets, etc. but I will focus on the basics here (an advanced chapter will be added to the course in the future).
+
+Pooling layers also work with **sliding windows**; they can but don't have to have the same dimension as the sliding window from the convolutional layer. Also, sliding windows for pooling normally don't overlap and every pixel is only considered once. There are several options for how to pool:
+
+- **max pooling** will keep only the biggest value of each window
+- **average pooling** will build the average from each window
+- **sum pooling** will build the sum of each window
+
+## Dense layers calculate the output of the CNN
+
+After our desired number of convolution + pooling blocks, there will usually be a few **dense (or fully connected)** layers before the final dense layer that calculates the **output**. These dense layers are nothing else than a simple MLP that learns the classification or regression task, while you can think of the preceding convolutions as the means to **extract the relevant features for this simple MLP**.
+
+Just like in a MLP, we use **activation functions**, like rectified linear units in our CNN; here, they are used with convolutional layers and dense layers. Because pooling only condenses information, we don't need to normalize the output there.
+
+---
+
+You can find the R version of the Python code, which we provide for this course in [this blog article](https://shirinsplayground.netlify.com/2018/06/keras_fruits/).
+
+---
+
+[Video](https://youtu.be/MWPohcMtFLo):
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/MWPohcMtFLo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+[Slides](https://codecentric.slides.com/shiringlander/intro_cnns):
+
+<iframe src="//codecentric.slides.com/shiringlander/intro_cnns/embed" width="576" height="420" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+---
+
+```{r}
+sessionInfo()
+```
+
+
