@@ -12,18 +12,61 @@ coverMeta: out
 slug: review_beyond_spreadsheets_with_r
 ---
 
-**Disclaimer**: Manning publications gave me an ebook version of [Beyond Spreadsheets with R - A beginner's guide to R and RStudio](https://www.manning.com/books/beyond-spreadsheets-with-r) for free so that I could review it here.
+**Disclaimer**: Manning publications gave me an ebook version of [Beyond Spreadsheets with R - A beginner's guide to R and RStudio by Dr. Jonathan Carroll](https://www.manning.com/books/beyond-spreadsheets-with-r) for free so that I could review it here.
 
 > Beyond Spreadsheets with R shows you how to take raw data and transform it for use in computations, tables, graphs, and more. You’ll build on simple programming techniques like loops and conditionals to create your own custom functions. You’ll come away with a toolkit of strategies for analyzing and visualizing data of all sorts using R and RStudio.
 
 ## Aimed at
 
-This book covers the very basics of getting started with R, so it is useful to beginners but probably won't offer much for users who are already familiar with R.
+This book covers all the very basics of getting started with R, so it is useful to beginners but probably won't offer much for users who are already familiar with R. However, it does hint at some advanced functions, like defining specific function calls for custom classes.
 
-## What I liked about the book
+## What I noticed about the book
 
 - It introduced **version control** right away in the first chapter. Coming from an academic background where such things as Github and virtual machines were not widely used (at least not in the biology department), I learned about these invaluable tools way too late. Thus, I would always encourage students to start using them as early as possible. It will definitely make your analyses more reproducible, failproof and comprehensible. And it will make it easier to collaborate and keep track of different projects from past and present!
 
-## What I didn't like about the book
+- Great recap of the very basics, like data types. Even though you might have been working with R for a while, I still find it useful to go over some basics once in a while - often I find some minor detail that I hadn't known before or had forgotten again (e.g. that you shouldn't use `T` and `F` instead of `TRUE` and `FALSE` because `T` and `F` can be variable names and in the worst case assigned to the opposite logical).
+
+- The book also includes a short part to debugging and testing, which I think is valuable knowledge that most introductions to R skip. Of course, you won't get an in depth covering of these two topics but at least you will have heard about them early on.
+
+- the `rex` package
+
+- The book introduces `tibble` and `dplyr` and also goes into Non-Standard Evaluation. It shows a couple of ways to work around that using tidy evaluation.
+
+This is what is shown:
+
+```{r}
+library(dplyr)
+library(rlang)
+
+head(mutate(mtcars, ratio = mpg / cyl))
+
+column_to_divide <- "cyl"
+head(mutate(mtcars, ratio = mpg / !!sym(column_to_divide)))
+```
+
+This snippet about Non-Standard-Evaluation in the book is very short. Users who worked with `dplyr` and functions before, might wonder why the book doesn't mention the standard evaluation form of the `dplyr` verbs (like `mutate_`). This is because those verbs are deprecated now. Instead, if you want to write functions with `dplyr`, use [tidy evaluation](https://dplyr.tidyverse.org/articles/programming.html).
+
+> dplyr used to offer twin versions of each verb suffixed with an underscore. These versions had standard evaluation (SE) semantics: rather than taking arguments by code, like NSE verbs, they took arguments by value. Their purpose was to make it possible to program with dplyr. However, dplyr now uses tidy evaluation semantics. NSE verbs still capture their arguments, but you can now unquote parts of these arguments. This offers full programmability with NSE verbs. Thus, the underscored versions are now superfluous.
+
+This is how it would work:
+
+1. You write your function with arguments as you would normally (the input to `column_to_divide` will be unquoted).
+2. You use `enquo` to "capture the expression supplied as argument by the user of the current function" (`?enquo`).
+3. You feed this object to your `dplyr` function (here `mutate`) and use `!!` ["to say that you want to unquote an input so that it’s evaluated"](https://dplyr.tidyverse.org/articles/programming.html).
+
+```{r}
+my_mutate_2 <- function(df, column_to_divide) {
+  
+  quo_column_to_divide <- enquo(column_to_divide)
+  
+  df %>%
+    mutate(ratio = mpg / !!quo_column_to_divide)
+}
+
+my_mutate_2(mtcars, cyl) %>%
+  select(mpg, cyl, ratio) %>%
+  head()
+```
+
 
 ## Verdict

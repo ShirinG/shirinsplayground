@@ -18,7 +18,12 @@ slug: how_cnns_learn
 <hr />
 <p>In this lesson, I am going to explain <strong>how computers learn to see</strong>; meaning, how do they learn to recognize images or object on images? One of the most commonly used approaches to teach computers “vision” are <strong>Convolutional Neural Nets</strong>.</p>
 <p>This lesson builds on top of two other lessons: <a href="https://youtu.be/JS4E04dJj0I">Computer Vision Basics</a> and <a href="https://shirinsplayground.netlify.com/2018/11/neural_nets_explained/">Neural Nets</a>. In the first video, Oli explains what computer vision is, how images are read by computers and how they can be analyzed with traditional approaches, like <strong>Histograms of Oriented Gradients</strong> and more. He also shows a very cool project, that he and colleagues worked on, where they programmed a small drone to recognize and avoid obstacles, like people. This video is only available in German, though. In the Neural Nets blog post, I show how Neural Nets work by explaining what <strong>Multi-Layer Perceptrons (MLPs)</strong> are and how they learn, using techniques like <strong>gradient descent</strong>, <strong>backpropagation</strong>, <strong>loss</strong> and <strong>activation functions</strong>.</p>
+<div id="convolutional-neural-nets" class="section level2">
+<h2>Convolutional Neural Nets</h2>
 <p>Convolutional Neural Nets are usually abbreviated either <strong>CNNs</strong> or <strong>ConvNets</strong>. They are a specific type of neural network that has very particular differences compared to MLPs. Basically, you can think of CNNs as working similarly to the <strong>receptive fields of photoreceptors</strong> in the human eye. Receptive fields in our eyes are small connected areas on the retina where groups of many photoreceptors stimulate much fewer ganglion cells. Thus, each ganglion cell can be stimulated by a large number of receptors, so that a complex input is condensed into a <strong>compressed output</strong> before it is further processed in the brain.</p>
+</div>
+<div id="how-does-a-computer-see-images" class="section level2">
+<h2>How does a computer see images</h2>
 <p>Before we dive deeper into CNNs, I briefly want to recap how images can take on a numerical format. We need a numerical representation of our image because just like any other machine learning model or neural net, CNNs need data in form of numbers in order to learn! With images, these numbers are <strong>pixel values</strong>; when we have a greyscale image, these values represent a range of “greyness” from 0 (black) to 255 (white).</p>
 <p>Here is an example image from the fruits datasets, which is used in the <a href="https://shirinsplayground.netlify.com/2018/06/keras_fruits/">practical example for this lesson</a>. In general, data can be represented in different formats, e.g. as vectors, tables or matrices. I am using the <code>imager</code> package to read the image and have a look at the pixel values, which are represented as a <strong>matrix with the dimensions image width x image height</strong>.</p>
 <pre class="r"><code>library(imager)
@@ -28,14 +33,14 @@ im &lt;- load.image(&quot;/Users/shiringlander/Documents/Github/codecentric.AI-b
 <p>But when we look at the <code>dim()</code> function with our image, we see that there are actually four dimensions and only the first two represent image width and image height. The third dimension is for the depth, which means in case of videos the time or order of the frames; with regular images, we don’t need this dimension. The third dimension shows the number of <strong>color channels</strong>; in this case, we have a color image, so there are three channels for red, green and blue. The values remain in the same between 0 and 255 but now they don’t represent greyscales but color intensity of the respective channel. This 3-dimensional format (a stack of three matrices) is also called a 3-dimensional <strong>array</strong>.</p>
 <pre class="r"><code>dim(im)</code></pre>
 <pre><code>## [1] 100 100   1   3</code></pre>
-<p>Let’s see what happens if we convert our image to greyscale:</p>
+<p>Let’s see what happens if we convert our image to <strong>greyscale</strong>:</p>
 <pre class="r"><code>im_grey &lt;- grayscale(im)
 plot(im_grey)</code></pre>
 <p><img src="/post/how_cnns_learn_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<p>Our grey image has only one channel.</p>
+<p>Our grey image has only <strong>one channel</strong>.</p>
 <pre class="r"><code>dim(im_grey)</code></pre>
 <pre><code>## [1] 100 100   1   1</code></pre>
-<p>When we look at the actual matrix of pixel values (below, shown with a subset), we see that our values are not shown as raw values, but as scaled values between 0 and 1.</p>
+<p>When we look at the actual matrix of pixel values (below, shown with a subset), we see that our values are not shown as raw values, but as <strong>scaled</strong> values between 0 and 1.</p>
 <pre class="r"><code>head(as.array(im_grey)[25:75, 25:75, 1, 1])</code></pre>
 <pre><code>##           [,1]      [,2]      [,3]      [,4]      [,5]      [,6]      [,7]
 ## [1,] 0.2015294 0.1923529 0.2043529 0.2354902 0.2021961 0.2389804 0.2431373
@@ -130,44 +135,39 @@ plot(im_grey)</code></pre>
 ## [4,]   148   149   139   159   190
 ## [5,]   215   191   237   233   229
 ## [6,]   136   133   141   143   148</code></pre>
-<p>These pixel arrays of our images are now the input to our CNN, which can now learn to recognize e.g. which fruit is on each image (a classification task). This is accomplished by learning different levels of abstraction of the images. In the first few hidden layers, the CNN ususally detects general patterns, like edges; the deeper we go into the CNN, these learned abstractions become more specific, like textures, patterns and (parts of) objects.</p>
-<p>We could also train MLPs on our images but usually, they are not very good at this sort of task. So, what’s the magic behind CNNs, that makes them so much more powerful at detecting images and object?</p>
-<div id="the-most-important-difference-is-that-mlps-consider-each-pixel-position-as-an-independent-feature-it-does-not-know-neighboring-pixels-thats-why-mlps-will-not-be-able-to-detect-images-where-the-objects-have-a-different-orientation-position-etc.-moreover-because-we-often-deal-with-large-images-the-sheer-number-of-trainable-parameters-in-an-mlp-will-quickly-escalate-so-that-training-such-a-network-isnt-exactly-efficient.-in-mlps-weights-are-learned-e.g.with-gradient-descent-and-backpropagation." class="section level2">
-<h2>The most important difference is that MLPs consider each pixel position as an independent feature; it does not know neighboring pixels! That’s why MLPs will not be able to detect images where the objects have a different orientation, position, etc. Moreover, because we often deal with large images, the sheer number of trainable parameters in an MLP will quickly escalate, so that training such a network isn’t exactly efficient. In MLPs, <strong>weights</strong> are learned, e.g. with gradient descent and backpropagation.</h2>
-<p>Bei CNNs werden dagegen Gruppen aus benachbarten Pixeln betrachtet. Das bezeichnen wir als “Local connectivity”, denn in unserem Neuronalen Netz sind Neuronen später zunächst nur mit den lokal entsprechenden Neuronen in den Folgeschichten verbinden. Dadurch kann das Netz effizient und relativ schnell den Kontext von Mustern und Objekten lernen und diese auch in anderen Postionen auf dem Bild erkennen. Konkret funktionert das mit sogenannten Sliding Windows, also Fenstern, die eine Gruppe von Pixeln betrachten und dabei von links oben nach rechts unten das Bild abscannen. Gelernt werden dabei dann auch keine Gewichte, sondern Filter. Was diese Filter sind, erkläre ich im nächsten Schritt. Übrigens können wir CNNs nicht nur für Bilder, sondern auch sehr gut für andere Aufgaben, wie Textklassifikation verwenden.</p>
-<hr />
-<p>Auf jedem Fenster des Sliding Windows,</p>
-<p>das zu Beispiel eine Größe</p>
-<p>von 3 x 3 Pixeln haben kann,</p>
-<p>wird nämlich nun eine bestimmt mathematische Operation durchgeführt, die sogenannte Faltung - oder auf Englisch: convolution. Daher also auch der Name… ;-)</p>
-<p>Diese Faltung passiert für jedes Fenster des gesamten Bildes.</p>
-<p>…</p>
-<p>In diesem Video, das ihr vielleicht schon aus den Computer Vision Basics kennt, ist das einmal animiert gezeigt.</p>
-<p>Aber was ist nun diese Faltung? Die Faltung passiert über das Multiplizieren der Pixelwerte in unserem Fenster mit einem sogenannten Filter. Dieser Filter ist nichts anderes als eine Matrix mit den selben Dimensionen des Sliding Windows, hier 3 x 3. Je nachdem, welche Werte in einem Filter stehen, führt die Faltung zu einer bestimmten Transformation des Originalbildes. Hier ist der Filter für das Schärfen von Bildern zu sehen.</p>
-<p>Das Ganze läuft nun so ab, wie in dieser großartigen Abbildung von setosa.io zu sehen ist. Das linke Bild ist das Original, das rechte zeigt das transformierte Bild nach Anwendung des Filters.</p>
-<p>Die Pixel des Fensters, das gerade betrachtete wird sind in den Kästchen in der Mitte zu sehen. Jeder Pixelwert in dem Fenster wird nun mit dem Wert an der entprechenden Stelle im Filter multipliziert und mit allen anderen so multiplizierten Werten aufaddiert. Das Ergebnis ist hier -97 und ist der neue Wert für das transformierte Bild.</p>
-<hr />
-<p>Zwei wichtige Hyperparameter für CNNs sind Padding und die Schrittgröße.</p>
-<p>Padding bezeichnet das Hinzufügen von extra Pixelschichten am Rand des Bildes, damit jeder Pixel des eigentlichen Bildes beim scannen des Sliding Windows gleich häufig gefaltet wird. Würden wir kein Padding anwenden, würden die Randpixel weniger häufig betrachtet, als die Pixel in der Mitte des Bildes - und unser Bild würde nach der Transformation kleiner werden. Es gibt mehrere Arten von Padding. Bei “same” werden die Randpixel dupliziert</p>
-<p>und an an den Rand</p>
-<p>hinzugefügt. Alternativ könnten wir die Ränder auch mit Nullern auffüllen, dem sogenannten Zero-Padding.</p>
-<p>Jetzt kann das Sliding Window oben link starten.</p>
-<p>Die Schrittgröße bezeichnet nun, wie weit das Sliding Window bei jedem Schritt vorrückt. Meisten wird eine Schrittgröße von 1 verwendet, d.h. dass das Sliding Window nach jeder Faltung jeweils einen Pixel weiterwandert. Würden wir die Schrittgröße vergrößern, würde die Berechnung des neuronalen Netzes schneller gehen, wir würden aber auch nicht so detaillierte Muster erkennen können. Und unser Bild würde sich im Output verkleinern.</p>
-<hr />
-<p>Kommen wir aber noch mal zurück zu den Filtern. Manchmal werden Filter, bzw. Fenster auch als Kernel oder Filter Kernel bezeichnet. Tatsächlich sind Filter Sammlungen von Kernels, d.h. wenn wir mit Farbbildern und 3 Kanälen - also 3 Dimensionen - arbeiten, haben wir einen Kernel pro Kanal, aus dem sich ein Filter zusammensetzt. Pro Filter bekommen wir dann EINEN Ergebniswert aus dem Skalarprodukt zurück! Beispiele für andere Filter können zum Beispiel das Originalbild verwaschen,</p>
-<p>untere</p>
-<p>oder obere horizontale Kanten erkennen.</p>
-<p>Im Prinzip können aber beliebige Werte in die Filter eingesetzt werden,</p>
-<p>so dass verschiedenste Muster in dem Bild hervortreten. Jedes Muster stellt eine sogenannte Feature Map oder Activation Map dar. Die Werte, die an den einzelnen Stellen des Filters stehen, sollen jetzt von unserem neuronalen Netz gelernt werden. Das CNN lernt also, welche Transformation es wann durchführen muss, um die richtigen Muster und Objekte in den Bildern zu erkennen. Dafür lernt das CNN nicht nur einen Filter, sondern sehr sehr viele. Es lernt sogar in jeder versteckten SCHICHT mehrere Filter parallel.</p>
-<p>Diese unabhängig voneinander parallel gelernten Filter, bzw. die transformierten Output-Bilder nach der Faltung, produzieren die sogenannten</p>
-<p>Stacks of Feature Maps oder Activation Maps. Die Anzahl der zu trainierenden Parameter ist bei Faltungen deutlich geringer als bei voll verknüpften Neuronen in MLPs. In den Beispielen, die ich hier gezeigt habe, haben wir Graustufenbilder und 2-dimensionale Filter gesehen. Bei Farbbildern mit 3 Farbkanälen hätten wir entsprechend 3-dimensionale Filter, die das Ergbenis ebenfalls mit dem Skalarprodukt aus Filter und Bildausschnitt berechnen.</p>
-<hr />
-<p>Wie CNNs LERNEN Bilder mit Hilfe von Filtern und Faltungen zu erkennen, haben wir jetzt gesehen. CNN-Architekturen bestehen aber nicht nur aus Schichten, in denen Faltung passiert, den Convolutional Layern, sondern sie haben zusätzlich sogenannte Pooling Schichten. In den Pooling Schichten werden die Bilder (also die transformierten Outputs aus vorhergehenden Faltungsschichten) verkleinert.</p>
-<p>Dafür wird auch wieder ein Sliding Window verwendet, dieses muss nicht die selbe Größe haben, wie das Sliding Window aus den Faltungsschichten aber hier zeige ich das Prinzip beispielhaft ebenfalls an einem 3 x 3 Fenster. Wichtig ist dabei, dass das Sliding Window beim Pooling meist nicht überlappt, sondern jeder Pixel genau 1x betrachtet wird, damit das Output-Bild entsprechend kleiner wird.</p>
-<p>Es gibt mehrere Arten, wie Bilder mit Pooling verkleinert werden können. Die häufigsten sind</p>
-<p>Max Pooling, wo nur der größte Wert jedes Fensters behalten wird,</p>
-<p>Average Pooling, wo der Durschschnittswert aus jedem Fenster gebildet wird</p>
-<p>und Sum Pooling, wo die Summe aller Werte gebildet wird. Pooling arbeitet dabei unabhängig auf jeder einzelnen Feature Map und sorgt nicht nur für eine Reduktion des Bildes und damit an zu optimierenden Parametern, sondern hilft auch dabei, allgemeingültige Feature zu extrahieren, die robust gegenüber kleineren Änderungen des Inputs sind.</p>
+</div>
+<div id="learning-different-levels-of-abstraction" class="section level2">
+<h2>Learning different levels of abstraction</h2>
+<p>These pixel arrays of our images are now the input to our CNN, which can now learn to recognize e.g. which fruit is on each image (a <strong>classification task</strong>). This is accomplished by learning different <a href="https://distill.pub/2017/feature-visualization/"><strong>levels of abstraction</strong></a> of the images. In the first few hidden layers, the CNN ususally detects <strong>general patterns</strong>, like edges; the deeper we go into the CNN, these learned abstractions become more specific, like <strong>textures</strong>, <strong>patterns</strong> and (parts of) <strong>objects</strong>.</p>
+</div>
+<div id="mlps-versus-cnns" class="section level2">
+<h2>MLPs versus CNNs</h2>
+<p>We could also train MLPs on our images but usually, they are not very good at this sort of task. So, what’s the <strong>magic behind CNNs</strong>, that makes them so much more powerful at detecting images and object?</p>
+<p>The most important difference is that <strong>MLPs consider each pixel position as an independent features</strong>; it does not know neighboring pixels! That’s why MLPs will not be able to detect images where the objects have a different orientation, position, etc. Moreover, because we often deal with large images, the sheer number of trainable parameters in an MLP will quickly escalate, so that training such a network isn’t exactly efficient. <strong>CNNs consider groups of neighboring pixels</strong>. In the neural net these groups of neighboring pixels are only connected vertically with each other in the first CNN layers (until we collapse the information); this is called <strong>local connectivity</strong>. Because the CNN looks at pixels in context, it is able to learn patterns and objects and recognizes them even if they are in different positions on the image. These groups of neighboring pixels are scanned with a <strong>sliding window</strong>, which runs across the entire image from the top left corner to the bottom right corner. The size of the sliding window can vary, often we find e.g. 3x3 or 5x5 pixel windows.</p>
+<p>In MLPs, <strong>weights</strong> are learned, e.g. with gradient descent and backpropagation. CNNs (convolutional layers to be specific) learn so called <strong>filters</strong> or <strong>kernels</strong> (sometimes also called filter kernels). The number of trainable parameters can be much lower in CNNs than in a MLP!</p>
+<p>By the way, CNNs can not only be used to classify images, they can also be used for other tasks, like text classification!</p>
+</div>
+<div id="learning-filter-kernels" class="section level2">
+<h2>Learning filter kernels</h2>
+<p>A filter is a matrix with the same dimension as our sliding window, e.g. 3x3. At each position of our sliding window, a mathematical operation is performed, the so called <strong>convolution</strong>. During convolution, each pixel value in our window is multiplied with the value at the respective position in the filter matrix and the sum of all multiplications is calculated. This result is called the <strong>dot product</strong>. Depending on what values the filter contains at which position, the original image will be <strong>transformed</strong> in a certain way, e.g. sharpen, blur or make edges stand out. You can find great visualisations on <a href="http://setosa.io/ev/image-kernels/">setosa.io</a>.</p>
+<p>To be precise, <strong>filters are collections of kernels</strong> so that, if we work with color images, we have 3 channels. The 3 dimensions from the channels will all get one kernel, which together create the filter. Each filter will only calculate one output value, the dot product mentioned earlier. The learning part of CNNs comes into play with these filters. Similar to learning weights in a MLP, CNNs will <strong>learn the most optimal filters</strong> for recognizing specific objects and patterns. But a CNN doesn’t only learn one filter, it learns multiple filters. In fact, it even learns multiple filters in each layer! Every filter learns a specific pattern, or <strong>feature</strong>. That’s why these collections of parallel filters are the so called <strong>stacks of feature maps</strong> or <strong>activation maps</strong></p>
+</div>
+<div id="padding-and-step-size" class="section level2">
+<h2>Padding and step size</h2>
+<p>Two important hyperparameters of CNNs are <strong>padding</strong> and <strong>step size</strong>. Padding means the (optional) adding of “fake” pixel values to the borders of the images. This is done to scan all pixels the same number of times with the sliding window (otherwise the border pixels would get covered less frequently than pixels in the center of the image) and to keep the the size of the image the same between layers (otherwise the output image would be smaller than the input image). There are different options for padding, with “same” the border pixels will be duplicated or you could pad with zeros. Now our sliding window can start “sliding”. The step size determines how far the window will proceed between convolutions. Often we find a step size of 1, where the sliding window will advance only 1 pixel to the right and to the bottom while scanning the image. If we increase the step size, we would need to do fewer calculations and our model would train faster. Also, we would reduce the output image size; in modern implementations, this is explicitly done for that purpose, instead of using pooling layers.</p>
+</div>
+<div id="pooling" class="section level2">
+<h2>Pooling</h2>
+<p>As you can probably guess from the previous sentence, <strong>pooling layers</strong> are used to reduce the size of images in a CNN and to compress the information down to a smaller scale. Pooling is applied to every feature map and helps to extract broader and more general patterns that are more robust to small changes in the input. Common CNN architectures combine one or two convolutional layers with one pooling layer in one block. Several of such blocks are then put in a row to form the core of a basic CNN. Several advancements to this basic architecture exist nowadays, like Inception/Xception, ResNets, etc. but I will focus on the basics here (an advanced chapter will be added to the course in the future).</p>
+<p>Pooling layers also work with <strong>sliding windows</strong>; they can but don’t have to have the same dimension as the sliding window from the convolutional layer. Also, sliding windows for pooling normally don’t overlap and every pixel is only considered once. There are several options for how to pool:</p>
+<ul>
+<li><strong>max pooling</strong> will keep only the biggest value of each window</li>
+<li><strong>average pooling</strong> will build the average from each window</li>
+<li><strong>sum pooling</strong> will build the sum of each window</li>
+</ul>
+</div>
+<div id="dense-layers-calculate-the-output-of-the-cnn" class="section level2">
+<h2>Dense layers calculate the output of the CNN</h2>
 <hr />
 <p>Okay, setzen wir nun also die Faltungsschichten und Pooling-Schichten zu einer typischen CNN-Architektur zusammen.</p>
 <p>Wir starten natürlich wie immer mit dem Input, in unserem Fall Bilder.</p>
@@ -208,7 +208,7 @@ plot(im_grey)</code></pre>
 ## [1] imager_0.41.1 magrittr_1.5 
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_1.0.0       bookdown_0.8     png_0.1-7        digest_0.6.18   
+##  [1] Rcpp_1.0.0       bookdown_0.9     png_0.1-7        digest_0.6.18   
 ##  [5] tiff_0.1-5       plyr_1.8.4       evaluate_0.12    blogdown_0.9    
 ##  [9] rlang_0.3.0.1    stringi_1.2.4    bmp_0.3          rmarkdown_1.11  
 ## [13] tools_3.5.1      stringr_1.3.1    purrr_0.2.5      igraph_1.2.2    

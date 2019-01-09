@@ -30,18 +30,18 @@
     
 
     
-    <meta name="description" content="Disclaimer: Manning publications gave me an ebook version of Beyond Spreadsheets with R - A beginner’s guide to R and RStudio for free so that I could review it here.
- Beyond Spreadsheets with R shows you how to take raw data and transform it for use in computations, tables, graphs, and more. You’ll build on simple programming techniques like loops and conditionals to create your own custom functions. You’ll come away with a toolkit of strategies for analyzing and visualizing data of all sorts using R and RStudio.">
-    <meta property="og:description" content="Disclaimer: Manning publications gave me an ebook version of Beyond Spreadsheets with R - A beginner’s guide to R and RStudio for free so that I could review it here.
- Beyond Spreadsheets with R shows you how to take raw data and transform it for use in computations, tables, graphs, and more. You’ll build on simple programming techniques like loops and conditionals to create your own custom functions. You’ll come away with a toolkit of strategies for analyzing and visualizing data of all sorts using R and RStudio.">
+    <meta name="description" content="Disclaimer: Manning publications gave me an ebook version of Beyond Spreadsheets with R - A beginner’s guide to R and RStudio by Dr. Jonathan Carroll for free so that I could review it here.
+ Beyond Spreadsheets with R shows you how to take raw data and transform it for use in computations, tables, graphs, and more. You’ll build on simple programming techniques like loops and conditionals to create your own custom functions.">
+    <meta property="og:description" content="Disclaimer: Manning publications gave me an ebook version of Beyond Spreadsheets with R - A beginner’s guide to R and RStudio by Dr. Jonathan Carroll for free so that I could review it here.
+ Beyond Spreadsheets with R shows you how to take raw data and transform it for use in computations, tables, graphs, and more. You’ll build on simple programming techniques like loops and conditionals to create your own custom functions.">
     <meta property="og:type" content="blog">
     <meta property="og:title" content="Book review: Beyond Spreadsheets with R">
     <meta property="og:url" content="/2019/01/review_beyond_spreadsheets_with_r/">
     <meta property="og:site_name" content="Shirin&#39;s playgRound">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Shirin&#39;s playgRound">
-    <meta name="twitter:description" content="Disclaimer: Manning publications gave me an ebook version of Beyond Spreadsheets with R - A beginner’s guide to R and RStudio for free so that I could review it here.
- Beyond Spreadsheets with R shows you how to take raw data and transform it for use in computations, tables, graphs, and more. You’ll build on simple programming techniques like loops and conditionals to create your own custom functions. You’ll come away with a toolkit of strategies for analyzing and visualizing data of all sorts using R and RStudio.">
+    <meta name="twitter:description" content="Disclaimer: Manning publications gave me an ebook version of Beyond Spreadsheets with R - A beginner’s guide to R and RStudio by Dr. Jonathan Carroll for free so that I could review it here.
+ Beyond Spreadsheets with R shows you how to take raw data and transform it for use in computations, tables, graphs, and more. You’ll build on simple programming techniques like loops and conditionals to create your own custom functions.">
     
       <meta name="twitter:creator" content="@ShirinGlander">
     
@@ -348,22 +348,80 @@ ga('send', 'pageview');
           
           <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
-              <p><strong>Disclaimer</strong>: Manning publications gave me an ebook version of <a href="https://www.manning.com/books/beyond-spreadsheets-with-r">Beyond Spreadsheets with R - A beginner’s guide to R and RStudio</a> for free so that I could review it here.</p>
+              <p><strong>Disclaimer</strong>: Manning publications gave me an ebook version of <a href="https://www.manning.com/books/beyond-spreadsheets-with-r">Beyond Spreadsheets with R - A beginner’s guide to R and RStudio by Dr. Jonathan Carroll</a> for free so that I could review it here.</p>
 <blockquote>
 <p>Beyond Spreadsheets with R shows you how to take raw data and transform it for use in computations, tables, graphs, and more. You’ll build on simple programming techniques like loops and conditionals to create your own custom functions. You’ll come away with a toolkit of strategies for analyzing and visualizing data of all sorts using R and RStudio.</p>
 </blockquote>
 <div id="aimed-at" class="section level2">
 <h2>Aimed at</h2>
-<p>This book covers the very basics of getting started with R, so it is useful to beginners but probably won’t offer much for users who are already familiar with R.</p>
+<p>This book covers all the very basics of getting started with R, so it is useful to beginners but probably won’t offer much for users who are already familiar with R. However, it does hint at some advanced functions, like defining specific function calls for custom classes.</p>
 </div>
-<div id="what-i-liked-about-the-book" class="section level2">
-<h2>What I liked about the book</h2>
+<div id="what-i-noticed-about-the-book" class="section level2">
+<h2>What I noticed about the book</h2>
 <ul>
-<li>It introduced <strong>version control</strong> right away in the first chapter. Coming from an academic background where such things as Github and virtual machines were not widely used (at least not in the biology department), I learned about these invaluable tools way too late. Thus, I would always encourage students to start using them as early as possible. It will definitely make your analyses more reproducible, failproof and comprehensible. And it will make it easier to collaborate and keep track of different projects from past and present!</li>
+<li><p>It introduced <strong>version control</strong> right away in the first chapter. Coming from an academic background where such things as Github and virtual machines were not widely used (at least not in the biology department), I learned about these invaluable tools way too late. Thus, I would always encourage students to start using them as early as possible. It will definitely make your analyses more reproducible, failproof and comprehensible. And it will make it easier to collaborate and keep track of different projects from past and present!</p></li>
+<li><p>Great recap of the very basics, like data types. Even though you might have been working with R for a while, I still find it useful to go over some basics once in a while - often I find some minor detail that I hadn’t known before or had forgotten again (e.g. that you shouldn’t use <code>T</code> and <code>F</code> instead of <code>TRUE</code> and <code>FALSE</code> because <code>T</code> and <code>F</code> can be variable names and in the worst case assigned to the opposite logical).</p></li>
+<li><p>The book also includes a short part to debugging and testing, which I think is valuable knowledge that most introductions to R skip. Of course, you won’t get an in depth covering of these two topics but at least you will have heard about them early on.</p></li>
+<li><p>the <code>rex</code> package</p></li>
+<li><p>The book introduces <code>tibble</code> and <code>dplyr</code> and also goes into Non-Standard Evaluation. It shows a couple of ways to work around that using tidy evaluation.</p></li>
 </ul>
-</div>
-<div id="what-i-didnt-like-about-the-book" class="section level2">
-<h2>What I didn’t like about the book</h2>
+<p>This is what is shown:</p>
+<pre class="r"><code>library(dplyr)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>library(rlang)
+
+head(mutate(mtcars, ratio = mpg / cyl))</code></pre>
+<pre><code>##    mpg cyl disp  hp drat    wt  qsec vs am gear carb    ratio
+## 1 21.0   6  160 110 3.90 2.620 16.46  0  1    4    4 3.500000
+## 2 21.0   6  160 110 3.90 2.875 17.02  0  1    4    4 3.500000
+## 3 22.8   4  108  93 3.85 2.320 18.61  1  1    4    1 5.700000
+## 4 21.4   6  258 110 3.08 3.215 19.44  1  0    3    1 3.566667
+## 5 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2 2.337500
+## 6 18.1   6  225 105 2.76 3.460 20.22  1  0    3    1 3.016667</code></pre>
+<pre class="r"><code>column_to_divide &lt;- &quot;cyl&quot;
+head(mutate(mtcars, ratio = mpg / !!sym(column_to_divide)))</code></pre>
+<pre><code>##    mpg cyl disp  hp drat    wt  qsec vs am gear carb    ratio
+## 1 21.0   6  160 110 3.90 2.620 16.46  0  1    4    4 3.500000
+## 2 21.0   6  160 110 3.90 2.875 17.02  0  1    4    4 3.500000
+## 3 22.8   4  108  93 3.85 2.320 18.61  1  1    4    1 5.700000
+## 4 21.4   6  258 110 3.08 3.215 19.44  1  0    3    1 3.566667
+## 5 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2 2.337500
+## 6 18.1   6  225 105 2.76 3.460 20.22  1  0    3    1 3.016667</code></pre>
+<p>This snippet about Non-Standard-Evaluation in the book is very short. Users who worked with <code>dplyr</code> and functions before, might wonder why the book doesn’t mention the standard evaluation form of the <code>dplyr</code> verbs (like <code>mutate_</code>). This is because those verbs are deprecated now. Instead, if you want to write functions with <code>dplyr</code>, use <a href="https://dplyr.tidyverse.org/articles/programming.html">tidy evaluation</a>.</p>
+<blockquote>
+<p>dplyr used to offer twin versions of each verb suffixed with an underscore. These versions had standard evaluation (SE) semantics: rather than taking arguments by code, like NSE verbs, they took arguments by value. Their purpose was to make it possible to program with dplyr. However, dplyr now uses tidy evaluation semantics. NSE verbs still capture their arguments, but you can now unquote parts of these arguments. This offers full programmability with NSE verbs. Thus, the underscored versions are now superfluous.</p>
+</blockquote>
+<p>This is how it would work:</p>
+<ol style="list-style-type: decimal">
+<li>You write your function with arguments as you would normally (the input to <code>column_to_divide</code> will be unquoted).</li>
+<li>You use <code>enquo</code> to “capture the expression supplied as argument by the user of the current function” (<code>?enquo</code>).</li>
+<li>You feed this object to your <code>dplyr</code> function (here <code>mutate</code>) and use <code>!!</code> <a href="https://dplyr.tidyverse.org/articles/programming.html">“to say that you want to unquote an input so that it’s evaluated”</a>.</li>
+</ol>
+<pre class="r"><code>my_mutate_2 &lt;- function(df, column_to_divide) {
+  
+  quo_column_to_divide &lt;- enquo(column_to_divide)
+  
+  df %&gt;%
+    mutate(ratio = mpg / !!quo_column_to_divide)
+}
+
+my_mutate_2(mtcars, cyl) %&gt;%
+  select(mpg, cyl, ratio) %&gt;%
+  head()</code></pre>
+<pre><code>##    mpg cyl    ratio
+## 1 21.0   6 3.500000
+## 2 21.0   6 3.500000
+## 3 22.8   4 5.700000
+## 4 21.4   6 3.566667
+## 5 18.7   8 2.337500
+## 6 18.1   6 3.016667</code></pre>
 </div>
 <div id="verdict" class="section level2">
 <h2>Verdict</h2>
@@ -624,8 +682,8 @@ ga('send', 'pageview');
                   Jan 1, 2019
                 </span>
               </span>
-              <div class="media-content hide-xs font-merryweather">Disclaimer: Manning publications gave me an ebook version of Beyond Spreadsheets with R - A beginner’s guide to R and RStudio for free so that I could review it here.
- Beyond Spreadsheets with R shows you how to take raw data and transform it for use in computations, tables, graphs, and more. You’ll build on simple programming techniques like loops and conditionals to create your own custom functions. You’ll come away with a toolkit of strategies for analyzing and visualizing data of all sorts using R and RStudio.</div>
+              <div class="media-content hide-xs font-merryweather">Disclaimer: Manning publications gave me an ebook version of Beyond Spreadsheets with R - A beginner’s guide to R and RStudio by Dr. Jonathan Carroll for free so that I could review it here.
+ Beyond Spreadsheets with R shows you how to take raw data and transform it for use in computations, tables, graphs, and more. You’ll build on simple programming techniques like loops and conditionals to create your own custom functions.</div>
             </div>
             <div style="clear:both;"></div>
             <hr>
@@ -662,7 +720,7 @@ You can RSVP here: http://meetu.ps/e/Gg5th/w54bW/f
                 </span>
               </span>
               <div class="media-content hide-xs font-merryweather">Registration is now open for my 1.5-day workshop on how to develop end-2-end from a Keras/TensorFlow model to production.
-It will take place on February 21st &amp; 22nd in Berlin, Germany.
+It will take place on February 21st &amp; 22nd in Berlin, Germany. The workshop will cost 950,00 Euro + MwST. We will start at 9 am on Thursday and finish around 3 pm on Friday.
 Please register by sending an email to shirin.glander@gmail.com with the following information:
  name company/institute/affiliation address for invoice phone number reference to this blog  The course material will be in English and we will speak a mix of German and English, depending on the participants’ preferences.</div>
             </div>
