@@ -7,11 +7,9 @@ showActions:    false
 thumbnailImage: /img/Bewerbungsfoto.jpg
 ---
 
-I'm Shirin, a biologist turned bioinformatician turned data scientist. ![](/img/Bewerbungsfoto_klein.jpg)
+I’m Shirin, a biologist turned bioinformatician turned data scientist. During my PhD and Postdoc I worked with Next Generation Sequencing data to analyze diseases like arthritis. However, I then chose to become a data scientist for a German IT company, called codecentric. In this capacity, I have been working on many different projects, e.g. building fraud detection models, creating a chatbot, implementing predictive maintenance, and more. My tool of choice for data analysis so far has been R but I also work with Python. I am also very passionate about teaching and sharing knowledge, so I give workshops, talk at conferences or [meetups](https://youtu.be/81UqFUk5B9I), write blog posts and organize the the [MünsteR R-users group on meetup.com](https://shiring.github.io/r_users_group/2017/05/20/muenster_r_user_group).  ![](/img/Bewerbungsfoto_klein.jpg)
 
-I'm especially interested in machine learning and data visualization. While I am using R most every day at work, I wanted to have an incentive to regularly explore other types of analyses and other types of data that I don't normally work with. I have also very often benefited from other people's published code in that it gave me ideas for my own work; and I hope that sharing my own analyses will inspire others as much as I often am by what can be be done with data.  It's amazing to me what can be learned from analyzing and visualizing data!
-
-My tool of choice for data analysis so far has been R. I also organize the [MünsteR R-users group on meetup.com](https://shiring.github.io/r_users_group/2017/05/20/muenster_r_user_group). 
+I also teach a [Data Camp course in hyperparameter tuning with R](https://www.datacamp.com/courses/hyperparameter-tuning-in-r) and I'm on the program committee of the [Minds Mastering Machines M3 conference](https://m3-konferenz.de/programmkomitee.php).
 
 ![My journey to Data Science](https://shiring.github.io/netlify_images/my_story_wml3zm.png)
 

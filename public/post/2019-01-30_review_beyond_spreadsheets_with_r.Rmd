@@ -68,5 +68,37 @@ my_mutate_2(mtcars, cyl) %>%
   head()
 ```
 
+- Weirdly, I find, the book introduces `dplyr` and pipe operators but when Jonathan talked about replacing NAs, he only mentions the base R version:
+
+```{r}
+d_NA <- data.frame(x = c(7, NA, 9, NA), y = 1:4)
+d_NA[is.na(d_NA)] <- 0
+d_NA
+```
+
+But he doesn't mention the tidy way to do this:
+
+```{r}
+d_NA %>%
+  tidyr::replace_na()
+```
+
+- Similar with `aggregate`. This is the base R version that is shown:
+
+```{r}
+aggregate(formula = . ~ Species, data = iris, FUN = mean)
+```
+
+But doesn't show the tidy way. I guess this is because at this point in book the tidy way would be a bit too complicated, due to the "wrong" data format (wide vs. long). He does introduce the tidy principles of data analysis in the next chapters.
+
+```{r warning=FALSE, message=FALSE}
+library(tidyverse)
+iris %>%
+  gather(x, y, Sepal.Length:Petal.Width) %>%
+  group_by(Species, x) %>%
+  summarise(mean = mean(y))
+```
+
+- It covers web scraping and exporting data to .RData, .rds and how to use `dput()` when asking StackOverflow questions
 
 ## Verdict

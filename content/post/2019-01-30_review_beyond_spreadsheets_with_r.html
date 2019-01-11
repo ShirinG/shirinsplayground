@@ -88,6 +88,58 @@ my_mutate_2(mtcars, cyl) %&gt;%
 ## 4 21.4   6 3.566667
 ## 5 18.7   8 2.337500
 ## 6 18.1   6 3.016667</code></pre>
+<ul>
+<li>Weirdly, I find, the book introduces <code>dplyr</code> and pipe operators but when Jonathan talked about replacing NAs, he only mentions the base R version:</li>
+</ul>
+<pre class="r"><code>d_NA &lt;- data.frame(x = c(7, NA, 9, NA), y = 1:4)
+d_NA[is.na(d_NA)] &lt;- 0
+d_NA</code></pre>
+<pre><code>##   x y
+## 1 7 1
+## 2 0 2
+## 3 9 3
+## 4 0 4</code></pre>
+<p>But he doesn’t mention the tidy way to do this:</p>
+<pre class="r"><code>d_NA %&gt;%
+  tidyr::replace_na()</code></pre>
+<pre><code>##   x y
+## 1 7 1
+## 2 0 2
+## 3 9 3
+## 4 0 4</code></pre>
+<ul>
+<li>Similar with <code>aggregate</code>. This is the base R version that is shown:</li>
+</ul>
+<pre class="r"><code>aggregate(formula = . ~ Species, data = iris, FUN = mean)</code></pre>
+<pre><code>##      Species Sepal.Length Sepal.Width Petal.Length Petal.Width
+## 1     setosa        5.006       3.428        1.462       0.246
+## 2 versicolor        5.936       2.770        4.260       1.326
+## 3  virginica        6.588       2.974        5.552       2.026</code></pre>
+<p>But doesn’t show the tidy way. I guess this is because at this point in book the tidy way would be a bit too complicated, due to the “wrong” data format (wide vs. long). He does introduce the tidy principles of data analysis in the next chapters.</p>
+<pre class="r"><code>library(tidyverse)
+iris %&gt;%
+  gather(x, y, Sepal.Length:Petal.Width) %&gt;%
+  group_by(Species, x) %&gt;%
+  summarise(mean = mean(y))</code></pre>
+<pre><code>## # A tibble: 12 x 3
+## # Groups:   Species [?]
+##    Species    x             mean
+##    &lt;fct&gt;      &lt;chr&gt;        &lt;dbl&gt;
+##  1 setosa     Petal.Length 1.46 
+##  2 setosa     Petal.Width  0.246
+##  3 setosa     Sepal.Length 5.01 
+##  4 setosa     Sepal.Width  3.43 
+##  5 versicolor Petal.Length 4.26 
+##  6 versicolor Petal.Width  1.33 
+##  7 versicolor Sepal.Length 5.94 
+##  8 versicolor Sepal.Width  2.77 
+##  9 virginica  Petal.Length 5.55 
+## 10 virginica  Petal.Width  2.03 
+## 11 virginica  Sepal.Length 6.59 
+## 12 virginica  Sepal.Width  2.97</code></pre>
+<ul>
+<li>It covers web scraping and exporting data to .RData, .rds and how to use <code>dput()</code> when asking StackOverflow questions</li>
+</ul>
 </div>
 <div id="verdict" class="section level2">
 <h2>Verdict</h2>

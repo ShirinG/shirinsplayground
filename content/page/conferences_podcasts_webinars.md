@@ -13,6 +13,12 @@ Here, you can find a list of all the talks I gave at conferences, webinars, podc
 
 ## Workshops I am giving
 
+- [Data Camp course on Hyperparameter Tuning in R](https://www.datacamp.com/courses/hyperparameter-tuning-in-r)
+
+> For many machine learning problems, simply running a model out-of-the-box and getting a prediction is not enough; you want the best model with the most accurate prediction. One way to perfect your model is with hyperparameter tuning, which means optimizing the settings for that specific model. In this course, you will work with the caret, mlr and h2o packages to find the optimal combination of hyperparameters in an efficient manner using grid search, random search, adaptive resampling and automatic machine learning (AutoML). Furthermore, you will work with different datasets and tune different supervised learning models, such as random forests, gradient boosting machines, support vector machines, and even neural nets. Get ready to tune!
+
+<br>
+
 - [Workshop on Deep Learning with Keras and TensorFlow in R](https://shirinsplayground.netlify.com/2017/11/deep_learning_keras_tensorflow/)
 
 > I offer a workshop on deep learning with Keras and TensorFlow using R.
@@ -88,7 +94,9 @@ https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell
 <br>
 
 - On Wednesday, October 26th, I was talking about ['Decoding The Black Box' at the Frankfurt Data Sciene Meetup](https://shirinsplayground.netlify.com/2018/09/ffm_datascience_meetup/).
-Slides can be found [here](https://shirinsplayground.netlify.com/2018/09/ffm_datascience_meetup_slides/).
+Slides can be found [here](https://shirinsplayground.netlify.com/2018/09/ffm_datascience_meetup_slides/) and the recording is up on [YouTube](https://youtu.be/81UqFUk5B9I):
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/81UqFUk5B9I" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <br>
 

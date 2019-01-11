@@ -88,6 +88,58 @@ my_mutate_2(mtcars, cyl) %&gt;%
 ## 4 21.4   6 3.566667
 ## 5 18.7   8 2.337500
 ## 6 18.1   6 3.016667</code></pre>
+<ul>
+<li>Weirdly, I find, the book introduces <code>dplyr</code> and pipe operators but when Jonathan talked about replacing NAs, he only mentions the base R version:</li>
+</ul>
+<pre class="r"><code>d_NA &lt;- data.frame(x = c(7, NA, 9, NA), y = 1:4)
+d_NA[is.na(d_NA)] &lt;- 0
+d_NA</code></pre>
+<pre><code>##   x y
+## 1 7 1
+## 2 0 2
+## 3 9 3
+## 4 0 4</code></pre>
+<p>But he doesn’t mention the tidy way to do this:</p>
+<pre class="r"><code>d_NA %&gt;%
+  tidyr::replace_na()</code></pre>
+<pre><code>##   x y
+## 1 7 1
+## 2 0 2
+## 3 9 3
+## 4 0 4</code></pre>
+<ul>
+<li>Similar with <code>aggregate</code>. This is the base R version that is shown:</li>
+</ul>
+<pre class="r"><code>aggregate(formula = . ~ Species, data = iris, FUN = mean)</code></pre>
+<pre><code>##      Species Sepal.Length Sepal.Width Petal.Length Petal.Width
+## 1     setosa        5.006       3.428        1.462       0.246
+## 2 versicolor        5.936       2.770        4.260       1.326
+## 3  virginica        6.588       2.974        5.552       2.026</code></pre>
+<p>But doesn’t show the tidy way. I guess this is because at this point in book the tidy way would be a bit too complicated, due to the “wrong” data format (wide vs. long). He does introduce the tidy principles of data analysis in the next chapters.</p>
+<pre class="r"><code>library(tidyverse)
+iris %&gt;%
+  gather(x, y, Sepal.Length:Petal.Width) %&gt;%
+  group_by(Species, x) %&gt;%
+  summarise(mean = mean(y))</code></pre>
+<pre><code>## # A tibble: 12 x 3
+## # Groups:   Species [?]
+##    Species    x             mean
+##    &lt;fct&gt;      &lt;chr&gt;        &lt;dbl&gt;
+##  1 setosa     Petal.Length 1.46 
+##  2 setosa     Petal.Width  0.246
+##  3 setosa     Sepal.Length 5.01 
+##  4 setosa     Sepal.Width  3.43 
+##  5 versicolor Petal.Length 4.26 
+##  6 versicolor Petal.Width  1.33 
+##  7 versicolor Sepal.Length 5.94 
+##  8 versicolor Sepal.Width  2.77 
+##  9 virginica  Petal.Length 5.55 
+## 10 virginica  Petal.Width  2.03 
+## 11 virginica  Sepal.Length 6.59 
+## 12 virginica  Sepal.Width  2.97</code></pre>
+<ul>
+<li>It covers web scraping and exporting data to .RData, .rds and how to use <code>dput()</code> when asking StackOverflow questions</li>
+</ul>
 </div>
 <div id="verdict" class="section level2">
 <h2>Verdict</h2>
@@ -8484,6 +8536,16 @@ cooc_books_5_graph &lt;- as_tbl_graph(coocs_book_5, directed = FALSE) %&gt;%
 <h2 id="workshops-i-am-giving">Workshops I am giving</h2>
 
 <ul>
+<li><a href="https://www.datacamp.com/courses/hyperparameter-tuning-in-r">Data Camp course on Hyperparameter Tuning in R</a></li>
+</ul>
+
+<blockquote>
+<p>For many machine learning problems, simply running a model out-of-the-box and getting a prediction is not enough; you want the best model with the most accurate prediction. One way to perfect your model is with hyperparameter tuning, which means optimizing the settings for that specific model. In this course, you will work with the caret, mlr and h2o packages to find the optimal combination of hyperparameters in an efficient manner using grid search, random search, adaptive resampling and automatic machine learning (AutoML). Furthermore, you will work with different datasets and tune different supervised learning models, such as random forests, gradient boosting machines, support vector machines, and even neural nets. Get ready to tune!</p>
+</blockquote>
+
+<p><br></p>
+
+<ul>
 <li><a href="https://shirinsplayground.netlify.com/2017/11/deep_learning_keras_tensorflow/">Workshop on Deep Learning with Keras and TensorFlow in R</a></li>
 </ul>
 
@@ -8585,8 +8647,10 @@ implementieren können.</p>
 
 <ul>
 <li>On Wednesday, October 26th, I was talking about <a href="https://shirinsplayground.netlify.com/2018/09/ffm_datascience_meetup/">&lsquo;Decoding The Black Box&rsquo; at the Frankfurt Data Sciene Meetup</a>.
-Slides can be found <a href="https://shirinsplayground.netlify.com/2018/09/ffm_datascience_meetup_slides/">here</a>.</li>
+Slides can be found <a href="https://shirinsplayground.netlify.com/2018/09/ffm_datascience_meetup_slides/">here</a> and the recording is up on <a href="https://youtu.be/81UqFUk5B9I">YouTube</a>:</li>
 </ul>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/81UqFUk5B9I" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <p><br></p>
 
@@ -9863,11 +9927,9 @@ Verteiltes Deep Learning mit TensorFlow und Kubernetes - <a href="https://twitte
     <updated>2017-09-12T16:06:06+02:00</updated>
     <content type="html"><![CDATA[
 
-<p>I&rsquo;m Shirin, a biologist turned bioinformatician turned data scientist. <img src="/img/Bewerbungsfoto_klein.jpg" alt="" /></p>
+<p>I’m Shirin, a biologist turned bioinformatician turned data scientist. During my PhD and Postdoc I worked with Next Generation Sequencing data to analyze diseases like arthritis. However, I then chose to become a data scientist for a German IT company, called codecentric. In this capacity, I have been working on many different projects, e.g. building fraud detection models, creating a chatbot, implementing predictive maintenance, and more. My tool of choice for data analysis so far has been R but I also work with Python. I am also very passionate about teaching and sharing knowledge, so I give workshops, talk at conferences or <a href="https://youtu.be/81UqFUk5B9I">meetups</a>, write blog posts and organize the the <a href="https://shiring.github.io/r_users_group/2017/05/20/muenster_r_user_group">MünsteR R-users group on meetup.com</a>.  <img src="/img/Bewerbungsfoto_klein.jpg" alt="" /></p>
 
-<p>I&rsquo;m especially interested in machine learning and data visualization. While I am using R most every day at work, I wanted to have an incentive to regularly explore other types of analyses and other types of data that I don&rsquo;t normally work with. I have also very often benefited from other people&rsquo;s published code in that it gave me ideas for my own work; and I hope that sharing my own analyses will inspire others as much as I often am by what can be be done with data.  It&rsquo;s amazing to me what can be learned from analyzing and visualizing data!</p>
-
-<p>My tool of choice for data analysis so far has been R. I also organize the <a href="https://shiring.github.io/r_users_group/2017/05/20/muenster_r_user_group">MünsteR R-users group on meetup.com</a>.</p>
+<p>I also teach a <a href="https://www.datacamp.com/courses/hyperparameter-tuning-in-r">Data Camp course in hyperparameter tuning with R</a> and I&rsquo;m on the program committee of the <a href="https://m3-konferenz.de/programmkomitee.php">Minds Mastering Machines M3 conference</a>.</p>
 
 <p><img src="https://shiring.github.io/netlify_images/my_story_wml3zm.png" alt="My journey to Data Science" /></p>
 
