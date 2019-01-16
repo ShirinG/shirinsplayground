@@ -8,6 +8,11 @@
   </url>
   
   <url>
+    <loc>/2019/01/lecture_slides_real_world_ds/</loc>
+    <lastmod>2019-01-16T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/2019/01/how_cnns_learn/</loc>
     <lastmod>2019-01-09T00:00:00+00:00</lastmod>
   </url>
@@ -507,6 +512,12 @@
   </url>
   
   <url>
+    <loc>/tags/case-studies/</loc>
+    <lastmod>2019-01-16T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/categories/</loc>
     <lastmod>2017-07-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -574,7 +585,7 @@
   
   <url>
     <loc>/tags/customer-churn/</loc>
-    <lastmod>2018-12-12T00:00:00+00:00</lastmod>
+    <lastmod>2019-01-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -598,7 +609,7 @@
   
   <url>
     <loc>/tags/deep-learning/</loc>
-    <lastmod>2019-01-09T00:00:00+00:00</lastmod>
+    <lastmod>2019-01-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -622,7 +633,7 @@
   
   <url>
     <loc>/tags/fraud-detection/</loc>
-    <lastmod>2017-09-06T00:00:00+00:00</lastmod>
+    <lastmod>2019-01-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -808,7 +819,7 @@
   
   <url>
     <loc>/tags/machine-learning/</loc>
-    <lastmod>2019-01-09T00:00:00+00:00</lastmod>
+    <lastmod>2019-01-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -970,7 +981,7 @@
   
   <url>
     <loc>/tags/predictive-maintenance/</loc>
-    <lastmod>2017-11-02T00:00:00+00:00</lastmod>
+    <lastmod>2019-01-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

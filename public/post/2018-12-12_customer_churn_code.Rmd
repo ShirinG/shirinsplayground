@@ -490,7 +490,10 @@ threshold <- metrics[order(-metrics$accuracy), "threshold"][1]
 finalRf_predictions <- data.frame(actual = as.vector(test_hf$Churn), 
                                   as.data.frame(h2o.predict(object = best_model, 
                                                             newdata = test_hf)))
+head(finalRf_predictions)
+```
 
+```{r fig.align='center'}
 finalRf_predictions$accurate <- ifelse(finalRf_predictions$actual == 
                                          finalRf_predictions$predict, "ja", "nein")
 
