@@ -147,6 +147,28 @@ iris %&gt;%
 ]]></content>
   </entry>
   <entry>
+    <title type="html"><![CDATA[My course on Hyperparameter Tuning in R is now on Data Camp!]]></title>
+    <link href="/2019/01/data_camp_hyperparameter_tuning/"/>
+    <id>/2019/01/data_camp_hyperparameter_tuning/</id>
+    <published>2019-01-20T00:00:00+00:00</published>
+    <updated>2019-01-20T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<p>I am very happy to announce that (after many months) my interactive course on <a href="https://www.datacamp.com/courses/hyperparameter-tuning-in-r">Hyperparameter Tuning in R</a> has now been officially launched on <a href="https://www.datacamp.com">Data Camp</a>!</p>
+<p><br></p>
+<div class="figure">
+<img src="https://assets.datacamp.com/production/course_6650/shields/original/shield_image_course_6650_20190104-13-b6ny51?1546619228" />
+
+</div>
+<div id="course-description" class="section level2">
+<h2>Course Description</h2>
+<blockquote>
+<p>For many machine learning problems, simply running a model out-of-the-box and getting a prediction is not enough; you want the best model with the most accurate prediction. One way to perfect your model is with hyperparameter tuning, which means optimizing the settings for that specific model. In this course, you will work with the caret, mlr and h2o packages to find the optimal combination of hyperparameters in an efficient manner using grid search, random search, adaptive resampling and automatic machine learning (AutoML). Furthermore, you will work with different datasets and tune different supervised learning models, such as random forests, gradient boosting machines, support vector machines, and even neural nets. Get ready to tune!</p>
+</blockquote>
+<p>You can take the course here:</p>
+<p><a href="https://www.datacamp.com/courses/hyperparameter-tuning-in-r" class="uri">https://www.datacamp.com/courses/hyperparameter-tuning-in-r</a></p>
+</div>
+]]></content>
+  </entry>
+  <entry>
     <title type="html"><![CDATA[Lecture slides: Real-World Data Science (Fraud Detection, Customer Churn &amp; Predictive Maintenance)]]></title>
     <link href="/2019/01/lecture_slides_real_world_ds/"/>
     <id>/2019/01/lecture_slides_real_world_ds/</id>
