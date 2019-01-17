@@ -1,0 +1,27 @@
+---
+title: "My course on Hyperparameter Tuning in R is now on Data Camp!"
+draft: false
+author: Shirin Glander
+date: '2019-01-17'
+categories: ["R"]
+tags: ["machine learning", "hyperparameter tuning", "h2o"]
+thumbnailImagePosition: left
+thumbnailImage: https://assets.datacamp.com/production/course_6650/shields/original/shield_image_course_6650_20190104-13-b6ny51?1546619228
+metaAlignment: center
+coverMeta: out
+slug: data_camp_hyperparameter_tuning
+---
+
+I am very happy to announce that (after many months) my interactive course on [Hyperparameter Tuning in R](https://www.datacamp.com/courses/hyperparameter-tuning-in-r) has now been officially launched on [Data Camp](https://www.datacamp.com)!
+
+<br>
+
+![](https://assets.datacamp.com/production/course_6650/shields/original/shield_image_course_6650_20190104-13-b6ny51?1546619228)
+
+## Course Description
+
+> For many machine learning problems, simply running a model out-of-the-box and getting a prediction is not enough; you want the best model with the most accurate prediction. One way to perfect your model is with hyperparameter tuning, which means optimizing the settings for that specific model. In this course, you will work with the caret, mlr and h2o packages to find the optimal combination of hyperparameters in an efficient manner using grid search, random search, adaptive resampling and automatic machine learning (AutoML). Furthermore, you will work with different datasets and tune different supervised learning models, such as random forests, gradient boosting machines, support vector machines, and even neural nets. Get ready to tune!
+
+You can take the course here: 
+
+https://www.datacamp.com/courses/hyperparameter-tuning-in-r

@@ -1,8 +1,8 @@
 ---
 title: "My course on Hyperparameter Tuning in R is now on Data Camp!"
-draft: true
+draft: false
 author: Shirin Glander
-date: '2019-01-20'
+date: '2019-01-17'
 categories: ["R"]
 tags: ["machine learning", "hyperparameter tuning", "h2o"]
 thumbnailImagePosition: left
