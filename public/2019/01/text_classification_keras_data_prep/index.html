@@ -1,0 +1,1096 @@
+
+
+  
+    
+  
+
+
+  
+
+
+
+
+  
+
+
+  
+
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hugo 0.27 with theme Tranquilpeak 0.4.1-BETA">
+    <title>How to prepare data for NLP (text classification) with Keras and TensorFlow</title>
+    <meta name="author" content="Dr. Shirin Glander">
+    <meta name="keywords" content=", R">
+
+    <link rel="icon" href="img/favicon.png">
+    
+
+    
+    <meta name="description" content="In the past, I have written and taught quite a bit about image classification with Keras (e.g. here). Text classification isn’t too different in terms of using the Keras principles to train a sequential or function model. You can even use Convolutional Neural Nets (CNNs) for text classification.
+What is very different, however, is how to prepare raw text data for modeling. When you look at the IMDB example from the Deep Learning with R Book, you get a great explanation of how to train the model.">
+    <meta property="og:description" content="In the past, I have written and taught quite a bit about image classification with Keras (e.g. here). Text classification isn’t too different in terms of using the Keras principles to train a sequential or function model. You can even use Convolutional Neural Nets (CNNs) for text classification.
+What is very different, however, is how to prepare raw text data for modeling. When you look at the IMDB example from the Deep Learning with R Book, you get a great explanation of how to train the model.">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="How to prepare data for NLP (text classification) with Keras and TensorFlow">
+    <meta property="og:url" content="/2019/01/text_classification_keras_data_prep/">
+    <meta property="og:site_name" content="Shirin&#39;s playgRound">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Shirin&#39;s playgRound">
+    <meta name="twitter:description" content="In the past, I have written and taught quite a bit about image classification with Keras (e.g. here). Text classification isn’t too different in terms of using the Keras principles to train a sequential or function model. You can even use Convolutional Neural Nets (CNNs) for text classification.
+What is very different, however, is how to prepare raw text data for modeling. When you look at the IMDB example from the Deep Learning with R Book, you get a great explanation of how to train the model.">
+    
+      <meta name="twitter:creator" content="@ShirinGlander">
+    
+    
+
+    
+    
+
+    
+      <meta property="og:image" content="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=640">
+    
+
+    
+      <meta property="og:image" content="https://shiring.github.io/netlify_images/book-eyeglasses-eyewear-261857.jpg">
+    
+    
+    
+
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="/css/style-hbs5om8csx9a8yrv5hnhpi2qqdv4ykuslajwbramhqxvleqbfklxgek50hye.min.css" />
+    
+    
+
+    
+      
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-86119417-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="/">Shirin&#39;s playgRound</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <h1 class="sidebar-profile-title">How to prepare data for NLP (text classification) with Keras and TensorFlow</h1>
+        <a href="https://blog.feedspot.com/r_programming_blogs/" rel="nofollow" title="R Programming Blogs"><img alt="R Programming Blogs" src="https://blog.feedspot.com/wp-content/uploads/2018/04/r_program_216px.png?x20694"/></a>
+        <a href="/#about">
+          <img class="sidebar-profile-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Dr. Shirin Glander</h4>
+        
+          <h5 class="sidebar-profile-bio">Biologist turned Bioinformatician turned Data Scientist</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/archives/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/categories/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/tags/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/page/about/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/page/conferences_podcasts_webinars/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bullhorn"></i>
+      
+      <span class="sidebar-button-desc">Hear me talk</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://shiring.github.io/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">My old R-blog</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.codecentric.de/kuenstliche-intelligenz/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-angle-double-right"></i>
+      
+      <span class="sidebar-button-desc">codecentric.ai</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/ShirinG">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.linkedin.com/in/shirin-glander-01120881/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-linkedin"></i>
+      
+      <span class="sidebar-button-desc">LinkedIn</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://stackoverflow.com/users/6623620/shirin-glander">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-stack-overflow"></i>
+      
+      <span class="sidebar-button-desc">Stack Overflow</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/ShirinGlander">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.xing.com/profile/Shirin_Glander">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-xing"></i>
+      
+      <span class="sidebar-button-desc">Xing</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.meetup.com/Munster-R-Users-Group">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-meetup"></i>
+      
+      <span class="sidebar-button-desc">MünsteR</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.r-bloggers.com/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-book"></i>
+      
+      <span class="sidebar-button-desc">R-bloggers</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.r-users.com/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-book"></i>
+      
+      <span class="sidebar-button-desc">R-users</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaOut
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-center">
+  
+    <h1 class="post-title" itemprop="headline">
+      How to prepare data for NLP (text classification) with Keras and TensorFlow
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2019-01-21T00:00:00Z">
+        
+  January 21, 2019
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="/categories/r">R</a>, 
+    
+      <a class="category-link" href="/categories/keras">Keras</a>
+    
+  
+
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>In the past, I have written and taught quite a bit about image classification with Keras (<a href="https://shirinsplayground.netlify.com/2018/06/keras_fruits/">e.g. here</a>). Text classification isn’t too different in terms of using the Keras principles to train a sequential or function model. You can even use Convolutional Neural Nets (CNNs) for text classification.</p>
+<p>What is very different, however, is how to prepare raw text data for modeling. When you look at the <a href="https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/3.4-classifying-movie-reviews.nb.html">IMDB example from the Deep Learning with R Book</a>, you get a great explanation of how to train the model. But because the <strong>preprocessed</strong> IMDB dataset comes with the <code>keras</code> package, it isn’t so straight-forward to use what you learned on your own data.</p>
+<div id="how-can-a-computer-work-with-text" class="section level2">
+<h2>How can a computer work with text?</h2>
+<p>As with any neural network, we need to convert our data into a numeric format; in Keras and TensorFlow we work with tensors. The IMDB example data from the <code>keras</code> package has been preprocessed to a list of integers, where every integer corresponds to a word arranged by descending word frequency.</p>
+<p>So, how do we make it from raw text to such a list of integers? Luckily, Keras offers a few convenience functions that make our lives much easier.</p>
+<pre class="r"><code>library(keras)
+library(tidyverse)</code></pre>
+</div>
+<div id="data" class="section level2">
+<h2>Data</h2>
+<p>In the example below, I am using a Kaggle dataset: <a href="https://www.kaggle.com/nicapotato/womens-ecommerce-clothing-reviews">Women’s e-commerce cloting reviews</a>. The data contains a text review of different items of clothing, as well as some additional information, like rating, division, etc. I will use the review title and text in order to classify whether or not the item was liked. I am creating the response variable from the rating: every item rates with 5 stars is considered “liked” (1), the rest as “not liked” (0). I am also combining review title and text.</p>
+<pre class="r"><code>clothing_reviews &lt;- read_csv(&quot;/Users/shiringlander/Documents/Github/ix_lime_etc/Womens Clothing E-Commerce Reviews.csv&quot;) %&gt;%
+  mutate(Liked = ifelse(Rating == 5, 1, 0),
+         text = paste(Title, `Review Text`),
+         text = gsub(&quot;NA&quot;, &quot;&quot;, text))</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   X1 = col_double(),
+##   `Clothing ID` = col_double(),
+##   Age = col_double(),
+##   Title = col_character(),
+##   `Review Text` = col_character(),
+##   Rating = col_double(),
+##   `Recommended IND` = col_double(),
+##   `Positive Feedback Count` = col_double(),
+##   `Division Name` = col_character(),
+##   `Department Name` = col_character(),
+##   `Class Name` = col_character()
+## )</code></pre>
+<pre class="r"><code>glimpse(clothing_reviews)</code></pre>
+<pre><code>## Observations: 23,486
+## Variables: 13
+## $ X1                        &lt;dbl&gt; 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, …
+## $ `Clothing ID`             &lt;dbl&gt; 767, 1080, 1077, 1049, 847, 1080, 858,…
+## $ Age                       &lt;dbl&gt; 33, 34, 60, 50, 47, 49, 39, 39, 24, 34…
+## $ Title                     &lt;chr&gt; NA, NA, &quot;Some major design flaws&quot;, &quot;My…
+## $ `Review Text`             &lt;chr&gt; &quot;Absolutely wonderful - silky and sexy…
+## $ Rating                    &lt;dbl&gt; 4, 5, 3, 5, 5, 2, 5, 4, 5, 5, 3, 5, 5,…
+## $ `Recommended IND`         &lt;dbl&gt; 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1,…
+## $ `Positive Feedback Count` &lt;dbl&gt; 0, 4, 0, 0, 6, 4, 1, 4, 0, 0, 14, 2, 2…
+## $ `Division Name`           &lt;chr&gt; &quot;Initmates&quot;, &quot;General&quot;, &quot;General&quot;, &quot;Ge…
+## $ `Department Name`         &lt;chr&gt; &quot;Intimate&quot;, &quot;Dresses&quot;, &quot;Dresses&quot;, &quot;Bot…
+## $ `Class Name`              &lt;chr&gt; &quot;Intimates&quot;, &quot;Dresses&quot;, &quot;Dresses&quot;, &quot;Pa…
+## $ Liked                     &lt;dbl&gt; 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1,…
+## $ text                      &lt;chr&gt; &quot; Absolutely wonderful - silky and sex…</code></pre>
+<p>Whether an item was liked or not will be the response variable or label for classification of the reviews.</p>
+<pre class="r"><code>clothing_reviews %&gt;%
+  ggplot(aes(x = factor(Liked), fill = Liked)) +
+    geom_bar(alpha = 0.8) +
+    guides(fill = FALSE)</code></pre>
+<p><img src="/post/2019-01-21_text_classification_keras_data_prep_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+<div id="tokenizers" class="section level2">
+<h2>Tokenizers</h2>
+<p>The first step is to tokenize the text. This means, converting our text into a sequence of integers where each integer corresponds to a word in the dictionary.</p>
+<pre class="r"><code>text &lt;- clothing_reviews$text</code></pre>
+<p>The <code>num_words</code> argument defines the number of words we want to consider (this will be our feature space). Because the output integers will be sorted according to decreasing word frequency, if we set 1000, we will only get the 1000 most frequent words in our corpus.</p>
+<pre class="r"><code>max_features &lt;- 1000
+tokenizer &lt;- text_tokenizer(num_words = max_features)</code></pre>
+<p>Next, we need to fit the tokenizer to our text data. Note, that the <code>tokenizer</code> object is modified in place (as are models in Keras)!</p>
+<pre class="r"><code>tokenizer %&gt;% 
+  fit_text_tokenizer(text)</code></pre>
+<p>After fitting the tokenizer, we can extract the following information: the number of documents …</p>
+<pre class="r"><code>tokenizer$document_count</code></pre>
+<pre><code>## [1] 23486</code></pre>
+<p>… and the word-index list. Notice, that even though we set the maximum number of words to 1000, our index contains many more words. In fact, the index will keep all words in the index but when converting our reviews to vectors, the stored value <code>tokenizer$num_words</code> will be used to restrict to the most common words.</p>
+<pre class="r"><code>tokenizer$word_index %&gt;%
+  head()</code></pre>
+<pre><code>## $raining
+## [1] 13788
+## 
+## $yellow
+## [1] 553
+## 
+## $four
+## [1] 1501
+## 
+## $bottons
+## [1] 7837
+## 
+## $woods
+## [1] 7896
+## 
+## $`friend&#39;s`
+## [1] 3525</code></pre>
+<p>We now have the dictionary of integers and which words they should replace in our text. But we still don’t have a list of integers for our reviews. So, now we use the <code>texts_to_sequences</code> functions, which will do just that! Words, which weren’t among the top 1000 were excluded.</p>
+<pre class="r"><code>text_seqs &lt;- texts_to_sequences(tokenizer, text)
+text_seqs %&gt;%
+  head()</code></pre>
+<pre><code>## [[1]]
+## [1] 249 494 924   3 595   3  63
+## 
+## [[2]]
+##  [1]  19   7  17  35  84   2   8 221   5   9   4 114   3  37 328   2 135
+## [18]   2 421  43  25  57   5 139  35  95   2  75   4  95   3  39 518   2
+## [35]  19   1  88  11  31 423  38   4  56 474   1 401  43 160  30   4 132
+## [52]  11 447 444   6 761  95
+## 
+## [[3]]
+##  [1] 156 134   2  68 314 180  12   7  17   3  53 183   5   8  98  12  31
+## [18]   2  57   1  95  42  18 240  22  10   2 230   7   8  30  42  15  42
+## [35]   9 683  21   2 122  20 803   5  45   2   5   9  95  99  86  16  38
+## [52] 581 256   1  24 673  16  63   3  26 267  10   1 182 673  68   4  23
+## [69] 148 285 489   3 543 738 481 157 997   4 134  16   1 157 489 846 326
+## [86]   1 455   5 706
+## 
+## [[4]]
+##  [1]  18 292 220   2  19  19  19   7 592  35 209   3 652 310 189   2  33
+## [18]   5   2 120 530  10  27 212
+## 
+## [[5]]
+##  [1]  55  71   7  71   6  23  55   8  76 504   8   1 163 484   5   6   1
+## [18]  49  88   8  33  14 262   3   5   6  15   5 855  64  14 257 376  19
+## [35]   7  71
+## 
+## [[6]]
+##  [1]  20  12   1  23  95   2  19 244  10   7  60   6  20  12   1  23  95
+## [18]   2  39  38 285 278 324   3 115  33   4   9   7 492   7  17  16  23
+## [35]  84  66  13   1  10 250   4 245  13  17   1 100   6  90   3  23 321
+## [52]  15   5  18  42 428  20   4   8   3   1 100  43 378 506 111   1  13
+## [69]   1   2  19   1  46   3   1 686  13   1 124  10   5  38 135  20  98
+## [86]  11  31   2 370   7  17</code></pre>
+<p>So, there we have it! From here on out, we can simply follow the <a href="https://github.com/rstudio/keras/blob/master/vignettes/examples/imdb_cnn.R">IMDB example from the Keras documentation</a>:</p>
+<pre class="r"><code># Set parameters:
+maxlen &lt;- 100
+batch_size &lt;- 32
+embedding_dims &lt;- 50
+filters &lt;- 64
+kernel_size &lt;- 3
+hidden_dims &lt;- 50
+epochs &lt;- 5</code></pre>
+<p>Because we can’t directly use this list of integers in our neural network, there is still some preprocessing to do. In the IMDB example, the lists are padded so that they all have the same length. The <code>pad_sequences</code> function will return a matrix, with columns for a given maximum number of words (or the number of words in the longest sequence). Here, we have 400 columns in our matrix. Reviews with fewer words were padded with zeros at the beginning before the indices. Longer reviews are cut after 400 words.</p>
+<pre class="r"><code>x_train &lt;- text_seqs %&gt;%
+  pad_sequences(maxlen = maxlen)
+dim(x_train)</code></pre>
+<pre><code>## [1] 23486   100</code></pre>
+<p>Our response variable will be encoded with 1s (5-star review) and 0s (not 5-star reviews). Because we have a binary outcome, we only need this one vector.</p>
+<pre class="r"><code>y_train &lt;- clothing_reviews$Liked
+length(y_train)</code></pre>
+<pre><code>## [1] 23486</code></pre>
+</div>
+<div id="embeddings" class="section level2">
+<h2>Embeddings</h2>
+<p>These padded word index matrices now need to be converted into something that gives information about the features (i.e. words) in a way that can be used for learning. Currently, the state-of-the-art for text models are word embeddings or word vectors, which are learned from the text data. Word embeddings encode the context of words in relatively few dimensions while maximizing the information that is contained in these vectors. Basically, word embeddings are values that are learned by a neural net just as <a href="https://shirinsplayground.netlify.com/2018/11/neural_nets_explained/">weights are learned by a multi-layer perceptron</a>.</p>
+<p>Word embedding vectors represent the words and their contexts; thus, words with similar meanings (synonyms) or with close semantic relationships will have more similar embeddings. Moreover, word embeddings should reflect how words are related to each other. For example, the embeddings for “man” should be to “king” as “woman” is to “queen”.</p>
+<p>In our model below, we want to learn the word embeddings from our (padded) word vectors and directly use these learned embeddings for classification. This part can now be the same as in the <a href="https://github.com/rstudio/keras/blob/master/vignettes/examples/imdb_lstm.R">Keras examples for LSTMs</a> and <a href="https://github.com/rstudio/keras/blob/master/vignettes/examples/imdb_cnn_lstm.R">CNNs</a></p>
+<pre class="r"><code>model &lt;- keras_model_sequential() %&gt;% 
+  layer_embedding(max_features, embedding_dims, input_length = maxlen) %&gt;%
+  layer_dropout(0.2) %&gt;%
+  layer_conv_1d(
+    filters, kernel_size, 
+    padding = &quot;valid&quot;, activation = &quot;relu&quot;, strides = 1
+  ) %&gt;%
+  layer_global_max_pooling_1d() %&gt;%
+  layer_dense(hidden_dims) %&gt;%
+  layer_dropout(0.2) %&gt;%
+  layer_activation(&quot;relu&quot;) %&gt;%
+  layer_dense(1) %&gt;%
+  layer_activation(&quot;sigmoid&quot;) %&gt;% compile(
+  loss = &quot;binary_crossentropy&quot;,
+  optimizer = &quot;adam&quot;,
+  metrics = &quot;accuracy&quot;
+)</code></pre>
+<pre class="r"><code>model %&gt;%
+  fit(
+    x_train,
+    y_train,
+    batch_size = batch_size,
+    epochs = epochs,
+    validation_split = 0.3
+  )</code></pre>
+</div>
+<div id="alternative-preprocessing-functions" class="section level2">
+<h2>Alternative preprocessing functions</h2>
+<p>The above example follows the IMDB example from the Keras documentation, but there are alternative ways to preprocess your text for modeling with Keras:</p>
+<ul>
+<li><a href="https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/6.1-one-hot-encoding-of-words-or-characters.nb.html">one-hot-encoding</a></li>
+</ul>
+<pre class="r"><code>one_hot_results &lt;- texts_to_matrix(tokenizer, text, mode = &quot;binary&quot;)
+dim(one_hot_results)</code></pre>
+<pre><code>## [1] 23486  1000</code></pre>
+<ul>
+<li><a href="https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/6.1-one-hot-encoding-of-words-or-characters.nb.html">one-hot hashing</a></li>
+</ul>
+<pre class="r"><code>hashing_results &lt;- text_hashing_trick(text[1], n = 100)
+hashing_results</code></pre>
+<pre><code>## [1] 88 75 18 90  7 90 23</code></pre>
+</div>
+<div id="pretrained-embeddings" class="section level2">
+<h2>Pretrained embeddings</h2>
+<p>Here, we have learned word embeddings from our word vectors and directly used the output of the embedding layers as input for additional layers in our neural net. Because learning embeddings takes time and computational power, we could also start with <a href="https://keras.rstudio.com/articles/examples/pretrained_word_embeddings.html">pre-trained embeddings</a>, particulary if we don’t have a whole lot of training data. You can find an example for how to use <a href="https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/6.1-using-word-embeddings.nb.html">GloVe embeddings here</a>.</p>
+<hr />
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 3.5.1 (2018-07-02)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS  10.14.2
+## 
+## Matrix products: default
+## BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] bindrcpp_0.2.2  forcats_0.3.0   stringr_1.3.1   dplyr_0.7.8    
+##  [5] purrr_0.2.5     readr_1.3.1     tidyr_0.8.2     tibble_2.0.1   
+##  [9] ggplot2_3.1.0   tidyverse_1.2.1 keras_2.2.4    
+## 
+## loaded via a namespace (and not attached):
+##  [1] reticulate_1.10  tidyselect_0.2.5 xfun_0.4         haven_2.0.0     
+##  [5] lattice_0.20-38  colorspace_1.4-0 generics_0.0.2   htmltools_0.3.6 
+##  [9] yaml_2.2.0       base64enc_0.1-3  utf8_1.1.4       rlang_0.3.1     
+## [13] pillar_1.3.1     withr_2.1.2      glue_1.3.0       readxl_1.2.0    
+## [17] modelr_0.1.2     bindr_0.1.1      plyr_1.8.4       tensorflow_1.10 
+## [21] cellranger_1.1.0 munsell_0.5.0    blogdown_0.10    gtable_0.2.0    
+## [25] rvest_0.3.2      evaluate_0.12    labeling_0.3     knitr_1.21      
+## [29] tfruns_1.4       fansi_0.4.0      broom_0.5.1      Rcpp_1.0.0      
+## [33] backports_1.1.3  scales_1.0.0     jsonlite_1.6     hms_0.4.2       
+## [37] digest_0.6.18    stringi_1.2.4    bookdown_0.9     grid_3.5.1      
+## [41] cli_1.0.1        tools_3.5.1      magrittr_1.5     lazyeval_0.2.1  
+## [45] crayon_1.3.4     whisker_0.3-2    pkgconfig_2.0.2  zeallot_0.1.0   
+## [49] Matrix_1.2-15    xml2_1.2.0       lubridate_1.7.4  rstudioapi_0.9.0
+## [53] assertthat_0.2.0 rmarkdown_1.11   httr_1.4.0       R6_2.3.0        
+## [57] nlme_3.1-137     compiler_3.5.1</code></pre>
+</div>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="//tags/machine-learning/">machine learning</a>
+
+  <a class="tag tag--primary tag--small" href="//tags/keras/">keras</a>
+
+  <a class="tag tag--primary tag--small" href="//tags/tensorflow/">tensorflow</a>
+
+  <a class="tag tag--primary tag--small" href="//tags/nlp/">nlp</a>
+
+                  </div>
+                
+              
+            
+            
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2019/01/review_beyond_spreadsheets_with_r/" data-tooltip="Book review: Beyond Spreadsheets with R">
+              
+                <i class="fa fa-angle-left"></i>
+                <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+              </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2019/01/data_camp_hyperparameter_tuning/" data-tooltip="My course on Hyperparameter Tuning in R is now on Data Camp!">
+              
+                <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2019/01/text_classification_keras_data_prep/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2019/01/text_classification_keras_data_prep/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2019/01/text_classification_keras_data_prep/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2019 Dr. Shirin Glander. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2019/01/review_beyond_spreadsheets_with_r/" data-tooltip="Book review: Beyond Spreadsheets with R">
+              
+                <i class="fa fa-angle-left"></i>
+                <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+              </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2019/01/data_camp_hyperparameter_tuning/" data-tooltip="My course on Hyperparameter Tuning in R is now on Data Camp!">
+              
+                <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2019/01/text_classification_keras_data_prep/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2019/01/text_classification_keras_data_prep/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2019/01/text_classification_keras_data_prep/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=%2F2019%2F01%2Ftext_classification_keras_data_prep%2F">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=%2F2019%2F01%2Ftext_classification_keras_data_prep%2F">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=%2F2019%2F01%2Ftext_classification_keras_data_prep%2F">
+          <i class="fa fa-google-plus"></i><span>Share on Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Dr. Shirin Glander</h4>
+    
+      <div id="about-card-bio">Biologist turned Bioinformatician turned Data Scientist</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Data Scientist
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Münster, Germany
+      </div>
+    
+  </div>
+</div>
+
+    <div id="algolia-search-modal" class="modal-container">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="close-button"><i class="fa fa-close"></i></span>
+      <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
+        <span class="searchby-algolia-text text-color-light text-small">by</span>
+        <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
+      </a>
+      <i class="search-icon fa fa-search"></i>
+      <form id="algolia-search-form">
+        <input type="text" id="algolia-search-input" name="search"
+          class="form-control input--large search-input" placeholder="Search" />
+      </form>
+    </div>
+    <div class="modal-body">
+      <div class="no-result text-color-light text-center">no post found</div>
+      <div class="results">
+        
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2019/02/keras_fruits_crossvalidation/">
+                <h3 class="media-heading">How to use cross-validation with the image data generator in Keras and TensorFlow</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Feb 2, 2019
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">I’ve been using keras and TensorFlow for a while now - and love its simplicity and straight-forward way to modeling. As part of the latest update to my Workshop about deep learning with R and keras I’ve added a new example analysis:
+ https://shirinsplayground.netlify.com/2018/06/keras_fruits/
+library(keras) library(tidyverse) ## ── Attaching packages ───────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ── ## ✔ ggplot2 3.1.0 ✔ purrr 0.2.5 ## ✔ tibble 2.0.1 ✔ dplyr 0.7.8 ## ✔ tidyr 0.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2019/01/review_beyond_spreadsheets_with_r/">
+                <h3 class="media-heading">Book review: Beyond Spreadsheets with R</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jan 1, 2019
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Disclaimer: Manning publications gave me an ebook version of Beyond Spreadsheets with R - A beginner’s guide to R and RStudio by Dr. Jonathan Carroll for free so that I could review it here.
+ Beyond Spreadsheets with R shows you how to take raw data and transform it for use in computations, tables, graphs, and more. You’ll build on simple programming techniques like loops and conditionals to create your own custom functions.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2019/01/text_classification_keras_data_prep/">
+                <h3 class="media-heading">How to prepare data for NLP (text classification) with Keras and TensorFlow</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jan 1, 2019
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">In the past, I have written and taught quite a bit about image classification with Keras (e.g. here). Text classification isn’t too different in terms of using the Keras principles to train a sequential or function model. You can even use Convolutional Neural Nets (CNNs) for text classification.
+What is very different, however, is how to prepare raw text data for modeling. When you look at the IMDB example from the Deep Learning with R Book, you get a great explanation of how to train the model.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2019/01/data_camp_hyperparameter_tuning/">
+                <h3 class="media-heading">My course on Hyperparameter Tuning in R is now on Data Camp!</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jan 1, 2019
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">I am very happy to announce that (after many months) my interactive course on Hyperparameter Tuning in R has now been officially launched on Data Camp!
+
+ Course Description  For many machine learning problems, simply running a model out-of-the-box and getting a prediction is not enough; you want the best model with the most accurate prediction. One way to perfect your model is with hyperparameter tuning, which means optimizing the settings for that specific model.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2019/01/lecture_slides_real_world_ds/">
+                <h3 class="media-heading">Lecture slides: Real-World Data Science (Fraud Detection, Customer Churn &amp; Predictive Maintenance)</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jan 1, 2019
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">These are slides from a lecture I gave at the School of Applied Sciences in Münster. In this lecture, I talked about Real-World Data Science and showed examples on Fraud Detection, Customer Churn &amp; Predictive Maintenance.
+
+  Real-World Data Science (Fraud Detection, Customer Churn &amp; Predictive Maintenance)  von Shirin Glander  The slides were created with xaringan.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2019/01/how_cnns_learn/">
+                <h3 class="media-heading">How do Convolutional Neural Nets (CNNs) learn? &#43; Keras example</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jan 1, 2019
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">As with the other videos from our codecentric.ai Bootcamp (Random Forests, Neural Nets &amp; Gradient Boosting), I am again sharing an English version of the script (plus R code) for this most recent addition on How Convolutional Neural Nets work.
+In this lesson, I am going to explain how computers learn to see; meaning, how do they learn to recognize images or object on images? One of the most commonly used approaches to teach computers “vision” are Convolutional Neural Nets.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2019/01/meetup_feb19/">
+                <h3 class="media-heading">Don’t reinvent the wheel: making use of shiny extension packages. Join MünsteR for our next meetup!</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jan 1, 2019
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">In our next MünsteR R-user group meetup on Tuesday, February 5th, 2019, titled Don’t reinvent the wheel: making use of shiny extension packages., Suthira Owlarn will introduce the shiny package and show how she used it to build an interactive web app for her sequencing datasets.
+You can RSVP here: http://meetu.ps/e/Gg5th/w54bW/f
+ Shiny is a popular R package for building interactive web apps and dashboards – no web development knowledge required!</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2019/01/end2end_ws_berlin_feb19/">
+                <h3 class="media-heading">February 21st &amp; 22nd: End-2-End from a Keras/TensorFlow model to production</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jan 1, 2019
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Registration is now open for my 1.5-day workshop on how to develop end-2-end from a Keras/TensorFlow model to production.
+It will take place on February 21st &amp; 22nd in Berlin, Germany. The workshop will cost 950.00 Euro + MwST. We will start at 9 am on Thursday and finish around 3 pm on Friday.
+Please register by sending an email to shirin.glander@gmail.com with the following information:
+ name company/institute/affiliation address for invoice phone number reference to this blog  The course material will be in English and we will speak a mix of German and English, depending on the participants’ preferences.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/12/customer_churn_code/">
+                <h3 class="media-heading">Code for case study - Customer Churn with Keras/TensorFlow and H2O</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Dec 12, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">This is code that accompanies a book chapter on customer churn that I have written for the German dpunkt Verlag. The book is in German and will probably appear in February: https://www.dpunkt.de/buecher/13208/9783864906107-data-science.html.
+The code you find below can be used to recreate all figures and analyses from this book chapter. Because the content is exclusively for the book, my descriptions around the code had to be minimal. But I’m sure, you can get the gist, even without the book.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/12/trust_in_ml_slides_ix/">
+                <h3 class="media-heading">Trust in ML models. Slides from TWiML &amp; AI EMEA Meetup &#43; iX Articles</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Dec 12, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Update: There is now a recording of the meetup up on YouTube.
+ Here you find my slides the TWiML &amp; AI EMEA Meetup about Trust in ML models, where I presented the Anchors paper by Carlos Guestrin et al..
+  I have also just written two articles for the German IT magazin iX about the same topic of Explaining Black-Box Machine Learning Models:
+ A short article in the iX 12/2018</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+      </div>
+    </div>
+    <div class="modal-footer">
+      <p class="results-count text-medium"
+         data-message-zero="no post found"
+         data-message-one="1 post found"
+         data-message-other="{n} posts found">
+         78 posts found
+      </p>
+    </div>
+  </div>
+</div>
+    
+  
+    
+    <div id="cover" style="background-image:url('/images/autumn-2789234_1920.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" integrity="sha256-IFHWFEbU2/+wNycDECKgjIRSirRNIDp2acEB5fvdVRU=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js" integrity="sha256-+mpyNVJsNt4rVXCw0F+pAOiB3YxmHgrbJsx4ecPuUaI=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.js" integrity="sha256-vMxgR/7FtLovVA+IPrR7+xTgIgARH7y9VZQnmmi0HDI=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.js" integrity="sha256-N0qFUh7/9vLvia87dDndewmsgsyYoNkdA212tPc+2NI=" crossorigin="anonymous"></script>
+
+
+<script src="/js/script-kr8dyqj6rb6ortyib7whfo9x9p6td6zo8t1v4fdz4ecx5kwybsdlmk1slygn.min.js"></script>
+
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = '\/2019\/01\/text_classification_keras_data_prep\/';
+          
+            this.page.identifier = '\/2019\/01\/text_classification_keras_data_prep\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'shirinsplayground';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+    
+  </body>
+</html>
+

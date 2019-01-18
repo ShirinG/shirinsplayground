@@ -2,46 +2,290 @@
   <title>Shirin&#39;s playgRound</title>
   <link href="/index.xml" rel="self"/>
   <link href="/"/>
-  <updated>2019-01-30T00:00:00+00:00</updated>
+  <updated>2019-02-04T00:00:00+00:00</updated>
   <id>/</id>
   <author>
     <name>Dr. Shirin Glander</name>
   </author>
   <generator>Hugo -- gohugo.io</generator>
   <entry>
+    <title type="html"><![CDATA[How to use cross-validation with the image data generator in Keras and TensorFlow]]></title>
+    <link href="/2019/02/keras_fruits_crossvalidation/"/>
+    <id>/2019/02/keras_fruits_crossvalidation/</id>
+    <published>2019-02-04T00:00:00+00:00</published>
+    <updated>2019-02-04T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<blockquote>
+<p>I’ve been using keras and TensorFlow for a while now - and love its simplicity and straight-forward way to modeling. As part of the latest update to my <a href="https://shirinsplayground.netlify.com/2018/05/deep_learning_keras_tensorflow_18_07/">Workshop about deep learning with R and keras</a> I’ve added a new example analysis:</p>
+</blockquote>
+<p><a href="https://shirinsplayground.netlify.com/2018/06/keras_fruits/" class="uri">https://shirinsplayground.netlify.com/2018/06/keras_fruits/</a></p>
+<pre class="r"><code>library(keras)
+library(tidyverse)</code></pre>
+<pre><code>## ── Attaching packages ───────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ✔ ggplot2 3.1.0     ✔ purrr   0.2.5
+## ✔ tibble  2.0.1     ✔ dplyr   0.7.8
+## ✔ tidyr   0.8.2     ✔ stringr 1.3.1
+## ✔ readr   1.3.1     ✔ forcats 0.3.0</code></pre>
+<pre><code>## Warning: package &#39;tibble&#39; was built under R version 3.5.2</code></pre>
+<pre><code>## ── Conflicts ──────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code># list of fruits to modle
+fruit_list &lt;- c(&quot;Kiwi&quot;, &quot;Banana&quot;, &quot;Apricot&quot;, &quot;Avocado&quot;, &quot;Cocos&quot;, &quot;Clementine&quot;, &quot;Mandarine&quot;, &quot;Orange&quot;,
+                &quot;Limes&quot;, &quot;Lemon&quot;, &quot;Peach&quot;, &quot;Plum&quot;, &quot;Raspberry&quot;, &quot;Strawberry&quot;, &quot;Pineapple&quot;, &quot;Pomegranate&quot;)
+
+# number of output classes (i.e. fruits)
+output_n &lt;- length(fruit_list)
+
+# image size to scale down to (original images are 100 x 100 px)
+img_width &lt;- 20
+img_height &lt;- 20
+target_size &lt;- c(img_width, img_height)
+
+# RGB = 3 channels
+channels &lt;- 3
+
+# path to image folders
+train_image_files_path &lt;- &quot;/Users/shiringlander/Documents/Github/DL_AI/Tutti_Frutti/fruits-360/Training/&quot;</code></pre>
+<pre class="r"><code>train_data_gen = image_data_generator(
+  rescale = 1/255,
+  validation_split = 0.3
+)</code></pre>
+<pre class="r"><code># training images
+train_image_array_gen &lt;- flow_images_from_directory(train_image_files_path, 
+                                          train_data_gen,
+                                          subset = &#39;training&#39;,
+                                          target_size = target_size,
+                                          class_mode = &quot;categorical&quot;,
+                                          classes = fruit_list,
+                                          seed = 42)
+
+# validation images
+valid_image_array_gen &lt;- flow_images_from_directory(train_image_files_path, 
+                                          train_data_gen,
+                                          subset = &#39;validation&#39;,
+                                          target_size = target_size,
+                                          class_mode = &quot;categorical&quot;,
+                                          classes = fruit_list,
+                                          seed = 42)</code></pre>
+<pre class="r"><code>cat(&quot;Number of images per class:&quot;)</code></pre>
+<pre><code>## Number of images per class:</code></pre>
+<pre class="r"><code>table(factor(train_image_array_gen$classes))</code></pre>
+<pre><code>## 
+##   0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15 
+## 327 343 345 299 343 343 343 336 343 345 345 313 343 345 343 345</code></pre>
+<pre class="r"><code>cat(&quot;\nClass label vs index mapping:\n&quot;)</code></pre>
+<pre><code>## 
+## Class label vs index mapping:</code></pre>
+<pre class="r"><code>train_image_array_gen$class_indices</code></pre>
+<pre><code>## $Lemon
+## [1] 9
+## 
+## $Peach
+## [1] 10
+## 
+## $Limes
+## [1] 8
+## 
+## $Apricot
+## [1] 2
+## 
+## $Plum
+## [1] 11
+## 
+## $Avocado
+## [1] 3
+## 
+## $Strawberry
+## [1] 13
+## 
+## $Pineapple
+## [1] 14
+## 
+## $Orange
+## [1] 7
+## 
+## $Mandarine
+## [1] 6
+## 
+## $Banana
+## [1] 1
+## 
+## $Clementine
+## [1] 5
+## 
+## $Kiwi
+## [1] 0
+## 
+## $Cocos
+## [1] 4
+## 
+## $Pomegranate
+## [1] 15
+## 
+## $Raspberry
+## [1] 12</code></pre>
+<div id="define-model" class="section level3">
+<h3>Define model</h3>
+<pre class="r"><code># number of training samples
+train_samples &lt;- train_image_array_gen$n
+# number of validation samples
+valid_samples &lt;- valid_image_array_gen$n
+
+# define batch size and number of epochs
+batch_size &lt;- 32
+epochs &lt;- 10</code></pre>
+<pre class="r"><code># initialise model
+model &lt;- keras_model_sequential()
+
+# add layers
+model %&gt;%
+  layer_conv_2d(filter = 32, kernel_size = c(3,3), padding = &quot;same&quot;, input_shape = c(img_width, img_height, channels)) %&gt;%
+  layer_activation(&quot;relu&quot;) %&gt;%
+  
+  # Second hidden layer
+  layer_conv_2d(filter = 16, kernel_size = c(3,3), padding = &quot;same&quot;) %&gt;%
+  layer_activation_leaky_relu(0.5) %&gt;%
+  layer_batch_normalization() %&gt;%
+
+  # Use max pooling
+  layer_max_pooling_2d(pool_size = c(2,2)) %&gt;%
+  layer_dropout(0.25) %&gt;%
+  
+  # Flatten max filtered output into feature vector 
+  # and feed into dense layer
+  layer_flatten() %&gt;%
+  layer_dense(100) %&gt;%
+  layer_activation(&quot;relu&quot;) %&gt;%
+  layer_dropout(0.5) %&gt;%
+
+  # Outputs from dense layer are projected onto output layer
+  layer_dense(output_n) %&gt;% 
+  layer_activation(&quot;softmax&quot;)
+
+# compile
+model %&gt;% compile(
+  loss = &quot;categorical_crossentropy&quot;,
+  optimizer = optimizer_rmsprop(lr = 0.0001, decay = 1e-6),
+  metrics = &quot;accuracy&quot;
+)</code></pre>
+<pre class="r"><code># fit
+hist &lt;- model %&gt;% fit_generator(
+  # training data
+  train_image_array_gen,
+  
+  # epochs
+  steps_per_epoch = as.integer(train_samples / batch_size), 
+  epochs = epochs, 
+  
+  # validation data
+  validation_data = valid_image_array_gen,
+  validation_steps = as.integer(valid_samples / batch_size)
+)</code></pre>
+<pre class="r"><code>plot(hist)</code></pre>
+<p><img src="/post/2019-02-04_keras_fruits_crossvalidation_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<pre class="r"><code>test_image_files_path = &quot;/Users/shiringlander/Documents/Github/DL_AI/Tutti_Frutti/fruits-360/Validation/&quot;
+
+test_datagen &lt;- image_data_generator(rescale = 1/255)
+
+test_generator &lt;- flow_images_from_directory(
+        test_image_files_path,
+        test_datagen,
+        target_size = target_size,
+        class_mode = &quot;categorical&quot;,
+        classes = fruit_list,
+        seed = 42)</code></pre>
+<pre class="r"><code>indices &lt;- train_image_array_gen$class_indices %&gt;%
+  as.data.frame() %&gt;%
+  gather() %&gt;%
+  arrange(value)</code></pre>
+<pre class="r"><code>predictions &lt;- as.data.frame(predict_generator(model, test_generator, steps = as.integer(test_generator$n / batch_size)))</code></pre>
+<pre class="r"><code>colnames(predictions) &lt;- indices$key
+predictions &lt;- predictions %&gt;%
+  mutate(truth_idx = test_generator$classes) %&gt;%
+  left_join(indices, by = c(&quot;truth_idx&quot; = &quot;value&quot;)) %&gt;%
+  rename(truth_lbl = key)</code></pre>
+<pre class="r"><code>predictions %&gt;%
+  mutate(id = seq(1:test_generator$n)) %&gt;%
+  gather(pred_lbl, y, Kiwi:Pomegranate) %&gt;%
+  ggplot(aes(x = id, y = y), color = truth_lbl) +
+    facet_wrap( ~ pred_lbl, scales = &quot;free&quot;, ncol = 2) +
+    geom_jitter()</code></pre>
+<pre class="r"><code>evaluate_generator(model, test_generator, steps = as.integer(test_generator$n / batch_size))</code></pre>
+<pre><code>## $loss
+## [1] 0.02518432
+## 
+## $acc
+## [1] 0.9907407</code></pre>
+<hr />
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 3.5.1 (2018-07-02)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS  10.14.2
+## 
+## Matrix products: default
+## BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] bindrcpp_0.2.2  forcats_0.3.0   stringr_1.3.1   dplyr_0.7.8    
+##  [5] purrr_0.2.5     readr_1.3.1     tidyr_0.8.2     tibble_2.0.1   
+##  [9] ggplot2_3.1.0   tidyverse_1.2.1 keras_2.2.4    
+## 
+## loaded via a namespace (and not attached):
+##  [1] reticulate_1.10  tidyselect_0.2.5 xfun_0.4         reshape2_1.4.3  
+##  [5] haven_2.0.0      lattice_0.20-38  colorspace_1.4-0 generics_0.0.2  
+##  [9] htmltools_0.3.6  yaml_2.2.0       base64enc_0.1-3  rlang_0.3.1     
+## [13] pillar_1.3.1     withr_2.1.2      glue_1.3.0       readxl_1.2.0    
+## [17] modelr_0.1.2     bindr_0.1.1      plyr_1.8.4       tensorflow_1.10 
+## [21] cellranger_1.1.0 munsell_0.5.0    blogdown_0.10    gtable_0.2.0    
+## [25] rvest_0.3.2      evaluate_0.12    labeling_0.3     knitr_1.21      
+## [29] tfruns_1.4       broom_0.5.1      Rcpp_1.0.0       backports_1.1.3 
+## [33] scales_1.0.0     jsonlite_1.6     hms_0.4.2        digest_0.6.18   
+## [37] stringi_1.2.4    bookdown_0.9     grid_3.5.1       cli_1.0.1       
+## [41] tools_3.5.1      magrittr_1.5     lazyeval_0.2.1   crayon_1.3.4    
+## [45] whisker_0.3-2    pkgconfig_2.0.2  zeallot_0.1.0    Matrix_1.2-15   
+## [49] xml2_1.2.0       lubridate_1.7.4  rstudioapi_0.9.0 assertthat_0.2.0
+## [53] rmarkdown_1.11   httr_1.4.0       R6_2.3.0         nlme_3.1-137    
+## [57] compiler_3.5.1</code></pre>
+</div>
+]]></content>
+  </entry>
+  <entry>
     <title type="html"><![CDATA[Book review: Beyond Spreadsheets with R]]></title>
     <link href="/2019/01/review_beyond_spreadsheets_with_r/"/>
     <id>/2019/01/review_beyond_spreadsheets_with_r/</id>
-    <published>2019-01-30T00:00:00+00:00</published>
-    <updated>2019-01-30T00:00:00+00:00</updated>
+    <published>2019-01-28T00:00:00+00:00</published>
+    <updated>2019-01-28T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p><strong>Disclaimer</strong>: Manning publications gave me an ebook version of <a href="https://www.manning.com/books/beyond-spreadsheets-with-r">Beyond Spreadsheets with R - A beginner’s guide to R and RStudio by Dr. Jonathan Carroll</a> for free so that I could review it here.</p>
 <blockquote>
 <p>Beyond Spreadsheets with R shows you how to take raw data and transform it for use in computations, tables, graphs, and more. You’ll build on simple programming techniques like loops and conditionals to create your own custom functions. You’ll come away with a toolkit of strategies for analyzing and visualizing data of all sorts using R and RStudio.</p>
 </blockquote>
+<div class="figure">
+<img src="https://images.manning.com/720/960/resize/book/8/5a28b18-1cbb-4721-830c-6770edfdb858/Carroll-BSwithR-HI.png" />
+
+</div>
 <div id="aimed-at" class="section level2">
 <h2>Aimed at</h2>
 <p>This book covers all the very basics of getting started with R, so it is useful to beginners but probably won’t offer much for users who are already familiar with R. However, it does hint at some advanced functions, like defining specific function calls for custom classes.</p>
 </div>
-<div id="what-i-noticed-about-the-book" class="section level2">
-<h2>What I noticed about the book</h2>
+<div id="what-stood-out-for-me-in-the-book-both-positive-and-negative" class="section level2">
+<h2>What stood out for me in the book (both positive and negative)</h2>
 <ul>
 <li><p>It introduced <strong>version control</strong> right away in the first chapter. Coming from an academic background where such things as Github and virtual machines were not widely used (at least not in the biology department), I learned about these invaluable tools way too late. Thus, I would always encourage students to start using them as early as possible. It will definitely make your analyses more reproducible, failproof and comprehensible. And it will make it easier to collaborate and keep track of different projects from past and present!</p></li>
 <li><p>Great recap of the very basics, like data types. Even though you might have been working with R for a while, I still find it useful to go over some basics once in a while - often I find some minor detail that I hadn’t known before or had forgotten again (e.g. that you shouldn’t use <code>T</code> and <code>F</code> instead of <code>TRUE</code> and <code>FALSE</code> because <code>T</code> and <code>F</code> can be variable names and in the worst case assigned to the opposite logical).</p></li>
 <li><p>The book also includes a short part to debugging and testing, which I think is valuable knowledge that most introductions to R skip. Of course, you won’t get an in depth covering of these two topics but at least you will have heard about them early on.</p></li>
-<li><p>the <code>rex</code> package</p></li>
+<li><p>It introduced the <a href="https://cran.r-project.org/web/packages/rex/index.html"><code>rex</code> package</a>, which I hadn’t known before. Looks very convenient for working with regular expressions!</p></li>
 <li><p>The book introduces <code>tibble</code> and <code>dplyr</code> and also goes into Non-Standard Evaluation. It shows a couple of ways to work around that using tidy evaluation.</p></li>
 </ul>
 <p>This is what is shown:</p>
-<pre class="r"><code>library(dplyr)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;dplyr&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     filter, lag</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     intersect, setdiff, setequal, union</code></pre>
-<pre class="r"><code>library(rlang)
+<pre class="r"><code>library(dplyr)
+library(rlang)
 
 head(mutate(mtcars, ratio = mpg / cyl))</code></pre>
 <pre><code>##    mpg cyl disp  hp drat    wt  qsec vs am gear carb    ratio
@@ -89,7 +333,7 @@ my_mutate_2(mtcars, cyl) %&gt;%
 ## 5 18.7   8 2.337500
 ## 6 18.1   6 3.016667</code></pre>
 <ul>
-<li>Weirdly, I find, the book introduces <code>dplyr</code> and pipe operators but when Jonathan talked about replacing NAs, he only mentions the base R version:</li>
+<li>Weirdly (to me) the book introduces <code>dplyr</code> and pipe operators but when Jonathan talked about replacing NAs, he only mentions the base R version:</li>
 </ul>
 <pre class="r"><code>d_NA &lt;- data.frame(x = c(7, NA, 9, NA), y = 1:4)
 d_NA[is.na(d_NA)] &lt;- 0
@@ -138,11 +382,288 @@ iris %&gt;%
 ## 11 virginica  Sepal.Length 6.59 
 ## 12 virginica  Sepal.Width  2.97</code></pre>
 <ul>
-<li>It covers web scraping and exporting data to .RData, .rds and how to use <code>dput()</code> when asking StackOverflow questions</li>
+<li><p>It covers web scraping and exporting data to .RData, .rds and how to use <code>dput()</code> when asking StackOverflow questions.</p></li>
+<li><p>In the part about looping, the book mainly focuses on using the <code>purrr</code> package. You can find an example for <a href="https://shirinsplayground.netlify.com/2018/04/flu_prediction/">using <code>purrr</code> in data analysis on my blog</a>.</p></li>
+<li><p>The book introduces package development, which is very useful, even if you just want to have a place where all your self-made functions “live”. :-) Moreover, it also goes into Unit Testing with <code>testthat</code>!</p></li>
 </ul>
+<p><br></p>
 </div>
 <div id="verdict" class="section level2">
 <h2>Verdict</h2>
+<p>Even though I am not really the target audience for a book like that since I am not a beginner any more (I basically skimmed through a lot of the very basic stuff), it still offered a lot of valuable information! I particularly liked that the book introduces very important parts of learning R for practical and modern applications, such as using the <code>tidyverse</code>, version control, debugging, how to aks proper questions on StackOverflow and basic package development, that don’t usually get mentioned in beginner’s books.</p>
+<hr />
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 3.5.1 (2018-07-02)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS  10.14.2
+## 
+## Matrix products: default
+## BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] forcats_0.3.0   stringr_1.3.1   purrr_0.2.5     readr_1.3.1    
+##  [5] tidyr_0.8.2     tibble_2.0.1    ggplot2_3.1.0   tidyverse_1.2.1
+##  [9] bindrcpp_0.2.2  rlang_0.3.1     dplyr_0.7.8    
+## 
+## loaded via a namespace (and not attached):
+##  [1] tidyselect_0.2.5 xfun_0.4         haven_2.0.0      lattice_0.20-38 
+##  [5] colorspace_1.4-0 generics_0.0.2   htmltools_0.3.6  yaml_2.2.0      
+##  [9] utf8_1.1.4       pillar_1.3.1     glue_1.3.0       withr_2.1.2     
+## [13] modelr_0.1.2     readxl_1.2.0     bindr_0.1.1      plyr_1.8.4      
+## [17] munsell_0.5.0    blogdown_0.10    gtable_0.2.0     cellranger_1.1.0
+## [21] rvest_0.3.2      evaluate_0.12    knitr_1.21       fansi_0.4.0     
+## [25] broom_0.5.1      Rcpp_1.0.0       scales_1.0.0     backports_1.1.3 
+## [29] jsonlite_1.6     hms_0.4.2        digest_0.6.18    stringi_1.2.4   
+## [33] bookdown_0.9     grid_3.5.1       cli_1.0.1        tools_3.5.1     
+## [37] magrittr_1.5     lazyeval_0.2.1   crayon_1.3.4     pkgconfig_2.0.2 
+## [41] xml2_1.2.0       lubridate_1.7.4  assertthat_0.2.0 rmarkdown_1.11  
+## [45] httr_1.4.0       rstudioapi_0.9.0 R6_2.3.0         nlme_3.1-137    
+## [49] compiler_3.5.1</code></pre>
+</div>
+]]></content>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[How to prepare data for NLP (text classification) with Keras and TensorFlow]]></title>
+    <link href="/2019/01/text_classification_keras_data_prep/"/>
+    <id>/2019/01/text_classification_keras_data_prep/</id>
+    <published>2019-01-21T00:00:00+00:00</published>
+    <updated>2019-01-21T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<p>In the past, I have written and taught quite a bit about image classification with Keras (<a href="https://shirinsplayground.netlify.com/2018/06/keras_fruits/">e.g. here</a>). Text classification isn’t too different in terms of using the Keras principles to train a sequential or function model. You can even use Convolutional Neural Nets (CNNs) for text classification.</p>
+<p>What is very different, however, is how to prepare raw text data for modeling. When you look at the <a href="https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/3.4-classifying-movie-reviews.nb.html">IMDB example from the Deep Learning with R Book</a>, you get a great explanation of how to train the model. But because the <strong>preprocessed</strong> IMDB dataset comes with the <code>keras</code> package, it isn’t so straight-forward to use what you learned on your own data.</p>
+<div id="how-can-a-computer-work-with-text" class="section level2">
+<h2>How can a computer work with text?</h2>
+<p>As with any neural network, we need to convert our data into a numeric format; in Keras and TensorFlow we work with tensors. The IMDB example data from the <code>keras</code> package has been preprocessed to a list of integers, where every integer corresponds to a word arranged by descending word frequency.</p>
+<p>So, how do we make it from raw text to such a list of integers? Luckily, Keras offers a few convenience functions that make our lives much easier.</p>
+<pre class="r"><code>library(keras)
+library(tidyverse)</code></pre>
+</div>
+<div id="data" class="section level2">
+<h2>Data</h2>
+<p>In the example below, I am using a Kaggle dataset: <a href="https://www.kaggle.com/nicapotato/womens-ecommerce-clothing-reviews">Women’s e-commerce cloting reviews</a>. The data contains a text review of different items of clothing, as well as some additional information, like rating, division, etc. I will use the review title and text in order to classify whether or not the item was liked. I am creating the response variable from the rating: every item rates with 5 stars is considered “liked” (1), the rest as “not liked” (0). I am also combining review title and text.</p>
+<pre class="r"><code>clothing_reviews &lt;- read_csv(&quot;/Users/shiringlander/Documents/Github/ix_lime_etc/Womens Clothing E-Commerce Reviews.csv&quot;) %&gt;%
+  mutate(Liked = ifelse(Rating == 5, 1, 0),
+         text = paste(Title, `Review Text`),
+         text = gsub(&quot;NA&quot;, &quot;&quot;, text))</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   X1 = col_double(),
+##   `Clothing ID` = col_double(),
+##   Age = col_double(),
+##   Title = col_character(),
+##   `Review Text` = col_character(),
+##   Rating = col_double(),
+##   `Recommended IND` = col_double(),
+##   `Positive Feedback Count` = col_double(),
+##   `Division Name` = col_character(),
+##   `Department Name` = col_character(),
+##   `Class Name` = col_character()
+## )</code></pre>
+<pre class="r"><code>glimpse(clothing_reviews)</code></pre>
+<pre><code>## Observations: 23,486
+## Variables: 13
+## $ X1                        &lt;dbl&gt; 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, …
+## $ `Clothing ID`             &lt;dbl&gt; 767, 1080, 1077, 1049, 847, 1080, 858,…
+## $ Age                       &lt;dbl&gt; 33, 34, 60, 50, 47, 49, 39, 39, 24, 34…
+## $ Title                     &lt;chr&gt; NA, NA, &quot;Some major design flaws&quot;, &quot;My…
+## $ `Review Text`             &lt;chr&gt; &quot;Absolutely wonderful - silky and sexy…
+## $ Rating                    &lt;dbl&gt; 4, 5, 3, 5, 5, 2, 5, 4, 5, 5, 3, 5, 5,…
+## $ `Recommended IND`         &lt;dbl&gt; 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1,…
+## $ `Positive Feedback Count` &lt;dbl&gt; 0, 4, 0, 0, 6, 4, 1, 4, 0, 0, 14, 2, 2…
+## $ `Division Name`           &lt;chr&gt; &quot;Initmates&quot;, &quot;General&quot;, &quot;General&quot;, &quot;Ge…
+## $ `Department Name`         &lt;chr&gt; &quot;Intimate&quot;, &quot;Dresses&quot;, &quot;Dresses&quot;, &quot;Bot…
+## $ `Class Name`              &lt;chr&gt; &quot;Intimates&quot;, &quot;Dresses&quot;, &quot;Dresses&quot;, &quot;Pa…
+## $ Liked                     &lt;dbl&gt; 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1,…
+## $ text                      &lt;chr&gt; &quot; Absolutely wonderful - silky and sex…</code></pre>
+<p>Whether an item was liked or not will be the response variable or label for classification of the reviews.</p>
+<pre class="r"><code>clothing_reviews %&gt;%
+  ggplot(aes(x = factor(Liked), fill = Liked)) +
+    geom_bar(alpha = 0.8) +
+    guides(fill = FALSE)</code></pre>
+<p><img src="/post/2019-01-21_text_classification_keras_data_prep_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+<div id="tokenizers" class="section level2">
+<h2>Tokenizers</h2>
+<p>The first step is to tokenize the text. This means, converting our text into a sequence of integers where each integer corresponds to a word in the dictionary.</p>
+<pre class="r"><code>text &lt;- clothing_reviews$text</code></pre>
+<p>The <code>num_words</code> argument defines the number of words we want to consider (this will be our feature space). Because the output integers will be sorted according to decreasing word frequency, if we set 1000, we will only get the 1000 most frequent words in our corpus.</p>
+<pre class="r"><code>max_features &lt;- 1000
+tokenizer &lt;- text_tokenizer(num_words = max_features)</code></pre>
+<p>Next, we need to fit the tokenizer to our text data. Note, that the <code>tokenizer</code> object is modified in place (as are models in Keras)!</p>
+<pre class="r"><code>tokenizer %&gt;% 
+  fit_text_tokenizer(text)</code></pre>
+<p>After fitting the tokenizer, we can extract the following information: the number of documents …</p>
+<pre class="r"><code>tokenizer$document_count</code></pre>
+<pre><code>## [1] 23486</code></pre>
+<p>… and the word-index list. Notice, that even though we set the maximum number of words to 1000, our index contains many more words. In fact, the index will keep all words in the index but when converting our reviews to vectors, the stored value <code>tokenizer$num_words</code> will be used to restrict to the most common words.</p>
+<pre class="r"><code>tokenizer$word_index %&gt;%
+  head()</code></pre>
+<pre><code>## $raining
+## [1] 13788
+## 
+## $yellow
+## [1] 553
+## 
+## $four
+## [1] 1501
+## 
+## $bottons
+## [1] 7837
+## 
+## $woods
+## [1] 7896
+## 
+## $`friend&#39;s`
+## [1] 3525</code></pre>
+<p>We now have the dictionary of integers and which words they should replace in our text. But we still don’t have a list of integers for our reviews. So, now we use the <code>texts_to_sequences</code> functions, which will do just that! Words, which weren’t among the top 1000 were excluded.</p>
+<pre class="r"><code>text_seqs &lt;- texts_to_sequences(tokenizer, text)
+text_seqs %&gt;%
+  head()</code></pre>
+<pre><code>## [[1]]
+## [1] 249 494 924   3 595   3  63
+## 
+## [[2]]
+##  [1]  19   7  17  35  84   2   8 221   5   9   4 114   3  37 328   2 135
+## [18]   2 421  43  25  57   5 139  35  95   2  75   4  95   3  39 518   2
+## [35]  19   1  88  11  31 423  38   4  56 474   1 401  43 160  30   4 132
+## [52]  11 447 444   6 761  95
+## 
+## [[3]]
+##  [1] 156 134   2  68 314 180  12   7  17   3  53 183   5   8  98  12  31
+## [18]   2  57   1  95  42  18 240  22  10   2 230   7   8  30  42  15  42
+## [35]   9 683  21   2 122  20 803   5  45   2   5   9  95  99  86  16  38
+## [52] 581 256   1  24 673  16  63   3  26 267  10   1 182 673  68   4  23
+## [69] 148 285 489   3 543 738 481 157 997   4 134  16   1 157 489 846 326
+## [86]   1 455   5 706
+## 
+## [[4]]
+##  [1]  18 292 220   2  19  19  19   7 592  35 209   3 652 310 189   2  33
+## [18]   5   2 120 530  10  27 212
+## 
+## [[5]]
+##  [1]  55  71   7  71   6  23  55   8  76 504   8   1 163 484   5   6   1
+## [18]  49  88   8  33  14 262   3   5   6  15   5 855  64  14 257 376  19
+## [35]   7  71
+## 
+## [[6]]
+##  [1]  20  12   1  23  95   2  19 244  10   7  60   6  20  12   1  23  95
+## [18]   2  39  38 285 278 324   3 115  33   4   9   7 492   7  17  16  23
+## [35]  84  66  13   1  10 250   4 245  13  17   1 100   6  90   3  23 321
+## [52]  15   5  18  42 428  20   4   8   3   1 100  43 378 506 111   1  13
+## [69]   1   2  19   1  46   3   1 686  13   1 124  10   5  38 135  20  98
+## [86]  11  31   2 370   7  17</code></pre>
+<p>So, there we have it! From here on out, we can simply follow the <a href="https://github.com/rstudio/keras/blob/master/vignettes/examples/imdb_cnn.R">IMDB example from the Keras documentation</a>:</p>
+<pre class="r"><code># Set parameters:
+maxlen &lt;- 100
+batch_size &lt;- 32
+embedding_dims &lt;- 50
+filters &lt;- 64
+kernel_size &lt;- 3
+hidden_dims &lt;- 50
+epochs &lt;- 5</code></pre>
+<p>Because we can’t directly use this list of integers in our neural network, there is still some preprocessing to do. In the IMDB example, the lists are padded so that they all have the same length. The <code>pad_sequences</code> function will return a matrix, with columns for a given maximum number of words (or the number of words in the longest sequence). Here, we have 400 columns in our matrix. Reviews with fewer words were padded with zeros at the beginning before the indices. Longer reviews are cut after 400 words.</p>
+<pre class="r"><code>x_train &lt;- text_seqs %&gt;%
+  pad_sequences(maxlen = maxlen)
+dim(x_train)</code></pre>
+<pre><code>## [1] 23486   100</code></pre>
+<p>Our response variable will be encoded with 1s (5-star review) and 0s (not 5-star reviews). Because we have a binary outcome, we only need this one vector.</p>
+<pre class="r"><code>y_train &lt;- clothing_reviews$Liked
+length(y_train)</code></pre>
+<pre><code>## [1] 23486</code></pre>
+</div>
+<div id="embeddings" class="section level2">
+<h2>Embeddings</h2>
+<p>These padded word index matrices now need to be converted into something that gives information about the features (i.e. words) in a way that can be used for learning. Currently, the state-of-the-art for text models are word embeddings or word vectors, which are learned from the text data. Word embeddings encode the context of words in relatively few dimensions while maximizing the information that is contained in these vectors. Basically, word embeddings are values that are learned by a neural net just as <a href="https://shirinsplayground.netlify.com/2018/11/neural_nets_explained/">weights are learned by a multi-layer perceptron</a>.</p>
+<p>Word embedding vectors represent the words and their contexts; thus, words with similar meanings (synonyms) or with close semantic relationships will have more similar embeddings. Moreover, word embeddings should reflect how words are related to each other. For example, the embeddings for “man” should be to “king” as “woman” is to “queen”.</p>
+<p>In our model below, we want to learn the word embeddings from our (padded) word vectors and directly use these learned embeddings for classification. This part can now be the same as in the <a href="https://github.com/rstudio/keras/blob/master/vignettes/examples/imdb_lstm.R">Keras examples for LSTMs</a> and <a href="https://github.com/rstudio/keras/blob/master/vignettes/examples/imdb_cnn_lstm.R">CNNs</a></p>
+<pre class="r"><code>model &lt;- keras_model_sequential() %&gt;% 
+  layer_embedding(max_features, embedding_dims, input_length = maxlen) %&gt;%
+  layer_dropout(0.2) %&gt;%
+  layer_conv_1d(
+    filters, kernel_size, 
+    padding = &quot;valid&quot;, activation = &quot;relu&quot;, strides = 1
+  ) %&gt;%
+  layer_global_max_pooling_1d() %&gt;%
+  layer_dense(hidden_dims) %&gt;%
+  layer_dropout(0.2) %&gt;%
+  layer_activation(&quot;relu&quot;) %&gt;%
+  layer_dense(1) %&gt;%
+  layer_activation(&quot;sigmoid&quot;) %&gt;% compile(
+  loss = &quot;binary_crossentropy&quot;,
+  optimizer = &quot;adam&quot;,
+  metrics = &quot;accuracy&quot;
+)</code></pre>
+<pre class="r"><code>model %&gt;%
+  fit(
+    x_train,
+    y_train,
+    batch_size = batch_size,
+    epochs = epochs,
+    validation_split = 0.3
+  )</code></pre>
+</div>
+<div id="alternative-preprocessing-functions" class="section level2">
+<h2>Alternative preprocessing functions</h2>
+<p>The above example follows the IMDB example from the Keras documentation, but there are alternative ways to preprocess your text for modeling with Keras:</p>
+<ul>
+<li><a href="https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/6.1-one-hot-encoding-of-words-or-characters.nb.html">one-hot-encoding</a></li>
+</ul>
+<pre class="r"><code>one_hot_results &lt;- texts_to_matrix(tokenizer, text, mode = &quot;binary&quot;)
+dim(one_hot_results)</code></pre>
+<pre><code>## [1] 23486  1000</code></pre>
+<ul>
+<li><a href="https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/6.1-one-hot-encoding-of-words-or-characters.nb.html">one-hot hashing</a></li>
+</ul>
+<pre class="r"><code>hashing_results &lt;- text_hashing_trick(text[1], n = 100)
+hashing_results</code></pre>
+<pre><code>## [1] 88 75 18 90  7 90 23</code></pre>
+</div>
+<div id="pretrained-embeddings" class="section level2">
+<h2>Pretrained embeddings</h2>
+<p>Here, we have learned word embeddings from our word vectors and directly used the output of the embedding layers as input for additional layers in our neural net. Because learning embeddings takes time and computational power, we could also start with <a href="https://keras.rstudio.com/articles/examples/pretrained_word_embeddings.html">pre-trained embeddings</a>, particulary if we don’t have a whole lot of training data. You can find an example for how to use <a href="https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/6.1-using-word-embeddings.nb.html">GloVe embeddings here</a>.</p>
+<hr />
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 3.5.1 (2018-07-02)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS  10.14.2
+## 
+## Matrix products: default
+## BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] bindrcpp_0.2.2  forcats_0.3.0   stringr_1.3.1   dplyr_0.7.8    
+##  [5] purrr_0.2.5     readr_1.3.1     tidyr_0.8.2     tibble_2.0.1   
+##  [9] ggplot2_3.1.0   tidyverse_1.2.1 keras_2.2.4    
+## 
+## loaded via a namespace (and not attached):
+##  [1] reticulate_1.10  tidyselect_0.2.5 xfun_0.4         haven_2.0.0     
+##  [5] lattice_0.20-38  colorspace_1.4-0 generics_0.0.2   htmltools_0.3.6 
+##  [9] yaml_2.2.0       base64enc_0.1-3  utf8_1.1.4       rlang_0.3.1     
+## [13] pillar_1.3.1     withr_2.1.2      glue_1.3.0       readxl_1.2.0    
+## [17] modelr_0.1.2     bindr_0.1.1      plyr_1.8.4       tensorflow_1.10 
+## [21] cellranger_1.1.0 munsell_0.5.0    blogdown_0.10    gtable_0.2.0    
+## [25] rvest_0.3.2      evaluate_0.12    labeling_0.3     knitr_1.21      
+## [29] tfruns_1.4       fansi_0.4.0      broom_0.5.1      Rcpp_1.0.0      
+## [33] backports_1.1.3  scales_1.0.0     jsonlite_1.6     hms_0.4.2       
+## [37] digest_0.6.18    stringi_1.2.4    bookdown_0.9     grid_3.5.1      
+## [41] cli_1.0.1        tools_3.5.1      magrittr_1.5     lazyeval_0.2.1  
+## [45] crayon_1.3.4     whisker_0.3-2    pkgconfig_2.0.2  zeallot_0.1.0   
+## [49] Matrix_1.2-15    xml2_1.2.0       lubridate_1.7.4  rstudioapi_0.9.0
+## [53] assertthat_0.2.0 rmarkdown_1.11   httr_1.4.0       R6_2.3.0        
+## [57] nlme_3.1-137     compiler_3.5.1</code></pre>
 </div>
 ]]></content>
   </entry>
@@ -2102,253 +2623,6 @@ h2o_xgb</code></pre>
 ]]></content>
   </entry>
   <entry>
-    <title type="html"><![CDATA[How to use cross-validation with the image data generator in Keras and TensorFlow]]></title>
-    <link href="/2018/11/keras_fruits_crossvalidation/"/>
-    <id>/2018/11/keras_fruits_crossvalidation/</id>
-    <published>2018-11-19T00:00:00+00:00</published>
-    <updated>2018-11-19T00:00:00+00:00</updated>
-    <content type="html"><![CDATA[<blockquote>
-<p>I’ve been using keras and TensorFlow for a while now - and love its simplicity and straight-forward way to modeling. As part of the latest update to my <a href="https://shirinsplayground.netlify.com/2018/05/deep_learning_keras_tensorflow_18_07/">Workshop about deep learning with R and keras</a> I’ve added a new example analysis:</p>
-</blockquote>
-<p><a href="https://shirinsplayground.netlify.com/2018/06/keras_fruits/" class="uri">https://shirinsplayground.netlify.com/2018/06/keras_fruits/</a></p>
-<pre class="r"><code>library(keras)
-library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 3.1.0     ✔ purrr   0.2.5
-## ✔ tibble  1.4.2     ✔ dplyr   0.7.7
-## ✔ tidyr   0.8.2     ✔ stringr 1.3.1
-## ✔ readr   1.1.1     ✔ forcats 0.3.0</code></pre>
-<pre><code>## ── Conflicts ───────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<pre class="r"><code># list of fruits to modle
-fruit_list &lt;- c(&quot;Kiwi&quot;, &quot;Banana&quot;, &quot;Apricot&quot;, &quot;Avocado&quot;, &quot;Cocos&quot;, &quot;Clementine&quot;, &quot;Mandarine&quot;, &quot;Orange&quot;,
-                &quot;Limes&quot;, &quot;Lemon&quot;, &quot;Peach&quot;, &quot;Plum&quot;, &quot;Raspberry&quot;, &quot;Strawberry&quot;, &quot;Pineapple&quot;, &quot;Pomegranate&quot;)
-
-# number of output classes (i.e. fruits)
-output_n &lt;- length(fruit_list)
-
-# image size to scale down to (original images are 100 x 100 px)
-img_width &lt;- 20
-img_height &lt;- 20
-target_size &lt;- c(img_width, img_height)
-
-# RGB = 3 channels
-channels &lt;- 3
-
-# path to image folders
-train_image_files_path &lt;- &quot;/Users/shiringlander/Documents/Github/DL_AI/Tutti_Frutti/fruits-360/Training/&quot;</code></pre>
-<pre class="r"><code>train_data_gen = image_data_generator(
-  rescale = 1/255,
-  validation_split = 0.3
-)</code></pre>
-<pre class="r"><code># training images
-train_image_array_gen &lt;- flow_images_from_directory(train_image_files_path, 
-                                          train_data_gen,
-                                          subset = &#39;training&#39;,
-                                          target_size = target_size,
-                                          class_mode = &quot;categorical&quot;,
-                                          classes = fruit_list,
-                                          seed = 42)
-
-# validation images
-valid_image_array_gen &lt;- flow_images_from_directory(train_image_files_path, 
-                                          train_data_gen,
-                                          subset = &#39;validation&#39;,
-                                          target_size = target_size,
-                                          class_mode = &quot;categorical&quot;,
-                                          classes = fruit_list,
-                                          seed = 42)</code></pre>
-<pre class="r"><code>cat(&quot;Number of images per class:&quot;)</code></pre>
-<pre><code>## Number of images per class:</code></pre>
-<pre class="r"><code>table(factor(train_image_array_gen$classes))</code></pre>
-<pre><code>## 
-##   0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15 
-## 327 343 345 299 343 343 343 336 343 345 345 313 343 345 343 345</code></pre>
-<pre class="r"><code>cat(&quot;\nClass label vs index mapping:\n&quot;)</code></pre>
-<pre><code>## 
-## Class label vs index mapping:</code></pre>
-<pre class="r"><code>train_image_array_gen$class_indices</code></pre>
-<pre><code>## $Lemon
-## [1] 9
-## 
-## $Peach
-## [1] 10
-## 
-## $Limes
-## [1] 8
-## 
-## $Apricot
-## [1] 2
-## 
-## $Plum
-## [1] 11
-## 
-## $Avocado
-## [1] 3
-## 
-## $Strawberry
-## [1] 13
-## 
-## $Pineapple
-## [1] 14
-## 
-## $Orange
-## [1] 7
-## 
-## $Mandarine
-## [1] 6
-## 
-## $Banana
-## [1] 1
-## 
-## $Clementine
-## [1] 5
-## 
-## $Kiwi
-## [1] 0
-## 
-## $Cocos
-## [1] 4
-## 
-## $Pomegranate
-## [1] 15
-## 
-## $Raspberry
-## [1] 12</code></pre>
-<div id="define-model" class="section level3">
-<h3>Define model</h3>
-<pre class="r"><code># number of training samples
-train_samples &lt;- train_image_array_gen$n
-# number of validation samples
-valid_samples &lt;- valid_image_array_gen$n
-
-# define batch size and number of epochs
-batch_size &lt;- 32
-epochs &lt;- 10</code></pre>
-<pre class="r"><code># initialise model
-model &lt;- keras_model_sequential()
-
-# add layers
-model %&gt;%
-  layer_conv_2d(filter = 32, kernel_size = c(3,3), padding = &quot;same&quot;, input_shape = c(img_width, img_height, channels)) %&gt;%
-  layer_activation(&quot;relu&quot;) %&gt;%
-  
-  # Second hidden layer
-  layer_conv_2d(filter = 16, kernel_size = c(3,3), padding = &quot;same&quot;) %&gt;%
-  layer_activation_leaky_relu(0.5) %&gt;%
-  layer_batch_normalization() %&gt;%
-
-  # Use max pooling
-  layer_max_pooling_2d(pool_size = c(2,2)) %&gt;%
-  layer_dropout(0.25) %&gt;%
-  
-  # Flatten max filtered output into feature vector 
-  # and feed into dense layer
-  layer_flatten() %&gt;%
-  layer_dense(100) %&gt;%
-  layer_activation(&quot;relu&quot;) %&gt;%
-  layer_dropout(0.5) %&gt;%
-
-  # Outputs from dense layer are projected onto output layer
-  layer_dense(output_n) %&gt;% 
-  layer_activation(&quot;softmax&quot;)
-
-# compile
-model %&gt;% compile(
-  loss = &quot;categorical_crossentropy&quot;,
-  optimizer = optimizer_rmsprop(lr = 0.0001, decay = 1e-6),
-  metrics = &quot;accuracy&quot;
-)</code></pre>
-<pre class="r"><code># fit
-hist &lt;- model %&gt;% fit_generator(
-  # training data
-  train_image_array_gen,
-  
-  # epochs
-  steps_per_epoch = as.integer(train_samples / batch_size), 
-  epochs = epochs, 
-  
-  # validation data
-  validation_data = valid_image_array_gen,
-  validation_steps = as.integer(valid_samples / batch_size)
-)</code></pre>
-<pre class="r"><code>plot(hist)</code></pre>
-<p><img src="/post/2018-11-19_keras_fruits_crossvalidation_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
-<pre class="r"><code>test_image_files_path = &quot;/Users/shiringlander/Documents/Github/DL_AI/Tutti_Frutti/fruits-360/Validation/&quot;
-
-test_datagen &lt;- image_data_generator(rescale = 1/255)
-
-test_generator &lt;- flow_images_from_directory(
-        test_image_files_path,
-        test_datagen,
-        target_size = target_size,
-        class_mode = &quot;categorical&quot;,
-        classes = fruit_list,
-        seed = 42)</code></pre>
-<pre class="r"><code>indices &lt;- train_image_array_gen$class_indices %&gt;%
-  as.data.frame() %&gt;%
-  gather() %&gt;%
-  arrange(value)</code></pre>
-<pre class="r"><code>predictions &lt;- as.data.frame(predict_generator(model, test_generator, steps = as.integer(test_generator$n / batch_size)))</code></pre>
-<pre class="r"><code>colnames(predictions) &lt;- indices$key
-predictions &lt;- predictions %&gt;%
-  mutate(truth_idx = test_generator$classes) %&gt;%
-  left_join(indices, by = c(&quot;truth_idx&quot; = &quot;value&quot;)) %&gt;%
-  rename(truth_lbl = key)</code></pre>
-<pre class="r"><code>predictions %&gt;%
-  mutate(id = seq(1:test_generator$n)) %&gt;%
-  gather(pred_lbl, y, Kiwi:Pomegranate) %&gt;%
-  ggplot(aes(x = id, y = y), color = truth_lbl) +
-    facet_wrap( ~ pred_lbl, scales = &quot;free&quot;, ncol = 2) +
-    geom_jitter()</code></pre>
-<pre class="r"><code>evaluate_generator(model, test_generator, steps = as.integer(test_generator$n / batch_size))</code></pre>
-<pre><code>## $loss
-## [1] 0.02086813
-## 
-## $acc
-## [1] 0.996142</code></pre>
-<hr />
-<pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>## R version 3.5.1 (2018-07-02)
-## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-## Running under: macOS  10.14.1
-## 
-## Matrix products: default
-## BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
-## LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
-## 
-## locale:
-## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
-## 
-## attached base packages:
-## [1] stats     graphics  grDevices utils     datasets  methods   base     
-## 
-## other attached packages:
-##  [1] bindrcpp_0.2.2  forcats_0.3.0   stringr_1.3.1   dplyr_0.7.7    
-##  [5] purrr_0.2.5     readr_1.1.1     tidyr_0.8.2     tibble_1.4.2   
-##  [9] ggplot2_3.1.0   tidyverse_1.2.1 keras_2.2.0    
-## 
-## loaded via a namespace (and not attached):
-##  [1] reticulate_1.10  tidyselect_0.2.5 xfun_0.4         reshape2_1.4.3  
-##  [5] haven_1.1.2      lattice_0.20-38  colorspace_1.3-2 htmltools_0.3.6 
-##  [9] yaml_2.2.0       base64enc_0.1-3  rlang_0.3.0.1    pillar_1.3.0    
-## [13] withr_2.1.2      glue_1.3.0       readxl_1.1.0     modelr_0.1.2    
-## [17] bindr_0.1.1      plyr_1.8.4       tensorflow_1.9   cellranger_1.1.0
-## [21] munsell_0.5.0    blogdown_0.9     gtable_0.2.0     rvest_0.3.2     
-## [25] evaluate_0.12    labeling_0.3     knitr_1.20       tfruns_1.4      
-## [29] broom_0.5.0      Rcpp_0.12.19     backports_1.1.2  scales_1.0.0    
-## [33] jsonlite_1.5     hms_0.4.2        digest_0.6.18    stringi_1.2.4   
-## [37] bookdown_0.7     grid_3.5.1       rprojroot_1.3-2  cli_1.0.1       
-## [41] tools_3.5.1      magrittr_1.5     lazyeval_0.2.1   crayon_1.3.4    
-## [45] whisker_0.3-2    pkgconfig_2.0.2  zeallot_0.1.0    Matrix_1.2-15   
-## [49] xml2_1.2.0       lubridate_1.7.4  rstudioapi_0.8   assertthat_0.2.0
-## [53] rmarkdown_1.10   httr_1.3.1       R6_2.3.0         nlme_3.1-137    
-## [57] compiler_3.5.1</code></pre>
-</div>
-]]></content>
-  </entry>
-  <entry>
     <title type="html"><![CDATA[TWIMLAI European Online Meetup about Trust in Predictions of ML Models]]></title>
     <link href="/2018/11/twimlai_meetup/"/>
     <id>/2018/11/twimlai_meetup/</id>
@@ -2363,324 +2637,6 @@ predictions &lt;- predictions %&gt;%
 <div class="figure">
 <img src="https://twimlai.com/files/2017/09/TWiML_banner_wide.png" />
 
-</div>
-]]></content>
-  </entry>
-  <entry>
-    <title type="html"><![CDATA[How to prepare data for NLP (text classification) with Keras and TensorFlow]]></title>
-    <link href="/2018/11/text_classification_keras_data_prep/"/>
-    <id>/2018/11/text_classification_keras_data_prep/</id>
-    <published>2018-11-12T00:00:00+00:00</published>
-    <updated>2018-11-12T00:00:00+00:00</updated>
-    <content type="html"><![CDATA[<p>In the past, I have written and taught quite a bit about image classification with Keras (<a href="https://shirinsplayground.netlify.com/2018/06/keras_fruits/">e.g. here</a>). Text classification isn’t too different in terms of using the Keras principles to train a sequential or function model. You can even use Convolutional Neural Nets (CNNs) for text classification.</p>
-<p>What is very different, however, is how to prepare raw text data for modeling. When you look at the <a href="https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/3.4-classifying-movie-reviews.nb.html">IMDB example from the Deep Learning with R Book</a>, you get a great explanation of how to train the model. But because the <strong>preprocessed</strong> IMDB dataset comes with the <code>keras</code> package, it isn’t so straight-forward to use what you learned on your own data.</p>
-<div id="how-can-a-computer-work-with-text" class="section level2">
-<h2>How can a computer work with text?</h2>
-<p>As with any neural network, we need to convert our data into a numeric format; in Keras and TensorFlow we work with tensors. The IMDB example data from the <code>keras</code> package has been preprocessed to a list of integers, where every integer corresponds to a word arranged by descending word frequency.</p>
-<p>So, how do we make it from raw text to such a list of integers? Luckily, Keras offers a few convenience functions that make our lives much easier.</p>
-<pre class="r"><code>library(keras)
-library(tidyverse)</code></pre>
-</div>
-<div id="data" class="section level2">
-<h2>Data</h2>
-<p>In the example below, I am using a Kaggle dataset: <a href="https://www.kaggle.com/nicapotato/womens-ecommerce-clothing-reviews">Women’s e-commerce cloting reviews</a>. The data contains a text review of different items of clothing, as well as some additional information, like rating, division, etc. I will use the review title and text in order to classify whether or not the item was liked. I am creating the response variable from the rating: every item rates with 5 stars is considered “liked” (1), the rest as “not liked” (0). I am also combining review title and text.</p>
-<pre class="r"><code>clothing_reviews &lt;- read_csv(&quot;/Users/shiringlander/Documents/Github/ix_lime_etc/Womens Clothing E-Commerce Reviews.csv&quot;) %&gt;%
-  mutate(Liked = ifelse(Rating == 5, 1, 0),
-         text = paste(Title, `Review Text`),
-         text = gsub(&quot;NA&quot;, &quot;&quot;, text))</code></pre>
-<pre><code>## Parsed with column specification:
-## cols(
-##   X1 = col_integer(),
-##   `Clothing ID` = col_integer(),
-##   Age = col_integer(),
-##   Title = col_character(),
-##   `Review Text` = col_character(),
-##   Rating = col_integer(),
-##   `Recommended IND` = col_integer(),
-##   `Positive Feedback Count` = col_integer(),
-##   `Division Name` = col_character(),
-##   `Department Name` = col_character(),
-##   `Class Name` = col_character()
-## )</code></pre>
-<pre class="r"><code>glimpse(clothing_reviews)</code></pre>
-<pre><code>## Observations: 23,486
-## Variables: 13
-## $ X1                        &lt;int&gt; 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11...
-## $ `Clothing ID`             &lt;int&gt; 767, 1080, 1077, 1049, 847, 1080, 85...
-## $ Age                       &lt;int&gt; 33, 34, 60, 50, 47, 49, 39, 39, 24, ...
-## $ Title                     &lt;chr&gt; NA, NA, &quot;Some major design flaws&quot;, &quot;...
-## $ `Review Text`             &lt;chr&gt; &quot;Absolutely wonderful - silky and se...
-## $ Rating                    &lt;int&gt; 4, 5, 3, 5, 5, 2, 5, 4, 5, 5, 3, 5, ...
-## $ `Recommended IND`         &lt;int&gt; 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, ...
-## $ `Positive Feedback Count` &lt;int&gt; 0, 4, 0, 0, 6, 4, 1, 4, 0, 0, 14, 2,...
-## $ `Division Name`           &lt;chr&gt; &quot;Initmates&quot;, &quot;General&quot;, &quot;General&quot;, &quot;...
-## $ `Department Name`         &lt;chr&gt; &quot;Intimate&quot;, &quot;Dresses&quot;, &quot;Dresses&quot;, &quot;B...
-## $ `Class Name`              &lt;chr&gt; &quot;Intimates&quot;, &quot;Dresses&quot;, &quot;Dresses&quot;, &quot;...
-## $ Liked                     &lt;dbl&gt; 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, ...
-## $ text                      &lt;chr&gt; &quot; Absolutely wonderful - silky and s...</code></pre>
-<p>Whether an item was liked or not will be the response variable or label for classification of the reviews.</p>
-<pre class="r"><code>clothing_reviews %&gt;%
-  ggplot(aes(x = factor(Liked), fill = Liked)) +
-    geom_bar(alpha = 0.8) +
-    guides(fill = FALSE)</code></pre>
-<p><img src="/post/2018-11-12_text_classification_keras_data_prep_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-</div>
-<div id="tokenizers" class="section level2">
-<h2>Tokenizers</h2>
-<p>The first step is to tokenize the text. This means, converting our text into a sequence of integers where each integer corresponds to a word in the dictionary.</p>
-<pre class="r"><code>text &lt;- clothing_reviews$text</code></pre>
-<p>The <code>num_words</code> argument defines the number of words we want to consider (this will be our feature space). Because the output integers will be sorted according to decreasing word frequency, if we set 1000, we will only get the 1000 most frequent words in our corpus.</p>
-<pre class="r"><code>max_features &lt;- 1000
-tokenizer &lt;- text_tokenizer(num_words = max_features)</code></pre>
-<p>Next, we need to fit the tokenizer to our text data. Note, that the <code>tokenizer</code> object is modified in place (as are models in Keras)!</p>
-<pre class="r"><code>tokenizer %&gt;% 
-  fit_text_tokenizer(text)</code></pre>
-<p>After fitting the tokenizer, we can extract the following information: the number of documents …</p>
-<pre class="r"><code>tokenizer$document_count</code></pre>
-<pre><code>## [1] 23486</code></pre>
-<p>… and the word-index list. Notice, that even though we set the maximum number of words to 1000, our index contains many more words. In fact, the index will keep all words in the index but when converting our reviews to vectors, the stored value <code>tokenizer$num_words</code> will be used to restrict to the most common words.</p>
-<pre class="r"><code>tokenizer$word_index %&gt;%
-  head()</code></pre>
-<pre><code>## $raining
-## [1] 13788
-## 
-## $yellow
-## [1] 553
-## 
-## $four
-## [1] 1501
-## 
-## $bottons
-## [1] 7837
-## 
-## $woods
-## [1] 7896
-## 
-## $`friend&#39;s`
-## [1] 3525</code></pre>
-<p>We now have the dictionary of integers and which words they should replace in our text. But we still don’t have a list of integers for our reviews. So, now we use the <code>texts_to_sequences</code> functions, which will do just that! Words, which weren’t among the top 1000 were excluded.</p>
-<pre class="r"><code>text_seqs &lt;- texts_to_sequences(tokenizer, text)
-text_seqs %&gt;%
-  head()</code></pre>
-<pre><code>## [[1]]
-## [1] 249 494 924   3 595   3  63
-## 
-## [[2]]
-##  [1]  19   7  17  35  84   2   8 221   5   9   4 114   3  37 328   2 135
-## [18]   2 421  43  25  57   5 139  35  95   2  75   4  95   3  39 518   2
-## [35]  19   1  88  11  31 423  38   4  56 474   1 401  43 160  30   4 132
-## [52]  11 447 444   6 761  95
-## 
-## [[3]]
-##  [1] 156 134   2  68 314 180  12   7  17   3  53 183   5   8  98  12  31
-## [18]   2  57   1  95  42  18 240  22  10   2 230   7   8  30  42  15  42
-## [35]   9 683  21   2 122  20 803   5  45   2   5   9  95  99  86  16  38
-## [52] 581 256   1  24 673  16  63   3  26 267  10   1 182 673  68   4  23
-## [69] 148 285 489   3 543 738 481 157 997   4 134  16   1 157 489 846 326
-## [86]   1 455   5 706
-## 
-## [[4]]
-##  [1]  18 292 220   2  19  19  19   7 592  35 209   3 652 310 189   2  33
-## [18]   5   2 120 530  10  27 212
-## 
-## [[5]]
-##  [1]  55  71   7  71   6  23  55   8  76 504   8   1 163 484   5   6   1
-## [18]  49  88   8  33  14 262   3   5   6  15   5 855  64  14 257 376  19
-## [35]   7  71
-## 
-## [[6]]
-##  [1]  20  12   1  23  95   2  19 244  10   7  60   6  20  12   1  23  95
-## [18]   2  39  38 285 278 324   3 115  33   4   9   7 492   7  17  16  23
-## [35]  84  66  13   1  10 250   4 245  13  17   1 100   6  90   3  23 321
-## [52]  15   5  18  42 428  20   4   8   3   1 100  43 378 506 111   1  13
-## [69]   1   2  19   1  46   3   1 686  13   1 124  10   5  38 135  20  98
-## [86]  11  31   2 370   7  17</code></pre>
-<p>So, there we have it! From here on out, we can simply follow the <a href="https://github.com/rstudio/keras/blob/master/vignettes/examples/imdb_cnn.R">IMDB example from the Keras documentation</a>:</p>
-<pre class="r"><code># Set parameters:
-maxlen &lt;- 100
-batch_size &lt;- 32
-embedding_dims &lt;- 50
-filters &lt;- 64
-kernel_size &lt;- 3
-hidden_dims &lt;- 50
-epochs &lt;- 5</code></pre>
-<p>Because we can’t directly use this list of integers in our neural network, there is still some preprocessing to do. In the IMDB example, the lists are padded so that they all have the same length. The <code>pad_sequences</code> function will return a matrix, with columns for a given maximum number of words (or the number of words in the longest sequence). Here, we have 400 columns in our matrix. Reviews with fewer words were padded with zeros at the beginning before the indices. Longer reviews are cut after 400 words.</p>
-<pre class="r"><code>x_train &lt;- text_seqs %&gt;%
-  pad_sequences(maxlen = maxlen)
-dim(x_train)</code></pre>
-<pre><code>## [1] 23486   100</code></pre>
-<p>Our response variable will be encoded with 1s (5-star review) and 0s (not 5-star reviews). Because we have a binary outcome, we only need this one vector.</p>
-<pre class="r"><code>y_train &lt;- clothing_reviews$Liked
-length(y_train)</code></pre>
-<pre><code>## [1] 23486</code></pre>
-</div>
-<div id="embeddings" class="section level2">
-<h2>Embeddings</h2>
-<p>These padded word index matrices now need to be converted into something that gives information about the features (i.e. words) in a way that can be used for learning. Currently, the state-of-the-art for text models are word embeddings or word vectors, which are learned from the text data. Word embeddings encode the context of words in relatively few dimensions while maximizing the information that is contained in these vectors. Basically, word embeddings are values that are learned by a neural net.</p>
-<p>In our model below, we want to learn the word embeddings from our (padded) word vectors and directly use these learned embeddings for classification</p>
-<p>word embeddings vs. one hot encoding</p>
-<p>There are two ways to obtain word embeddings:</p>
-<p>Learn word embeddings jointly with the main task you care about (e.g. document classification or sentiment prediction). In this setup, you would start with random word vectors, then learn your word vectors in the same way that you learn the weights of a neural network. Load into your model word embeddings that were pre-computed using a different machine learning task than the one you are trying to solve. These are called “pre-trained word embeddings”.</p>
-<p>The simplest way to associate a dense vector to a word would be to pick the vector at random. The problem with this approach is that the resulting embedding space would have no structure: for instance, the words “accurate” and “exact” may end up with completely different embeddings, even though they are interchangeable in most sentences. It would be very difficult for a deep neural network to make sense of such a noisy, unstructured embedding space.</p>
-<p>To get a bit more abstract: the geometric relationships between word vectors should reflect the semantic relationships between these words. Word embeddings are meant to map human language into a geometric space. For instance, in a reasonable embedding space, we would expect synonyms to be embedded into similar word vectors, and in general we would expect the geometric distance (e.g. L2 distance) between any two word vectors to relate to the semantic distance of the associated words (words meaning very different things would be embedded to points far away from each other, while related words would be closer). Even beyond mere distance, we may want specific directions in the embedding space to be meaningful.</p>
-<p>In real-world word embedding spaces, common examples of meaningful geometric transformations are “gender vectors” and “plural vector”. For instance, by adding a “female vector” to the vector “king”, one obtain the vector “queen”. By adding a “plural vector”, one obtain “kings”. Word embedding spaces typically feature thousands of such interpretable and potentially useful vectors.</p>
-<p>Is there some “ideal” word embedding space that would perfectly map human language and could be used for any natural language processing task? Possibly, but in any case, we have yet to compute anything of the sort. Also, there isn’t such a thing as “human language”, there are many different languages and they are not isomorphic, as a language is the reflection of a specific culture and a specific context. But more pragmatically, what makes a good word embedding space depends heavily on your task: the perfect word embedding space for an English-language movie review sentiment analysis model may look very different from the perfect embedding space for an English-language legal document classification model, because the importance of certain semantic relationships varies from task to task.</p>
-<p>It’s thus reasonable to learn a new embedding space with every new task. Fortunately, backpropagation makes this easy, and Keras makes it even easier. It’s about learning the weights of a layer using layer_embedding()</p>
-<p>A layer_embedding() is best understood as a dictionary that maps integer indices (which stand for specific words) to dense vectors. It takes integers as input, it looks up these integers in an internal dictionary, and it returns the associated vectors. It’s effectively a dictionary lookup (see figure 6.4).</p>
-<p>An embedding layer takes as input a 2D tensor of integers, of shape (samples, sequence_length), where each entry is a sequence of integers. It can embed sequences of variable lengths: for instance, you could feed into the embedding layer in the previous example batches with shapes (32, 10) (batch of 32 sequences of length 10) or (64, 15) (batch of 64 sequences of length 15). All sequences in a batch must have the same length, though (because you need to pack them into a single tensor), so sequences that are shorter than others should be padded with zeros, and sequences that are longer should be truncated.</p>
-<p>This layer returns a 3D floating-point tensor, of shape (samples, sequence_length, embedding_dimensionality). Such a 3D tensor can then be processed by an RNN layer or a 1D convolution layer (both will be introduced in the following sections).</p>
-<p>When you instantiate an embedding layer, its weights (its internal dictionary of token vectors) are initially random, just as with any other layer. During training, these word vectors are gradually adjusted via backpropagation, structuring the space into something the downstream model can exploit. Once fully trained, the embedding space will show a lot of structure – a kind of structure specialized for the specific problem for which you were training your model.</p>
-<p>Let’s apply this idea to the IMDB movie-review sentiment-prediction task that you’re already familiar with. First, you’ll quickly prepare the data. You’ll restrict the movie reviews to the top 10,000 most common words (as you did the first time you worked with this dataset) and cut off the reviews after only 20 words. The network will learn 8-dimensional embeddings for each of the 10,000 words, turn the input integer sequences (2D integer tensor) into embedded sequences (3D float tensor), flatten the tensor to 2D, and train a single dense layer on top for classification.</p>
-<pre class="r"><code>#Initialize model
-model &lt;- keras_model_sequential()
-
-model %&gt;% 
-  # Start off with an efficient embedding layer which maps
-  # the vocab indices into embedding_dims dimensions
-  layer_embedding(max_features, embedding_dims, input_length = maxlen) %&gt;%
-  layer_dropout(0.2) %&gt;%
-
-  # Add a Convolution1D, which will learn filters
-    # Word group filters of size filter_length:
-  layer_conv_1d(
-    filters, kernel_size, 
-    padding = &quot;valid&quot;, activation = &quot;relu&quot;, strides = 1
-  ) %&gt;%
-  # Apply max pooling:
-  layer_global_max_pooling_1d() %&gt;%
-
-  # Add a vanilla hidden layer:
-  layer_dense(hidden_dims) %&gt;%
-
-  # Apply 20% layer dropout
-  layer_dropout(0.2) %&gt;%
-  layer_activation(&quot;relu&quot;) %&gt;%
-
-  # Project onto a single unit output layer, and squash it with a sigmoid
-
-  layer_dense(1) %&gt;%
-  layer_activation(&quot;sigmoid&quot;)
-
-# Compile model
-model %&gt;% compile(
-  loss = &quot;binary_crossentropy&quot;,
-  optimizer = &quot;adam&quot;,
-  metrics = &quot;accuracy&quot;
-)</code></pre>
-<pre class="r"><code>model %&gt;%
-  fit(
-    x_train,
-    y_train,
-    batch_size = batch_size,
-    epochs = epochs,
-    validation_split = 0.3
-  )</code></pre>
-<p><a href="https://github.com/rstudio/keras/blob/master/vignettes/examples/imdb_cnn_lstm.R" class="uri">https://github.com/rstudio/keras/blob/master/vignettes/examples/imdb_cnn_lstm.R</a> <a href="https://github.com/rstudio/keras/blob/master/vignettes/examples/imdb_lstm.R" class="uri">https://github.com/rstudio/keras/blob/master/vignettes/examples/imdb_lstm.R</a></p>
-</div>
-<div id="alternative-preprocessing-functions" class="section level2">
-<h2>Alternative preprocessing functions</h2>
-<p>The above example follows the IMDB example from the Keras documentation, but there are alternative ways to preprocess your text for modeling with Keras.</p>
-<p><a href="https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/6.1-one-hot-encoding-of-words-or-characters.nb.html">one-hot-encoding</a></p>
-<pre class="r"><code>one_hot_results &lt;- texts_to_matrix(tokenizer, text, mode = &quot;binary&quot;)
-dim(one_hot_results)</code></pre>
-<pre><code>## [1] 23486  1000</code></pre>
-<p>A variant of one-hot encoding is the so-called “one-hot hashing trick”, which can be used when the number of unique tokens in your vocabulary is too large to handle explicitly. Instead of explicitly assigning an index to each word and keeping a reference of these indices in a dictionary, one may hash words into vectors of fixed size. This is typically done with a very lightweight hashing function. The main advantage of this method is that it does away with maintaining an explicit word index, which saves memory and allows online encoding of the data (starting to generate token vectors right away, before having seen all of the available data). The one drawback of this method is that it is susceptible to “hash collisions”: two different words may end up with the same hash, and subsequently any machine learning model looking at these hashes won’t be able to tell the difference between these words. The likelihood of hash collisions decreases when the dimensionality of the hashing space is much larger than the total number of unique tokens being hashed.</p>
-<p>Word-level one-hot encoding with hashing trick (toy example):</p>
-<pre class="r"><code>hashing_results &lt;- text_hashing_trick(text[1], n = 100)
-hashing_results</code></pre>
-<pre><code>## [1] 88 75 18 90  7 90 23</code></pre>
-<p>Using pre-trained word embeddings Sometimes, you have so little training data available that could never use your data alone to learn an appropriate task-specific embedding of your vocabulary. What to do then?</p>
-<p>Instead of learning word embeddings jointly with the problem you want to solve, you could be loading embedding vectors from a pre-computed embedding space known to be highly structured and to exhibit useful properties – that captures generic aspects of language structure. The rationale behind using pre-trained word embeddings in natural language processing is very much the same as for using pre-trained convnets in image classification: we don’t have enough data available to learn truly powerful features on our own, but we expect the features that we need to be fairly generic, i.e. common visual features or semantic features. In this case it makes sense to reuse features learned on a different problem.</p>
-<p>Such word embeddings are generally computed using word occurrence statistics (observations about what words co-occur in sentences or documents), using a variety of techniques, some involving neural networks, others not. The idea of a dense, low-dimensional embedding space for words, computed in an unsupervised way, was initially explored by Bengio et al. in the early 2000s, but it only started really taking off in research and industry applications after the release of one of the most famous and successful word embedding scheme: the Word2Vec algorithm, developed by Mikolov at Google in 2013. Word2Vec dimensions capture specific semantic properties, e.g. gender.</p>
-<p>There are various pre-computed databases of word embeddings that can download and start using in a Keras embedding layer. Word2Vec is one of them. Another popular one is called “GloVe”, developed by Stanford researchers in 2014. It stands for “Global Vectors for Word Representation”, and it is an embedding technique based on factorizing a matrix of word co-occurrence statistics. Its developers have made available pre-computed embeddings for millions of English tokens, obtained from Wikipedia data or from Common Crawl data.</p>
-<p>Let’s take a look at how you can get started using GloVe embeddings in a Keras model. The same method will of course be valid for Word2Vec embeddings or any other word embedding database that you can download. We will also use this example to refresh the text tokenization techniques we introduced a few paragraphs ago: we will start from raw text, and work our way up.</p>
-<p><a href="https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/6.1-using-word-embeddings.nb.html" class="uri">https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/6.1-using-word-embeddings.nb.html</a></p>
-<p><a href="https://www.r-bloggers.com/word-embeddings-with-keras/" class="uri">https://www.r-bloggers.com/word-embeddings-with-keras/</a></p>
-<blockquote>
-<p>Word embedding is a method used to map words of a vocabulary to dense vectors of real numbers where semanticaly similar words are mapped to nearby points. Representing words in this vector space help algorithms achieve better performance in natural language processing tasks like syntatic parsing and sentiment analysis by grouping similar words. For example, we expect that in the embedding space “cats” and “dogs” are mapped to nearby points since they are both animals, mammals, pets, etc. In this tutorial we will implement the skip-gram model created by Mikolov et al in R using the keras package. The skip-gram model is a flavor of word2vec, a class of computationally-efficient predictive models for learning word embeddings from raw text.</p>
-</blockquote>
-<blockquote>
-<p>You can’t feed lists of integers into a neural network. You have to turn your lists into tensors. There are two ways to do that: - Pad your lists so that they all have the same length, turn them into an integer tensor of shape (samples, word_indices), and then use as the first layer in your network a layer capable of handling such integer tensors (the “embedding” layer, which we’ll cover in detail later in the book). - One-hot-encode your lists to turn them into vectors of 0s and 1s. This would mean, for instance, turning the sequence [3, 5] into a 10,000-dimensional vector that would be all zeros except for indices 3 and 5, which would be ones. Then you could use as the first layer in your network a dense layer, capable of handling floating-point vector data.</p>
-</blockquote>
-</div>
-<div id="use-pretrained-glove-embeddings-separate-post" class="section level2">
-<h2>Use pretrained GLove embeddings (separate post)</h2>
-<p><a href="https://keras.rstudio.com/articles/examples/pretrained_word_embeddings.html" class="uri">https://keras.rstudio.com/articles/examples/pretrained_word_embeddings.html</a></p>
-<pre class="r"><code>library(keras)
-
-GLOVE_DIR &lt;- &#39;/Users/shiringlander/Documents/Github/Data/glove.6B&#39;
-TEXT_DATA_DIR &lt;- &#39;/Users/shiringlander/Documents/Github/Data/20_newsgroup&#39;
-MAX_SEQUENCE_LENGTH &lt;- 1000
-MAX_NUM_WORDS &lt;- 20000
-EMBEDDING_DIM &lt;- 100
-VALIDATION_SPLIT &lt;- 0.2
-
-# download data if necessary
-download_data &lt;- function(data_dir, url_path, data_file) {
-  if (!dir.exists(data_dir)) {
-    download.file(paste0(url_path, data_file), data_file, mode = &quot;wb&quot;)
-    if (tools::file_ext(data_file) == &quot;zip&quot;)
-      unzip(data_file, exdir = tools::file_path_sans_ext(data_file))
-    else
-      untar(data_file)
-    unlink(data_file)
-  }
-}
-download_data(GLOVE_DIR, &#39;http://nlp.stanford.edu/data/&#39;, &#39;glove.6B.zip&#39;)
-download_data(TEXT_DATA_DIR, &quot;http://www.cs.cmu.edu/afs/cs.cmu.edu/project/theo-20/www/data/&quot;, &quot;news20.tar.gz&quot;)
-
-# first, build index mapping words in the embeddings set
-# to their embedding vector
-
-cat(&#39;Indexing word vectors.\n&#39;)</code></pre>
-<pre><code>## Indexing word vectors.</code></pre>
-<pre class="r"><code>embeddings_index &lt;- new.env(parent = emptyenv())
-lines &lt;- readLines(file.path(GLOVE_DIR, &#39;glove.6B.100d.txt&#39;))
-for (line in lines) {
-  values &lt;- strsplit(line, &#39; &#39;, fixed = TRUE)[[1]]
-  word &lt;- values[[1]]
-  coefs &lt;- as.numeric(values[-1])
-  embeddings_index[[word]] &lt;- coefs
-}
-
-cat(sprintf(&#39;Found %s word vectors.\n&#39;, length(embeddings_index)))</code></pre>
-<pre><code>## Found 400000 word vectors.</code></pre>
-<hr />
-<pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>## R version 3.5.1 (2018-07-02)
-## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-## Running under: macOS  10.14.1
-## 
-## Matrix products: default
-## BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
-## LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
-## 
-## locale:
-## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
-## 
-## attached base packages:
-## [1] stats     graphics  grDevices utils     datasets  methods   base     
-## 
-## other attached packages:
-##  [1] bindrcpp_0.2.2  forcats_0.3.0   stringr_1.3.1   dplyr_0.7.7    
-##  [5] purrr_0.2.5     readr_1.1.1     tidyr_0.8.2     tibble_1.4.2   
-##  [9] ggplot2_3.1.0   tidyverse_1.2.1 keras_2.2.0    
-## 
-## loaded via a namespace (and not attached):
-##  [1] reticulate_1.10  tidyselect_0.2.5 xfun_0.4         haven_1.1.2     
-##  [5] lattice_0.20-38  colorspace_1.3-2 htmltools_0.3.6  yaml_2.2.0      
-##  [9] base64enc_0.1-3  rlang_0.3.0.1    pillar_1.3.0     withr_2.1.2     
-## [13] glue_1.3.0       readxl_1.1.0     modelr_0.1.2     bindr_0.1.1     
-## [17] plyr_1.8.4       tensorflow_1.9   cellranger_1.1.0 munsell_0.5.0   
-## [21] blogdown_0.9     gtable_0.2.0     rvest_0.3.2      evaluate_0.12   
-## [25] labeling_0.3     knitr_1.20       tfruns_1.4       broom_0.5.0     
-## [29] Rcpp_0.12.19     backports_1.1.2  scales_1.0.0     jsonlite_1.5    
-## [33] hms_0.4.2        digest_0.6.18    stringi_1.2.4    bookdown_0.7    
-## [37] grid_3.5.1       rprojroot_1.3-2  cli_1.0.1        tools_3.5.1     
-## [41] magrittr_1.5     lazyeval_0.2.1   crayon_1.3.4     whisker_0.3-2   
-## [45] pkgconfig_2.0.2  zeallot_0.1.0    Matrix_1.2-15    xml2_1.2.0      
-## [49] lubridate_1.7.4  rstudioapi_0.8   assertthat_0.2.0 rmarkdown_1.10  
-## [53] httr_1.3.1       R6_2.3.0         nlme_3.1-137     compiler_3.5.1</code></pre>
 </div>
 ]]></content>
   </entry>

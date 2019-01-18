@@ -2,7 +2,7 @@
 title: "How to use cross-validation with the image data generator in Keras and TensorFlow"
 draft: true
 author: Shirin Glander
-date: '2018-11-19'
+date: '2019-02-04'
 categories: ["R", "keras"]
 tags: ["R", "keras", "image classification", "tensorflow"]
 thumbnailImagePosition: left

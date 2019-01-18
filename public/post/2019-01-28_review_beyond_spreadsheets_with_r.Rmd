@@ -1,0 +1,121 @@
+---
+title: "Book review: Beyond Spreadsheets with R"
+draft: true
+author: Shirin Glander
+date: '2019-01-28'
+categories: ["R"]
+tags: ["R"]
+thumbnailImagePosition: left
+thumbnailImage: https://images.manning.com/720/960/resize/book/8/5a28b18-1cbb-4721-830c-6770edfdb858/Carroll-BSwithR-HI.png
+metaAlignment: center
+coverMeta: out
+slug: review_beyond_spreadsheets_with_r
+---
+
+**Disclaimer**: Manning publications gave me an ebook version of [Beyond Spreadsheets with R - A beginner's guide to R and RStudio by Dr. Jonathan Carroll](https://www.manning.com/books/beyond-spreadsheets-with-r) for free so that I could review it here.
+
+> Beyond Spreadsheets with R shows you how to take raw data and transform it for use in computations, tables, graphs, and more. You’ll build on simple programming techniques like loops and conditionals to create your own custom functions. You’ll come away with a toolkit of strategies for analyzing and visualizing data of all sorts using R and RStudio.
+
+![](https://images.manning.com/720/960/resize/book/8/5a28b18-1cbb-4721-830c-6770edfdb858/Carroll-BSwithR-HI.png)
+
+## Aimed at
+
+This book covers all the very basics of getting started with R, so it is useful to beginners but probably won't offer much for users who are already familiar with R. However, it does hint at some advanced functions, like defining specific function calls for custom classes.
+
+## What stood out for me in the book (both positive and negative)
+
+- It introduced **version control** right away in the first chapter. Coming from an academic background where such things as Github and virtual machines were not widely used (at least not in the biology department), I learned about these invaluable tools way too late. Thus, I would always encourage students to start using them as early as possible. It will definitely make your analyses more reproducible, failproof and comprehensible. And it will make it easier to collaborate and keep track of different projects from past and present!
+
+- Great recap of the very basics, like data types. Even though you might have been working with R for a while, I still find it useful to go over some basics once in a while - often I find some minor detail that I hadn't known before or had forgotten again (e.g. that you shouldn't use `T` and `F` instead of `TRUE` and `FALSE` because `T` and `F` can be variable names and in the worst case assigned to the opposite logical).
+
+- The book also includes a short part to debugging and testing, which I think is valuable knowledge that most introductions to R skip. Of course, you won't get an in depth covering of these two topics but at least you will have heard about them early on.
+
+- It introduced the [`rex` package](https://cran.r-project.org/web/packages/rex/index.html), which I hadn't known before. Looks very convenient for working with regular expressions!
+
+- The book introduces `tibble` and `dplyr` and also goes into Non-Standard Evaluation. It shows a couple of ways to work around that using tidy evaluation.
+
+This is what is shown:
+
+```{r warning=FALSE, message=FALSE}
+library(dplyr)
+library(rlang)
+
+head(mutate(mtcars, ratio = mpg / cyl))
+
+column_to_divide <- "cyl"
+head(mutate(mtcars, ratio = mpg / !!sym(column_to_divide)))
+```
+
+This snippet about Non-Standard-Evaluation in the book is very short. Users who worked with `dplyr` and functions before, might wonder why the book doesn't mention the standard evaluation form of the `dplyr` verbs (like `mutate_`). This is because those verbs are deprecated now. Instead, if you want to write functions with `dplyr`, use [tidy evaluation](https://dplyr.tidyverse.org/articles/programming.html).
+
+> dplyr used to offer twin versions of each verb suffixed with an underscore. These versions had standard evaluation (SE) semantics: rather than taking arguments by code, like NSE verbs, they took arguments by value. Their purpose was to make it possible to program with dplyr. However, dplyr now uses tidy evaluation semantics. NSE verbs still capture their arguments, but you can now unquote parts of these arguments. This offers full programmability with NSE verbs. Thus, the underscored versions are now superfluous.
+
+This is how it would work:
+
+1. You write your function with arguments as you would normally (the input to `column_to_divide` will be unquoted).
+2. You use `enquo` to "capture the expression supplied as argument by the user of the current function" (`?enquo`).
+3. You feed this object to your `dplyr` function (here `mutate`) and use `!!` ["to say that you want to unquote an input so that it’s evaluated"](https://dplyr.tidyverse.org/articles/programming.html).
+
+```{r}
+my_mutate_2 <- function(df, column_to_divide) {
+  
+  quo_column_to_divide <- enquo(column_to_divide)
+  
+  df %>%
+    mutate(ratio = mpg / !!quo_column_to_divide)
+}
+
+my_mutate_2(mtcars, cyl) %>%
+  select(mpg, cyl, ratio) %>%
+  head()
+```
+
+- Weirdly (to me) the book introduces `dplyr` and pipe operators but when Jonathan talked about replacing NAs, he only mentions the base R version:
+
+```{r}
+d_NA <- data.frame(x = c(7, NA, 9, NA), y = 1:4)
+d_NA[is.na(d_NA)] <- 0
+d_NA
+```
+
+But he doesn't mention the tidy way to do this:
+
+```{r}
+d_NA %>%
+  tidyr::replace_na()
+```
+
+- Similar with `aggregate`. This is the base R version that is shown:
+
+```{r}
+aggregate(formula = . ~ Species, data = iris, FUN = mean)
+```
+
+But doesn't show the tidy way. I guess this is because at this point in book the tidy way would be a bit too complicated, due to the "wrong" data format (wide vs. long). He does introduce the tidy principles of data analysis in the next chapters.
+
+```{r warning=FALSE, message=FALSE}
+library(tidyverse)
+iris %>%
+  gather(x, y, Sepal.Length:Petal.Width) %>%
+  group_by(Species, x) %>%
+  summarise(mean = mean(y))
+```
+
+- It covers web scraping and exporting data to .RData, .rds and how to use `dput()` when asking StackOverflow questions.
+
+- In the part about looping, the book mainly focuses on using the `purrr` package. You can find an example for [using `purrr` in data analysis on my blog](https://shirinsplayground.netlify.com/2018/04/flu_prediction/).
+
+- The book introduces package development, which is very useful, even if you just want to have a place where all your self-made functions "live". :-) Moreover, it also goes into Unit Testing with `testthat`!
+
+<br>
+
+## Verdict
+
+Even though I am not really the target audience for a book like that since I am not a beginner any more (I basically skimmed through a lot of the very basic stuff), it still offered a lot of valuable information! I particularly liked that the book introduces very important parts of learning R for practical and modern applications, such as using the `tidyverse`, version control, debugging, how to aks proper questions on StackOverflow and basic package development, that don't usually get mentioned in beginner's books.
+
+---
+
+```{r}
+sessionInfo()
+```
+

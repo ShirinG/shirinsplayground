@@ -1,0 +1,190 @@
+---
+title: "How to prepare data for NLP (text classification) with Keras and TensorFlow"
+draft: true
+author: Shirin Glander
+date: '2019-01-21'
+categories: ["R", "Keras"]
+tags: ["machine learning", "keras", "tensorflow", "nlp"]
+thumbnailImagePosition: left
+thumbnailImage: https://shiring.github.io/netlify_images/book-eyeglasses-eyewear-261857.jpg
+metaAlignment: center
+coverMeta: out
+slug: text_classification_keras_data_prep
+---
+
+In the past, I have written and taught quite a bit about image classification with Keras ([e.g. here](https://shirinsplayground.netlify.com/2018/06/keras_fruits/)). Text classification isn't too different in terms of using the Keras principles to train a sequential or function model. You can even use Convolutional Neural Nets (CNNs) for text classification.
+
+What is very different, however, is how to prepare raw text data for modeling. When you look at the [IMDB example from the Deep Learning with R Book](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/3.4-classifying-movie-reviews.nb.html), you get a great explanation of how to train the model. But because the **preprocessed** IMDB dataset comes with the `keras` package, it isn't so straight-forward to use what you learned on your own data.
+
+## How can a computer work with text?
+
+As with any neural network, we need to convert our data into a numeric format; in Keras and TensorFlow we work with tensors. The IMDB example data from the `keras` package has been preprocessed to a list of integers, where every integer corresponds to a word arranged by descending word frequency.
+
+So, how do we make it from raw text to such a list of integers? Luckily, Keras offers a few convenience functions that make our lives much easier.
+
+```{r message=FALSE, warning=FALSE}
+library(keras)
+library(tidyverse)
+``` 
+
+## Data
+
+In the example below, I am using a Kaggle dataset: [Women's e-commerce cloting reviews](https://www.kaggle.com/nicapotato/womens-ecommerce-clothing-reviews). The data contains a text review of different items of clothing, as well as some additional information, like rating, division, etc.
+I will use the review title and text in order to classify whether or not the item was liked. I am creating the response variable from the rating: every item rates with 5 stars is considered "liked" (1), the rest as "not liked" (0). I am also combining review title and text.
+
+```{r warning=FALSE}
+clothing_reviews <- read_csv("/Users/shiringlander/Documents/Github/ix_lime_etc/Womens Clothing E-Commerce Reviews.csv") %>%
+  mutate(Liked = ifelse(Rating == 5, 1, 0),
+         text = paste(Title, `Review Text`),
+         text = gsub("NA", "", text))
+glimpse(clothing_reviews)
+```
+
+Whether an item was liked or not will be the response variable or label for classification of the reviews.
+
+```{r}
+clothing_reviews %>%
+  ggplot(aes(x = factor(Liked), fill = Liked)) +
+    geom_bar(alpha = 0.8) +
+    guides(fill = FALSE)
+```
+
+## Tokenizers
+
+The first step is to tokenize the text. This means, converting our text into a sequence of integers where each integer corresponds to a word in the dictionary. 
+
+```{r}
+text <- clothing_reviews$text
+```
+
+The `num_words` argument defines the number of words we want to consider (this will be our feature space). Because the output integers will be sorted according to decreasing word frequency, if we set 1000, we will only get the 1000 most frequent words in our corpus.
+
+```{r}
+max_features <- 1000
+tokenizer <- text_tokenizer(num_words = max_features)
+```
+
+Next, we need to fit the tokenizer to our text data. Note, that the `tokenizer` object is modified in place (as are models in Keras)!
+
+```{r}
+tokenizer %>% 
+  fit_text_tokenizer(text)
+```
+
+After fitting the tokenizer, we can extract the following information: the number of documents ...
+
+```{r}
+tokenizer$document_count
+```
+
+... and the word-index list. Notice, that even though we set the maximum number of words to 1000, our index contains many more words. In fact, the index will keep all words in the index but when converting our reviews to vectors, the stored value `tokenizer$num_words` will be used to restrict to the most common words.
+
+```{r}
+tokenizer$word_index %>%
+  head()
+```
+
+We now have the dictionary of integers and which words they should replace in our text. But we still don't have a list of integers for our reviews. So, now we use the
+`texts_to_sequences` functions, which will do just that! Words, which weren't among the top 1000 were excluded.
+
+```{r}
+text_seqs <- texts_to_sequences(tokenizer, text)
+text_seqs %>%
+  head()
+```
+
+So, there we have it! From here on out, we can simply follow the [IMDB example from the Keras documentation](https://github.com/rstudio/keras/blob/master/vignettes/examples/imdb_cnn.R):
+
+```{r}
+# Set parameters:
+maxlen <- 100
+batch_size <- 32
+embedding_dims <- 50
+filters <- 64
+kernel_size <- 3
+hidden_dims <- 50
+epochs <- 5
+```
+
+Because we can't directly use this list of integers in our neural network, there is still some preprocessing to do. In the IMDB example, the lists are padded so that they all have the same length. The `pad_sequences` function will return a matrix, with columns for a given maximum number of words (or the number of words in the longest sequence). Here, we have 400 columns in our matrix. Reviews with fewer words were padded with zeros at the beginning before the indices. Longer reviews are cut after 400 words.
+
+```{r}
+x_train <- text_seqs %>%
+  pad_sequences(maxlen = maxlen)
+dim(x_train)
+```
+
+Our response variable will be encoded with 1s (5-star review) and 0s (not 5-star reviews). Because we have a binary outcome, we only need this one vector.
+
+```{r}
+y_train <- clothing_reviews$Liked
+length(y_train)
+```
+
+## Embeddings
+
+These padded word index matrices now need to be converted into something that gives information about the features (i.e. words) in a way that can be used for learning. Currently, the state-of-the-art for text models are word embeddings or word vectors, which are learned from the text data. Word embeddings encode the context of words in relatively few dimensions while maximizing the information that is contained in these vectors. Basically, word embeddings are values that are learned by a neural net just as [weights are learned by a multi-layer perceptron](https://shirinsplayground.netlify.com/2018/11/neural_nets_explained/).
+
+Word embedding vectors represent the words and their contexts; thus, words with similar meanings (synonyms) or with close semantic relationships will have more similar embeddings. Moreover, word embeddings should reflect how words are related to each other. For example, the embeddings for "man" should be to "king" as "woman" is to "queen".
+
+In our model below, we want to learn the word embeddings from our (padded) word vectors and directly use these learned embeddings for classification. This part can now be the same as in the [Keras examples for LSTMs](https://github.com/rstudio/keras/blob/master/vignettes/examples/imdb_lstm.R) and [CNNs](https://github.com/rstudio/keras/blob/master/vignettes/examples/imdb_cnn_lstm.R)
+
+```{r}
+model <- keras_model_sequential() %>% 
+  layer_embedding(max_features, embedding_dims, input_length = maxlen) %>%
+  layer_dropout(0.2) %>%
+  layer_conv_1d(
+    filters, kernel_size, 
+    padding = "valid", activation = "relu", strides = 1
+  ) %>%
+  layer_global_max_pooling_1d() %>%
+  layer_dense(hidden_dims) %>%
+  layer_dropout(0.2) %>%
+  layer_activation("relu") %>%
+  layer_dense(1) %>%
+  layer_activation("sigmoid") %>% compile(
+  loss = "binary_crossentropy",
+  optimizer = "adam",
+  metrics = "accuracy"
+)
+```
+
+```{r}
+model %>%
+  fit(
+    x_train,
+    y_train,
+    batch_size = batch_size,
+    epochs = epochs,
+    validation_split = 0.3
+  )
+```
+
+## Alternative preprocessing functions
+
+The above example follows the IMDB example from the Keras documentation, but there are alternative ways to preprocess your text for modeling with Keras:
+
+- [one-hot-encoding](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/6.1-one-hot-encoding-of-words-or-characters.nb.html)
+
+```{r}
+one_hot_results <- texts_to_matrix(tokenizer, text, mode = "binary")
+dim(one_hot_results)
+```
+
+- [one-hot hashing](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/6.1-one-hot-encoding-of-words-or-characters.nb.html)
+
+```{r}
+hashing_results <- text_hashing_trick(text[1], n = 100)
+hashing_results
+```
+
+## Pretrained embeddings
+
+Here, we have learned word embeddings from our word vectors and directly used the output of the embedding layers as input for additional layers in our neural net. Because learning embeddings takes time and computational power, we could also start with [pre-trained embeddings](https://keras.rstudio.com/articles/examples/pretrained_word_embeddings.html), particulary if we don't have a whole lot of training data. You can find an example for how to use [GloVe embeddings here](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/6.1-using-word-embeddings.nb.html).
+
+---
+
+```{r}
+sessionInfo()
+```
+

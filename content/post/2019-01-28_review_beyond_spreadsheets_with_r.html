@@ -2,11 +2,11 @@
 title: "Book review: Beyond Spreadsheets with R"
 draft: true
 author: Shirin Glander
-date: '2019-01-30'
+date: '2019-01-28'
 categories: ["R"]
 tags: ["R"]
 thumbnailImagePosition: left
-thumbnailImage: 
+thumbnailImage: https://images.manning.com/720/960/resize/book/8/5a28b18-1cbb-4721-830c-6770edfdb858/Carroll-BSwithR-HI.png
 metaAlignment: center
 coverMeta: out
 slug: review_beyond_spreadsheets_with_r
@@ -18,30 +18,26 @@ slug: review_beyond_spreadsheets_with_r
 <blockquote>
 <p>Beyond Spreadsheets with R shows you how to take raw data and transform it for use in computations, tables, graphs, and more. You’ll build on simple programming techniques like loops and conditionals to create your own custom functions. You’ll come away with a toolkit of strategies for analyzing and visualizing data of all sorts using R and RStudio.</p>
 </blockquote>
+<div class="figure">
+<img src="https://images.manning.com/720/960/resize/book/8/5a28b18-1cbb-4721-830c-6770edfdb858/Carroll-BSwithR-HI.png" />
+
+</div>
 <div id="aimed-at" class="section level2">
 <h2>Aimed at</h2>
 <p>This book covers all the very basics of getting started with R, so it is useful to beginners but probably won’t offer much for users who are already familiar with R. However, it does hint at some advanced functions, like defining specific function calls for custom classes.</p>
 </div>
-<div id="what-i-noticed-about-the-book" class="section level2">
-<h2>What I noticed about the book</h2>
+<div id="what-stood-out-for-me-in-the-book-both-positive-and-negative" class="section level2">
+<h2>What stood out for me in the book (both positive and negative)</h2>
 <ul>
 <li><p>It introduced <strong>version control</strong> right away in the first chapter. Coming from an academic background where such things as Github and virtual machines were not widely used (at least not in the biology department), I learned about these invaluable tools way too late. Thus, I would always encourage students to start using them as early as possible. It will definitely make your analyses more reproducible, failproof and comprehensible. And it will make it easier to collaborate and keep track of different projects from past and present!</p></li>
 <li><p>Great recap of the very basics, like data types. Even though you might have been working with R for a while, I still find it useful to go over some basics once in a while - often I find some minor detail that I hadn’t known before or had forgotten again (e.g. that you shouldn’t use <code>T</code> and <code>F</code> instead of <code>TRUE</code> and <code>FALSE</code> because <code>T</code> and <code>F</code> can be variable names and in the worst case assigned to the opposite logical).</p></li>
 <li><p>The book also includes a short part to debugging and testing, which I think is valuable knowledge that most introductions to R skip. Of course, you won’t get an in depth covering of these two topics but at least you will have heard about them early on.</p></li>
-<li><p>the <code>rex</code> package</p></li>
+<li><p>It introduced the <a href="https://cran.r-project.org/web/packages/rex/index.html"><code>rex</code> package</a>, which I hadn’t known before. Looks very convenient for working with regular expressions!</p></li>
 <li><p>The book introduces <code>tibble</code> and <code>dplyr</code> and also goes into Non-Standard Evaluation. It shows a couple of ways to work around that using tidy evaluation.</p></li>
 </ul>
 <p>This is what is shown:</p>
-<pre class="r"><code>library(dplyr)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;dplyr&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     filter, lag</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     intersect, setdiff, setequal, union</code></pre>
-<pre class="r"><code>library(rlang)
+<pre class="r"><code>library(dplyr)
+library(rlang)
 
 head(mutate(mtcars, ratio = mpg / cyl))</code></pre>
 <pre><code>##    mpg cyl disp  hp drat    wt  qsec vs am gear carb    ratio
@@ -89,7 +85,7 @@ my_mutate_2(mtcars, cyl) %&gt;%
 ## 5 18.7   8 2.337500
 ## 6 18.1   6 3.016667</code></pre>
 <ul>
-<li>Weirdly, I find, the book introduces <code>dplyr</code> and pipe operators but when Jonathan talked about replacing NAs, he only mentions the base R version:</li>
+<li>Weirdly (to me) the book introduces <code>dplyr</code> and pipe operators but when Jonathan talked about replacing NAs, he only mentions the base R version:</li>
 </ul>
 <pre class="r"><code>d_NA &lt;- data.frame(x = c(7, NA, 9, NA), y = 1:4)
 d_NA[is.na(d_NA)] &lt;- 0
@@ -138,9 +134,48 @@ iris %&gt;%
 ## 11 virginica  Sepal.Length 6.59 
 ## 12 virginica  Sepal.Width  2.97</code></pre>
 <ul>
-<li>It covers web scraping and exporting data to .RData, .rds and how to use <code>dput()</code> when asking StackOverflow questions</li>
+<li><p>It covers web scraping and exporting data to .RData, .rds and how to use <code>dput()</code> when asking StackOverflow questions.</p></li>
+<li><p>In the part about looping, the book mainly focuses on using the <code>purrr</code> package. You can find an example for <a href="https://shirinsplayground.netlify.com/2018/04/flu_prediction/">using <code>purrr</code> in data analysis on my blog</a>.</p></li>
+<li><p>The book introduces package development, which is very useful, even if you just want to have a place where all your self-made functions “live”. :-) Moreover, it also goes into Unit Testing with <code>testthat</code>!</p></li>
 </ul>
+<p><br></p>
 </div>
 <div id="verdict" class="section level2">
 <h2>Verdict</h2>
+<p>Even though I am not really the target audience for a book like that since I am not a beginner any more (I basically skimmed through a lot of the very basic stuff), it still offered a lot of valuable information! I particularly liked that the book introduces very important parts of learning R for practical and modern applications, such as using the <code>tidyverse</code>, version control, debugging, how to aks proper questions on StackOverflow and basic package development, that don’t usually get mentioned in beginner’s books.</p>
+<hr />
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 3.5.1 (2018-07-02)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS  10.14.2
+## 
+## Matrix products: default
+## BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] forcats_0.3.0   stringr_1.3.1   purrr_0.2.5     readr_1.3.1    
+##  [5] tidyr_0.8.2     tibble_2.0.1    ggplot2_3.1.0   tidyverse_1.2.1
+##  [9] bindrcpp_0.2.2  rlang_0.3.1     dplyr_0.7.8    
+## 
+## loaded via a namespace (and not attached):
+##  [1] tidyselect_0.2.5 xfun_0.4         haven_2.0.0      lattice_0.20-38 
+##  [5] colorspace_1.4-0 generics_0.0.2   htmltools_0.3.6  yaml_2.2.0      
+##  [9] utf8_1.1.4       pillar_1.3.1     glue_1.3.0       withr_2.1.2     
+## [13] modelr_0.1.2     readxl_1.2.0     bindr_0.1.1      plyr_1.8.4      
+## [17] munsell_0.5.0    blogdown_0.10    gtable_0.2.0     cellranger_1.1.0
+## [21] rvest_0.3.2      evaluate_0.12    knitr_1.21       fansi_0.4.0     
+## [25] broom_0.5.1      Rcpp_1.0.0       scales_1.0.0     backports_1.1.3 
+## [29] jsonlite_1.6     hms_0.4.2        digest_0.6.18    stringi_1.2.4   
+## [33] bookdown_0.9     grid_3.5.1       cli_1.0.1        tools_3.5.1     
+## [37] magrittr_1.5     lazyeval_0.2.1   crayon_1.3.4     pkgconfig_2.0.2 
+## [41] xml2_1.2.0       lubridate_1.7.4  assertthat_0.2.0 rmarkdown_1.11  
+## [45] httr_1.4.0       rstudioapi_0.9.0 R6_2.3.0         nlme_3.1-137    
+## [49] compiler_3.5.1</code></pre>
 </div>

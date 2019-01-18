@@ -2,11 +2,11 @@
 title: "Book review: Beyond Spreadsheets with R"
 draft: true
 author: Shirin Glander
-date: '2019-01-30'
+date: '2019-01-28'
 categories: ["R"]
 tags: ["R"]
 thumbnailImagePosition: left
-thumbnailImage: 
+thumbnailImage: https://images.manning.com/720/960/resize/book/8/5a28b18-1cbb-4721-830c-6770edfdb858/Carroll-BSwithR-HI.png
 metaAlignment: center
 coverMeta: out
 slug: review_beyond_spreadsheets_with_r
@@ -16,11 +16,13 @@ slug: review_beyond_spreadsheets_with_r
 
 > Beyond Spreadsheets with R shows you how to take raw data and transform it for use in computations, tables, graphs, and more. You’ll build on simple programming techniques like loops and conditionals to create your own custom functions. You’ll come away with a toolkit of strategies for analyzing and visualizing data of all sorts using R and RStudio.
 
+![](https://images.manning.com/720/960/resize/book/8/5a28b18-1cbb-4721-830c-6770edfdb858/Carroll-BSwithR-HI.png)
+
 ## Aimed at
 
 This book covers all the very basics of getting started with R, so it is useful to beginners but probably won't offer much for users who are already familiar with R. However, it does hint at some advanced functions, like defining specific function calls for custom classes.
 
-## What I noticed about the book
+## What stood out for me in the book (both positive and negative)
 
 - It introduced **version control** right away in the first chapter. Coming from an academic background where such things as Github and virtual machines were not widely used (at least not in the biology department), I learned about these invaluable tools way too late. Thus, I would always encourage students to start using them as early as possible. It will definitely make your analyses more reproducible, failproof and comprehensible. And it will make it easier to collaborate and keep track of different projects from past and present!
 
@@ -28,13 +30,13 @@ This book covers all the very basics of getting started with R, so it is useful 
 
 - The book also includes a short part to debugging and testing, which I think is valuable knowledge that most introductions to R skip. Of course, you won't get an in depth covering of these two topics but at least you will have heard about them early on.
 
-- the `rex` package
+- It introduced the [`rex` package](https://cran.r-project.org/web/packages/rex/index.html), which I hadn't known before. Looks very convenient for working with regular expressions!
 
 - The book introduces `tibble` and `dplyr` and also goes into Non-Standard Evaluation. It shows a couple of ways to work around that using tidy evaluation.
 
 This is what is shown:
 
-```{r}
+```{r warning=FALSE, message=FALSE}
 library(dplyr)
 library(rlang)
 
@@ -68,7 +70,7 @@ my_mutate_2(mtcars, cyl) %>%
   head()
 ```
 
-- Weirdly, I find, the book introduces `dplyr` and pipe operators but when Jonathan talked about replacing NAs, he only mentions the base R version:
+- Weirdly (to me) the book introduces `dplyr` and pipe operators but when Jonathan talked about replacing NAs, he only mentions the base R version:
 
 ```{r}
 d_NA <- data.frame(x = c(7, NA, 9, NA), y = 1:4)
@@ -99,6 +101,21 @@ iris %>%
   summarise(mean = mean(y))
 ```
 
-- It covers web scraping and exporting data to .RData, .rds and how to use `dput()` when asking StackOverflow questions
+- It covers web scraping and exporting data to .RData, .rds and how to use `dput()` when asking StackOverflow questions.
+
+- In the part about looping, the book mainly focuses on using the `purrr` package. You can find an example for [using `purrr` in data analysis on my blog](https://shirinsplayground.netlify.com/2018/04/flu_prediction/).
+
+- The book introduces package development, which is very useful, even if you just want to have a place where all your self-made functions "live". :-) Moreover, it also goes into Unit Testing with `testthat`!
+
+<br>
 
 ## Verdict
+
+Even though I am not really the target audience for a book like that since I am not a beginner any more (I basically skimmed through a lot of the very basic stuff), it still offered a lot of valuable information! I particularly liked that the book introduces very important parts of learning R for practical and modern applications, such as using the `tidyverse`, version control, debugging, how to aks proper questions on StackOverflow and basic package development, that don't usually get mentioned in beginner's books.
+
+---
+
+```{r}
+sessionInfo()
+```
+
