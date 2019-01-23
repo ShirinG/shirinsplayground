@@ -1,8 +1,8 @@
 ---
 title: "How to prepare data for NLP (text classification) with Keras and TensorFlow"
-draft: true
+draft: false
 author: Shirin Glander
-date: '2019-01-21'
+date: '2019-01-23'
 categories: ["R", "Keras"]
 tags: ["machine learning", "keras", "tensorflow", "nlp"]
 thumbnailImagePosition: left
@@ -102,6 +102,7 @@ tokenizer &lt;- text_tokenizer(num_words = max_features)</code></pre>
 ## [1] 3525</code></pre>
 <p>We now have the dictionary of integers and which words they should replace in our text. But we still don’t have a list of integers for our reviews. So, now we use the <code>texts_to_sequences</code> functions, which will do just that! Words, which weren’t among the top 1000 were excluded.</p>
 <pre class="r"><code>text_seqs &lt;- texts_to_sequences(tokenizer, text)
+
 text_seqs %&gt;%
   head()</code></pre>
 <pre><code>## [[1]]
@@ -178,7 +179,7 @@ length(y_train)</code></pre>
   optimizer = &quot;adam&quot;,
   metrics = &quot;accuracy&quot;
 )</code></pre>
-<pre class="r"><code>model %&gt;%
+<pre class="r"><code>hist &lt;- model %&gt;%
   fit(
     x_train,
     y_train,
@@ -186,6 +187,8 @@ length(y_train)</code></pre>
     epochs = epochs,
     validation_split = 0.3
   )</code></pre>
+<pre class="r"><code>plot(hist)</code></pre>
+<p><img src="/post/2019-01-21_text_classification_keras_data_prep_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 </div>
 <div id="alternative-preprocessing-functions" class="section level2">
 <h2>Alternative preprocessing functions</h2>
@@ -207,10 +210,13 @@ hashing_results</code></pre>
 <h2>Pretrained embeddings</h2>
 <p>Here, we have learned word embeddings from our word vectors and directly used the output of the embedding layers as input for additional layers in our neural net. Because learning embeddings takes time and computational power, we could also start with <a href="https://keras.rstudio.com/articles/examples/pretrained_word_embeddings.html">pre-trained embeddings</a>, particulary if we don’t have a whole lot of training data. You can find an example for how to use <a href="https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/6.1-using-word-embeddings.nb.html">GloVe embeddings here</a>.</p>
 <hr />
+</div>
+<div id="session-info" class="section level2">
+<h2>Session info</h2>
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>## R version 3.5.1 (2018-07-02)
+<pre><code>## R version 3.5.2 (2018-12-20)
 ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-## Running under: macOS  10.14.2
+## Running under: macOS Mojave 10.14.2
 ## 
 ## Matrix products: default
 ## BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
@@ -228,19 +234,19 @@ hashing_results</code></pre>
 ##  [9] ggplot2_3.1.0   tidyverse_1.2.1 keras_2.2.4    
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] reticulate_1.10  tidyselect_0.2.5 xfun_0.4         haven_2.0.0     
-##  [5] lattice_0.20-38  colorspace_1.4-0 generics_0.0.2   htmltools_0.3.6 
-##  [9] yaml_2.2.0       base64enc_0.1-3  utf8_1.1.4       rlang_0.3.1     
-## [13] pillar_1.3.1     withr_2.1.2      glue_1.3.0       readxl_1.2.0    
-## [17] modelr_0.1.2     bindr_0.1.1      plyr_1.8.4       tensorflow_1.10 
-## [21] cellranger_1.1.0 munsell_0.5.0    blogdown_0.10    gtable_0.2.0    
-## [25] rvest_0.3.2      evaluate_0.12    labeling_0.3     knitr_1.21      
-## [29] tfruns_1.4       fansi_0.4.0      broom_0.5.1      Rcpp_1.0.0      
-## [33] backports_1.1.3  scales_1.0.0     jsonlite_1.6     hms_0.4.2       
-## [37] digest_0.6.18    stringi_1.2.4    bookdown_0.9     grid_3.5.1      
-## [41] cli_1.0.1        tools_3.5.1      magrittr_1.5     lazyeval_0.2.1  
-## [45] crayon_1.3.4     whisker_0.3-2    pkgconfig_2.0.2  zeallot_0.1.0   
-## [49] Matrix_1.2-15    xml2_1.2.0       lubridate_1.7.4  rstudioapi_0.9.0
-## [53] assertthat_0.2.0 rmarkdown_1.11   httr_1.4.0       R6_2.3.0        
-## [57] nlme_3.1-137     compiler_3.5.1</code></pre>
+##  [1] reticulate_1.10  tidyselect_0.2.5 xfun_0.4         reshape2_1.4.3  
+##  [5] haven_2.0.0      lattice_0.20-38  colorspace_1.4-0 generics_0.0.2  
+##  [9] htmltools_0.3.6  yaml_2.2.0       base64enc_0.1-3  utf8_1.1.4      
+## [13] rlang_0.3.1      pillar_1.3.1     withr_2.1.2      glue_1.3.0      
+## [17] readxl_1.2.0     modelr_0.1.2     bindr_0.1.1      plyr_1.8.4      
+## [21] tensorflow_1.10  cellranger_1.1.0 munsell_0.5.0    blogdown_0.10   
+## [25] gtable_0.2.0     rvest_0.3.2      evaluate_0.12    labeling_0.3    
+## [29] knitr_1.21       tfruns_1.4       fansi_0.4.0      broom_0.5.1     
+## [33] Rcpp_1.0.0       backports_1.1.3  scales_1.0.0     jsonlite_1.6    
+## [37] hms_0.4.2        digest_0.6.18    stringi_1.2.4    bookdown_0.9    
+## [41] grid_3.5.2       cli_1.0.1        tools_3.5.2      magrittr_1.5    
+## [45] lazyeval_0.2.1   crayon_1.3.4     whisker_0.3-2    pkgconfig_2.0.2 
+## [49] zeallot_0.1.0    Matrix_1.2-15    xml2_1.2.0       lubridate_1.7.4 
+## [53] rstudioapi_0.9.0 assertthat_0.2.0 rmarkdown_1.11   httr_1.4.0      
+## [57] R6_2.3.0         nlme_3.1-137     compiler_3.5.2</code></pre>
 </div>

@@ -1,8 +1,8 @@
 ---
 title: "How to prepare data for NLP (text classification) with Keras and TensorFlow"
-draft: true
+draft: false
 author: Shirin Glander
-date: '2019-01-21'
+date: '2019-01-23'
 categories: ["R", "Keras"]
 tags: ["machine learning", "keras", "tensorflow", "nlp"]
 thumbnailImagePosition: left
@@ -89,6 +89,7 @@ We now have the dictionary of integers and which words they should replace in ou
 
 ```{r}
 text_seqs <- texts_to_sequences(tokenizer, text)
+
 text_seqs %>%
   head()
 ```
@@ -150,7 +151,7 @@ model <- keras_model_sequential() %>%
 ```
 
 ```{r}
-model %>%
+hist <- model %>%
   fit(
     x_train,
     y_train,
@@ -158,6 +159,10 @@ model %>%
     epochs = epochs,
     validation_split = 0.3
   )
+```
+
+```{r}
+plot(hist)
 ```
 
 ## Alternative preprocessing functions
@@ -183,6 +188,8 @@ hashing_results
 Here, we have learned word embeddings from our word vectors and directly used the output of the embedding layers as input for additional layers in our neural net. Because learning embeddings takes time and computational power, we could also start with [pre-trained embeddings](https://keras.rstudio.com/articles/examples/pretrained_word_embeddings.html), particulary if we don't have a whole lot of training data. You can find an example for how to use [GloVe embeddings here](https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/6.1-using-word-embeddings.nb.html).
 
 ---
+
+## Session info
 
 ```{r}
 sessionInfo()
