@@ -15,7 +15,7 @@ slug: neural_nets_explained
 
 
 <p>In my <a href="https://shirinsplayground.netlify.com/2018/10/ml_basics_rf/">last blogpost about Random Forests</a> I introduced the <a href="https://www.codecentric.de/kuenstliche-intelligenz/">codecentric.ai Bootcamp</a>. The next part I published was about <strong>Neural Networks</strong> and <strong>Deep Learning</strong>. Every video of our bootcamp will have example code and tasks to promote hands-on learning. While the practical parts of the bootcamp will be using Python, below you will find the English R version of this <strong>Neural Nets Practical Example</strong>, where I explain how neural nets learn and how the concepts and techniques translate to training neural nets in R with the <a href="http://docs.h2o.ai/h2o/latest-stable/h2o-docs/data-science/deep-learning.html">H2O Deep Learning function</a>.</p>
-<p>You can find the video on <a href="https://youtu.be/Z42fE0MGoDQ">YouTube</a> but as, as before, it is only available in German. Same goes for the <a href="https://codecentric.slides.com/shiringlander/dl_bootcamp_nn">slides</a>, which are also currently German only. See the end of this article for the embedded video and slides.</p>
+<p>You can find the video on <a href="https://youtu.be/Y6Bf3noDTL8">YouTube</a> but as, as before, it is only available in German. Same goes for the <a href="https://codecentric.slides.com/shiringlander/dl_bootcamp_nn">slides</a>, which are also currently German only. See the end of this article for the embedded video and slides.</p>
 <div class="figure">
 <img src="https://shiring.github.io/netlify_images/nn_explained/neural_nets_explained.png" />
 
@@ -44,17 +44,25 @@ slug: neural_nets_explained
 library(readr)
 library(h2o)
 h2o.init(nthreads = -1)</code></pre>
-<pre><code>##  Connection successful!
+<pre><code>## 
+## H2O is not running yet, starting it now...
+## 
+## Note:  In case of errors look at the following log files:
+##     /var/folders/5j/v30zfr7s14qfhqwqdmqmpxw80000gn/T//Rtmp6br9Lr/h2o_shiringlander_started_from_r.out
+##     /var/folders/5j/v30zfr7s14qfhqwqdmqmpxw80000gn/T//Rtmp6br9Lr/h2o_shiringlander_started_from_r.err
+## 
+## 
+## Starting H2O JVM and connecting: ... Connection successful!
 ## 
 ## R is connected to the H2O cluster: 
-##     H2O cluster uptime:         3 hours 46 minutes 
+##     H2O cluster uptime:         2 seconds 427 milliseconds 
 ##     H2O cluster timezone:       Europe/Berlin 
 ##     H2O data parsing timezone:  UTC 
-##     H2O cluster version:        3.20.0.8 
-##     H2O cluster version age:    1 month and 16 days  
-##     H2O cluster name:           H2O_started_from_R_shiringlander_jpa775 
+##     H2O cluster version:        3.22.1.1 
+##     H2O cluster version age:    28 days and 42 minutes  
+##     H2O cluster name:           H2O_started_from_R_shiringlander_xnf724 
 ##     H2O cluster total nodes:    1 
-##     H2O cluster total memory:   3.16 GB 
+##     H2O cluster total memory:   3.56 GB 
 ##     H2O cluster total cores:    8 
 ##     H2O cluster allowed cores:  8 
 ##     H2O cluster healthy:        TRUE 
@@ -63,7 +71,7 @@ h2o.init(nthreads = -1)</code></pre>
 ##     H2O Connection proxy:       NA 
 ##     H2O Internal Security:      FALSE 
 ##     H2O API Extensions:         XGBoost, Algos, AutoML, Core V3, Core V4 
-##     R Version:                  R version 3.5.1 (2018-07-02)</code></pre>
+##     R Version:                  R version 3.5.2 (2018-12-20)</code></pre>
 </div>
 <div id="data" class="section level2">
 <h2>Data</h2>
@@ -76,8 +84,8 @@ h2o.init(nthreads = -1)</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   .default = col_character(),
-##   SeniorCitizen = col_integer(),
-##   tenure = col_integer(),
+##   SeniorCitizen = col_double(),
+##   tenure = col_double(),
 ##   MonthlyCharges = col_double(),
 ##   TotalCharges = col_double()
 ## )</code></pre>
@@ -85,14 +93,14 @@ h2o.init(nthreads = -1)</code></pre>
 <pre class="r"><code>head(telco_data)</code></pre>
 <pre><code>## # A tibble: 6 x 21
 ##   customerID gender SeniorCitizen Partner Dependents tenure PhoneService
-##   &lt;chr&gt;      &lt;chr&gt;          &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;       
+##   &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;       
 ## 1 7590-VHVEG Female             0 Yes     No              1 No          
 ## 2 5575-GNVDE Male               0 No      No             34 Yes         
 ## 3 3668-QPYBK Male               0 No      No              2 Yes         
 ## 4 7795-CFOCW Male               0 No      No             45 No          
 ## 5 9237-HQITU Female             0 No      No              2 Yes         
 ## 6 9305-CDSKC Female             0 No      No              8 Yes         
-## # ... with 14 more variables: MultipleLines &lt;chr&gt;, InternetService &lt;chr&gt;,
+## # … with 14 more variables: MultipleLines &lt;chr&gt;, InternetService &lt;chr&gt;,
 ## #   OnlineSecurity &lt;chr&gt;, OnlineBackup &lt;chr&gt;, DeviceProtection &lt;chr&gt;,
 ## #   TechSupport &lt;chr&gt;, StreamingTV &lt;chr&gt;, StreamingMovies &lt;chr&gt;,
 ## #   Contract &lt;chr&gt;, PaperlessBilling &lt;chr&gt;, PaymentMethod &lt;chr&gt;,
@@ -305,19 +313,19 @@ hf_y</code></pre>
 <pre><code>## [[1]]
 ##   predict        No        Yes
 ## 1      No 0.0000000 0.00000000
-## 2      No 0.9784236 0.02157642
+## 2      No 0.9742401 0.02575991
 ## 3      No 0.0000000 0.00000000
-## 4      No 0.9808329 0.01916711
-## 5     Yes 0.1512552 0.84874476
-## 6     Yes 0.1590060 0.84099396
+## 4      No 0.9810427 0.01895733
+## 5     Yes 0.1665065 0.83349348
+## 6     Yes 0.1771927 0.82280726
 ## 
 ## [7043 rows x 3 columns] 
 ## 
 ## [[2]]
 ##   predict        No       Yes
-## 1     Yes 0.2484017 0.7515983
+## 1     Yes 0.4017627 0.5982373
 ## 2      No 0.0000000 0.0000000
-## 3      No 0.8107972 0.1892028
+## 3      No 0.8110977 0.1889023
 ## 4      No 0.0000000 0.0000000
 ## 5      No 0.0000000 0.0000000
 ## 6      No 0.0000000 0.0000000
@@ -336,19 +344,19 @@ hf_y</code></pre>
 ## [7043 rows x 3 columns]</code></pre>
 <pre class="r"><code>h2o.cross_validation_holdout_predictions(dl_model)</code></pre>
 <pre><code>##   predict        No        Yes
-## 1     Yes 0.2484017 0.75159829
-## 2      No 0.9784236 0.02157642
-## 3      No 0.8107972 0.18920283
-## 4      No 0.9808329 0.01916711
-## 5     Yes 0.1512552 0.84874476
-## 6     Yes 0.1590060 0.84099396
+## 1     Yes 0.4017627 0.59823735
+## 2      No 0.9742401 0.02575991
+## 3      No 0.8110977 0.18890231
+## 4      No 0.9810427 0.01895733
+## 5     Yes 0.1665065 0.83349348
+## 6     Yes 0.1771927 0.82280726
 ## 
 ## [7043 rows x 3 columns]</code></pre>
 <hr />
 </div>
 <div id="video" class="section level1">
 <h1>Video</h1>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Z42fE0MGoDQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Y6Bf3noDTL8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 </div>
 <div id="slides" class="section level1">
@@ -357,9 +365,9 @@ hf_y</code></pre>
 </iframe>
 <hr />
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>## R version 3.5.1 (2018-07-02)
+<pre><code>## R version 3.5.2 (2018-12-20)
 ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-## Running under: macOS  10.14
+## Running under: macOS Mojave 10.14.2
 ## 
 ## Matrix products: default
 ## BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
@@ -372,23 +380,23 @@ hf_y</code></pre>
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] bindrcpp_0.2.2  h2o_3.20.0.8    forcats_0.3.0   stringr_1.3.1  
-##  [5] dplyr_0.7.7     purrr_0.2.5     readr_1.1.1     tidyr_0.8.1    
-##  [9] tibble_1.4.2    ggplot2_3.1.0   tidyverse_1.2.1
+##  [1] bindrcpp_0.2.2  h2o_3.22.1.1    forcats_0.3.0   stringr_1.3.1  
+##  [5] dplyr_0.7.8     purrr_0.2.5     readr_1.3.1     tidyr_0.8.2    
+##  [9] tibble_2.0.1    ggplot2_3.1.0   tidyverse_1.2.1
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] tidyselect_0.2.5 xfun_0.4         haven_1.1.2      lattice_0.20-35 
-##  [5] colorspace_1.3-2 htmltools_0.3.6  yaml_2.2.0       utf8_1.1.4      
-##  [9] rlang_0.3.0.1    pillar_1.3.0     glue_1.3.0       withr_2.1.2     
-## [13] modelr_0.1.2     readxl_1.1.0     bindr_0.1.1      plyr_1.8.4      
-## [17] munsell_0.5.0    blogdown_0.9     gtable_0.2.0     cellranger_1.1.0
-## [21] rvest_0.3.2      evaluate_0.12    labeling_0.3     knitr_1.20      
-## [25] fansi_0.4.0      broom_0.5.0      Rcpp_0.12.19     scales_1.0.0    
-## [29] backports_1.1.2  jsonlite_1.5     hms_0.4.2        digest_0.6.18   
-## [33] stringi_1.2.4    bookdown_0.7     grid_3.5.1       rprojroot_1.3-2 
-## [37] bitops_1.0-6     cli_1.0.1        tools_3.5.1      magrittr_1.5    
+##  [1] tidyselect_0.2.5 xfun_0.4         haven_2.0.0      lattice_0.20-38 
+##  [5] colorspace_1.4-0 generics_0.0.2   htmltools_0.3.6  yaml_2.2.0      
+##  [9] utf8_1.1.4       rlang_0.3.1      pillar_1.3.1     glue_1.3.0      
+## [13] withr_2.1.2      modelr_0.1.2     readxl_1.2.0     bindr_0.1.1     
+## [17] plyr_1.8.4       munsell_0.5.0    blogdown_0.10    gtable_0.2.0    
+## [21] cellranger_1.1.0 rvest_0.3.2      evaluate_0.12    labeling_0.3    
+## [25] knitr_1.21       fansi_0.4.0      broom_0.5.1      Rcpp_1.0.0      
+## [29] scales_1.0.0     backports_1.1.3  jsonlite_1.6     hms_0.4.2       
+## [33] digest_0.6.18    stringi_1.2.4    bookdown_0.9     grid_3.5.2      
+## [37] bitops_1.0-6     cli_1.0.1        tools_3.5.2      magrittr_1.5    
 ## [41] lazyeval_0.2.1   RCurl_1.95-4.11  crayon_1.3.4     pkgconfig_2.0.2 
-## [45] xml2_1.2.0       lubridate_1.7.4  assertthat_0.2.0 rmarkdown_1.10  
-## [49] httr_1.3.1       rstudioapi_0.8   R6_2.3.0         nlme_3.1-137    
-## [53] compiler_3.5.1</code></pre>
+## [45] xml2_1.2.0       lubridate_1.7.4  assertthat_0.2.0 rmarkdown_1.11  
+## [49] httr_1.4.0       rstudioapi_0.9.0 R6_2.3.0         nlme_3.1-137    
+## [53] compiler_3.5.2</code></pre>
 </div>

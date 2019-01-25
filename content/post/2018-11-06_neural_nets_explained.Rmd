@@ -14,7 +14,7 @@ slug: neural_nets_explained
 
 In my [last blogpost about Random Forests](https://shirinsplayground.netlify.com/2018/10/ml_basics_rf/) I introduced the [codecentric.ai Bootcamp](https://www.codecentric.de/kuenstliche-intelligenz/). The next part I published was about **Neural Networks** and **Deep Learning**. Every video of our bootcamp will have example code and tasks to promote hands-on learning. While the practical parts of the bootcamp will be using Python, below you will find the English R version of this **Neural Nets Practical Example**, where I explain how neural nets learn and how the concepts and techniques translate to training neural nets in R with the [H2O Deep Learning function](http://docs.h2o.ai/h2o/latest-stable/h2o-docs/data-science/deep-learning.html).
 
-You can find the video on [YouTube](https://youtu.be/Z42fE0MGoDQ) but as, as before, it is only available in German. Same goes for the [slides](https://codecentric.slides.com/shiringlander/dl_bootcamp_nn), which are also currently German only. See the end of this article for the embedded video and slides.
+You can find the video on [YouTube](https://youtu.be/Y6Bf3noDTL8) but as, as before, it is only available in German. Same goes for the [slides](https://codecentric.slides.com/shiringlander/dl_bootcamp_nn), which are also currently German only. See the end of this article for the embedded video and slides.
 
 ![](https://shiring.github.io/netlify_images/nn_explained/neural_nets_explained.png)
 
@@ -315,7 +315,7 @@ h2o.cross_validation_holdout_predictions(dl_model)
 
 # Video
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Z42fE0MGoDQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Y6Bf3noDTL8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 # Slides
 
