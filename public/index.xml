@@ -2,12 +2,37 @@
   <title>Shirin&#39;s playgRound</title>
   <link href="/index.xml" rel="self"/>
   <link href="/"/>
-  <updated>2019-02-04T00:00:00+00:00</updated>
+  <updated>2019-02-08T00:00:00+00:00</updated>
   <id>/</id>
   <author>
     <name>Dr. Shirin Glander</name>
   </author>
   <generator>Hugo -- gohugo.io</generator>
+  <entry>
+    <title type="html"><![CDATA[Launching codecentric.AI Bootcamp course!]]></title>
+    <link href="/2019/02/ccai_bootcamp_launch/"/>
+    <id>/2019/02/ccai_bootcamp_launch/</id>
+    <published>2019-02-08T00:00:00+00:00</published>
+    <updated>2019-02-08T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<p>Today, I am happy to announce the launch of our <a href="https://bootcamp.codecentric.ai/">codecentric.AI Bootcamp</a>!</p>
+<p>This bootcamp is a free online course for everyone who wants to learn hands-on machine learning and AI techniques, from basic algorithms to deep learning, computer vision and NLP. However, the course language is German only, but for every chapter I did, you will find an English R-version here on my blog (see below for links).</p>
+<p>Right now, the course is in beta phase, so we are happy about everyone who tests our content and leaves feedback. Also, not the entire curriculum is finished yet, we will update and extend the course during the next months. If there are specific topics you’d like to have us cover, just let us know!</p>
+<p>You can register for the learning platform at</p>
+<p><a href="https://bootcamp.codecentric.ai/" class="uri">https://bootcamp.codecentric.ai/</a></p>
+<p>The code examples in the course are given in Python but for every chapter I did, you can find an R-version here on my blog:</p>
+<ul>
+<li><a href="https://shirinsplayground.netlify.com/2019/01/how_cnns_learn/">How do Convolutional Neural Nets (CNNs) learn? + Keras example</a></li>
+<li><a href="https://shirinsplayground.netlify.com/2018/11/ml_basics_gbm/">Machine Learning Basics - Gradient Boosting &amp; XGBoost</a></li>
+<li><a href="https://shirinsplayground.netlify.com/2018/11/neural_nets_explained/">‘How do neural nets learn?’ A step by step explanation using the H2O Deep Learning algorithm.</a></li>
+<li><a href="https://shirinsplayground.netlify.com/2018/10/ml_basics_rf/">Machine Learning Basics - Random Forest</a></li>
+</ul>
+<p>We also offer additional support with on-site training packages for companies that want to use our course to make their employees fit for AI. More info here: <a href="https://bootcamp.codecentric.ai/#firmen-deep-drive" class="uri">https://bootcamp.codecentric.ai/#firmen-deep-drive</a>.</p>
+<div class="figure">
+<img src="https://shiring.github.io/netlify_images/ccai_bootcamp.png" />
+
+</div>
+]]></content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[How to use cross-validation with the image data generator in Keras and TensorFlow]]></title>
     <link href="/2019/02/keras_fruits_crossvalidation/"/>

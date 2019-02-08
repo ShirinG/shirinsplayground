@@ -1,0 +1,34 @@
+---
+title: "Launching codecentric.AI Bootcamp course!"
+draft: false
+author: Shirin Glander
+date: '2019-02-08'
+categories: ["codecentric.ai"]
+tags: ["codecentric.ai"]
+thumbnailImagePosition: left
+thumbnailImage: https://shiring.github.io/netlify_images/ccai_bootcamp.png
+metaAlignment: center
+coverMeta: out
+slug: ccai_bootcamp_launch
+---
+
+Today, I am happy to announce the launch of our [codecentric.AI Bootcamp](https://bootcamp.codecentric.ai/)!
+
+This bootcamp is a free online course for everyone who wants to learn hands-on machine learning and AI techniques, from basic algorithms to deep learning, computer vision and NLP. However, the course language is German only, but for every chapter I did, you will find an English R-version here on my blog (see below for links).
+ 
+Right now, the course is in beta phase, so we are happy about everyone who tests our content and leaves feedback. Also, not the entire curriculum is finished yet, we will update and extend the course during the next months. If there are specific topics you'd like to have us cover, just let us know!
+
+You can register for the learning platform at
+
+https://bootcamp.codecentric.ai/
+
+The code examples in the course are given in Python but for every chapter I did, you can find an R-version here on my blog:
+
+- [How do Convolutional Neural Nets (CNNs) learn? + Keras example](https://shirinsplayground.netlify.com/2019/01/how_cnns_learn/)
+- [Machine Learning Basics - Gradient Boosting & XGBoost](https://shirinsplayground.netlify.com/2018/11/ml_basics_gbm/)
+- ['How do neural nets learn?' A step by step explanation using the H2O Deep Learning algorithm.](https://shirinsplayground.netlify.com/2018/11/neural_nets_explained/)
+- [Machine Learning Basics - Random Forest](https://shirinsplayground.netlify.com/2018/10/ml_basics_rf/)
+
+We also offer additional support with on-site training packages for companies that want to use our course to make their employees fit for AI. More info here: https://bootcamp.codecentric.ai/#firmen-deep-drive.
+
+![](https://shiring.github.io/netlify_images/ccai_bootcamp.png)
