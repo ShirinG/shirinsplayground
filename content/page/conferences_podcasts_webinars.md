@@ -24,8 +24,6 @@ Here, you can find a list of all the talks I gave at conferences, webinars, podc
 > I offer a workshop on deep learning with Keras and TensorFlow using R.
 Date and place depend on who and how many people are interested, so please contact me either directly or via the workshop page: https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/ (the description is in German but I also offer to give the workshop in English).
 
-[The next dates for the workshop are: tbd](https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/)
-
 <br>
 
 - [Workshop: End-2-End vom Keras TensorFlow-Modell zur Produktion](https://www.codecentric.de/schulung/end-2-end-vom-keras-tensorflow-modell-zur-produktion/)
@@ -34,11 +32,7 @@ Date and place depend on who and how many people are interested, so please conta
 Keras ist eine High-Level-Schnittstelle, die ein schnelles, einfaches und flexibles Prototypisieren von Neuronalen Netzwerken mit TensorFlow ermöglicht. Zusammen mit Luigi lassen sich beliebig komplexe Datenverarbeitungs-Workflows in Python erstellen. Das führt dazu, dass auch Nicht-Entwickler den End-2-End-Workflow des Keras-TensorFlow-Modells zur Produktionsreife leicht
 implementieren können.
 
-Next dates: 
-
-21st & 22nd of February 2019 in Berlin
-
-11th & 12th of April 2019 in Münster
+- Next date: [We will give this workshop at the M3 conference in Mannheim on May 14th](https://www.m3-konferenz.de/lecture.php?id=8533&source=0)
 
 <br>
 
@@ -56,7 +50,7 @@ Next dates:
 
 ![](https://shiring.github.io/netlify_images/ix_article_01.jpeg)
 
-- Book chapter Predictive Analytics (German)
+- Book chapter Predictive Analytics (German): planned publication in April 2019
 
 ---
 
@@ -64,13 +58,21 @@ Next dates:
 
 ## Upcoming talks, webinars, podcasts, etc.
 
-- tbd
+- March, 26th: At the [data lounge Bremen, I'll be talking about Explainable Machine Learning](http://meetu.ps/e/GlST9/w54bW/f)
+
+- April, 11th: At the [Data Science Meetup Bielefeld, I'll be talking about Building Interpretable Neural Networks with Keras and LIME](http://meetu.ps/e/G8yg1/w54bW/f)
+
+- May, 15th: At the same conference, [I'll be giving a talk about TensorFlow Probability](https://www.m3-konferenz.de/lecture.php?id=7861&source=0)
 
 ---
 
 <br>
 
 ## Past talks, webinars, podcasts, etc.
+
+- On March, 15th, I talked about **Deep Learning for Software Engineers** at the [AccsoCon 2019](https://accso.de/magazin/deep-learning-fuer-neugierige-entwickler/). You can find my slides [here](https://www.beautiful.ai/deck/-L_l3VZxSdN73Pxr8dw-/ACCSOCON-2019).
+
+<br>
 
 - At the [This week in machine learning and AI European online Meetup on December 5th, 2018](https://shirinsplayground.netlify.com/2018/11/twimlai_meetup/), I presented and led a discussion about the Anchors paper, the next generation of machine learning interpretability tools. You can find the slides [here](https://shirinsplayground.netlify.com/2018/12/trust_in_ml_slides_ix/).
 

@@ -1,0 +1,35 @@
+---
+title: "Upcoming talks in spring 2019"
+draft: false
+author: Shirin Glander
+date: '2019-03-22'
+categories: ["R"]
+tags: ["meetup", "conferences"]
+thumbnailImagePosition: left
+thumbnailImage: https://www.meetup.com/mu_static/de-DE/logo--script.004ada05.svg
+metaAlignment: center
+coverMeta: out
+slug: upcoming_talks_spring2019
+---
+
+This spring, I'll be giving talks at a couple of Meetups and conferences:
+
+<br>
+
+![](https://www.meetup.com/mu_static/de-DE/logo--script.004ada05.svg)
+
+- March, 26th: At the [data lounge Bremen, I'll be talking about Explainable Machine Learning](http://meetu.ps/e/GlST9/w54bW/f)
+
+- April, 11th: At the [Data Science Meetup Bielefeld, I'll be talking about Building Interpretable Neural Networks with Keras and LIME](http://meetu.ps/e/G8yg1/w54bW/f)
+
+<br>
+
+![](https://www.m3-konferenz.de/2018/common/images/konferenzen/m3text.svg)
+
+- May, 14th: At the [M3 conference in Mannheim, a colleague and I will give our workshop on building production-ready machine learning models with Keras, Luigi, DVC and TensorFlow Serving](https://www.m3-konferenz.de/lecture.php?id=8533&source=0)
+
+- May, 15th: At the same conference, [I'll be giving a talk about TensorFlow Probability](https://www.m3-konferenz.de/lecture.php?id=7861&source=0)
+
+<br>
+
+If you happen to be at any of these events, please come and say Hi! I'd love to connect. :-)
