@@ -8723,8 +8723,6 @@ implementieren können.</p>
 <h2 id="upcoming-talks-webinars-podcasts-etc">Upcoming talks, webinars, podcasts, etc.</h2>
 
 <ul>
-<li><p>March, 26th: At the <a href="http://meetu.ps/e/GlST9/w54bW/f">data lounge Bremen, I&rsquo;ll be talking about Explainable Machine Learning</a></p></li>
-
 <li><p>April, 11th: At the <a href="http://meetu.ps/e/G8yg1/w54bW/f">Data Science Meetup Bielefeld, I&rsquo;ll be talking about Building Interpretable Neural Networks with Keras and LIME</a></p></li>
 
 <li><p>May, 15th: At the same conference, <a href="https://www.m3-konferenz.de/lecture.php?id=7861&amp;source=0">I&rsquo;ll be giving a talk about TensorFlow Probability</a></p></li>
@@ -8735,6 +8733,12 @@ implementieren können.</p>
 <p><br></p>
 
 <h2 id="past-talks-webinars-podcasts-etc">Past talks, webinars, podcasts, etc.</h2>
+
+<ul>
+<li>On March, 26th, I gave my talk about <a href="http://meetu.ps/e/GlST9/w54bW/f">Explainable Machine Learning at the data lounge Meetup Bremen</a>. Slides are <a href="https://www.beautiful.ai/deck/-L_l8U2hYD6Of0R83sM4/Data-Lounge-HB-Meetup">here</a>.</li>
+</ul>
+
+<p><br></p>
 
 <ul>
 <li>On March, 15th, I talked about <strong>Deep Learning for Software Engineers</strong> at the <a href="https://accso.de/magazin/deep-learning-fuer-neugierige-entwickler/">AccsoCon 2019</a>. You can find my slides <a href="https://www.beautiful.ai/deck/-L_l3VZxSdN73Pxr8dw-/ACCSOCON-2019">here</a>.</li>

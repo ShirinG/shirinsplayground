@@ -58,8 +58,6 @@ implementieren können.
 
 ## Upcoming talks, webinars, podcasts, etc.
 
-- March, 26th: At the [data lounge Bremen, I'll be talking about Explainable Machine Learning](http://meetu.ps/e/GlST9/w54bW/f)
-
 - April, 11th: At the [Data Science Meetup Bielefeld, I'll be talking about Building Interpretable Neural Networks with Keras and LIME](http://meetu.ps/e/G8yg1/w54bW/f)
 
 - May, 15th: At the same conference, [I'll be giving a talk about TensorFlow Probability](https://www.m3-konferenz.de/lecture.php?id=7861&source=0)
@@ -69,6 +67,10 @@ implementieren können.
 <br>
 
 ## Past talks, webinars, podcasts, etc.
+
+- On March, 26th, I gave my talk about [Explainable Machine Learning at the data lounge Meetup Bremen](http://meetu.ps/e/GlST9/w54bW/f). Slides are [here](https://www.beautiful.ai/deck/-L_l8U2hYD6Of0R83sM4/Data-Lounge-HB-Meetup).
+
+<br>
 
 - On March, 15th, I talked about **Deep Learning for Software Engineers** at the [AccsoCon 2019](https://accso.de/magazin/deep-learning-fuer-neugierige-entwickler/). You can find my slides [here](https://www.beautiful.ai/deck/-L_l3VZxSdN73Pxr8dw-/ACCSOCON-2019).
 
