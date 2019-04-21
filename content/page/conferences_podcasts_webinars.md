@@ -15,6 +15,8 @@ Here, you can find a list of all the talks I gave at conferences, webinars, podc
 
 - [Data Camp course on Hyperparameter Tuning in R](https://www.datacamp.com/courses/hyperparameter-tuning-in-r)
 
+**UPDATE:** Before you take this course please consider [the info about the sexual harrassment scandal surrounding DataCamp](https://shirinsplayground.netlify.com/2019/04/consider_data_camp)!
+
 > For many machine learning problems, simply running a model out-of-the-box and getting a prediction is not enough; you want the best model with the most accurate prediction. One way to perfect your model is with hyperparameter tuning, which means optimizing the settings for that specific model. In this course, you will work with the caret, mlr and h2o packages to find the optimal combination of hyperparameters in an efficient manner using grid search, random search, adaptive resampling and automatic machine learning (AutoML). Furthermore, you will work with different datasets and tune different supervised learning models, such as random forests, gradient boosting machines, support vector machines, and even neural nets. Get ready to tune!
 
 <br>
@@ -58,7 +60,7 @@ implementieren können.
 
 ## Upcoming talks, webinars, podcasts, etc.
 
-- April, 11th: At the [Data Science Meetup Bielefeld, I'll be talking about Building Interpretable Neural Networks with Keras and LIME](http://meetu.ps/e/G8yg1/w54bW/f)
+- [We will give our workshop "End-2-End vom Keras TensorFlow-Modell zur Produktion" at the M3 conference in Mannheim on May 14th](https://www.m3-konferenz.de/lecture.php?id=8533&source=0)
 
 - May, 15th: At the same conference, [I'll be giving a talk about TensorFlow Probability](https://www.m3-konferenz.de/lecture.php?id=7861&source=0)
 
@@ -67,6 +69,10 @@ implementieren können.
 <br>
 
 ## Past talks, webinars, podcasts, etc.
+
+- On April, 11th, at the [Data Science Meetup Bielefeld, I was talking about Building Interpretable Neural Networks with Keras and LIME](http://meetu.ps/e/G8yg1/w54bW/f). Slides are [here](https://www.beautiful.ai/deck/-LaWjFBM_2crkZG-Oz4g/Data-Science-Meetup-Bielefeld).
+
+<br>
 
 - On March, 26th, I gave my talk about [Explainable Machine Learning at the data lounge Meetup Bremen](http://meetu.ps/e/GlST9/w54bW/f). Slides are [here](https://www.beautiful.ai/deck/-L_l8U2hYD6Of0R83sM4/Data-Lounge-HB-Meetup).
 

@@ -11,7 +11,7 @@ thumbnailImage: /img/Bewerbungsfoto.jpg
 
 I’m Shirin, a biologist turned bioinformatician turned data scientist. During my PhD and Postdoc I worked with Next Generation Sequencing data to analyze diseases like arthritis. However, I then chose to become a data scientist for a German IT company, called codecentric. In this capacity, I have been working on many different projects, e.g. building fraud detection models, creating a chatbot, implementing predictive maintenance, and more. My tool of choice for data analysis so far has been R but I also work with Python. I am also very passionate about teaching and sharing knowledge, so I give workshops, talk at conferences or [meetups](https://youtu.be/81UqFUk5B9I), write blog posts and organize the the [MünsteR R-users group on meetup.com](https://shiring.github.io/r_users_group/2017/05/20/muenster_r_user_group).  ![](/img/Bewerbungsfoto_klein.jpg)
 
-I also teach a [Data Camp course in hyperparameter tuning with R](https://www.datacamp.com/courses/hyperparameter-tuning-in-r) and I'm on the program committee of the [Minds Mastering Machines M3 conference](https://m3-konferenz.de/programmkomitee.php).
+I also teach a [Data Camp course in hyperparameter tuning with R](https://www.datacamp.com/courses/hyperparameter-tuning-in-r) (**UPDATE:** Before you take this course please consider [the info about the sexual harrassment scandal surrounding DataCamp](https://shirinsplayground.netlify.com/2019/04/consider_data_camp)!) and I'm on the program committee of the [Minds Mastering Machines M3 conference](https://m3-konferenz.de/programmkomitee.php).
 
 ![My journey to Data Science](https://shiring.github.io/netlify_images/my_story_wml3zm.png)
 

@@ -12,6 +12,10 @@ coverMeta: out
 slug: data_camp_hyperparameter_tuning
 ---
 
+**UPDATE:** Before you take this course please consider [the info about the sexual harrassment scandal surrounding DataCamp](https://shirinsplayground.netlify.com/2019/04/consider_data_camp)!
+
+<br>
+
 I am very happy to announce that (after many months) my interactive course on [Hyperparameter Tuning in R](https://www.datacamp.com/courses/hyperparameter-tuning-in-r) has now been officially launched on [Data Camp](https://www.datacamp.com)!
 
 <br>
