@@ -12,17 +12,17 @@ coverMeta: out
 slug: consider_data_camp
 ---
 
-Today, I am finally getting around to writing this very sad blogpost: **Before you take [my DataCamp course](https://shirinsplayground.netlify.com/2019/01/data_camp_hyperparameter_tuning/) please consider the following information about the sexual harrassment scandal surrounding DataCamp!**
+Today, I am finally getting around to writing this very sad blog post: **Before you take [my DataCamp course](https://shirinsplayground.netlify.com/2019/01/data_camp_hyperparameter_tuning/) please consider the following information about the sexual harrassment scandal surrounding DataCamp!**
 
 As many of my fellow instructors and community members have already written excellent articles about what happened, I am providing a collection of tweets and links below for you to judge the situation for yourself. All I have to add is that while I have no personal knowledge of ALL the details surrounding the incident, there are many prominent members of the community who have - and since I highly value their opinion and trust their judgement, I am supporting what has been said!
 
-It's making me very sad that my course, which I have put a lot of hard work into and which I was very proud of, and by association my name are now linked to this unfortunate situation. That's why I have not been addressing any feedback messages on my course any more and will not do so for the foreseeable future. At the end of this post, I have collected some efforts to find alternatives for DataCamp courses. The contents of my own course will probably be converted to a series of blogposts.
+It's making me very sad that my course, which I have put a lot of hard work into and which I was very proud of, and by association my name are now linked to this unfortunate situation. That's why I have not been addressing any feedback messages on my course any more and will not do so for the foreseeable future. At the end of this post, I have collected some efforts to find alternatives for DataCamp courses. The contents of my own course will probably be converted to a series of blog posts.
 
 <br>
 
 ## What happened
 
-In essence, after a broader group of instructors, including myself, were made aware of an incident of sexual harrassment at DataCamp (which was followed by a lengthy struggle to get them to properly handle and own up to what happened), DataCamp made a "public" announcement:
+In essence, after a broader group of instructors, including myself, were made aware of an incident of sexual harassment at DataCamp (which was followed by a lengthy struggle to get them to properly handle and own up to what happened), DataCamp made a "public" announcement:
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">After *many months* of collective negotiating by the instructor community to demand more transparency &amp; accountability, they still did nothing.  Their public announcement is a response to a letter we sent to <a href="https://twitter.com/DataCamp?ref_src=twsrc%5Etfw">@DataCamp</a> one day prior, signed by over 100 DataCamp instructors. <a href="https://t.co/9su0XCwuxV">https://t.co/9su0XCwuxV</a></p>&mdash; Erin LeDell (@ledell) <a href="https://twitter.com/ledell/status/1114238844503609344?ref_src=twsrc%5Etfw">April 5, 2019</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>

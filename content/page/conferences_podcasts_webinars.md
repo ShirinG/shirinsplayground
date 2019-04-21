@@ -15,7 +15,7 @@ Here, you can find a list of all the talks I gave at conferences, webinars, podc
 
 - [Data Camp course on Hyperparameter Tuning in R](https://www.datacamp.com/courses/hyperparameter-tuning-in-r)
 
-**UPDATE:** Before you take this course please consider [the info about the sexual harrassment scandal surrounding DataCamp](https://shirinsplayground.netlify.com/2019/04/consider_data_camp)!
+**UPDATE:** Before you take this course please consider [the info about the sexual harassment scandal surrounding DataCamp](https://shirinsplayground.netlify.com/2019/04/consider_data_camp)!
 
 > For many machine learning problems, simply running a model out-of-the-box and getting a prediction is not enough; you want the best model with the most accurate prediction. One way to perfect your model is with hyperparameter tuning, which means optimizing the settings for that specific model. In this course, you will work with the caret, mlr and h2o packages to find the optimal combination of hyperparameters in an efficient manner using grid search, random search, adaptive resampling and automatic machine learning (AutoML). Furthermore, you will work with different datasets and tune different supervised learning models, such as random forests, gradient boosting machines, support vector machines, and even neural nets. Get ready to tune!
 
@@ -51,8 +51,7 @@ implementieren können.
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr"><a href="https://t.co/onaDiQV3Ci">https://t.co/onaDiQV3Ci</a><br>My article about machine learning with Python has come out in the German Entwickler Magazin. 😊</p>&mdash; Shirin Glander (@ShirinGlander) <a href="https://twitter.com/ShirinGlander/status/1116340544110825472?ref_src=twsrc%5Etfw">April 11, 2019</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-
-br>
+<br>
 
 - [An article about about **Explaining Black-Box Machine Learning Models** in the **iX Developer Machine Learning**](https://shop.heise.de/katalog/blick-in-die-blackbox) (German)
 
