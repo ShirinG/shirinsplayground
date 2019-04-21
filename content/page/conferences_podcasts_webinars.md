@@ -46,6 +46,14 @@ implementieren können.
 
 ## Where you find my written word
 
+- [For the German Entwickler Magazin, I have written an article about how to train your own image classification model with Python and Keras](https://entwickler.de/leseproben/machine-learning-mit-python-579887732.html)
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr"><a href="https://t.co/onaDiQV3Ci">https://t.co/onaDiQV3Ci</a><br>My article about machine learning with Python has come out in the German Entwickler Magazin. 😊</p>&mdash; Shirin Glander (@ShirinGlander) <a href="https://twitter.com/ShirinGlander/status/1116340544110825472?ref_src=twsrc%5Etfw">April 11, 2019</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+br>
+
 - [An article about about **Explaining Black-Box Machine Learning Models** in the **iX Developer Machine Learning**](https://shop.heise.de/katalog/blick-in-die-blackbox) (German)
 
 - [A short version of this article about **Explaining Black-Box Machine Learning Models** in the **iX 12/2018**](https://shop.heise.de/katalog/ix-12-2018) (German)
