@@ -31,7 +31,7 @@ canonifyurls = true
   archive = "archives"
 
 [author]
-  name = "Dr. Shirin Glander"
+  name = "Dr. Shirin Elsinghorst"
   bio = "Biologist turned Bioinformatician turned Data Scientist"
   job = "Data Scientist"
   location = "Münster, Germany"
