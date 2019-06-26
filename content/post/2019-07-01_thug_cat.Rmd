@@ -74,11 +74,13 @@ plot(image)
 points(points[, grepl("_x", colnames(points))], points[, grepl("_y", colnames(points))])
 ```
 
+### Crop images to same height and width and combine into one array
+
+- Let's start with predicting only the mouth
+- We want to crop, so some of the keypoints will be cut off; these images we want to exclude, so let's find them and write them into a new vector
+
 ```{r}
-library(OpenImageR)
-image <- readImage(img)
-image_crop <- cropImage(image, new_width = 1:100, new_height = 1:100, type = 'user_defined')
-dim(image_crop)
+cutoff <- 250
 ```
 
 ```{r}
@@ -91,9 +93,56 @@ return_keypoints <- function(filename){
 }
 ```
 
-```{r warning=FALSE, message=FALSE}
-return_keypoints(img)
+```{r warning=FALSE, message=FALSE, eval=FALSE}
+images_to_use <- c()
+
+for(i in 1:length(list_of_cat_images)) {
+  
+  img <- list_of_cat_images[i]
+  img_id <- gsub("/Users/shiringlander/Documents/Github/Data/cats//", "", img)
+  kps_mouth <- return_keypoints(img)[6:7]
+  
+  if (any(kps_mouth > cutoff)) {
+    cat("Mouth keypoints of image", img_id, "not in cutoff\n")
+  } else {
+    images_to_use <- c(images_to_use, img_id)
+  }
+}
+
+length(images_to_use) #5541
+saveRDS(images_to_use, file = "/Users/shiringlander/Documents/Github/shirinsplayground/data/images_to_use.rds")
 ```
+
+- Let's load these images, convert them to an array and combine them into one array
+
+```{r}
+images_to_use <- readRDS(file = "/Users/shiringlander/Documents/Github/shirinsplayground/data/images_to_use.rds")
+
+library(abind)
+
+for(i in 1:length(images_to_use)) {
+  image <- readImage(paste0("/Users/shiringlander/Documents/Github/Data/cats//", images_to_use[i]))
+  #countcolors::plotArrayAsImage(image)
+  img_id <- images_to_use[i]
+  
+  if (all(dim(image)[1:2] >= cutoff))
+  image_crop <- cropImage(image, new_width = 1:cutoff, new_height = 1:cutoff, type = 'user_defined')
+  
+  if (i == 1) {
+    image_crop_array <- abind(image_crop, along = 0)
+    attr(image_crop_array, "dimnames")[[1]] <- c(img_id)
+  } else {
+    image_crop <- abind(image_crop, along = 0)
+    image_crop_array <- abind(image_crop_array, image_crop, along = 1)
+    attr(image_crop_array, "dimnames")[[1]][i] <- c(img_id)
+  }
+}
+dim(image_crop_array)
+str(image_crop_array)
+```
+
+
+
 
 
 ## Predict only mouth
