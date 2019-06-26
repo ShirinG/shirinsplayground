@@ -50,6 +50,7 @@ head(list_of_cat_images)
 ```
 
 ```{r message = FALSE, warning=FALSE}
+library(imager)
 img <- list_of_cat_images[1]
 image <- load.image(img)
 dim(image)
@@ -66,18 +67,128 @@ keypoints = c("no_kps",
               "rgt_ear_2_x", "rgt_ear_2_y",
               "rgt_ear_3_x", "rgt_ear_3_y")
 
-pts <- gsub(".jpg", ".cat", img)
-points <- read_delim(list_of_cat_annos[1], delim = " ", col_names = keypoints)
+pts <- gsub(".jpg", ".jpg.cat", img)
+points <- read_delim(pts, delim = " ", col_names = keypoints)
 
-library(imager)
 plot(image)
 points(points[, grepl("_x", colnames(points))], points[, grepl("_y", colnames(points))])
 ```
 
+```{r}
+library(OpenImageR)
+image <- readImage(img)
+image_crop <- cropImage(image, new_width = 1:100, new_height = 1:100, type = 'user_defined')
+dim(image_crop)
+```
+
+```{r}
+return_keypoints <- function(filename){
+  pts <- gsub(".jpg", ".jpg.cat", filename)
+  points <- read_delim(pts, delim = " ", col_names = keypoints) %>%
+    slice(1) %>% 
+    unlist(., use.names = TRUE)
+  return(points)
+}
+```
+
+```{r warning=FALSE, message=FALSE}
+return_keypoints(img)
+```
 
 
+## Predict only mouth
 
+- "data.frame containing the filepaths relative to directory (or absolute paths if directory is NULL) of the images in a character column."
+- "if class_mode is "other" it should contain the columns specified in y_col ("other": array of y_col data)."
 
+```{r}
+return_img_w <- function(filename){
+  image <- load.image(filename)
+  img_w <- dim(image)[1]
+  return(img_w)
+}
+
+return_img_h <- function(filename){
+  image <- load.image(filename)
+  img_h <- dim(image)[2]
+  return(img_h)
+}
+```
+
+```{r message = FALSE, warning=FALSE, eval=FALSE}
+library(tidyverse)
+img_data_frame <- tibble(filename = list_of_cat_images[1:100]) %>%
+  mutate(img_w = map_dbl(filename, return_img_w),
+         img_h = map_dbl(filename, return_img_h),
+         keypoints = map(filename, return_keypoints),
+         kpt_mouth_x = map_dbl(keypoints, "mouth_x"),
+         kpt_mouth_y = map_dbl(keypoints, "mouth_y")
+)
+head(img_data_frame)
+```
+
+```{r}
+library(keras)
+img_gen <- image_data_generator(rescale = 1/255, 
+                                validation_split = 0.3)
+```
+
+```{r}
+img_gen_flow <- flow_images_from_dataframe(img_data_frame, 
+                           directory = NULL,
+                           class_mode = "other",
+                           x_col = "filename", 
+                           y_col = c("kpt_mouth_x", "kpt_mouth_y"),
+                           generator = img_gen, 
+                           target_size = c(224, 224))
+```
+
+```{r}
+feature_extractor <- application_resnet50(
+  include_top = FALSE,
+  input_shape = c(224, 224, 3)
+)
+```
+
+```{r}
+model_input <- layer_input(shape = c(224, 224, 3), dtype = 'float32', name = 'image_input')
+main_network <- 
+  model_input %>%
+  layer_dense(units = 256, activation = 'relu', input_shape = c(224*224*3)) %>%
+  layer_dropout(rate = 0.4) %>% 
+  layer_dense(units = 128, activation = 'relu') %>%
+  layer_dropout(rate = 0.3) %>%
+  layer_dense(units = 2, activation = 'relu')
+
+output_y1 <- 
+  main_network %>%
+  layer_dense(units = 1, activation = "linear", name = "output_y1")
+
+output_y2 <-
+  main_network %>%
+  layer_dense(units = 1, activation = "linear", name = "output_y2")
+
+model <- keras_model(
+  inputs = model_input,
+  outputs = c(output_y1, output_y2)
+)
+
+model 
+```
+
+```{r}
+model %>%
+  compile(loss = 'mean_squared_error', # MSE for continuous output
+          loss_weights = c(0.5, 0.5), # Weight both coords equally 
+          optimizer = optimizer_adam())
+```
+
+```{r}
+model %>% fit_generator(
+  img_gen_flow,
+  epochs = 20,
+  steps_per_epoch = 100)
+```
 
 
 
