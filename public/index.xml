@@ -2,12 +2,38 @@
   <title>Shirin&#39;s playgRound</title>
   <link href="/index.xml" rel="self"/>
   <link href="/"/>
-  <updated>2019-04-21T00:00:00+00:00</updated>
+  <updated>2019-06-26T00:00:00+00:00</updated>
   <id>/</id>
   <author>
     <name>Dr. Shirin Elsinghorst</name>
   </author>
   <generator>Hugo -- gohugo.io</generator>
+  <entry>
+    <title type="html"><![CDATA[Word2Vec Text Mining &amp; Parallelization in R. Join MünsteR for our next meetup!]]></title>
+    <link href="/2019/06/meetup_july19/"/>
+    <id>/2019/06/meetup_july19/</id>
+    <published>2019-06-26T00:00:00+00:00</published>
+    <updated>2019-06-26T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<p><img src="https://shiring.github.io/r_users_group/2017/05/20/map.png" /></p>
+<p>In our <a href="https://www.meetup.com/de-DE/Munster-R-Users-Group/events/262236134/">next MünsteR R-user group meetup</a> on <strong>Tuesday, July 9th, 2019</strong>, we will have two exciting talks about Word2Vec Text Mining &amp; Parallelization in R!</p>
+<p>You can RSVP here: <a href="https://www.meetup.com/de-DE/Munster-R-Users-Group/events/262236134/">https://www.meetup.com/de-DE/Munster-R-Users-Group/events/262236134/</a></p>
+<blockquote>
+<p>Thorben Hellweg will talk about Parallelization in R. More information tba!</p>
+</blockquote>
+<blockquote>
+<p>Maren Reuter from viadee AG will give an introduction into the functionality and use of the Word2Vec algorithm in R.</p>
+</blockquote>
+<blockquote>
+<p>Text data in its raw form cannot be used as input for machine learning algorithms. Therefore, an information extraction method is required to process plain text into an appropriate representation. By exploiting the semantic and syntactic structure of the text data, the importance of a word can be defined and represented as a vector in a vector space. I.e. the vector can be seen as a numerical „importance“ value. There exist two predominant approaches to represent words as vectors: Either by using the word frequency (ngrams), or by using a prediction model to estimate the relatedness of words. The Word2Vec algorithm by Mikolov et al. belongs to the latter one. This talk will show the functionality of the algorithm and how it can be used in practice.</p>
+</blockquote>
+<div id="about-maren" class="section level2">
+<h2>About Maren:</h2>
+<blockquote>
+<p>Maren Reuter is an IT-Consultant at viadee AG and part of the company’s Artificial Intelligence research group. She got her Master’s degree in Information Systems at the University of Münster with a focus in Data Analytics. In her Master thesis she dealt with text mining techniques to predict maintenance tasks in agile software projects. For this purpose, she used the Word2Vec algorithm to build a word vector representation model.</p>
+</blockquote>
+</div>
+]]></content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[Before you take my DataCamp course please consider this info]]></title>
     <link href="/2019/04/consider_data_camp/"/>
@@ -171,10 +197,7 @@ An open invite to all <a href="https://twitter.com/hashtag/datacamp?src=hash&amp
     <id>/2019/03/meetup_april19/</id>
     <published>2019-03-06T00:00:00+00:00</published>
     <updated>2019-03-06T00:00:00+00:00</updated>
-    <content type="html"><![CDATA[<div class="figure">
-<img src="https://shiring.github.io/r_users_group/2017/05/20/map.png" />
-
-</div>
+    <content type="html"><![CDATA[<p><img src="https://shiring.github.io/r_users_group/2017/05/20/map.png" /></p>
 <p>In our <a href="http://meetu.ps/e/Gsh9F/w54bW/f">next MünsteR R-user group meetup</a> on <strong>Tuesday, April 9th, 2019</strong>, we will have two exciting talks: <strong>Getting started with RMarkdown</strong> and <strong>Trying to make it in the world of Kaggle</strong>!</p>
 <p>You can RSVP here: <a href="http://meetu.ps/e/Gsh9F/w54bW/f">http://meetu.ps/e/Gg5th/w54bW/f</a></p>
 <div id="getting-started-with-rmarkdown" class="section level2">
@@ -198,7 +221,9 @@ An open invite to all <a href="https://twitter.com/hashtag/datacamp?src=hash&amp
 <p>The internet was made for cats. In this talk Thomas will present his findings for a Kaggle challenge posted by petfinder.my in which he participated.</p>
 </blockquote>
 <blockquote>
-<p>From the Petfinder competition description: Millions of stray animals suffer on the streets or are euthanized in shelters every day around the world. If homes can be found for them, many precious lives can be saved — and more happy families created. PetFinder.my has been Malaysia’s leading animal welfare platform since 2008, with a database of more than 150,000 animals. PetFinder collaborates closely with animal lovers, media, corporations, and global organizations to improve animal welfare.</p>
+<p>From the Petfinder competition description:
+Millions of stray animals suffer on the streets or are euthanized in shelters every day around the world. If homes can be found for them, many precious lives can be saved — and more happy families created.
+PetFinder.my has been Malaysia’s leading animal welfare platform since 2008, with a database of more than 150,000 animals. PetFinder collaborates closely with animal lovers, media, corporations, and global organizations to improve animal welfare.</p>
 </blockquote>
 <blockquote>
 <p>The key question that he was trying to resolve was: How quickly is a pet adopted?</p>
@@ -207,7 +232,8 @@ An open invite to all <a href="https://twitter.com/hashtag/datacamp?src=hash&amp
 <div id="about-niklas" class="section level2">
 <h2>About Niklas:</h2>
 <blockquote>
-<p>Niklas Wulms is a biologist (MSc) doing his PhD (Dr. rer. medic.) in the junior research group “Population Imaging of the Brain” at the Institute of Epidemiology and Social Medicine of the University Hospital, Münster. Since 2016 he is focused on answering neurobiological and clinical questions using image processing, batch programming and statistics. He started programming using MATLAB interchangeably with SPSS, Statistica and Spreadsheets. In his research regarding the interaction and early development of depression and cardiovascular disease he compares clinical and behavioral parameters with structural and functional MRI.</p>
+<p>Niklas Wulms is a biologist (MSc) doing his PhD (Dr. rer. medic.) in the junior research group “Population Imaging of the Brain” at the Institute of Epidemiology and Social Medicine of the University Hospital, Münster.
+Since 2016 he is focused on answering neurobiological and clinical questions using image processing, batch programming and statistics. He started programming using MATLAB interchangeably with SPSS, Statistica and Spreadsheets. In his research regarding the interaction and early development of depression and cardiovascular disease he compares clinical and behavioral parameters with structural and functional MRI.</p>
 </blockquote>
 </div>
 <div id="about-thomas" class="section level2">
@@ -245,8 +271,8 @@ An open invite to all <a href="https://twitter.com/hashtag/datacamp?src=hash&amp
   </entry>
   <entry>
     <title type="html"><![CDATA[How to use cross-validation with the image data generator in Keras and TensorFlow]]></title>
-    <link href="/2019/02/keras_fruits_crossvalidation/"/>
-    <id>/2019/02/keras_fruits_crossvalidation/</id>
+    <link href="/drafts/keras_fruits_crossvalidation/"/>
+    <id>/drafts/keras_fruits_crossvalidation/</id>
     <published>2019-02-04T00:00:00+00:00</published>
     <updated>2019-02-04T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<blockquote>
