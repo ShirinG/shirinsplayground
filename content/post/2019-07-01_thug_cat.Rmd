@@ -1,0 +1,87 @@
+---
+title: "codecentric.AI Thug Cat Project in R: keypoint regression with Keras"
+draft: true
+author: Shirin Glander
+date: '2019-07-01'
+categories: ["R", "codecentric.AI"]
+tags: ["R", "codecentric.AI", "Keras", "TensorFlow"]
+thumbnailImagePosition: left
+thumbnailImage: 
+metaAlignment: center
+coverMeta: out
+slug: thug_cat_r
+---
+
+https://bootcamp.codecentric.ai/
+
+Module 5: Neural Nets and Deep Learning
+Lesson 5.10: Thug Cat Project
+https://bootcamp.codecentric.ai/dl-course/module/5/43/
+
+## The data
+
+https://www.kaggle.com/crawford/cat-dataset
+
+> The CAT dataset includes over 9,000 cat images. For each image, there are annotations of the head of cat with nine points, two for eyes, one for mouth, and six for ears.
+
+> Weiwei Zhang, Jian Sun, and Xiaoou Tang, Cat Head Detection - How to Effectively Exploit Shape and Texture Features, Proc. of European Conf. Computer Vision, vol. 4, pp.802-816, 2008.
+
+> The annotation data are stored in a file with the name of the corresponding image plus ."cat" at the end. There is one annotation file for each cat image. For each annotation file, the annotation data are stored in the following sequence:
+
+- number of points
+- Left Eye
+- Right Eye
+- Mouth
+- Left Ear-1
+- Left Ear-2
+- Left Ear-3
+- Right Ear-1
+- Right Ear-2
+- Right Ear-3
+
+```{r}
+path_to_images <- "/Users/shiringlander/Documents/Github/Data/cats/"
+list_of_cat_images <- list.files(path_to_images, full.names = TRUE, recursive = TRUE, include.dirs = TRUE, pattern = "*.jpg$")
+list_of_cat_annos <- list.files(path_to_images, full.names = TRUE, recursive = TRUE, include.dirs = TRUE, pattern = "*.cat$")
+
+length(list_of_cat_images) == length(list_of_cat_annos)
+length(list_of_cat_images)
+head(list_of_cat_images)
+```
+
+```{r message = FALSE, warning=FALSE}
+img <- list_of_cat_images[1]
+image <- load.image(img)
+dim(image)
+
+library(readr)
+keypoints = c("no_kps", 
+              "lft_eye_x", "lft_eye_y", 
+              "rgt_eye_x", "rgt_eye_y",
+              "mouth_x", "mouth_y",
+              "lft_ear_1_x", "lft_ear_1_y",
+              "lft_ear_2_x", "lft_ear_2_y",
+              "lft_ear_3_x", "lft_ear_3_y", 
+              "rgt_ear_1_x", "rgt_ear_1_y", 
+              "rgt_ear_2_x", "rgt_ear_2_y",
+              "rgt_ear_3_x", "rgt_ear_3_y")
+
+pts <- gsub(".jpg", ".cat", img)
+points <- read_delim(list_of_cat_annos[1], delim = " ", col_names = keypoints)
+
+library(imager)
+plot(image)
+points(points[, grepl("_x", colnames(points))], points[, grepl("_y", colnames(points))])
+```
+
+
+
+
+
+
+
+
+
+
+
+
