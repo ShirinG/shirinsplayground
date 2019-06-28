@@ -39,7 +39,8 @@ https://www.kaggle.com/crawford/cat-dataset
 - Right Ear-2
 - Right Ear-3
 
-```{r}
+```{r message = FALSE, warning=FALSE}
+library(tidyverse)
 path_to_images <- "/Users/shiringlander/Documents/Github/Data/cats/"
 list_of_cat_images <- list.files(path_to_images, full.names = TRUE, recursive = TRUE, include.dirs = TRUE, pattern = "*.jpg$")
 list_of_cat_annos <- list.files(path_to_images, full.names = TRUE, recursive = TRUE, include.dirs = TRUE, pattern = "*.cat$")
@@ -74,14 +75,11 @@ plot(image)
 points(points[, grepl("_x", colnames(points))], points[, grepl("_y", colnames(points))])
 ```
 
+## Predict only mouth
+
 ### Crop images to same height and width and combine into one array
 
-- Let's start with predicting only the mouth
-- We want to crop, so some of the keypoints will be cut off; these images we want to exclude, so let's find them and write them into a new vector
-
-```{r}
-cutoff <- 250
-```
+- Convert keypoints into heatmap (1 heatmap per keypoint, starting with mouth)
 
 ```{r}
 return_keypoints <- function(filename){
@@ -93,117 +91,154 @@ return_keypoints <- function(filename){
 }
 ```
 
-```{r warning=FALSE, message=FALSE, eval=FALSE}
-images_to_use <- c()
-
-for(i in 1:length(list_of_cat_images)) {
-  
-  img <- list_of_cat_images[i]
-  img_id <- gsub("/Users/shiringlander/Documents/Github/Data/cats//", "", img)
-  kps_mouth <- return_keypoints(img)[6:7]
-  
-  if (any(kps_mouth > cutoff)) {
-    cat("Mouth keypoints of image", img_id, "not in cutoff\n")
-  } else {
-    images_to_use <- c(images_to_use, img_id)
-  }
-}
-
-length(images_to_use) #5541
-saveRDS(images_to_use, file = "/Users/shiringlander/Documents/Github/shirinsplayground/data/images_to_use.rds")
+```{r}
+image_crop_array <- readRDS("/Users/shiringlander/Documents/Github/shirinsplayground/data/image_crop_array.rds")
+heatmap_crop_array <- readRDS("/Users/shiringlander/Documents/Github/shirinsplayground/data/heatmap_crop_array.rds")
 ```
 
-- Let's load these images, convert them to an array and combine them into one array
-
 ```{r}
-images_to_use <- readRDS(file = "/Users/shiringlander/Documents/Github/shirinsplayground/data/images_to_use.rds")
+str(heatmap_crop_array)
+```
 
+```{r warning=FALSE, message=FALSE, eval=FALSE}
+library(matlab)
 library(abind)
 
-for(i in 1:length(images_to_use)) {
-  image <- readImage(paste0("/Users/shiringlander/Documents/Github/Data/cats//", images_to_use[i]))
-  #countcolors::plotArrayAsImage(image)
-  img_id <- images_to_use[i]
+for (i in 1312:length(list_of_cat_images)) {
+  img <- list_of_cat_images[i]
+  image <- load.image(img)
+  image <- grayscale(image, method = "Luma", drop = TRUE)
   
-  if (all(dim(image)[1:2] >= cutoff))
-  image_crop <- cropImage(image, new_width = 1:cutoff, new_height = 1:cutoff, type = 'user_defined')
+  w <- dim(image)[1]
+  h <- dim(image)[2]
+  
+  heatmap <- matrix(0, nrow = w, ncol = h)
+  kps_mouth <- return_keypoints(img)[6:7]
+  heatmap[kps_mouth[1], kps_mouth[2]] <- 1
+  
+  image <- padarray(as.matrix(image), c(300, 300), padval=0, direction = "both")
+  heatmap <- padarray(heatmap, c(300, 300), padval=0, direction = "both")
+  
+  kps_mouth[1] <- which(heatmap == 1, arr.ind=TRUE)[1]
+  kps_mouth[2] <- which(heatmap == 1, arr.ind=TRUE)[2]
+  
+  rdm_1 <- sample(5:112, 1)
+  rdm_2 <- sample(5:112, 1)
+  
+  min_w <- kps_mouth[1] - rdm_1
+  max_w <- kps_mouth[1] + 223 - rdm_1
+  
+  min_h <- kps_mouth[2] - rdm_2
+  max_h <- kps_mouth[2] + 223 - rdm_2
+  
+  image_resize <- image[min_w:max_w, min_h:max_h]
+  heatmap_resize <- heatmap[min_w:max_w, min_h:max_h]
+  
+  img_id <- gsub("/Users/shiringlander/Documents/Github/Data/cats//", "", img)
   
   if (i == 1) {
-    image_crop_array <- abind(image_crop, along = 0)
+    image_crop_array <- abind(image_resize, along = 0)
     attr(image_crop_array, "dimnames")[[1]] <- c(img_id)
+    
+    heatmap_crop_array <- abind(heatmap_resize, along = 0)
+    attr(heatmap_crop_array, "dimnames")[[1]] <- c(img_id)
+    
   } else {
-    image_crop <- abind(image_crop, along = 0)
-    image_crop_array <- abind(image_crop_array, image_crop, along = 1)
+    image_resize <- abind(image_resize, along = 0)
+    image_crop_array <- abind(image_crop_array, image_resize, along = 1)
     attr(image_crop_array, "dimnames")[[1]][i] <- c(img_id)
+    
+    heatmap_resize <- abind(heatmap_resize, along = 0)
+    heatmap_crop_array <- abind(heatmap_crop_array, heatmap_resize, along = 1)
+    attr(heatmap_crop_array, "dimnames")[[1]][i] <- c(img_id)
+  }
+  
+  if (i %% 10 == 0) {
+    cat("Image", i, "\n")
   }
 }
-dim(image_crop_array)
-str(image_crop_array)
+
+saveRDS(image_crop_array, file = "/Users/shiringlander/Documents/Github/shirinsplayground/data/image_crop_array.rds")
+saveRDS(heatmap_crop_array, file = "/Users/shiringlander/Documents/Github/shirinsplayground/data/heatmap_crop_array.rds")
 ```
-
-
-
-
-
-## Predict only mouth
-
-- "data.frame containing the filepaths relative to directory (or absolute paths if directory is NULL) of the images in a character column."
-- "if class_mode is "other" it should contain the columns specified in y_col ("other": array of y_col data)."
 
 ```{r}
-return_img_w <- function(filename){
-  image <- load.image(filename)
-  img_w <- dim(image)[1]
-  return(img_w)
-}
-
-return_img_h <- function(filename){
-  image <- load.image(filename)
-  img_h <- dim(image)[2]
-  return(img_h)
-}
+image_crop_array <- readRDS("/Users/shiringlander/Documents/Github/shirinsplayground/data/image_crop_array.rds")
+heatmap_crop_array <- readRDS("/Users/shiringlander/Documents/Github/shirinsplayground/data/heatmap_crop_array.rds")
 ```
 
-```{r message = FALSE, warning=FALSE, eval=FALSE}
-library(tidyverse)
-img_data_frame <- tibble(filename = list_of_cat_images[1:100]) %>%
-  mutate(img_w = map_dbl(filename, return_img_w),
-         img_h = map_dbl(filename, return_img_h),
-         keypoints = map(filename, return_keypoints),
-         kpt_mouth_x = map_dbl(keypoints, "mouth_x"),
-         kpt_mouth_y = map_dbl(keypoints, "mouth_y")
-)
-head(img_data_frame)
+```{r}
+dim(image_crop_array)
+dim(heatmap_crop_array)
+
+min(image_crop_array)
+max(image_crop_array)
+
+min(heatmap_crop_array)
+max(heatmap_crop_array)
+```
+
+- Split into training and test data
+
+```{r}
+
 ```
 
 ```{r}
 library(keras)
-img_gen <- image_data_generator(rescale = 1/255, 
-                                validation_split = 0.3)
+
+image_crop_array <- array_reshape(image_crop_array, c(100, 224, 224, 1))
+heatmap_crop_array <- array_reshape(heatmap_crop_array, c(100, 224, 224, 1))
+
+model <- keras_model_sequential() %>%
+ 
+  layer_conv_2d(filter = 32, kernel_size = c(3,3), padding = "same", input_shape = c(224, 224, 1)) %>%
+  layer_activation("relu") %>%
+
+  layer_conv_2d(filter = 1, kernel_size = c(3,3), padding = "same") %>%
+  layer_activation("sigmoid")
+
+model %>% compile(
+  loss = "mse",
+  optimizer = "adam",
+  metrics = "accuracy"
+)
+
+model
 ```
 
 ```{r}
-img_gen_flow <- flow_images_from_dataframe(img_data_frame, 
-                           directory = NULL,
-                           class_mode = "other",
-                           x_col = "filename", 
-                           y_col = c("kpt_mouth_x", "kpt_mouth_y"),
-                           generator = img_gen, 
-                           target_size = c(224, 224))
-```
-
-```{r}
-feature_extractor <- application_resnet50(
-  include_top = FALSE,
-  input_shape = c(224, 224, 3)
+model %>% fit(
+    image_crop_array, 
+    heatmap_crop_array,
+    batch_size = 10,
+    epochs = 5,
+    shuffle = TRUE
 )
 ```
 
 ```{r}
-model_input <- layer_input(shape = c(224, 224, 3), dtype = 'float32', name = 'image_input')
+model %>% predict()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+library(keras)
+
+model_input <- layer_input(shape = c(224, 224), dtype = 'float32', name = 'image_input')
 main_network <- 
   model_input %>%
-  layer_dense(units = 256, activation = 'relu', input_shape = c(224*224*3)) %>%
+  layer_dense(units = 256, activation = 'relu', input_shape = c(224, 224)) %>%
   layer_dropout(rate = 0.4) %>% 
   layer_dense(units = 128, activation = 'relu') %>%
   layer_dropout(rate = 0.3) %>%
