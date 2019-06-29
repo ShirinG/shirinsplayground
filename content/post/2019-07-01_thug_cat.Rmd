@@ -104,7 +104,7 @@ str(heatmap_crop_array)
 library(matlab)
 library(abind)
 
-for (i in 1312:length(list_of_cat_images)) {
+for (i in 1564:length(list_of_cat_images)) {
   img <- list_of_cat_images[i]
   image <- load.image(img)
   image <- grayscale(image, method = "Luma", drop = TRUE)
@@ -168,6 +168,10 @@ heatmap_crop_array <- readRDS("/Users/shiringlander/Documents/Github/shirinsplay
 ```
 
 ```{r}
+image_crop_array <- image_crop_array[which(attr(image_crop_array, "dimnames")[[1]] %in% attr(heatmap_crop_array, "dimnames")[[1]]), , ]
+```
+
+```{r}
 dim(image_crop_array)
 dim(heatmap_crop_array)
 
@@ -178,18 +182,46 @@ min(heatmap_crop_array)
 max(heatmap_crop_array)
 ```
 
+```{r warning=FALSE, message=FALSE}
+mouth_label_x <- rep(NA, dim(heatmap_crop_array)[1])
+mouth_label_y <- rep(NA, dim(heatmap_crop_array)[1])
+
+for(i in 1:dim(heatmap_crop_array)[1]) {
+  img <- attr(heatmap_crop_array, "dimnames")[[1]][i]
+  heatmap <- heatmap_crop_array[i, , ]
+
+  mouth_label_x[i] <- which(heatmap == 1, arr.ind=TRUE)[1]
+  mouth_label_y[i] <- which(heatmap == 1, arr.ind=TRUE)[2]
+}
+
+names(mouth_label_x) <- attr(image_crop_array, "dimnames")[[1]]
+names(mouth_label_y) <- attr(image_crop_array, "dimnames")[[1]]
+```
+
 - Split into training and test data
 
 ```{r}
+x_train <- image_crop_array[1:1500, , ]
+y_train <- heatmap_crop_array[1:1500, , ]
+x_test <- image_crop_array[1501:2012, , ]
+y_test <- heatmap_crop_array[1501:2012, , ]
 
+y_train_lbl_x <- mouth_label_x[1:1500]
+y_train_lbl_y <- mouth_label_y[1:1500]
+y_test_lbl_x <- mouth_label_x[1501:2012]
+y_test_lbl_y <- mouth_label_y[1501:2012]
 ```
 
 ```{r}
 library(keras)
 
-image_crop_array <- array_reshape(image_crop_array, c(100, 224, 224, 1))
-heatmap_crop_array <- array_reshape(heatmap_crop_array, c(100, 224, 224, 1))
+x_train <- array_reshape(x_train, c(1500, 224, 224, 1))
+y_train <- array_reshape(y_train, c(1500, 224, 224, 1))
+x_test <- array_reshape(x_test, c(512, 224, 224, 1))
+y_test <- array_reshape(y_test, c(512, 224, 224, 1))
+```
 
+```{r}
 model <- keras_model_sequential() %>%
  
   layer_conv_2d(filter = 32, kernel_size = c(3,3), padding = "same", input_shape = c(224, 224, 1)) %>%
@@ -201,55 +233,71 @@ model <- keras_model_sequential() %>%
 model %>% compile(
   loss = "mse",
   optimizer = "adam",
-  metrics = "accuracy"
+  metrics = c("mae", "mse")
 )
 
 model
 ```
 
 ```{r}
-model %>% fit(
-    image_crop_array, 
-    heatmap_crop_array,
+history <- model %>% fit(
+    x_train, 
+    y_train,
+    validation_split = 0.2,
     batch_size = 10,
-    epochs = 5,
-    shuffle = TRUE
+    epochs = 3
 )
 ```
 
 ```{r}
-model %>% predict()
+plot(history)
 ```
 
-
-
-
-
-
-
-
-
-
-
+```{r}
+results <- model %>% 
+  evaluate(x_test, y_test)
+results
+```
 
 ```{r}
-library(keras)
+image_test <- x_test[1, , , ]
+dim(image_test)
+image(image_test)
+```
 
-model_input <- layer_input(shape = c(224, 224), dtype = 'float32', name = 'image_input')
-main_network <- 
+```{r}
+image_test <- array_reshape(image_test, c(1, 224, 224, 1))
+heatmap_pred <- model %>% predict(image_test)
+str(heatmap_pred)
+image(heatmap_pred[1, , , ], col = gray.colors(10))
+```
+
+```{r}
+image(round(heatmap_pred[1, , ,]), col = gray.colors(10))
+```
+
+```{r}
+k_clear_session()
+```
+
+```{r}
+model_input <- layer_input(shape = c(224, 224, 1), dtype = 'float32', name = 'image_input')
+
+predictions <- 
   model_input %>%
-  layer_dense(units = 256, activation = 'relu', input_shape = c(224, 224)) %>%
-  layer_dropout(rate = 0.4) %>% 
-  layer_dense(units = 128, activation = 'relu') %>%
-  layer_dropout(rate = 0.3) %>%
-  layer_dense(units = 2, activation = 'relu')
+  layer_activation("relu") %>%
+  
+  layer_flatten() %>%
+  layer_dense(10) %>%
+  layer_activation("relu") %>%
+  layer_dropout(0.5)
 
 output_y1 <- 
-  main_network %>%
+  predictions %>%
   layer_dense(units = 1, activation = "linear", name = "output_y1")
 
 output_y2 <-
-  main_network %>%
+  predictions %>%
   layer_dense(units = 1, activation = "linear", name = "output_y2")
 
 model <- keras_model(
@@ -268,15 +316,30 @@ model %>%
 ```
 
 ```{r}
-model %>% fit_generator(
-  img_gen_flow,
-  epochs = 20,
-  steps_per_epoch = 100)
+history <- model %>% fit(
+    x = x_train, 
+    y = list(y_train_lbl_x, y_train_lbl_y),
+    validation_split = 0.2,
+    batch_size = 10,
+    epochs = 3
+)
 ```
 
+```{r}
+results <- model %>% 
+  evaluate(x_test, list(y_test_lbl_x, y_test_lbl_y))
+results
+```
 
+```{r}
+image_test <- array_reshape(image_test, c(1, 224, 224, 1))
+coords_pred <- model %>% predict(image_test)
+coords_pred
+```
 
-
-
-
+```{r}
+image_test <- x_test[1, , , ]
+image(image_test)
+points(coords_pred[[1]], coords_pred[[2]])
+```
 
