@@ -1,0 +1,60 @@
+---
+title: "Book review: Machine Learning with R"
+draft: true
+author: Shirin Elsinghorst
+date: '2019-08-06'
+categories: ["R"]
+tags: [""]
+thumbnailImagePosition: left
+thumbnailImage: 
+metaAlignment: center
+coverMeta: out
+slug: 
+---
+
+Today, I am reviewing the book ["Machine Learning with R; Expert techniques for predictive modeling" by Brett Lantz (Third Edition)](https://www.amazon.de/dp/1788295862/ref=cm_sw_em_r_mt_dp_U_lzvtDb8AQFRQX).
+
+**Disclaimer**: I have been given a free copy of this book for review purposes.
+
+## My verdict
+
+## Who I think would benefit from this book
+
+The author claims that no prior experience is necessary, though familiarity with programming and math basics would be helpful. And indeed, he is starting with the very basics of ML and even introduces R & RStudio, though only very briefly. The book also spends a lot of time introducing data structures, so it would be suitable for those who have not previously worked with data in R (or who would like to freshen up some rusty knowledge).
+
+
+---
+
+## The setup of the book
+
+This book covers the following topics:
+
+- Introduction to Machine Learning
+- Managing and understanding data, including real-world data, online data, bioinformatics and network data
+- Nearest Neighbor learning
+- Naive Bayes
+- Decision Trees
+- Regression learners
+- Neural Nets
+- Support Vector Machines
+- Association Rules
+- K-means clustering
+- Evaluating and improving model performance
+- Improving training performance in R when using large datasets, e.g. with parallel computing and/or GPUs
+
+## What I liked about the book
+
+- It offers code files for download.
+- The author discusses the limits and ethics of machine learning so that you know which potential pitfalls and moral grey areas to avoid.
+
+## What I didn't like about the book
+
+- Keras?
+- RWeka
+- no tidyverse/ggplot, just base R (realize it's personal preference but I consider it part of best practices of modern Data Science workflows with R)
+
+
+
+
+
+

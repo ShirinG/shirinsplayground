@@ -1,0 +1,95 @@
+---
+title: "Baby weight app"
+draft: true
+author: Shirin Elsinghorst
+date: '2019-08-06'
+categories: ["R"]
+tags: [""]
+thumbnailImagePosition: left
+thumbnailImage: 
+metaAlignment: center
+coverMeta: out
+slug: 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+```{r}
+library(readr)
+library(tidyverse)
+library(lubridate)
+```
+
+https://www.who.int/childgrowth/standards/weight_for_age/en/
+
+Weight-for-age tables
+percentiles
+
+Weight-for-age: Birth to 13 weeks
+
+```{r}
+boys_p_0_13 <- read_delim("/Users/shiringlander/Documents/Github/shirinsplayground/data/who_wfa/tab_wfa_boys_p_0_13.txt", delim = "\t") %>%
+  mutate(gender = "boys")
+girls_p_0_13 <- read_delim("/Users/shiringlander/Documents/Github/shirinsplayground/data/who_wfa/tab_wfa_girls_p_0_13.txt", delim = "\t") %>%
+  mutate(gender = "girls")
+p_0_13 <- bind_rows(boys_p_0_13, girls_p_0_13) %>%
+  gather("percentile", "weight", P01:P999)
+head(p_0_13)
+```
+
+```{r}
+p_0_13 %>%
+  ggplot(aes(x = Week, y = weight, color = percentile)) +
+  geom_line() +
+  facet_wrap(gender ~ ., ncol = 1)
+```
+
+Weight-for-age: Birth to 5 years
+
+```{r}
+boys_p_0_5 <- read_delim("/Users/shiringlander/Documents/Github/shirinsplayground/data/who_wfa/tab_wfa_boys_p_0_5.txt", delim = "\t") %>%
+  mutate(gender = "boys")
+girls_p_0_5 <- read_delim("/Users/shiringlander/Documents/Github/shirinsplayground/data/who_wfa/tab_wfa_girls_p_0_5.txt", delim = "\t") %>%
+  mutate(gender = "girls")
+p_0_5 <- bind_rows(boys_p_0_5, girls_p_0_5) %>%
+  gather("percentile", "weight", P01:P999)
+head(p_0_5)
+```
+
+```{r}
+p_0_5 %>%
+  ggplot(aes(x = Month, y = weight, color = percentile)) +
+  geom_line() +
+  facet_wrap(gender ~ ., ncol = 1)
+```
+
+
+```{r}
+weight_measures <- read_delim("/Users/shiringlander/Documents/Github/shirinsplayground/data/who_wfa/weight_measures.txt", delim = " ",
+                              col_types = list(col_date(format = "%d.%m.%y"), col_double())) %>%
+  # WHO weights are in kg
+  mutate(weight = weight / 1000)
+head(weight_measures)
+```
+
+```{r}
+reference_date <- weight_measures$date[[1]]
+reference_weight <- weight_measures$weight[[1]]
+reference_weight_who <- boys_p_0_13[1, 5:19]
+reference_p <- colnames(reference_weight_who[which.min(abs(reference_weight_who - reference_weight))])
+
+boys_p_0_13_s <- boys_p_0_13 %>%
+  mutate(date = seq(from = reference_date, by = 7, length.out = 14),
+         ref = "WHO") %>%
+  select(ref, date, !!paste(reference_p))
+colnames(boys_p_0_13_s)[3] <- "weight"
+
+weight_measures %>%
+  mutate(ref = "measurement") %>%
+  bind_rows(boys_p_0_13_s) %>%
+  ggplot(aes(date, weight)) +
+    geom_line(aes(group = ref, color = ref))
+```
+

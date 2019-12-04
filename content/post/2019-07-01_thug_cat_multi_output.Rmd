@@ -1,7 +1,7 @@
 ---
 title: "codecentric.AI Thug Cat Project in R: keypoint regression with Keras"
 draft: true
-author: Shirin Glander
+author: Shirin Elsinghorst
 date: '2019-07-01'
 categories: ["R", "codecentric.AI"]
 tags: ["R", "codecentric.AI", "Keras", "TensorFlow"]

@@ -1,7 +1,7 @@
 ---
 title: "codecentric.AI Thug Cat Project in R: keypoint regression with Keras"
 draft: true
-author: Shirin Glander
+author: Shirin Elsinghorst
 date: '2019-07-01'
 categories: ["R", "codecentric.AI"]
 tags: ["R", "codecentric.AI", "Keras", "TensorFlow"]
@@ -55,10 +55,11 @@ names(mouth_label_x) <- list_of_cat_images
 names(mouth_label_y) <- list_of_cat_images
 ```
 
-```{r}
+```{r eval=FALSE}
 flow_df <- data.frame(filepaths = list_of_cat_images,
                       mouth_label_x = mouth_label_x,
                       mouth_label_y = mouth_label_y)
+
 saveRDS(flow_df, file = "/Users/shiringlander/Documents/Github/shirinsplayground/data/flow_df.rds")
 ```
 
@@ -73,13 +74,16 @@ library(keras)
 
 imgdg <- image_data_generator(rescale = 1/255)
 
+batch_size = 32
+
 flow_imgdg_train <- flow_images_from_dataframe(dataframe = flow_df[1:8000, ],
                            class_mode = "other",
                            x_col = "filepaths",
                            #y_col = list("mouth_label_x", "mouth_label_y"),
                            y_col = "mouth_label_x",
                            generator = imgdg,
-                           target_size = c(224, 224))
+                           target_size = c(224, 224),
+                           batch_size = batch_size)
 
 flow_imgdg_test <- flow_images_from_dataframe(dataframe = flow_df[8001:9997, ],
                            class_mode = "other",
@@ -87,7 +91,23 @@ flow_imgdg_test <- flow_images_from_dataframe(dataframe = flow_df[8001:9997, ],
                            #y_col = list("mouth_label_x", "mouth_label_y"),
                            y_col = "mouth_label_x",
                            generator = imgdg,
-                           target_size = c(224, 224))
+                           target_size = c(224, 224),
+                           batch_size = batch_size)
+```
+
+```{r}
+n_train <- 8000
+n_test <- 1997
+```
+
+```{r}
+conv_base <- application_resnet50(
+  weights = "imagenet",
+  include_top = FALSE,
+  input_shape = c(224, 224, 3)
+)
+
+freeze_weights(conv_base)
 ```
 
 ```{r}
@@ -95,11 +115,7 @@ model_input <- layer_input(shape = c(224, 224, 3), dtype = 'float32', name = 'im
 
 predictions <- 
   model_input %>%
-  layer_conv_2d(filter = 32, kernel_size = c(3,3), padding = "same") %>%
-  layer_activation("relu") %>%
-
-  layer_conv_2d(filter = 1, kernel_size = c(3,3), padding = "same") %>%
-  layer_activation("relu") %>%
+  conv_base %>%
   
   layer_flatten() %>%
   layer_dense(10) %>%
@@ -131,27 +147,55 @@ model %>%
 ```
 
 ```{r}
-history <- model %>% fit_generator(
+history <- model %>% 
+  fit_generator(
     flow_imgdg_train,
-    steps_per_epoch = 200,
+    steps_per_epoch = round(n_train / batch_size),
     epochs = 3
-)
+  )
+```
+
+```{r}
+plot(history)
+```
+
+```{r}
+unfreeze_weights(conv_base, from = "block3_conv1")
+
+model %>%
+  compile(loss = 'mean_squared_error', # MSE for continuous output
+          #loss_weights = c(0.5, 0.5), # Weight both coords equally 
+          optimizer = optimizer_adam())
+
+history <- model %>% 
+  fit_generator(
+    flow_imgdg_train,
+    steps_per_epoch = round(n_train / batch_size),
+    epochs = 3
+  )
 ```
 
 ```{r}
 results <- model %>% 
-  evaluate(x_test, list(y_test_lbl_x, y_test_lbl_y))
+  evaluate_generator(flow_imgdg_test,
+                     steps = round(n_test / batch_size))
 results
 ```
 
 ```{r}
-coords_pred <- model %>% predict(image_test)
-coords_pred
+predictions <- model %>% 
+  predict_generator(flow_imgdg_test,
+                     steps = 20)
 ```
 
 ```{r}
-image_test <- x_test[1, , , ]
-image(image_test)
-points(coords_pred[[1]], coords_pred[[2]])
+library(imager)
+image <- load.image(as.character(flow_df[8001, ]$filepaths))
+plot(image)
+points(predictions[1], predictions[1])
+```
+
+```{r}
+predictions
 ```
 
