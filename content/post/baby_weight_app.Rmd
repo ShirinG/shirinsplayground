@@ -16,11 +16,16 @@ slug:
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
+## Libraries
+
 ```{r}
 library(readr)
 library(tidyverse)
 library(lubridate)
+library(plotly)
 ```
+
+## Reference data
 
 https://www.who.int/childgrowth/standards/weight_for_age/en/
 
@@ -39,13 +44,6 @@ p_0_13 <- bind_rows(boys_p_0_13, girls_p_0_13) %>%
 head(p_0_13)
 ```
 
-```{r}
-p_0_13 %>%
-  ggplot(aes(x = Week, y = weight, color = percentile)) +
-  geom_line() +
-  facet_wrap(gender ~ ., ncol = 1)
-```
-
 Weight-for-age: Birth to 5 years
 
 ```{r}
@@ -58,38 +56,210 @@ p_0_5 <- bind_rows(boys_p_0_5, girls_p_0_5) %>%
 head(p_0_5)
 ```
 
-```{r}
-p_0_5 %>%
-  ggplot(aes(x = Month, y = weight, color = percentile)) +
-  geom_line() +
-  facet_wrap(gender ~ ., ncol = 1)
-```
+## Adding own measurements
 
+Needs
+
+- `date` column
+- `weight` column in kg
+- first row has to contain the birthdate and birthweight
 
 ```{r}
 weight_measures <- read_delim("/Users/shiringlander/Documents/Github/shirinsplayground/data/who_wfa/weight_measures.txt", delim = " ",
-                              col_types = list(col_date(format = "%d.%m.%y"), col_double())) %>%
-  # WHO weights are in kg
-  mutate(weight = weight / 1000)
+                              col_types = list(col_date(format = "%d.%m.%y"), col_double()))
 head(weight_measures)
 ```
 
 ```{r}
-reference_date <- weight_measures$date[[1]]
-reference_weight <- weight_measures$weight[[1]]
-reference_weight_who <- boys_p_0_13[1, 5:19]
-reference_p <- colnames(reference_weight_who[which.min(abs(reference_weight_who - reference_weight))])
-
-boys_p_0_13_s <- boys_p_0_13 %>%
-  mutate(date = seq(from = reference_date, by = 7, length.out = 14),
+combine_measures_who <- function(weight_measures, 
+                                 age_range, # "0_13" or "0_5"
+                                 weight_in, # "g" or "kg"
+                                 gender) { # "boy" or "girl"
+  
+  if (weight_in == "g") {
+    weight_measures <- weight_measures %>%
+      mutate(weight = weight / 1000)
+  }
+  
+  reference_date <- weight_measures$date[[1]]
+  end_date <- weight_measures$date[[nrow(weight_measures)]] + 31
+  
+  reference_weight <- weight_measures$weight[[1]]
+  
+  if (age_range == "0_13") {
+    if (gender == "boy") {
+      who <- p_0_13 %>%
+        filter(gender == "boys")
+      
+    } else if (gender == "girl") {
+      who <- p_0_13 %>%
+        filter(gender == "girls")
+      
+    } else {
+      stop('"gender" either has to be "boy" or "girl"')
+    }
+    
+    who <- who %>%
+    mutate(date = rep(seq(from = reference_date, by = "week", length.out = 14), 15),
+         ref = "WHO")
+    
+    who_f <- who %>%
+      filter(Week == 0)
+    
+  } else if (age_range == "0_5") {
+    if (gender == "boy") {
+      who <- p_0_5 %>%
+        filter(gender == "boys")
+      
+    } else if (gender == "girl") {
+      who <- p_0_5 %>%
+        filter(gender == "girls")
+      
+    } else {
+      stop('"gender" either has to be "boy" or "girl"')
+    }
+    
+    who <- who %>%
+      mutate(date = rep(seq(from = reference_date, by = "month", length.out = 61), 15),
          ref = "WHO") %>%
-  select(ref, date, !!paste(reference_p))
-colnames(boys_p_0_13_s)[3] <- "weight"
+      filter(date <= !!paste(end_date))
+    
+    who_f <- who %>%
+      filter(Month == 0)
+    
+  } else {
+    stop('"age_range" either has to be "0_13" or "0_5"')
+  }
+  
+  who <- weight_measures %>%
+    mutate(ref = "measurement",
+           percentile = "measurement",
+           starting_p = who_f[which.min(abs(who_f$weight - reference_weight)), ]$percentile) %>%
+    bind_rows(who)
+  
+  return(who)
+}
+```
 
-weight_measures %>%
-  mutate(ref = "measurement") %>%
-  bind_rows(boys_p_0_13_s) %>%
-  ggplot(aes(date, weight)) +
-    geom_line(aes(group = ref, color = ref))
+```{r}
+combine_measures_who_2 <- function(weight_measures, 
+                                 weight_in, # "g" or "kg"
+                                 gender) { # "boy" or "girl"
+  
+  if (weight_in == "g") {
+    weight_measures <- weight_measures %>%
+      mutate(weight = weight / 1000)
+  }
+  
+  reference_date <- weight_measures$date[[1]]
+  end_date <- weight_measures$date[[nrow(weight_measures)]] + 31
+  
+  reference_weight <- weight_measures$weight[[1]]
+  
+  p_0_13_2 <- p_0_13 %>%
+    mutate(date = rep(seq(from = reference_date, by = "week", length.out = 14), 30),
+         ref = "WHO")
+  
+  p_0_5_2 <- p_0_5 %>%
+      mutate(date = rep(seq(from = reference_date, by = "month", length.out = 61), 30),
+         ref = "WHO")
+  
+  who <- p_0_13_2 %>%
+    bind_rows(p_0_5_2) %>%
+    filter(date <= !!paste(end_date))
+  
+  if (gender == "boy") {
+      who <- who %>%
+        filter(gender == "boys")
+      
+    } else if (gender == "girl") {
+      who <- who %>%
+        filter(gender == "girls")
+      
+    } else {
+      stop('"gender" either has to be "boy" or "girl"')
+    }
+  
+  who_f <- who %>%
+    filter(Week == 0)
+      
+  who <- weight_measures %>%
+    mutate(ref = "measurement",
+           percentile = "measurement",
+           starting_p = who_f[which.min(abs(who_f$weight - reference_weight)), ]$percentile) %>%
+    bind_rows(who)
+  
+  return(who)
+}
+```
+
+```{r}
+combine_measures_who_final <- combine_measures_who_2(weight_measures, 
+                                             weight_in = "g",
+                                             gender = "boy")
+```
+
+```{r}
+plot_final <- combine_measures_who_final %>%
+  ggplot(aes(date, weight,
+             linetype = ref,
+             group = percentile, 
+             color = percentile)) +
+    geom_line() +
+    geom_point() +
+    xlab("Date") + ylab("Weight in kg") +
+    ggtitle("Weekly WHO Percentiles for boys") + 
+    theme_bw()
+
+ggplotly(plot_final)
+```
+
+```{r}
+combine_measures_who_0_13 <- combine_measures_who(weight_measures, 
+                                             age_range = "0_13",
+                                             weight_in = "g",
+                                             gender = "boy")
+```
+
+```{r}
+plot_0_13 <- combine_measures_who_0_13 %>%
+  ggplot(aes(date, weight,
+             linetype = ref,
+             group = percentile, 
+             color = percentile)) +
+    geom_line() +
+    geom_point() +
+    xlab("Date") + ylab("Weight in kg") +
+    ggtitle("Weekly WHO Percentiles for boys 0 to 13 weeks old") + 
+    theme_bw()
+
+ggplotly(plot_0_13)
+```
+
+
+```{r}
+combine_measures_who_0_5 <- combine_measures_who(weight_measures, 
+                                             age_range = "0_5",
+                                             weight_in = "g",
+                                             gender = "boy")
+
+plot_0_5 <- combine_measures_who_0_5 %>%
+  ggplot(aes(date, weight,
+             linetype = ref,
+             group = percentile, 
+             color = percentile)) +
+    geom_line() +
+    geom_point() +
+    xlab("Date") + ylab("Weight in kg") +
+    ggtitle("Monthly WHO Percentiles for boys 0 to 5 years old") + 
+    theme_bw()
+
+ggplotly(plot_0_5)
+```
+
+---
+
+```{r}
+sessionInfo()
 ```
 
