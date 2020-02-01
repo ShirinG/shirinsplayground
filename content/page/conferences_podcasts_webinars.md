@@ -67,11 +67,12 @@ implementieren können.
 
 ## Upcoming talks, webinars, podcasts, etc.
 
-- [We will give our workshop "End-2-End vom Keras TensorFlow-Modell zur Produktion" at the M3 conference in Mannheim on May 14th](https://www.m3-konferenz.de/lecture.php?id=8533&source=0)
+-None planned at the moment due to maternity leave. Details will follow for
 
-- May, 15th: At the same conference, [I'll be giving a talk about TensorFlow Probability](https://www.m3-konferenz.de/lecture.php?id=7861&source=0)
+- UseR 2020 Munich
 
----
+ [ML Summit Berlin in October of 2020-
+--
 
 <br>
 

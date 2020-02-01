@@ -34,26 +34,33 @@ percentiles
 
 Weight-for-age: Birth to 13 weeks
 
-```{r}
+```{r eval=FALSE}
 boys_p_0_13 <- read_delim("/Users/shiringlander/Documents/Github/shirinsplayground/data/who_wfa/tab_wfa_boys_p_0_13.txt", delim = "\t") %>%
   mutate(gender = "boys")
 girls_p_0_13 <- read_delim("/Users/shiringlander/Documents/Github/shirinsplayground/data/who_wfa/tab_wfa_girls_p_0_13.txt", delim = "\t") %>%
   mutate(gender = "girls")
 p_0_13 <- bind_rows(boys_p_0_13, girls_p_0_13) %>%
   gather("percentile", "weight", P01:P999)
+write_csv(p_0_13, "/Users/shiringlander/Documents/Github/who_baby_weight_app/data/p_0_13.csv")
 head(p_0_13)
 ```
 
 Weight-for-age: Birth to 5 years
 
-```{r}
+```{r eval=FALSE}
 boys_p_0_5 <- read_delim("/Users/shiringlander/Documents/Github/shirinsplayground/data/who_wfa/tab_wfa_boys_p_0_5.txt", delim = "\t") %>%
   mutate(gender = "boys")
 girls_p_0_5 <- read_delim("/Users/shiringlander/Documents/Github/shirinsplayground/data/who_wfa/tab_wfa_girls_p_0_5.txt", delim = "\t") %>%
   mutate(gender = "girls")
 p_0_5 <- bind_rows(boys_p_0_5, girls_p_0_5) %>%
   gather("percentile", "weight", P01:P999)
+write_csv(p_0_5, "/Users/shiringlander/Documents/Github/who_baby_weight_app/data/p_0_5.csv")
 head(p_0_5)
+```
+
+```{r}
+p_0_5 <- read_csv("/Users/shiringlander/Documents/Github/who_baby_weight_app/data/p_0_5.csv")
+p_0_13 <- read_csv("/Users/shiringlander/Documents/Github/who_baby_weight_app/data/p_0_13.csv")
 ```
 
 ## Adding own measurements
@@ -64,9 +71,22 @@ Needs
 - `weight` column in kg
 - first row has to contain the birthdate and birthweight
 
+```{r, eval=FALSE}
+weight_measures <- read_csv("/Users/shiringlander/Documents/Github/who_baby_weight/data/weight_measures.csv")
+head(weight_measures)
+```
+
+```{r, eval=FALSE}
+## Create fake data based on real values by
+## adding/subtracting to/from every value a random number between -200 & 200
+random_nos <- base::sample(-200:200, nrow(weight_measures), replace = TRUE)
+weight_measures$weight <- weight_measures$weight + random_nos
+write_csv(weight_measures, "/Users/shiringlander/Documents/Github/who_baby_weight/data/weight_measures.csv")
+```
+
 ```{r}
-weight_measures <- read_delim("/Users/shiringlander/Documents/Github/shirinsplayground/data/who_wfa/weight_measures.txt", delim = " ",
-                              col_types = list(col_date(format = "%d.%m.%y"), col_double()))
+weight_measures <- read_csv("/Users/shiringlander/Documents/Github/who_baby_weight_app/data/weight_measures.csv",
+                              col_types = list(col_date(format = "%d.%m.%Y"), col_double()))
 head(weight_measures)
 ```
 
@@ -141,7 +161,7 @@ combine_measures_who <- function(weight_measures,
 }
 ```
 
-```{r}
+```{r echo=FALSE, eval=FALSE}
 combine_measures_who_2 <- function(weight_measures, 
                                  weight_in, # "g" or "kg"
                                  gender) { # "boy" or "girl"
@@ -194,27 +214,6 @@ combine_measures_who_2 <- function(weight_measures,
 ```
 
 ```{r}
-combine_measures_who_final <- combine_measures_who_2(weight_measures, 
-                                             weight_in = "g",
-                                             gender = "boy")
-```
-
-```{r}
-plot_final <- combine_measures_who_final %>%
-  ggplot(aes(date, weight,
-             linetype = ref,
-             group = percentile, 
-             color = percentile)) +
-    geom_line() +
-    geom_point() +
-    xlab("Date") + ylab("Weight in kg") +
-    ggtitle("Weekly WHO Percentiles for boys") + 
-    theme_bw()
-
-ggplotly(plot_final)
-```
-
-```{r}
 combine_measures_who_0_13 <- combine_measures_who(weight_measures, 
                                              age_range = "0_13",
                                              weight_in = "g",
@@ -246,7 +245,7 @@ combine_measures_who_0_5 <- combine_measures_who(weight_measures,
 plot_0_5 <- combine_measures_who_0_5 %>%
   ggplot(aes(date, weight,
              linetype = ref,
-             group = percentile, 
+             #group = percentile, 
              color = percentile)) +
     geom_line() +
     geom_point() +
@@ -255,6 +254,106 @@ plot_0_5 <- combine_measures_who_0_5 %>%
     theme_bw()
 
 ggplotly(plot_0_5)
+```
+
+```{r}
+# add missing dates
+reference_date <- weight_measures$date[[1]]
+end_date <- weight_measures$date[[nrow(weight_measures)]]
+
+all_dates <- seq(from = reference_date, to = end_date, by = "day") %>%
+  as.tibble()
+colnames(all_dates) = "date"
+
+weight_measures_all <- weight_measures %>%
+  right_join(all_dates, by = "date")
+```
+
+```{r}
+## approximate missing values
+weight_measures_all <- weight_measures_all %>%
+  mutate(weight_approx = approx(weight, n = nrow(.))[[2]])
+```
+
+```{r}
+## add running week number
+nos <- rep(1:ceiling(nrow(weight_measures_all)/7), each = 7)
+weight_measures_all$week <- nos[1:nrow(weight_measures_all)]
+```
+
+```{r}
+## calculate sum over week
+weight_measures_all <- weight_measures_all %>%
+  mutate(diff_day = c(0, diff(weight_approx, lag = 1)),
+         diff_week = c(rep(0, 7), diff(weight_approx, lag = 7)))
+```
+
+```{r}
+# https://stackoverflow.com/a/26640698
+elapsed_months <- function(end_date, start_date) {
+    ed <- as.POSIXlt(end_date)
+    sd <- as.POSIXlt(start_date)
+    mo <- (ed$year - sd$year) + (ed$mon - sd$mon)
+    ifelse(day(ed) >= day(sd), mo + 1, mo)
+}
+
+weight_measures_all <- weight_measures_all %>%
+  mutate(month = elapsed_months(date, reference_date))
+```
+
+https://www.stillkinder.de/gewicht-und-wachstum-von-gestillten-kindern/
+
+Am 10.-14. Lebenstag sollte es sein Geburtsgewicht wieder erreicht haben.
+
+Nach 3 Wochen muss es sein Geburtsgewicht wieder erreicht haben.
+
+In den ersten 2 Monaten nimmt es normalerweise 170 – 330 g pro Woche zu.
+
+Im 3. – 4. Monat 110 – 330 g pro Woche, 5. – 6. Monat 70 – 140 g pro Woche und vom 7. – 12. Monat 40 – 110 g pro Woche.
+
+```{r}
+weight_measures_all <- weight_measures_all %>%
+  distinct(week, .keep_all = TRUE) %>%
+  mutate(color = ifelse(month <= 2 & diff_week >= 170, "ok",
+                        ifelse(month == 3 & diff_week >= 110, "ok",
+                               ifelse(month == 4 & diff_week >= 110, "ok",
+                                      ifelse(month == 5 & diff_week >= 70, "ok",
+                                             ifelse(month == 6 & diff_week >= 70, "ok",
+                                                    ifelse(month >=7 & diff_week >= 40, "ok", "low")))))))
+```
+
+```{r}
+weight_measures_all %>%
+  ggplot(aes(x = date, y = diff_week, fill = color, color = color)) +
+  geom_bar(stat = "identity") +
+  scale_color_brewer(palette = "Set1") +
+  scale_fill_brewer(palette = "Set1")
+```
+
+```{r}
+## find reference percentile
+reference_date <- weight_measures$date[[1]]
+starting_p <- combine_measures_who_0_5 %>% 
+  filter(date == reference_date) %>%
+  select(starting_p) %>%
+  .[[1]] %>%
+  .[1]
+```
+
+```{r}
+test_curves <- combine_measures_who_0_5 %>%
+  filter(percentile == !!paste(starting_p)) %>%
+  left_join(select(weight_measures_all, date, weight_approx), by = "date") %>%
+  tail(3)
+```
+
+```{r}
+cor(test_curves$weight, test_curves$weight_approx, use = "complete.obs", method = "kendall")
+```
+
+```{r, eval=FALSE, echo=FALSE}
+mod <- lm(weight ~ weight_approx, test_curves)
+modelr::rmse(mod, test_curves)
 ```
 
 ---

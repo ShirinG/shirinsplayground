@@ -15,6 +15,8 @@ I also teach a [Data Camp course in hyperparameter tuning with R](https://www.da
 
 ![My journey to Data Science](https://shiring.github.io/netlify_images/my_story_wml3zm.png)
 
+Since summer 2019, I am also mom of a precious baby boy, who is not leaving me much time to persue coding at the moment. ;-)
+
 I love dancing and used to do competitive ballroom and latin dancing. Even though I don't have time for that anymore, I still enjoy teaching "social dances" once a week with the Hochschulsport (university sports courses).
 
 I created the R package [exprAnalysis](https://github.com/ShirinG/exprAnalysis), designed to streamline my RNA-seq data analysis pipeline. It is available via Github. Instructions for installation and usage can be found [here](https://shiring.github.io/rna-seq/microarray/2016/09/28/exprAnalysis).
