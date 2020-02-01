@@ -67,12 +67,13 @@ implementieren können.
 
 ## Upcoming talks, webinars, podcasts, etc.
 
--None planned at the moment due to maternity leave. Details will follow for
+None planned at the moment due to maternity leave. Details will follow for
 
 - UseR 2020 Munich
 
- [ML Summit Berlin in October of 2020-
---
+- ML Summit Berlin in October of 2020
+
+---
 
 <br>
 
@@ -190,3 +191,43 @@ I talked about how blogging about R and Data Science helped me become a Data Sci
 - [Building meaningful machine learning models for disease prediction](https://shiring.github.io/machine_learning/2017/03/31/webinar_code)
 
 > In March 2017 I gave a webinar for the ISDS R Group about my work on building machine-learning models to predict the course of different diseases. I went over building a model, evaluating its performance, and answering or addressing different disease related questions using machine learning. My talk covered the theory of machine learning as it is applied using R.
+
+---
+
+<br>
+
+## Publications
+
+- [**Assortment of flowering time and immunity alleles in natural Arabidopsis thaliana populations suggests immunity and vegetative lifespan strategies coevolve**](https://academic.oup.com/gbe/article/10/9/2278/5042901)
+
+Shirin Glander, Fei He, Gregor Schmitz, Anika Witten, Arndt Telschow, J de Meaux; Genome Biology and Evolution, 22nd June 2018, evy124, https://doi.org/10.1093/gbe/evy124
+
+<br>
+
+- [**The spectrum of mutations controlling complex traits and the genetics of fitness in plants.**](https://www.sciencedirect.com/science/article/pii/S0959437X1300141X)
+
+K Christin Falke · Shirin Glander · Fei He · Jinyong Hu · Juliette de Meaux · Gregor Schmitz., Nov. 2011, Current Opinion in Genetics & Development
+
+<br>
+
+- [**Teriflunomide treatment for multiple sclerosis modulates T cell mitochondrial respiration with affinity-dependent effects**](https://stm.sciencemag.org/content/11/490/eaao5563)
+
+Luisa Klotz et al. 2019. Science Translational Medicine, May 2019
+
+<br>
+
+- [**Transcriptomic and proteomic analysis of iris tissue and aqueous humor in juvenile idiopathic arthritis-associated uveitis.**](https://www.sciencedirect.com/science/article/pii/S0896841119300381?dgcid=author)
+
+Lena Wildschütz, Doreen Ackermann, Anika Witten, Maren Kasper, Martin Busch, Shirin Glander, Harutyun Melkony, Karoline Walscheid, Christoph Tappeiner, Solon Thanos, Andrei Barysenka, Jörg Koch, Carsten Heinz, Björn Laffer, Dirk Bauer, Monika Stoll, Simon König, Arnd Heiligenhaus. Journal of Autoimmunity, Volume 100, June 2019, Pages 75-83
+
+<br>
+
+- [**Nur77 serves as a molecular brake of the metabolic switch during T cell activation to restrict autoimmunity**](https://www.pnas.org/content/115/34/E8017)
+
+Marie Liebmann, Stephanie Hucke, Kathrin Koch, Melanie Eschborn, Julia Ghelman, Achmet I. Chasan, Shirin Glander, Martin Schädlich, Meike Kuhlencord, Niklas M. Daber, Maria Eveslage, Marc Beyer, Michael Dietrich, Philipp Albrecht, Monika Stoll, Karin B. Busch, Heinz Wiendl, Johannes Roth, Tanja Kuhlmann, Luisa Klotz. Proceedings of the National Academy of Sciences, August 2018, DOI: 10.1073/pnas.1721049115
+
+<br>
+
+- [**S100-induced innate immune programming protects newborn infants from sepsis.**](https://www.nature.com/articles/ni.3745)
+
+Ulas et al., May 2017, Nature Immunology
