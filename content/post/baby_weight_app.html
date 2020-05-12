@@ -1,0 +1,62 @@
+---
+title: "Baby weight app"
+draft: true
+author: Shirin Elsinghorst
+date: '2020-02-02'
+categories: ["R"]
+tags: ["R", "Shiny", "tidyverse", "ggplot", "plotly"]
+thumbnailImagePosition: left
+thumbnailImage: 
+metaAlignment: center
+coverMeta: out
+slug: baby_weight_app
+---
+
+
+
+<p><a href="https://shiring.shinyapps.io/who_baby_weight/" class="uri">https://shiring.shinyapps.io/who_baby_weight/</a></p>
+<div id="reference-data" class="section level2">
+<h2>Reference data</h2>
+<p><a href="https://www.who.int/childgrowth/standards/weight_for_age/en/" class="uri">https://www.who.int/childgrowth/standards/weight_for_age/en/</a></p>
+<p>Weight-for-age tables
+percentiles</p>
+<p>Weight-for-age: Birth to 13 weeks</p>
+<p>Weight-for-age: Birth to 5 years</p>
+</div>
+<div id="adding-own-measurements" class="section level2">
+<h2>Adding own measurements</h2>
+<p>Needs</p>
+<ul>
+<li><code>date</code> column</li>
+<li><code>weight</code> column in kg</li>
+<li>first row has to contain the birthdate and birthweight</li>
+</ul>
+<pre class="r"><code>weight_measures &lt;- read_csv(&quot;/Users/shiringlander/Documents/Github/who_baby_weight/data/weight_measures.csv&quot;)
+head(weight_measures)</code></pre>
+<p><a href="https://www.stillkinder.de/gewicht-und-wachstum-von-gestillten-kindern/" class="uri">https://www.stillkinder.de/gewicht-und-wachstum-von-gestillten-kindern/</a></p>
+<p>Am 10.-14. Lebenstag sollte es sein Geburtsgewicht wieder erreicht haben.</p>
+<p>Nach 3 Wochen muss es sein Geburtsgewicht wieder erreicht haben.</p>
+<p>In den ersten 2 Monaten nimmt es normalerweise 170 – 330 g pro Woche zu.</p>
+<p>Im 3. – 4. Monat 110 – 330 g pro Woche, 5. – 6. Monat 70 – 140 g pro Woche und vom 7. – 12. Monat 40 – 110 g pro Woche.</p>
+<hr />
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 4.0.0 (2020-04-24)
+## Platform: x86_64-apple-darwin17.0 (64-bit)
+## Running under: macOS Catalina 10.15.4
+## 
+## Matrix products: default
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## loaded via a namespace (and not attached):
+##  [1] compiler_4.0.0  magrittr_1.5    bookdown_0.18   tools_4.0.0    
+##  [5] htmltools_0.4.0 yaml_2.2.1      Rcpp_1.0.4.6    stringi_1.4.6  
+##  [9] rmarkdown_2.1   blogdown_0.18   knitr_1.28      stringr_1.4.0  
+## [13] digest_0.6.25   xfun_0.13       rlang_0.4.6     evaluate_0.14</code></pre>
+</div>

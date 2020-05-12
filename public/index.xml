@@ -2,12 +2,66 @@
   <title>Shirin&#39;s playgRound</title>
   <link href="/index.xml" rel="self"/>
   <link href="/"/>
-  <updated>2019-06-26T00:00:00+00:00</updated>
+  <updated>2020-02-02T00:00:00+00:00</updated>
   <id>/</id>
   <author>
     <name>Dr. Shirin Elsinghorst</name>
   </author>
   <generator>Hugo -- gohugo.io</generator>
+  <entry>
+    <title type="html"><![CDATA[Baby weight app]]></title>
+    <link href="/2020/02/baby_weight_app/"/>
+    <id>/2020/02/baby_weight_app/</id>
+    <published>2020-02-02T00:00:00+00:00</published>
+    <updated>2020-02-02T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<p><a href="https://shiring.shinyapps.io/who_baby_weight/" class="uri">https://shiring.shinyapps.io/who_baby_weight/</a></p>
+<div id="reference-data" class="section level2">
+<h2>Reference data</h2>
+<p><a href="https://www.who.int/childgrowth/standards/weight_for_age/en/" class="uri">https://www.who.int/childgrowth/standards/weight_for_age/en/</a></p>
+<p>Weight-for-age tables
+percentiles</p>
+<p>Weight-for-age: Birth to 13 weeks</p>
+<p>Weight-for-age: Birth to 5 years</p>
+</div>
+<div id="adding-own-measurements" class="section level2">
+<h2>Adding own measurements</h2>
+<p>Needs</p>
+<ul>
+<li><code>date</code> column</li>
+<li><code>weight</code> column in kg</li>
+<li>first row has to contain the birthdate and birthweight</li>
+</ul>
+<pre class="r"><code>weight_measures &lt;- read_csv(&quot;/Users/shiringlander/Documents/Github/who_baby_weight/data/weight_measures.csv&quot;)
+head(weight_measures)</code></pre>
+<p><a href="https://www.stillkinder.de/gewicht-und-wachstum-von-gestillten-kindern/" class="uri">https://www.stillkinder.de/gewicht-und-wachstum-von-gestillten-kindern/</a></p>
+<p>Am 10.-14. Lebenstag sollte es sein Geburtsgewicht wieder erreicht haben.</p>
+<p>Nach 3 Wochen muss es sein Geburtsgewicht wieder erreicht haben.</p>
+<p>In den ersten 2 Monaten nimmt es normalerweise 170 – 330 g pro Woche zu.</p>
+<p>Im 3. – 4. Monat 110 – 330 g pro Woche, 5. – 6. Monat 70 – 140 g pro Woche und vom 7. – 12. Monat 40 – 110 g pro Woche.</p>
+<hr />
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 4.0.0 (2020-04-24)
+## Platform: x86_64-apple-darwin17.0 (64-bit)
+## Running under: macOS Catalina 10.15.4
+## 
+## Matrix products: default
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## loaded via a namespace (and not attached):
+##  [1] compiler_4.0.0  magrittr_1.5    bookdown_0.18   tools_4.0.0    
+##  [5] htmltools_0.4.0 yaml_2.2.1      Rcpp_1.0.4.6    stringi_1.4.6  
+##  [9] rmarkdown_2.1   blogdown_0.18   knitr_1.28      stringr_1.4.0  
+## [13] digest_0.6.25   xfun_0.13       rlang_0.4.6     evaluate_0.14</code></pre>
+</div>
+]]></content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[Word2Vec Text Mining &amp; Parallelization in R. Join MünsteR for our next meetup!]]></title>
     <link href="/2019/06/meetup_july19/"/>
@@ -266,254 +320,6 @@ Since 2016 he is focused on answering neurobiological and clinical questions usi
 <div class="figure">
 <img src="https://shiring.github.io/netlify_images/ccai_bootcamp.png" />
 
-</div>
-]]></content>
-  </entry>
-  <entry>
-    <title type="html"><![CDATA[How to use cross-validation with the image data generator in Keras and TensorFlow]]></title>
-    <link href="/drafts/keras_fruits_crossvalidation/"/>
-    <id>/drafts/keras_fruits_crossvalidation/</id>
-    <published>2019-02-04T00:00:00+00:00</published>
-    <updated>2019-02-04T00:00:00+00:00</updated>
-    <content type="html"><![CDATA[<blockquote>
-<p>I’ve been using keras and TensorFlow for a while now - and love its simplicity and straight-forward way to modeling. As part of the latest update to my <a href="https://shirinsplayground.netlify.com/2018/05/deep_learning_keras_tensorflow_18_07/">Workshop about deep learning with R and keras</a> I’ve added a new example analysis:</p>
-</blockquote>
-<p><a href="https://shirinsplayground.netlify.com/2018/06/keras_fruits/" class="uri">https://shirinsplayground.netlify.com/2018/06/keras_fruits/</a></p>
-<pre class="r"><code>library(keras)
-library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ───────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 3.1.0     ✔ purrr   0.2.5
-## ✔ tibble  2.0.1     ✔ dplyr   0.7.8
-## ✔ tidyr   0.8.2     ✔ stringr 1.3.1
-## ✔ readr   1.3.1     ✔ forcats 0.3.0</code></pre>
-<pre><code>## Warning: package &#39;tibble&#39; was built under R version 3.5.2</code></pre>
-<pre><code>## ── Conflicts ──────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<pre class="r"><code># list of fruits to modle
-fruit_list &lt;- c(&quot;Kiwi&quot;, &quot;Banana&quot;, &quot;Apricot&quot;, &quot;Avocado&quot;, &quot;Cocos&quot;, &quot;Clementine&quot;, &quot;Mandarine&quot;, &quot;Orange&quot;,
-                &quot;Limes&quot;, &quot;Lemon&quot;, &quot;Peach&quot;, &quot;Plum&quot;, &quot;Raspberry&quot;, &quot;Strawberry&quot;, &quot;Pineapple&quot;, &quot;Pomegranate&quot;)
-
-# number of output classes (i.e. fruits)
-output_n &lt;- length(fruit_list)
-
-# image size to scale down to (original images are 100 x 100 px)
-img_width &lt;- 20
-img_height &lt;- 20
-target_size &lt;- c(img_width, img_height)
-
-# RGB = 3 channels
-channels &lt;- 3
-
-# path to image folders
-train_image_files_path &lt;- &quot;/Users/shiringlander/Documents/Github/DL_AI/Tutti_Frutti/fruits-360/Training/&quot;</code></pre>
-<pre class="r"><code>train_data_gen = image_data_generator(
-  rescale = 1/255,
-  validation_split = 0.3
-)</code></pre>
-<pre class="r"><code># training images
-train_image_array_gen &lt;- flow_images_from_directory(train_image_files_path, 
-                                          train_data_gen,
-                                          subset = &#39;training&#39;,
-                                          target_size = target_size,
-                                          class_mode = &quot;categorical&quot;,
-                                          classes = fruit_list,
-                                          seed = 42)
-
-# validation images
-valid_image_array_gen &lt;- flow_images_from_directory(train_image_files_path, 
-                                          train_data_gen,
-                                          subset = &#39;validation&#39;,
-                                          target_size = target_size,
-                                          class_mode = &quot;categorical&quot;,
-                                          classes = fruit_list,
-                                          seed = 42)</code></pre>
-<pre class="r"><code>cat(&quot;Number of images per class:&quot;)</code></pre>
-<pre><code>## Number of images per class:</code></pre>
-<pre class="r"><code>table(factor(train_image_array_gen$classes))</code></pre>
-<pre><code>## 
-##   0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15 
-## 327 343 345 299 343 343 343 336 343 345 345 313 343 345 343 345</code></pre>
-<pre class="r"><code>cat(&quot;\nClass label vs index mapping:\n&quot;)</code></pre>
-<pre><code>## 
-## Class label vs index mapping:</code></pre>
-<pre class="r"><code>train_image_array_gen$class_indices</code></pre>
-<pre><code>## $Lemon
-## [1] 9
-## 
-## $Peach
-## [1] 10
-## 
-## $Limes
-## [1] 8
-## 
-## $Apricot
-## [1] 2
-## 
-## $Plum
-## [1] 11
-## 
-## $Avocado
-## [1] 3
-## 
-## $Strawberry
-## [1] 13
-## 
-## $Pineapple
-## [1] 14
-## 
-## $Orange
-## [1] 7
-## 
-## $Mandarine
-## [1] 6
-## 
-## $Banana
-## [1] 1
-## 
-## $Clementine
-## [1] 5
-## 
-## $Kiwi
-## [1] 0
-## 
-## $Cocos
-## [1] 4
-## 
-## $Pomegranate
-## [1] 15
-## 
-## $Raspberry
-## [1] 12</code></pre>
-<div id="define-model" class="section level3">
-<h3>Define model</h3>
-<pre class="r"><code># number of training samples
-train_samples &lt;- train_image_array_gen$n
-# number of validation samples
-valid_samples &lt;- valid_image_array_gen$n
-
-# define batch size and number of epochs
-batch_size &lt;- 32
-epochs &lt;- 10</code></pre>
-<pre class="r"><code># initialise model
-model &lt;- keras_model_sequential()
-
-# add layers
-model %&gt;%
-  layer_conv_2d(filter = 32, kernel_size = c(3,3), padding = &quot;same&quot;, input_shape = c(img_width, img_height, channels)) %&gt;%
-  layer_activation(&quot;relu&quot;) %&gt;%
-  
-  # Second hidden layer
-  layer_conv_2d(filter = 16, kernel_size = c(3,3), padding = &quot;same&quot;) %&gt;%
-  layer_activation_leaky_relu(0.5) %&gt;%
-  layer_batch_normalization() %&gt;%
-
-  # Use max pooling
-  layer_max_pooling_2d(pool_size = c(2,2)) %&gt;%
-  layer_dropout(0.25) %&gt;%
-  
-  # Flatten max filtered output into feature vector 
-  # and feed into dense layer
-  layer_flatten() %&gt;%
-  layer_dense(100) %&gt;%
-  layer_activation(&quot;relu&quot;) %&gt;%
-  layer_dropout(0.5) %&gt;%
-
-  # Outputs from dense layer are projected onto output layer
-  layer_dense(output_n) %&gt;% 
-  layer_activation(&quot;softmax&quot;)
-
-# compile
-model %&gt;% compile(
-  loss = &quot;categorical_crossentropy&quot;,
-  optimizer = optimizer_rmsprop(lr = 0.0001, decay = 1e-6),
-  metrics = &quot;accuracy&quot;
-)</code></pre>
-<pre class="r"><code># fit
-hist &lt;- model %&gt;% fit_generator(
-  # training data
-  train_image_array_gen,
-  
-  # epochs
-  steps_per_epoch = as.integer(train_samples / batch_size), 
-  epochs = epochs, 
-  
-  # validation data
-  validation_data = valid_image_array_gen,
-  validation_steps = as.integer(valid_samples / batch_size)
-)</code></pre>
-<pre class="r"><code>plot(hist)</code></pre>
-<p><img src="/post/2019-02-04_keras_fruits_crossvalidation_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
-<pre class="r"><code>test_image_files_path = &quot;/Users/shiringlander/Documents/Github/DL_AI/Tutti_Frutti/fruits-360/Validation/&quot;
-
-test_datagen &lt;- image_data_generator(rescale = 1/255)
-
-test_generator &lt;- flow_images_from_directory(
-        test_image_files_path,
-        test_datagen,
-        target_size = target_size,
-        class_mode = &quot;categorical&quot;,
-        classes = fruit_list,
-        seed = 42)</code></pre>
-<pre class="r"><code>indices &lt;- train_image_array_gen$class_indices %&gt;%
-  as.data.frame() %&gt;%
-  gather() %&gt;%
-  arrange(value)</code></pre>
-<pre class="r"><code>predictions &lt;- as.data.frame(predict_generator(model, test_generator, steps = as.integer(test_generator$n / batch_size)))</code></pre>
-<pre class="r"><code>colnames(predictions) &lt;- indices$key
-predictions &lt;- predictions %&gt;%
-  mutate(truth_idx = test_generator$classes) %&gt;%
-  left_join(indices, by = c(&quot;truth_idx&quot; = &quot;value&quot;)) %&gt;%
-  rename(truth_lbl = key)</code></pre>
-<pre class="r"><code>predictions %&gt;%
-  mutate(id = seq(1:test_generator$n)) %&gt;%
-  gather(pred_lbl, y, Kiwi:Pomegranate) %&gt;%
-  ggplot(aes(x = id, y = y), color = truth_lbl) +
-    facet_wrap( ~ pred_lbl, scales = &quot;free&quot;, ncol = 2) +
-    geom_jitter()</code></pre>
-<pre class="r"><code>evaluate_generator(model, test_generator, steps = as.integer(test_generator$n / batch_size))</code></pre>
-<pre><code>## $loss
-## [1] 0.02518432
-## 
-## $acc
-## [1] 0.9907407</code></pre>
-<hr />
-<pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>## R version 3.5.1 (2018-07-02)
-## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-## Running under: macOS  10.14.2
-## 
-## Matrix products: default
-## BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
-## LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
-## 
-## locale:
-## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
-## 
-## attached base packages:
-## [1] stats     graphics  grDevices utils     datasets  methods   base     
-## 
-## other attached packages:
-##  [1] bindrcpp_0.2.2  forcats_0.3.0   stringr_1.3.1   dplyr_0.7.8    
-##  [5] purrr_0.2.5     readr_1.3.1     tidyr_0.8.2     tibble_2.0.1   
-##  [9] ggplot2_3.1.0   tidyverse_1.2.1 keras_2.2.4    
-## 
-## loaded via a namespace (and not attached):
-##  [1] reticulate_1.10  tidyselect_0.2.5 xfun_0.4         reshape2_1.4.3  
-##  [5] haven_2.0.0      lattice_0.20-38  colorspace_1.4-0 generics_0.0.2  
-##  [9] htmltools_0.3.6  yaml_2.2.0       base64enc_0.1-3  rlang_0.3.1     
-## [13] pillar_1.3.1     withr_2.1.2      glue_1.3.0       readxl_1.2.0    
-## [17] modelr_0.1.2     bindr_0.1.1      plyr_1.8.4       tensorflow_1.10 
-## [21] cellranger_1.1.0 munsell_0.5.0    blogdown_0.10    gtable_0.2.0    
-## [25] rvest_0.3.2      evaluate_0.12    labeling_0.3     knitr_1.21      
-## [29] tfruns_1.4       broom_0.5.1      Rcpp_1.0.0       backports_1.1.3 
-## [33] scales_1.0.0     jsonlite_1.6     hms_0.4.2        digest_0.6.18   
-## [37] stringi_1.2.4    bookdown_0.9     grid_3.5.1       cli_1.0.1       
-## [41] tools_3.5.1      magrittr_1.5     lazyeval_0.2.1   crayon_1.3.4    
-## [45] whisker_0.3-2    pkgconfig_2.0.2  zeallot_0.1.0    Matrix_1.2-15   
-## [49] xml2_1.2.0       lubridate_1.7.4  rstudioapi_0.9.0 assertthat_0.2.0
-## [53] rmarkdown_1.11   httr_1.4.0       R6_2.3.0         nlme_3.1-137    
-## [57] compiler_3.5.1</code></pre>
 </div>
 ]]></content>
   </entry>
@@ -8889,10 +8695,12 @@ implementieren können.</p>
 
 <h2 id="upcoming-talks-webinars-podcasts-etc">Upcoming talks, webinars, podcasts, etc.</h2>
 
-<ul>
-<li><p><a href="https://www.m3-konferenz.de/lecture.php?id=8533&amp;source=0">We will give our workshop &ldquo;End-2-End vom Keras TensorFlow-Modell zur Produktion&rdquo; at the M3 conference in Mannheim on May 14th</a></p></li>
+<p>None planned at the moment due to maternity leave. Details will follow for</p>
 
-<li><p>May, 15th: At the same conference, <a href="https://www.m3-konferenz.de/lecture.php?id=7861&amp;source=0">I&rsquo;ll be giving a talk about TensorFlow Probability</a></p></li>
+<ul>
+<li><p>UseR 2020 Munich</p></li>
+
+<li><p>ML Summit Berlin in October of 2020</p></li>
 </ul>
 
 <hr />
@@ -9070,6 +8878,58 @@ I talked about how blogging about R and Data Science helped me become a Data Sci
 <blockquote>
 <p>In March 2017 I gave a webinar for the ISDS R Group about my work on building machine-learning models to predict the course of different diseases. I went over building a model, evaluating its performance, and answering or addressing different disease related questions using machine learning. My talk covered the theory of machine learning as it is applied using R.</p>
 </blockquote>
+
+<hr />
+
+<p><br></p>
+
+<h2 id="publications">Publications</h2>
+
+<ul>
+<li><a href="https://academic.oup.com/gbe/article/10/9/2278/5042901"><strong>Assortment of flowering time and immunity alleles in natural Arabidopsis thaliana populations suggests immunity and vegetative lifespan strategies coevolve</strong></a></li>
+</ul>
+
+<p>Shirin Glander, Fei He, Gregor Schmitz, Anika Witten, Arndt Telschow, J de Meaux; Genome Biology and Evolution, 22nd June 2018, evy124, <a href="https://doi.org/10.1093/gbe/evy124">https://doi.org/10.1093/gbe/evy124</a></p>
+
+<p><br></p>
+
+<ul>
+<li><a href="https://www.sciencedirect.com/science/article/pii/S0959437X1300141X"><strong>The spectrum of mutations controlling complex traits and the genetics of fitness in plants.</strong></a></li>
+</ul>
+
+<p>K Christin Falke · Shirin Glander · Fei He · Jinyong Hu · Juliette de Meaux · Gregor Schmitz., Nov. 2011, Current Opinion in Genetics &amp; Development</p>
+
+<p><br></p>
+
+<ul>
+<li><a href="https://stm.sciencemag.org/content/11/490/eaao5563"><strong>Teriflunomide treatment for multiple sclerosis modulates T cell mitochondrial respiration with affinity-dependent effects</strong></a></li>
+</ul>
+
+<p>Luisa Klotz et al. 2019. Science Translational Medicine, May 2019</p>
+
+<p><br></p>
+
+<ul>
+<li><a href="https://www.sciencedirect.com/science/article/pii/S0896841119300381?dgcid=author"><strong>Transcriptomic and proteomic analysis of iris tissue and aqueous humor in juvenile idiopathic arthritis-associated uveitis.</strong></a></li>
+</ul>
+
+<p>Lena Wildschütz, Doreen Ackermann, Anika Witten, Maren Kasper, Martin Busch, Shirin Glander, Harutyun Melkony, Karoline Walscheid, Christoph Tappeiner, Solon Thanos, Andrei Barysenka, Jörg Koch, Carsten Heinz, Björn Laffer, Dirk Bauer, Monika Stoll, Simon König, Arnd Heiligenhaus. Journal of Autoimmunity, Volume 100, June 2019, Pages 75-83</p>
+
+<p><br></p>
+
+<ul>
+<li><a href="https://www.pnas.org/content/115/34/E8017"><strong>Nur77 serves as a molecular brake of the metabolic switch during T cell activation to restrict autoimmunity</strong></a></li>
+</ul>
+
+<p>Marie Liebmann, Stephanie Hucke, Kathrin Koch, Melanie Eschborn, Julia Ghelman, Achmet I. Chasan, Shirin Glander, Martin Schädlich, Meike Kuhlencord, Niklas M. Daber, Maria Eveslage, Marc Beyer, Michael Dietrich, Philipp Albrecht, Monika Stoll, Karin B. Busch, Heinz Wiendl, Johannes Roth, Tanja Kuhlmann, Luisa Klotz. Proceedings of the National Academy of Sciences, August 2018, DOI: 10.1073/pnas.1721049115</p>
+
+<p><br></p>
+
+<ul>
+<li><a href="https://www.nature.com/articles/ni.3745"><strong>S100-induced innate immune programming protects newborn infants from sepsis.</strong></a></li>
+</ul>
+
+<p>Ulas et al., May 2017, Nature Immunology</p>
 ]]></content>
   </entry>
   <entry>
@@ -10234,11 +10094,13 @@ Verteiltes Deep Learning mit TensorFlow und Kubernetes - <a href="https://twitte
 
 <p><a href="https://promocode.com.ph/toplists/top-20-programming-blogs/" title="Banners for Top 20 Programming Blogs"><img src="https://promocode.com.ph/wp-content/uploads/2019/03/340x240-3.png" alt="Banners for Top 20 Programming Blogs"></a></p>
 
-<p>I’m Shirin, a biologist turned bioinformatician turned data scientist. During my PhD and Postdoc I worked with Next Generation Sequencing data to analyze diseases like arthritis. However, I then chose to become a data scientist for a German IT company, called codecentric. In this capacity, I have been working on many different projects, e.g. building fraud detection models, creating a chatbot, implementing predictive maintenance, and more. My tool of choice for data analysis so far has been R but I also work with Python. I am also very passionate about teaching and sharing knowledge, so I give workshops, talk at conferences or <a href="https://youtu.be/81UqFUk5B9I">meetups</a>, write blog posts and organize the the <a href="https://shiring.github.io/r_users_group/2017/05/20/muenster_r_user_group">MünsteR R-users group on meetup.com</a>.  <img src="/img/Bewerbungsfoto_klein.jpg" alt="" /></p>
+<p>I’m Shirin (Elsinghorst, born Glander), a biologist turned bioinformatician turned data scientist. During my PhD and Postdoc I worked with Next Generation Sequencing data. However, I then chose to become a data scientist for a German IT company, called codecentric. In this capacity, I have been working on many different projects, e.g. building fraud detection models, creating a chatbot, implementing predictive maintenance, and more. My preferred tool for data analysis has been R but I also work with Python. I am also very passionate about teaching and sharing knowledge, so I give workshops, talk at conferences or <a href="https://youtu.be/81UqFUk5B9I">meetups</a>, write blog posts and organize the <a href="https://shiring.github.io/r_users_group/2017/05/20/muenster_r_user_group">MünsteR R-users group on meetup.com</a>.  <img src="/img/Bewerbungsfoto_klein.jpg" alt="" /></p>
 
 <p>I also teach a <a href="https://www.datacamp.com/courses/hyperparameter-tuning-in-r">Data Camp course in hyperparameter tuning with R</a> (<strong>UPDATE:</strong> Before you take this course please consider <a href="https://shirinsplayground.netlify.com/2019/04/consider_data_camp">the info about the sexual harrassment scandal surrounding DataCamp</a>!) and I&rsquo;m on the program committee of the <a href="https://m3-konferenz.de/programmkomitee.php">Minds Mastering Machines M3 conference</a>.</p>
 
 <p><img src="https://shiring.github.io/netlify_images/my_story_wml3zm.png" alt="My journey to Data Science" /></p>
+
+<p>Since summer 2019, I am also mom of a precious baby boy, who is not leaving me much time to persue coding at the moment. ;-)</p>
 
 <p>I love dancing and used to do competitive ballroom and latin dancing. Even though I don&rsquo;t have time for that anymore, I still enjoy teaching &ldquo;social dances&rdquo; once a week with the Hochschulsport (university sports courses).</p>
 
@@ -10257,6 +10119,11 @@ Verteiltes Deep Learning mit TensorFlow und Kubernetes - <a href="https://twitte
 <li><a href="http://de.linkedin.com/in/shirin-glander-01120881">Linkedin</a></li>
 <li><a href="http://twitter.com/ShirinGlander">Twitter</a></li>
 </ul>
+
+<hr />
+
+<p>Join the WomenTech Global Conference 2020 June 10-12: 👉<a href="https://www.womentech.net/women-tech-conference?join=ODMzOQ==">https://www.womentech.net/women-tech-conference?join=ODMzOQ==</a>
+<img src="https://www.womentech.net/sites/default/files/event-images/SignatureBanner.png" alt="" /></p>
 
 <hr />
 

@@ -151,6 +151,12 @@ canonifyurls = true
   name = "RSS"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-rss\"></i>"
   url = "/index.xml"
+[[menu.misc]]
+  weight = 8
+  identifier = "womenintech"
+  name = "WomenInTech"
+  pre = "<i class=\"sidebar-button-icon fa fa-lg fa-wifi\"></i>"
+  url = "https://www.womentech.net/women-tech-conference?join=ODMzOQ=="  
 
 [params]
   # Customize date format use to render blog post date, categories and other
