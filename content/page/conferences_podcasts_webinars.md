@@ -67,17 +67,29 @@ implementieren können.
 
 ## Upcoming talks, webinars, podcasts, etc.
 
-None planned at the moment due to maternity leave. Details will follow for
-
-- UseR 2020 Munich
-
-- ML Summit Berlin in October of 2020
+None planned at the moment due to maternity leave.
 
 ---
 
 <br>
 
 ## Past talks, webinars, podcasts, etc.
+
+- **German only -** [RICHTIG GUT: DIE QUALITÄT VON MODELLEN VERSTEHEN](https://www.slideshare.net/ShirinGlander/richtig-gut-die-qualitt-von-modellen-verstehen)
+
+[Vortrag auf der M3 Online-Konferenz am 16.06.2020](https://online.m3-konferenz.de/lecture.php?id=12337&source=0)
+
+Mit Machine Learning getroffene Entscheidungen sind inhärent schwierig – wenn nicht gar unmöglich – nachzuvollziehen. Ein scheinbar gutes Ergebnis mit Hilfe von maschinellen Lernverfahren ist oft schnell erzielt oder wird von anderen als bahnbrechend verkauft.
+Die Komplexität einiger der besten Modelle wie neuronaler Netze ist genau das, was sie so erfolgreich macht. Aber es macht sie gleichzeitig zu einer Black Box. Das kann problematisch sein, denn Geschäftsführer oder Vorstände werden weniger geneigt sein, einer Entscheidung zu vertrauen und nach ihr zu handeln, wenn sie sie nicht verstehen.
+Shapley Values, Local Interpretable Model-Agnostic Explanations (LIME) und Anchors sind Ansätze, diese komplexen Modelle zumindest teilweise nachvollziehbar zu machen.
+In diesem Vortrag erkläre ich, wie diese Ansätze funktionieren, und zeige Anwendungsbeispiele.
+
+LERNZIELE
+* Die Teilnehmer erhalten Einblick in Möglichkeit, die komplexe Modelle erklärbar machen.
+* Sie lernen, Datensätze kritisch zu hinterfragen und angemessen aufzuteilen.
+* Und sie erfahren, unter welchen Bedingungen sie Entscheidungen durch Machine Learning vertrauen können.
+
+<br>
 
 - On April, 11th, at the [Data Science Meetup Bielefeld, I was talking about Building Interpretable Neural Networks with Keras and LIME](http://meetu.ps/e/G8yg1/w54bW/f). Slides are [here](https://www.beautiful.ai/deck/-LaWjFBM_2crkZG-Oz4g/Data-Science-Meetup-Bielefeld).
 
