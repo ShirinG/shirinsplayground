@@ -2,12 +2,409 @@
   <title>Shirin&#39;s playgRound</title>
   <link href="/index.xml" rel="self"/>
   <link href="/"/>
-  <updated>2020-02-02T00:00:00+00:00</updated>
+  <updated>2020-08-23T00:00:00+00:00</updated>
   <id>/</id>
   <author>
     <name>Dr. Shirin Elsinghorst</name>
   </author>
   <generator>Hugo -- gohugo.io</generator>
+  <entry>
+    <title type="html"><![CDATA[Conferences, webinars, podcasts, workshops, books, articles and the likes]]></title>
+    <link href="/page/conferences_podcasts_webinars/"/>
+    <id>/page/conferences_podcasts_webinars/</id>
+    <published>2020-08-23T00:00:00+00:00</published>
+    <updated>2020-08-23T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[
+
+<p>Here, you can find a list of all the talks I gave at conferences, webinars, podcasts, workshops, and all the other places you can and could hear me talk. You will also find a section with magazine articles and books I&rsquo;ve written. :-)</p>
+
+<p><img src="https://secure.meetupstatic.com/s/img/5455565085016210254/logo/svg/logo--script.svg" alt="" /></p>
+
+<h2 id="workshops-i-am-giving">Workshops I am giving</h2>
+
+<ul>
+<li><a href="https://www.datacamp.com/courses/hyperparameter-tuning-in-r">Data Camp course on Hyperparameter Tuning in R</a></li>
+</ul>
+
+<p><strong>UPDATE:</strong> Before you take this course please consider <a href="https://shirinsplayground.netlify.com/2019/04/consider_data_camp">the info about the sexual harassment scandal surrounding DataCamp</a>!</p>
+
+<blockquote>
+<p>For many machine learning problems, simply running a model out-of-the-box and getting a prediction is not enough; you want the best model with the most accurate prediction. One way to perfect your model is with hyperparameter tuning, which means optimizing the settings for that specific model. In this course, you will work with the caret, mlr and h2o packages to find the optimal combination of hyperparameters in an efficient manner using grid search, random search, adaptive resampling and automatic machine learning (AutoML). Furthermore, you will work with different datasets and tune different supervised learning models, such as random forests, gradient boosting machines, support vector machines, and even neural nets. Get ready to tune!</p>
+</blockquote>
+
+<p><br></p>
+
+<ul>
+<li><a href="https://shirinsplayground.netlify.com/2017/11/deep_learning_keras_tensorflow/">Workshop on Deep Learning with Keras and TensorFlow in R</a></li>
+</ul>
+
+<blockquote>
+<p>I offer a workshop on deep learning with Keras and TensorFlow using R.
+Date and place depend on who and how many people are interested, so please contact me either directly or via the workshop page: <a href="https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/">https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/</a> (the description is in German but I also offer to give the workshop in English).</p>
+</blockquote>
+
+<p><br></p>
+
+<ul>
+<li><a href="https://www.codecentric.de/schulung/end-2-end-vom-keras-tensorflow-modell-zur-produktion/">Workshop: End-2-End vom Keras TensorFlow-Modell zur Produktion</a></li>
+</ul>
+
+<blockquote>
+<p>Durch das stark wachsende Datenvolumen hat sich das Rollenverständnis von Data Scientists erweitert. Statt Machine-Learning-Modelle für einmalige Analysen zu erstellen,  wird häufiger in konkreten Entwicklungsprojekten gearbeitet, in denen Prototypen in produktive Anwendungen überführt werden.
+Keras ist eine High-Level-Schnittstelle, die ein schnelles, einfaches und flexibles Prototypisieren von Neuronalen Netzwerken mit TensorFlow ermöglicht. Zusammen mit Luigi lassen sich beliebig komplexe Datenverarbeitungs-Workflows in Python erstellen. Das führt dazu, dass auch Nicht-Entwickler den End-2-End-Workflow des Keras-TensorFlow-Modells zur Produktionsreife leicht
+implementieren können.</p>
+</blockquote>
+
+<ul>
+<li>Next date: <a href="https://www.m3-konferenz.de/lecture.php?id=8533&amp;source=0">We will give this workshop at the M3 conference in Mannheim on May 14th</a></li>
+</ul>
+
+<p><br></p>
+
+<ul>
+<li><a href="https://shirinsplayground.netlify.com/2018/06/intro_to_ml_workshop_heidelberg/">Machine Learning Basics in R</a></li>
+</ul>
+
+<hr />
+
+<p><br></p>
+
+<h2 id="where-you-find-my-written-word">Where you find my written word</h2>
+
+<ul>
+<li><a href="https://entwickler.de/leseproben/machine-learning-mit-python-579887732.html">For the German Entwickler Magazin, I have written an article about how to train your own image classification model with Python and Keras</a></li>
+</ul>
+
+<p><blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr"><a href="https://t.co/onaDiQV3Ci">https://t.co/onaDiQV3Ci</a><br>My article about machine learning with Python has come out in the German Entwickler Magazin. 😊</p>&mdash; Shirin Glander (@ShirinGlander) <a href="https://twitter.com/ShirinGlander/status/1116340544110825472?ref_src=twsrc%5Etfw">April 11, 2019</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+
+<p><br></p>
+
+<ul>
+<li><p><a href="https://shop.heise.de/katalog/blick-in-die-blackbox">An article about about <strong>Explaining Black-Box Machine Learning Models</strong> in the <strong>iX Developer Machine Learning</strong></a> (German)</p></li>
+
+<li><p><a href="https://shop.heise.de/katalog/ix-12-2018">A short version of this article about <strong>Explaining Black-Box Machine Learning Models</strong> in the <strong>iX <sup>12</sup>&frasl;<sub>2018</sub></strong></a> (German)</p></li>
+</ul>
+
+<p><img src="https://shiring.github.io/netlify_images/ix_article_01.jpeg" alt="" /></p>
+
+<ul>
+<li>Book chapter Predictive Analytics (German): planned publication in April 2019</li>
+</ul>
+
+<hr />
+
+<p><br></p>
+
+<h2 id="upcoming-talks-webinars-podcasts-etc">Upcoming talks, webinars, podcasts, etc.</h2>
+
+<p>None planned at the moment due to maternity leave.</p>
+
+<hr />
+
+<p><br></p>
+
+<h2 id="past-talks-webinars-podcasts-etc">Past talks, webinars, podcasts, etc.</h2>
+
+<ul>
+<li><strong>German only -</strong> <a href="https://www.slideshare.net/ShirinGlander/richtig-gut-die-qualitt-von-modellen-verstehen">RICHTIG GUT: DIE QUALITÄT VON MODELLEN VERSTEHEN</a></li>
+</ul>
+
+<p><a href="https://online.m3-konferenz.de/lecture.php?id=12337&amp;source=0">Vortrag auf der M3 Online-Konferenz am 16.06.2020</a></p>
+
+<p>Mit Machine Learning getroffene Entscheidungen sind inhärent schwierig – wenn nicht gar unmöglich – nachzuvollziehen. Ein scheinbar gutes Ergebnis mit Hilfe von maschinellen Lernverfahren ist oft schnell erzielt oder wird von anderen als bahnbrechend verkauft.
+Die Komplexität einiger der besten Modelle wie neuronaler Netze ist genau das, was sie so erfolgreich macht. Aber es macht sie gleichzeitig zu einer Black Box. Das kann problematisch sein, denn Geschäftsführer oder Vorstände werden weniger geneigt sein, einer Entscheidung zu vertrauen und nach ihr zu handeln, wenn sie sie nicht verstehen.
+Shapley Values, Local Interpretable Model-Agnostic Explanations (LIME) und Anchors sind Ansätze, diese komplexen Modelle zumindest teilweise nachvollziehbar zu machen.
+In diesem Vortrag erkläre ich, wie diese Ansätze funktionieren, und zeige Anwendungsbeispiele.</p>
+
+<p>LERNZIELE
+* Die Teilnehmer erhalten Einblick in Möglichkeit, die komplexe Modelle erklärbar machen.
+* Sie lernen, Datensätze kritisch zu hinterfragen und angemessen aufzuteilen.
+* Und sie erfahren, unter welchen Bedingungen sie Entscheidungen durch Machine Learning vertrauen können.</p>
+
+<p><br></p>
+
+<ul>
+<li>On April, 11th, at the <a href="http://meetu.ps/e/G8yg1/w54bW/f">Data Science Meetup Bielefeld, I was talking about Building Interpretable Neural Networks with Keras and LIME</a>. Slides are <a href="https://www.beautiful.ai/deck/-LaWjFBM_2crkZG-Oz4g/Data-Science-Meetup-Bielefeld">here</a>.</li>
+</ul>
+
+<p><br></p>
+
+<ul>
+<li>On March, 26th, I gave my talk about <a href="http://meetu.ps/e/GlST9/w54bW/f">Explainable Machine Learning at the data lounge Meetup Bremen</a>. Slides are <a href="https://www.beautiful.ai/deck/-L_l8U2hYD6Of0R83sM4/Data-Lounge-HB-Meetup">here</a>.</li>
+</ul>
+
+<p><br></p>
+
+<ul>
+<li>On March, 15th, I talked about <strong>Deep Learning for Software Engineers</strong> at the <a href="https://accso.de/magazin/deep-learning-fuer-neugierige-entwickler/">AccsoCon 2019</a>. You can find my slides <a href="https://www.beautiful.ai/deck/-L_l3VZxSdN73Pxr8dw-/ACCSOCON-2019">here</a>.</li>
+</ul>
+
+<p><br></p>
+
+<ul>
+<li>At the <a href="https://shirinsplayground.netlify.com/2018/11/twimlai_meetup/">This week in machine learning and AI European online Meetup on December 5th, 2018</a>, I presented and led a discussion about the Anchors paper, the next generation of machine learning interpretability tools. You can find the slides <a href="https://shirinsplayground.netlify.com/2018/12/trust_in_ml_slides_ix/">here</a>.</li>
+</ul>
+
+<p><br></p>
+
+<ul>
+<li>On November 7th, Uwe Friedrichsen and I gave our talk from the <a href="https://shirinsplayground.netlify.com/2018/01/jax2018/">JAX conference 2018: Deep Learning - a Primer</a> again at the <a href="https://shirinsplayground.netlify.com/2018/01/slides_demystifying_dl/">W-JAX</a> in Munich.</li>
+</ul>
+
+<p><br></p>
+
+<ul>
+<li>While in London for the <a href="https://shirinsplayground.netlify.com/2018/10/mcubed_slides/">M-cubed conference</a>, I also gave a talk at the R-Ladies London Meetup about <a href="https://shirinsplayground.netlify.com/2018/09/rladieslondontalk/">Interpretable Deep Learning with R, Keras and LIME</a>.</li>
+</ul>
+
+<p><br></p>
+
+<ul>
+<li>From 15th to 17th October 2018, I was in London for the <a href="https://www.mcubed.london/">M-cubed conference</a> with my talk about <a href="https://shirinsplayground.netlify.com/2018/10/mcubed_slides/">Explaining complex machine learning models with LIME</a>.</li>
+</ul>
+
+<p><br></p>
+
+<ul>
+<li>Together with a colleague from codecentric, I gave a workshop about <a href="https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953">&ldquo;END-2-END VOM KERAS TENSORFLOW-MODELL ZUR PRODUKTION&rdquo;</a> at the data2day conference, which was being held from September 25th - 27th 2018 in Heidelberg, Germany (German language):
+<a href="https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953">https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953</a></li>
+</ul>
+
+<p><br></p>
+
+<ul>
+<li>On Wednesday, October 26th, I was talking about <a href="https://shirinsplayground.netlify.com/2018/09/ffm_datascience_meetup/">&lsquo;Decoding The Black Box&rsquo; at the Frankfurt Data Sciene Meetup</a>.
+Slides can be found <a href="https://shirinsplayground.netlify.com/2018/09/ffm_datascience_meetup_slides/">here</a> and the recording is up on <a href="https://youtu.be/81UqFUk5B9I">YouTube</a>:</li>
+</ul>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/81UqFUk5B9I" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<p><br></p>
+
+<ul>
+<li>At the <a href="https://www.ml-summit.de">ML Summit</a> held on October 1st and 2nd in Berlin, Germany, I gave a workshop about <a href="https://ml-summit.de/specialized-topics/bildklassifikation-leicht-gemacht-mit-keras-und-tensorflow/">image classification with Keras</a>: <a href="https://ml-summit.de/specialized-topics/bildklassifikation-leicht-gemacht-mit-keras-und-tensorflow/">https://ml-summit.de/specialized-topics/bildklassifikation-leicht-gemacht-mit-keras-und-tensorflow/</a> (German language)</li>
+</ul>
+
+<p><br></p>
+
+<ul>
+<li>In August 2018 I gave a webinar for SAP about <a href="https://shirinsplayground.netlify.com/2018/08/sap_webinar_slides/">Explaining Keras Image Classification Models with LIME</a>.</li>
+</ul>
+
+<p><br></p>
+
+<ul>
+<li>In June 2018 I gave a 3-hour workshop about the basics of machine learning with R at the University of Heidelberg, Germany. <a href="https://shirinsplayground.netlify.com/2018/06/intro_to_ml_workshop_heidelberg/">Slides and workshop code can be found here</a>.</li>
+</ul>
+
+<p><br></p>
+
+<ul>
+<li>In May 2018 I was at the <a href="http://unconf18.ropensci.org/">ROpenSci unconference in Seattle, WA</a>
+You can read about my experience and the project I worked on <a href="https://shirinsplayground.netlify.com/2018/05/ropensci_unconf18/">here</a>.</li>
+</ul>
+
+<p><br></p>
+
+<ul>
+<li>At the <a href="https://aws.amazon.com/de/events/web-days-2018/">Amazon AWS AI &amp; Machine Learning Web Day on May 8th</a>, I gave a presentation on how to get started with Amazon SageMaker. The recording can be found on <a href="https://youtu.be/lQmcXAN7GJ4">YouTube</a>; slides are on <a href="https://www.slideshare.net/AWSAktuell/ai-machine-learning-web-day-wie-gelingt-der-einstieg-in-amazon-sagemaker-prsentiert-von-codecentric">Slideshare</a></li>
+</ul>
+
+<p><br></p>
+
+<ul>
+<li><a href="https://shirinsplayground.netlify.com/2018/02/m3_2018/">I talked about explaining complex machine learning models at Minds Mastering Machines Conference</a> on Wednesday, April 25th 2018 in Colone
+The presentation was in German but the slides were similar to those: <a href="https://shirinsplayground.netlify.com/2018/04/hh_datascience_meetup_2018_slides/">https://shirinsplayground.netlify.com/2018/04/hh_datascience_meetup_2018_slides/</a></li>
+</ul>
+
+<p><br></p>
+
+<ul>
+<li>My colleague Uwe Friedrichsen and I gave a talk at the <a href="https://shirinsplayground.netlify.com/2018/01/jax2018/">JAX conference 2018: Deep Learning - a Primer</a> on April 24th 2018 in Mainz.
+Slides can be found here: <a href="https://www.slideshare.net/ShirinGlander/deep-learning-a-primer-95197733">https://www.slideshare.net/ShirinGlander/deep-learning-a-primer-95197733</a></li>
+</ul>
+
+<blockquote>
+<p>Deep Learning is one of the &ldquo;hot&rdquo; topics in the AI area – a lot of hype, a lot of inflated expectation, but also quite some impressive success stories. As some AI experts already predict that Deep Learning will become &ldquo;Software 2.0&rdquo;, it might be a good time to have a closer look at the topic. In this session I will try to give a comprehensive overview of Deep Learning. We will start with a bit of history and some theoretical foundations that we will use to create a little Deep Learning taxonomy. Then we will have a look at current and upcoming application areas: Where can we apply Deep Learning successfully and what does it differentiate from other approaches? Afterwards we will examine the ecosystem: Which tools and libraries are available? What are their strengths and weaknesses? And to complete the session, we will look into some practical code examples and the typical pitfalls of Deep Learning. After this session you will have a much better idea of the why, what and how of Deep Learning, including if and how you might want to apply it to your own work. <a href="https://jax.de/big-data-machine-learning/deep-learning-a-primer/">https://jax.de/big-data-machine-learning/deep-learning-a-primer/</a></p>
+</blockquote>
+
+<p><br></p>
+
+<ul>
+<li><a href="https://shirinsplayground.netlify.com/2018/03/meetup_talk_ruhrpy_april_18/">I talked about explaining complex Machine Learning Models with LIME</a> at this meetup: <a href="https://www.meetup.com/Hamburg-Data-Science-Meetup/events/244145443/">Data Science Meetup Hamburg</a> on Thursday, April 12th 2018.
+Slides can be found here: <a href="https://shirinsplayground.netlify.com/2018/04/hh_datascience_meetup_2018_slides/">https://shirinsplayground.netlify.com/2018/04/hh_datascience_meetup_2018_slides/</a></li>
+</ul>
+
+<blockquote>
+<p>Traditional machine learning workflows focus heavily on model training and optimization; the best model is usually chosen via performance measures like accuracy or error and we tend to assume that a model is good enough for deployment if it passes certain thresholds of these performance criteria. Why a model makes the predictions it makes, however, is generally neglected. But being able to understand and interpret such models can be immensely important for improving model quality, increasing trust and transparency and for reducing bias. Because complex machine learning models are essentially black boxes and too complicated to understand, we need to use approximations to get a better sense of how they work. One such approach is LIME, which stands for Local Interpretable Model-agnostic Explanations and is a tool that helps understand and explain the decisions made by complex machine learning models.
+Dr. Shirin Glander is Data Scientist at codecentric AG. She has received a PhD in Bioinformatics and applies methods of analysis and visualization from different areas - for instance, machine learning, classical statistics, text mining, etc. -to extract and leverage information from data.</p>
+</blockquote>
+
+<p><br></p>
+
+<ul>
+<li><a href="https://shirinsplayground.netlify.com/2018/03/meetup_talk_ruhrpy_april_18/">I talked about Deep Learning with Keras in R and Python</a> at this meetup: <a href="https://www.meetup.com/Ruhr-py/events/248093628/">Ruhr.Py 2018</a> on Wednesday, April 4th 2018.
+Slides can be found here: <a href="https://shirinsplayground.netlify.com/2018/04/ruhrpy_meetup_2018_slides/">https://shirinsplayground.netlify.com/2018/04/ruhrpy_meetup_2018_slides/</a></li>
+</ul>
+
+<blockquote>
+<p>Introducing Deep Learning with Keras and Python
+Keras is a high-level API written in Python for building and prototyping neural networks. It can be used on top of TensorFlow, Theano or CNTK. In this talk we build, train and visualize a Model using Python and Keras - all interactive with Jupyter Notebooks!</p>
+</blockquote>
+
+<p><br></p>
+
+<ul>
+<li><a href="https://shirinsplayground.netlify.com/2018/02/herr_mies_wills_wissen/">I talked about machine learning with Daniel Mies (Podcast in German, though)</a></li>
+</ul>
+
+<blockquote>
+<p>In January 2018 I was interviewed for a tech podcast where I talked about machine learning, neural nets, why I love R and Rstudio and how I became a Data Scientist.</p>
+</blockquote>
+
+<p><br></p>
+
+<ul>
+<li><a href="https://shirinsplayground.netlify.com/2017/12/lime_sketchnotes/">Explaining Predictions of Machine Learning Models with LIME - Münster Data Science Meetup</a></li>
+</ul>
+
+<blockquote>
+<p>In December 2017 I talked about Explaining Predictions of Machine Learning Models with LIME at the Münster Data Science Meetup.</p>
+</blockquote>
+
+<p><br></p>
+
+<ul>
+<li><a href="https://shiring.github.io/blogging/2017/09/20/webinar_biology_to_data_science">From Biology to Industry. A Blogger’s Journey to Data Science</a></li>
+</ul>
+
+<blockquote>
+<p>In September 2017 I gave a webinar for the Applied Epidemiology Didactic of the University of Wisconsin - Madison titled “From Biology to Industry. A Blogger’s Journey to Data Science.”
+I talked about how blogging about R and Data Science helped me become a Data Scientist. I also gave a short introduction to Machine Learning, Big Data and Neural Networks.</p>
+</blockquote>
+
+<p><br></p>
+
+<ul>
+<li><a href="https://shiring.github.io/machine_learning/2017/03/31/webinar_code">Building meaningful machine learning models for disease prediction</a></li>
+</ul>
+
+<blockquote>
+<p>In March 2017 I gave a webinar for the ISDS R Group about my work on building machine-learning models to predict the course of different diseases. I went over building a model, evaluating its performance, and answering or addressing different disease related questions using machine learning. My talk covered the theory of machine learning as it is applied using R.</p>
+</blockquote>
+
+<hr />
+
+<p><br></p>
+
+<h2 id="publications">Publications</h2>
+
+<ul>
+<li><a href="https://academic.oup.com/gbe/article/10/9/2278/5042901"><strong>Assortment of flowering time and immunity alleles in natural Arabidopsis thaliana populations suggests immunity and vegetative lifespan strategies coevolve</strong></a></li>
+</ul>
+
+<p>Shirin Glander, Fei He, Gregor Schmitz, Anika Witten, Arndt Telschow, J de Meaux; Genome Biology and Evolution, 22nd June 2018, evy124, <a href="https://doi.org/10.1093/gbe/evy124">https://doi.org/10.1093/gbe/evy124</a></p>
+
+<p><br></p>
+
+<ul>
+<li><a href="https://www.sciencedirect.com/science/article/pii/S0959437X1300141X"><strong>The spectrum of mutations controlling complex traits and the genetics of fitness in plants.</strong></a></li>
+</ul>
+
+<p>K Christin Falke · Shirin Glander · Fei He · Jinyong Hu · Juliette de Meaux · Gregor Schmitz., Nov. 2011, Current Opinion in Genetics &amp; Development</p>
+
+<p><br></p>
+
+<ul>
+<li><a href="https://stm.sciencemag.org/content/11/490/eaao5563"><strong>Teriflunomide treatment for multiple sclerosis modulates T cell mitochondrial respiration with affinity-dependent effects</strong></a></li>
+</ul>
+
+<p>Luisa Klotz et al. 2019. Science Translational Medicine, May 2019</p>
+
+<p><br></p>
+
+<ul>
+<li><a href="https://www.sciencedirect.com/science/article/pii/S0896841119300381?dgcid=author"><strong>Transcriptomic and proteomic analysis of iris tissue and aqueous humor in juvenile idiopathic arthritis-associated uveitis.</strong></a></li>
+</ul>
+
+<p>Lena Wildschütz, Doreen Ackermann, Anika Witten, Maren Kasper, Martin Busch, Shirin Glander, Harutyun Melkony, Karoline Walscheid, Christoph Tappeiner, Solon Thanos, Andrei Barysenka, Jörg Koch, Carsten Heinz, Björn Laffer, Dirk Bauer, Monika Stoll, Simon König, Arnd Heiligenhaus. Journal of Autoimmunity, Volume 100, June 2019, Pages 75-83</p>
+
+<p><br></p>
+
+<ul>
+<li><a href="https://www.pnas.org/content/115/34/E8017"><strong>Nur77 serves as a molecular brake of the metabolic switch during T cell activation to restrict autoimmunity</strong></a></li>
+</ul>
+
+<p>Marie Liebmann, Stephanie Hucke, Kathrin Koch, Melanie Eschborn, Julia Ghelman, Achmet I. Chasan, Shirin Glander, Martin Schädlich, Meike Kuhlencord, Niklas M. Daber, Maria Eveslage, Marc Beyer, Michael Dietrich, Philipp Albrecht, Monika Stoll, Karin B. Busch, Heinz Wiendl, Johannes Roth, Tanja Kuhlmann, Luisa Klotz. Proceedings of the National Academy of Sciences, August 2018, DOI: 10.1073/pnas.1721049115</p>
+
+<p><br></p>
+
+<ul>
+<li><a href="https://www.nature.com/articles/ni.3745"><strong>S100-induced innate immune programming protects newborn infants from sepsis.</strong></a></li>
+</ul>
+
+<p>Ulas et al., May 2017, Nature Immunology</p>
+]]></content>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[Have a question - book me!]]></title>
+    <link href="/page/bookme/"/>
+    <id>/page/bookme/</id>
+    <published>2020-08-23T00:00:00+00:00</published>
+    <updated>2020-08-23T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<p>Because I have been getting too many emails with questions and requests for help than I can answer, you can now <strong>book 15-minute time-slots</strong> with me. I will offer one 15-minute-slot per day on a <strong>first-come-first-serve</strong> basis. These 15 minutes will be <strong>free of charge</strong> and we will meet via Zoom, Skype or Google Meet. During these 15 minutes we can discuss your problem or question. Any help you might require beyond that, will have to be billed (details to be discussed in person). Click the button below to schedule a time-slot:</p>
+
+<p><img src="https://www.appointletcdn.com/loader/buttons/F62459.png" data-appointlet-organization="shirin-elsinghorst" data-appointlet-service="357892"><script src="https://www.appointletcdn.com/loader/loader.min.js" async="" defer=""></script></p>
+]]></content>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[Welcome to my page!]]></title>
+    <link href="/page/about/"/>
+    <id>/page/about/</id>
+    <published>2020-08-23T00:00:00+00:00</published>
+    <updated>2020-08-23T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[
+
+<p><a href="https://promocode.com.ph/toplists/top-20-programming-blogs/" title="Banners for Top 20 Programming Blogs"><img src="https://promocode.com.ph/wp-content/uploads/2019/03/340x240-3.png" alt="Banners for Top 20 Programming Blogs"></a></p>
+
+<p>I’m Shirin (Elsinghorst, born Glander), a biologist turned bioinformatician turned data scientist. During my PhD and Postdoc I worked with Next Generation Sequencing data. However, I then chose to become a data scientist for a German IT company, called codecentric. In this capacity, I have been working on many different projects, e.g. building fraud detection models, creating a chatbot, implementing predictive maintenance, and more. My preferred tool for data analysis has been R but I also work with Python. I am also very passionate about teaching and sharing knowledge, so I give workshops, talk at conferences or <a href="https://youtu.be/81UqFUk5B9I">meetups</a>, write blog posts and organize the <a href="https://shiring.github.io/r_users_group/2017/05/20/muenster_r_user_group">MünsteR R-users group on meetup.com</a>.</p>
+
+<p><img src="https://shiring.github.io/netlify_images/my_story_wml3zm.png" alt="My journey to Data Science" /></p>
+
+<p>I teach a <a href="https://www.datacamp.com/courses/hyperparameter-tuning-in-r">Data Camp course in hyperparameter tuning with R</a> (<strong>UPDATE:</strong> Before you take this course please consider <a href="https://shirinsplayground.netlify.com/2019/04/consider_data_camp">the info about the sexual harrassment scandal surrounding DataCamp</a>!) and I&rsquo;m on the program committee of the <a href="https://m3-konferenz.de/programmkomitee.php">Minds Mastering Machines M3 conference</a>.</p>
+
+<p>Since summer 2019, I am also mom of a precious baby boy, who is not leaving me much time to persue coding at the moment. ;-)</p>
+
+<p>I love dancing and used to do competitive ballroom and latin dancing. Even though I don&rsquo;t have time for that anymore, I still enjoy teaching &ldquo;social dances&rdquo; once a week with the Hochschulsport (university sports courses).</p>
+
+<p>I created the R package <a href="https://github.com/ShirinG/exprAnalysis">exprAnalysis</a>, designed to streamline my RNA-seq data analysis pipeline. It is available via Github. Instructions for installation and usage can be found <a href="https://shiring.github.io/rna-seq/microarray/2016/09/28/exprAnalysis">here</a>; however, the package is not being actively maintained any longer.</p>
+
+<p>This blog will showcase some of the analyses I have been doing with different data sets (all freely available). I will also host teaching materials for students to access in conjunction with R courses I am giving.</p>
+
+<hr />
+
+<h2 id="contact-me">Contact me:</h2>
+
+<ul>
+<li><a href="https://www.codecentric.de/team/shirin-glander/">Codecentric AG</a></li>
+<li><a href="mailto:shirin.glander@gmail.com">Email</a> (if you send me an email, please don&rsquo;t add any links - your mail will most likely go directly to my spam folder and I won&rsquo;t see it!)</li>
+<li><a href="http://www.xing.com/profile/Shirin_Glander">Xing</a></li>
+<li><a href="https://www.linkedin.com/in/shirin-e-01120881/">Linkedin</a></li>
+<li><a href="http://twitter.com/ShirinGlander">Twitter</a></li>
+</ul>
+
+<p>Because I have been getting too many emails with questions and requests for help than I can answer, you can now <a href="/page/bookme/">book 15-minute time-slots with me</a>. I will offer one 15-minute-slot per day on a first-come-first-serve basis. These 15 minutes will be free of charge but any help you might require beyond that, will have to be billed (details to be discussed in person). Click the button below to schedule a time-slot:</p>
+
+<p><img src="https://www.appointletcdn.com/loader/buttons/F62459.png" data-appointlet-organization="shirin-elsinghorst" data-appointlet-service="357892"><script src="https://www.appointletcdn.com/loader/loader.min.js" async="" defer=""></script></p>
+
+<hr />
+
+<p><a href="https://www.womentech.net/about/womentech-membership?join=ODMzOQ==">Join the WomenTech Global Network</a></p>
+
+<p>Also check out <a href="http://www.R-bloggers.com">R-bloggers</a> for lots of cool R stuff!</p>
+]]></content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[Baby weight app]]></title>
     <link href="/2020/02/baby_weight_app/"/>
@@ -8606,345 +9003,6 @@ cooc_books_5_graph &lt;- as_tbl_graph(coocs_book_5, directed = FALSE) %&gt;%
 ]]></content>
   </entry>
   <entry>
-    <title type="html"><![CDATA[Conferences, webinars, podcasts, workshops, books, articles and the likes]]></title>
-    <link href="/page/conferences_podcasts_webinars/"/>
-    <id>/page/conferences_podcasts_webinars/</id>
-    <published>2018-02-01T16:06:06+02:00</published>
-    <updated>2018-02-01T16:06:06+02:00</updated>
-    <content type="html"><![CDATA[
-
-<p>Here, you can find a list of all the talks I gave at conferences, webinars, podcasts, workshops, and all the other places you can and could hear me talk. You will also find a section with magazine articles and books I&rsquo;ve written. :-)</p>
-
-<p><img src="https://secure.meetupstatic.com/s/img/5455565085016210254/logo/svg/logo--script.svg" alt="" /></p>
-
-<h2 id="workshops-i-am-giving">Workshops I am giving</h2>
-
-<ul>
-<li><a href="https://www.datacamp.com/courses/hyperparameter-tuning-in-r">Data Camp course on Hyperparameter Tuning in R</a></li>
-</ul>
-
-<p><strong>UPDATE:</strong> Before you take this course please consider <a href="https://shirinsplayground.netlify.com/2019/04/consider_data_camp">the info about the sexual harassment scandal surrounding DataCamp</a>!</p>
-
-<blockquote>
-<p>For many machine learning problems, simply running a model out-of-the-box and getting a prediction is not enough; you want the best model with the most accurate prediction. One way to perfect your model is with hyperparameter tuning, which means optimizing the settings for that specific model. In this course, you will work with the caret, mlr and h2o packages to find the optimal combination of hyperparameters in an efficient manner using grid search, random search, adaptive resampling and automatic machine learning (AutoML). Furthermore, you will work with different datasets and tune different supervised learning models, such as random forests, gradient boosting machines, support vector machines, and even neural nets. Get ready to tune!</p>
-</blockquote>
-
-<p><br></p>
-
-<ul>
-<li><a href="https://shirinsplayground.netlify.com/2017/11/deep_learning_keras_tensorflow/">Workshop on Deep Learning with Keras and TensorFlow in R</a></li>
-</ul>
-
-<blockquote>
-<p>I offer a workshop on deep learning with Keras and TensorFlow using R.
-Date and place depend on who and how many people are interested, so please contact me either directly or via the workshop page: <a href="https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/">https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/</a> (the description is in German but I also offer to give the workshop in English).</p>
-</blockquote>
-
-<p><br></p>
-
-<ul>
-<li><a href="https://www.codecentric.de/schulung/end-2-end-vom-keras-tensorflow-modell-zur-produktion/">Workshop: End-2-End vom Keras TensorFlow-Modell zur Produktion</a></li>
-</ul>
-
-<blockquote>
-<p>Durch das stark wachsende Datenvolumen hat sich das Rollenverständnis von Data Scientists erweitert. Statt Machine-Learning-Modelle für einmalige Analysen zu erstellen,  wird häufiger in konkreten Entwicklungsprojekten gearbeitet, in denen Prototypen in produktive Anwendungen überführt werden.
-Keras ist eine High-Level-Schnittstelle, die ein schnelles, einfaches und flexibles Prototypisieren von Neuronalen Netzwerken mit TensorFlow ermöglicht. Zusammen mit Luigi lassen sich beliebig komplexe Datenverarbeitungs-Workflows in Python erstellen. Das führt dazu, dass auch Nicht-Entwickler den End-2-End-Workflow des Keras-TensorFlow-Modells zur Produktionsreife leicht
-implementieren können.</p>
-</blockquote>
-
-<ul>
-<li>Next date: <a href="https://www.m3-konferenz.de/lecture.php?id=8533&amp;source=0">We will give this workshop at the M3 conference in Mannheim on May 14th</a></li>
-</ul>
-
-<p><br></p>
-
-<ul>
-<li><a href="https://shirinsplayground.netlify.com/2018/06/intro_to_ml_workshop_heidelberg/">Machine Learning Basics in R</a></li>
-</ul>
-
-<hr />
-
-<p><br></p>
-
-<h2 id="where-you-find-my-written-word">Where you find my written word</h2>
-
-<ul>
-<li><a href="https://entwickler.de/leseproben/machine-learning-mit-python-579887732.html">For the German Entwickler Magazin, I have written an article about how to train your own image classification model with Python and Keras</a></li>
-</ul>
-
-<p><blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr"><a href="https://t.co/onaDiQV3Ci">https://t.co/onaDiQV3Ci</a><br>My article about machine learning with Python has come out in the German Entwickler Magazin. 😊</p>&mdash; Shirin Glander (@ShirinGlander) <a href="https://twitter.com/ShirinGlander/status/1116340544110825472?ref_src=twsrc%5Etfw">April 11, 2019</a></blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
-
-<p><br></p>
-
-<ul>
-<li><p><a href="https://shop.heise.de/katalog/blick-in-die-blackbox">An article about about <strong>Explaining Black-Box Machine Learning Models</strong> in the <strong>iX Developer Machine Learning</strong></a> (German)</p></li>
-
-<li><p><a href="https://shop.heise.de/katalog/ix-12-2018">A short version of this article about <strong>Explaining Black-Box Machine Learning Models</strong> in the <strong>iX <sup>12</sup>&frasl;<sub>2018</sub></strong></a> (German)</p></li>
-</ul>
-
-<p><img src="https://shiring.github.io/netlify_images/ix_article_01.jpeg" alt="" /></p>
-
-<ul>
-<li>Book chapter Predictive Analytics (German): planned publication in April 2019</li>
-</ul>
-
-<hr />
-
-<p><br></p>
-
-<h2 id="upcoming-talks-webinars-podcasts-etc">Upcoming talks, webinars, podcasts, etc.</h2>
-
-<p>None planned at the moment due to maternity leave.</p>
-
-<hr />
-
-<p><br></p>
-
-<h2 id="past-talks-webinars-podcasts-etc">Past talks, webinars, podcasts, etc.</h2>
-
-<ul>
-<li><strong>German only -</strong> <a href="https://www.slideshare.net/ShirinGlander/richtig-gut-die-qualitt-von-modellen-verstehen">RICHTIG GUT: DIE QUALITÄT VON MODELLEN VERSTEHEN</a></li>
-</ul>
-
-<p><a href="https://online.m3-konferenz.de/lecture.php?id=12337&amp;source=0">Vortrag auf der M3 Online-Konferenz am 16.06.2020</a></p>
-
-<p>Mit Machine Learning getroffene Entscheidungen sind inhärent schwierig – wenn nicht gar unmöglich – nachzuvollziehen. Ein scheinbar gutes Ergebnis mit Hilfe von maschinellen Lernverfahren ist oft schnell erzielt oder wird von anderen als bahnbrechend verkauft.
-Die Komplexität einiger der besten Modelle wie neuronaler Netze ist genau das, was sie so erfolgreich macht. Aber es macht sie gleichzeitig zu einer Black Box. Das kann problematisch sein, denn Geschäftsführer oder Vorstände werden weniger geneigt sein, einer Entscheidung zu vertrauen und nach ihr zu handeln, wenn sie sie nicht verstehen.
-Shapley Values, Local Interpretable Model-Agnostic Explanations (LIME) und Anchors sind Ansätze, diese komplexen Modelle zumindest teilweise nachvollziehbar zu machen.
-In diesem Vortrag erkläre ich, wie diese Ansätze funktionieren, und zeige Anwendungsbeispiele.</p>
-
-<p>LERNZIELE
-* Die Teilnehmer erhalten Einblick in Möglichkeit, die komplexe Modelle erklärbar machen.
-* Sie lernen, Datensätze kritisch zu hinterfragen und angemessen aufzuteilen.
-* Und sie erfahren, unter welchen Bedingungen sie Entscheidungen durch Machine Learning vertrauen können.</p>
-
-<p><br></p>
-
-<ul>
-<li>On April, 11th, at the <a href="http://meetu.ps/e/G8yg1/w54bW/f">Data Science Meetup Bielefeld, I was talking about Building Interpretable Neural Networks with Keras and LIME</a>. Slides are <a href="https://www.beautiful.ai/deck/-LaWjFBM_2crkZG-Oz4g/Data-Science-Meetup-Bielefeld">here</a>.</li>
-</ul>
-
-<p><br></p>
-
-<ul>
-<li>On March, 26th, I gave my talk about <a href="http://meetu.ps/e/GlST9/w54bW/f">Explainable Machine Learning at the data lounge Meetup Bremen</a>. Slides are <a href="https://www.beautiful.ai/deck/-L_l8U2hYD6Of0R83sM4/Data-Lounge-HB-Meetup">here</a>.</li>
-</ul>
-
-<p><br></p>
-
-<ul>
-<li>On March, 15th, I talked about <strong>Deep Learning for Software Engineers</strong> at the <a href="https://accso.de/magazin/deep-learning-fuer-neugierige-entwickler/">AccsoCon 2019</a>. You can find my slides <a href="https://www.beautiful.ai/deck/-L_l3VZxSdN73Pxr8dw-/ACCSOCON-2019">here</a>.</li>
-</ul>
-
-<p><br></p>
-
-<ul>
-<li>At the <a href="https://shirinsplayground.netlify.com/2018/11/twimlai_meetup/">This week in machine learning and AI European online Meetup on December 5th, 2018</a>, I presented and led a discussion about the Anchors paper, the next generation of machine learning interpretability tools. You can find the slides <a href="https://shirinsplayground.netlify.com/2018/12/trust_in_ml_slides_ix/">here</a>.</li>
-</ul>
-
-<p><br></p>
-
-<ul>
-<li>On November 7th, Uwe Friedrichsen and I gave our talk from the <a href="https://shirinsplayground.netlify.com/2018/01/jax2018/">JAX conference 2018: Deep Learning - a Primer</a> again at the <a href="https://shirinsplayground.netlify.com/2018/01/slides_demystifying_dl/">W-JAX</a> in Munich.</li>
-</ul>
-
-<p><br></p>
-
-<ul>
-<li>While in London for the <a href="https://shirinsplayground.netlify.com/2018/10/mcubed_slides/">M-cubed conference</a>, I also gave a talk at the R-Ladies London Meetup about <a href="https://shirinsplayground.netlify.com/2018/09/rladieslondontalk/">Interpretable Deep Learning with R, Keras and LIME</a>.</li>
-</ul>
-
-<p><br></p>
-
-<ul>
-<li>From 15th to 17th October 2018, I was in London for the <a href="https://www.mcubed.london/">M-cubed conference</a> with my talk about <a href="https://shirinsplayground.netlify.com/2018/10/mcubed_slides/">Explaining complex machine learning models with LIME</a>.</li>
-</ul>
-
-<p><br></p>
-
-<ul>
-<li>Together with a colleague from codecentric, I gave a workshop about <a href="https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953">&ldquo;END-2-END VOM KERAS TENSORFLOW-MODELL ZUR PRODUKTION&rdquo;</a> at the data2day conference, which was being held from September 25th - 27th 2018 in Heidelberg, Germany (German language):
-<a href="https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953">https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953</a></li>
-</ul>
-
-<p><br></p>
-
-<ul>
-<li>On Wednesday, October 26th, I was talking about <a href="https://shirinsplayground.netlify.com/2018/09/ffm_datascience_meetup/">&lsquo;Decoding The Black Box&rsquo; at the Frankfurt Data Sciene Meetup</a>.
-Slides can be found <a href="https://shirinsplayground.netlify.com/2018/09/ffm_datascience_meetup_slides/">here</a> and the recording is up on <a href="https://youtu.be/81UqFUk5B9I">YouTube</a>:</li>
-</ul>
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/81UqFUk5B9I" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-<p><br></p>
-
-<ul>
-<li>At the <a href="https://www.ml-summit.de">ML Summit</a> held on October 1st and 2nd in Berlin, Germany, I gave a workshop about <a href="https://ml-summit.de/specialized-topics/bildklassifikation-leicht-gemacht-mit-keras-und-tensorflow/">image classification with Keras</a>: <a href="https://ml-summit.de/specialized-topics/bildklassifikation-leicht-gemacht-mit-keras-und-tensorflow/">https://ml-summit.de/specialized-topics/bildklassifikation-leicht-gemacht-mit-keras-und-tensorflow/</a> (German language)</li>
-</ul>
-
-<p><br></p>
-
-<ul>
-<li>In August 2018 I gave a webinar for SAP about <a href="https://shirinsplayground.netlify.com/2018/08/sap_webinar_slides/">Explaining Keras Image Classification Models with LIME</a>.</li>
-</ul>
-
-<p><br></p>
-
-<ul>
-<li>In June 2018 I gave a 3-hour workshop about the basics of machine learning with R at the University of Heidelberg, Germany. <a href="https://shirinsplayground.netlify.com/2018/06/intro_to_ml_workshop_heidelberg/">Slides and workshop code can be found here</a>.</li>
-</ul>
-
-<p><br></p>
-
-<ul>
-<li>In May 2018 I was at the <a href="http://unconf18.ropensci.org/">ROpenSci unconference in Seattle, WA</a>
-You can read about my experience and the project I worked on <a href="https://shirinsplayground.netlify.com/2018/05/ropensci_unconf18/">here</a>.</li>
-</ul>
-
-<p><br></p>
-
-<ul>
-<li>At the <a href="https://aws.amazon.com/de/events/web-days-2018/">Amazon AWS AI &amp; Machine Learning Web Day on May 8th</a>, I gave a presentation on how to get started with Amazon SageMaker. The recording can be found on <a href="https://youtu.be/lQmcXAN7GJ4">YouTube</a>; slides are on <a href="https://www.slideshare.net/AWSAktuell/ai-machine-learning-web-day-wie-gelingt-der-einstieg-in-amazon-sagemaker-prsentiert-von-codecentric">Slideshare</a></li>
-</ul>
-
-<p><br></p>
-
-<ul>
-<li><a href="https://shirinsplayground.netlify.com/2018/02/m3_2018/">I talked about explaining complex machine learning models at Minds Mastering Machines Conference</a> on Wednesday, April 25th 2018 in Colone
-The presentation was in German but the slides were similar to those: <a href="https://shirinsplayground.netlify.com/2018/04/hh_datascience_meetup_2018_slides/">https://shirinsplayground.netlify.com/2018/04/hh_datascience_meetup_2018_slides/</a></li>
-</ul>
-
-<p><br></p>
-
-<ul>
-<li>My colleague Uwe Friedrichsen and I gave a talk at the <a href="https://shirinsplayground.netlify.com/2018/01/jax2018/">JAX conference 2018: Deep Learning - a Primer</a> on April 24th 2018 in Mainz.
-Slides can be found here: <a href="https://www.slideshare.net/ShirinGlander/deep-learning-a-primer-95197733">https://www.slideshare.net/ShirinGlander/deep-learning-a-primer-95197733</a></li>
-</ul>
-
-<blockquote>
-<p>Deep Learning is one of the &ldquo;hot&rdquo; topics in the AI area – a lot of hype, a lot of inflated expectation, but also quite some impressive success stories. As some AI experts already predict that Deep Learning will become &ldquo;Software 2.0&rdquo;, it might be a good time to have a closer look at the topic. In this session I will try to give a comprehensive overview of Deep Learning. We will start with a bit of history and some theoretical foundations that we will use to create a little Deep Learning taxonomy. Then we will have a look at current and upcoming application areas: Where can we apply Deep Learning successfully and what does it differentiate from other approaches? Afterwards we will examine the ecosystem: Which tools and libraries are available? What are their strengths and weaknesses? And to complete the session, we will look into some practical code examples and the typical pitfalls of Deep Learning. After this session you will have a much better idea of the why, what and how of Deep Learning, including if and how you might want to apply it to your own work. <a href="https://jax.de/big-data-machine-learning/deep-learning-a-primer/">https://jax.de/big-data-machine-learning/deep-learning-a-primer/</a></p>
-</blockquote>
-
-<p><br></p>
-
-<ul>
-<li><a href="https://shirinsplayground.netlify.com/2018/03/meetup_talk_ruhrpy_april_18/">I talked about explaining complex Machine Learning Models with LIME</a> at this meetup: <a href="https://www.meetup.com/Hamburg-Data-Science-Meetup/events/244145443/">Data Science Meetup Hamburg</a> on Thursday, April 12th 2018.
-Slides can be found here: <a href="https://shirinsplayground.netlify.com/2018/04/hh_datascience_meetup_2018_slides/">https://shirinsplayground.netlify.com/2018/04/hh_datascience_meetup_2018_slides/</a></li>
-</ul>
-
-<blockquote>
-<p>Traditional machine learning workflows focus heavily on model training and optimization; the best model is usually chosen via performance measures like accuracy or error and we tend to assume that a model is good enough for deployment if it passes certain thresholds of these performance criteria. Why a model makes the predictions it makes, however, is generally neglected. But being able to understand and interpret such models can be immensely important for improving model quality, increasing trust and transparency and for reducing bias. Because complex machine learning models are essentially black boxes and too complicated to understand, we need to use approximations to get a better sense of how they work. One such approach is LIME, which stands for Local Interpretable Model-agnostic Explanations and is a tool that helps understand and explain the decisions made by complex machine learning models.
-Dr. Shirin Glander is Data Scientist at codecentric AG. She has received a PhD in Bioinformatics and applies methods of analysis and visualization from different areas - for instance, machine learning, classical statistics, text mining, etc. -to extract and leverage information from data.</p>
-</blockquote>
-
-<p><br></p>
-
-<ul>
-<li><a href="https://shirinsplayground.netlify.com/2018/03/meetup_talk_ruhrpy_april_18/">I talked about Deep Learning with Keras in R and Python</a> at this meetup: <a href="https://www.meetup.com/Ruhr-py/events/248093628/">Ruhr.Py 2018</a> on Wednesday, April 4th 2018.
-Slides can be found here: <a href="https://shirinsplayground.netlify.com/2018/04/ruhrpy_meetup_2018_slides/">https://shirinsplayground.netlify.com/2018/04/ruhrpy_meetup_2018_slides/</a></li>
-</ul>
-
-<blockquote>
-<p>Introducing Deep Learning with Keras and Python
-Keras is a high-level API written in Python for building and prototyping neural networks. It can be used on top of TensorFlow, Theano or CNTK. In this talk we build, train and visualize a Model using Python and Keras - all interactive with Jupyter Notebooks!</p>
-</blockquote>
-
-<p><br></p>
-
-<ul>
-<li><a href="https://shirinsplayground.netlify.com/2018/02/herr_mies_wills_wissen/">I talked about machine learning with Daniel Mies (Podcast in German, though)</a></li>
-</ul>
-
-<blockquote>
-<p>In January 2018 I was interviewed for a tech podcast where I talked about machine learning, neural nets, why I love R and Rstudio and how I became a Data Scientist.</p>
-</blockquote>
-
-<p><br></p>
-
-<ul>
-<li><a href="https://shirinsplayground.netlify.com/2017/12/lime_sketchnotes/">Explaining Predictions of Machine Learning Models with LIME - Münster Data Science Meetup</a></li>
-</ul>
-
-<blockquote>
-<p>In December 2017 I talked about Explaining Predictions of Machine Learning Models with LIME at the Münster Data Science Meetup.</p>
-</blockquote>
-
-<p><br></p>
-
-<ul>
-<li><a href="https://shiring.github.io/blogging/2017/09/20/webinar_biology_to_data_science">From Biology to Industry. A Blogger’s Journey to Data Science</a></li>
-</ul>
-
-<blockquote>
-<p>In September 2017 I gave a webinar for the Applied Epidemiology Didactic of the University of Wisconsin - Madison titled “From Biology to Industry. A Blogger’s Journey to Data Science.”
-I talked about how blogging about R and Data Science helped me become a Data Scientist. I also gave a short introduction to Machine Learning, Big Data and Neural Networks.</p>
-</blockquote>
-
-<p><br></p>
-
-<ul>
-<li><a href="https://shiring.github.io/machine_learning/2017/03/31/webinar_code">Building meaningful machine learning models for disease prediction</a></li>
-</ul>
-
-<blockquote>
-<p>In March 2017 I gave a webinar for the ISDS R Group about my work on building machine-learning models to predict the course of different diseases. I went over building a model, evaluating its performance, and answering or addressing different disease related questions using machine learning. My talk covered the theory of machine learning as it is applied using R.</p>
-</blockquote>
-
-<hr />
-
-<p><br></p>
-
-<h2 id="publications">Publications</h2>
-
-<ul>
-<li><a href="https://academic.oup.com/gbe/article/10/9/2278/5042901"><strong>Assortment of flowering time and immunity alleles in natural Arabidopsis thaliana populations suggests immunity and vegetative lifespan strategies coevolve</strong></a></li>
-</ul>
-
-<p>Shirin Glander, Fei He, Gregor Schmitz, Anika Witten, Arndt Telschow, J de Meaux; Genome Biology and Evolution, 22nd June 2018, evy124, <a href="https://doi.org/10.1093/gbe/evy124">https://doi.org/10.1093/gbe/evy124</a></p>
-
-<p><br></p>
-
-<ul>
-<li><a href="https://www.sciencedirect.com/science/article/pii/S0959437X1300141X"><strong>The spectrum of mutations controlling complex traits and the genetics of fitness in plants.</strong></a></li>
-</ul>
-
-<p>K Christin Falke · Shirin Glander · Fei He · Jinyong Hu · Juliette de Meaux · Gregor Schmitz., Nov. 2011, Current Opinion in Genetics &amp; Development</p>
-
-<p><br></p>
-
-<ul>
-<li><a href="https://stm.sciencemag.org/content/11/490/eaao5563"><strong>Teriflunomide treatment for multiple sclerosis modulates T cell mitochondrial respiration with affinity-dependent effects</strong></a></li>
-</ul>
-
-<p>Luisa Klotz et al. 2019. Science Translational Medicine, May 2019</p>
-
-<p><br></p>
-
-<ul>
-<li><a href="https://www.sciencedirect.com/science/article/pii/S0896841119300381?dgcid=author"><strong>Transcriptomic and proteomic analysis of iris tissue and aqueous humor in juvenile idiopathic arthritis-associated uveitis.</strong></a></li>
-</ul>
-
-<p>Lena Wildschütz, Doreen Ackermann, Anika Witten, Maren Kasper, Martin Busch, Shirin Glander, Harutyun Melkony, Karoline Walscheid, Christoph Tappeiner, Solon Thanos, Andrei Barysenka, Jörg Koch, Carsten Heinz, Björn Laffer, Dirk Bauer, Monika Stoll, Simon König, Arnd Heiligenhaus. Journal of Autoimmunity, Volume 100, June 2019, Pages 75-83</p>
-
-<p><br></p>
-
-<ul>
-<li><a href="https://www.pnas.org/content/115/34/E8017"><strong>Nur77 serves as a molecular brake of the metabolic switch during T cell activation to restrict autoimmunity</strong></a></li>
-</ul>
-
-<p>Marie Liebmann, Stephanie Hucke, Kathrin Koch, Melanie Eschborn, Julia Ghelman, Achmet I. Chasan, Shirin Glander, Martin Schädlich, Meike Kuhlencord, Niklas M. Daber, Maria Eveslage, Marc Beyer, Michael Dietrich, Philipp Albrecht, Monika Stoll, Karin B. Busch, Heinz Wiendl, Johannes Roth, Tanja Kuhlmann, Luisa Klotz. Proceedings of the National Academy of Sciences, August 2018, DOI: 10.1073/pnas.1721049115</p>
-
-<p><br></p>
-
-<ul>
-<li><a href="https://www.nature.com/articles/ni.3745"><strong>S100-induced innate immune programming protects newborn infants from sepsis.</strong></a></li>
-</ul>
-
-<p>Ulas et al., May 2017, Nature Immunology</p>
-]]></content>
-  </entry>
-  <entry>
     <title type="html"><![CDATA[Announcing my talk about explainability of machine learning models at Minds Mastering Machines conference]]></title>
     <link href="/2018/02/m3_2018/"/>
     <id>/2018/02/m3_2018/</id>
@@ -10094,52 +10152,6 @@ Verteiltes Deep Learning mit TensorFlow und Kubernetes - <a href="https://twitte
 <p class="caption">Community is everything!</p>
 </div>
 <p>The main drawbacks I experience with R are that scripts tends to be harder to deploy than Python (<a href="https://www.microsoft.com/en-us/cloud-platform/r-server">R-server</a> might be a solution, but I don’t know enough about it to really judge). Dealing with memory, space and security issues is often difficult in R. But there has already been a vast improvement over the last months/years, so I’m sure we will see development there in the future…</p>
-]]></content>
-  </entry>
-  <entry>
-    <title type="html"><![CDATA[Welcome to my page!]]></title>
-    <link href="/page/about/"/>
-    <id>/page/about/</id>
-    <published>2017-09-12T16:06:06+02:00</published>
-    <updated>2017-09-12T16:06:06+02:00</updated>
-    <content type="html"><![CDATA[
-
-<p><a href="https://promocode.com.ph/toplists/top-20-programming-blogs/" title="Banners for Top 20 Programming Blogs"><img src="https://promocode.com.ph/wp-content/uploads/2019/03/340x240-3.png" alt="Banners for Top 20 Programming Blogs"></a></p>
-
-<p>I’m Shirin (Elsinghorst, born Glander), a biologist turned bioinformatician turned data scientist. During my PhD and Postdoc I worked with Next Generation Sequencing data. However, I then chose to become a data scientist for a German IT company, called codecentric. In this capacity, I have been working on many different projects, e.g. building fraud detection models, creating a chatbot, implementing predictive maintenance, and more. My preferred tool for data analysis has been R but I also work with Python. I am also very passionate about teaching and sharing knowledge, so I give workshops, talk at conferences or <a href="https://youtu.be/81UqFUk5B9I">meetups</a>, write blog posts and organize the <a href="https://shiring.github.io/r_users_group/2017/05/20/muenster_r_user_group">MünsteR R-users group on meetup.com</a>.  <img src="/img/Bewerbungsfoto_klein.jpg" alt="" /></p>
-
-<p>I also teach a <a href="https://www.datacamp.com/courses/hyperparameter-tuning-in-r">Data Camp course in hyperparameter tuning with R</a> (<strong>UPDATE:</strong> Before you take this course please consider <a href="https://shirinsplayground.netlify.com/2019/04/consider_data_camp">the info about the sexual harrassment scandal surrounding DataCamp</a>!) and I&rsquo;m on the program committee of the <a href="https://m3-konferenz.de/programmkomitee.php">Minds Mastering Machines M3 conference</a>.</p>
-
-<p><img src="https://shiring.github.io/netlify_images/my_story_wml3zm.png" alt="My journey to Data Science" /></p>
-
-<p>Since summer 2019, I am also mom of a precious baby boy, who is not leaving me much time to persue coding at the moment. ;-)</p>
-
-<p>I love dancing and used to do competitive ballroom and latin dancing. Even though I don&rsquo;t have time for that anymore, I still enjoy teaching &ldquo;social dances&rdquo; once a week with the Hochschulsport (university sports courses).</p>
-
-<p>I created the R package <a href="https://github.com/ShirinG/exprAnalysis">exprAnalysis</a>, designed to streamline my RNA-seq data analysis pipeline. It is available via Github. Instructions for installation and usage can be found <a href="https://shiring.github.io/rna-seq/microarray/2016/09/28/exprAnalysis">here</a>.</p>
-
-<p>This blog will showcase some of the analyses I have been doing with different data sets (all freely available). I will also host teaching materials for students to access in conjunction with R courses I am giving.</p>
-
-<hr />
-
-<h2 id="contact-me">Contact me:</h2>
-
-<ul>
-<li><a href="https://www.codecentric.de/team/shirin-glander/">Codecentric AG</a></li>
-<li><a href="mailto:shirin.glander@gmail.com">Email</a> (if you send me an email, please don&rsquo;t add any links - your mail will most likely go directly to my spam folder and I won&rsquo;t see it!)</li>
-<li><a href="http://www.xing.com/profile/Shirin_Glander">Xing</a></li>
-<li><a href="http://de.linkedin.com/in/shirin-glander-01120881">Linkedin</a></li>
-<li><a href="http://twitter.com/ShirinGlander">Twitter</a></li>
-</ul>
-
-<hr />
-
-<p>Join the WomenTech Global Conference 2020 June 10-12: 👉<a href="https://www.womentech.net/women-tech-conference?join=ODMzOQ==">https://www.womentech.net/women-tech-conference?join=ODMzOQ==</a>
-<img src="https://www.womentech.net/sites/default/files/event-images/SignatureBanner.png" alt="" /></p>
-
-<hr />
-
-<p>Also check out <a href="http://www.R-bloggers.com">R-bloggers</a> for lots of cool R stuff!</p>
 ]]></content>
   </entry>
   <entry>

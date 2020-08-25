@@ -1,10 +1,10 @@
 ---
 title: "Conferences, webinars, podcasts, workshops, books, articles and the likes"
-date: 2018-02-01T16:06:06+02:00
+date: 2020-08-23
 comments:       false
 showMeta:       false
-showActions:    false
-thumbnailImage: /img/Bewerbungsfoto.jpg
+showActions:    true
+thumbnailImage: 
 ---
 
 Here, you can find a list of all the talks I gave at conferences, webinars, podcasts, workshops, and all the other places you can and could hear me talk. You will also find a section with magazine articles and books I've written. :-)

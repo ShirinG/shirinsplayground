@@ -3,6 +3,21 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/page/conferences_podcasts_webinars/</loc>
+    <lastmod>2020-08-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/page/bookme/</loc>
+    <lastmod>2020-08-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/page/about/</loc>
+    <lastmod>2020-08-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/2020/02/baby_weight_app/</loc>
     <lastmod>2020-02-02T00:00:00+00:00</lastmod>
   </url>
@@ -293,11 +308,6 @@
   </url>
   
   <url>
-    <loc>/page/conferences_podcasts_webinars/</loc>
-    <lastmod>2018-02-01T16:06:06+02:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/2018/02/m3_2018/</loc>
     <lastmod>2018-02-01T00:00:00+00:00</lastmod>
   </url>
@@ -390,11 +400,6 @@
   <url>
     <loc>/2017/09/ode_to_r/</loc>
     <lastmod>2017-09-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/page/about/</loc>
-    <lastmod>2017-09-12T16:06:06+02:00</lastmod>
   </url>
   
   <url>
@@ -987,7 +992,7 @@
   
   <url>
     <loc>/page/</loc>
-    <lastmod>2018-02-01T16:06:06+02:00</lastmod>
+    <lastmod>2020-08-23T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -1143,7 +1148,7 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2020-02-02T00:00:00+00:00</lastmod>
+    <lastmod>2020-08-23T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

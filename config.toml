@@ -52,6 +52,7 @@ canonifyurls = true
   name = "Home"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-home\"></i>"
   url = "/"
+  
 [[menu.main]]
   weight = 2
   identifier = "categories"
@@ -59,57 +60,64 @@ canonifyurls = true
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-bookmark\"></i>"
   url = "/categories/"
 [[menu.main]]
-  weight = 2
+  weight = 3
   identifier = "tags"
   name = "Tags"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-tags\"></i>"
   url = "/tags/"
 [[menu.main]]
-  weight = 2
-  identifier = "archives"
-  name = "Archives"
-  pre = "<i class=\"sidebar-button-icon fa fa-lg fa-archive\"></i>"
-  url = "/archives/"
-[[menu.main]]
-  weight = 3
+  weight = 4
   identifier = "about"
   name = "About"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-question\"></i>"
   # url = "/#about"
   url = "/page/about/"
 [[menu.main]]
-  weight = 4
+  weight = 5
+  identifier = "bookme"
+  name = "Book me"
+  pre = "<i class=\"sidebar-button-icon fa fa-lg fa-calendar\"></i>"
+  url = "/page/bookme/"
+[[menu.main]]
+  weight = 6
   identifier = "conferences_podcasts_webinars"
   name = "Hear me talk"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-bullhorn\"></i>"
   url = "/page/conferences_podcasts_webinars/"
+
 [[menu.main]]
-  weight = 4
-  identifier = "codecentricai"
-  name = "codecentric.ai"
-  pre = "<i class=\"sidebar-button-icon fa fa-lg fa-angle-double-right\"></i>"
-  url = "https://www.codecentric.de/kuenstliche-intelligenz/"
+  weight = 7
+  identifier = "archives"
+  name = "Archives"
+  pre = "<i class=\"sidebar-button-icon fa fa-lg fa-archive\"></i>"
+  url = "/archives/"
 [[menu.main]]
-  weight = 4
+  weight = 8
+  identifier = "rss"
+  name = "RSS"
+  pre = "<i class=\"sidebar-button-icon fa fa-lg fa-rss\"></i>"
+  url = "/index.xml"
+  
+[[menu.links]]
+  weight = 1
   identifier = "github_playground"
   name = "My old R-blog"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-archive\"></i>"
   url = "https://shiring.github.io/"
-  
 [[menu.links]]
-  weight = 5
+  weight = 2
   identifier = "github"
   name = "GitHub"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-github\"></i>"
   url = "https://github.com/ShirinG"
 [[menu.links]]
-  weight = 5
+  weight = 3
   identifier = "stackoverflow"
   name = "Stack Overflow"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-stack-overflow\"></i>"
   url = "https://stackoverflow.com/users/6623620/shirin-glander"
 [[menu.links]]
-  weight = 5
+  weight = 4
   identifier = "twitter"
   name = "Twitter"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-twitter\"></i>"
@@ -121,38 +129,38 @@ canonifyurls = true
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-linkedin\"></i>"
   url = "https://www.linkedin.com/in/shirin-glander-01120881/"
 [[menu.links]]
-  weight = 5
+  weight = 6
   identifier = "xing"
   name = "Xing"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-xing\"></i>"
-  url = "https://www.xing.com/profile/Shirin_Glander"
-[[menu.links]]
-  weight = 6
+  url = "https://www.xing.com/profile/Shirin_Elsinghorst/cv"
+[[menu.links]] 
+  weight = 7
   identifier = "meetup"
   name = "MünsteR"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-meetup\"></i>"
   url = "https://www.meetup.com/Munster-R-Users-Group"
-[[menu.links]]
-  weight = 7
+  
+[[menu.misc]]
+  weight = 8
+  identifier = "codecentricai"
+  name = "codecentric.ai"
+  pre = "<i class=\"sidebar-button-icon fa fa-lg fa-angle-double-right\"></i>"
+  url = "https://www.codecentric.de/kuenstliche-intelligenz/"
+[[menu.misc]]
+  weight = 5
   identifier = "rbloggers"
   name = "R-bloggers"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-book\"></i>"
   url = "https://www.r-bloggers.com/"
-[[menu.links]]
-  weight = 7
+[[menu.misc]]
+  weight = 5
   identifier = "rusers"
   name = "R-users"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-book\"></i>"
   url = "https://www.r-users.com/"
-  
 [[menu.misc]]
-  weight = 8
-  identifier = "rss"
-  name = "RSS"
-  pre = "<i class=\"sidebar-button-icon fa fa-lg fa-rss\"></i>"
-  url = "/index.xml"
-[[menu.misc]]
-  weight = 8
+  weight = 5
   identifier = "womenintech"
   name = "WomenInTech"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-wifi\"></i>"
