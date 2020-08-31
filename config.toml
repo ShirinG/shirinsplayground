@@ -268,13 +268,13 @@ canonifyurls = true
     icon = ""
     url = "/#about"
 
-  # Customize link of author avatar in sidebar
-  # [params.sidebar.profile]
-  #   url = "/#about"
+# Customize link of author avatar in sidebar
+  [params.sidebar.profile]
+    url = "/#about"
 
-  # Customize copyright value "© 2017 Shirin Glander. All Rights Reserved"
-  # [params.footer]
-  #   copyright = "<a href=\"https://github.com/kakawait\">kakawait</a>"
+  # Customize copyright value "© 2017 Shirin Elsinghorst. All Rights Reserved"
+   [params.footer]
+     copyright = "<a href='https://shirin-elsinghorst.appointlet.com/s/15-minute-intro'>Dr. Shirin Elsinghorst</a>"
 
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$", "^Thumbs\\.db$"]
 
