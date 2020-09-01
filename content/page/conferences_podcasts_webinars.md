@@ -59,7 +59,9 @@ implementieren können.
 
 ![](https://shiring.github.io/netlify_images/ix_article_01.jpeg)
 
-- Book chapter Predictive Analytics (German): planned publication in April 2019
+<br>
+
+- Book chapter Predictive Analytics (German): [Data Science Grundlagen, Architekturen und Anwendungen](https://www.dpunkt.de/buecher/13208/9783864906107-data-science.html) Mai 2019, 336 Seiten, gebunden, dpunkt.verlag, ISBN Print: 978-3-86490-610-7
 
 ---
 
