@@ -63,6 +63,8 @@ implementieren können.
 
 - Book chapter Predictive Analytics (German): [Data Science Grundlagen, Architekturen und Anwendungen](https://www.dpunkt.de/buecher/13208/9783864906107-data-science.html) Mai 2019, 336 Seiten, gebunden, dpunkt.verlag, ISBN Print: 978-3-86490-610-7
 
+![](https://www.dpunkt.de/common/images/cover_masterid/300/13208.jpg)
+
 ---
 
 <br>
