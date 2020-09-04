@@ -2,12 +2,757 @@
   <title>Shirin&#39;s playgRound</title>
   <link href="/index.xml" rel="self"/>
   <link href="/"/>
-  <updated>2020-08-23T00:00:00+00:00</updated>
+  <updated>2020-10-20T00:00:00+00:00</updated>
   <id>/</id>
   <author>
     <name>Dr. Shirin Elsinghorst</name>
   </author>
   <generator>Hugo -- gohugo.io</generator>
+  <entry>
+    <title type="html"><![CDATA[The Good, the Bad and the Ugly: how (not) to visualize data]]></title>
+    <link href="/2020/10/goodbadugly/"/>
+    <id>/2020/10/goodbadugly/</id>
+    <published>2020-10-20T00:00:00+00:00</published>
+    <updated>2020-10-20T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<pre class="r"><code>library(tidyverse)
+
+library(ggExtra)
+library(ragg)
+library(ggalluvial)
+library(treemapify)
+library(ggalt)
+
+library(palmerpenguins)</code></pre>
+<div id="dataset" class="section level2">
+<h2>Dataset</h2>
+<pre class="r"><code>head(penguins)</code></pre>
+<pre><code>## # A tibble: 6 x 8
+##   species island bill_length_mm bill_depth_mm flipper_length_… body_mass_g sex  
+##   &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;            &lt;int&gt;       &lt;int&gt; &lt;fct&gt;
+## 1 Adelie  Torge…           39.1          18.7              181        3750 male 
+## 2 Adelie  Torge…           39.5          17.4              186        3800 fema…
+## 3 Adelie  Torge…           40.3          18                195        3250 fema…
+## 4 Adelie  Torge…           NA            NA                 NA          NA &lt;NA&gt; 
+## 5 Adelie  Torge…           36.7          19.3              193        3450 fema…
+## 6 Adelie  Torge…           39.3          20.6              190        3650 male 
+## # … with 1 more variable: year &lt;int&gt;</code></pre>
+<pre class="r"><code>#head(penguins_raw)</code></pre>
+</div>
+<div id="colors" class="section level2">
+<h2>Colors</h2>
+<ul>
+<li>set <a href="https://jfly.uni-koeln.de/color/">colorblind-friendly palettes</a></li>
+</ul>
+<pre class="r"><code># The palette with grey:
+cbp1 &lt;- c(&quot;#999999&quot;, &quot;#E69F00&quot;, &quot;#56B4E9&quot;, &quot;#009E73&quot;,
+          &quot;#F0E442&quot;, &quot;#0072B2&quot;, &quot;#D55E00&quot;, &quot;#CC79A7&quot;)
+
+# The palette with black:
+cbp2 &lt;- c(&quot;#000000&quot;, &quot;#E69F00&quot;, &quot;#56B4E9&quot;, &quot;#009E73&quot;,
+          &quot;#F0E442&quot;, &quot;#0072B2&quot;, &quot;#D55E00&quot;, &quot;#CC79A7&quot;)
+
+library(plotrix)
+sliceValues &lt;- rep(10, 8) # each slice value=10 for proportionate slices
+(
+  p &lt;- pie3D(sliceValues, 
+      explode=0, 
+      theta = 1.2, 
+      col = cbp1, 
+      labels = cbp1, 
+      labelcex = 0.9,
+      shade = 0.6,
+      main = &quot;Colorblind\nfriendly palette&quot;)
+)</code></pre>
+<p><img src="/post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<pre><code>## [1] 0.3926991 1.1780972 1.9634954 2.7488936 3.5342917 4.3196899 5.1050881
+## [8] 5.8904862</code></pre>
+<pre class="r"><code>ggplot &lt;- function(...) ggplot2::ggplot(...) + 
+  scale_color_manual(values = cbp1) +
+  scale_fill_manual(values = cbp1) + # note: needs to be overridden when using continuous color scales
+  theme_bw()</code></pre>
+</div>
+<div id="main-diagram-types" class="section level2">
+<h2>Main Diagram types</h2>
+<p><a href="https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf" class="uri">https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf</a></p>
+<div id="point-chart" class="section level3">
+<h3>Point chart</h3>
+<pre class="r"><code>penguins %&gt;%
+    remove_missing() %&gt;%
+    ggplot(aes(x = bill_length_mm, y = flipper_length_mm)) +
+    geom_jitter(alpha = 0.5) +
+    facet_wrap(vars(species), ncol = 3) +
+    scale_x_reverse() +
+    scale_y_reverse() +
+    labs(x = &quot;Bill length (mm)&quot;, 
+         y = &quot;Flipper length (mm)&quot;,
+         size = &quot;body mass (g)&quot;,
+        title = &quot;Scatterplot&quot;, 
+        subtitle = &quot;Penguins bill v. flipper length by species&quot;,
+        caption = &quot;Source: https://github.com/allisonhorst/palmerpenguins&quot;)</code></pre>
+<p><img src="/post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<pre class="r"><code>penguins %&gt;%
+    remove_missing() %&gt;%
+    ggplot(aes(x = bill_length_mm, y = flipper_length_mm,
+              color = species, shape = species)) +
+    geom_point(alpha = 0.7) +
+    labs(x = &quot;Bill length (mm)&quot;, 
+         y = &quot;Flipper length (mm)&quot;,
+        title = &quot;Scatterplot&quot;, 
+        subtitle = &quot;Penguins bill v. flipper length by species&quot;,
+        caption = &quot;Source: https://github.com/allisonhorst/palmerpenguins&quot;)</code></pre>
+<p><img src="/post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<ul>
+<li>Jitter with smoothing line</li>
+</ul>
+<pre class="r"><code>penguins %&gt;%
+    remove_missing() %&gt;%
+    ggplot(aes(x = bill_length_mm, y = flipper_length_mm,
+              color = species, shape = species)) +
+    geom_jitter(alpha = 0.5) +
+    geom_smooth(method = &quot;loess&quot;, se = TRUE) +
+    facet_wrap(vars(species), nrow = 3) +
+    labs(x = &quot;Bill length (mm)&quot;, 
+         y = &quot;Flipper length (mm)&quot;,
+        title = &quot;Scatterplot with smoothing line&quot;, 
+        subtitle = &quot;Penguins bill v. flipper length by species with loess smoothing line&quot;,
+        caption = &quot;Source: https://github.com/allisonhorst/palmerpenguins&quot;)</code></pre>
+<p><img src="/post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<pre class="r"><code>penguins %&gt;%
+  remove_missing() %&gt;%
+  filter(species == &quot;Adelie&quot;) %&gt;%
+  ggplot(aes(x = bill_length_mm, y = flipper_length_mm)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = &quot;loess&quot;, se = TRUE) +
+    labs(x = &quot;Bill length (mm)&quot;, 
+         y = &quot;Flipper length (mm)&quot;,
+        title = &quot;Scatterplot with smoothing line&quot;, 
+        subtitle = &quot;Penguins bill v. flipper length by species with\nloess smoothing line, histogram &amp; density distribution&quot;,
+        caption = &quot;Source: https://github.com/allisonhorst/palmerpenguins&quot;)</code></pre>
+<p><img src="/post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<pre class="r"><code>#(ggMarginal(p, type = &quot;densigram&quot;, fill = &quot;transparent&quot;))</code></pre>
+</div>
+<div id="bubble-chart" class="section level3">
+<h3>Bubble chart</h3>
+<pre class="r"><code>penguins %&gt;%
+    remove_missing() %&gt;%
+    ggplot(aes(x = bill_length_mm, y = flipper_length_mm,
+              color = species, shape = species, size = body_mass_g)) +
+    geom_point(alpha = 0.5) +
+    labs(x = &quot;Bill length (mm)&quot;, 
+         y = &quot;Flipper length (mm)&quot;,
+        title = &quot;Bubble plot&quot;, 
+        size = &quot;body mass (g)&quot;,
+        subtitle = &quot;Penguins bill v. flipper length by species;\nsize indicates body mass in grams&quot;,
+        caption = &quot;Source: https://github.com/allisonhorst/palmerpenguins&quot;)</code></pre>
+<p><img src="/post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+</div>
+<div id="line-chart" class="section level3">
+<h3>Line chart</h3>
+<pre class="r"><code>penguins %&gt;%
+    remove_missing() %&gt;%
+    ggplot(aes(x = bill_length_mm, y = flipper_length_mm,
+               color = species)) +
+    geom_line() +
+    facet_wrap(vars(species, sex), nrow = 3) +
+    labs(x = &quot;Bill length (mm)&quot;, 
+         y = &quot;Flipper length (mm)&quot;,
+        title = &quot;Line plot&quot;, 
+        subtitle = &quot;Penguins bill v. flipper length by species and sex&quot;,
+        caption = &quot;Source: https://github.com/allisonhorst/palmerpenguins&quot;)</code></pre>
+<p><img src="/post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+</div>
+<div id="correlation-plots-heatmap" class="section level3">
+<h3>Correlation plots / heatmap</h3>
+<pre class="r"><code>mat &lt;- penguins %&gt;%
+  remove_missing() %&gt;%
+  select(bill_depth_mm, bill_length_mm, body_mass_g, flipper_length_mm)
+
+cormat &lt;- round(cor(mat), 2)
+cormat[upper.tri(cormat)] &lt;- NA
+
+cormat &lt;- cormat %&gt;%
+  as_data_frame() %&gt;%
+  mutate(x = colnames(mat)) %&gt;%
+  gather(key = &quot;y&quot;, value = &quot;value&quot;, bill_depth_mm:flipper_length_mm)
+
+cormat %&gt;%
+    remove_missing() %&gt;%
+    arrange(x, y) %&gt;%
+    ggplot(aes(x = x, y = y, fill = value)) + 
+    geom_tile() +
+    scale_fill_gradient2(low = &quot;blue&quot;, high = &quot;red&quot;, mid = &quot;white&quot;, 
+     midpoint = 0, limit = c(-1,1), space = &quot;Lab&quot;, 
+     name = &quot;Pearson\nCorrelation&quot;) +
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
+    coord_fixed() +
+      labs(x = &quot;&quot;, 
+           y = &quot;&quot;,
+          title = &quot;Correlation heatmap&quot;, 
+          subtitle = &quot;Correlation btw. penguins&#39; traits&quot;,
+          caption = &quot;Source: https://github.com/allisonhorst/palmerpenguins&quot;)</code></pre>
+<p><img src="/post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+</div>
+<div id="bar-chart" class="section level3">
+<h3>Bar chart</h3>
+<ul>
+<li>per default: counts</li>
+</ul>
+<pre class="r"><code>penguins %&gt;%
+    remove_missing() %&gt;%
+    ggplot(aes(x = species,
+               fill = sex)) +
+    geom_bar() +
+      labs(x = &quot;Species&quot;, 
+           y = &quot;Counts&quot;,
+          title = &quot;Barchart&quot;, 
+          subtitle = &quot;Counts of male &amp; female penguins per species in study&quot;,
+          caption = &quot;Source: https://github.com/allisonhorst/palmerpenguins&quot;)</code></pre>
+<p><img src="/post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<pre class="r"><code>penguins %&gt;%
+    remove_missing() %&gt;%
+    ggplot(aes(x = species,
+               fill = sex)) +
+    geom_bar(position = &#39;dodge&#39;) +
+      labs(x = &quot;Species&quot;, 
+           y = &quot;Counts&quot;,
+          title = &quot;Barchart&quot;, 
+          subtitle = &quot;Counts of male &amp; female penguins per species in study&quot;,
+          caption = &quot;Source: https://github.com/allisonhorst/palmerpenguins&quot;)</code></pre>
+<p><img src="/post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<ul>
+<li>alternative: set y-values</li>
+</ul>
+<pre class="r"><code>penguins %&gt;%
+    remove_missing() %&gt;%
+    group_by(species, sex) %&gt;%
+    summarise(mean_bmg = mean(body_mass_g),
+              sd_bmg = sd(body_mass_g)) %&gt;%
+    ggplot(aes(x = species, y = mean_bmg,
+               fill = sex)) +
+    geom_bar(stat = &quot;identity&quot;, position = &quot;dodge&quot;) +
+    geom_errorbar(aes(ymin = mean_bmg - sd_bmg, 
+                      ymax = mean_bmg + sd_bmg), 
+                  width = 0.2,
+                 position = position_dodge(0.9)) +
+      labs(x = &quot;Species&quot;, 
+           y = &quot;Mean body mass (in g)&quot;,
+          title = &quot;Barchart&quot;, 
+          subtitle = &quot;Mean body mass of male &amp; female penguins per species\nwith standard deviation&quot;,
+          caption = &quot;Source: https://github.com/allisonhorst/palmerpenguins&quot;)</code></pre>
+<p><img src="/post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+</div>
+<div id="boxplot" class="section level3">
+<h3>Boxplot</h3>
+<pre class="r"><code>penguins %&gt;%
+    remove_missing() %&gt;%
+    ggplot(aes(x = species, y = body_mass_g,
+               fill = sex)) +
+    geom_boxplot() +
+      labs(x = &quot;Species&quot;, 
+           y = &quot;Body mass (in g)&quot;,
+          title = &quot;Boxplot&quot;, 
+          subtitle = &quot;Body mass of three penguin species per sex&quot;,
+          caption = &quot;Source: https://github.com/allisonhorst/palmerpenguins&quot;)</code></pre>
+<p><img src="/post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<ul>
+<li>with points</li>
+</ul>
+<pre class="r"><code>penguins %&gt;%
+    remove_missing() %&gt;%
+    ggplot(aes(x = species, y = body_mass_g,
+               fill = sex, color = sex)) +
+    geom_boxplot(alpha = 0.5, notch = TRUE) +
+    geom_jitter(alpha = 0.5, position=position_jitter(0.3)) +
+      labs(x = &quot;Species&quot;, 
+           y = &quot;Body mass (in g)&quot;,
+          title = &quot;Boxplot with points (dotplot)&quot;, 
+          subtitle = &quot;Body mass of three penguin species per sex&quot;,
+          caption = &quot;Source: https://github.com/allisonhorst/palmerpenguins&quot;)</code></pre>
+<p><img src="/post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+</div>
+<div id="violin-plot" class="section level3">
+<h3>Violin plot</h3>
+<pre class="r"><code>penguins %&gt;%
+    remove_missing() %&gt;%
+    ggplot(aes(x = species, y = body_mass_g,
+               fill = sex)) +
+    geom_violin(scale = &quot;area&quot;) +
+      labs(x = &quot;Species&quot;, 
+           y = &quot;Body mass (in g)&quot;,
+          title = &quot;Violinplot&quot;, 
+          subtitle = &quot;Body mass of three penguin species per sex&quot;,
+          caption = &quot;Source: https://github.com/allisonhorst/palmerpenguins&quot;)</code></pre>
+<p><img src="/post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<pre class="r"><code>penguins %&gt;%
+    remove_missing() %&gt;%
+    ggplot(aes(x = species, y = body_mass_g,
+               fill = sex, color = sex)) +
+    geom_dotplot(method = &quot;dotdensity&quot;, alpha = 0.7,
+                 binaxis = &#39;y&#39;, stackdir = &#39;center&#39;,
+                 position = position_dodge(1)) +
+      labs(x = &quot;Species&quot;, 
+           y = &quot;Body mass (in g)&quot;,
+          title = &quot;Violinplot with points (dotplot)&quot;, 
+          subtitle = &quot;Body mass of three penguin species per sex&quot;,
+          caption = &quot;Source: https://github.com/allisonhorst/palmerpenguins&quot;)</code></pre>
+<p><img src="/post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+</div>
+<div id="pie-chart" class="section level3">
+<h3>Pie chart</h3>
+<pre class="r"><code>penguins %&gt;%
+    remove_missing() %&gt;%
+    group_by(species, sex) %&gt;%
+    summarise(n = n()) %&gt;%
+    mutate(freq = n / sum(n),
+           percentage = freq * 100) %&gt;%
+    ggplot(aes(x = &quot;&quot;, y = percentage,
+               fill = sex)) +
+    facet_wrap(vars(species), nrow = 1) +
+    geom_bar(stat = &quot;identity&quot;, alpha = 0.8) +
+    coord_polar(&quot;y&quot;, start = 0) +
+      labs(x = &quot;&quot;, 
+           y = &quot;Percentage&quot;,
+          title = &quot;Piechart&quot;, 
+          subtitle = &quot;Percentage of male v. female penguins per species in study&quot;,
+          caption = &quot;Source: https://github.com/allisonhorst/palmerpenguins&quot;)</code></pre>
+<p><img src="/post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+</div>
+<div id="alluvial-charts" class="section level3">
+<h3>Alluvial charts</h3>
+<pre class="r"><code>as.data.frame(UCBAdmissions) %&gt;%
+    ggplot(aes(y = Freq, axis1 = Gender, axis2 = Dept)) +
+    geom_alluvium(aes(fill = Admit), width = 1/12) +
+    geom_stratum(width = 1/12, fill = &quot;black&quot;, color = &quot;grey&quot;) +
+    geom_label(stat = &quot;stratum&quot;, aes(label = after_stat(stratum))) +
+    scale_x_discrete(limits = c(&quot;Gender&quot;, &quot;Dept&quot;), expand = c(.05, .05)) +
+      labs(x = &quot;&quot;, 
+           y = &quot;Frequency&quot;,
+          title = &quot;Alluvial chart&quot;, 
+          subtitle = &quot;UC Berkeley admissions and rejections, by sex and department&quot;,
+          caption = &quot;Source: Bickel et al. (1975)\nSex bias in graduate admissions: Data from Berkeley. Science, 187, 398–403.&quot;)</code></pre>
+<p><img src="/post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+</div>
+<div id="treemaps" class="section level3">
+<h3>Treemaps</h3>
+<pre class="r"><code>as.data.frame(UCBAdmissions) %&gt;%
+    group_by(Admit, Gender) %&gt;%
+    summarise(sum_freq = sum(Freq)) %&gt;%
+    ggplot(aes(area = sum_freq, fill = sum_freq, label = Gender, 
+               subgroup = Admit)) +
+    geom_treemap() +
+    geom_treemap_subgroup_border() +
+    geom_treemap_subgroup_text(place = &quot;centre&quot;, grow = T, alpha = 0.5, colour =
+                             &quot;black&quot;, fontface = &quot;italic&quot;, min.size = 0) +
+    geom_treemap_text(colour = &quot;white&quot;, place = &quot;centre&quot;, reflow = T) +
+    scale_fill_gradient2(low = &quot;#999999&quot;, high = &quot;#E69F00&quot;, mid = &quot;white&quot;, midpoint = 1000, space = &quot;Lab&quot;, 
+     name = &quot;Sum of\nfrequencies&quot;) +
+      labs(x = &quot;&quot;, 
+           y = &quot;&quot;,
+          title = &quot;Treemap&quot;, 
+          subtitle = &quot;UC Berkeley admissions and rejections by sex&quot;,
+          caption = &quot;Source: Bickel et al. (1975)\nSex bias in graduate admissions: Data from Berkeley. Science, 187, 398–403.&quot;)</code></pre>
+<p><img src="/post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+</div>
+<div id="dumbbell-plots" class="section level3">
+<h3>Dumbbell plots</h3>
+<pre class="r"><code>penguins %&gt;%
+    remove_missing() %&gt;%
+    group_by(year, species, sex) %&gt;%
+    summarise(mean_bmg = mean(body_mass_g)) %&gt;%
+    mutate(species_sex = paste(species, sex, sep = &quot;_&quot;),
+         year = paste0(&quot;year_&quot;, year)) %&gt;%
+    spread(year, mean_bmg) %&gt;%
+    ggplot(aes(x = year_2007, xend = year_2009, 
+               y = reorder(species_sex, year_2009))) +
+    geom_dumbbell(color = &quot;#999999&quot;, 
+                      size_x = 3, 
+                      size_xend = 3,
+                      #Note: there is no US:&#39;color&#39; for UK:&#39;colour&#39; 
+                      # in geom_dumbbel unlike standard geoms in ggplot()
+                      colour_x = &quot;#999999&quot;,
+                      colour_xend = &quot;#E69F00&quot;) +
+      labs(x = &quot;Body mass (g)&quot;, 
+           y = &quot;Species &amp; sex&quot;,
+          title = &quot;Dumbbell plot&quot;, 
+          subtitle = &quot;Penguin&#39;s change in body mass from 2007 to 2009&quot;,
+          caption = &quot;Source: https://github.com/allisonhorst/palmerpenguins&quot;)</code></pre>
+<p><img src="/post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+</div>
+<div id="slope-charts" class="section level3">
+<h3>Slope charts</h3>
+<pre class="r"><code>penguins %&gt;%
+    remove_missing() %&gt;%
+    group_by(year, species, sex) %&gt;%
+    summarise(mean_bmg = mean(body_mass_g)) %&gt;%
+    ggplot(aes(x = year, y = mean_bmg, group = sex,
+               color = sex)) +
+    facet_wrap(vars(species), nrow = 3) +
+    geom_line(alpha = 0.6, size = 2) +
+    geom_point(alpha = 1, size = 3) +
+    scale_x_continuous(breaks=c(2007, 2008, 2009)) +
+      labs(x = &quot;Year&quot;, 
+           y = &quot;Body mass (g)&quot;,
+           color = &quot;Sex&quot;,
+          title = &quot;Slope chart&quot;, 
+          subtitle = &quot;Penguin&#39;s change in body mass from 2007 to 2009&quot;,
+          caption = &quot;Source: https://github.com/allisonhorst/palmerpenguins&quot;)</code></pre>
+<p><img src="/post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+</div>
+<div id="stacked-area-charts" class="section level3">
+<h3>Stacked area charts</h3>
+<pre class="r"><code>penguins %&gt;%
+    remove_missing() %&gt;%
+    group_by(year, species, sex) %&gt;%
+    summarise(mean_bmg = mean(body_mass_g)) %&gt;%
+    ggplot(aes(x = year, y = mean_bmg, fill = sex)) +
+    facet_wrap(vars(species), nrow = 3) +
+    geom_area(alpha = 0.6, size=.5, color = &quot;white&quot;) +
+    scale_x_continuous(breaks=c(2007, 2008, 2009)) +
+      labs(x = &quot;Year&quot;, 
+           y = &quot;Mean body mass (g)&quot;,
+           color = &quot;Sex&quot;,
+          title = &quot;Stacked area chart&quot;, 
+          subtitle = &quot;Penguin&#39;s change in body mass from 2007 to 2009&quot;,
+          caption = &quot;Source: https://github.com/allisonhorst/palmerpenguins&quot;)</code></pre>
+<p><img src="/post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+</div>
+<div id="lolliplot-chart" class="section level3">
+<h3>Lolliplot chart</h3>
+<pre class="r"><code>penguins %&gt;%
+    remove_missing() %&gt;%
+    group_by(year, species, sex) %&gt;%
+    summarise(mean_bmg = mean(body_mass_g)) %&gt;%
+    mutate(species_sex = paste(species, sex, sep = &quot;_&quot;),
+         year = paste0(&quot;year_&quot;, year)) %&gt;%
+    spread(year, mean_bmg) %&gt;%
+    ggplot() +
+    geom_segment(aes(x = reorder(species_sex, -year_2009), xend = reorder(species_sex, -year_2009), 
+                   y = 0, yend = year_2009),
+                 color = &quot;#999999&quot;, size = 1) +
+    geom_point(aes(x = reorder(species_sex, -year_2009), y = year_2009),
+               size = 4, color = &quot;#E69F00&quot;) +
+    coord_flip() +
+      labs(x = &quot;Species &amp; sex&quot;, 
+           y = &quot;Body mass (g)&quot;,
+          title = &quot;Lollipop chart&quot;, 
+          subtitle = &quot;Penguin&#39;s body mass in 2009&quot;,
+          caption = &quot;Source: https://github.com/allisonhorst/palmerpenguins&quot;)</code></pre>
+<p><img src="/post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+</div>
+<div id="dendrograms" class="section level3">
+<h3>Dendrograms</h3>
+<pre class="r"><code>library(ggdendro)
+library(dendextend)</code></pre>
+<pre class="r"><code>penguins_hist &lt;- penguins %&gt;%
+  filter(sex == &quot;male&quot;) %&gt;%
+  select(species, bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g) %&gt;%
+  group_by(species) %&gt;% 
+  sample_n(10) %&gt;%
+  as.data.frame()
+rownames(penguins_hist) &lt;- paste(penguins_hist$species, seq_len(nrow(penguins_hist)), sep = &quot;_&quot;)
+
+penguins_hist &lt;- penguins_hist %&gt;%
+  select(-species) %&gt;%
+  remove_missing()</code></pre>
+<pre class="r"><code>#hc &lt;- hclust(dist(penguins_hist, method = &quot;euclidean&quot;), method = &quot;ward.D2&quot;)
+#ggdendrogram(hc)
+
+# Create a dendrogram and plot it
+penguins_hist %&gt;%  
+  scale %&gt;% 
+  dist(method = &quot;euclidean&quot;) %&gt;%
+  hclust(method = &quot;ward.D2&quot;) %&gt;% 
+  as.dendrogram</code></pre>
+<pre><code>## &#39;dendrogram&#39; with 2 branches and 30 members total, at height 12.39093</code></pre>
+</div>
+<div id="waterfall-charts" class="section level3">
+<h3>Waterfall charts</h3>
+<pre class="r"><code>library(waterfall)</code></pre>
+<pre class="r"><code>jaquith %&gt;%
+    arrange(score) %&gt;%
+    add_row(factor = &quot;Total&quot;, score = sum(jaquith$score)) %&gt;%
+    mutate(factor = factor(factor, levels = factor),
+                           id = seq_along(score)) %&gt;%
+    mutate(end = cumsum(score),
+           start = c(0, end[-length(end)]),
+           start = c(start[-length(start)], 0),
+           end = c(end[-length(end)], score[length(score)]),
+           gr_col = ifelse(factor == &quot;Total&quot;, &quot;Total&quot;, &quot;Part&quot;)) %&gt;%
+    ggplot(aes(x = factor, fill = gr_col)) + 
+      geom_rect(aes(x = factor,
+                    xmin = id - 0.45, xmax = id + 0.45, 
+                    ymin = end, ymax = start)) +
+      theme(axis.text.x = element_text(angle = 60, vjust = 1, hjust = 1),
+            legend.position = &quot;none&quot;) +
+        labs(x = &quot;&quot;, 
+             y = &quot;Amount&quot;,
+            title = &quot;Waterfall chart&quot;, 
+            subtitle = &quot;Sample business-adjusted risk from Security Metrics&quot;,
+            caption = &quot;Andrew Jaquith, Security Metrics: Replacing Fear, Uncertainty, and Doubt\n(Boston: Addison-Wesley Professional, 2007), 170-171.&quot;)</code></pre>
+<p><img src="/post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+</div>
+<div id="biplots" class="section level3">
+<h3>Biplots</h3>
+<pre class="r"><code>library(ggfortify)</code></pre>
+<pre class="r"><code>penguins_prep &lt;- penguins %&gt;%
+  remove_missing() %&gt;%
+  select(bill_length_mm:body_mass_g)
+
+penguins_pca &lt;- penguins_prep %&gt;%
+  prcomp(scale. = TRUE)</code></pre>
+<pre class="r"><code>penguins_km &lt;- penguins_prep %&gt;%
+  kmeans(3)</code></pre>
+<pre class="r"><code>autoplot(penguins_pca, 
+                data = penguins %&gt;% remove_missing(), 
+                colour = &#39;species&#39;,
+                shape = &#39;species&#39;,
+                loadings = TRUE, 
+                loadings.colour = &#39;blue&#39;,
+                loadings.label = TRUE, 
+                loadings.label.size = 3) +
+      scale_color_manual(values = cbp1) +
+  scale_fill_manual(values = cbp1) +
+  theme_bw() +
+            labs(
+            title = &quot;Biplot PCA&quot;, 
+            caption = &quot;Source: https://github.com/allisonhorst/palmerpenguins&quot;)</code></pre>
+<p><img src="/post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+<pre class="r"><code>autoplot(penguins_km, 
+                data = penguins %&gt;% remove_missing(), 
+                colour = &#39;species&#39;,
+                shape = &#39;species&#39;,
+                frame = TRUE, frame.type = &#39;norm&#39;) +
+      scale_color_manual(values = cbp1) +
+  scale_fill_manual(values = cbp1) +
+  theme_bw() +
+            labs(
+            title = &quot;Biplot k-Means clustering&quot;, 
+            caption = &quot;Source: https://github.com/allisonhorst/palmerpenguins&quot;)</code></pre>
+<p><img src="/post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+</div>
+<div id="radar-charts-aka-star-chart-aka-spider-plot" class="section level3">
+<h3>Radar charts, aka star chart, aka spider plot</h3>
+<p><a href="https://www.data-to-viz.com/caveat/spider.html" class="uri">https://www.data-to-viz.com/caveat/spider.html</a></p>
+<pre class="r"><code>library(ggiraphExtra)</code></pre>
+<pre class="r"><code>penguins %&gt;%
+    remove_missing() %&gt;%
+    select(-island, -year) %&gt;%
+    ggRadar(aes(x = c(bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g), 
+                group = species,
+                colour = sex, facet = sex), 
+            rescale = TRUE, 
+            size = 1, interactive = FALSE, 
+            use.label = TRUE) +
+     scale_color_manual(values = cbp1) +
+  scale_fill_manual(values = cbp1) +
+  theme_bw() +
+     scale_y_discrete(breaks = NULL) + # don&#39;t show ticks
+      labs(
+          title = &quot;Radar/spider/star chart&quot;, 
+          subtitle = &quot;Body mass of male &amp; female penguins per species&quot;,
+          caption = &quot;Source: https://github.com/allisonhorst/palmerpenguins&quot;)</code></pre>
+<p><img src="/post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+<hr />
+<pre class="r"><code>devtools::session_info()</code></pre>
+<pre><code>## ─ Session info ───────────────────────────────────────────────────────────────
+##  setting  value                       
+##  version  R version 4.0.2 (2020-06-22)
+##  os       macOS Catalina 10.15.6      
+##  system   x86_64, darwin17.0          
+##  ui       X11                         
+##  language (EN)                        
+##  collate  en_US.UTF-8                 
+##  ctype    en_US.UTF-8                 
+##  tz       Europe/Berlin               
+##  date     2020-09-04                  
+## 
+## ─ Packages ───────────────────────────────────────────────────────────────────
+##  package        * version date       lib source        
+##  ash              1.0-15  2015-09-01 [1] CRAN (R 4.0.2)
+##  assertthat       0.2.1   2019-03-21 [1] CRAN (R 4.0.0)
+##  backports        1.1.9   2020-08-24 [1] CRAN (R 4.0.2)
+##  blob             1.2.1   2020-01-20 [1] CRAN (R 4.0.2)
+##  blogdown         0.20    2020-06-23 [1] CRAN (R 4.0.2)
+##  bookdown         0.20    2020-06-23 [1] CRAN (R 4.0.2)
+##  broom            0.7.0   2020-07-09 [1] CRAN (R 4.0.2)
+##  callr            3.4.3   2020-03-28 [1] CRAN (R 4.0.0)
+##  cellranger       1.1.0   2016-07-27 [1] CRAN (R 4.0.0)
+##  cli              2.0.2   2020-02-28 [1] CRAN (R 4.0.0)
+##  colorspace       1.4-1   2019-03-18 [1] CRAN (R 4.0.0)
+##  crayon           1.3.4   2017-09-16 [1] CRAN (R 4.0.0)
+##  DBI              1.1.0   2019-12-15 [1] CRAN (R 4.0.0)
+##  dbplyr           1.4.4   2020-05-27 [1] CRAN (R 4.0.2)
+##  dendextend     * 1.14.0  2020-08-26 [1] CRAN (R 4.0.2)
+##  desc             1.2.0   2018-05-01 [1] CRAN (R 4.0.0)
+##  devtools         2.3.1   2020-07-21 [1] CRAN (R 4.0.2)
+##  digest           0.6.25  2020-02-23 [1] CRAN (R 4.0.0)
+##  dplyr          * 1.0.2   2020-08-18 [1] CRAN (R 4.0.2)
+##  ellipsis         0.3.1   2020-05-15 [1] CRAN (R 4.0.0)
+##  evaluate         0.14    2019-05-28 [1] CRAN (R 4.0.0)
+##  extrafont        0.17    2014-12-08 [1] CRAN (R 4.0.2)
+##  extrafontdb      1.0     2012-06-11 [1] CRAN (R 4.0.2)
+##  fansi            0.4.1   2020-01-08 [1] CRAN (R 4.0.0)
+##  farver           2.0.3   2020-01-16 [1] CRAN (R 4.0.0)
+##  fastmap          1.0.1   2019-10-08 [1] CRAN (R 4.0.0)
+##  forcats        * 0.5.0   2020-03-01 [1] CRAN (R 4.0.0)
+##  fs               1.5.0   2020-07-31 [1] CRAN (R 4.0.2)
+##  gdtools          0.2.2   2020-04-03 [1] CRAN (R 4.0.2)
+##  generics         0.0.2   2018-11-29 [1] CRAN (R 4.0.0)
+##  ggalluvial     * 0.12.1  2020-08-10 [1] CRAN (R 4.0.2)
+##  ggalt          * 0.4.0   2017-02-15 [1] CRAN (R 4.0.2)
+##  ggdendro       * 0.1.21  2020-08-11 [1] CRAN (R 4.0.2)
+##  ggExtra        * 0.9     2019-08-27 [1] CRAN (R 4.0.2)
+##  ggfittext        0.9.0   2020-06-14 [1] CRAN (R 4.0.2)
+##  ggfortify      * 0.4.10  2020-04-26 [1] CRAN (R 4.0.2)
+##  ggiraph          0.7.8   2020-07-01 [1] CRAN (R 4.0.2)
+##  ggiraphExtra   * 0.2.9   2018-07-22 [1] CRAN (R 4.0.2)
+##  ggplot2        * 3.3.2   2020-06-19 [1] CRAN (R 4.0.2)
+##  glue             1.4.2   2020-08-27 [1] CRAN (R 4.0.2)
+##  gridExtra        2.3     2017-09-09 [1] CRAN (R 4.0.2)
+##  gtable           0.3.0   2019-03-25 [1] CRAN (R 4.0.0)
+##  haven            2.3.1   2020-06-01 [1] CRAN (R 4.0.2)
+##  hms              0.5.3   2020-01-08 [1] CRAN (R 4.0.0)
+##  htmltools        0.5.0   2020-06-16 [1] CRAN (R 4.0.2)
+##  htmlwidgets      1.5.1   2019-10-08 [1] CRAN (R 4.0.0)
+##  httpuv           1.5.4   2020-06-06 [1] CRAN (R 4.0.2)
+##  httr             1.4.2   2020-07-20 [1] CRAN (R 4.0.2)
+##  insight          0.9.1   2020-08-26 [1] CRAN (R 4.0.2)
+##  jsonlite         1.7.0   2020-06-25 [1] CRAN (R 4.0.2)
+##  KernSmooth       2.23-17 2020-04-26 [1] CRAN (R 4.0.2)
+##  knitr            1.29    2020-06-23 [1] CRAN (R 4.0.2)
+##  labeling         0.3     2014-08-23 [1] CRAN (R 4.0.0)
+##  later            1.1.0.1 2020-06-05 [1] CRAN (R 4.0.2)
+##  lattice        * 0.20-41 2020-04-02 [1] CRAN (R 4.0.2)
+##  lifecycle        0.2.0   2020-03-06 [1] CRAN (R 4.0.0)
+##  lubridate        1.7.9   2020-06-08 [1] CRAN (R 4.0.2)
+##  magrittr         1.5     2014-11-22 [1] CRAN (R 4.0.0)
+##  maps             3.3.0   2018-04-03 [1] CRAN (R 4.0.2)
+##  MASS             7.3-52  2020-08-18 [1] CRAN (R 4.0.2)
+##  Matrix           1.2-18  2019-11-27 [1] CRAN (R 4.0.2)
+##  memoise          1.1.0   2017-04-21 [1] CRAN (R 4.0.0)
+##  mgcv             1.8-32  2020-08-19 [1] CRAN (R 4.0.2)
+##  mime             0.9     2020-02-04 [1] CRAN (R 4.0.0)
+##  miniUI           0.1.1.1 2018-05-18 [1] CRAN (R 4.0.0)
+##  modelr           0.1.8   2020-05-19 [1] CRAN (R 4.0.2)
+##  munsell          0.5.0   2018-06-12 [1] CRAN (R 4.0.0)
+##  mycor            0.1.1   2018-04-10 [1] CRAN (R 4.0.2)
+##  nlme             3.1-149 2020-08-23 [1] CRAN (R 4.0.2)
+##  palmerpenguins * 0.1.0   2020-07-23 [1] CRAN (R 4.0.2)
+##  pillar           1.4.6   2020-07-10 [1] CRAN (R 4.0.2)
+##  pkgbuild         1.1.0   2020-07-13 [1] CRAN (R 4.0.2)
+##  pkgconfig        2.0.3   2019-09-22 [1] CRAN (R 4.0.0)
+##  pkgload          1.1.0   2020-05-29 [1] CRAN (R 4.0.2)
+##  plotrix        * 3.7-8   2020-04-16 [1] CRAN (R 4.0.2)
+##  plyr             1.8.6   2020-03-03 [1] CRAN (R 4.0.0)
+##  ppcor            1.1     2015-12-03 [1] CRAN (R 4.0.2)
+##  prettyunits      1.1.1   2020-01-24 [1] CRAN (R 4.0.0)
+##  processx         3.4.3   2020-07-05 [1] CRAN (R 4.0.2)
+##  proj4            1.0-10  2020-03-02 [1] CRAN (R 4.0.1)
+##  promises         1.1.1   2020-06-09 [1] CRAN (R 4.0.2)
+##  ps               1.3.4   2020-08-11 [1] CRAN (R 4.0.2)
+##  purrr          * 0.3.4   2020-04-17 [1] CRAN (R 4.0.0)
+##  R6               2.4.1   2019-11-12 [1] CRAN (R 4.0.0)
+##  ragg           * 0.3.1   2020-07-03 [1] CRAN (R 4.0.2)
+##  RColorBrewer     1.1-2   2014-12-07 [1] CRAN (R 4.0.0)
+##  Rcpp             1.0.5   2020-07-06 [1] CRAN (R 4.0.2)
+##  readr          * 1.3.1   2018-12-21 [1] CRAN (R 4.0.0)
+##  readxl           1.3.1   2019-03-13 [1] CRAN (R 4.0.0)
+##  remotes          2.2.0   2020-07-21 [1] CRAN (R 4.0.2)
+##  reprex           0.3.0   2019-05-16 [1] CRAN (R 4.0.0)
+##  reshape2         1.4.4   2020-04-09 [1] CRAN (R 4.0.0)
+##  rlang            0.4.7   2020-07-09 [1] CRAN (R 4.0.2)
+##  rmarkdown        2.3     2020-06-18 [1] CRAN (R 4.0.2)
+##  rprojroot        1.3-2   2018-01-03 [1] CRAN (R 4.0.0)
+##  rstudioapi       0.11    2020-02-07 [1] CRAN (R 4.0.0)
+##  Rttf2pt1         1.3.8   2020-01-10 [1] CRAN (R 4.0.2)
+##  rvest            0.3.6   2020-07-25 [1] CRAN (R 4.0.2)
+##  scales           1.1.1   2020-05-11 [1] CRAN (R 4.0.0)
+##  sessioninfo      1.1.1   2018-11-05 [1] CRAN (R 4.0.0)
+##  shiny            1.5.0   2020-06-23 [1] CRAN (R 4.0.2)
+##  sjlabelled       1.1.6   2020-06-25 [1] CRAN (R 4.0.2)
+##  sjmisc           2.8.5   2020-05-28 [1] CRAN (R 4.0.2)
+##  stringi          1.4.6   2020-02-17 [1] CRAN (R 4.0.0)
+##  stringr        * 1.4.0   2019-02-10 [1] CRAN (R 4.0.0)
+##  systemfonts      0.2.3   2020-06-09 [1] CRAN (R 4.0.2)
+##  testthat         2.3.2   2020-03-02 [1] CRAN (R 4.0.0)
+##  tibble         * 3.0.3   2020-07-10 [1] CRAN (R 4.0.2)
+##  tidyr          * 1.1.2   2020-08-27 [1] CRAN (R 4.0.2)
+##  tidyselect       1.1.0   2020-05-11 [1] CRAN (R 4.0.0)
+##  tidyverse      * 1.3.0   2019-11-21 [1] CRAN (R 4.0.0)
+##  treemapify     * 2.5.3   2019-01-30 [1] CRAN (R 4.0.2)
+##  usethis          1.6.1   2020-04-29 [1] CRAN (R 4.0.0)
+##  utf8             1.1.4   2018-05-24 [1] CRAN (R 4.0.0)
+##  uuid             0.1-4   2020-02-26 [1] CRAN (R 4.0.2)
+##  vctrs            0.3.3   2020-08-27 [1] CRAN (R 4.0.2)
+##  viridis          0.5.1   2018-03-29 [1] CRAN (R 4.0.2)
+##  viridisLite      0.3.0   2018-02-01 [1] CRAN (R 4.0.0)
+##  waterfall      * 1.0.2   2016-04-03 [1] CRAN (R 4.0.2)
+##  withr            2.2.0   2020-04-20 [1] CRAN (R 4.0.0)
+##  xfun             0.16    2020-07-24 [1] CRAN (R 4.0.2)
+##  xml2             1.3.2   2020-04-23 [1] CRAN (R 4.0.0)
+##  xtable           1.8-4   2019-04-21 [1] CRAN (R 4.0.0)
+##  yaml             2.2.1   2020-02-01 [1] CRAN (R 4.0.0)
+## 
+## [1] /Library/Frameworks/R.framework/Versions/4.0/Resources/library</code></pre>
+</div>
+</div>
+]]></content>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[Baby weight app]]></title>
+    <link href="/2020/09/baby_weight_app/"/>
+    <id>/2020/09/baby_weight_app/</id>
+    <published>2020-09-05T00:00:00+00:00</published>
+    <updated>2020-09-05T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<p><a href="https://shiring.shinyapps.io/who_baby_weight/" class="uri">https://shiring.shinyapps.io/who_baby_weight/</a></p>
+<p><a href="https://github.com/ShirinG/who_baby_weight_app" class="uri">https://github.com/ShirinG/who_baby_weight_app</a></p>
+<div id="reference-data" class="section level2">
+<h2>Reference data</h2>
+<p><a href="https://www.who.int/childgrowth/standards/weight_for_age/en/" class="uri">https://www.who.int/childgrowth/standards/weight_for_age/en/</a></p>
+<p>Weight-for-age tables
+percentiles</p>
+<p>Weight-for-age: Birth to 13 weeks</p>
+<p>Weight-for-age: Birth to 5 years</p>
+</div>
+<div id="adding-own-measurements" class="section level2">
+<h2>Adding own measurements</h2>
+<p>Needs</p>
+<ul>
+<li><code>date</code> column</li>
+<li><code>weight</code> column in kg</li>
+<li>first row has to contain the birthdate and birthweight</li>
+</ul>
+<pre class="r"><code>weight_measures &lt;- read_csv(&quot;/Users/shiringlander/Documents/Github/who_baby_weight/data/weight_measures.csv&quot;)
+head(weight_measures)</code></pre>
+<p><a href="https://www.stillkinder.de/gewicht-und-wachstum-von-gestillten-kindern/" class="uri">https://www.stillkinder.de/gewicht-und-wachstum-von-gestillten-kindern/</a></p>
+<p>Am 10.-14. Lebenstag sollte es sein Geburtsgewicht wieder erreicht haben.</p>
+<p>Nach 3 Wochen muss es sein Geburtsgewicht wieder erreicht haben.</p>
+<p>In den ersten 2 Monaten nimmt es normalerweise 170 – 330 g pro Woche zu.</p>
+<p>Im 3. – 4. Monat 110 – 330 g pro Woche, 5. – 6. Monat 70 – 140 g pro Woche und vom 7. – 12. Monat 40 – 110 g pro Woche.</p>
+<hr />
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 4.0.2 (2020-06-22)
+## Platform: x86_64-apple-darwin17.0 (64-bit)
+## Running under: macOS Catalina 10.15.6
+## 
+## Matrix products: default
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## loaded via a namespace (and not attached):
+##  [1] compiler_4.0.2  magrittr_1.5    bookdown_0.20   tools_4.0.2    
+##  [5] htmltools_0.5.0 yaml_2.2.1      stringi_1.4.6   rmarkdown_2.3  
+##  [9] blogdown_0.20   knitr_1.29      stringr_1.4.0   digest_0.6.25  
+## [13] xfun_0.16       rlang_0.4.7     evaluate_0.14</code></pre>
+</div>
+]]></content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[Conferences, webinars, podcasts, workshops, books, articles and the likes]]></title>
     <link href="/page/conferences_podcasts_webinars/"/>
@@ -102,7 +847,9 @@ implementieren können.</p>
 
 <h2 id="upcoming-talks-webinars-podcasts-etc">Upcoming talks, webinars, podcasts, etc.</h2>
 
-<p>None planned at the moment due to maternity leave.</p>
+<ul>
+<li>During the virtual data2day conference on October 20th 2020, I&rsquo;ll be talking about <a href="https://www.data2day.de/lecture.php?id=12321&amp;source=0">The Good, the Bad and the Ugly: how (not) to visualize data</a> (German)</li>
+</ul>
 
 <hr />
 
@@ -407,60 +1154,6 @@ I talked about how blogging about R and Data Science helped me become a Data Sci
 <p><a href="https://www.womentech.net/about/womentech-membership?join=ODMzOQ==">Join the WomenTech Global Network</a></p>
 
 <p>Also check out <a href="http://www.R-bloggers.com">R-bloggers</a> for lots of cool R stuff!</p>
-]]></content>
-  </entry>
-  <entry>
-    <title type="html"><![CDATA[Baby weight app]]></title>
-    <link href="/2020/02/baby_weight_app/"/>
-    <id>/2020/02/baby_weight_app/</id>
-    <published>2020-02-02T00:00:00+00:00</published>
-    <updated>2020-02-02T00:00:00+00:00</updated>
-    <content type="html"><![CDATA[<p><a href="https://shiring.shinyapps.io/who_baby_weight/" class="uri">https://shiring.shinyapps.io/who_baby_weight/</a></p>
-<div id="reference-data" class="section level2">
-<h2>Reference data</h2>
-<p><a href="https://www.who.int/childgrowth/standards/weight_for_age/en/" class="uri">https://www.who.int/childgrowth/standards/weight_for_age/en/</a></p>
-<p>Weight-for-age tables
-percentiles</p>
-<p>Weight-for-age: Birth to 13 weeks</p>
-<p>Weight-for-age: Birth to 5 years</p>
-</div>
-<div id="adding-own-measurements" class="section level2">
-<h2>Adding own measurements</h2>
-<p>Needs</p>
-<ul>
-<li><code>date</code> column</li>
-<li><code>weight</code> column in kg</li>
-<li>first row has to contain the birthdate and birthweight</li>
-</ul>
-<pre class="r"><code>weight_measures &lt;- read_csv(&quot;/Users/shiringlander/Documents/Github/who_baby_weight/data/weight_measures.csv&quot;)
-head(weight_measures)</code></pre>
-<p><a href="https://www.stillkinder.de/gewicht-und-wachstum-von-gestillten-kindern/" class="uri">https://www.stillkinder.de/gewicht-und-wachstum-von-gestillten-kindern/</a></p>
-<p>Am 10.-14. Lebenstag sollte es sein Geburtsgewicht wieder erreicht haben.</p>
-<p>Nach 3 Wochen muss es sein Geburtsgewicht wieder erreicht haben.</p>
-<p>In den ersten 2 Monaten nimmt es normalerweise 170 – 330 g pro Woche zu.</p>
-<p>Im 3. – 4. Monat 110 – 330 g pro Woche, 5. – 6. Monat 70 – 140 g pro Woche und vom 7. – 12. Monat 40 – 110 g pro Woche.</p>
-<hr />
-<pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>## R version 4.0.0 (2020-04-24)
-## Platform: x86_64-apple-darwin17.0 (64-bit)
-## Running under: macOS Catalina 10.15.4
-## 
-## Matrix products: default
-## BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
-## LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
-## 
-## locale:
-## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
-## 
-## attached base packages:
-## [1] stats     graphics  grDevices utils     datasets  methods   base     
-## 
-## loaded via a namespace (and not attached):
-##  [1] compiler_4.0.0  magrittr_1.5    bookdown_0.18   tools_4.0.0    
-##  [5] htmltools_0.4.0 yaml_2.2.1      Rcpp_1.0.4.6    stringi_1.4.6  
-##  [9] rmarkdown_2.1   blogdown_0.18   knitr_1.28      stringr_1.4.0  
-## [13] digest_0.6.25   xfun_0.13       rlang_0.4.6     evaluate_0.14</code></pre>
-</div>
 ]]></content>
   </entry>
   <entry>

@@ -71,7 +71,7 @@ implementieren können.
 
 ## Upcoming talks, webinars, podcasts, etc.
 
-None planned at the moment due to maternity leave.
+- During the virtual data2day conference on October 20th 2020, I'll be talking about [The Good, the Bad and the Ugly: how (not) to visualize data](https://www.data2day.de/lecture.php?id=12321&source=0) (German)
 
 ---
 

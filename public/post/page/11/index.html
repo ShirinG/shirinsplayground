@@ -343,6 +343,73 @@ ga('send', 'pageview');
     
     <div class="postShorten-header">
       <h1 class="postShorten-title" itemprop="headline">
+        <a class="link-unstyled" href="/2017/12/lime_sketchnotes/">
+          Explaining Predictions of Machine Learning Models with LIME - Münster Data Science Meetup
+        </a>
+      </h1>
+      
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2017-12-12T00:00:00Z">
+        
+  December 12, 2017
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="/categories/r">R</a>, 
+    
+      <a class="category-link" href="/categories/python">Python</a>, 
+    
+      <a class="category-link" href="/categories/sketchnotes">sketchnotes</a>, 
+    
+      <a class="category-link" href="/categories/twimlai">twimlai</a>
+    
+  
+
+
+  </div>
+
+    </div>
+    <div class="postShorten-excerpt" itemprop="articleBody">
+      Slides from Münster Data Science Meetup These are my slides from the Münster Data Science Meetup on December 12th, 2017.
+knitr::include_url(&quot;https://shiring.github.io/netlify_images/lime_meetup_slides_wvsh6s.pdf&quot;)  
+My sketchnotes were collected from these two podcasts:
+ https://twimlai.com/twiml-talk-7-carlos-guestrin-explaining-predictions-machine-learning-models/ https://dataskeptic.com/blog/episodes/2016/trusting-machine-learning-models-with-lime  Sketchnotes: TWiML Talk #7 with Carlos Guestrin – Explaining the Predictions of Machine Learning Models &amp; Data Skeptic Podcast - Trusting Machine Learning Models with Lime
+  Example Code  the following libraries were loaded:  library(tidyverse) # for tidy data analysis library(farff) # for reading arff file library(missForest) # for imputing missing values library(dummies) # for creating dummy variables library(caret) # for modeling library(lime) # for explaining predictions Data The Chronic Kidney Disease dataset was downloaded from UC Irvine’s Machine Learning repository: http://archive.
+      <p>
+        <a href="/2017/12/lime_sketchnotes/" class="postShorten-excerpt_link link">Continue reading</a>
+        
+      </p>
+    </div>
+  </div>
+  
+    <a href="/2017/12/lime_sketchnotes/">
+      <div class="postShorten-thumbnailimg">
+        <img alt="" itemprop="image" src="https://shiring.github.io/netlify_images/lime_sketchnotes_guq6u5.jpg"/>
+      </div>
+    </a>
+  
+</article>
+
+          
+            
+  
+    
+  
+
+
+  
+
+<article class="postShorten postShorten--thumbnailimg-left" itemscope itemType="http://schema.org/BlogPosting">
+  <div class="postShorten-wrap">
+    
+    <div class="postShorten-header">
+      <h1 class="postShorten-title" itemprop="headline">
         <a class="link-unstyled" href="/2017/11/mice_sketchnotes/">
           MICE (Multiple Imputation by Chained Equations) in R - sketchnotes from MünsteR Meetup
         </a>
@@ -693,63 +760,6 @@ My slides can be found here: https://www.slideshare.net/ShirinGlander/from-biolo
 </article>
 
           
-            
-  
-    
-  
-
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-left" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="/2017/09/ode_to_r/">
-          Why I use R for Data Science - An Ode to R
-        </a>
-      </h1>
-      
-  <div class="postShorten-meta post-meta">
-    
-      <time itemprop="datePublished" datetime="2017-09-19T00:00:00Z">
-        
-  September 19, 2017
-
-      </time>
-    
-    
-  
-  
-    <span>in</span>
-    
-      <a class="category-link" href="/categories/r">R</a>
-    
-  
-
-
-  </div>
-
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      Working in Data Science, I often feel like I have to justify using R over Python. And while I do use Python for running scripts in production, I am much more comfortable with the R environment. Basically, whenever I can, I use R for prototyping, testing, visualizing and teaching. But because personal gut-feeling preference isn’t a very good reason to give to (scientifically minded) people, I’ve thought a lot about the pros and cons of using R.
-      <p>
-        <a href="/2017/09/ode_to_r/" class="postShorten-excerpt_link link">Continue reading</a>
-        
-      </p>
-    </div>
-  </div>
-  
-    <a href="/2017/09/ode_to_r/">
-      <div class="postShorten-thumbnailimg">
-        <img alt="" itemprop="image" src="https://shiring.github.io/netlify_images/circle-159252_1280_mfs0ku.png"/>
-      </div>
-    </a>
-  
-</article>
-
-          
           
   <div class="pagination-bar">
     <ul class="pagination">
@@ -835,15 +845,33 @@ My slides can be found here: https://www.slideshare.net/ShirinGlander/from-biolo
           <div class="media">
             
             <div class="media-body">
-              <a class="link-unstyled" href="/2020/02/baby_weight_app/">
+              <a class="link-unstyled" href="/2020/10/goodbadugly/">
+                <h3 class="media-heading">The Good, the Bad and the Ugly: how (not) to visualize data</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Oct 10, 2020
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">library(tidyverse) library(ggExtra) library(ragg) library(ggalluvial) library(treemapify) library(ggalt) library(palmerpenguins) Dataset head(penguins) ## # A tibble: 6 x 8 ## species island bill_length_mm bill_depth_mm flipper_length_… body_mass_g sex ## &lt;fct&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;fct&gt; ## 1 Adelie Torge… 39.1 18.7 181 3750 male ## 2 Adelie Torge… 39.5 17.4 186 3800 fema… ## 3 Adelie Torge… 40.3 18 195 3250 fema… ## 4 Adelie Torge… NA NA NA NA &lt;NA&gt; ## 5 Adelie Torge… 36.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2020/09/baby_weight_app/">
                 <h3 class="media-heading">Baby weight app</h3>
               </a>
               <span class="media-meta">
                 <span class="media-date text-small">
-                  Feb 2, 2020
+                  Sep 9, 2020
                 </span>
               </span>
               <div class="media-content hide-xs font-merryweather">https://shiring.shinyapps.io/who_baby_weight/
+https://github.com/ShirinG/who_baby_weight_app
 Reference data https://www.who.int/childgrowth/standards/weight_for_age/en/
 Weight-for-age tables percentiles
 Weight-for-age: Birth to 13 weeks
@@ -1015,25 +1043,6 @@ I am very happy to announce that (after many months) my interactive course on Hy
             <hr>
           </div>
         
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="/2019/01/lecture_slides_real_world_ds/">
-                <h3 class="media-heading">Lecture slides: Real-World Data Science (Fraud Detection, Customer Churn &amp; Predictive Maintenance)</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Jan 1, 2019
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">These are slides from a lecture I gave at the School of Applied Sciences in Münster. In this lecture, I talked about Real-World Data Science and showed examples on Fraud Detection, Customer Churn &amp; Predictive Maintenance.
-
-  Real-World Data Science (Fraud Detection, Customer Churn &amp; Predictive Maintenance)  von Shirin Glander  The slides were created with xaringan.</div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
       </div>
     </div>
     <div class="modal-footer">
@@ -1041,7 +1050,7 @@ I am very happy to announce that (after many months) my interactive course on Hy
          data-message-zero="no post found"
          data-message-one="1 post found"
          data-message-other="{n} posts found">
-         83 posts found
+         84 posts found
       </p>
     </div>
   </div>

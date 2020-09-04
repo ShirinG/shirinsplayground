@@ -1,0 +1,614 @@
+---
+title: "The Good, the Bad and the Ugly: how (not) to visualize data"
+draft: true
+author: Shirin Glander
+date: '2020-10-20'
+categories: ["R"]
+tags: ["R", "ggplot2"]
+thumbnailImagePosition: left
+thumbnailImage: post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-29-1.png
+metaAlignment: center
+coverMeta: out
+slug: goodbadugly
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+```{r libraries}
+library(tidyverse)
+
+library(ggExtra)
+library(ragg)
+library(ggalluvial)
+library(treemapify)
+library(ggalt)
+
+library(palmerpenguins)
+```
+
+## Dataset
+
+```{r}
+head(penguins)
+#head(penguins_raw)
+```
+
+## Colors
+
+- set [colorblind-friendly palettes](https://jfly.uni-koeln.de/color/)
+
+```{r}
+# The palette with grey:
+cbp1 <- c("#999999", "#E69F00", "#56B4E9", "#009E73",
+          "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+
+# The palette with black:
+cbp2 <- c("#000000", "#E69F00", "#56B4E9", "#009E73",
+          "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+
+library(plotrix)
+sliceValues <- rep(10, 8) # each slice value=10 for proportionate slices
+(
+  p <- pie3D(sliceValues, 
+      explode=0, 
+      theta = 1.2, 
+      col = cbp1, 
+      labels = cbp1, 
+      labelcex = 0.9,
+      shade = 0.6,
+      main = "Colorblind\nfriendly palette")
+)
+```
+
+```{r}
+ggplot <- function(...) ggplot2::ggplot(...) + 
+  scale_color_manual(values = cbp1) +
+  scale_fill_manual(values = cbp1) + # note: needs to be overridden when using continuous color scales
+  theme_bw()
+```
+
+## Main Diagram types
+
+https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf
+
+### Point chart
+
+```{r}
+penguins %>%
+    remove_missing() %>%
+    ggplot(aes(x = bill_length_mm, y = flipper_length_mm)) +
+    geom_jitter(alpha = 0.5) +
+    facet_wrap(vars(species), ncol = 3) +
+    scale_x_reverse() +
+    scale_y_reverse() +
+    labs(x = "Bill length (mm)", 
+         y = "Flipper length (mm)",
+         size = "body mass (g)",
+        title = "Scatterplot", 
+        subtitle = "Penguins bill v. flipper length by species",
+        caption = "Source: https://github.com/allisonhorst/palmerpenguins")
+```
+
+```{r}
+penguins %>%
+    remove_missing() %>%
+    ggplot(aes(x = bill_length_mm, y = flipper_length_mm,
+              color = species, shape = species)) +
+    geom_point(alpha = 0.7) +
+    labs(x = "Bill length (mm)", 
+         y = "Flipper length (mm)",
+        title = "Scatterplot", 
+        subtitle = "Penguins bill v. flipper length by species",
+        caption = "Source: https://github.com/allisonhorst/palmerpenguins")
+```
+
+- Jitter with smoothing line
+
+```{r}
+penguins %>%
+    remove_missing() %>%
+    ggplot(aes(x = bill_length_mm, y = flipper_length_mm,
+              color = species, shape = species)) +
+    geom_jitter(alpha = 0.5) +
+    geom_smooth(method = "loess", se = TRUE) +
+    facet_wrap(vars(species), nrow = 3) +
+    labs(x = "Bill length (mm)", 
+         y = "Flipper length (mm)",
+        title = "Scatterplot with smoothing line", 
+        subtitle = "Penguins bill v. flipper length by species with loess smoothing line",
+        caption = "Source: https://github.com/allisonhorst/palmerpenguins")
+```
+
+```{r}
+penguins %>%
+  remove_missing() %>%
+  filter(species == "Adelie") %>%
+  ggplot(aes(x = bill_length_mm, y = flipper_length_mm)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "loess", se = TRUE) +
+    labs(x = "Bill length (mm)", 
+         y = "Flipper length (mm)",
+        title = "Scatterplot with smoothing line", 
+        subtitle = "Penguins bill v. flipper length by species with\nloess smoothing line, histogram & density distribution",
+        caption = "Source: https://github.com/allisonhorst/palmerpenguins")
+
+#(ggMarginal(p, type = "densigram", fill = "transparent"))
+```
+
+### Bubble chart
+
+```{r}
+penguins %>%
+    remove_missing() %>%
+    ggplot(aes(x = bill_length_mm, y = flipper_length_mm,
+              color = species, shape = species, size = body_mass_g)) +
+    geom_point(alpha = 0.5) +
+    labs(x = "Bill length (mm)", 
+         y = "Flipper length (mm)",
+        title = "Bubble plot", 
+        size = "body mass (g)",
+        subtitle = "Penguins bill v. flipper length by species;\nsize indicates body mass in grams",
+        caption = "Source: https://github.com/allisonhorst/palmerpenguins")
+```
+
+### Line chart
+
+```{r}
+penguins %>%
+    remove_missing() %>%
+    ggplot(aes(x = bill_length_mm, y = flipper_length_mm,
+               color = species)) +
+    geom_line() +
+    facet_wrap(vars(species, sex), nrow = 3) +
+    labs(x = "Bill length (mm)", 
+         y = "Flipper length (mm)",
+        title = "Line plot", 
+        subtitle = "Penguins bill v. flipper length by species and sex",
+        caption = "Source: https://github.com/allisonhorst/palmerpenguins")
+```
+
+### Correlation plots / heatmap
+
+```{r}
+mat <- penguins %>%
+  remove_missing() %>%
+  select(bill_depth_mm, bill_length_mm, body_mass_g, flipper_length_mm)
+
+cormat <- round(cor(mat), 2)
+cormat[upper.tri(cormat)] <- NA
+
+cormat <- cormat %>%
+  as_data_frame() %>%
+  mutate(x = colnames(mat)) %>%
+  gather(key = "y", value = "value", bill_depth_mm:flipper_length_mm)
+
+cormat %>%
+    remove_missing() %>%
+    arrange(x, y) %>%
+    ggplot(aes(x = x, y = y, fill = value)) + 
+    geom_tile() +
+    scale_fill_gradient2(low = "blue", high = "red", mid = "white", 
+     midpoint = 0, limit = c(-1,1), space = "Lab", 
+     name = "Pearson\nCorrelation") +
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
+    coord_fixed() +
+      labs(x = "", 
+           y = "",
+          title = "Correlation heatmap", 
+          subtitle = "Correlation btw. penguins' traits",
+          caption = "Source: https://github.com/allisonhorst/palmerpenguins")
+```
+
+### Bar chart
+
+- per default: counts
+
+```{r}
+penguins %>%
+    remove_missing() %>%
+    ggplot(aes(x = species,
+               fill = sex)) +
+    geom_bar() +
+      labs(x = "Species", 
+           y = "Counts",
+          title = "Barchart", 
+          subtitle = "Counts of male & female penguins per species in study",
+          caption = "Source: https://github.com/allisonhorst/palmerpenguins")
+```
+
+```{r}
+penguins %>%
+    remove_missing() %>%
+    ggplot(aes(x = species,
+               fill = sex)) +
+    geom_bar(position = 'dodge') +
+      labs(x = "Species", 
+           y = "Counts",
+          title = "Barchart", 
+          subtitle = "Counts of male & female penguins per species in study",
+          caption = "Source: https://github.com/allisonhorst/palmerpenguins")
+```
+
+- alternative: set y-values
+
+```{r}
+penguins %>%
+    remove_missing() %>%
+    group_by(species, sex) %>%
+    summarise(mean_bmg = mean(body_mass_g),
+              sd_bmg = sd(body_mass_g)) %>%
+    ggplot(aes(x = species, y = mean_bmg,
+               fill = sex)) +
+    geom_bar(stat = "identity", position = "dodge") +
+    geom_errorbar(aes(ymin = mean_bmg - sd_bmg, 
+                      ymax = mean_bmg + sd_bmg), 
+                  width = 0.2,
+                 position = position_dodge(0.9)) +
+      labs(x = "Species", 
+           y = "Mean body mass (in g)",
+          title = "Barchart", 
+          subtitle = "Mean body mass of male & female penguins per species\nwith standard deviation",
+          caption = "Source: https://github.com/allisonhorst/palmerpenguins")
+```
+
+### Boxplot
+
+```{r}
+penguins %>%
+    remove_missing() %>%
+    ggplot(aes(x = species, y = body_mass_g,
+               fill = sex)) +
+    geom_boxplot() +
+      labs(x = "Species", 
+           y = "Body mass (in g)",
+          title = "Boxplot", 
+          subtitle = "Body mass of three penguin species per sex",
+          caption = "Source: https://github.com/allisonhorst/palmerpenguins")
+```
+
+- with points
+
+```{r}
+penguins %>%
+    remove_missing() %>%
+    ggplot(aes(x = species, y = body_mass_g,
+               fill = sex, color = sex)) +
+    geom_boxplot(alpha = 0.5, notch = TRUE) +
+    geom_jitter(alpha = 0.5, position=position_jitter(0.3)) +
+      labs(x = "Species", 
+           y = "Body mass (in g)",
+          title = "Boxplot with points (dotplot)", 
+          subtitle = "Body mass of three penguin species per sex",
+          caption = "Source: https://github.com/allisonhorst/palmerpenguins")
+```
+
+### Violin plot
+
+```{r}
+penguins %>%
+    remove_missing() %>%
+    ggplot(aes(x = species, y = body_mass_g,
+               fill = sex)) +
+    geom_violin(scale = "area") +
+      labs(x = "Species", 
+           y = "Body mass (in g)",
+          title = "Violinplot", 
+          subtitle = "Body mass of three penguin species per sex",
+          caption = "Source: https://github.com/allisonhorst/palmerpenguins")
+```
+
+```{r}
+penguins %>%
+    remove_missing() %>%
+    ggplot(aes(x = species, y = body_mass_g,
+               fill = sex, color = sex)) +
+    geom_dotplot(method = "dotdensity", alpha = 0.7,
+                 binaxis = 'y', stackdir = 'center',
+                 position = position_dodge(1)) +
+      labs(x = "Species", 
+           y = "Body mass (in g)",
+          title = "Violinplot with points (dotplot)", 
+          subtitle = "Body mass of three penguin species per sex",
+          caption = "Source: https://github.com/allisonhorst/palmerpenguins")
+```
+
+### Pie chart
+
+```{r}
+penguins %>%
+    remove_missing() %>%
+    group_by(species, sex) %>%
+    summarise(n = n()) %>%
+    mutate(freq = n / sum(n),
+           percentage = freq * 100) %>%
+    ggplot(aes(x = "", y = percentage,
+               fill = sex)) +
+    facet_wrap(vars(species), nrow = 1) +
+    geom_bar(stat = "identity", alpha = 0.8) +
+    coord_polar("y", start = 0) +
+      labs(x = "", 
+           y = "Percentage",
+          title = "Piechart", 
+          subtitle = "Percentage of male v. female penguins per species in study",
+          caption = "Source: https://github.com/allisonhorst/palmerpenguins")
+```
+
+### Alluvial charts
+
+```{r}
+as.data.frame(UCBAdmissions) %>%
+    ggplot(aes(y = Freq, axis1 = Gender, axis2 = Dept)) +
+    geom_alluvium(aes(fill = Admit), width = 1/12) +
+    geom_stratum(width = 1/12, fill = "black", color = "grey") +
+    geom_label(stat = "stratum", aes(label = after_stat(stratum))) +
+    scale_x_discrete(limits = c("Gender", "Dept"), expand = c(.05, .05)) +
+      labs(x = "", 
+           y = "Frequency",
+          title = "Alluvial chart", 
+          subtitle = "UC Berkeley admissions and rejections, by sex and department",
+          caption = "Source: Bickel et al. (1975)\nSex bias in graduate admissions: Data from Berkeley. Science, 187, 398–403.")
+```
+
+### Treemaps
+
+```{r}
+as.data.frame(UCBAdmissions) %>%
+    group_by(Admit, Gender) %>%
+    summarise(sum_freq = sum(Freq)) %>%
+    ggplot(aes(area = sum_freq, fill = sum_freq, label = Gender, 
+               subgroup = Admit)) +
+    geom_treemap() +
+    geom_treemap_subgroup_border() +
+    geom_treemap_subgroup_text(place = "centre", grow = T, alpha = 0.5, colour =
+                             "black", fontface = "italic", min.size = 0) +
+    geom_treemap_text(colour = "white", place = "centre", reflow = T) +
+    scale_fill_gradient2(low = "#999999", high = "#E69F00", mid = "white", midpoint = 1000, space = "Lab", 
+     name = "Sum of\nfrequencies") +
+      labs(x = "", 
+           y = "",
+          title = "Treemap", 
+          subtitle = "UC Berkeley admissions and rejections by sex",
+          caption = "Source: Bickel et al. (1975)\nSex bias in graduate admissions: Data from Berkeley. Science, 187, 398–403.")
+```
+
+### Dumbbell plots
+
+```{r}
+penguins %>%
+    remove_missing() %>%
+    group_by(year, species, sex) %>%
+    summarise(mean_bmg = mean(body_mass_g)) %>%
+    mutate(species_sex = paste(species, sex, sep = "_"),
+         year = paste0("year_", year)) %>%
+    spread(year, mean_bmg) %>%
+    ggplot(aes(x = year_2007, xend = year_2009, 
+               y = reorder(species_sex, year_2009))) +
+    geom_dumbbell(color = "#999999", 
+                      size_x = 3, 
+                      size_xend = 3,
+                      #Note: there is no US:'color' for UK:'colour' 
+                      # in geom_dumbbel unlike standard geoms in ggplot()
+                      colour_x = "#999999",
+                      colour_xend = "#E69F00") +
+      labs(x = "Body mass (g)", 
+           y = "Species & sex",
+          title = "Dumbbell plot", 
+          subtitle = "Penguin's change in body mass from 2007 to 2009",
+          caption = "Source: https://github.com/allisonhorst/palmerpenguins")
+```
+
+### Slope charts
+
+```{r}
+penguins %>%
+    remove_missing() %>%
+    group_by(year, species, sex) %>%
+    summarise(mean_bmg = mean(body_mass_g)) %>%
+    ggplot(aes(x = year, y = mean_bmg, group = sex,
+               color = sex)) +
+    facet_wrap(vars(species), nrow = 3) +
+    geom_line(alpha = 0.6, size = 2) +
+    geom_point(alpha = 1, size = 3) +
+    scale_x_continuous(breaks=c(2007, 2008, 2009)) +
+      labs(x = "Year", 
+           y = "Body mass (g)",
+           color = "Sex",
+          title = "Slope chart", 
+          subtitle = "Penguin's change in body mass from 2007 to 2009",
+          caption = "Source: https://github.com/allisonhorst/palmerpenguins")
+```
+
+### Stacked area charts
+
+```{r}
+penguins %>%
+    remove_missing() %>%
+    group_by(year, species, sex) %>%
+    summarise(mean_bmg = mean(body_mass_g)) %>%
+    ggplot(aes(x = year, y = mean_bmg, fill = sex)) +
+    facet_wrap(vars(species), nrow = 3) +
+    geom_area(alpha = 0.6, size=.5, color = "white") +
+    scale_x_continuous(breaks=c(2007, 2008, 2009)) +
+      labs(x = "Year", 
+           y = "Mean body mass (g)",
+           color = "Sex",
+          title = "Stacked area chart", 
+          subtitle = "Penguin's change in body mass from 2007 to 2009",
+          caption = "Source: https://github.com/allisonhorst/palmerpenguins")
+```
+
+### Lolliplot chart
+
+```{r}
+penguins %>%
+    remove_missing() %>%
+    group_by(year, species, sex) %>%
+    summarise(mean_bmg = mean(body_mass_g)) %>%
+    mutate(species_sex = paste(species, sex, sep = "_"),
+         year = paste0("year_", year)) %>%
+    spread(year, mean_bmg) %>%
+    ggplot() +
+    geom_segment(aes(x = reorder(species_sex, -year_2009), xend = reorder(species_sex, -year_2009), 
+                   y = 0, yend = year_2009),
+                 color = "#999999", size = 1) +
+    geom_point(aes(x = reorder(species_sex, -year_2009), y = year_2009),
+               size = 4, color = "#E69F00") +
+    coord_flip() +
+      labs(x = "Species & sex", 
+           y = "Body mass (g)",
+          title = "Lollipop chart", 
+          subtitle = "Penguin's body mass in 2009",
+          caption = "Source: https://github.com/allisonhorst/palmerpenguins")
+```
+
+### Dendrograms
+
+```{r}
+library(ggdendro)
+library(dendextend)
+```
+
+```{r}
+penguins_hist <- penguins %>%
+  filter(sex == "male") %>%
+  select(species, bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g) %>%
+  group_by(species) %>% 
+  sample_n(10) %>%
+  as.data.frame()
+rownames(penguins_hist) <- paste(penguins_hist$species, seq_len(nrow(penguins_hist)), sep = "_")
+
+penguins_hist <- penguins_hist %>%
+  select(-species) %>%
+  remove_missing()
+```
+
+```{r}
+#hc <- hclust(dist(penguins_hist, method = "euclidean"), method = "ward.D2")
+#ggdendrogram(hc)
+
+# Create a dendrogram and plot it
+penguins_hist %>%  
+  scale %>% 
+  dist(method = "euclidean") %>%
+  hclust(method = "ward.D2") %>% 
+  as.dendrogram
+```
+
+### Waterfall charts
+
+```{r}
+library(waterfall)
+```
+
+```{r}
+jaquith %>%
+    arrange(score) %>%
+    add_row(factor = "Total", score = sum(jaquith$score)) %>%
+    mutate(factor = factor(factor, levels = factor),
+                           id = seq_along(score)) %>%
+    mutate(end = cumsum(score),
+           start = c(0, end[-length(end)]),
+           start = c(start[-length(start)], 0),
+           end = c(end[-length(end)], score[length(score)]),
+           gr_col = ifelse(factor == "Total", "Total", "Part")) %>%
+    ggplot(aes(x = factor, fill = gr_col)) + 
+      geom_rect(aes(x = factor,
+                    xmin = id - 0.45, xmax = id + 0.45, 
+                    ymin = end, ymax = start)) +
+      theme(axis.text.x = element_text(angle = 60, vjust = 1, hjust = 1),
+            legend.position = "none") +
+        labs(x = "", 
+             y = "Amount",
+            title = "Waterfall chart", 
+            subtitle = "Sample business-adjusted risk from Security Metrics",
+            caption = "Andrew Jaquith, Security Metrics: Replacing Fear, Uncertainty, and Doubt\n(Boston: Addison-Wesley Professional, 2007), 170-171.")
+```
+
+### Biplots
+
+```{r}
+library(ggfortify)
+```
+
+```{r}
+penguins_prep <- penguins %>%
+  remove_missing() %>%
+  select(bill_length_mm:body_mass_g)
+
+penguins_pca <- penguins_prep %>%
+  prcomp(scale. = TRUE)
+```
+
+```{r}
+penguins_km <- penguins_prep %>%
+  kmeans(3)
+```
+
+```{r}
+autoplot(penguins_pca, 
+                data = penguins %>% remove_missing(), 
+                colour = 'species',
+                shape = 'species',
+                loadings = TRUE, 
+                loadings.colour = 'blue',
+                loadings.label = TRUE, 
+                loadings.label.size = 3) +
+      scale_color_manual(values = cbp1) +
+  scale_fill_manual(values = cbp1) +
+  theme_bw() +
+            labs(
+            title = "Biplot PCA", 
+            caption = "Source: https://github.com/allisonhorst/palmerpenguins")
+```
+
+```{r}
+autoplot(penguins_km, 
+                data = penguins %>% remove_missing(), 
+                colour = 'species',
+                shape = 'species',
+                frame = TRUE, frame.type = 'norm') +
+      scale_color_manual(values = cbp1) +
+  scale_fill_manual(values = cbp1) +
+  theme_bw() +
+            labs(
+            title = "Biplot k-Means clustering", 
+            caption = "Source: https://github.com/allisonhorst/palmerpenguins")
+```
+
+### Radar charts, aka star chart, aka spider plot
+
+https://www.data-to-viz.com/caveat/spider.html
+
+```{r}
+library(ggiraphExtra)
+```
+
+```{r}
+penguins %>%
+    remove_missing() %>%
+    select(-island, -year) %>%
+    ggRadar(aes(x = c(bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g), 
+                group = species,
+                colour = sex, facet = sex), 
+            rescale = TRUE, 
+            size = 1, interactive = FALSE, 
+            use.label = TRUE) +
+     scale_color_manual(values = cbp1) +
+  scale_fill_manual(values = cbp1) +
+  theme_bw() +
+     scale_y_discrete(breaks = NULL) + # don't show ticks
+      labs(
+          title = "Radar/spider/star chart", 
+          subtitle = "Body mass of male & female penguins per species",
+          caption = "Source: https://github.com/allisonhorst/palmerpenguins")
+```
+
+---
+
+```{r}
+devtools::session_info()
+```
+
+

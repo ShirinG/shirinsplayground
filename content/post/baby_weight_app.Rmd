@@ -2,7 +2,7 @@
 title: "Baby weight app"
 draft: true
 author: Shirin Elsinghorst
-date: '2020-02-02'
+date: '2020-09-05'
 categories: ["R"]
 tags: ["R", "Shiny", "tidyverse", "ggplot", "plotly"]
 thumbnailImagePosition: left
@@ -16,8 +16,9 @@ slug: baby_weight_app
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
-
 https://shiring.shinyapps.io/who_baby_weight/
+
+https://github.com/ShirinG/who_baby_weight_app
 
 ## Reference data
 
