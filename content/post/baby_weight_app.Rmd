@@ -1,12 +1,12 @@
 ---
-title: "Baby weight app"
+title: "Baby Weight Shiny app"
 draft: true
 author: Shirin Elsinghorst
 date: '2020-09-05'
 categories: ["R"]
 tags: ["R", "Shiny", "tidyverse", "ggplot", "plotly"]
 thumbnailImagePosition: left
-thumbnailImage: 
+thumbnailImage: img/who_baby_weight_app.png
 metaAlignment: center
 coverMeta: out
 slug: baby_weight_app
@@ -16,36 +16,173 @@ slug: baby_weight_app
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
-https://shiring.shinyapps.io/who_baby_weight/
+Alright, this is it: I am officially back! :-D
 
-https://github.com/ShirinG/who_baby_weight_app
+I have not written any blogposts for over a year. Last year, I had the cutest baby boy and ever since then, I did not get around to doing much coding. One of the reasons was that, unfortunately, we did not have the easiest of starts with the little one. Feeding problems led to weight gain problems, so we had to weigh him regularly. Because I wanted to see for myself if we were on the right track with his weight gain, I created this [Baby Weight Shiny app](https://shiring.shinyapps.io/who_baby_weight/). With the app, I could easily visualize how we compared to the [WHO baby/childen weight-for-age tables](https://www.who.int/childgrowth/standards/weight_for_age/en/).
+
+Here, I'll describe how I built the plots. The entire code for building the app can be found on [Github](https://github.com/ShirinG/who_baby_weight_app).
+
+<br>
+
+![Baby Weight Shiny app](https://shirinsplayground.netlify.app/img/who_baby_weight_app.png)
 
 ## Reference data
 
-https://www.who.int/childgrowth/standards/weight_for_age/en/
+I am using the following [WHO baby/childen weight-for-age tables](https://www.who.int/childgrowth/standards/weight_for_age/en/):
 
-Weight-for-age tables
-percentiles
+- Percentiles girls & boys
 
-Weight-for-age: Birth to 13 weeks
+I combined girls' and boys' data into one table each for:
 
+- Weight-for-age: [Birth to 13 weeks](https://github.com/ShirinG/who_baby_weight_app/blob/master/p_0_13.csv)
+- Weight-for-age: [Birth to 5 years](https://github.com/ShirinG/who_baby_weight_app/blob/master/p_0_5.csv)
 
-Weight-for-age: Birth to 5 years
+## Adding my own measurements
 
+I collected all our weight measurements in a `.csv` file with two columns:
 
-## Adding own measurements
+- a `date` column in the format `%d.%m.%Y` (`dd.mm.yyyy`)
+- a `weight` column in *g* or *kg*
 
-Needs
+**The first row has to contain the birthdate and birthweight**, as this is, what was used to calculate the growth percentile to follow. 
 
-- `date` column
-- `weight` column in kg
-- first row has to contain the birthdate and birthweight
+Because, obviously, I am not going to make my son's actual weight data available on the internet, I created some mock data, similar to real-world examples (weight in *g*):
 
-```{r, eval=FALSE}
-weight_measures <- read_csv("/Users/shiringlander/Documents/Github/who_baby_weight/data/weight_measures.csv")
+```{r, eval=TRUE}
+library(readr)
+library(lubridate)
+
+weight_measures <- read_delim("/Users/shiringlander/Documents/Github/who_baby_weight_app/data/weight_measures.csv",
+                            delim = ",",
+                            col_types = list(col_date(format = "%d.%m.%Y"), col_double()))
 head(weight_measures)
 ```
 
+In the [Baby Weight Shiny app](https://shiring.shinyapps.io/who_baby_weight/), you can upload this mock data or your own data. The choose:
+
+- whether the columns in your `.csv` are separated by **comma, semicolon or tabulator**
+- whether you want to show only reference values for the **first 13 weeks** or for the **first 5 years** (only reference values corresponding to your measurement dates will be shown)
+- whether your weight data is given in **gramm or kilogramm** and
+- whether you want to display reference data for **girls or boys**
+
+```{r}
+library(tidyverse)
+source("/Users/shiringlander/Documents/Github/who_baby_weight_app/functions/combine_measures.R")
+p_0_5 <- read_csv("/Users/shiringlander/Documents/Github/who_baby_weight_app/data/p_0_5.csv")
+p_0_13 <- read_csv("/Users/shiringlander/Documents/Github/who_baby_weight_app/data/p_0_13.csv")
+        
+combine_measures_who_final <- combine_measures_who(weight_measures, 
+                                                   p_0_13, p_0_5,
+                                                   age_range = "0_5",
+                                                   weight_in = "g",
+                                                   gender = "boy")
+head(combine_measures_who_final)
+```
+
+```{r}
+# add missing dates for calculating weight change per week of life
+reference_date <- weight_measures$date[[1]]
+end_date <- weight_measures$date[[nrow(weight_measures)]]
+
+starting_p <- combine_measures_who_final %>% 
+  filter(date == reference_date) %>%
+  select(starting_p) %>%
+  .[[1]] %>%
+  .[1]
+        
+all_dates <- seq(from = reference_date, to = end_date, by = "day") %>%
+  as_tibble()
+colnames(all_dates) = "date"
+        
+weight_measures_all <- weight_measures %>%
+  full_join(all_dates, by = "date") %>%
+  arrange(date)
+
+## approximate missing values
+weight_measures_all <- weight_measures_all %>%
+  mutate(weight_approx = approx(weight, n = nrow(.))[[2]])
+        
+## add running week number
+nos <- rep(1:ceiling(nrow(weight_measures_all)/7), each = 7)
+weight_measures_all$week <- nos[1:nrow(weight_measures_all)]
+        
+## calculate sum over week
+weight_measures_all <- weight_measures_all %>%
+  mutate(diff_day = c(0, diff(weight_approx, lag = 1)),
+         diff_week = c(rep(0, 7), diff(weight_approx, lag = 7)))
+        
+source("/Users/shiringlander/Documents/Github/who_baby_weight_app/functions/elapsed_months.R")
+weight_measures_all <- weight_measures_all %>%
+  mutate(month = elapsed_months(date, reference_date))
+```
+
+## The curve
+
+![](https://shirinsplayground.netlify.app/img/baby_weight_curve.png)
+
+
+```{r}
+gender <- "boys"
+age <- "years 1 through 5"
+        
+combine_measures_who_final %>%
+  ggplot(aes(date, weight,
+             linetype = ref,
+             color = percentile)) +
+  geom_line() +
+  geom_point() +
+  labs(x = "Date",
+       y = "Weight in kg",
+       title = "WHO child growth standard percentiles",
+       subtitle = paste("Shown for", gender, age)) +
+  theme_bw() +
+  theme(legend.position = "bottom")
+```
+
+```{r}
+test_curves <- combine_measures_who_final %>%
+  filter(percentile == !!paste(starting_p)) %>%
+  left_join(select(weight_measures_all, date, weight_approx), by = "date")
+
+paste("Your reference percentile is:", starting_p)
+paste("Correlation between your measurements and your reference percentile is:",
+      round(cor(test_curves$weight, test_curves$weight_approx, use = 'complete.obs'), digits = 5))
+```
+
+## Barchart
+
+Bar colors show whether the weekly weight gain is above (blue) or below (red) the required minimum for BREASTFED babies given by [this German site about breastfeeding](https://www.stillkinder.de/gewicht-und-wachstum-von-gestillten-kindern/):
+
+- in months 1 and 2, the minimum weight gain should be: 170 g
+- in months 3 and 4: 110 g
+- in months 5 and 6: 70 g and 
+- from month 7 to 12: 40 g
+
+```{r}
+weight_measures_all <- weight_measures_all %>%
+  mutate(color = ifelse(month <= 2 & diff_week >= 170, "ok",
+                        ifelse(month == 3 & diff_week >= 110, "ok",
+                               ifelse(month == 4 & diff_week >= 110, "ok",
+                                      ifelse(month == 5 & diff_week >= 70, "ok",
+                                             ifelse(month == 6 & diff_week >= 70, "ok",
+                                                    ifelse(month >=7 & diff_week >= 40, "ok", "low")))))))
+```
+
+```{r}
+weight_measures_all %>%
+  distinct(week, .keep_all = TRUE) %>%
+  ggplot(aes(x = date, y = diff_week, fill = color)) +
+  geom_bar(stat = "identity") +
+  scale_fill_brewer(palette = "Set1") +
+  labs(x = "Date",
+       y = "Weight difference in gramm",
+       title = "Weekly weight differences",
+       subtitle = "Weight at each full week compared to one week prior") +
+  theme_bw()
+```
+
+    
+<br>
 
 https://www.stillkinder.de/gewicht-und-wachstum-von-gestillten-kindern/
 

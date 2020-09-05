@@ -158,10 +158,11 @@ penguins %>%
 ```{r}
 penguins %>%
     remove_missing() %>%
+    filter(species == "Adelie") %>%
     ggplot(aes(x = bill_length_mm, y = flipper_length_mm,
-               color = species)) +
+               color = sex)) +
     geom_line() +
-    facet_wrap(vars(species, sex), nrow = 3) +
+    geom_point() +
     labs(x = "Bill length (mm)", 
          y = "Flipper length (mm)",
         title = "Line plot", 

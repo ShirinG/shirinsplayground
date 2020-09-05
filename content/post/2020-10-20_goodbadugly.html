@@ -150,10 +150,11 @@ sliceValues &lt;- rep(10, 8) # each slice value=10 for proportionate slices
 <h3>Line chart</h3>
 <pre class="r"><code>penguins %&gt;%
     remove_missing() %&gt;%
+    filter(species == &quot;Adelie&quot;) %&gt;%
     ggplot(aes(x = bill_length_mm, y = flipper_length_mm,
-               color = species)) +
+               color = sex)) +
     geom_line() +
-    facet_wrap(vars(species, sex), nrow = 3) +
+    geom_point() +
     labs(x = &quot;Bill length (mm)&quot;, 
          y = &quot;Flipper length (mm)&quot;,
         title = &quot;Line plot&quot;, 
@@ -463,7 +464,7 @@ penguins_hist %&gt;%
   dist(method = &quot;euclidean&quot;) %&gt;%
   hclust(method = &quot;ward.D2&quot;) %&gt;% 
   as.dendrogram</code></pre>
-<pre><code>## &#39;dendrogram&#39; with 2 branches and 30 members total, at height 12.39093</code></pre>
+<pre><code>## &#39;dendrogram&#39; with 2 branches and 30 members total, at height 11.8191</code></pre>
 </div>
 <div id="waterfall-charts" class="section level3">
 <h3>Waterfall charts</h3>
@@ -564,7 +565,7 @@ penguins_pca &lt;- penguins_prep %&gt;%
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       Europe/Berlin               
-##  date     2020-09-04                  
+##  date     2020-09-05                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────
 ##  package        * version date       lib source        
