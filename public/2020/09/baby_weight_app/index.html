@@ -55,7 +55,7 @@ I have not written any blogposts for over a year. Last year, I had the cutest ba
     
 
     
-      <meta property="og:image" content="/img/who_baby_weight_app.png">
+      <meta property="og:image" content="/post/2020-09-08_baby_weight_app_files/figure-html/unnamed-chunk-8-1.png">
     
     
     
@@ -348,9 +348,9 @@ ga('send', 'pageview');
   
   <div class="postShorten-meta post-meta">
     
-      <time itemprop="datePublished" datetime="2020-09-05T00:00:00Z">
+      <time itemprop="datePublished" datetime="2020-09-07T00:00:00Z">
         
-  September 5, 2020
+  September 7, 2020
 
       </time>
     
@@ -372,12 +372,12 @@ ga('send', 'pageview');
             <div class="main-content-wrap">
               <p>Alright, this is it: I am officially back! :-D</p>
 <p>I have not written any blogposts for over a year. Last year, I had the cutest baby boy and ever since then, I did not get around to doing much coding. One of the reasons was that, unfortunately, we did not have the easiest of starts with the little one. Feeding problems led to weight gain problems, so we had to weigh him regularly. Because I wanted to see for myself if we were on the right track with his weight gain, I created this <a href="https://shiring.shinyapps.io/who_baby_weight/">Baby Weight Shiny app</a>. With the app, I could easily visualize how we compared to the <a href="https://www.who.int/childgrowth/standards/weight_for_age/en/">WHO baby/childen weight-for-age tables</a>.</p>
-<p>Here, I’ll describe how I built the plots. The entire code for building the app can be found on <a href="https://github.com/ShirinG/who_baby_weight_app">Github</a>.</p>
+<p>Below, I’ll describe how I prepared the data and built the plots. The entire code for building the app can be found on <a href="https://github.com/ShirinG/who_baby_weight_app">Github</a>.</p>
+<p>If you have questions or would like to talk about the app (or something else data-related), you can now <a href="http://127.0.0.1:4321/page/bookme/">book 15-minute timeslots</a> with me (one slot available per weekday):</p>
+<img src="https://www.appointletcdn.com/loader/buttons/F62459.png" data-appointlet-organization="shirin-elsinghorst" data-appointlet-service="357892">
+<script src="https://www.appointletcdn.com/loader/loader.min.js" async="" defer=""></script>
 <p><br></p>
-<div class="figure">
-<img src="https://shirinsplayground.netlify.app/img/who_baby_weight_app.png" alt="" />
-<p class="caption">Baby Weight Shiny app</p>
-</div>
+<hr />
 <div id="reference-data" class="section level2">
 <h2>Reference data</h2>
 <p>I am using the following <a href="https://www.who.int/childgrowth/standards/weight_for_age/en/">WHO baby/childen weight-for-age tables</a>:</p>
@@ -397,12 +397,13 @@ ga('send', 'pageview');
 <li>a <code>date</code> column in the format <code>%d.%m.%Y</code> (<code>dd.mm.yyyy</code>)</li>
 <li>a <code>weight</code> column in <em>g</em> or <em>kg</em></li>
 </ul>
-<p><strong>The first row has to contain the birthdate and birthweight</strong>, as this is, what was used to calculate the growth percentile to follow.</p>
-<p>Because, obviously, I am not going to make my son’s actual weight data available on the internet, I created some mock data, similar to real-world examples (weight in <em>g</em>):</p>
+<p><strong>The first row has to contain the birthdate and birthweight</strong>, as this is what’s used to calculate the growth percentile to follow. A baby’s birthweight will put them into a certain growth percentile (e.g. a boy who weighs around 3.3 kg at birth is closest to the 50th percentile, meaning that about 50% of boys his same age will be heavier and 50% will be lighter than he is). For a healthy weight gain, the baby’s weight curve is supposed to roughly follow a parallel line with this growth percentile.</p>
+<p>Because, obviously, I am not going to make my son’s actual weight data available on the internet, I created some <a href="https://github.com/ShirinG/who_baby_weight_app/blob/master/data/weight_measures.csv">mock data</a>, similar to real-world examples (weight in <em>g</em>):</p>
 <pre class="r"><code>library(readr)
 library(lubridate)
 
-weight_measures &lt;- read_delim(&quot;/Users/shiringlander/Documents/Github/who_baby_weight_app/data/weight_measures.csv&quot;,
+# download from https://github.com/ShirinG/who_baby_weight_app/
+weight_measures &lt;- read_delim(&quot;weight_measures.csv&quot;,
                             delim = &quot;,&quot;,
                             col_types = list(col_date(format = &quot;%d.%m.%Y&quot;), col_double()))
 head(weight_measures)</code></pre>
@@ -415,17 +416,24 @@ head(weight_measures)</code></pre>
 ## 4 2019-08-18   3348
 ## 5 2019-08-20   3286
 ## 6 2019-08-22   3626</code></pre>
-<p>In the <a href="https://shiring.shinyapps.io/who_baby_weight/">Baby Weight Shiny app</a>, you can upload this mock data or your own data. The choose:</p>
+<p>In the <a href="https://shiring.shinyapps.io/who_baby_weight/">Baby Weight Shiny app</a>, you can upload this <a href="https://github.com/ShirinG/who_baby_weight_app/blob/master/data/weight_measures.csv">mock data</a> or your own data. Then choose:</p>
 <ul>
 <li>whether the columns in your <code>.csv</code> are separated by <strong>comma, semicolon or tabulator</strong></li>
 <li>whether you want to show only reference values for the <strong>first 13 weeks</strong> or for the <strong>first 5 years</strong> (only reference values corresponding to your measurement dates will be shown)</li>
 <li>whether your weight data is given in <strong>gramm or kilogramm</strong> and</li>
 <li>whether you want to display reference data for <strong>girls or boys</strong></li>
 </ul>
+<p>You can then check to see if the data looks correct (tab: <em>Data</em>). The tabs <em>Curve</em> and <em>Barchart</em> show two plots. Below, I’ll describe how I prepared the data for plotting.</p>
+</div>
+<div id="data-preparation" class="section level2">
+<h2>Data preparation</h2>
+<p>First, I combined my weight measures with the reference tables from WHO. The function is saved in a <a href="https://github.com/ShirinG/who_baby_weight_app/">script on Github</a> for you to examine. The function code contains comments that describe what I’ve been doing. Here is the outcome:</p>
 <pre class="r"><code>library(tidyverse)
-source(&quot;/Users/shiringlander/Documents/Github/who_baby_weight_app/functions/combine_measures.R&quot;)
-p_0_5 &lt;- read_csv(&quot;/Users/shiringlander/Documents/Github/who_baby_weight_app/data/p_0_5.csv&quot;)
-p_0_13 &lt;- read_csv(&quot;/Users/shiringlander/Documents/Github/who_baby_weight_app/data/p_0_13.csv&quot;)
+
+# download from https://github.com/ShirinG/who_baby_weight_app/
+source(&quot;combine_measures.R&quot;)
+p_0_5 &lt;- read_csv(&quot;p_0_5.csv&quot;)
+p_0_13 &lt;- read_csv(&quot;p_0_13.csv&quot;)
         
 combine_measures_who_final &lt;- combine_measures_who(weight_measures, 
                                                    p_0_13, p_0_5,
@@ -442,6 +450,7 @@ head(combine_measures_who_final)</code></pre>
 ## 4 2019-08-18   3.35 measur… measureme… P50           NA    NA    NA    NA &lt;NA&gt;  
 ## 5 2019-08-20   3.29 measur… measureme… P50           NA    NA    NA    NA &lt;NA&gt;  
 ## 6 2019-08-22   3.63 measur… measureme… P50           NA    NA    NA    NA &lt;NA&gt;</code></pre>
+<p>In order to calculate weight data for every full week of life (to make the values comparable with the reference), I am interpolating weight values for every day with missing information (linear approximation).</p>
 <pre class="r"><code># add missing dates for calculating weight change per week of life
 reference_date &lt;- weight_measures$date[[1]]
 end_date &lt;- weight_measures$date[[nrow(weight_measures)]]
@@ -471,15 +480,16 @@ weight_measures_all$week &lt;- nos[1:nrow(weight_measures_all)]
 ## calculate sum over week
 weight_measures_all &lt;- weight_measures_all %&gt;%
   mutate(diff_day = c(0, diff(weight_approx, lag = 1)),
-         diff_week = c(rep(0, 7), diff(weight_approx, lag = 7)))
-        
-source(&quot;/Users/shiringlander/Documents/Github/who_baby_weight_app/functions/elapsed_months.R&quot;)
+         diff_week = c(rep(0, 7), diff(weight_approx, lag = 7)))</code></pre>
+<p>I also want to know the month of life, so I am using <a href="https://github.com/ShirinG/who_baby_weight_app/">the following function</a> to do so:</p>
+<pre class="r"><code># download from https://github.com/ShirinG/who_baby_weight_app/
+source(&quot;elapsed_months.R&quot;)
 weight_measures_all &lt;- weight_measures_all %&gt;%
   mutate(month = elapsed_months(date, reference_date))</code></pre>
 </div>
 <div id="the-curve" class="section level2">
 <h2>The curve</h2>
-<p><img src="https://shirinsplayground.netlify.app/img/baby_weight_curve.png" /></p>
+<p>The first plot shows a simple lineplot with all reference curves (i.e. all WHO growth percentiles) and my measurements plotted against them. The plot in the Shiny app has been created with <strong>Plotly</strong>, so you can click on the legend to hide/show specific growth percentiles or zoom into specific areas on the plot.</p>
 <pre class="r"><code>gender &lt;- &quot;boys&quot;
 age &lt;- &quot;years 1 through 5&quot;
         
@@ -495,7 +505,7 @@ combine_measures_who_final %&gt;%
          subtitle = paste(&quot;Shown for&quot;, gender, age)) +
     theme_bw() +
     theme(legend.position = &quot;bottom&quot;)</code></pre>
-<p><img src="/post/baby_weight_app_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="/post/2020-09-08_baby_weight_app_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <pre class="r"><code>test_curves &lt;- combine_measures_who_final %&gt;%
   filter(percentile == !!paste(starting_p)) %&gt;%
   left_join(select(weight_measures_all, date, weight_approx), by = &quot;date&quot;)
@@ -504,38 +514,39 @@ paste(&quot;Your reference percentile is:&quot;, starting_p)</code></pre>
 <pre><code>## [1] &quot;Your reference percentile is: P50&quot;</code></pre>
 <pre class="r"><code>paste(&quot;Correlation between your measurements and your reference percentile is:&quot;,
       round(cor(test_curves$weight, test_curves$weight_approx, use = &#39;complete.obs&#39;), digits = 5))</code></pre>
-<pre><code>## [1] &quot;Correlation between your measurements and your reference percentile is: 0.99447&quot;</code></pre>
+<pre><code>## [1] &quot;Correlation between your measurements and your reference percentile is: 0.98757&quot;</code></pre>
 </div>
 <div id="approximated-missing-values" class="section level2">
 <h2>Approximated missing values</h2>
+<p>The next plot is not shown in the Shiny app, but here I’ll include it to show how the interpolated weight values look like:</p>
 <pre class="r"><code>weight_measures_all %&gt;%
   ggplot(aes(x = date)) +
     geom_line(aes(y = weight_approx), color = &quot;grey&quot;) +
-    geom_point(aes(y = weight_approx), color = &quot;blue&quot;, size = 1) +
-    geom_point(aes(y = weight), color = &quot;red&quot;, size = 3) +
+    geom_point(aes(y = weight_approx), color = &quot;blue&quot;, size = 1, alpha = 0.6) +
+    geom_point(aes(y = weight), color = &quot;red&quot;, size = 3, alpha = 0.6) +
     geom_point(data = weight_measures_all %&gt;% distinct(week, .keep_all = TRUE), 
-               aes(x = date, y = weight_approx), color = &quot;grey&quot;, size = 2) +
+               aes(x = date, y = weight_approx), 
+               color = &quot;grey&quot;, size = 2, alpha = 0.6) +
     geom_label(data = weight_measures_all %&gt;% distinct(week, .keep_all = TRUE), 
                aes(x = date, y = weight_approx, label = week), 
-               nudge_y = 300, alpha = 0.8) +
+               nudge_y = 500, alpha = 0.6) +
     labs(x = &quot;Date&quot;,
          y = &quot;Weight in gramm&quot;,
          title = &quot;Measured &amp; approximated weight values&quot;,
-         subtitle = &quot;red: measured values; blue: approximated values; labels: week of life&quot;) +
+         subtitle = &quot;red: measured values; blue: approximated values; labels &amp; grey dots: week of life&quot;) +
     theme_bw()</code></pre>
-<p><img src="/post/baby_weight_app_files/figure-html/unnamed-chunk-6-1.png" width="960" /></p>
+<p><img src="/post/2020-09-08_baby_weight_app_files/figure-html/unnamed-chunk-10-1.png" width="960" /></p>
 </div>
 <div id="barchart" class="section level2">
 <h2>Barchart</h2>
-<p>Bar colors show whether the weekly weight gain is above (blue) or below (red) the required minimum for BREASTFED babies given by <a href="https://www.stillkinder.de/gewicht-und-wachstum-von-gestillten-kindern/">this German site about breastfeeding</a>:</p>
+<p>The barchart, which you can find in the Shiny app, shows weekly weight differences, i.e. for every day the difference in weight compared to 7 days prior is calculated.</p>
+<p>Bar colors show whether the weekly weight difference is above (blue) or below (red) the required minimum for <strong>BREASTFED</strong> babies given by <a href="https://www.stillkinder.de/gewicht-und-wachstum-von-gestillten-kindern/">this German site about breastfeeding</a>:</p>
 <ul>
 <li>in months 1 and 2, the minimum weight gain should be: 170 g</li>
 <li>in months 3 and 4: 110 g</li>
 <li>in months 5 and 6: 70 g and</li>
 <li>from month 7 to 12: 40 g</li>
 </ul>
-<p>Am 10.-14. Lebenstag sollte es sein Geburtsgewicht wieder erreicht haben.</p>
-<p>Nach 3 Wochen muss es sein Geburtsgewicht wieder erreicht haben.</p>
 <pre class="r"><code>weight_measures_all &lt;- weight_measures_all %&gt;%
   mutate(color = ifelse(month &lt;= 2 &amp; diff_week &gt;= 170, &quot;ok&quot;,
                         ifelse(month == 3 &amp; diff_week &gt;= 110, &quot;ok&quot;,
@@ -543,35 +554,13 @@ paste(&quot;Your reference percentile is:&quot;, starting_p)</code></pre>
                                       ifelse(month == 5 &amp; diff_week &gt;= 70, &quot;ok&quot;,
                                              ifelse(month == 6 &amp; diff_week &gt;= 70, &quot;ok&quot;,
                                                     ifelse(month &gt;=7 &amp; diff_week &gt;= 40, &quot;ok&quot;, &quot;low&quot;)))))))</code></pre>
-<pre class="r"><code>weight_measures_all &lt;- weight_measures_all %&gt;%
-  mutate(threshold = ifelse(month &lt;= 2, 170,
-                        ifelse(month == 3 | 4, 110,
-                                      ifelse(month == 5 | 6, 70,
-                                                    ifelse(month &gt;=7, 40, NA)))))</code></pre>
-<pre class="r"><code>weight_measures_all %&gt;% 
-  distinct(month, .keep_all = TRUE)</code></pre>
-<pre><code>## # A tibble: 12 x 9
-##    date       weight weight_approx  week diff_day diff_week month color
-##    &lt;date&gt;      &lt;dbl&gt;         &lt;dbl&gt; &lt;int&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;
-##  1 2019-08-12   3168         3168      1    0           0       1 low  
-##  2 2019-09-12     NA         4554.     5   69.8       476.      2 ok   
-##  3 2019-10-12     NA         5474.     9   -0.636      82.9     3 low  
-##  4 2019-11-12   6083         6083     14 -146          45       4 low  
-##  5 2019-12-12   6431         6431     18 -238        -145       5 low  
-##  6 2020-01-01   7010         7010     21  -10         130      -6 low  
-##  7 2020-01-12   7200         7200     22  -50          90      -5 low  
-##  8 2020-02-12     NA         7774.    27   19.5       137.     -4 low  
-##  9 2020-03-12   8040         8040     31    3.64       25.5    -3 low  
-## 10 2020-04-12     NA         8728     35   17         119      -2 low  
-## 11 2020-05-12     NA         9074.    40    5.33       37.3    -1 low  
-## 12 2020-06-12     NA         9239.    44    5.33       37.3     0 low  
-## # … with 1 more variable: threshold &lt;dbl&gt;</code></pre>
+<p>The actual plot in the Shiny app is again created with <strong>Plotly</strong>, so you can interact with the graph there.</p>
 <pre class="r"><code>weight_measures_all %&gt;%
   ggplot(aes(x = date, y = diff_week)) +
     geom_bar(aes(fill = color), stat = &quot;identity&quot;) +
     geom_label(data = weight_measures_all %&gt;% distinct(week, .keep_all = TRUE), 
                aes(x = date, label = week), 
-               nudge_y = 10, alpha = 0.8) +
+               nudge_y = 50, alpha = 0.6) +
     scale_fill_brewer(palette = &quot;Set1&quot;) +
     labs(x = &quot;Week of life&quot;,
          y = &quot;Weight difference in gramm&quot;,
@@ -579,7 +568,7 @@ paste(&quot;Your reference percentile is:&quot;, starting_p)</code></pre>
          title = &quot;Weekly weight differences&quot;,
          subtitle = &quot;(Approximated) weight for each day compared to weight at 7 days prior;\nlabels: week of life&quot;) +
     theme_bw()</code></pre>
-<p><img src="/post/baby_weight_app_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p><img src="/post/2020-09-08_baby_weight_app_files/figure-html/unnamed-chunk-13-1.png" width="960" /></p>
 <p><br></p>
 <hr />
 <pre class="r"><code>sessionInfo()</code></pre>

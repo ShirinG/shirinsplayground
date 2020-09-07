@@ -1,12 +1,12 @@
 ---
 title: "Baby Weight Shiny app"
-draft: true
+draft: false
 author: Shirin Elsinghorst
-date: '2020-09-08'
+date: '2020-09-07'
 categories: ["R"]
 tags: ["R", "Shiny", "tidyverse", "ggplot", "plotly"]
 thumbnailImagePosition: left
-thumbnailImage: post/
+thumbnailImage: post/2020-09-08_baby_weight_app_files/figure-html/unnamed-chunk-8-1.png
 metaAlignment: center
 coverMeta: out
 slug: baby_weight_app
@@ -20,11 +20,15 @@ Alright, this is it: I am officially back! :-D
 
 I have not written any blogposts for over a year. Last year, I had the cutest baby boy and ever since then, I did not get around to doing much coding. One of the reasons was that, unfortunately, we did not have the easiest of starts with the little one. Feeding problems led to weight gain problems, so we had to weigh him regularly. Because I wanted to see for myself if we were on the right track with his weight gain, I created this [Baby Weight Shiny app](https://shiring.shinyapps.io/who_baby_weight/). With the app, I could easily visualize how we compared to the [WHO baby/childen weight-for-age tables](https://www.who.int/childgrowth/standards/weight_for_age/en/).
 
-Here, I'll describe how I built the plots. The entire code for building the app can be found on [Github](https://github.com/ShirinG/who_baby_weight_app).
+Below, I'll describe how I prepared the data and built the plots. The entire code for building the app can be found on [Github](https://github.com/ShirinG/who_baby_weight_app).
+
+If you have questions or would like to talk about the app (or something else data-related), you can now [book 15-minute timeslots](http://127.0.0.1:4321/page/bookme/) with me (one slot available per weekday): 
+
+<img src="https://www.appointletcdn.com/loader/buttons/F62459.png" data-appointlet-organization="shirin-elsinghorst" data-appointlet-service="357892"><script src="https://www.appointletcdn.com/loader/loader.min.js" async="" defer=""></script>
 
 <br>
 
-![Baby Weight Shiny app](https://shirinsplayground.netlify.app/img/who_baby_weight_app.png)
+---
 
 ## Reference data
 
@@ -44,7 +48,7 @@ I collected all our weight measurements in a `.csv` file with two columns:
 - a `date` column in the format `%d.%m.%Y` (`dd.mm.yyyy`)
 - a `weight` column in *g* or *kg*
 
-**The first row has to contain the birthdate and birthweight**, as this is, what was used to calculate the growth percentile to follow. 
+**The first row has to contain the birthdate and birthweight**, as this is what's used to calculate the growth percentile to follow. A baby's birthweight will put them into a certain growth percentile (e.g. a boy who weighs around 3.3 kg at birth is closest to the 50th percentile, meaning that about 50% of boys his same age will be heavier and 50% will be lighter than he is). For a healthy weight gain, the baby's weight curve is supposed to roughly follow a parallel line with this growth percentile.
 
 Because, obviously, I am not going to make my son's actual weight data available on the internet, I created some [mock data](https://github.com/ShirinG/who_baby_weight_app/blob/master/data/weight_measures.csv), similar to real-world examples (weight in *g*):
 
@@ -76,6 +80,12 @@ In the [Baby Weight Shiny app](https://shiring.shinyapps.io/who_baby_weight/), y
 - whether your weight data is given in **gramm or kilogramm** and
 - whether you want to display reference data for **girls or boys**
 
+You can then check to see if the data looks correct (tab: *Data*). The tabs *Curve* and *Barchart* show two plots. Below, I'll describe how I prepared the data for plotting.
+
+## Data preparation
+
+First, I combined my weight measures with the reference tables from WHO. The function is saved in a [script on Github](https://github.com/ShirinG/who_baby_weight_app/) for you to examine. The function code contains comments that describe what I've been doing. Here is the outcome:
+
 ```{r eval=FALSE}
 library(tidyverse)
 
@@ -104,6 +114,8 @@ combine_measures_who_final <- combine_measures_who(weight_measures,
                                                    gender = "boy")
 head(combine_measures_who_final)
 ```
+
+In order to calculate weight data for every full week of life (to make the values comparable with the reference), I am interpolating weight values for every day with missing information (linear approximation).
 
 ```{r}
 # add missing dates for calculating weight change per week of life
@@ -138,6 +150,8 @@ weight_measures_all <- weight_measures_all %>%
          diff_week = c(rep(0, 7), diff(weight_approx, lag = 7)))
 ```
 
+I also want to know the month of life, so I am using [the following function](https://github.com/ShirinG/who_baby_weight_app/) to do so:
+
 ```{r echo=FALSE}
 source("/Users/shiringlander/Documents/Github/who_baby_weight_app/functions/elapsed_months.R")
 weight_measures_all <- weight_measures_all %>%
@@ -152,6 +166,8 @@ weight_measures_all <- weight_measures_all %>%
 ```
 
 ## The curve
+
+The first plot shows a simple lineplot with all reference curves (i.e. all WHO growth percentiles) and my measurements plotted against them. The plot in the Shiny app has  been created with **Plotly**, so you can click on the legend to hide/show specific growth percentiles or zoom into specific areas on the plot.
 
 ```{r}
 gender <- "boys"
@@ -183,6 +199,8 @@ paste("Correlation between your measurements and your reference percentile is:",
 
 ## Approximated missing values
 
+The next plot is not shown in the Shiny app, but here I'll include it to show how the interpolated weight values look like:
+
 ```{r fig.width=10}
 weight_measures_all %>%
   ggplot(aes(x = date)) +
@@ -204,7 +222,9 @@ weight_measures_all %>%
 
 ## Barchart
 
-Bar colors show whether the weekly weight gain is above (blue) or below (red) the required minimum for BREASTFED babies given by [this German site about breastfeeding](https://www.stillkinder.de/gewicht-und-wachstum-von-gestillten-kindern/):
+The barchart, which you can find in the Shiny app, shows weekly weight differences, i.e. for every day the difference in weight compared to 7 days prior is calculated.
+
+Bar colors show whether the weekly weight difference is above (blue) or below (red) the required minimum for **BREASTFED** babies given by [this German site about breastfeeding](https://www.stillkinder.de/gewicht-und-wachstum-von-gestillten-kindern/):
 
 - in months 1 and 2, the minimum weight gain should be: 170 g
 - in months 3 and 4: 110 g
@@ -221,13 +241,15 @@ weight_measures_all <- weight_measures_all %>%
                                                     ifelse(month >=7 & diff_week >= 40, "ok", "low")))))))
 ```
 
-```{r}
+```{r echo=FALSE}
 weight_measures_all <- weight_measures_all %>%
   mutate(threshold = ifelse(month <= 2, 170,
                         ifelse(month == 3 | month == 4, 110,
                                       ifelse(month == 5 | month == 6, 70,
                                                     ifelse(month >=7, 40, NA)))))
 ```
+
+The actual plot in the Shiny app is again created with **Plotly**, so you can interact with the graph there.
 
 ```{r fig.width=10}
 weight_measures_all %>%
