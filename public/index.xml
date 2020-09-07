@@ -822,14 +822,14 @@ combine_measures_who_final %&gt;%
   ggplot(aes(date, weight,
              linetype = ref,
              color = percentile)) +
-  geom_line() +
-  geom_point() +
-  labs(x = &quot;Date&quot;,
-       y = &quot;Weight in kg&quot;,
-       title = &quot;WHO child growth standard percentiles&quot;,
-       subtitle = paste(&quot;Shown for&quot;, gender, age)) +
-  theme_bw() +
-  theme(legend.position = &quot;bottom&quot;)</code></pre>
+    geom_line() +
+    geom_point() +
+    labs(x = &quot;Date&quot;,
+         y = &quot;Weight in kg&quot;,
+         title = &quot;WHO child growth standard percentiles&quot;,
+         subtitle = paste(&quot;Shown for&quot;, gender, age)) +
+    theme_bw() +
+    theme(legend.position = &quot;bottom&quot;)</code></pre>
 <p><img src="/post/baby_weight_app_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <pre class="r"><code>test_curves &lt;- combine_measures_who_final %&gt;%
   filter(percentile == !!paste(starting_p)) %&gt;%
@@ -839,7 +839,26 @@ paste(&quot;Your reference percentile is:&quot;, starting_p)</code></pre>
 <pre><code>## [1] &quot;Your reference percentile is: P50&quot;</code></pre>
 <pre class="r"><code>paste(&quot;Correlation between your measurements and your reference percentile is:&quot;,
       round(cor(test_curves$weight, test_curves$weight_approx, use = &#39;complete.obs&#39;), digits = 5))</code></pre>
-<pre><code>## [1] &quot;Correlation between your measurements and your reference percentile is: 0.99322&quot;</code></pre>
+<pre><code>## [1] &quot;Correlation between your measurements and your reference percentile is: 0.99447&quot;</code></pre>
+</div>
+<div id="approximated-missing-values" class="section level2">
+<h2>Approximated missing values</h2>
+<pre class="r"><code>weight_measures_all %&gt;%
+  ggplot(aes(x = date)) +
+    geom_line(aes(y = weight_approx), color = &quot;grey&quot;) +
+    geom_point(aes(y = weight_approx), color = &quot;blue&quot;, size = 1) +
+    geom_point(aes(y = weight), color = &quot;red&quot;, size = 3) +
+    geom_point(data = weight_measures_all %&gt;% distinct(week, .keep_all = TRUE), 
+               aes(x = date, y = weight_approx), color = &quot;grey&quot;, size = 2) +
+    geom_label(data = weight_measures_all %&gt;% distinct(week, .keep_all = TRUE), 
+               aes(x = date, y = weight_approx, label = week), 
+               nudge_y = 300, alpha = 0.8) +
+    labs(x = &quot;Date&quot;,
+         y = &quot;Weight in gramm&quot;,
+         title = &quot;Measured &amp; approximated weight values&quot;,
+         subtitle = &quot;red: measured values; blue: approximated values; labels: week of life&quot;) +
+    theme_bw()</code></pre>
+<p><img src="/post/baby_weight_app_files/figure-html/unnamed-chunk-6-1.png" width="960" /></p>
 </div>
 <div id="barchart" class="section level2">
 <h2>Barchart</h2>
@@ -850,6 +869,8 @@ paste(&quot;Your reference percentile is:&quot;, starting_p)</code></pre>
 <li>in months 5 and 6: 70 g and</li>
 <li>from month 7 to 12: 40 g</li>
 </ul>
+<p>Am 10.-14. Lebenstag sollte es sein Geburtsgewicht wieder erreicht haben.</p>
+<p>Nach 3 Wochen muss es sein Geburtsgewicht wieder erreicht haben.</p>
 <pre class="r"><code>weight_measures_all &lt;- weight_measures_all %&gt;%
   mutate(color = ifelse(month &lt;= 2 &amp; diff_week &gt;= 170, &quot;ok&quot;,
                         ifelse(month == 3 &amp; diff_week &gt;= 110, &quot;ok&quot;,
@@ -857,23 +878,44 @@ paste(&quot;Your reference percentile is:&quot;, starting_p)</code></pre>
                                       ifelse(month == 5 &amp; diff_week &gt;= 70, &quot;ok&quot;,
                                              ifelse(month == 6 &amp; diff_week &gt;= 70, &quot;ok&quot;,
                                                     ifelse(month &gt;=7 &amp; diff_week &gt;= 40, &quot;ok&quot;, &quot;low&quot;)))))))</code></pre>
+<pre class="r"><code>weight_measures_all &lt;- weight_measures_all %&gt;%
+  mutate(threshold = ifelse(month &lt;= 2, 170,
+                        ifelse(month == 3 | 4, 110,
+                                      ifelse(month == 5 | 6, 70,
+                                                    ifelse(month &gt;=7, 40, NA)))))</code></pre>
+<pre class="r"><code>weight_measures_all %&gt;% 
+  distinct(month, .keep_all = TRUE)</code></pre>
+<pre><code>## # A tibble: 12 x 9
+##    date       weight weight_approx  week diff_day diff_week month color
+##    &lt;date&gt;      &lt;dbl&gt;         &lt;dbl&gt; &lt;int&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;
+##  1 2019-08-12   3168         3168      1    0           0       1 low  
+##  2 2019-09-12     NA         4554.     5   69.8       476.      2 ok   
+##  3 2019-10-12     NA         5474.     9   -0.636      82.9     3 low  
+##  4 2019-11-12   6083         6083     14 -146          45       4 low  
+##  5 2019-12-12   6431         6431     18 -238        -145       5 low  
+##  6 2020-01-01   7010         7010     21  -10         130      -6 low  
+##  7 2020-01-12   7200         7200     22  -50          90      -5 low  
+##  8 2020-02-12     NA         7774.    27   19.5       137.     -4 low  
+##  9 2020-03-12   8040         8040     31    3.64       25.5    -3 low  
+## 10 2020-04-12     NA         8728     35   17         119      -2 low  
+## 11 2020-05-12     NA         9074.    40    5.33       37.3    -1 low  
+## 12 2020-06-12     NA         9239.    44    5.33       37.3     0 low  
+## # … with 1 more variable: threshold &lt;dbl&gt;</code></pre>
 <pre class="r"><code>weight_measures_all %&gt;%
-  distinct(week, .keep_all = TRUE) %&gt;%
-  ggplot(aes(x = date, y = diff_week, fill = color)) +
-  geom_bar(stat = &quot;identity&quot;) +
-  scale_fill_brewer(palette = &quot;Set1&quot;) +
-  labs(x = &quot;Date&quot;,
-       y = &quot;Weight difference in gramm&quot;,
-       title = &quot;Weekly weight differences&quot;,
-       subtitle = &quot;Weight at each full week compared to one week prior&quot;) +
-  theme_bw()</code></pre>
-<p><img src="/post/baby_weight_app_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+  ggplot(aes(x = date, y = diff_week)) +
+    geom_bar(aes(fill = color), stat = &quot;identity&quot;) +
+    geom_label(data = weight_measures_all %&gt;% distinct(week, .keep_all = TRUE), 
+               aes(x = date, label = week), 
+               nudge_y = 10, alpha = 0.8) +
+    scale_fill_brewer(palette = &quot;Set1&quot;) +
+    labs(x = &quot;Week of life&quot;,
+         y = &quot;Weight difference in gramm&quot;,
+         fill = &quot;Weight gain&quot;,
+         title = &quot;Weekly weight differences&quot;,
+         subtitle = &quot;(Approximated) weight for each day compared to weight at 7 days prior;\nlabels: week of life&quot;) +
+    theme_bw()</code></pre>
+<p><img src="/post/baby_weight_app_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <p><br></p>
-<p><a href="https://www.stillkinder.de/gewicht-und-wachstum-von-gestillten-kindern/" class="uri">https://www.stillkinder.de/gewicht-und-wachstum-von-gestillten-kindern/</a></p>
-<p>Am 10.-14. Lebenstag sollte es sein Geburtsgewicht wieder erreicht haben.</p>
-<p>Nach 3 Wochen muss es sein Geburtsgewicht wieder erreicht haben.</p>
-<p>In den ersten 2 Monaten nimmt es normalerweise 170 – 330 g pro Woche zu.</p>
-<p>Im 3. – 4. Monat 110 – 330 g pro Woche, 5. – 6. Monat 70 – 140 g pro Woche und vom 7. – 12. Monat 40 – 110 g pro Woche.</p>
 <hr />
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>## R version 4.0.2 (2020-06-22)

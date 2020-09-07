@@ -129,14 +129,14 @@ combine_measures_who_final %>%
   ggplot(aes(date, weight,
              linetype = ref,
              color = percentile)) +
-  geom_line() +
-  geom_point() +
-  labs(x = "Date",
-       y = "Weight in kg",
-       title = "WHO child growth standard percentiles",
-       subtitle = paste("Shown for", gender, age)) +
-  theme_bw() +
-  theme(legend.position = "bottom")
+    geom_line() +
+    geom_point() +
+    labs(x = "Date",
+         y = "Weight in kg",
+         title = "WHO child growth standard percentiles",
+         subtitle = paste("Shown for", gender, age)) +
+    theme_bw() +
+    theme(legend.position = "bottom")
 ```
 
 ```{r}
@@ -149,6 +149,26 @@ paste("Correlation between your measurements and your reference percentile is:",
       round(cor(test_curves$weight, test_curves$weight_approx, use = 'complete.obs'), digits = 5))
 ```
 
+## Approximated missing values
+
+```{r fig.width=10}
+weight_measures_all %>%
+  ggplot(aes(x = date)) +
+    geom_line(aes(y = weight_approx), color = "grey") +
+    geom_point(aes(y = weight_approx), color = "blue", size = 1) +
+    geom_point(aes(y = weight), color = "red", size = 3) +
+    geom_point(data = weight_measures_all %>% distinct(week, .keep_all = TRUE), 
+               aes(x = date, y = weight_approx), color = "grey", size = 2) +
+    geom_label(data = weight_measures_all %>% distinct(week, .keep_all = TRUE), 
+               aes(x = date, y = weight_approx, label = week), 
+               nudge_y = 300, alpha = 0.8) +
+    labs(x = "Date",
+         y = "Weight in gramm",
+         title = "Measured & approximated weight values",
+         subtitle = "red: measured values; blue: approximated values; labels: week of life") +
+    theme_bw()
+```
+
 ## Barchart
 
 Bar colors show whether the weekly weight gain is above (blue) or below (red) the required minimum for BREASTFED babies given by [this German site about breastfeeding](https://www.stillkinder.de/gewicht-und-wachstum-von-gestillten-kindern/):
@@ -157,6 +177,12 @@ Bar colors show whether the weekly weight gain is above (blue) or below (red) th
 - in months 3 and 4: 110 g
 - in months 5 and 6: 70 g and 
 - from month 7 to 12: 40 g
+
+
+Am 10.-14. Lebenstag sollte es sein Geburtsgewicht wieder erreicht haben.
+
+Nach 3 Wochen muss es sein Geburtsgewicht wieder erreicht haben.
+
 
 ```{r}
 weight_measures_all <- weight_measures_all %>%
@@ -169,30 +195,32 @@ weight_measures_all <- weight_measures_all %>%
 ```
 
 ```{r}
+weight_measures_all <- weight_measures_all %>%
+  mutate(threshold = ifelse(month <= 2, 170,
+                        ifelse(month == 3 | month == 4, 110,
+                                      ifelse(month == 5 | month == 6, 70,
+                                                    ifelse(month >=7, 40, NA)))))
+```
+
+```{r fig.width=10}
 weight_measures_all %>%
-  distinct(week, .keep_all = TRUE) %>%
-  ggplot(aes(x = date, y = diff_week, fill = color)) +
-  geom_bar(stat = "identity") +
-  scale_fill_brewer(palette = "Set1") +
-  labs(x = "Date",
-       y = "Weight difference in gramm",
-       title = "Weekly weight differences",
-       subtitle = "Weight at each full week compared to one week prior") +
-  theme_bw()
+  ggplot(aes(x = date, y = diff_week)) +
+    geom_bar(aes(fill = color), stat = "identity") +
+    geom_label(data = weight_measures_all %>% distinct(week, .keep_all = TRUE), 
+               aes(x = date, label = week), 
+               nudge_y = 10, alpha = 0.8) +
+    scale_fill_brewer(palette = "Set1") +
+    labs(x = "Week of life",
+         y = "Weight difference in gramm",
+         fill = "Weight gain",
+         title = "Weekly weight differences",
+         subtitle = "(Approximated) weight for each day compared to weight at 7 days prior;\nlabels: week of life") +
+    theme_bw()
 ```
 
     
 <br>
 
-https://www.stillkinder.de/gewicht-und-wachstum-von-gestillten-kindern/
-
-Am 10.-14. Lebenstag sollte es sein Geburtsgewicht wieder erreicht haben.
-
-Nach 3 Wochen muss es sein Geburtsgewicht wieder erreicht haben.
-
-In den ersten 2 Monaten nimmt es normalerweise 170 – 330 g pro Woche zu.
-
-Im 3. – 4. Monat 110 – 330 g pro Woche, 5. – 6. Monat 70 – 140 g pro Woche und vom 7. – 12. Monat 40 – 110 g pro Woche.
 
 
 ---
