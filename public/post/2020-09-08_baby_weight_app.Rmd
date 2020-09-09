@@ -1,7 +1,7 @@
 ---
 title: "Baby Weight Shiny app"
 draft: false
-author: Shirin Elsinghorst
+author: Dr. Shirin Elsinghorst
 date: '2020-09-07'
 categories: ["R"]
 tags: ["R", "Shiny", "tidyverse", "ggplot", "plotly"]
@@ -231,14 +231,18 @@ Bar colors show whether the weekly weight difference is above (blue) or below (r
 - in months 5 and 6: 70 g and 
 - from month 7 to 12: 40 g
 
+**Update:** Based on [a Github pull request](https://github.com/ShirinG/who_baby_weight_app/pull/1#issue-482023764) by [latlio](https://github.com/latlio), I changed the `ifelse` statement to `case_when` (thanks again for the contribution!).
+
 ```{r}
 weight_measures_all <- weight_measures_all %>%
-  mutate(color = ifelse(month <= 2 & diff_week >= 170, "ok",
-                        ifelse(month == 3 & diff_week >= 110, "ok",
-                               ifelse(month == 4 & diff_week >= 110, "ok",
-                                      ifelse(month == 5 & diff_week >= 70, "ok",
-                                             ifelse(month == 6 & diff_week >= 70, "ok",
-                                                    ifelse(month >=7 & diff_week >= 40, "ok", "low")))))))
+            mutate(color = case_when(
+                month <= 2 & diff_week >= 170 ~ "ok",
+                month == 3 & diff_week >= 110 ~ "ok",
+                month == 4 & diff_week >= 110 ~ "ok",
+                month == 5 & diff_week >= 70 ~ "ok",
+                month == 6 & diff_week >= 70 ~ "ok",
+                month >= 7 & diff_week >= 40 ~ "ok",
+                TRUE ~ "low"))
 ```
 
 ```{r echo=FALSE}

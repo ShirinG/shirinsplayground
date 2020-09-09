@@ -1,7 +1,7 @@
 ---
 title: "Baby Weight Shiny app"
 draft: false
-author: Shirin Elsinghorst
+author: Dr. Shirin Elsinghorst
 date: '2020-09-07'
 categories: ["R"]
 tags: ["R", "Shiny", "tidyverse", "ggplot", "plotly"]
@@ -191,13 +191,16 @@ paste(&quot;Your reference percentile is:&quot;, starting_p)</code></pre>
 <li>in months 5 and 6: 70 g and</li>
 <li>from month 7 to 12: 40 g</li>
 </ul>
+<p><strong>Update:</strong> Based on <a href="https://github.com/ShirinG/who_baby_weight_app/pull/1#issue-482023764">a Github pull request</a> by <a href="https://github.com/latlio">latlio</a>, I changed the <code>ifelse</code> statement to <code>case_when</code> (thanks again for the contribution!).</p>
 <pre class="r"><code>weight_measures_all &lt;- weight_measures_all %&gt;%
-  mutate(color = ifelse(month &lt;= 2 &amp; diff_week &gt;= 170, &quot;ok&quot;,
-                        ifelse(month == 3 &amp; diff_week &gt;= 110, &quot;ok&quot;,
-                               ifelse(month == 4 &amp; diff_week &gt;= 110, &quot;ok&quot;,
-                                      ifelse(month == 5 &amp; diff_week &gt;= 70, &quot;ok&quot;,
-                                             ifelse(month == 6 &amp; diff_week &gt;= 70, &quot;ok&quot;,
-                                                    ifelse(month &gt;=7 &amp; diff_week &gt;= 40, &quot;ok&quot;, &quot;low&quot;)))))))</code></pre>
+            mutate(color = case_when(
+                month &lt;= 2 &amp; diff_week &gt;= 170 ~ &quot;ok&quot;,
+                month == 3 &amp; diff_week &gt;= 110 ~ &quot;ok&quot;,
+                month == 4 &amp; diff_week &gt;= 110 ~ &quot;ok&quot;,
+                month == 5 &amp; diff_week &gt;= 70 ~ &quot;ok&quot;,
+                month == 6 &amp; diff_week &gt;= 70 ~ &quot;ok&quot;,
+                month &gt;= 7 &amp; diff_week &gt;= 40 ~ &quot;ok&quot;,
+                TRUE ~ &quot;low&quot;))</code></pre>
 <p>The actual plot in the Shiny app is again created with <strong>Plotly</strong>, so you can interact with the graph there.</p>
 <pre class="r"><code>weight_measures_all %&gt;%
   ggplot(aes(x = date, y = diff_week)) +
