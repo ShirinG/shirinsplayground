@@ -1,0 +1,60 @@
+---
+title: "Update for Keras and TF 2.0: It's that easy! Image classification with keras in roughly 100 lines of code."
+draft: true
+author: Shirin Glander
+date: '2020-09-13'
+categories: ["R", "keras"]
+tags: ["R", "keras", "image classification", "tensorflow"]
+thumbnailImagePosition: left
+thumbnailImage: 
+metaAlignment: center
+coverMeta: out
+slug: keras_fruits_update
+---
+
+> I've been using keras and TensorFlow for a while now - and love its simplicity and straight-forward way to modeling. As part of the latest update to my [Workshop about deep learning with R and keras](https://shirinsplayground.netlify.com/2018/05/deep_learning_keras_tensorflow_18_07/) I've added a new example analysis:
+
+https://shirinsplayground.netlify.com/2018/06/keras_fruits/
+
+```{r}
+# load libraries
+library(tidyverse)
+library(keras)
+```
+
+The dataset is the [fruit images dataset from Kaggle](https://www.kaggle.com/moltean/fruits/data). I downloaded it to my computer and unpacked it. Because I don't want to build a model for all the different fruits, I define a list of fruits (corresponding to the folder names) that I want to include in the model.
+
+I also define a few other parameters in the beginning to make adapting as easy as possible.
+
+````{r}
+# list of fruits to modle
+fruit_list <- c("Kiwi", "Banana", "Apricot", "Avocado", "Cocos", "Clementine", "Mandarine", "Orange",
+                "Limes", "Lemon", "Peach", "Plum", "Raspberry", "Strawberry", "Pineapple", "Pomegranate")
+
+# number of output classes (i.e. fruits)
+output_n <- length(fruit_list)
+
+# image size to scale down to (original images are 100 x 100 px)
+img_width <- 20
+img_height <- 20
+target_size <- c(img_width, img_height)
+
+# RGB = 3 channels
+channels <- 3
+
+# path to image folders
+train_image_files_path <- "/Users/shiringlander/Documents/Github/Data/fruits-360/Training/"
+```
+
+## Loading images
+
+The handy `image_data_generator()` and `flow_images_from_directory()` functions can be used to load images from a directory. If you want to use data augmentation, you can directly define how and in what way you want to augment your images with `image_data_generator`. Here I am not augmenting the data, I only scale the pixel values to fall between 0 and 1.
+
+```{r}
+head(list.files(train_image_files_path))
+```
+
+
+
+
+

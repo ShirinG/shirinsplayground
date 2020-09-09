@@ -1,0 +1,24 @@
+---
+title: "Update for Keras and TF 2.0: It's that easy! Image classification with keras in roughly 100 lines of code."
+draft: true
+author: Shirin Glander
+date: '2020-09-13'
+categories: ["R", "keras"]
+tags: ["R", "keras", "image classification", "tensorflow"]
+thumbnailImagePosition: left
+thumbnailImage: 
+metaAlignment: center
+coverMeta: out
+slug: keras_fruits_update
+---
+
+
+```{r}
+library(keras)
+is_keras_available()
+```
+
+
+
+
+

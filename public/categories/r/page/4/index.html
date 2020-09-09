@@ -346,6 +346,66 @@ ga('send', 'pageview');
     
     <div class="postShorten-header">
       <h1 class="postShorten-title" itemprop="headline">
+        <a class="link-unstyled" href="/2018/06/googlelanguager/">
+          Addendum: Text-to-Speech with the googleLanguageR package
+        </a>
+      </h1>
+      
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2018-06-29T00:00:00Z">
+        
+  June 29, 2018
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="/categories/r">R</a>
+    
+  
+
+
+  </div>
+
+    </div>
+    <div class="postShorten-excerpt" itemprop="articleBody">
+      After posting my short blog post about Text-to-speech with R, I got two very useful tips. One was to use the googleLanguageR package, which uses the Google Cloud Text-to-Speech API.
+And indeed, it was very easy to use and the resulting audio sounded much better than what I tried before!
+Here’s a short example of how to use the package for TTS:
+Set up Google Cloud and authentification You first need to set up a Google Cloud Account and provide credit card information (the first year is free to use, though).
+      <p>
+        <a href="/2018/06/googlelanguager/" class="postShorten-excerpt_link link">Continue reading</a>
+        
+      </p>
+    </div>
+  </div>
+  
+    <a href="/2018/06/googlelanguager/">
+      <div class="postShorten-thumbnailimg">
+        <img alt="" itemprop="image" src="https://shiring.github.io/netlify_images/speech-icon-2797263_1280.png"/>
+      </div>
+    </a>
+  
+</article>
+
+            
+              
+  
+    
+  
+
+
+  
+
+<article class="postShorten postShorten--thumbnailimg-left" itemscope itemType="http://schema.org/BlogPosting">
+  <div class="postShorten-wrap">
+    
+    <div class="postShorten-header">
+      <h1 class="postShorten-title" itemprop="headline">
         <a class="link-unstyled" href="/2018/06/intro_to_ml_workshop_heidelberg/">
           Code for Workshop: Introduction to Machine Learning with R
         </a>
@@ -696,67 +756,6 @@ You can read about one participant’s experience in my last workshop:
 </article>
 
             
-              
-  
-    
-  
-
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-left" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="/2018/04/pkgnet/">
-          Comparing dependencies of popular machine learning packages with `pkgnet`
-        </a>
-      </h1>
-      
-  <div class="postShorten-meta post-meta">
-    
-      <time itemprop="datePublished" datetime="2018-04-30T00:00:00Z">
-        
-  April 30, 2018
-
-      </time>
-    
-    
-  
-  
-    <span>in</span>
-    
-      <a class="category-link" href="/categories/r">R</a>, 
-    
-      <a class="category-link" href="/categories/machine-learning">machine learning</a>
-    
-  
-
-
-  </div>
-
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      When looking through the CRAN list of packages, I stumbled upon this little gem:
- pkgnet is an R library designed for the analysis of R libraries! The goal of the package is to build a graph representation of a package and its dependencies.
- And I thought it would be fun to play around with it. The little analysis I ended up doing was to compare dependencies of popular machine learning packages.
-      <p>
-        <a href="/2018/04/pkgnet/" class="postShorten-excerpt_link link">Continue reading</a>
-        
-      </p>
-    </div>
-  </div>
-  
-    <a href="/2018/04/pkgnet/">
-      <div class="postShorten-thumbnailimg">
-        <img alt="" itemprop="image" src="/post/2018-04-30_pkgnet_files/figure-html/graph-1.png"/>
-      </div>
-    </a>
-  
-</article>
-
-            
             
   <div class="pagination-bar">
     <ul class="pagination">
@@ -852,6 +851,25 @@ You can read about one participant’s experience in my last workshop:
                 </span>
               </span>
               <div class="media-content hide-xs font-merryweather">library(tidyverse) library(ggExtra) library(ragg) library(ggalluvial) library(treemapify) library(ggalt) library(palmerpenguins) Dataset head(penguins) ## # A tibble: 6 x 8 ## species island bill_length_mm bill_depth_mm flipper_length_… body_mass_g sex ## &lt;fct&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;fct&gt; ## 1 Adelie Torge… 39.1 18.7 181 3750 male ## 2 Adelie Torge… 39.5 17.4 186 3800 fema… ## 3 Adelie Torge… 40.3 18 195 3250 fema… ## 4 Adelie Torge… NA NA NA NA &lt;NA&gt; ## 5 Adelie Torge… 36.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2020/09/keras_fruits_update/">
+                <h3 class="media-heading">Update for Keras and TF 2.0: It&#39;s that easy! Image classification with keras in roughly 100 lines of code.</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Sep 9, 2020
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">I’ve been using keras and TensorFlow for a while now - and love its simplicity and straight-forward way to modeling. As part of the latest update to my Workshop about deep learning with R and keras I’ve added a new example analysis:
+ https://shirinsplayground.netlify.com/2018/06/keras_fruits/
+# load libraries library(tidyverse) ## ── Attaching packages ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ── ## ✓ ggplot2 3.3.2 ✓ purrr 0.3.4 ## ✓ tibble 3.0.3 ✓ dplyr 1.</div>
             </div>
             <div style="clear:both;"></div>
             <hr>
@@ -1011,27 +1029,6 @@ What is very different, however, is how to prepare raw text data for modeling. W
             <hr>
           </div>
         
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="/2019/01/data_camp_hyperparameter_tuning/">
-                <h3 class="media-heading">My course on Hyperparameter Tuning in R is now on Data Camp!</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Jan 1, 2019
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">UPDATE: Before you take this course please consider the info about the sexual harrassment scandal surrounding DataCamp!
-
-I am very happy to announce that (after many months) my interactive course on Hyperparameter Tuning in R has now been officially launched on Data Camp!
-
- Course Description  For many machine learning problems, simply running a model out-of-the-box and getting a prediction is not enough; you want the best model with the most accurate prediction.</div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
       </div>
     </div>
     <div class="modal-footer">
@@ -1039,7 +1036,7 @@ I am very happy to announce that (after many months) my interactive course on Hy
          data-message-zero="no post found"
          data-message-one="1 post found"
          data-message-other="{n} posts found">
-         84 posts found
+         85 posts found
       </p>
     </div>
   </div>
