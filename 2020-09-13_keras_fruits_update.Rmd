@@ -21,7 +21,7 @@ is_keras_available()
 The handy `image_data_generator()` and `flow_images_from_directory()` functions can be used to load images from a directory. If you want to use data augmentation, you can directly define how and in what way you want to augment your images with `image_data_generator`. Here I am not augmenting the data, I only scale the pixel values to fall between 0 and 1.
 
 ```{r}
-train_data_gen = image_data_generator(
+train_data_gen <- image_data_generator(
   rescale = 1/255,
   validation_split = 0.3
 )

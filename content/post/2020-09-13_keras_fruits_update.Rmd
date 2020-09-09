@@ -15,9 +15,16 @@ slug: keras_fruits_update
 
 ```{r}
 library(keras)
-is_keras_available()
+#is_keras_available()
 ```
 
+```{r}
+xfun::session_info('blogdown')
+```
+
+```{r}
+devtools::session_info()
+```
 
 
 

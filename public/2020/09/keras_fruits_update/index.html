@@ -30,21 +30,15 @@
     
 
     
-    <meta name="description" content="I’ve been using keras and TensorFlow for a while now - and love its simplicity and straight-forward way to modeling. As part of the latest update to my Workshop about deep learning with R and keras I’ve added a new example analysis:
- https://shirinsplayground.netlify.com/2018/06/keras_fruits/
-# load libraries library(tidyverse) ## ── Attaching packages ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ── ## ✓ ggplot2 3.3.2 ✓ purrr 0.3.4 ## ✓ tibble 3.0.3 ✓ dplyr 1.">
-    <meta property="og:description" content="I’ve been using keras and TensorFlow for a while now - and love its simplicity and straight-forward way to modeling. As part of the latest update to my Workshop about deep learning with R and keras I’ve added a new example analysis:
- https://shirinsplayground.netlify.com/2018/06/keras_fruits/
-# load libraries library(tidyverse) ## ── Attaching packages ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ── ## ✓ ggplot2 3.3.2 ✓ purrr 0.3.4 ## ✓ tibble 3.0.3 ✓ dplyr 1.">
+    <meta name="description" content="library(keras) #is_keras_available() xfun::session_info(&#39;blogdown&#39;) ## R version 4.0.2 (2020-06-22) ## Platform: x86_64-apple-darwin17.0 (64-bit) ## Running under: macOS Catalina 10.15.6 ## ## Locale: en_US.UTF-8 / en_US.UTF-8 / en_US.UTF-8 / C / en_US.UTF-8 / en_US.UTF-8 ## ## Package version: ## base64enc_0.1.3 BH_1.72.0.3 blogdown_0.20.1 bookdown_0.20 ## digest_0.6.25 evaluate_0.14 glue_1.4.2 graphics_4.0.2 ## grDevices_4.0.2 highr_0.8 htmltools_0.5.0 httpuv_1.5.4 ## jsonlite_1.7.1 knitr_1.29 later_1.1.0.1 magrittr_1.5 ## markdown_1.1 methods_4.0.2 mime_0.9 promises_1.1.1 ## R6_2.4.1 Rcpp_1.0.5 rlang_0.4.7 rmarkdown_2.3 ## servr_0.18.1 stats_4.0.2 stringi_1.5.3 stringr_1.">
+    <meta property="og:description" content="library(keras) #is_keras_available() xfun::session_info(&#39;blogdown&#39;) ## R version 4.0.2 (2020-06-22) ## Platform: x86_64-apple-darwin17.0 (64-bit) ## Running under: macOS Catalina 10.15.6 ## ## Locale: en_US.UTF-8 / en_US.UTF-8 / en_US.UTF-8 / C / en_US.UTF-8 / en_US.UTF-8 ## ## Package version: ## base64enc_0.1.3 BH_1.72.0.3 blogdown_0.20.1 bookdown_0.20 ## digest_0.6.25 evaluate_0.14 glue_1.4.2 graphics_4.0.2 ## grDevices_4.0.2 highr_0.8 htmltools_0.5.0 httpuv_1.5.4 ## jsonlite_1.7.1 knitr_1.29 later_1.1.0.1 magrittr_1.5 ## markdown_1.1 methods_4.0.2 mime_0.9 promises_1.1.1 ## R6_2.4.1 Rcpp_1.0.5 rlang_0.4.7 rmarkdown_2.3 ## servr_0.18.1 stats_4.0.2 stringi_1.5.3 stringr_1.">
     <meta property="og:type" content="blog">
     <meta property="og:title" content="Update for Keras and TF 2.0: It&#39;s that easy! Image classification with keras in roughly 100 lines of code.">
     <meta property="og:url" content="/2020/09/keras_fruits_update/">
     <meta property="og:site_name" content="Shirin&#39;s playgRound">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Shirin&#39;s playgRound">
-    <meta name="twitter:description" content="I’ve been using keras and TensorFlow for a while now - and love its simplicity and straight-forward way to modeling. As part of the latest update to my Workshop about deep learning with R and keras I’ve added a new example analysis:
- https://shirinsplayground.netlify.com/2018/06/keras_fruits/
-# load libraries library(tidyverse) ## ── Attaching packages ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ── ## ✓ ggplot2 3.3.2 ✓ purrr 0.3.4 ## ✓ tibble 3.0.3 ✓ dplyr 1.">
+    <meta name="twitter:description" content="library(keras) #is_keras_available() xfun::session_info(&#39;blogdown&#39;) ## R version 4.0.2 (2020-06-22) ## Platform: x86_64-apple-darwin17.0 (64-bit) ## Running under: macOS Catalina 10.15.6 ## ## Locale: en_US.UTF-8 / en_US.UTF-8 / en_US.UTF-8 / C / en_US.UTF-8 / en_US.UTF-8 ## ## Package version: ## base64enc_0.1.3 BH_1.72.0.3 blogdown_0.20.1 bookdown_0.20 ## digest_0.6.25 evaluate_0.14 glue_1.4.2 graphics_4.0.2 ## grDevices_4.0.2 highr_0.8 htmltools_0.5.0 httpuv_1.5.4 ## jsonlite_1.7.1 knitr_1.29 later_1.1.0.1 magrittr_1.5 ## markdown_1.1 methods_4.0.2 mime_0.9 promises_1.1.1 ## R6_2.4.1 Rcpp_1.0.5 rlang_0.4.7 rmarkdown_2.3 ## servr_0.18.1 stats_4.0.2 stringi_1.5.3 stringr_1.">
     
       <meta name="twitter:creator" content="@ShirinGlander">
     
@@ -373,47 +367,92 @@ ga('send', 'pageview');
           
           <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
-              <blockquote>
-<p>I’ve been using keras and TensorFlow for a while now - and love its simplicity and straight-forward way to modeling. As part of the latest update to my <a href="https://shirinsplayground.netlify.com/2018/05/deep_learning_keras_tensorflow_18_07/">Workshop about deep learning with R and keras</a> I’ve added a new example analysis:</p>
-</blockquote>
-<p><a href="https://shirinsplayground.netlify.com/2018/06/keras_fruits/" class="uri">https://shirinsplayground.netlify.com/2018/06/keras_fruits/</a></p>
-<pre class="r"><code># load libraries
-library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
-<pre><code>## ✓ ggplot2 3.3.2     ✓ purrr   0.3.4
-## ✓ tibble  3.0.3     ✓ dplyr   1.0.2
-## ✓ tidyr   1.1.2     ✓ stringr 1.4.0
-## ✓ readr   1.3.1     ✓ forcats 0.5.0</code></pre>
-<pre><code>## ── Conflicts ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()</code></pre>
-<pre class="r"><code>library(keras)</code></pre>
-<p>The dataset is the <a href="https://www.kaggle.com/moltean/fruits/data">fruit images dataset from Kaggle</a>. I downloaded it to my computer and unpacked it. Because I don’t want to build a model for all the different fruits, I define a list of fruits (corresponding to the folder names) that I want to include in the model.</p>
-<p>I also define a few other parameters in the beginning to make adapting as easy as possible.</p>
-<pre class="r"><code># list of fruits to modle
-fruit_list &lt;- c(&quot;Kiwi&quot;, &quot;Banana&quot;, &quot;Apricot&quot;, &quot;Avocado&quot;, &quot;Cocos&quot;, &quot;Clementine&quot;, &quot;Mandarine&quot;, &quot;Orange&quot;,
-                &quot;Limes&quot;, &quot;Lemon&quot;, &quot;Peach&quot;, &quot;Plum&quot;, &quot;Raspberry&quot;, &quot;Strawberry&quot;, &quot;Pineapple&quot;, &quot;Pomegranate&quot;)
-
-# number of output classes (i.e. fruits)
-output_n &lt;- length(fruit_list)
-
-# image size to scale down to (original images are 100 x 100 px)
-img_width &lt;- 20
-img_height &lt;- 20
-target_size &lt;- c(img_width, img_height)
-
-# RGB = 3 channels
-channels &lt;- 3
-
-# path to image folders
-train_image_files_path &lt;- &quot;/Users/shiringlander/Documents/Github/Data/fruits-360/Training/&quot;</code></pre>
-<div id="loading-images" class="section level2">
-<h2>Loading images</h2>
-<p>The handy <code>image_data_generator()</code> and <code>flow_images_from_directory()</code> functions can be used to load images from a directory. If you want to use data augmentation, you can directly define how and in what way you want to augment your images with <code>image_data_generator</code>. Here I am not augmenting the data, I only scale the pixel values to fall between 0 and 1.</p>
-<pre class="r"><code>head(list.files(train_image_files_path))</code></pre>
-<pre><code>## [1] &quot;Apple Braeburn&quot;     &quot;Apple Crimson Snow&quot; &quot;Apple Golden 1&quot;    
-## [4] &quot;Apple Golden 2&quot;     &quot;Apple Golden 3&quot;     &quot;Apple Granny Smith&quot;</code></pre>
-</div>
+              <pre class="r"><code>library(keras)
+#is_keras_available()</code></pre>
+<pre class="r"><code>xfun::session_info(&#39;blogdown&#39;)</code></pre>
+<pre><code>## R version 4.0.2 (2020-06-22)
+## Platform: x86_64-apple-darwin17.0 (64-bit)
+## Running under: macOS Catalina 10.15.6
+## 
+## Locale: en_US.UTF-8 / en_US.UTF-8 / en_US.UTF-8 / C / en_US.UTF-8 / en_US.UTF-8
+## 
+## Package version:
+##   base64enc_0.1.3 BH_1.72.0.3     blogdown_0.20.1 bookdown_0.20  
+##   digest_0.6.25   evaluate_0.14   glue_1.4.2      graphics_4.0.2 
+##   grDevices_4.0.2 highr_0.8       htmltools_0.5.0 httpuv_1.5.4   
+##   jsonlite_1.7.1  knitr_1.29      later_1.1.0.1   magrittr_1.5   
+##   markdown_1.1    methods_4.0.2   mime_0.9        promises_1.1.1 
+##   R6_2.4.1        Rcpp_1.0.5      rlang_0.4.7     rmarkdown_2.3  
+##   servr_0.18.1    stats_4.0.2     stringi_1.5.3   stringr_1.4.0  
+##   tinytex_0.25    tools_4.0.2     utils_4.0.2     xfun_0.17      
+##   yaml_2.2.1</code></pre>
+<pre class="r"><code>devtools::session_info()</code></pre>
+<pre><code>## ─ Session info ───────────────────────────────────────────────────────────────
+##  setting  value                       
+##  version  R version 4.0.2 (2020-06-22)
+##  os       macOS Catalina 10.15.6      
+##  system   x86_64, darwin17.0          
+##  ui       X11                         
+##  language (EN)                        
+##  collate  en_US.UTF-8                 
+##  ctype    en_US.UTF-8                 
+##  tz       Europe/Berlin               
+##  date     2020-09-09                  
+## 
+## ─ Packages ───────────────────────────────────────────────────────────────────
+##  package     * version date       lib source                           
+##  assertthat    0.2.1   2019-03-21 [1] CRAN (R 4.0.0)                   
+##  backports     1.1.9   2020-08-24 [1] CRAN (R 4.0.2)                   
+##  base64enc     0.1-3   2015-07-28 [1] CRAN (R 4.0.0)                   
+##  blogdown      0.20.1  2020-09-09 [1] Github (rstudio/blogdown@d96fe78)
+##  bookdown      0.20    2020-06-23 [1] CRAN (R 4.0.2)                   
+##  callr         3.4.4   2020-09-07 [1] CRAN (R 4.0.2)                   
+##  cli           2.0.2   2020-02-28 [1] CRAN (R 4.0.0)                   
+##  crayon        1.3.4   2017-09-16 [1] CRAN (R 4.0.0)                   
+##  desc          1.2.0   2018-05-01 [1] CRAN (R 4.0.0)                   
+##  devtools      2.3.1   2020-07-21 [1] CRAN (R 4.0.2)                   
+##  digest        0.6.25  2020-02-23 [1] CRAN (R 4.0.0)                   
+##  ellipsis      0.3.1   2020-05-15 [1] CRAN (R 4.0.0)                   
+##  evaluate      0.14    2019-05-28 [1] CRAN (R 4.0.1)                   
+##  fansi         0.4.1   2020-01-08 [1] CRAN (R 4.0.0)                   
+##  fs            1.5.0   2020-07-31 [1] CRAN (R 4.0.2)                   
+##  generics      0.0.2   2018-11-29 [1] CRAN (R 4.0.0)                   
+##  glue          1.4.2   2020-08-27 [1] CRAN (R 4.0.2)                   
+##  htmltools     0.5.0   2020-06-16 [1] CRAN (R 4.0.2)                   
+##  jsonlite      1.7.1   2020-09-07 [1] CRAN (R 4.0.2)                   
+##  keras       * 2.3.0.0 2020-05-19 [1] CRAN (R 4.0.2)                   
+##  knitr         1.29    2020-06-23 [1] CRAN (R 4.0.2)                   
+##  lattice       0.20-41 2020-04-02 [1] CRAN (R 4.0.2)                   
+##  magrittr      1.5     2014-11-22 [1] CRAN (R 4.0.0)                   
+##  Matrix        1.2-18  2019-11-27 [1] CRAN (R 4.0.2)                   
+##  memoise       1.1.0   2017-04-21 [1] CRAN (R 4.0.0)                   
+##  pkgbuild      1.1.0   2020-07-13 [1] CRAN (R 4.0.2)                   
+##  pkgload       1.1.0   2020-05-29 [1] CRAN (R 4.0.2)                   
+##  prettyunits   1.1.1   2020-01-24 [1] CRAN (R 4.0.0)                   
+##  processx      3.4.4   2020-09-03 [1] CRAN (R 4.0.2)                   
+##  ps            1.3.4   2020-08-11 [1] CRAN (R 4.0.2)                   
+##  R6            2.4.1   2019-11-12 [1] CRAN (R 4.0.0)                   
+##  Rcpp          1.0.5   2020-07-06 [1] CRAN (R 4.0.2)                   
+##  remotes       2.2.0   2020-07-21 [1] CRAN (R 4.0.2)                   
+##  reticulate    1.16    2020-05-27 [1] CRAN (R 4.0.2)                   
+##  rlang         0.4.7   2020-07-09 [1] CRAN (R 4.0.2)                   
+##  rmarkdown     2.3     2020-06-18 [1] CRAN (R 4.0.2)                   
+##  rprojroot     1.3-2   2018-01-03 [1] CRAN (R 4.0.0)                   
+##  rstudioapi    0.11    2020-02-07 [1] CRAN (R 4.0.0)                   
+##  sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 4.0.0)                   
+##  stringi       1.5.3   2020-09-09 [1] CRAN (R 4.0.2)                   
+##  stringr       1.4.0   2019-02-10 [1] CRAN (R 4.0.0)                   
+##  tensorflow    2.2.0   2020-05-11 [1] CRAN (R 4.0.0)                   
+##  testthat      2.3.2   2020-03-02 [1] CRAN (R 4.0.0)                   
+##  tfruns        1.4     2018-08-25 [1] CRAN (R 4.0.0)                   
+##  usethis       1.6.1   2020-04-29 [1] CRAN (R 4.0.0)                   
+##  whisker       0.4     2019-08-28 [1] CRAN (R 4.0.0)                   
+##  withr         2.2.0   2020-04-20 [1] CRAN (R 4.0.0)                   
+##  xfun          0.17    2020-09-09 [1] CRAN (R 4.0.2)                   
+##  yaml          2.2.1   2020-02-01 [1] CRAN (R 4.0.0)                   
+##  zeallot       0.1.0   2018-01-28 [1] CRAN (R 4.0.0)                   
+## 
+## [1] /Library/Frameworks/R.framework/Versions/4.0/Resources/library</code></pre>
 
               
             </div>
@@ -693,9 +732,7 @@ train_image_files_path &lt;- &quot;/Users/shiringlander/Documents/Github/Data/fr
                   Sep 9, 2020
                 </span>
               </span>
-              <div class="media-content hide-xs font-merryweather">I’ve been using keras and TensorFlow for a while now - and love its simplicity and straight-forward way to modeling. As part of the latest update to my Workshop about deep learning with R and keras I’ve added a new example analysis:
- https://shirinsplayground.netlify.com/2018/06/keras_fruits/
-# load libraries library(tidyverse) ## ── Attaching packages ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ── ## ✓ ggplot2 3.3.2 ✓ purrr 0.3.4 ## ✓ tibble 3.0.3 ✓ dplyr 1.</div>
+              <div class="media-content hide-xs font-merryweather">library(keras) #is_keras_available() xfun::session_info(&#39;blogdown&#39;) ## R version 4.0.2 (2020-06-22) ## Platform: x86_64-apple-darwin17.0 (64-bit) ## Running under: macOS Catalina 10.15.6 ## ## Locale: en_US.UTF-8 / en_US.UTF-8 / en_US.UTF-8 / C / en_US.UTF-8 / en_US.UTF-8 ## ## Package version: ## base64enc_0.1.3 BH_1.72.0.3 blogdown_0.20.1 bookdown_0.20 ## digest_0.6.25 evaluate_0.14 glue_1.4.2 graphics_4.0.2 ## grDevices_4.0.2 highr_0.8 htmltools_0.5.0 httpuv_1.5.4 ## jsonlite_1.7.1 knitr_1.29 later_1.1.0.1 magrittr_1.5 ## markdown_1.1 methods_4.0.2 mime_0.9 promises_1.1.1 ## R6_2.4.1 Rcpp_1.0.5 rlang_0.4.7 rmarkdown_2.3 ## servr_0.18.1 stats_4.0.2 stringi_1.5.3 stringr_1.</div>
             </div>
             <div style="clear:both;"></div>
             <hr>
