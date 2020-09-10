@@ -22,7 +22,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Hugo 0.27 with theme Tranquilpeak 0.4.1-BETA">
-    <title>Update for Keras and TF 2.0: It&#39;s that easy! Image classification with keras in roughly 100 lines of code.</title>
+    <title>Update for Keras and TF 2.0: Image classification with keras.</title>
     <meta name="author" content="Dr. Shirin Elsinghorst">
     <meta name="keywords" content=", R">
 
@@ -30,21 +30,15 @@
     
 
     
-    <meta name="description" content="If you have questions or would like to talk about this article (or something else data-related), you can now book 15-minute timeslots with me (it’s free - one slot available per weekday):
- If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at paypal.me. Thank you! :-)
-library(keras) #keras::is_keras_available() xfun::session_info(&#39;blogdown&#39;) ## R version 4.0.2 (2020-06-22) ## Platform: x86_64-apple-darwin17.">
-    <meta property="og:description" content="If you have questions or would like to talk about this article (or something else data-related), you can now book 15-minute timeslots with me (it’s free - one slot available per weekday):
- If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at paypal.me. Thank you! :-)
-library(keras) #keras::is_keras_available() xfun::session_info(&#39;blogdown&#39;) ## R version 4.0.2 (2020-06-22) ## Platform: x86_64-apple-darwin17.">
+    <meta name="description" content="Recently, I have been getting a few comments on my old article on image classification with Keras, saying that they are getting errors with the code. And I have also gotten a few questions how to use a Keras model to predict on new image (of different size). Instead of replying to them all individually, I decidec to write this updated version using the most recent Keras and Tensorflow versions (all package versions and system information can be found at the bottom of this article, as usual).">
+    <meta property="og:description" content="Recently, I have been getting a few comments on my old article on image classification with Keras, saying that they are getting errors with the code. And I have also gotten a few questions how to use a Keras model to predict on new image (of different size). Instead of replying to them all individually, I decidec to write this updated version using the most recent Keras and Tensorflow versions (all package versions and system information can be found at the bottom of this article, as usual).">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="Update for Keras and TF 2.0: It&#39;s that easy! Image classification with keras in roughly 100 lines of code.">
+    <meta property="og:title" content="Update for Keras and TF 2.0: Image classification with keras.">
     <meta property="og:url" content="/2020/09/keras_fruits_update/">
     <meta property="og:site_name" content="Shirin&#39;s playgRound">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Shirin&#39;s playgRound">
-    <meta name="twitter:description" content="If you have questions or would like to talk about this article (or something else data-related), you can now book 15-minute timeslots with me (it’s free - one slot available per weekday):
- If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at paypal.me. Thank you! :-)
-library(keras) #keras::is_keras_available() xfun::session_info(&#39;blogdown&#39;) ## R version 4.0.2 (2020-06-22) ## Platform: x86_64-apple-darwin17.">
+    <meta name="twitter:description" content="Recently, I have been getting a few comments on my old article on image classification with Keras, saying that they are getting errors with the code. And I have also gotten a few questions how to use a Keras model to predict on new image (of different size). Instead of replying to them all individually, I decidec to write this updated version using the most recent Keras and Tensorflow versions (all package versions and system information can be found at the bottom of this article, as usual).">
     
       <meta name="twitter:creator" content="@ShirinGlander">
     
@@ -115,7 +109,7 @@ ga('send', 'pageview');
   <div class="sidebar-container">
     
       <div class="sidebar-profile">
-        <h1 class="sidebar-profile-title">Update for Keras and TF 2.0: It&#39;s that easy! Image classification with keras in roughly 100 lines of code.</h1>
+        <h1 class="sidebar-profile-title">Update for Keras and TF 2.0: Image classification with keras.</h1>
         <a href="https://blog.feedspot.com/r_programming_blogs/" rel="nofollow" title="R Programming Blogs"><img alt="R Programming Blogs" src="https://blog.feedspot.com/wp-content/uploads/2018/04/r_program_216px.png?x20694"/></a>
         <a href="/#about">
           <img class="sidebar-profile-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=110" alt="Author&#39;s picture" />
@@ -343,7 +337,7 @@ ga('send', 'pageview');
             <div class="post-header main-content-wrap text-center">
   
     <h1 class="post-title" itemprop="headline">
-      Update for Keras and TF 2.0: It&#39;s that easy! Image classification with keras in roughly 100 lines of code.
+      Update for Keras and TF 2.0: Image classification with keras.
     </h1>
   
   
@@ -373,97 +367,204 @@ ga('send', 'pageview');
           
           <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
-              <p>If you have questions or would like to talk about this article (or something else data-related), you can now <a href="http://127.0.0.1:4321/page/bookme/">book 15-minute timeslots</a> with me (it’s free - one slot available per weekday):</p>
+              <p>Recently, I have been getting a few comments on my <a href="https://shirinsplayground.netlify.com/2018/06/keras_fruits/">old article on image classification with Keras</a>, saying that they are getting errors with the code. And I have also gotten a few questions <strong>how to use a Keras model to predict on new image (of different size)</strong>. Instead of replying to them all individually, I decidec to write this updated version using the most recent Keras and Tensorflow versions (all package versions and system information can be found at the bottom of this article, as usual).</p>
+<p>Specific updated made compared to the <a href="https://shirinsplayground.netlify.com/2018/06/keras_fruits/">old article</a>:</p>
+<ul>
+<li><p>using TF 2.2.0</p></li>
+<li><p>using Keras 2.3.1</p></li>
+<li><p>used validation split instead of validation set</p></li>
+<li><p>used folder Validation/Test for showing how to predict on “new” images</p></li>
+</ul>
+<p>If you have questions or would like to talk about this article (or something else data-related), you can now <a href="http://127.0.0.1:4321/page/bookme/">book 15-minute timeslots</a> with me (it’s free - one slot available per weekday):</p>
 <img src="https://www.appointletcdn.com/loader/buttons/F62459.png" data-appointlet-organization="shirin-elsinghorst" data-appointlet-service="357892">
 <script src="https://www.appointletcdn.com/loader/loader.min.js" async="" defer=""></script>
 <p><em>If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at <button><a href="https://paypal.me/ShirinGlander">paypal.me</a></button>. Thank you!</em> :-)</p>
 <hr />
-<pre class="r"><code>library(keras)
-#keras::is_keras_available()</code></pre>
+<pre class="r"><code># load libraries
+library(tidyverse)
+library(keras)</code></pre>
+<pre class="r"><code># check if keras is available
+is_keras_available()</code></pre>
+<div id="loading-images-data" class="section level2">
+<h2>Loading images (data)</h2>
+<p>The dataset we are using here is the <a href="https://www.kaggle.com/moltean/fruits/data">fruit images dataset from Kaggle</a>. I downloaded it to my computer and unpacked it. Because I don’t want to build a model for all the different fruits, I define a list of fruits (corresponding to the folder names) that I want to include in the model.</p>
+<pre class="r"><code># path to image folders
+train_image_files_path &lt;- &quot;/fruits/Training/&quot;</code></pre>
+<pre class="r"><code># list of fruits to modle
+fruit_list &lt;- c(&quot;Kiwi&quot;, &quot;Banana&quot;, &quot;Apricot&quot;, &quot;Avocado&quot;, &quot;Cocos&quot;, &quot;Clementine&quot;, &quot;Mandarine&quot;, &quot;Orange&quot;,
+                &quot;Limes&quot;, &quot;Lemon&quot;, &quot;Peach&quot;, &quot;Plum&quot;, &quot;Raspberry&quot;, &quot;Strawberry&quot;, &quot;Pineapple&quot;, &quot;Pomegranate&quot;)
+
+# number of output classes (i.e. fruits)
+output_n &lt;- length(fruit_list)
+
+# image size to scale down to (original images are 100 x 100 px)
+img_width &lt;- 20
+img_height &lt;- 20
+target_size &lt;- c(img_width, img_height)
+
+# RGB = 3 channels
+channels &lt;- 3</code></pre>
+<p>When we train our model, we want to have a way to judge how well it learned and if learning improves over the epochs. Therefore, we want to use validation data, to make these performance measures less biased compared to using the training data only. In Keras, we can either give a specific <strong>validation set</strong> (as I did in the <a href="https://shirinsplayground.netlify.com/2018/06/keras_fruits/">old article on image classification with Keras</a>) or we define a validation split:</p>
+<pre class="r"><code>train_data_gen &lt;- image_data_generator(
+  rescale = 1/255,
+  validation_split = 0.3
+)</code></pre>
+<pre class="r"><code># training images
+train_image_array_gen &lt;- flow_images_from_directory(train_image_files_path, 
+                                          train_data_gen,
+                                          subset = &#39;training&#39;,
+                                          target_size = target_size,
+                                          class_mode = &quot;categorical&quot;,
+                                          classes = fruit_list,
+                                          seed = 42)
+
+# validation images
+valid_image_array_gen &lt;- flow_images_from_directory(train_image_files_path, 
+                                          train_data_gen,
+                                          subset = &#39;validation&#39;,
+                                          target_size = target_size,
+                                          class_mode = &quot;categorical&quot;,
+                                          classes = fruit_list,
+                                          seed = 42)</code></pre>
+<pre class="r"><code>cat(&quot;Number of images per class:&quot;)
+table(factor(train_image_array_gen$classes))
+
+cat(&quot;\nClass label vs index mapping:\n&quot;)
+train_image_array_gen$class_indices</code></pre>
+</div>
+<div id="training-the-model" class="section level2">
+<h2>Training the model</h2>
+<p>Now, I define and train the model just as before:</p>
+<pre class="r"><code># number of training samples
+train_samples &lt;- train_image_array_gen$n
+# number of validation samples
+valid_samples &lt;- valid_image_array_gen$n
+
+# define batch size and number of epochs
+batch_size &lt;- 32
+epochs &lt;- 10</code></pre>
+<pre class="r"><code># initialise model
+model &lt;- keras_model_sequential()
+
+# add layers
+model %&gt;%
+  layer_conv_2d(filter = 32, kernel_size = c(3,3), padding = &quot;same&quot;, input_shape = c(img_width, img_height, channels)) %&gt;%
+  layer_activation(&quot;relu&quot;) %&gt;%
+  
+  # Second hidden layer
+  layer_conv_2d(filter = 16, kernel_size = c(3,3), padding = &quot;same&quot;) %&gt;%
+  layer_activation_leaky_relu(0.5) %&gt;%
+  layer_batch_normalization() %&gt;%
+
+  # Use max pooling
+  layer_max_pooling_2d(pool_size = c(2,2)) %&gt;%
+  layer_dropout(0.25) %&gt;%
+  
+  # Flatten max filtered output into feature vector 
+  # and feed into dense layer
+  layer_flatten() %&gt;%
+  layer_dense(100) %&gt;%
+  layer_activation(&quot;relu&quot;) %&gt;%
+  layer_dropout(0.5) %&gt;%
+
+  # Outputs from dense layer are projected onto output layer
+  layer_dense(output_n) %&gt;% 
+  layer_activation(&quot;softmax&quot;)
+
+# compile
+model %&gt;% compile(
+  loss = &quot;categorical_crossentropy&quot;,
+  optimizer = optimizer_rmsprop(lr = 0.0001, decay = 1e-6),
+  metrics = &quot;accuracy&quot;
+)</code></pre>
+<pre class="r"><code># fit
+hist &lt;- model %&gt;% fit_generator(
+  # training data
+  train_image_array_gen,
+  
+  # epochs
+  steps_per_epoch = as.integer(train_samples / batch_size), 
+  epochs = epochs, 
+  
+  # validation data
+  validation_data = valid_image_array_gen,
+  validation_steps = as.integer(valid_samples / batch_size)
+)</code></pre>
+<pre class="r"><code>plot(hist)</code></pre>
+</div>
+<div id="predicting-on-new-set-of-images" class="section level2">
+<h2>Predicting on “new” set of images</h2>
+<p>Here is what’s new: how to use the model I just trained for predicting on new images (alternatively, load a previously trained model and use that for predictions). Just keep in mind, that these new images here aren’t actually “new”. They come from the same data source, i.e. the same distribution and thus aren’t independent enough to give an accurate assessment of how well the model generalizes.</p>
+<pre class="r"><code># path to image folders
+test_image_files_path &lt;- &quot;/fruits/Test/&quot;</code></pre>
+<pre class="r"><code>test_datagen &lt;- image_data_generator(rescale = 1/255)
+
+test_generator &lt;- flow_images_from_directory(
+        test_image_files_path,
+        test_datagen,
+        target_size = target_size,
+        class_mode = &quot;categorical&quot;,
+        classes = fruit_list,
+        batch_size = 1,
+        shuffle = FALSE,
+        seed = 42)</code></pre>
+<pre class="r"><code>test_generator$reset()
+model %&gt;%
+  evaluate_generator(test_generator, 
+                     steps = as.integer(test_generator$n))</code></pre>
+<pre class="r"><code>classes &lt;- test_generator$classes %&gt;%
+  factor() %&gt;%
+  table() %&gt;%
+  as.tibble()
+colnames(classes)[1] &lt;- &quot;value&quot;</code></pre>
+<pre class="r"><code># create library of indices &amp; class labels
+indices &lt;- train_image_array_gen$class_indices %&gt;%
+  as.data.frame() %&gt;%
+  gather() %&gt;%
+  mutate(value = as.character(value)) %&gt;%
+  left_join(classes, by = &quot;value&quot;)</code></pre>
+<pre class="r"><code># predict on test data
+test_generator$reset()
+predictions &lt;- model %&gt;% 
+  predict_generator(
+    generator = test_generator,
+    steps = as.integer(test_generator$n)
+    ) %&gt;%
+  round() %&gt;%
+  as.tibble()
+
+colnames(predictions) &lt;- indices$key
+
+predictions &lt;- predictions %&gt;%
+  mutate(truth_idx = as.character(test_generator$classes)) %&gt;%
+  left_join(indices, by = c(&quot;truth_idx&quot; = &quot;value&quot;))</code></pre>
+<pre class="r"><code>pred_analysis &lt;- predictions %&gt;%
+  mutate(img_id = seq(1:test_generator$n)) %&gt;%
+  gather(pred_lbl, y, Kiwi:Pomegranate) %&gt;%
+  group_by(img_id) %&gt;%
+  filter(y == max(y)) %&gt;%
+  arrange(img_id) %&gt;%
+  group_by(key, n, pred_lbl) %&gt;%
+  count()</code></pre>
+<pre class="r"><code>pred_analysis %&gt;%
+  mutate(percentage_pred = nn / n * 100) %&gt;%
+  ggplot(aes(x = key, y = pred_lbl, fill = percentage_pred)) +
+    geom_tile()</code></pre>
+<pre class="r"><code>pred_analysis %&gt;%
+  mutate(prediction = case_when(
+    key == pred_lbl ~ &quot;correct&quot;,
+    TRUE ~ &quot;false&quot;
+  )) %&gt;%
+  group_by(key, prediction, n) %&gt;%
+  summarise(sum = sum(nn)) %&gt;%
+  mutate(percentage_pred = sum / n * 100) %&gt;%
+  ggplot(aes(x = key, y = prediction, fill = percentage_pred)) +
+    geom_tile() +
+    coord_flip()</code></pre>
+<hr />
 <pre class="r"><code>xfun::session_info(&#39;blogdown&#39;)</code></pre>
-<pre><code>## R version 4.0.2 (2020-06-22)
-## Platform: x86_64-apple-darwin17.0 (64-bit)
-## Running under: macOS Catalina 10.15.6
-## 
-## Locale: en_US.UTF-8 / en_US.UTF-8 / en_US.UTF-8 / C / en_US.UTF-8 / en_US.UTF-8
-## 
-## Package version:
-##   base64enc_0.1.3 BH_1.72.0.3     blogdown_0.20.1 bookdown_0.20  
-##   digest_0.6.25   evaluate_0.14   glue_1.4.2      graphics_4.0.2 
-##   grDevices_4.0.2 highr_0.8       htmltools_0.5.0 httpuv_1.5.4   
-##   jsonlite_1.7.1  knitr_1.29      later_1.1.0.1   magrittr_1.5   
-##   markdown_1.1    methods_4.0.2   mime_0.9        promises_1.1.1 
-##   R6_2.4.1        Rcpp_1.0.5      rlang_0.4.7     rmarkdown_2.3  
-##   servr_0.18.1    stats_4.0.2     stringi_1.5.3   stringr_1.4.0  
-##   tinytex_0.25    tools_4.0.2     utils_4.0.2     xfun_0.17      
-##   yaml_2.2.1</code></pre>
 <pre class="r"><code>devtools::session_info()</code></pre>
-<pre><code>## ─ Session info ───────────────────────────────────────────────────────────────
-##  setting  value                       
-##  version  R version 4.0.2 (2020-06-22)
-##  os       macOS Catalina 10.15.6      
-##  system   x86_64, darwin17.0          
-##  ui       X11                         
-##  language (EN)                        
-##  collate  en_US.UTF-8                 
-##  ctype    en_US.UTF-8                 
-##  tz       Europe/Berlin               
-##  date     2020-09-10                  
-## 
-## ─ Packages ───────────────────────────────────────────────────────────────────
-##  package     * version date       lib source                           
-##  assertthat    0.2.1   2019-03-21 [1] CRAN (R 4.0.0)                   
-##  backports     1.1.9   2020-08-24 [1] CRAN (R 4.0.2)                   
-##  base64enc     0.1-3   2015-07-28 [1] CRAN (R 4.0.0)                   
-##  blogdown      0.20.1  2020-09-09 [1] Github (rstudio/blogdown@d96fe78)
-##  bookdown      0.20    2020-06-23 [1] CRAN (R 4.0.2)                   
-##  callr         3.4.4   2020-09-07 [1] CRAN (R 4.0.2)                   
-##  cli           2.0.2   2020-02-28 [1] CRAN (R 4.0.0)                   
-##  crayon        1.3.4   2017-09-16 [1] CRAN (R 4.0.0)                   
-##  desc          1.2.0   2018-05-01 [1] CRAN (R 4.0.0)                   
-##  devtools      2.3.1   2020-07-21 [1] CRAN (R 4.0.2)                   
-##  digest        0.6.25  2020-02-23 [1] CRAN (R 4.0.0)                   
-##  ellipsis      0.3.1   2020-05-15 [1] CRAN (R 4.0.0)                   
-##  evaluate      0.14    2019-05-28 [1] CRAN (R 4.0.1)                   
-##  fansi         0.4.1   2020-01-08 [1] CRAN (R 4.0.0)                   
-##  fs            1.5.0   2020-07-31 [1] CRAN (R 4.0.2)                   
-##  generics      0.0.2   2018-11-29 [1] CRAN (R 4.0.0)                   
-##  glue          1.4.2   2020-08-27 [1] CRAN (R 4.0.2)                   
-##  htmltools     0.5.0   2020-06-16 [1] CRAN (R 4.0.2)                   
-##  jsonlite      1.7.1   2020-09-07 [1] CRAN (R 4.0.2)                   
-##  keras       * 2.3.0.0 2020-05-19 [1] CRAN (R 4.0.2)                   
-##  knitr         1.29    2020-06-23 [1] CRAN (R 4.0.2)                   
-##  lattice       0.20-41 2020-04-02 [1] CRAN (R 4.0.2)                   
-##  magrittr      1.5     2014-11-22 [1] CRAN (R 4.0.0)                   
-##  Matrix        1.2-18  2019-11-27 [1] CRAN (R 4.0.2)                   
-##  memoise       1.1.0   2017-04-21 [1] CRAN (R 4.0.0)                   
-##  pkgbuild      1.1.0   2020-07-13 [1] CRAN (R 4.0.2)                   
-##  pkgload       1.1.0   2020-05-29 [1] CRAN (R 4.0.2)                   
-##  prettyunits   1.1.1   2020-01-24 [1] CRAN (R 4.0.0)                   
-##  processx      3.4.4   2020-09-03 [1] CRAN (R 4.0.2)                   
-##  ps            1.3.4   2020-08-11 [1] CRAN (R 4.0.2)                   
-##  R6            2.4.1   2019-11-12 [1] CRAN (R 4.0.0)                   
-##  Rcpp          1.0.5   2020-07-06 [1] CRAN (R 4.0.2)                   
-##  remotes       2.2.0   2020-07-21 [1] CRAN (R 4.0.2)                   
-##  reticulate    1.16    2020-05-27 [1] CRAN (R 4.0.2)                   
-##  rlang         0.4.7   2020-07-09 [1] CRAN (R 4.0.2)                   
-##  rmarkdown     2.3     2020-06-18 [1] CRAN (R 4.0.2)                   
-##  rprojroot     1.3-2   2018-01-03 [1] CRAN (R 4.0.0)                   
-##  rstudioapi    0.11    2020-02-07 [1] CRAN (R 4.0.0)                   
-##  sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 4.0.0)                   
-##  stringi       1.5.3   2020-09-09 [1] CRAN (R 4.0.2)                   
-##  stringr       1.4.0   2019-02-10 [1] CRAN (R 4.0.0)                   
-##  tensorflow    2.2.0   2020-05-11 [1] CRAN (R 4.0.0)                   
-##  testthat      2.3.2   2020-03-02 [1] CRAN (R 4.0.0)                   
-##  tfruns        1.4     2018-08-25 [1] CRAN (R 4.0.0)                   
-##  usethis       1.6.1   2020-04-29 [1] CRAN (R 4.0.0)                   
-##  whisker       0.4     2019-08-28 [1] CRAN (R 4.0.0)                   
-##  withr         2.2.0   2020-04-20 [1] CRAN (R 4.0.0)                   
-##  xfun          0.17    2020-09-09 [1] CRAN (R 4.0.2)                   
-##  yaml          2.2.1   2020-02-01 [1] CRAN (R 4.0.0)                   
-##  zeallot       0.1.0   2018-01-28 [1] CRAN (R 4.0.0)                   
-## 
-## [1] /Library/Frameworks/R.framework/Versions/4.0/Resources/library</code></pre>
+</div>
 
               
             </div>
@@ -738,16 +839,14 @@ If you have questions or would like to talk about this article (or something els
             
             <div class="media-body">
               <a class="link-unstyled" href="/2020/09/keras_fruits_update/">
-                <h3 class="media-heading">Update for Keras and TF 2.0: It&#39;s that easy! Image classification with keras in roughly 100 lines of code.</h3>
+                <h3 class="media-heading">Update for Keras and TF 2.0: Image classification with keras.</h3>
               </a>
               <span class="media-meta">
                 <span class="media-date text-small">
                   Sep 9, 2020
                 </span>
               </span>
-              <div class="media-content hide-xs font-merryweather">If you have questions or would like to talk about this article (or something else data-related), you can now book 15-minute timeslots with me (it’s free - one slot available per weekday):
- If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at paypal.me. Thank you! :-)
-library(keras) #keras::is_keras_available() xfun::session_info(&#39;blogdown&#39;) ## R version 4.0.2 (2020-06-22) ## Platform: x86_64-apple-darwin17.</div>
+              <div class="media-content hide-xs font-merryweather">Recently, I have been getting a few comments on my old article on image classification with Keras, saying that they are getting errors with the code. And I have also gotten a few questions how to use a Keras model to predict on new image (of different size). Instead of replying to them all individually, I decidec to write this updated version using the most recent Keras and Tensorflow versions (all package versions and system information can be found at the bottom of this article, as usual).</div>
             </div>
             <div style="clear:both;"></div>
             <hr>
