@@ -9,7 +9,7 @@ thumbnailImage:
 
 Here, you can find a list of all the talks I gave at conferences, webinars, podcasts, workshops, and all the other places you can and could hear me talk. You will also find a section with magazine articles and books I've written. :-)
 
-![](https://secure.meetupstatic.com/s/img/5455565085016210254/logo/svg/logo--script.svg)
+*If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at <button>[paypal.me](https://paypal.me/ShirinGlander)</button>. Thank you!* :-)
 
 ## Workshops I am giving
 

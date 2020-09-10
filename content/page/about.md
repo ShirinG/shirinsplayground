@@ -25,6 +25,10 @@ This blog will showcase some of the analyses I have been doing with different da
 
 ---
 
+*If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at <button>[paypal.me](https://paypal.me/ShirinGlander)</button>. Thank you!* :-)
+
+---
+
 ## Contact me:
 
 - [Codecentric AG](https://www.codecentric.de/team/shirin-glander/)
