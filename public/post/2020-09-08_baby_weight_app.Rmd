@@ -22,7 +22,7 @@ I have not written any blogposts for over a year. Last year, I had the cutest ba
 
 Below, I'll describe how I prepared the data and built the plots. The entire code for building the app can be found on [Github](https://github.com/ShirinG/who_baby_weight_app).
 
-If you have questions or would like to talk about the app (or something else data-related), you can now [book 15-minute timeslots](http://127.0.0.1:4321/page/bookme/) with me (one slot available per weekday): 
+If you have questions or would like to talk about the app (or something else data-related), you can now [book 15-minute timeslots](http://127.0.0.1:4321/page/bookme/) with me (it's free - one slot available per weekday): 
 
 <img src="https://www.appointletcdn.com/loader/buttons/F62459.png" data-appointlet-organization="shirin-elsinghorst" data-appointlet-service="357892"><script src="https://www.appointletcdn.com/loader/loader.min.js" async="" defer=""></script>
 

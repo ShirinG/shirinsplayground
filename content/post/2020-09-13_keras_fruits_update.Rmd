@@ -12,15 +12,17 @@ coverMeta: out
 slug: keras_fruits_update
 ---
 
-If you have questions or would like to talk about the app (or something else data-related), you can now [book 15-minute timeslots](http://127.0.0.1:4321/page/bookme/) with me (one slot available per weekday): 
+If you have questions or would like to talk about this article (or something else data-related), you can now [book 15-minute timeslots](http://127.0.0.1:4321/page/bookme/) with me (it's free - one slot available per weekday): 
 
 <img src="https://www.appointletcdn.com/loader/buttons/F62459.png" data-appointlet-organization="shirin-elsinghorst" data-appointlet-service="357892"><script src="https://www.appointletcdn.com/loader/loader.min.js" async="" defer=""></script>
 
 *If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at <button>[paypal.me](https://paypal.me/ShirinGlander)</button>. Thank you!* :-)
 
+---
+
 ```{r}
 library(keras)
-#is_keras_available()
+#keras::is_keras_available()
 ```
 
 ```{r}

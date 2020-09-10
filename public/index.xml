@@ -14,10 +14,12 @@
     <id>/2020/10/goodbadugly/</id>
     <published>2020-10-20T00:00:00+00:00</published>
     <updated>2020-10-20T00:00:00+00:00</updated>
-    <content type="html"><![CDATA[<p>If you have questions or would like to talk about the app (or something else data-related), you can now <a href="http://127.0.0.1:4321/page/bookme/">book 15-minute timeslots</a> with me (one slot available per weekday):</p>
+    <content type="html"><![CDATA[<p>This is the complete code used to create the <strong>ggplot2</strong> graphs in my talk <strong>The Good, the Bad and the Ugly: how (not) to visualize data</strong> at this year’s data2day conference. You can find the slides here.</p>
+<p>If you have questions or would like to talk about this article (or something else data-related), you can now <a href="http://127.0.0.1:4321/page/bookme/">book 15-minute timeslots</a> with me (it’s free - one slot available per weekday):</p>
 <img src="https://www.appointletcdn.com/loader/buttons/F62459.png" data-appointlet-organization="shirin-elsinghorst" data-appointlet-service="357892">
 <script src="https://www.appointletcdn.com/loader/loader.min.js" async="" defer=""></script>
 <p><em>If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at <button><a href="https://paypal.me/ShirinGlander">paypal.me</a></button>. Thank you!</em> :-)</p>
+<hr />
 <pre class="r"><code>library(tidyverse)
 
 library(ggExtra)
@@ -76,10 +78,10 @@ sliceValues &lt;- rep(10, 8) # each slice value=10 for proportionate slices
   theme_bw()</code></pre>
 </div>
 <div id="main-diagram-types" class="section level2">
-<h2>Main Diagram types</h2>
+<h2>Main diagram types</h2>
 <p><a href="https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf" class="uri">https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf</a></p>
-<div id="point-chart" class="section level3">
-<h3>Point chart</h3>
+<div id="pointcharts" class="section level3">
+<h3>Pointcharts</h3>
 <pre class="r"><code>penguins %&gt;%
     remove_missing() %&gt;%
     ggplot(aes(x = bill_length_mm, y = flipper_length_mm)) +
@@ -135,8 +137,8 @@ sliceValues &lt;- rep(10, 8) # each slice value=10 for proportionate slices
 <p><img src="/post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <pre class="r"><code>#(ggMarginal(p, type = &quot;densigram&quot;, fill = &quot;transparent&quot;))</code></pre>
 </div>
-<div id="bubble-chart" class="section level3">
-<h3>Bubble chart</h3>
+<div id="bubblecharts" class="section level3">
+<h3>Bubblecharts</h3>
 <pre class="r"><code>penguins %&gt;%
     remove_missing() %&gt;%
     ggplot(aes(x = bill_length_mm, y = flipper_length_mm,
@@ -150,8 +152,8 @@ sliceValues &lt;- rep(10, 8) # each slice value=10 for proportionate slices
         caption = &quot;Source: https://github.com/allisonhorst/palmerpenguins&quot;)</code></pre>
 <p><img src="/post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 </div>
-<div id="line-chart" class="section level3">
-<h3>Line chart</h3>
+<div id="linecharts" class="section level3">
+<h3>Linecharts</h3>
 <pre class="r"><code>penguins %&gt;%
     remove_missing() %&gt;%
     filter(species == &quot;Adelie&quot;) %&gt;%
@@ -166,8 +168,8 @@ sliceValues &lt;- rep(10, 8) # each slice value=10 for proportionate slices
         caption = &quot;Source: https://github.com/allisonhorst/palmerpenguins&quot;)</code></pre>
 <p><img src="/post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 </div>
-<div id="correlation-plots-heatmap" class="section level3">
-<h3>Correlation plots / heatmap</h3>
+<div id="correlation-plots-heatmaps" class="section level3">
+<h3>Correlation plots / heatmaps</h3>
 <pre class="r"><code>mat &lt;- penguins %&gt;%
   remove_missing() %&gt;%
   select(bill_depth_mm, bill_length_mm, body_mass_g, flipper_length_mm)
@@ -197,8 +199,8 @@ cormat %&gt;%
           caption = &quot;Source: https://github.com/allisonhorst/palmerpenguins&quot;)</code></pre>
 <p><img src="/post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 </div>
-<div id="bar-chart" class="section level3">
-<h3>Bar chart</h3>
+<div id="barcharts" class="section level3">
+<h3>Barcharts</h3>
 <ul>
 <li>per default: counts</li>
 </ul>
@@ -246,8 +248,8 @@ cormat %&gt;%
           caption = &quot;Source: https://github.com/allisonhorst/palmerpenguins&quot;)</code></pre>
 <p><img src="/post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 </div>
-<div id="boxplot" class="section level3">
-<h3>Boxplot</h3>
+<div id="boxplots" class="section level3">
+<h3>Boxplots</h3>
 <pre class="r"><code>penguins %&gt;%
     remove_missing() %&gt;%
     ggplot(aes(x = species, y = body_mass_g,
@@ -275,8 +277,8 @@ cormat %&gt;%
           caption = &quot;Source: https://github.com/allisonhorst/palmerpenguins&quot;)</code></pre>
 <p><img src="/post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 </div>
-<div id="violin-plot" class="section level3">
-<h3>Violin plot</h3>
+<div id="violinplots" class="section level3">
+<h3>Violinplots</h3>
 <pre class="r"><code>penguins %&gt;%
     remove_missing() %&gt;%
     ggplot(aes(x = species, y = body_mass_g,
@@ -288,6 +290,9 @@ cormat %&gt;%
           subtitle = &quot;Body mass of three penguin species per sex&quot;,
           caption = &quot;Source: https://github.com/allisonhorst/palmerpenguins&quot;)</code></pre>
 <p><img src="/post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<ul>
+<li>with dots (sina-plots)</li>
+</ul>
 <pre class="r"><code>penguins %&gt;%
     remove_missing() %&gt;%
     ggplot(aes(x = species, y = body_mass_g,
@@ -302,8 +307,8 @@ cormat %&gt;%
           caption = &quot;Source: https://github.com/allisonhorst/palmerpenguins&quot;)</code></pre>
 <p><img src="/post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 </div>
-<div id="pie-chart" class="section level3">
-<h3>Pie chart</h3>
+<div id="piecharts" class="section level3">
+<h3>Piecharts</h3>
 <pre class="r"><code>penguins %&gt;%
     remove_missing() %&gt;%
     group_by(species, sex) %&gt;%
@@ -468,7 +473,7 @@ penguins_hist %&gt;%
   dist(method = &quot;euclidean&quot;) %&gt;%
   hclust(method = &quot;ward.D2&quot;) %&gt;% 
   as.dendrogram</code></pre>
-<pre><code>## &#39;dendrogram&#39; with 2 branches and 30 members total, at height 12.11971</code></pre>
+<pre><code>## &#39;dendrogram&#39; with 2 branches and 30 members total, at height 11.71654</code></pre>
 </div>
 <div id="waterfall-charts" class="section level3">
 <h3>Waterfall charts</h3>
@@ -710,12 +715,13 @@ penguins_pca &lt;- penguins_prep %&gt;%
     <id>/2020/09/keras_fruits_update/</id>
     <published>2020-09-13T00:00:00+00:00</published>
     <updated>2020-09-13T00:00:00+00:00</updated>
-    <content type="html"><![CDATA[<p>If you have questions or would like to talk about the app (or something else data-related), you can now <a href="http://127.0.0.1:4321/page/bookme/">book 15-minute timeslots</a> with me (one slot available per weekday):</p>
+    <content type="html"><![CDATA[<p>If you have questions or would like to talk about this article (or something else data-related), you can now <a href="http://127.0.0.1:4321/page/bookme/">book 15-minute timeslots</a> with me (it’s free - one slot available per weekday):</p>
 <img src="https://www.appointletcdn.com/loader/buttons/F62459.png" data-appointlet-organization="shirin-elsinghorst" data-appointlet-service="357892">
 <script src="https://www.appointletcdn.com/loader/loader.min.js" async="" defer=""></script>
 <p><em>If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at <button><a href="https://paypal.me/ShirinGlander">paypal.me</a></button>. Thank you!</em> :-)</p>
+<hr />
 <pre class="r"><code>library(keras)
-#is_keras_available()</code></pre>
+#keras::is_keras_available()</code></pre>
 <pre class="r"><code>xfun::session_info(&#39;blogdown&#39;)</code></pre>
 <pre><code>## R version 4.0.2 (2020-06-22)
 ## Platform: x86_64-apple-darwin17.0 (64-bit)
@@ -811,7 +817,7 @@ penguins_pca &lt;- penguins_prep %&gt;%
     <content type="html"><![CDATA[<p>Alright, this is it: I am officially back! :-D</p>
 <p>I have not written any blogposts for over a year. Last year, I had the cutest baby boy and ever since then, I did not get around to doing much coding. One of the reasons was that, unfortunately, we did not have the easiest of starts with the little one. Feeding problems led to weight gain problems, so we had to weigh him regularly. Because I wanted to see for myself if we were on the right track with his weight gain, I created this <a href="https://shiring.shinyapps.io/who_baby_weight/">Baby Weight Shiny app</a>. With the app, I could easily visualize how we compared to the <a href="https://www.who.int/childgrowth/standards/weight_for_age/en/">WHO baby/childen weight-for-age tables</a>.</p>
 <p>Below, I’ll describe how I prepared the data and built the plots. The entire code for building the app can be found on <a href="https://github.com/ShirinG/who_baby_weight_app">Github</a>.</p>
-<p>If you have questions or would like to talk about the app (or something else data-related), you can now <a href="http://127.0.0.1:4321/page/bookme/">book 15-minute timeslots</a> with me (one slot available per weekday):</p>
+<p>If you have questions or would like to talk about the app (or something else data-related), you can now <a href="http://127.0.0.1:4321/page/bookme/">book 15-minute timeslots</a> with me (it’s free - one slot available per weekday):</p>
 <img src="https://www.appointletcdn.com/loader/buttons/F62459.png" data-appointlet-organization="shirin-elsinghorst" data-appointlet-service="357892">
 <script src="https://www.appointletcdn.com/loader/loader.min.js" async="" defer=""></script>
 <p><em>If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at <button><a href="https://paypal.me/ShirinGlander">paypal.me</a></button>. Thank you!</em> :-)</p>
