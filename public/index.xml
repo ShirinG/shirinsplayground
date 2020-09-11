@@ -715,27 +715,34 @@ penguins_pca &lt;- penguins_prep %&gt;%
     <id>/2020/09/keras_fruits_update/</id>
     <published>2020-09-13T00:00:00+00:00</published>
     <updated>2020-09-13T00:00:00+00:00</updated>
-    <content type="html"><![CDATA[<p>Recently, I have been getting a few comments on my <a href="https://shirinsplayground.netlify.com/2018/06/keras_fruits/">old article on image classification with Keras</a>, saying that they are getting errors with the code. And I have also gotten a few questions <strong>how to use a Keras model to predict on new image (of different size)</strong>. Instead of replying to them all individually, I decidec to write this updated version using the most recent Keras and Tensorflow versions (all package versions and system information can be found at the bottom of this article, as usual).</p>
-<p>Specific updated made compared to the <a href="https://shirinsplayground.netlify.com/2018/06/keras_fruits/">old article</a>:</p>
+    <content type="html"><![CDATA[<p>Recently, I have been getting a few comments on my <a href="https://shirinsplayground.netlify.com/2018/06/keras_fruits/">old article on image classification with Keras</a>, saying that they are getting errors with the code. And I have also gotten a few questions about <strong>how to use a Keras model to predict on new images (of different size)</strong>. Instead of replying to them all individually, I decided to write this updated version using the most recent Keras and Tensorflow versions (all package versions and system information can be found at the bottom of this article, as usual).</p>
+<p>Specific updates made compared to the <a href="https://shirinsplayground.netlify.com/2018/06/keras_fruits/">old article</a>:</p>
 <ul>
 <li><p>using TF 2.2.0</p></li>
 <li><p>using Keras 2.3.1</p></li>
-<li><p>used validation split instead of validation set</p></li>
-<li><p>used folder Validation/Test for showing how to predict on “new” images</p></li>
+<li><p>used <strong>validation split</strong> instead of validation set</p></li>
+<li><p>used folder Validation/Test for showing how to <strong>predict on new images</strong></p></li>
 </ul>
+<hr />
 <p>If you have questions or would like to talk about this article (or something else data-related), you can now <a href="http://127.0.0.1:4321/page/bookme/">book 15-minute timeslots</a> with me (it’s free - one slot available per weekday):</p>
 <img src="https://www.appointletcdn.com/loader/buttons/F62459.png" data-appointlet-organization="shirin-elsinghorst" data-appointlet-service="357892">
 <script src="https://www.appointletcdn.com/loader/loader.min.js" async="" defer=""></script>
 <p><em>If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at <button><a href="https://paypal.me/ShirinGlander">paypal.me</a></button>. Thank you!</em> :-)</p>
 <hr />
+<p><strong>Note</strong>:</p>
+<p>I have been having an <a href="https://github.com/rstudio/blogdown/issues/473">issue</a> with <code>blogdown</code>, where the code below runs perfectly fine in my R console from within the RMarkdown file but whenever I include any function from the <code>keras</code> package, <code>blogdown::serve_site()</code> throws an error: <code>Error in render_page(f) : Failed to render 'content/post/keras.Rmd'</code>.</p>
+<p>Since I have no idea what’s going on there (<code>blogdown::serve_site()</code> builds my site without trouble as long as I don’t include <code>keras</code> functions) and haven’t gotten a reply to the <a href="https://github.com/rstudio/blogdown/issues/473">issue</a> I posted to Github, I had to write this blogpost without actually running the code while building the site.</p>
+<p>I worked around that problem by not evaluating most of the code below and instead ran the code locally on my computer. Objects and images, I then saved as <em>.RData</em> or <em>.png</em> files and manually put them back into the document. By just reading this blogpost as it rendered on my site, you won’t notice much of a difference (except where I copy/pasted the output as comments below the code) but in order to be fully transparent, you can see on <a href="https://github.com/ShirinG/shirinsplayground/blob/master/content/post/2020-09-13_keras_fruits_update.Rmd">Github</a> what I did with hidden code chunks to create this post.</p>
+<hr />
 <pre class="r"><code># load libraries
 library(tidyverse)
 library(keras)</code></pre>
 <pre class="r"><code># check if keras is available
-is_keras_available()</code></pre>
+is_keras_available()
+#[1] TRUE</code></pre>
 <div id="loading-images-data" class="section level2">
 <h2>Loading images (data)</h2>
-<p>The dataset we are using here is the <a href="https://www.kaggle.com/moltean/fruits/data">fruit images dataset from Kaggle</a>. I downloaded it to my computer and unpacked it. Because I don’t want to build a model for all the different fruits, I define a list of fruits (corresponding to the folder names) that I want to include in the model.</p>
+<p>The dataset I am using here is the <a href="https://www.kaggle.com/moltean/fruits/data">fruit images dataset from Kaggle</a>. I downloaded it to my computer and unpacked it. Because I don’t want to build a model for all the different fruits, I define a list of fruits (corresponding to the folder names) that I want to include in the model.</p>
 <pre class="r"><code># path to image folders
 train_image_files_path &lt;- &quot;/fruits/Training/&quot;</code></pre>
 <pre class="r"><code># list of fruits to modle
@@ -751,12 +758,17 @@ img_height &lt;- 20
 target_size &lt;- c(img_width, img_height)
 
 # RGB = 3 channels
-channels &lt;- 3</code></pre>
-<p>When we train our model, we want to have a way to judge how well it learned and if learning improves over the epochs. Therefore, we want to use validation data, to make these performance measures less biased compared to using the training data only. In Keras, we can either give a specific <strong>validation set</strong> (as I did in the <a href="https://shirinsplayground.netlify.com/2018/06/keras_fruits/">old article on image classification with Keras</a>) or we define a validation split:</p>
+channels &lt;- 3
+
+# define batch size
+batch_size &lt;- 32</code></pre>
+<p>The handy <code>image_data_generator()</code> and <code>flow_images_from_directory()</code> functions can be used to load images from a directory without having to store all data in memory at the same time. Instead <code>image_data_generator</code> will loop over the data and process the images in batches.</p>
+<p>When we train our model, we want to have a way to judge how well it learned and if learning improves over the epochs. Therefore, we want to use validation data, to make these performance measures less biased compared to using the training data only. In Keras, we can either give a specific <strong>validation set</strong> (as I did in the <a href="https://shirinsplayground.netlify.com/2018/06/keras_fruits/">old article on image classification with Keras</a>) or we define a validation split.</p>
+<p>If you want to use data augmentation, you can directly define how and in what way you want to augment your images with <code>image_data_generator</code>. Here I am not augmenting the data, I only scale the pixel values to fall between 0 and 1.</p>
 <pre class="r"><code>train_data_gen &lt;- image_data_generator(
   rescale = 1/255,
-  validation_split = 0.3
-)</code></pre>
+  validation_split = 0.3)</code></pre>
+<p>Now we load the images into memory and resize them.</p>
 <pre class="r"><code># training images
 train_image_array_gen &lt;- flow_images_from_directory(train_image_files_path, 
                                           train_data_gen,
@@ -764,7 +776,9 @@ train_image_array_gen &lt;- flow_images_from_directory(train_image_files_path,
                                           target_size = target_size,
                                           class_mode = &quot;categorical&quot;,
                                           classes = fruit_list,
+                                          batch_size = batch_size,
                                           seed = 42)
+#Found 5401 images belonging to 16 classes.
 
 # validation images
 valid_image_array_gen &lt;- flow_images_from_directory(train_image_files_path, 
@@ -773,12 +787,27 @@ valid_image_array_gen &lt;- flow_images_from_directory(train_image_files_path,
                                           target_size = target_size,
                                           class_mode = &quot;categorical&quot;,
                                           classes = fruit_list,
-                                          seed = 42)</code></pre>
+                                          batch_size = batch_size,
+                                          seed = 42)
+#Found 2308 images belonging to 16 classes.</code></pre>
 <pre class="r"><code>cat(&quot;Number of images per class:&quot;)
 table(factor(train_image_array_gen$classes))
-
-cat(&quot;\nClass label vs index mapping:\n&quot;)
-train_image_array_gen$class_indices</code></pre>
+#Number of images per class:
+#  0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15 
+#327 343 345 299 343 343 343 336 343 345 345 313 343 345 343 345</code></pre>
+<p>Note, that even though Keras’ <code>image_data_generator</code> recognizes folder names as class labels for classification tasks, these labels will be converted into indices (alphabetical starting from 0) for training and prediction later. Thus, it is useful to create a library object that matches these indices back to human-interpretable labels.</p>
+<pre class="r"><code>train_image_array_gen_t &lt;- train_image_array_gen$class_indices %&gt;%
+  as.tibble()</code></pre>
+<pre class="r"><code>cat(&quot;\nClass label vs index mapping:\n&quot;)</code></pre>
+<pre><code>## 
+## Class label vs index mapping:</code></pre>
+<pre class="r"><code>train_image_array_gen_t</code></pre>
+<pre><code>## # A tibble: 1 x 16
+##    Kiwi Banana Apricot Avocado Cocos Clementine Mandarine Orange Limes Lemon
+##   &lt;int&gt;  &lt;int&gt;   &lt;int&gt;   &lt;int&gt; &lt;int&gt;      &lt;int&gt;     &lt;int&gt;  &lt;int&gt; &lt;int&gt; &lt;int&gt;
+## 1     0      1       2       3     4          5         6      7     8     9
+## # … with 6 more variables: Peach &lt;int&gt;, Plum &lt;int&gt;, Raspberry &lt;int&gt;,
+## #   Strawberry &lt;int&gt;, Pineapple &lt;int&gt;, Pomegranate &lt;int&gt;</code></pre>
 </div>
 <div id="training-the-model" class="section level2">
 <h2>Training the model</h2>
@@ -788,8 +817,7 @@ train_samples &lt;- train_image_array_gen$n
 # number of validation samples
 valid_samples &lt;- valid_image_array_gen$n
 
-# define batch size and number of epochs
-batch_size &lt;- 32
+# define number of epochs
 epochs &lt;- 10</code></pre>
 <pre class="r"><code># initialise model
 model &lt;- keras_model_sequential()
@@ -825,6 +853,7 @@ model %&gt;% compile(
   optimizer = optimizer_rmsprop(lr = 0.0001, decay = 1e-6),
   metrics = &quot;accuracy&quot;
 )</code></pre>
+<p>Fitting the model: because I used <code>image_data_generator()</code> and <code>flow_images_from_directory()</code> I am now also using the <code>fit_generator()</code> to run the training.</p>
 <pre class="r"><code># fit
 hist &lt;- model %&gt;% fit_generator(
   # training data
@@ -838,7 +867,29 @@ hist &lt;- model %&gt;% fit_generator(
   validation_data = valid_image_array_gen,
   validation_steps = as.integer(valid_samples / batch_size)
 )</code></pre>
+<pre><code>Epoch 1/10
+168/168 [==============================] - 9s 56ms/step - loss: 2.2358 - accuracy: 0.3038 - val_loss: 2.3285 - val_accuracy: 0.5477
+Epoch 2/10
+168/168 [==============================] - 6s 38ms/step - loss: 1.1505 - accuracy: 0.6161 - val_loss: 1.2697 - val_accuracy: 0.9054
+Epoch 3/10
+168/168 [==============================] - 6s 37ms/step - loss: 0.6588 - accuracy: 0.7812 - val_loss: 0.3950 - val_accuracy: 0.9227
+Epoch 4/10
+168/168 [==============================] - 6s 35ms/step - loss: 0.4223 - accuracy: 0.8624 - val_loss: 0.1600 - val_accuracy: 0.9609
+Epoch 5/10
+168/168 [==============================] - 6s 35ms/step - loss: 0.2775 - accuracy: 0.9091 - val_loss: 0.1180 - val_accuracy: 0.9648
+Epoch 6/10
+168/168 [==============================] - 6s 39ms/step - loss: 0.1981 - accuracy: 0.9383 - val_loss: 0.0844 - val_accuracy: 0.9727
+Epoch 7/10
+168/168 [==============================] - 6s 35ms/step - loss: 0.1514 - accuracy: 0.9527 - val_loss: 0.0674 - val_accuracy: 0.9731
+Epoch 8/10
+168/168 [==============================] - 6s 34ms/step - loss: 0.1116 - accuracy: 0.9685 - val_loss: 0.0669 - val_accuracy: 0.9805
+Epoch 9/10
+168/168 [==============================] - 6s 34ms/step - loss: 0.0897 - accuracy: 0.9722 - val_loss: 0.0466 - val_accuracy: 0.9818
+Epoch 10/10
+168/168 [==============================] - 6s 34ms/step - loss: 0.0699 - accuracy: 0.9795 - val_loss: 0.0698 - val_accuracy: 0.9787</code></pre>
+<p>In RStudio we are seeing the output as an interactive plot in the “Viewer” pane but we can also plot it:</p>
 <pre class="r"><code>plot(hist)</code></pre>
+<p><img src="/img/hist.png" /></p>
 </div>
 <div id="predicting-on-new-set-of-images" class="section level2">
 <h2>Predicting on “new” set of images</h2>
@@ -855,11 +906,14 @@ test_generator &lt;- flow_images_from_directory(
         classes = fruit_list,
         batch_size = 1,
         shuffle = FALSE,
-        seed = 42)</code></pre>
+        seed = 42)
+#Found 2592 images belonging to 16 classes.</code></pre>
 <pre class="r"><code>test_generator$reset()
 model %&gt;%
   evaluate_generator(test_generator, 
                      steps = as.integer(test_generator$n))</code></pre>
+<pre><code>      loss   accuracy 
+0.04565864 0.99112654 </code></pre>
 <pre class="r"><code>classes &lt;- test_generator$classes %&gt;%
   factor() %&gt;%
   table() %&gt;%
@@ -894,11 +948,18 @@ predictions &lt;- predictions %&gt;%
   arrange(img_id) %&gt;%
   group_by(key, n, pred_lbl) %&gt;%
   count()</code></pre>
-<pre class="r"><code>pred_analysis %&gt;%
+<pre class="r"><code>p &lt;- pred_analysis %&gt;%
   mutate(percentage_pred = nn / n * 100) %&gt;%
-  ggplot(aes(x = key, y = pred_lbl, fill = percentage_pred)) +
-    geom_tile()</code></pre>
-<pre class="r"><code>pred_analysis %&gt;%
+  ggplot(aes(x = key, y = pred_lbl, 
+             fill = percentage_pred,
+             label = round(percentage_pred, 2))) +
+    geom_tile() +
+    scale_fill_continuous() +
+    geom_text(color = &quot;white&quot;) +
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+p</code></pre>
+<p><img src="/img/percentage_pred.png" /></p>
+<pre class="r"><code>p2 &lt;- pred_analysis %&gt;%
   mutate(prediction = case_when(
     key == pred_lbl ~ &quot;correct&quot;,
     TRUE ~ &quot;false&quot;
@@ -906,12 +967,116 @@ predictions &lt;- predictions %&gt;%
   group_by(key, prediction, n) %&gt;%
   summarise(sum = sum(nn)) %&gt;%
   mutate(percentage_pred = sum / n * 100) %&gt;%
-  ggplot(aes(x = key, y = prediction, fill = percentage_pred)) +
+  ggplot(aes(x = key, y = prediction, 
+             fill = percentage_pred,
+             label = round(percentage_pred, 2))) +
     geom_tile() +
-    coord_flip()</code></pre>
+    scale_fill_continuous() +
+    geom_text(color = &quot;white&quot;) +
+    coord_flip()
+p2</code></pre>
+<p><img src="/img/percentage_pred_cor.png" /></p>
+<p>As we can see, the model is quite accurate on the test data. However, we need to keep in mind that our images are very uniform, they all have the same white background and show the fruits centered and without anything else in the images. Thus, our model will not work with images that don’t look similar as the ones we trained on (that’s also why we can achieve such good results with such a small neural net).</p>
 <hr />
-<pre class="r"><code>xfun::session_info(&#39;blogdown&#39;)</code></pre>
 <pre class="r"><code>devtools::session_info()</code></pre>
+<pre><code>## ─ Session info ───────────────────────────────────────────────────────────────
+##  setting  value                       
+##  version  R version 4.0.2 (2020-06-22)
+##  os       macOS Catalina 10.15.6      
+##  system   x86_64, darwin17.0          
+##  ui       X11                         
+##  language (EN)                        
+##  collate  en_US.UTF-8                 
+##  ctype    en_US.UTF-8                 
+##  tz       Europe/Berlin               
+##  date     2020-09-11                  
+## 
+## ─ Packages ───────────────────────────────────────────────────────────────────
+##  package     * version date       lib source                           
+##  assertthat    0.2.1   2019-03-21 [1] CRAN (R 4.0.0)                   
+##  backports     1.1.9   2020-08-24 [1] CRAN (R 4.0.2)                   
+##  base64enc     0.1-3   2015-07-28 [1] CRAN (R 4.0.0)                   
+##  blob          1.2.1   2020-01-20 [1] CRAN (R 4.0.2)                   
+##  blogdown      0.20.1  2020-09-09 [1] Github (rstudio/blogdown@d96fe78)
+##  bookdown      0.20    2020-06-23 [1] CRAN (R 4.0.2)                   
+##  broom         0.7.0   2020-07-09 [1] CRAN (R 4.0.2)                   
+##  callr         3.4.4   2020-09-07 [1] CRAN (R 4.0.2)                   
+##  cellranger    1.1.0   2016-07-27 [1] CRAN (R 4.0.0)                   
+##  cli           2.0.2   2020-02-28 [1] CRAN (R 4.0.0)                   
+##  colorspace    1.4-1   2019-03-18 [1] CRAN (R 4.0.0)                   
+##  crayon        1.3.4   2017-09-16 [1] CRAN (R 4.0.0)                   
+##  DBI           1.1.0   2019-12-15 [1] CRAN (R 4.0.0)                   
+##  dbplyr        1.4.4   2020-05-27 [1] CRAN (R 4.0.2)                   
+##  desc          1.2.0   2018-05-01 [1] CRAN (R 4.0.0)                   
+##  devtools      2.3.1   2020-07-21 [1] CRAN (R 4.0.2)                   
+##  digest        0.6.25  2020-02-23 [1] CRAN (R 4.0.0)                   
+##  dplyr       * 1.0.2   2020-08-18 [1] CRAN (R 4.0.2)                   
+##  ellipsis      0.3.1   2020-05-15 [1] CRAN (R 4.0.0)                   
+##  evaluate      0.14    2019-05-28 [1] CRAN (R 4.0.1)                   
+##  fansi         0.4.1   2020-01-08 [1] CRAN (R 4.0.0)                   
+##  forcats     * 0.5.0   2020-03-01 [1] CRAN (R 4.0.0)                   
+##  fs            1.5.0   2020-07-31 [1] CRAN (R 4.0.2)                   
+##  generics      0.0.2   2018-11-29 [1] CRAN (R 4.0.0)                   
+##  ggplot2     * 3.3.2   2020-06-19 [1] CRAN (R 4.0.2)                   
+##  glue          1.4.2   2020-08-27 [1] CRAN (R 4.0.2)                   
+##  gtable        0.3.0   2019-03-25 [1] CRAN (R 4.0.0)                   
+##  haven         2.3.1   2020-06-01 [1] CRAN (R 4.0.2)                   
+##  hms           0.5.3   2020-01-08 [1] CRAN (R 4.0.0)                   
+##  htmltools     0.5.0   2020-06-16 [1] CRAN (R 4.0.2)                   
+##  httr          1.4.2   2020-07-20 [1] CRAN (R 4.0.2)                   
+##  jsonlite      1.7.1   2020-09-07 [1] CRAN (R 4.0.2)                   
+##  keras       * 2.3.0.0 2020-05-19 [1] CRAN (R 4.0.2)                   
+##  knitr         1.29    2020-06-23 [1] CRAN (R 4.0.2)                   
+##  lattice       0.20-41 2020-04-02 [1] CRAN (R 4.0.2)                   
+##  lifecycle     0.2.0   2020-03-06 [1] CRAN (R 4.0.0)                   
+##  lubridate     1.7.9   2020-06-08 [1] CRAN (R 4.0.2)                   
+##  magrittr      1.5     2014-11-22 [1] CRAN (R 4.0.0)                   
+##  Matrix        1.2-18  2019-11-27 [1] CRAN (R 4.0.2)                   
+##  memoise       1.1.0   2017-04-21 [1] CRAN (R 4.0.0)                   
+##  modelr        0.1.8   2020-05-19 [1] CRAN (R 4.0.2)                   
+##  munsell       0.5.0   2018-06-12 [1] CRAN (R 4.0.0)                   
+##  pillar        1.4.6   2020-07-10 [1] CRAN (R 4.0.2)                   
+##  pkgbuild      1.1.0   2020-07-13 [1] CRAN (R 4.0.2)                   
+##  pkgconfig     2.0.3   2019-09-22 [1] CRAN (R 4.0.0)                   
+##  pkgload       1.1.0   2020-05-29 [1] CRAN (R 4.0.2)                   
+##  prettyunits   1.1.1   2020-01-24 [1] CRAN (R 4.0.0)                   
+##  processx      3.4.4   2020-09-03 [1] CRAN (R 4.0.2)                   
+##  ps            1.3.4   2020-08-11 [1] CRAN (R 4.0.2)                   
+##  purrr       * 0.3.4   2020-04-17 [1] CRAN (R 4.0.0)                   
+##  R6            2.4.1   2019-11-12 [1] CRAN (R 4.0.0)                   
+##  Rcpp          1.0.5   2020-07-06 [1] CRAN (R 4.0.2)                   
+##  readr       * 1.3.1   2018-12-21 [1] CRAN (R 4.0.0)                   
+##  readxl        1.3.1   2019-03-13 [1] CRAN (R 4.0.0)                   
+##  remotes       2.2.0   2020-07-21 [1] CRAN (R 4.0.2)                   
+##  reprex        0.3.0   2019-05-16 [1] CRAN (R 4.0.0)                   
+##  reticulate    1.16    2020-05-27 [1] CRAN (R 4.0.2)                   
+##  rlang         0.4.7   2020-07-09 [1] CRAN (R 4.0.2)                   
+##  rmarkdown     2.3     2020-06-18 [1] CRAN (R 4.0.2)                   
+##  rprojroot     1.3-2   2018-01-03 [1] CRAN (R 4.0.0)                   
+##  rstudioapi    0.11    2020-02-07 [1] CRAN (R 4.0.0)                   
+##  rvest         0.3.6   2020-07-25 [1] CRAN (R 4.0.2)                   
+##  scales        1.1.1   2020-05-11 [1] CRAN (R 4.0.0)                   
+##  sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 4.0.0)                   
+##  stringi       1.5.3   2020-09-09 [1] CRAN (R 4.0.2)                   
+##  stringr     * 1.4.0   2019-02-10 [1] CRAN (R 4.0.0)                   
+##  tensorflow    2.2.0   2020-05-11 [1] CRAN (R 4.0.0)                   
+##  testthat      2.3.2   2020-03-02 [1] CRAN (R 4.0.0)                   
+##  tfruns        1.4     2018-08-25 [1] CRAN (R 4.0.0)                   
+##  tibble      * 3.0.3   2020-07-10 [1] CRAN (R 4.0.2)                   
+##  tidyr       * 1.1.2   2020-08-27 [1] CRAN (R 4.0.2)                   
+##  tidyselect    1.1.0   2020-05-11 [1] CRAN (R 4.0.0)                   
+##  tidyverse   * 1.3.0   2019-11-21 [1] CRAN (R 4.0.0)                   
+##  usethis       1.6.1   2020-04-29 [1] CRAN (R 4.0.0)                   
+##  utf8          1.1.4   2018-05-24 [1] CRAN (R 4.0.0)                   
+##  vctrs         0.3.4   2020-08-29 [1] CRAN (R 4.0.2)                   
+##  whisker       0.4     2019-08-28 [1] CRAN (R 4.0.0)                   
+##  withr         2.2.0   2020-04-20 [1] CRAN (R 4.0.0)                   
+##  xfun          0.17    2020-09-09 [1] CRAN (R 4.0.2)                   
+##  xml2          1.3.2   2020-04-23 [1] CRAN (R 4.0.0)                   
+##  yaml          2.2.1   2020-02-01 [1] CRAN (R 4.0.0)                   
+##  zeallot       0.1.0   2018-01-28 [1] CRAN (R 4.0.0)                   
+## 
+## [1] /Library/Frameworks/R.framework/Versions/4.0/Resources/library</code></pre>
 </div>
 ]]></content>
   </entry>
