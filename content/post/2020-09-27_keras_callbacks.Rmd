@@ -1,0 +1,266 @@
+---
+title: "Using Keras Callbacks"
+draft: true
+author: Dr. Shirin Elsinghorst
+date: '2020-09-13'
+categories: ["R", "keras"]
+tags: ["R", "keras", "image classification", "tensorflow"]
+thumbnailImagePosition: left
+thumbnailImage: 
+metaAlignment: center
+coverMeta: out
+slug: keras_funct_api
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+Keras comes with a number of built in [callbacks](https://keras.rstudio.com/articles/training_callbacks.html).
+
+When you’re training a model, there are many things you can’t predict from the start. In particular, you can’t tell how many epochs will be needed to get to an optimal validation loss. The examples so far have adopted the strategy of training for enough epochs that you begin overfitting, using the first run to figure out the proper number of epochs to train for, and then finally launching a new training run from scratch using this optimal number. Of course, this approach is wasteful.
+
+A much better way to handle this is to stop training when you measure that the validation loss in no longer improving. This can be achieved using a Keras callback. A callback is an object that is passed to the model in the call to fit and that is called by the model at various points during training. It has access to all the available data about the state of the model and its performance, and it can take action: interrupt training, save a model, load a different weight set, or otherwise alter the state of the model.
+
+Model checkpointing—Saving the current weights of the model at different points during training.
+Early stopping—Interrupting training when the validation loss is no longer improving (and saving the best model obtained during training).
+Dynamically adjusting the value of certain parameters during training—Such as the learning rate of the optimizer.
+Logging training and validation metrics during training, or visualizing the representations learned by the model as they’re updated—The Keras progress bar that you’re familiar with is a callback!
+
+The model-checkpoint and early-stopping callbacks
+You can use callback_early_stopping to interrupt training once a target metric being monitored has stopped improving for a fixed number of epochs. For instance, this callback allows you to interrupt training as soon as you start overfitting, thus avoiding having to retrain your model for a smaller number of epochs. This callback is typically used in combination with callback_model_checkpoint, which lets you continually save the model during training (and, optionally, save only the current best model so far: the version of the model that achieved the best performance at the end of an epoch):
+
+1 Callbacks are passed to the model via the callbacks argument in fit, which takes a list of callbacks. You can pass any number of callbacks.
+2 Interrupts training when improvement stops
+3 Monitors the model’s validation accuracy
+4 Interrupts training when accuracy has stopped improving for more than one epoch (that is, two epochs)
+5 Saves the current weights after every epoch
+6 Path to the destination model file
+7 These two arguments mean you won’t overwrite the model file unless val_loss has improved, which allows you to keep the best model seen during training.
+8 You monitor accuracy, so it should be part of the model’s metrics.
+9 Note that because the callback will monitor validation loss and accuracy, you need to pass validation_data to the call to fit.
+
+The reduce-learning-rate-on-plateau callback
+You can use this callback to reduce the learning rate when the validation loss has stopped improving. Reducing or increasing the learning rate in case of a loss plateau is is an effective strategy to get out of local minima during training. The following example uses callback_reduce_lr_on_plateau:
+
+1 Monitors the model’s validation loss
+2 Divides the learning rate by 10 when triggered
+3 The callback is triggered after the validation loss has stopped improving for 10 epochs.
+4 Because the callback will monitor the validation loss, you need to pass validation_data to the call to fit.
+Writing your own callback
+If you need to take a specific action during training that isn’t covered by one of the built-in callbacks, you can write your own callback. Callbacks are implemented by creating a new R6 class that inherits from the KerasCallback class. You can then implement any number of the following transparently named methods, which are called at various points during training:
+
+1 Called at the start of every epoch
+2 Called at the end of every epoch
+3 Called right before processing each batch
+4 Called right after processing each batch
+5 Called at the start of training
+6 Called at the end of training
+These methods all are called with a logs argument, which is a named list containing information about the previous batch, epoch, or training run: training and validation metrics, and so on. Additionally, the callback has access to the following attributes:
+
+self$model—Reference to the Keras model being trained
+self$params—Named list with training parameters (verbosity, batch size, number of epochs, and so on)
+Here’s a simple example that saves a list of losses over each batch during training:
+
+1 Called at the end of every training batch
+2 Accumulates losses from every batch in a list
+3 Creates an instance of the callback
+4 Attaches the callback to model training
+5 Accumulated losses are now available from the callback instance.
+This is all you need to know about callbacks—the rest is technical details, which you can easily look up. Now you’re equipped to perform any sort of logging or preprogrammed intervention on a Keras model during training.
+
+7.2.2. Introduction to TensorBoard: the TensorFlow visualization framework
+To do good research or develop good models, you need rich, frequent feedback about what’s going on inside your models during your experiments. That’s the point of running experiments: to get information about how well a model performs—as much information as possible. Making progress is an iterative process, or loop: you start with an idea and express it as an experiment, attempting to validate or invalidate your idea. You run this experiment and process the information it generates. This inspires your next idea. The more iterations of this loop you’re able to run, the more refined and powerful your ideas become. Keras helps you go from idea to experiment in the least possible time, and fast GPUs can help you get from experiment to result as quickly as possible. But what about processing the experiment results? That’s where Tensor-Board comes in.
+
+This section introduces TensorBoard, a browser-based visualization tool that comes packaged with TensorFlow. Note that it’s only available for Keras models when you’re using Keras with the TensorFlow backend.
+
+The key purpose of TensorBoard is to help you visually monitor everything that goes on inside your model during training. If you’re monitoring more information than just the model’s final loss, you can develop a clearer vision of what the model does and doesn’t do, and you can make progress more quickly. TensorBoard gives you access to several neat features, all in your browser:
+
+Visually monitoring metrics during training
+Visualizing your model architecture
+Visualizing histograms of activations and gradients
+Exploring embeddings in 3D
+Let’s demonstrate these features on a simple example. You’ll train a 1D convnet on the IMDB sentiment-analysis task.
+
+
+---
+
+If you have questions or would like to talk about this article (or something else data-related), you can now [book 15-minute timeslots](http://127.0.0.1:4321/page/bookme/) with me (it's free - one slot available per weekday): 
+
+<img src="https://www.appointletcdn.com/loader/buttons/F62459.png" data-appointlet-organization="shirin-elsinghorst" data-appointlet-service="357892"><script src="https://www.appointletcdn.com/loader/loader.min.js" async="" defer=""></script>
+
+*If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at <button>[paypal.me](https://paypal.me/ShirinGlander)</button>. Thank you!* :-)
+
+---
+
+```{r eval=TRUE}
+# load libraries
+library(tidyverse)
+library(keras)
+```
+
+```{r}
+# check if keras is available
+is_keras_available()
+#[1] TRUE
+```
+
+## Loading images (data)
+
+```{r echo=TRUE, eval=FALSE}
+# path to image folders
+train_image_files_path <- "/fruits/Training/"
+```
+
+```{r echo=FALSE}
+# path to image folders
+train_image_files_path <- "/Users/shiringlander/Documents/Github/Data/fruits-360/Training/"
+```
+
+```{r}
+# list of fruits to modle
+fruit_list <- c("Kiwi", "Banana", "Apricot", "Avocado", "Cocos", "Clementine", "Mandarine", "Orange",
+                "Limes", "Lemon", "Peach", "Plum", "Raspberry", "Strawberry", "Pineapple", "Pomegranate")
+
+# number of output classes (i.e. fruits)
+output_n <- length(fruit_list)
+
+# image size to scale down to (original images are 100 x 100 px)
+img_width <- 20
+img_height <- 20
+target_size <- c(img_width, img_height)
+
+# RGB = 3 channels
+channels <- 3
+
+# define batch size
+batch_size <- 32
+```
+
+```{r}
+train_data_gen <- image_data_generator(
+  rescale = 1/255,
+  validation_split = 0.3)
+```
+
+Now we load the images into memory and resize them. 
+
+```{r}
+# training images
+train_image_array_gen <- flow_images_from_directory(train_image_files_path, 
+                                          train_data_gen,
+                                          subset = 'training',
+                                          target_size = target_size,
+                                          class_mode = "categorical",
+                                          classes = fruit_list,
+                                          batch_size = batch_size,
+                                          seed = 42)
+#Found 5401 images belonging to 16 classes.
+
+# validation images
+valid_image_array_gen <- flow_images_from_directory(train_image_files_path, 
+                                          train_data_gen,
+                                          subset = 'validation',
+                                          target_size = target_size,
+                                          class_mode = "categorical",
+                                          classes = fruit_list,
+                                          batch_size = batch_size,
+                                          seed = 42)
+#Found 2308 images belonging to 16 classes.
+```
+
+## Training the model
+
+Now, I define and train the model just as before:
+
+```{r}
+# number of training samples
+train_samples <- train_image_array_gen$n
+# number of validation samples
+valid_samples <- valid_image_array_gen$n
+
+# define number of epochs
+epochs <- 10
+```
+
+```{r}
+# input layer
+inputs <- layer_input(shape = c(img_width, img_height, channels))
+
+# outputs compose input + dense layers
+predictions <- inputs %>%
+  layer_conv_2d(filter = 32, kernel_size = c(3,3), padding = "same") %>%
+  layer_activation("relu") %>%
+  
+  # Second hidden layer
+  layer_conv_2d(filter = 16, kernel_size = c(3,3), padding = "same") %>%
+  layer_activation_leaky_relu(0.5) %>%
+  layer_batch_normalization() %>%
+
+  # Use max pooling
+  layer_max_pooling_2d(pool_size = c(2,2)) %>%
+  layer_dropout(0.25) %>%
+  
+  # Flatten max filtered output into feature vector 
+  # and feed into dense layer
+  layer_flatten() %>%
+  layer_dense(100) %>%
+  layer_activation("relu") %>%
+  layer_dropout(0.5) %>%
+  
+  # Outputs from dense layer are projected onto output layer
+  layer_dense(output_n) %>% 
+  layer_activation("softmax")
+
+# create and compile model
+model <- keras_model(inputs = inputs, outputs = predictions)
+
+model %>% compile(
+  loss = "categorical_crossentropy",
+  optimizer = optimizer_rmsprop(lr = 0.0001, decay = 1e-6),
+  metrics = "accuracy"
+)
+```
+
+```{r}
+# fit
+hist <- model %>% fit_generator(
+  # training data
+  train_image_array_gen,
+  
+  # epochs
+  steps_per_epoch = as.integer(train_samples / batch_size), 
+  epochs = epochs, 
+  
+  # validation data
+  validation_data = valid_image_array_gen,
+  validation_steps = as.integer(valid_samples / batch_size)
+  
+  # callbacks
+  callbacks = list(
+    #callback_model_checkpoint("checkpoints.h5"),
+    callback_early_stopping(monitor = "val_loss", min_delta = 0.001, patience = 3)#,
+    #callback_tensorboard("logs")
+  )
+)
+```
+
+```{r }
+plot(hist)
+```
+
+```{r eval=FALSE}
+tensorboard("logs")
+```
+
+---
+
+```{r echo=FALSE}
+xfun::session_info('blogdown')
+```
+
+```{r eval=TRUE}
+devtools::session_info()
+```
+
+
