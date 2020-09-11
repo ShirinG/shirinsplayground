@@ -1,7 +1,7 @@
 ---
 title: "Update for Keras and TF 2.0: Image classification with keras."
 draft: true
-author: Shirin Glander
+author: Dr. Shirin Elsinghorst
 date: '2020-09-13'
 categories: ["R", "keras"]
 tags: ["R", "keras", "image classification", "tensorflow"]
@@ -262,7 +262,7 @@ plot(hist)
 
 ## Predicting on "new" set of images
 
-Here is what's new: how to use the model I just trained for predicting on new images (alternatively, load a previously trained model and use that for predictions). Just keep in mind, that these new images here aren't actually "new". They come from the same data source, i.e. the same distribution and thus aren't independent enough to give an accurate assessment of how well the model generalizes.
+**Here is what's new**: how to use the model we just trained for predicting on new images. Alternatively, load a previously trained model and use that for predictions. Just keep in mind, that these "new" images here aren't actually new. They come from the same data source, i.e. the same distribution and thus aren't independent enough to give an accurate assessment of how well the model generalizes.
 
 ```{r echo=TRUE, eval=FALSE}
 # path to image folders
