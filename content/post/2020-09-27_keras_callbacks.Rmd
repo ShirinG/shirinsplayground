@@ -9,7 +9,7 @@ thumbnailImagePosition: left
 thumbnailImage: 
 metaAlignment: center
 coverMeta: out
-slug: keras_funct_api
+slug: keras_callbacks
 ---
 
 ```{r setup, include=FALSE}
