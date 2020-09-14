@@ -32,7 +32,7 @@ Specific changes compared to the [old article](https://shirinsplayground.netlify
 
 ---
 
-If you have questions or would like to talk about this article (or something else data-related), you can now [book 15-minute timeslots](http://127.0.0.1:4321/page/bookme/) with me (it's free - one slot available per weekday): 
+If you have questions or would like to talk about this article (or something else data-related), you can now [book 15-minute timeslots](https://shirinsplayground.netlify.app/page/bookme/) with me (it's free - one slot available per weekday): 
 
 <img src="https://www.appointletcdn.com/loader/buttons/F62459.png" data-appointlet-organization="shirin-elsinghorst" data-appointlet-service="357892"><script src="https://www.appointletcdn.com/loader/loader.min.js" async="" defer=""></script>
 
@@ -49,6 +49,8 @@ Since I have no idea what's going on there (`blogdown::serve_site()` builds my s
 I worked around that problem by not evaluating most of the code below and instead ran the code locally on my computer. Objects and images, I then saved as *.RData* or *.png* files and manually put them back into the document. By just reading this blogpost as it rendered on my site, you won't notice much of a difference (except where I copy/pasted the output as comments below the code) but in order to be fully transparent, you can see on [Github](https://github.com/ShirinG/shirinsplayground/blob/master/content/post/2020-09-13_keras_fruits_update.Rmd) what I did with hidden code chunks to create this post.
 
 ---
+
+## Loading libraries
 
 ```{r eval=TRUE}
 # load libraries

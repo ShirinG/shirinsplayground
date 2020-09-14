@@ -25,7 +25,7 @@ slug: keras_fruits_update
 <hr />
 <p><strong>Workshop announcement:</strong> Because this year’s UseR 2020 in Munich couldn’t happen as an in-person event, I will be giving my <a href="https://user2020.r-project.org/program/tutorials/">workshop on Deep Learning with Keras and TensorFlow</a> as an online event. I’ll be announcing the date once it’s been finalized but if you are interested in participating: we are looking at the first week of October (13:00 UTC).</p>
 <hr />
-<p>If you have questions or would like to talk about this article (or something else data-related), you can now <a href="http://127.0.0.1:4321/page/bookme/">book 15-minute timeslots</a> with me (it’s free - one slot available per weekday):</p>
+<p>If you have questions or would like to talk about this article (or something else data-related), you can now <a href="https://shirinsplayground.netlify.app/page/bookme/">book 15-minute timeslots</a> with me (it’s free - one slot available per weekday):</p>
 <img src="https://www.appointletcdn.com/loader/buttons/F62459.png" data-appointlet-organization="shirin-elsinghorst" data-appointlet-service="357892">
 <script src="https://www.appointletcdn.com/loader/loader.min.js" async="" defer=""></script>
 <p><em>If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at <button><a href="https://paypal.me/ShirinGlander">paypal.me</a></button>. Thank you!</em> :-)</p>
@@ -35,6 +35,8 @@ slug: keras_fruits_update
 <p>Since I have no idea what’s going on there (<code>blogdown::serve_site()</code> builds my site without trouble as long as I don’t include <code>keras</code> functions) and haven’t gotten a reply to the <a href="https://github.com/rstudio/blogdown/issues/473">issue</a> I posted to Github, I had to write this blogpost without actually running the code while building the site.</p>
 <p>I worked around that problem by not evaluating most of the code below and instead ran the code locally on my computer. Objects and images, I then saved as <em>.RData</em> or <em>.png</em> files and manually put them back into the document. By just reading this blogpost as it rendered on my site, you won’t notice much of a difference (except where I copy/pasted the output as comments below the code) but in order to be fully transparent, you can see on <a href="https://github.com/ShirinG/shirinsplayground/blob/master/content/post/2020-09-13_keras_fruits_update.Rmd">Github</a> what I did with hidden code chunks to create this post.</p>
 <hr />
+<div id="loading-libraries" class="section level2">
+<h2>Loading libraries</h2>
 <pre class="r"><code># load libraries
 library(tidyverse)
 library(tensorflow)
@@ -48,6 +50,7 @@ tf_version()
 # check if keras is available
 is_keras_available()
 #[1] TRUE</code></pre>
+</div>
 <div id="loading-images-data" class="section level2">
 <h2>Loading images (data)</h2>
 <p>The dataset I am using here is the <a href="https://www.kaggle.com/moltean/fruits/data">fruit images dataset from Kaggle</a>. I downloaded it to my computer and unpacked it. Because I don’t want to build a model for all the different fruits, I define a list of fruits (corresponding to the folder names) that I want to include in the model.</p>

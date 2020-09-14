@@ -14,10 +14,46 @@ slug: keras_funct_api
 
 
 
-<p><a href="https://keras.rstudio.com/articles/functional_api.html" class="uri">https://keras.rstudio.com/articles/functional_api.html</a></p>
-<p>The Keras Functional API is more for complex models, like multi-input and multi-output models, but I will show how it works in a simple example here.</p>
-<p>(keras_model_sequential). The sequential model makes the assumption that the network has exactly one input and exactly one output, and that it consists of a linear stack of layers (see figure 7.1).</p>
-<p>This is a commonly verified assumption; the configuration is so common that we’ve been able to cover many topics and practical applications in these pages so far using only keras_model_sequential. But this set of assumptions is too inflexible in a number of cases. Some networks require several independent inputs, others require multiple outputs, and some networks have internal branching between layers that makes them look like graphs of layers rather than linear stacks of layers.</p>
+<p>I have been working with Keras for a while now, and I’ve also been writing quite a few <a href="https://shirinsplayground.netlify.app//tags/keras/">blogposts about it</a>; the most recent one being <a href="https://shirinsplayground.netlify.app/2020/09/keras_fruits_update/">an update to image classification using TF 2.0</a>.</p>
+<p>However, in my blogposts I have always been using <strong>Keras sequential models</strong> and never shown how to use the <a href="https://keras.rstudio.com/articles/functional_api.html"><strong>functional API</strong></a>. The reason is that the functional API is usually applied when building more complex models, like multi-input or multi-output models. And in my blogposts I usually show simple examples that don’t take too much time and computing power to run, so that everybody can follow along.</p>
+<p>But the <a href="https://keras.rstudio.com/articles/functional_api.html"><strong>functional API</strong></a> can also be used to build simple models (in fact, every model built with the sequential API can also be built with the functional API but <em>not vice versa</em>). Let me show you how it works! :-)</p>
+<hr />
+<p><strong>Workshop announcement:</strong> Because this year’s UseR 2020 in Munich couldn’t happen as an in-person event, I will be giving my <a href="https://user2020.r-project.org/program/tutorials/">workshop on Deep Learning with Keras and TensorFlow</a> as an online event. I’ll be announcing the date once it’s been finalized but if you are interested in participating: we are looking at the first week of October (13:00 UTC).</p>
+<hr />
+<p>If you have questions or would like to talk about this article (or something else data-related), you can now <a href="https://shirinsplayground.netlify.app/page/bookme/">book 15-minute timeslots</a> with me (it’s free - one slot available per weekday):</p>
+<img src="https://www.appointletcdn.com/loader/buttons/F62459.png" data-appointlet-organization="shirin-elsinghorst" data-appointlet-service="357892">
+<script src="https://www.appointletcdn.com/loader/loader.min.js" async="" defer=""></script>
+<p><em>If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at <button><a href="https://paypal.me/ShirinGlander">paypal.me</a></button>. Thank you!</em> :-)</p>
+<hr />
+<p><strong>Note</strong>:</p>
+<p>I have been having an <a href="https://github.com/rstudio/blogdown/issues/473">issue</a> with <code>blogdown</code>, where the code below runs perfectly fine in my R console from within the RMarkdown file but whenever I include any function from the <code>keras</code> package, <code>blogdown::serve_site()</code> throws an error: <code>Error in render_page(f) : Failed to render 'content/post/keras.Rmd'</code>.</p>
+<p>Since I have no idea what’s going on there (<code>blogdown::serve_site()</code> builds my site without trouble as long as I don’t include <code>keras</code> functions) and haven’t gotten a reply to the <a href="https://github.com/rstudio/blogdown/issues/473">issue</a> I posted to Github, I had to write this blogpost without actually running the code while building the site.</p>
+<p>I worked around that problem by not evaluating most of the code below and instead ran the code locally on my computer. Objects and images, I then saved as <em>.RData</em> or <em>.png</em> files and manually put them back into the document. By just reading this blogpost as it rendered on my site, you won’t notice much of a difference (except where I copy/pasted the output as comments below the code) but in order to be fully transparent, you can see on <a href="https://github.com/ShirinG/shirinsplayground/blob/master/content/post/2020-09-13_keras_fruits_update.Rmd">Github</a> what I did with hidden code chunks to create this post.</p>
+<hr />
+<div id="loading-libraries" class="section level2">
+<h2>Loading libraries</h2>
+<pre class="r"><code># load libraries
+library(tidyverse)
+library(tensorflow)
+library(keras)</code></pre>
+<pre class="r"><code>tf$random$set_seed(42)
+
+# check TF version
+tf_version()
+#[1] ‘2.2’
+
+# check if keras is available
+is_keras_available()
+#[1] TRUE</code></pre>
+</div>
+<div id="sequential-models" class="section level2">
+<h2>Sequential models</h2>
+<p>For many models, <code>keras_model_sequential</code> is sufficient! Whenever your model has one input (i.e. one set of images, one matrix, one set of texts, etc.), one output layer and a linear order of layers in between, you can use the <code>keras_model_sequential()</code> function. For example, it can be used to build simple <a href="https://github.com/rstudio/keras/blob/master/vignettes/examples/mnist_mlp.R">MLPs</a>, <a href="https://github.com/rstudio/keras/blob/master/vignettes/examples/cifar10_cnn.R">CNNs</a> and <a href="https://github.com/rstudio/keras/blob/master/vignettes/examples/imdb_bidirectional_lstm.R">(Bidirectional) LSTMs</a>.</p>
+<p>You can find a full working example <a href="https://shirinsplayground.netlify.app/2020/09/keras_fruits_update/">here</a>.</p>
+</div>
+<div id="complex-models" class="section level2">
+<h2>Complex models</h2>
+<p>So, when would you use the <strong>functional API</strong>? You can’t use the <code>keras_model_sequential</code> when you want to build a more complex model, e.g. in case you have multiple (types of) inputs (like images and text) or multiple outputs, or even complex connections between layers that can’t be described in a linear fashion. Examples include an <a href="https://github.com/rstudio/keras/blob/master/vignettes/examples/mnist_acgan.R">Auxiliary Classifier Generative Adversarial Network (ACGAN)</a> and <a href="https://github.com/rstudio/keras/blob/master/vignettes/examples/eager_styletransfer.R">neural style transfer</a>.</p>
 <p>Some tasks, for instance, require multimodal inputs: they merge data coming from different input sources, processing each type of data using different kinds of neural layers. Imagine a deep-learning model trying to predict the most likely market price of a second-hand piece of clothing, using the following inputs: user-provided metadata (such as the item’s brand, age, and so on), a user-provided text description, and a picture of the item. If you had only the metadata available, you could one-hot encode it and use a densely connected network to predict the price. If you had only the text description available, you could use an RNN or a 1D convnet. If you had only the picture, you could use a 2D convnet. But how can you use all three at the same time? A naive approach would be to train three separate models and then do a weighted average of their predictions. But this may be suboptimal, because the information extracted by the models may be redundant. A better way is to jointly learn a more accurate model of the data by using a model that can see all available input modalities simultaneously: a model with three input branches (see figure 7.2).</p>
 <p>Similarly, some tasks need to predict multiple target attributes of input data. Given the text of a novel or short story, you might want to automatically classify it by genre (such as romance or thriller) but also predict the approximate date it was written. Of course, you could train two separate models: one for the genre and one for the date. But because these attributes aren’t statistically independent, you could build a better model by learning to jointly predict both genre and date at the same time. Such a joint model would then have two outputs, or heads (see figure 7.3). Due to correlations between genre and date, knowing the date of a novel would help the model learn rich, accurate representations of the space of novel genres, and vice versa.</p>
 <p>Additionally, many recently developed neural architectures require nonlinear network topology: networks structured as directed acyclic graphs. The Inception family of networks (developed by Szegedy et al. at Google),[1] for instance, relies on Inception modules, where the input is processed by several parallel convolutional branches whose outputs are then merged back into a single tensor (see figure 7.4). There’s also the recent trend of adding residual connections to a model, which started with the ResNet family of networks (developed by He et al. at Microsoft).[2] A residual connection consists of reinjecting previous representations into the downstream flow of data by adding a past output tensor to a later output tensor (see figure 7.5), which helps prevent information loss along the data-processing flow. There are many other examples of such graph-like networks.</p>
@@ -44,6 +80,7 @@ library(keras)</code></pre>
 <pre class="r"><code># check if keras is available
 is_keras_available()
 #[1] TRUE</code></pre>
+</div>
 <div id="loading-images-data" class="section level2">
 <h2>Loading images (data)</h2>
 <pre class="r"><code># path to image folders
@@ -235,7 +272,7 @@ hist &lt;- model %&gt;% fit_generator(
 ##  sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 4.0.0)                   
 ##  stringi       1.5.3   2020-09-09 [1] CRAN (R 4.0.2)                   
 ##  stringr     * 1.4.0   2019-02-10 [1] CRAN (R 4.0.0)                   
-##  tensorflow    2.2.0   2020-05-11 [1] CRAN (R 4.0.0)                   
+##  tensorflow  * 2.2.0   2020-05-11 [1] CRAN (R 4.0.0)                   
 ##  testthat      2.3.2   2020-03-02 [1] CRAN (R 4.0.0)                   
 ##  tfruns        1.4     2018-08-25 [1] CRAN (R 4.0.0)                   
 ##  tibble      * 3.0.3   2020-07-10 [1] CRAN (R 4.0.2)                   

@@ -83,9 +83,37 @@ Exploring embeddings in 3D
 Let’s demonstrate these features on a simple example. You’ll train a 1D convnet on the IMDB sentiment-analysis task.
 
 
+```{r}
+# callbacks for weights and learning rate
+lr_schedule <- function(epoch, lr) {
+  
+  if(epoch <= 150) {
+    0.1
+  } else if(epoch > 150 && epoch <= 225){
+    0.01
+  } else {
+    0.001
+  }
+
+}
+
+lr_reducer <- callback_learning_rate_scheduler(lr_schedule)
+
+history <- model %>% fit(
+  x_train, y_train, 
+  batch_size = batch_size, 
+  epochs = epochs, 
+  validation_data = list(x_test, y_test), 
+  callbacks = list(
+    lr_reducer
+  )
+)
+
+```
+
 ---
 
-If you have questions or would like to talk about this article (or something else data-related), you can now [book 15-minute timeslots](http://127.0.0.1:4321/page/bookme/) with me (it's free - one slot available per weekday): 
+If you have questions or would like to talk about this article (or something else data-related), you can now [book 15-minute timeslots](https://shirinsplayground.netlify.app/page/bookme/) with me (it's free - one slot available per weekday): 
 
 <img src="https://www.appointletcdn.com/loader/buttons/F62459.png" data-appointlet-organization="shirin-elsinghorst" data-appointlet-service="357892"><script src="https://www.appointletcdn.com/loader/loader.min.js" async="" defer=""></script>
 
