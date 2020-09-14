@@ -1,0 +1,293 @@
+---
+title: "Using Keras Callbacks"
+draft: true
+author: Dr. Shirin Elsinghorst
+date: '2020-09-27'
+categories: ["R", "keras"]
+tags: ["R", "keras", "image classification", "tensorflow"]
+thumbnailImagePosition: left
+thumbnailImage: 
+metaAlignment: center
+coverMeta: out
+slug: keras_callbacks
+---
+
+
+
+<p>Keras comes with a number of built in <a href="https://keras.rstudio.com/articles/training_callbacks.html">callbacks</a>.</p>
+<p>When you’re training a model, there are many things you can’t predict from the start. In particular, you can’t tell how many epochs will be needed to get to an optimal validation loss. The examples so far have adopted the strategy of training for enough epochs that you begin overfitting, using the first run to figure out the proper number of epochs to train for, and then finally launching a new training run from scratch using this optimal number. Of course, this approach is wasteful.</p>
+<p>A much better way to handle this is to stop training when you measure that the validation loss in no longer improving. This can be achieved using a Keras callback. A callback is an object that is passed to the model in the call to fit and that is called by the model at various points during training. It has access to all the available data about the state of the model and its performance, and it can take action: interrupt training, save a model, load a different weight set, or otherwise alter the state of the model.</p>
+<p>Model checkpointing—Saving the current weights of the model at different points during training.
+Early stopping—Interrupting training when the validation loss is no longer improving (and saving the best model obtained during training).
+Dynamically adjusting the value of certain parameters during training—Such as the learning rate of the optimizer.
+Logging training and validation metrics during training, or visualizing the representations learned by the model as they’re updated—The Keras progress bar that you’re familiar with is a callback!</p>
+<p>The model-checkpoint and early-stopping callbacks
+You can use callback_early_stopping to interrupt training once a target metric being monitored has stopped improving for a fixed number of epochs. For instance, this callback allows you to interrupt training as soon as you start overfitting, thus avoiding having to retrain your model for a smaller number of epochs. This callback is typically used in combination with callback_model_checkpoint, which lets you continually save the model during training (and, optionally, save only the current best model so far: the version of the model that achieved the best performance at the end of an epoch):</p>
+<p>1 Callbacks are passed to the model via the callbacks argument in fit, which takes a list of callbacks. You can pass any number of callbacks.
+2 Interrupts training when improvement stops
+3 Monitors the model’s validation accuracy
+4 Interrupts training when accuracy has stopped improving for more than one epoch (that is, two epochs)
+5 Saves the current weights after every epoch
+6 Path to the destination model file
+7 These two arguments mean you won’t overwrite the model file unless val_loss has improved, which allows you to keep the best model seen during training.
+8 You monitor accuracy, so it should be part of the model’s metrics.
+9 Note that because the callback will monitor validation loss and accuracy, you need to pass validation_data to the call to fit.</p>
+<p>The reduce-learning-rate-on-plateau callback
+You can use this callback to reduce the learning rate when the validation loss has stopped improving. Reducing or increasing the learning rate in case of a loss plateau is is an effective strategy to get out of local minima during training. The following example uses callback_reduce_lr_on_plateau:</p>
+<p>1 Monitors the model’s validation loss
+2 Divides the learning rate by 10 when triggered
+3 The callback is triggered after the validation loss has stopped improving for 10 epochs.
+4 Because the callback will monitor the validation loss, you need to pass validation_data to the call to fit.
+Writing your own callback
+If you need to take a specific action during training that isn’t covered by one of the built-in callbacks, you can write your own callback. Callbacks are implemented by creating a new R6 class that inherits from the KerasCallback class. You can then implement any number of the following transparently named methods, which are called at various points during training:</p>
+<p>1 Called at the start of every epoch
+2 Called at the end of every epoch
+3 Called right before processing each batch
+4 Called right after processing each batch
+5 Called at the start of training
+6 Called at the end of training
+These methods all are called with a logs argument, which is a named list containing information about the previous batch, epoch, or training run: training and validation metrics, and so on. Additionally, the callback has access to the following attributes:</p>
+<p>self<span class="math inline">\(model—Reference to the Keras model being trained self\)</span>params—Named list with training parameters (verbosity, batch size, number of epochs, and so on)
+Here’s a simple example that saves a list of losses over each batch during training:</p>
+<p>1 Called at the end of every training batch
+2 Accumulates losses from every batch in a list
+3 Creates an instance of the callback
+4 Attaches the callback to model training
+5 Accumulated losses are now available from the callback instance.
+This is all you need to know about callbacks—the rest is technical details, which you can easily look up. Now you’re equipped to perform any sort of logging or preprogrammed intervention on a Keras model during training.</p>
+<p>7.2.2. Introduction to TensorBoard: the TensorFlow visualization framework
+To do good research or develop good models, you need rich, frequent feedback about what’s going on inside your models during your experiments. That’s the point of running experiments: to get information about how well a model performs—as much information as possible. Making progress is an iterative process, or loop: you start with an idea and express it as an experiment, attempting to validate or invalidate your idea. You run this experiment and process the information it generates. This inspires your next idea. The more iterations of this loop you’re able to run, the more refined and powerful your ideas become. Keras helps you go from idea to experiment in the least possible time, and fast GPUs can help you get from experiment to result as quickly as possible. But what about processing the experiment results? That’s where Tensor-Board comes in.</p>
+<p>This section introduces TensorBoard, a browser-based visualization tool that comes packaged with TensorFlow. Note that it’s only available for Keras models when you’re using Keras with the TensorFlow backend.</p>
+<p>The key purpose of TensorBoard is to help you visually monitor everything that goes on inside your model during training. If you’re monitoring more information than just the model’s final loss, you can develop a clearer vision of what the model does and doesn’t do, and you can make progress more quickly. TensorBoard gives you access to several neat features, all in your browser:</p>
+<p>Visually monitoring metrics during training
+Visualizing your model architecture
+Visualizing histograms of activations and gradients
+Exploring embeddings in 3D
+Let’s demonstrate these features on a simple example. You’ll train a 1D convnet on the IMDB sentiment-analysis task.</p>
+<hr />
+<p>If you have questions or would like to talk about this article (or something else data-related), you can now <a href="http://127.0.0.1:4321/page/bookme/">book 15-minute timeslots</a> with me (it’s free - one slot available per weekday):</p>
+<img src="https://www.appointletcdn.com/loader/buttons/F62459.png" data-appointlet-organization="shirin-elsinghorst" data-appointlet-service="357892">
+<script src="https://www.appointletcdn.com/loader/loader.min.js" async="" defer=""></script>
+<p><em>If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at <button><a href="https://paypal.me/ShirinGlander">paypal.me</a></button>. Thank you!</em> :-)</p>
+<hr />
+<pre class="r"><code># load libraries
+library(tidyverse)
+library(keras)</code></pre>
+<pre class="r"><code># check if keras is available
+is_keras_available()
+#[1] TRUE</code></pre>
+<div id="loading-images-data" class="section level2">
+<h2>Loading images (data)</h2>
+<pre class="r"><code># path to image folders
+train_image_files_path &lt;- &quot;/fruits/Training/&quot;</code></pre>
+<pre class="r"><code># list of fruits to modle
+fruit_list &lt;- c(&quot;Kiwi&quot;, &quot;Banana&quot;, &quot;Apricot&quot;, &quot;Avocado&quot;, &quot;Cocos&quot;, &quot;Clementine&quot;, &quot;Mandarine&quot;, &quot;Orange&quot;,
+                &quot;Limes&quot;, &quot;Lemon&quot;, &quot;Peach&quot;, &quot;Plum&quot;, &quot;Raspberry&quot;, &quot;Strawberry&quot;, &quot;Pineapple&quot;, &quot;Pomegranate&quot;)
+
+# number of output classes (i.e. fruits)
+output_n &lt;- length(fruit_list)
+
+# image size to scale down to (original images are 100 x 100 px)
+img_width &lt;- 20
+img_height &lt;- 20
+target_size &lt;- c(img_width, img_height)
+
+# RGB = 3 channels
+channels &lt;- 3
+
+# define batch size
+batch_size &lt;- 32</code></pre>
+<pre class="r"><code>train_data_gen &lt;- image_data_generator(
+  rescale = 1/255,
+  validation_split = 0.3)</code></pre>
+<p>Now we load the images into memory and resize them.</p>
+<pre class="r"><code># training images
+train_image_array_gen &lt;- flow_images_from_directory(train_image_files_path, 
+                                          train_data_gen,
+                                          subset = &#39;training&#39;,
+                                          target_size = target_size,
+                                          class_mode = &quot;categorical&quot;,
+                                          classes = fruit_list,
+                                          batch_size = batch_size,
+                                          seed = 42)
+#Found 5401 images belonging to 16 classes.
+
+# validation images
+valid_image_array_gen &lt;- flow_images_from_directory(train_image_files_path, 
+                                          train_data_gen,
+                                          subset = &#39;validation&#39;,
+                                          target_size = target_size,
+                                          class_mode = &quot;categorical&quot;,
+                                          classes = fruit_list,
+                                          batch_size = batch_size,
+                                          seed = 42)
+#Found 2308 images belonging to 16 classes.</code></pre>
+</div>
+<div id="training-the-model" class="section level2">
+<h2>Training the model</h2>
+<p>Now, I define and train the model just as before:</p>
+<pre class="r"><code># number of training samples
+train_samples &lt;- train_image_array_gen$n
+# number of validation samples
+valid_samples &lt;- valid_image_array_gen$n
+
+# define number of epochs
+epochs &lt;- 10</code></pre>
+<pre class="r"><code># input layer
+inputs &lt;- layer_input(shape = c(img_width, img_height, channels))
+
+# outputs compose input + dense layers
+predictions &lt;- inputs %&gt;%
+  layer_conv_2d(filter = 32, kernel_size = c(3,3), padding = &quot;same&quot;) %&gt;%
+  layer_activation(&quot;relu&quot;) %&gt;%
+  
+  # Second hidden layer
+  layer_conv_2d(filter = 16, kernel_size = c(3,3), padding = &quot;same&quot;) %&gt;%
+  layer_activation_leaky_relu(0.5) %&gt;%
+  layer_batch_normalization() %&gt;%
+
+  # Use max pooling
+  layer_max_pooling_2d(pool_size = c(2,2)) %&gt;%
+  layer_dropout(0.25) %&gt;%
+  
+  # Flatten max filtered output into feature vector 
+  # and feed into dense layer
+  layer_flatten() %&gt;%
+  layer_dense(100) %&gt;%
+  layer_activation(&quot;relu&quot;) %&gt;%
+  layer_dropout(0.5) %&gt;%
+  
+  # Outputs from dense layer are projected onto output layer
+  layer_dense(output_n) %&gt;% 
+  layer_activation(&quot;softmax&quot;)
+
+# create and compile model
+model &lt;- keras_model(inputs = inputs, outputs = predictions)
+
+model %&gt;% compile(
+  loss = &quot;categorical_crossentropy&quot;,
+  optimizer = optimizer_rmsprop(lr = 0.0001, decay = 1e-6),
+  metrics = &quot;accuracy&quot;
+)</code></pre>
+<pre class="r"><code># fit
+hist &lt;- model %&gt;% fit_generator(
+  # training data
+  train_image_array_gen,
+  
+  # epochs
+  steps_per_epoch = as.integer(train_samples / batch_size), 
+  epochs = epochs, 
+  
+  # validation data
+  validation_data = valid_image_array_gen,
+  validation_steps = as.integer(valid_samples / batch_size)
+  
+  # callbacks
+  callbacks = list(
+    #callback_model_checkpoint(&quot;checkpoints.h5&quot;),
+    callback_early_stopping(monitor = &quot;val_loss&quot;, min_delta = 0.001, patience = 3)#,
+    #callback_tensorboard(&quot;logs&quot;)
+  )
+)</code></pre>
+<pre class="r"><code>plot(hist)</code></pre>
+<pre class="r"><code>tensorboard(&quot;logs&quot;)</code></pre>
+<hr />
+<pre class="r"><code>devtools::session_info()</code></pre>
+<pre><code>## ─ Session info ───────────────────────────────────────────────────────────────
+##  setting  value                       
+##  version  R version 4.0.2 (2020-06-22)
+##  os       macOS Catalina 10.15.6      
+##  system   x86_64, darwin17.0          
+##  ui       X11                         
+##  language (EN)                        
+##  collate  en_US.UTF-8                 
+##  ctype    en_US.UTF-8                 
+##  tz       Europe/Berlin               
+##  date     2020-09-14                  
+## 
+## ─ Packages ───────────────────────────────────────────────────────────────────
+##  package     * version date       lib source                           
+##  assertthat    0.2.1   2019-03-21 [1] CRAN (R 4.0.0)                   
+##  backports     1.1.9   2020-08-24 [1] CRAN (R 4.0.2)                   
+##  base64enc     0.1-3   2015-07-28 [1] CRAN (R 4.0.0)                   
+##  blob          1.2.1   2020-01-20 [1] CRAN (R 4.0.2)                   
+##  blogdown      0.20.1  2020-09-09 [1] Github (rstudio/blogdown@d96fe78)
+##  bookdown      0.20    2020-06-23 [1] CRAN (R 4.0.2)                   
+##  broom         0.7.0   2020-07-09 [1] CRAN (R 4.0.2)                   
+##  callr         3.4.4   2020-09-07 [1] CRAN (R 4.0.2)                   
+##  cellranger    1.1.0   2016-07-27 [1] CRAN (R 4.0.0)                   
+##  cli           2.0.2   2020-02-28 [1] CRAN (R 4.0.0)                   
+##  colorspace    1.4-1   2019-03-18 [1] CRAN (R 4.0.0)                   
+##  crayon        1.3.4   2017-09-16 [1] CRAN (R 4.0.0)                   
+##  DBI           1.1.0   2019-12-15 [1] CRAN (R 4.0.0)                   
+##  dbplyr        1.4.4   2020-05-27 [1] CRAN (R 4.0.2)                   
+##  desc          1.2.0   2018-05-01 [1] CRAN (R 4.0.0)                   
+##  devtools      2.3.1   2020-07-21 [1] CRAN (R 4.0.2)                   
+##  digest        0.6.25  2020-02-23 [1] CRAN (R 4.0.0)                   
+##  dplyr       * 1.0.2   2020-08-18 [1] CRAN (R 4.0.2)                   
+##  ellipsis      0.3.1   2020-05-15 [1] CRAN (R 4.0.0)                   
+##  evaluate      0.14    2019-05-28 [1] CRAN (R 4.0.1)                   
+##  fansi         0.4.1   2020-01-08 [1] CRAN (R 4.0.0)                   
+##  forcats     * 0.5.0   2020-03-01 [1] CRAN (R 4.0.0)                   
+##  fs            1.5.0   2020-07-31 [1] CRAN (R 4.0.2)                   
+##  generics      0.0.2   2018-11-29 [1] CRAN (R 4.0.0)                   
+##  ggplot2     * 3.3.2   2020-06-19 [1] CRAN (R 4.0.2)                   
+##  glue          1.4.2   2020-08-27 [1] CRAN (R 4.0.2)                   
+##  gtable        0.3.0   2019-03-25 [1] CRAN (R 4.0.0)                   
+##  haven         2.3.1   2020-06-01 [1] CRAN (R 4.0.2)                   
+##  hms           0.5.3   2020-01-08 [1] CRAN (R 4.0.0)                   
+##  htmltools     0.5.0   2020-06-16 [1] CRAN (R 4.0.2)                   
+##  httr          1.4.2   2020-07-20 [1] CRAN (R 4.0.2)                   
+##  jsonlite      1.7.1   2020-09-07 [1] CRAN (R 4.0.2)                   
+##  keras       * 2.3.0.0 2020-05-19 [1] CRAN (R 4.0.2)                   
+##  knitr         1.29    2020-06-23 [1] CRAN (R 4.0.2)                   
+##  lattice       0.20-41 2020-04-02 [1] CRAN (R 4.0.2)                   
+##  lifecycle     0.2.0   2020-03-06 [1] CRAN (R 4.0.0)                   
+##  lubridate     1.7.9   2020-06-08 [1] CRAN (R 4.0.2)                   
+##  magrittr      1.5     2014-11-22 [1] CRAN (R 4.0.0)                   
+##  Matrix        1.2-18  2019-11-27 [1] CRAN (R 4.0.2)                   
+##  memoise       1.1.0   2017-04-21 [1] CRAN (R 4.0.0)                   
+##  modelr        0.1.8   2020-05-19 [1] CRAN (R 4.0.2)                   
+##  munsell       0.5.0   2018-06-12 [1] CRAN (R 4.0.0)                   
+##  pillar        1.4.6   2020-07-10 [1] CRAN (R 4.0.2)                   
+##  pkgbuild      1.1.0   2020-07-13 [1] CRAN (R 4.0.2)                   
+##  pkgconfig     2.0.3   2019-09-22 [1] CRAN (R 4.0.0)                   
+##  pkgload       1.1.0   2020-05-29 [1] CRAN (R 4.0.2)                   
+##  prettyunits   1.1.1   2020-01-24 [1] CRAN (R 4.0.0)                   
+##  processx      3.4.4   2020-09-03 [1] CRAN (R 4.0.2)                   
+##  ps            1.3.4   2020-08-11 [1] CRAN (R 4.0.2)                   
+##  purrr       * 0.3.4   2020-04-17 [1] CRAN (R 4.0.0)                   
+##  R6            2.4.1   2019-11-12 [1] CRAN (R 4.0.0)                   
+##  Rcpp          1.0.5   2020-07-06 [1] CRAN (R 4.0.2)                   
+##  readr       * 1.3.1   2018-12-21 [1] CRAN (R 4.0.0)                   
+##  readxl        1.3.1   2019-03-13 [1] CRAN (R 4.0.0)                   
+##  remotes       2.2.0   2020-07-21 [1] CRAN (R 4.0.2)                   
+##  reprex        0.3.0   2019-05-16 [1] CRAN (R 4.0.0)                   
+##  reticulate    1.16    2020-05-27 [1] CRAN (R 4.0.2)                   
+##  rlang         0.4.7   2020-07-09 [1] CRAN (R 4.0.2)                   
+##  rmarkdown     2.3     2020-06-18 [1] CRAN (R 4.0.2)                   
+##  rprojroot     1.3-2   2018-01-03 [1] CRAN (R 4.0.0)                   
+##  rstudioapi    0.11    2020-02-07 [1] CRAN (R 4.0.0)                   
+##  rvest         0.3.6   2020-07-25 [1] CRAN (R 4.0.2)                   
+##  scales        1.1.1   2020-05-11 [1] CRAN (R 4.0.0)                   
+##  sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 4.0.0)                   
+##  stringi       1.5.3   2020-09-09 [1] CRAN (R 4.0.2)                   
+##  stringr     * 1.4.0   2019-02-10 [1] CRAN (R 4.0.0)                   
+##  tensorflow    2.2.0   2020-05-11 [1] CRAN (R 4.0.0)                   
+##  testthat      2.3.2   2020-03-02 [1] CRAN (R 4.0.0)                   
+##  tfruns        1.4     2018-08-25 [1] CRAN (R 4.0.0)                   
+##  tibble      * 3.0.3   2020-07-10 [1] CRAN (R 4.0.2)                   
+##  tidyr       * 1.1.2   2020-08-27 [1] CRAN (R 4.0.2)                   
+##  tidyselect    1.1.0   2020-05-11 [1] CRAN (R 4.0.0)                   
+##  tidyverse   * 1.3.0   2019-11-21 [1] CRAN (R 4.0.0)                   
+##  usethis       1.6.1   2020-04-29 [1] CRAN (R 4.0.0)                   
+##  vctrs         0.3.4   2020-08-29 [1] CRAN (R 4.0.2)                   
+##  whisker       0.4     2019-08-28 [1] CRAN (R 4.0.0)                   
+##  withr         2.2.0   2020-04-20 [1] CRAN (R 4.0.0)                   
+##  xfun          0.17    2020-09-09 [1] CRAN (R 4.0.2)                   
+##  xml2          1.3.2   2020-04-23 [1] CRAN (R 4.0.0)                   
+##  yaml          2.2.1   2020-02-01 [1] CRAN (R 4.0.0)                   
+##  zeallot       0.1.0   2018-01-28 [1] CRAN (R 4.0.0)                   
+## 
+## [1] /Library/Frameworks/R.framework/Versions/4.0/Resources/library</code></pre>
+</div>

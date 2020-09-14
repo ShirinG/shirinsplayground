@@ -1,0 +1,255 @@
+---
+title: "Using the Keras Functional API"
+draft: true
+author: Dr. Shirin Elsinghorst
+date: '2020-09-20'
+categories: ["R", "keras"]
+tags: ["R", "keras", "image classification", "tensorflow"]
+thumbnailImagePosition: left
+thumbnailImage: 
+metaAlignment: center
+coverMeta: out
+slug: keras_funct_api
+---
+
+
+
+<p><a href="https://keras.rstudio.com/articles/functional_api.html" class="uri">https://keras.rstudio.com/articles/functional_api.html</a></p>
+<p>The Keras Functional API is more for complex models, like multi-input and multi-output models, but I will show how it works in a simple example here.</p>
+<p>(keras_model_sequential). The sequential model makes the assumption that the network has exactly one input and exactly one output, and that it consists of a linear stack of layers (see figure 7.1).</p>
+<p>This is a commonly verified assumption; the configuration is so common that we’ve been able to cover many topics and practical applications in these pages so far using only keras_model_sequential. But this set of assumptions is too inflexible in a number of cases. Some networks require several independent inputs, others require multiple outputs, and some networks have internal branching between layers that makes them look like graphs of layers rather than linear stacks of layers.</p>
+<p>Some tasks, for instance, require multimodal inputs: they merge data coming from different input sources, processing each type of data using different kinds of neural layers. Imagine a deep-learning model trying to predict the most likely market price of a second-hand piece of clothing, using the following inputs: user-provided metadata (such as the item’s brand, age, and so on), a user-provided text description, and a picture of the item. If you had only the metadata available, you could one-hot encode it and use a densely connected network to predict the price. If you had only the text description available, you could use an RNN or a 1D convnet. If you had only the picture, you could use a 2D convnet. But how can you use all three at the same time? A naive approach would be to train three separate models and then do a weighted average of their predictions. But this may be suboptimal, because the information extracted by the models may be redundant. A better way is to jointly learn a more accurate model of the data by using a model that can see all available input modalities simultaneously: a model with three input branches (see figure 7.2).</p>
+<p>Similarly, some tasks need to predict multiple target attributes of input data. Given the text of a novel or short story, you might want to automatically classify it by genre (such as romance or thriller) but also predict the approximate date it was written. Of course, you could train two separate models: one for the genre and one for the date. But because these attributes aren’t statistically independent, you could build a better model by learning to jointly predict both genre and date at the same time. Such a joint model would then have two outputs, or heads (see figure 7.3). Due to correlations between genre and date, knowing the date of a novel would help the model learn rich, accurate representations of the space of novel genres, and vice versa.</p>
+<p>Additionally, many recently developed neural architectures require nonlinear network topology: networks structured as directed acyclic graphs. The Inception family of networks (developed by Szegedy et al. at Google),[1] for instance, relies on Inception modules, where the input is processed by several parallel convolutional branches whose outputs are then merged back into a single tensor (see figure 7.4). There’s also the recent trend of adding residual connections to a model, which started with the ResNet family of networks (developed by He et al. at Microsoft).[2] A residual connection consists of reinjecting previous representations into the downstream flow of data by adding a past output tensor to a later output tensor (see figure 7.5), which helps prevent information loss along the data-processing flow. There are many other examples of such graph-like networks.</p>
+<p>In the functional API, you build your input and output layers and then pass them to the keras_model function. This model can be trained just like Keras sequential models.</p>
+<p>The only part that may seem a bit magical at this point is passing only an input tensor and an output tensor to the keras_model function. Behind the scenes, Keras retrieves every layer involved in going from input_tensor to output_tensor, bringing them together into a graph-like data structure—a model. Of course, the reason it works is that output_tensor was obtained by repeatedly transforming input_tensor. If you tried to build a model from inputs and outputs that weren’t related, you’d get an error:</p>
+<p>This error tells you, in essence, that Keras couldn’t reach input_1 from the provided output tensor.</p>
+<p>When it comes to compiling, training, or evaluating a model built this way, the API is the same as that of sequential models:</p>
+<p>The functional API can be used to build models that have multiple inputs. Typically, such models at some point merge their different input branches using a layer that can combine several tensors: by adding them, concatenating them, and so on. This is usually done via a Keras merge operation such as layer_add, layer_concatenate, and so on. Let’s look at a very simple example of a multi-input model: a question-answering model.</p>
+<p>A typical question-answering model has two inputs: a natural-language question and a text snippet (such as a news article) providing information to be used for answering the question. The model must then produce an answer: in the simplest possible setup, this is a one-word answer obtained via a softmax over some predefined vocabulary (see figure 7.6).</p>
+<p>In the same way, you can use the functional API to build models with multiple outputs (or multiple heads). A simple example is a network that attempts to simultaneously predict different properties of the data, such as a network that takes as input a series of social media posts from a single anonymous person and tries to predict attributes of that person, such as age, gender, and income level (see figure 7.7).</p>
+<p>With the functional API, not only can you build models with multiple inputs and multiple outputs, but you can also implement networks with a complex internal topology. Neural networks in Keras are allowed to be arbitrary directed acyclic graphs of layers. The qualifier acyclic is important: these graphs can’t have cycles. It’s impossible for a tensor x to become the input of one of the layers that generated x. The only processing loops that are allowed (that is, recurrent connections) are those internal to recurrent layers.</p>
+<p>Several common neural-network components are implemented as graphs. Two notable ones are Inception modules and residual connections. To better understand how the functional API can be used to build graphs of layers, let’s take a look at how you can implement both of them in Keras.</p>
+<p>Inception modules
+Inception[3] is a popular type of network architecture for convolutional neural networks; it was developed by Christian Szegedy and his colleagues at Google in 2013–2014, inspired by the earlier network-in-network architecture.[4] It consists of a stack of modules that themselves look like small independent networks, split into several parallel branches. The most basic form of an Inception module has three to four branches starting with a 1 × 1 convolution, followed by a 3 × 3 convolution, and ending with the concatenation of the resulting features. This setup helps the network separately learn spatial features and channel-wise features, which is more efficient than learning them jointly. More-complex versions of an Inception module are also possible, typically involving pooling operations, different spatial convolution sizes (for example, 5 × 5 instead of 3 × 3 on some branches), and branches without a spatial convolution (only a 1 × 1 convolution). An example of such a module, taken from Inception V3, is shown in figure 7.8.</p>
+<hr />
+<p>If you have questions or would like to talk about this article (or something else data-related), you can now <a href="http://127.0.0.1:4321/page/bookme/">book 15-minute timeslots</a> with me (it’s free - one slot available per weekday):</p>
+<img src="https://www.appointletcdn.com/loader/buttons/F62459.png" data-appointlet-organization="shirin-elsinghorst" data-appointlet-service="357892">
+<script src="https://www.appointletcdn.com/loader/loader.min.js" async="" defer=""></script>
+<p><em>If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at <button><a href="https://paypal.me/ShirinGlander">paypal.me</a></button>. Thank you!</em> :-)</p>
+<hr />
+<pre class="r"><code># load libraries
+library(tidyverse)
+library(keras)</code></pre>
+<pre class="r"><code># check if keras is available
+is_keras_available()
+#[1] TRUE</code></pre>
+<div id="loading-images-data" class="section level2">
+<h2>Loading images (data)</h2>
+<pre class="r"><code># path to image folders
+train_image_files_path &lt;- &quot;/fruits/Training/&quot;</code></pre>
+<pre class="r"><code># list of fruits to modle
+fruit_list &lt;- c(&quot;Kiwi&quot;, &quot;Banana&quot;, &quot;Apricot&quot;, &quot;Avocado&quot;, &quot;Cocos&quot;, &quot;Clementine&quot;, &quot;Mandarine&quot;, &quot;Orange&quot;,
+                &quot;Limes&quot;, &quot;Lemon&quot;, &quot;Peach&quot;, &quot;Plum&quot;, &quot;Raspberry&quot;, &quot;Strawberry&quot;, &quot;Pineapple&quot;, &quot;Pomegranate&quot;)
+
+# number of output classes (i.e. fruits)
+output_n &lt;- length(fruit_list)
+
+# image size to scale down to (original images are 100 x 100 px)
+img_width &lt;- 20
+img_height &lt;- 20
+target_size &lt;- c(img_width, img_height)
+
+# RGB = 3 channels
+channels &lt;- 3
+
+# define batch size
+batch_size &lt;- 32</code></pre>
+<pre class="r"><code>train_data_gen &lt;- image_data_generator(
+  rescale = 1/255,
+  validation_split = 0.3)</code></pre>
+<p>Now we load the images into memory and resize them.</p>
+<pre class="r"><code># training images
+train_image_array_gen &lt;- flow_images_from_directory(train_image_files_path, 
+                                          train_data_gen,
+                                          subset = &#39;training&#39;,
+                                          target_size = target_size,
+                                          class_mode = &quot;categorical&quot;,
+                                          classes = fruit_list,
+                                          batch_size = batch_size,
+                                          seed = 42)
+#Found 5401 images belonging to 16 classes.
+
+# validation images
+valid_image_array_gen &lt;- flow_images_from_directory(train_image_files_path, 
+                                          train_data_gen,
+                                          subset = &#39;validation&#39;,
+                                          target_size = target_size,
+                                          class_mode = &quot;categorical&quot;,
+                                          classes = fruit_list,
+                                          batch_size = batch_size,
+                                          seed = 42)
+#Found 2308 images belonging to 16 classes.</code></pre>
+</div>
+<div id="training-the-model" class="section level2">
+<h2>Training the model</h2>
+<p>Now, I define and train the model just as before:</p>
+<pre class="r"><code># number of training samples
+train_samples &lt;- train_image_array_gen$n
+# number of validation samples
+valid_samples &lt;- valid_image_array_gen$n
+
+# define number of epochs
+epochs &lt;- 10</code></pre>
+<pre class="r"><code># input layer
+inputs &lt;- layer_input(shape = c(img_width, img_height, channels))
+
+# outputs compose input + dense layers
+predictions &lt;- inputs %&gt;%
+  layer_conv_2d(filter = 32, kernel_size = c(3,3), padding = &quot;same&quot;) %&gt;%
+  layer_activation(&quot;relu&quot;) %&gt;%
+  
+  # Second hidden layer
+  layer_conv_2d(filter = 16, kernel_size = c(3,3), padding = &quot;same&quot;) %&gt;%
+  layer_activation_leaky_relu(0.5) %&gt;%
+  layer_batch_normalization() %&gt;%
+
+  # Use max pooling
+  layer_max_pooling_2d(pool_size = c(2,2)) %&gt;%
+  layer_dropout(0.25) %&gt;%
+  
+  # Flatten max filtered output into feature vector 
+  # and feed into dense layer
+  layer_flatten() %&gt;%
+  layer_dense(100) %&gt;%
+  layer_activation(&quot;relu&quot;) %&gt;%
+  layer_dropout(0.5) %&gt;%
+  
+  # Outputs from dense layer are projected onto output layer
+  layer_dense(output_n) %&gt;% 
+  layer_activation(&quot;softmax&quot;)
+
+# create and compile model
+model &lt;- keras_model(inputs = inputs, outputs = predictions)
+
+model %&gt;% compile(
+  loss = &quot;categorical_crossentropy&quot;,
+  optimizer = optimizer_rmsprop(lr = 0.0001, decay = 1e-6),
+  metrics = &quot;accuracy&quot;
+)</code></pre>
+<pre class="r"><code># fit
+hist &lt;- model %&gt;% fit_generator(
+  # training data
+  train_image_array_gen,
+  
+  # epochs
+  steps_per_epoch = as.integer(train_samples / batch_size), 
+  epochs = epochs, 
+  
+  # validation data
+  validation_data = valid_image_array_gen,
+  validation_steps = as.integer(valid_samples / batch_size)
+)</code></pre>
+<pre class="r"><code>plot(hist)</code></pre>
+</div>
+<div id="section" class="section level2">
+<h2><img src="/img/hist.png" /></h2>
+<pre class="r"><code>devtools::session_info()</code></pre>
+<pre><code>## ─ Session info ───────────────────────────────────────────────────────────────
+##  setting  value                       
+##  version  R version 4.0.2 (2020-06-22)
+##  os       macOS Catalina 10.15.6      
+##  system   x86_64, darwin17.0          
+##  ui       X11                         
+##  language (EN)                        
+##  collate  en_US.UTF-8                 
+##  ctype    en_US.UTF-8                 
+##  tz       Europe/Berlin               
+##  date     2020-09-14                  
+## 
+## ─ Packages ───────────────────────────────────────────────────────────────────
+##  package     * version date       lib source                           
+##  assertthat    0.2.1   2019-03-21 [1] CRAN (R 4.0.0)                   
+##  backports     1.1.9   2020-08-24 [1] CRAN (R 4.0.2)                   
+##  base64enc     0.1-3   2015-07-28 [1] CRAN (R 4.0.0)                   
+##  blob          1.2.1   2020-01-20 [1] CRAN (R 4.0.2)                   
+##  blogdown      0.20.1  2020-09-09 [1] Github (rstudio/blogdown@d96fe78)
+##  bookdown      0.20    2020-06-23 [1] CRAN (R 4.0.2)                   
+##  broom         0.7.0   2020-07-09 [1] CRAN (R 4.0.2)                   
+##  callr         3.4.4   2020-09-07 [1] CRAN (R 4.0.2)                   
+##  cellranger    1.1.0   2016-07-27 [1] CRAN (R 4.0.0)                   
+##  cli           2.0.2   2020-02-28 [1] CRAN (R 4.0.0)                   
+##  colorspace    1.4-1   2019-03-18 [1] CRAN (R 4.0.0)                   
+##  crayon        1.3.4   2017-09-16 [1] CRAN (R 4.0.0)                   
+##  DBI           1.1.0   2019-12-15 [1] CRAN (R 4.0.0)                   
+##  dbplyr        1.4.4   2020-05-27 [1] CRAN (R 4.0.2)                   
+##  desc          1.2.0   2018-05-01 [1] CRAN (R 4.0.0)                   
+##  devtools      2.3.1   2020-07-21 [1] CRAN (R 4.0.2)                   
+##  digest        0.6.25  2020-02-23 [1] CRAN (R 4.0.0)                   
+##  dplyr       * 1.0.2   2020-08-18 [1] CRAN (R 4.0.2)                   
+##  ellipsis      0.3.1   2020-05-15 [1] CRAN (R 4.0.0)                   
+##  evaluate      0.14    2019-05-28 [1] CRAN (R 4.0.1)                   
+##  fansi         0.4.1   2020-01-08 [1] CRAN (R 4.0.0)                   
+##  forcats     * 0.5.0   2020-03-01 [1] CRAN (R 4.0.0)                   
+##  fs            1.5.0   2020-07-31 [1] CRAN (R 4.0.2)                   
+##  generics      0.0.2   2018-11-29 [1] CRAN (R 4.0.0)                   
+##  ggplot2     * 3.3.2   2020-06-19 [1] CRAN (R 4.0.2)                   
+##  glue          1.4.2   2020-08-27 [1] CRAN (R 4.0.2)                   
+##  gtable        0.3.0   2019-03-25 [1] CRAN (R 4.0.0)                   
+##  haven         2.3.1   2020-06-01 [1] CRAN (R 4.0.2)                   
+##  hms           0.5.3   2020-01-08 [1] CRAN (R 4.0.0)                   
+##  htmltools     0.5.0   2020-06-16 [1] CRAN (R 4.0.2)                   
+##  httr          1.4.2   2020-07-20 [1] CRAN (R 4.0.2)                   
+##  jsonlite      1.7.1   2020-09-07 [1] CRAN (R 4.0.2)                   
+##  keras       * 2.3.0.0 2020-05-19 [1] CRAN (R 4.0.2)                   
+##  knitr         1.29    2020-06-23 [1] CRAN (R 4.0.2)                   
+##  lattice       0.20-41 2020-04-02 [1] CRAN (R 4.0.2)                   
+##  lifecycle     0.2.0   2020-03-06 [1] CRAN (R 4.0.0)                   
+##  lubridate     1.7.9   2020-06-08 [1] CRAN (R 4.0.2)                   
+##  magrittr      1.5     2014-11-22 [1] CRAN (R 4.0.0)                   
+##  Matrix        1.2-18  2019-11-27 [1] CRAN (R 4.0.2)                   
+##  memoise       1.1.0   2017-04-21 [1] CRAN (R 4.0.0)                   
+##  modelr        0.1.8   2020-05-19 [1] CRAN (R 4.0.2)                   
+##  munsell       0.5.0   2018-06-12 [1] CRAN (R 4.0.0)                   
+##  pillar        1.4.6   2020-07-10 [1] CRAN (R 4.0.2)                   
+##  pkgbuild      1.1.0   2020-07-13 [1] CRAN (R 4.0.2)                   
+##  pkgconfig     2.0.3   2019-09-22 [1] CRAN (R 4.0.0)                   
+##  pkgload       1.1.0   2020-05-29 [1] CRAN (R 4.0.2)                   
+##  prettyunits   1.1.1   2020-01-24 [1] CRAN (R 4.0.0)                   
+##  processx      3.4.4   2020-09-03 [1] CRAN (R 4.0.2)                   
+##  ps            1.3.4   2020-08-11 [1] CRAN (R 4.0.2)                   
+##  purrr       * 0.3.4   2020-04-17 [1] CRAN (R 4.0.0)                   
+##  R6            2.4.1   2019-11-12 [1] CRAN (R 4.0.0)                   
+##  Rcpp          1.0.5   2020-07-06 [1] CRAN (R 4.0.2)                   
+##  readr       * 1.3.1   2018-12-21 [1] CRAN (R 4.0.0)                   
+##  readxl        1.3.1   2019-03-13 [1] CRAN (R 4.0.0)                   
+##  remotes       2.2.0   2020-07-21 [1] CRAN (R 4.0.2)                   
+##  reprex        0.3.0   2019-05-16 [1] CRAN (R 4.0.0)                   
+##  reticulate    1.16    2020-05-27 [1] CRAN (R 4.0.2)                   
+##  rlang         0.4.7   2020-07-09 [1] CRAN (R 4.0.2)                   
+##  rmarkdown     2.3     2020-06-18 [1] CRAN (R 4.0.2)                   
+##  rprojroot     1.3-2   2018-01-03 [1] CRAN (R 4.0.0)                   
+##  rstudioapi    0.11    2020-02-07 [1] CRAN (R 4.0.0)                   
+##  rvest         0.3.6   2020-07-25 [1] CRAN (R 4.0.2)                   
+##  scales        1.1.1   2020-05-11 [1] CRAN (R 4.0.0)                   
+##  sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 4.0.0)                   
+##  stringi       1.5.3   2020-09-09 [1] CRAN (R 4.0.2)                   
+##  stringr     * 1.4.0   2019-02-10 [1] CRAN (R 4.0.0)                   
+##  tensorflow    2.2.0   2020-05-11 [1] CRAN (R 4.0.0)                   
+##  testthat      2.3.2   2020-03-02 [1] CRAN (R 4.0.0)                   
+##  tfruns        1.4     2018-08-25 [1] CRAN (R 4.0.0)                   
+##  tibble      * 3.0.3   2020-07-10 [1] CRAN (R 4.0.2)                   
+##  tidyr       * 1.1.2   2020-08-27 [1] CRAN (R 4.0.2)                   
+##  tidyselect    1.1.0   2020-05-11 [1] CRAN (R 4.0.0)                   
+##  tidyverse   * 1.3.0   2019-11-21 [1] CRAN (R 4.0.0)                   
+##  usethis       1.6.1   2020-04-29 [1] CRAN (R 4.0.0)                   
+##  vctrs         0.3.4   2020-08-29 [1] CRAN (R 4.0.2)                   
+##  whisker       0.4     2019-08-28 [1] CRAN (R 4.0.0)                   
+##  withr         2.2.0   2020-04-20 [1] CRAN (R 4.0.0)                   
+##  xfun          0.17    2020-09-09 [1] CRAN (R 4.0.2)                   
+##  xml2          1.3.2   2020-04-23 [1] CRAN (R 4.0.0)                   
+##  yaml          2.2.1   2020-02-01 [1] CRAN (R 4.0.0)                   
+##  zeallot       0.1.0   2018-01-28 [1] CRAN (R 4.0.0)                   
+## 
+## [1] /Library/Frameworks/R.framework/Versions/4.0/Resources/library</code></pre>
+</div>

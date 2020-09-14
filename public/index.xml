@@ -473,7 +473,7 @@ penguins_hist %&gt;%
   dist(method = &quot;euclidean&quot;) %&gt;%
   hclust(method = &quot;ward.D2&quot;) %&gt;% 
   as.dendrogram</code></pre>
-<pre><code>## &#39;dendrogram&#39; with 2 branches and 30 members total, at height 11.71654</code></pre>
+<pre><code>## &#39;dendrogram&#39; with 2 branches and 30 members total, at height 12.31756</code></pre>
 </div>
 <div id="waterfall-charts" class="section level3">
 <h3>Waterfall charts</h3>
@@ -574,7 +574,7 @@ penguins_pca &lt;- penguins_prep %&gt;%
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       Europe/Berlin               
-##  date     2020-09-10                  
+##  date     2020-09-14                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────
 ##  package        * version date       lib source                           
@@ -638,7 +638,7 @@ penguins_pca &lt;- penguins_prep %&gt;%
 ##  lubridate        1.7.9   2020-06-08 [1] CRAN (R 4.0.2)                   
 ##  magrittr         1.5     2014-11-22 [1] CRAN (R 4.0.0)                   
 ##  maps             3.3.0   2018-04-03 [1] CRAN (R 4.0.2)                   
-##  MASS             7.3-52  2020-08-18 [1] CRAN (R 4.0.2)                   
+##  MASS             7.3-53  2020-09-09 [1] CRAN (R 4.0.2)                   
 ##  Matrix           1.2-18  2019-11-27 [1] CRAN (R 4.0.2)                   
 ##  memoise          1.1.0   2017-04-21 [1] CRAN (R 4.0.0)                   
 ##  mgcv             1.8-33  2020-08-27 [1] CRAN (R 4.0.2)                   
@@ -710,19 +710,553 @@ penguins_pca &lt;- penguins_prep %&gt;%
 ]]></content>
   </entry>
   <entry>
-    <title type="html"><![CDATA[Update for Keras and TF 2.0: Image classification with keras.]]></title>
+    <title type="html"><![CDATA[Using Keras Callbacks]]></title>
+    <link href="/2020/09/keras_callbacks/"/>
+    <id>/2020/09/keras_callbacks/</id>
+    <published>2020-09-27T00:00:00+00:00</published>
+    <updated>2020-09-27T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<p>Keras comes with a number of built in <a href="https://keras.rstudio.com/articles/training_callbacks.html">callbacks</a>.</p>
+<p>When you’re training a model, there are many things you can’t predict from the start. In particular, you can’t tell how many epochs will be needed to get to an optimal validation loss. The examples so far have adopted the strategy of training for enough epochs that you begin overfitting, using the first run to figure out the proper number of epochs to train for, and then finally launching a new training run from scratch using this optimal number. Of course, this approach is wasteful.</p>
+<p>A much better way to handle this is to stop training when you measure that the validation loss in no longer improving. This can be achieved using a Keras callback. A callback is an object that is passed to the model in the call to fit and that is called by the model at various points during training. It has access to all the available data about the state of the model and its performance, and it can take action: interrupt training, save a model, load a different weight set, or otherwise alter the state of the model.</p>
+<p>Model checkpointing—Saving the current weights of the model at different points during training.
+Early stopping—Interrupting training when the validation loss is no longer improving (and saving the best model obtained during training).
+Dynamically adjusting the value of certain parameters during training—Such as the learning rate of the optimizer.
+Logging training and validation metrics during training, or visualizing the representations learned by the model as they’re updated—The Keras progress bar that you’re familiar with is a callback!</p>
+<p>The model-checkpoint and early-stopping callbacks
+You can use callback_early_stopping to interrupt training once a target metric being monitored has stopped improving for a fixed number of epochs. For instance, this callback allows you to interrupt training as soon as you start overfitting, thus avoiding having to retrain your model for a smaller number of epochs. This callback is typically used in combination with callback_model_checkpoint, which lets you continually save the model during training (and, optionally, save only the current best model so far: the version of the model that achieved the best performance at the end of an epoch):</p>
+<p>1 Callbacks are passed to the model via the callbacks argument in fit, which takes a list of callbacks. You can pass any number of callbacks.
+2 Interrupts training when improvement stops
+3 Monitors the model’s validation accuracy
+4 Interrupts training when accuracy has stopped improving for more than one epoch (that is, two epochs)
+5 Saves the current weights after every epoch
+6 Path to the destination model file
+7 These two arguments mean you won’t overwrite the model file unless val_loss has improved, which allows you to keep the best model seen during training.
+8 You monitor accuracy, so it should be part of the model’s metrics.
+9 Note that because the callback will monitor validation loss and accuracy, you need to pass validation_data to the call to fit.</p>
+<p>The reduce-learning-rate-on-plateau callback
+You can use this callback to reduce the learning rate when the validation loss has stopped improving. Reducing or increasing the learning rate in case of a loss plateau is is an effective strategy to get out of local minima during training. The following example uses callback_reduce_lr_on_plateau:</p>
+<p>1 Monitors the model’s validation loss
+2 Divides the learning rate by 10 when triggered
+3 The callback is triggered after the validation loss has stopped improving for 10 epochs.
+4 Because the callback will monitor the validation loss, you need to pass validation_data to the call to fit.
+Writing your own callback
+If you need to take a specific action during training that isn’t covered by one of the built-in callbacks, you can write your own callback. Callbacks are implemented by creating a new R6 class that inherits from the KerasCallback class. You can then implement any number of the following transparently named methods, which are called at various points during training:</p>
+<p>1 Called at the start of every epoch
+2 Called at the end of every epoch
+3 Called right before processing each batch
+4 Called right after processing each batch
+5 Called at the start of training
+6 Called at the end of training
+These methods all are called with a logs argument, which is a named list containing information about the previous batch, epoch, or training run: training and validation metrics, and so on. Additionally, the callback has access to the following attributes:</p>
+<p>self<span class="math inline">\(model—Reference to the Keras model being trained self\)</span>params—Named list with training parameters (verbosity, batch size, number of epochs, and so on)
+Here’s a simple example that saves a list of losses over each batch during training:</p>
+<p>1 Called at the end of every training batch
+2 Accumulates losses from every batch in a list
+3 Creates an instance of the callback
+4 Attaches the callback to model training
+5 Accumulated losses are now available from the callback instance.
+This is all you need to know about callbacks—the rest is technical details, which you can easily look up. Now you’re equipped to perform any sort of logging or preprogrammed intervention on a Keras model during training.</p>
+<p>7.2.2. Introduction to TensorBoard: the TensorFlow visualization framework
+To do good research or develop good models, you need rich, frequent feedback about what’s going on inside your models during your experiments. That’s the point of running experiments: to get information about how well a model performs—as much information as possible. Making progress is an iterative process, or loop: you start with an idea and express it as an experiment, attempting to validate or invalidate your idea. You run this experiment and process the information it generates. This inspires your next idea. The more iterations of this loop you’re able to run, the more refined and powerful your ideas become. Keras helps you go from idea to experiment in the least possible time, and fast GPUs can help you get from experiment to result as quickly as possible. But what about processing the experiment results? That’s where Tensor-Board comes in.</p>
+<p>This section introduces TensorBoard, a browser-based visualization tool that comes packaged with TensorFlow. Note that it’s only available for Keras models when you’re using Keras with the TensorFlow backend.</p>
+<p>The key purpose of TensorBoard is to help you visually monitor everything that goes on inside your model during training. If you’re monitoring more information than just the model’s final loss, you can develop a clearer vision of what the model does and doesn’t do, and you can make progress more quickly. TensorBoard gives you access to several neat features, all in your browser:</p>
+<p>Visually monitoring metrics during training
+Visualizing your model architecture
+Visualizing histograms of activations and gradients
+Exploring embeddings in 3D
+Let’s demonstrate these features on a simple example. You’ll train a 1D convnet on the IMDB sentiment-analysis task.</p>
+<hr />
+<p>If you have questions or would like to talk about this article (or something else data-related), you can now <a href="http://127.0.0.1:4321/page/bookme/">book 15-minute timeslots</a> with me (it’s free - one slot available per weekday):</p>
+<img src="https://www.appointletcdn.com/loader/buttons/F62459.png" data-appointlet-organization="shirin-elsinghorst" data-appointlet-service="357892">
+<script src="https://www.appointletcdn.com/loader/loader.min.js" async="" defer=""></script>
+<p><em>If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at <button><a href="https://paypal.me/ShirinGlander">paypal.me</a></button>. Thank you!</em> :-)</p>
+<hr />
+<pre class="r"><code># load libraries
+library(tidyverse)
+library(keras)</code></pre>
+<pre class="r"><code># check if keras is available
+is_keras_available()
+#[1] TRUE</code></pre>
+<div id="loading-images-data" class="section level2">
+<h2>Loading images (data)</h2>
+<pre class="r"><code># path to image folders
+train_image_files_path &lt;- &quot;/fruits/Training/&quot;</code></pre>
+<pre class="r"><code># list of fruits to modle
+fruit_list &lt;- c(&quot;Kiwi&quot;, &quot;Banana&quot;, &quot;Apricot&quot;, &quot;Avocado&quot;, &quot;Cocos&quot;, &quot;Clementine&quot;, &quot;Mandarine&quot;, &quot;Orange&quot;,
+                &quot;Limes&quot;, &quot;Lemon&quot;, &quot;Peach&quot;, &quot;Plum&quot;, &quot;Raspberry&quot;, &quot;Strawberry&quot;, &quot;Pineapple&quot;, &quot;Pomegranate&quot;)
+
+# number of output classes (i.e. fruits)
+output_n &lt;- length(fruit_list)
+
+# image size to scale down to (original images are 100 x 100 px)
+img_width &lt;- 20
+img_height &lt;- 20
+target_size &lt;- c(img_width, img_height)
+
+# RGB = 3 channels
+channels &lt;- 3
+
+# define batch size
+batch_size &lt;- 32</code></pre>
+<pre class="r"><code>train_data_gen &lt;- image_data_generator(
+  rescale = 1/255,
+  validation_split = 0.3)</code></pre>
+<p>Now we load the images into memory and resize them.</p>
+<pre class="r"><code># training images
+train_image_array_gen &lt;- flow_images_from_directory(train_image_files_path, 
+                                          train_data_gen,
+                                          subset = &#39;training&#39;,
+                                          target_size = target_size,
+                                          class_mode = &quot;categorical&quot;,
+                                          classes = fruit_list,
+                                          batch_size = batch_size,
+                                          seed = 42)
+#Found 5401 images belonging to 16 classes.
+
+# validation images
+valid_image_array_gen &lt;- flow_images_from_directory(train_image_files_path, 
+                                          train_data_gen,
+                                          subset = &#39;validation&#39;,
+                                          target_size = target_size,
+                                          class_mode = &quot;categorical&quot;,
+                                          classes = fruit_list,
+                                          batch_size = batch_size,
+                                          seed = 42)
+#Found 2308 images belonging to 16 classes.</code></pre>
+</div>
+<div id="training-the-model" class="section level2">
+<h2>Training the model</h2>
+<p>Now, I define and train the model just as before:</p>
+<pre class="r"><code># number of training samples
+train_samples &lt;- train_image_array_gen$n
+# number of validation samples
+valid_samples &lt;- valid_image_array_gen$n
+
+# define number of epochs
+epochs &lt;- 10</code></pre>
+<pre class="r"><code># input layer
+inputs &lt;- layer_input(shape = c(img_width, img_height, channels))
+
+# outputs compose input + dense layers
+predictions &lt;- inputs %&gt;%
+  layer_conv_2d(filter = 32, kernel_size = c(3,3), padding = &quot;same&quot;) %&gt;%
+  layer_activation(&quot;relu&quot;) %&gt;%
+  
+  # Second hidden layer
+  layer_conv_2d(filter = 16, kernel_size = c(3,3), padding = &quot;same&quot;) %&gt;%
+  layer_activation_leaky_relu(0.5) %&gt;%
+  layer_batch_normalization() %&gt;%
+
+  # Use max pooling
+  layer_max_pooling_2d(pool_size = c(2,2)) %&gt;%
+  layer_dropout(0.25) %&gt;%
+  
+  # Flatten max filtered output into feature vector 
+  # and feed into dense layer
+  layer_flatten() %&gt;%
+  layer_dense(100) %&gt;%
+  layer_activation(&quot;relu&quot;) %&gt;%
+  layer_dropout(0.5) %&gt;%
+  
+  # Outputs from dense layer are projected onto output layer
+  layer_dense(output_n) %&gt;% 
+  layer_activation(&quot;softmax&quot;)
+
+# create and compile model
+model &lt;- keras_model(inputs = inputs, outputs = predictions)
+
+model %&gt;% compile(
+  loss = &quot;categorical_crossentropy&quot;,
+  optimizer = optimizer_rmsprop(lr = 0.0001, decay = 1e-6),
+  metrics = &quot;accuracy&quot;
+)</code></pre>
+<pre class="r"><code># fit
+hist &lt;- model %&gt;% fit_generator(
+  # training data
+  train_image_array_gen,
+  
+  # epochs
+  steps_per_epoch = as.integer(train_samples / batch_size), 
+  epochs = epochs, 
+  
+  # validation data
+  validation_data = valid_image_array_gen,
+  validation_steps = as.integer(valid_samples / batch_size)
+  
+  # callbacks
+  callbacks = list(
+    #callback_model_checkpoint(&quot;checkpoints.h5&quot;),
+    callback_early_stopping(monitor = &quot;val_loss&quot;, min_delta = 0.001, patience = 3)#,
+    #callback_tensorboard(&quot;logs&quot;)
+  )
+)</code></pre>
+<pre class="r"><code>plot(hist)</code></pre>
+<pre class="r"><code>tensorboard(&quot;logs&quot;)</code></pre>
+<hr />
+<pre class="r"><code>devtools::session_info()</code></pre>
+<pre><code>## ─ Session info ───────────────────────────────────────────────────────────────
+##  setting  value                       
+##  version  R version 4.0.2 (2020-06-22)
+##  os       macOS Catalina 10.15.6      
+##  system   x86_64, darwin17.0          
+##  ui       X11                         
+##  language (EN)                        
+##  collate  en_US.UTF-8                 
+##  ctype    en_US.UTF-8                 
+##  tz       Europe/Berlin               
+##  date     2020-09-14                  
+## 
+## ─ Packages ───────────────────────────────────────────────────────────────────
+##  package     * version date       lib source                           
+##  assertthat    0.2.1   2019-03-21 [1] CRAN (R 4.0.0)                   
+##  backports     1.1.9   2020-08-24 [1] CRAN (R 4.0.2)                   
+##  base64enc     0.1-3   2015-07-28 [1] CRAN (R 4.0.0)                   
+##  blob          1.2.1   2020-01-20 [1] CRAN (R 4.0.2)                   
+##  blogdown      0.20.1  2020-09-09 [1] Github (rstudio/blogdown@d96fe78)
+##  bookdown      0.20    2020-06-23 [1] CRAN (R 4.0.2)                   
+##  broom         0.7.0   2020-07-09 [1] CRAN (R 4.0.2)                   
+##  callr         3.4.4   2020-09-07 [1] CRAN (R 4.0.2)                   
+##  cellranger    1.1.0   2016-07-27 [1] CRAN (R 4.0.0)                   
+##  cli           2.0.2   2020-02-28 [1] CRAN (R 4.0.0)                   
+##  colorspace    1.4-1   2019-03-18 [1] CRAN (R 4.0.0)                   
+##  crayon        1.3.4   2017-09-16 [1] CRAN (R 4.0.0)                   
+##  DBI           1.1.0   2019-12-15 [1] CRAN (R 4.0.0)                   
+##  dbplyr        1.4.4   2020-05-27 [1] CRAN (R 4.0.2)                   
+##  desc          1.2.0   2018-05-01 [1] CRAN (R 4.0.0)                   
+##  devtools      2.3.1   2020-07-21 [1] CRAN (R 4.0.2)                   
+##  digest        0.6.25  2020-02-23 [1] CRAN (R 4.0.0)                   
+##  dplyr       * 1.0.2   2020-08-18 [1] CRAN (R 4.0.2)                   
+##  ellipsis      0.3.1   2020-05-15 [1] CRAN (R 4.0.0)                   
+##  evaluate      0.14    2019-05-28 [1] CRAN (R 4.0.1)                   
+##  fansi         0.4.1   2020-01-08 [1] CRAN (R 4.0.0)                   
+##  forcats     * 0.5.0   2020-03-01 [1] CRAN (R 4.0.0)                   
+##  fs            1.5.0   2020-07-31 [1] CRAN (R 4.0.2)                   
+##  generics      0.0.2   2018-11-29 [1] CRAN (R 4.0.0)                   
+##  ggplot2     * 3.3.2   2020-06-19 [1] CRAN (R 4.0.2)                   
+##  glue          1.4.2   2020-08-27 [1] CRAN (R 4.0.2)                   
+##  gtable        0.3.0   2019-03-25 [1] CRAN (R 4.0.0)                   
+##  haven         2.3.1   2020-06-01 [1] CRAN (R 4.0.2)                   
+##  hms           0.5.3   2020-01-08 [1] CRAN (R 4.0.0)                   
+##  htmltools     0.5.0   2020-06-16 [1] CRAN (R 4.0.2)                   
+##  httr          1.4.2   2020-07-20 [1] CRAN (R 4.0.2)                   
+##  jsonlite      1.7.1   2020-09-07 [1] CRAN (R 4.0.2)                   
+##  keras       * 2.3.0.0 2020-05-19 [1] CRAN (R 4.0.2)                   
+##  knitr         1.29    2020-06-23 [1] CRAN (R 4.0.2)                   
+##  lattice       0.20-41 2020-04-02 [1] CRAN (R 4.0.2)                   
+##  lifecycle     0.2.0   2020-03-06 [1] CRAN (R 4.0.0)                   
+##  lubridate     1.7.9   2020-06-08 [1] CRAN (R 4.0.2)                   
+##  magrittr      1.5     2014-11-22 [1] CRAN (R 4.0.0)                   
+##  Matrix        1.2-18  2019-11-27 [1] CRAN (R 4.0.2)                   
+##  memoise       1.1.0   2017-04-21 [1] CRAN (R 4.0.0)                   
+##  modelr        0.1.8   2020-05-19 [1] CRAN (R 4.0.2)                   
+##  munsell       0.5.0   2018-06-12 [1] CRAN (R 4.0.0)                   
+##  pillar        1.4.6   2020-07-10 [1] CRAN (R 4.0.2)                   
+##  pkgbuild      1.1.0   2020-07-13 [1] CRAN (R 4.0.2)                   
+##  pkgconfig     2.0.3   2019-09-22 [1] CRAN (R 4.0.0)                   
+##  pkgload       1.1.0   2020-05-29 [1] CRAN (R 4.0.2)                   
+##  prettyunits   1.1.1   2020-01-24 [1] CRAN (R 4.0.0)                   
+##  processx      3.4.4   2020-09-03 [1] CRAN (R 4.0.2)                   
+##  ps            1.3.4   2020-08-11 [1] CRAN (R 4.0.2)                   
+##  purrr       * 0.3.4   2020-04-17 [1] CRAN (R 4.0.0)                   
+##  R6            2.4.1   2019-11-12 [1] CRAN (R 4.0.0)                   
+##  Rcpp          1.0.5   2020-07-06 [1] CRAN (R 4.0.2)                   
+##  readr       * 1.3.1   2018-12-21 [1] CRAN (R 4.0.0)                   
+##  readxl        1.3.1   2019-03-13 [1] CRAN (R 4.0.0)                   
+##  remotes       2.2.0   2020-07-21 [1] CRAN (R 4.0.2)                   
+##  reprex        0.3.0   2019-05-16 [1] CRAN (R 4.0.0)                   
+##  reticulate    1.16    2020-05-27 [1] CRAN (R 4.0.2)                   
+##  rlang         0.4.7   2020-07-09 [1] CRAN (R 4.0.2)                   
+##  rmarkdown     2.3     2020-06-18 [1] CRAN (R 4.0.2)                   
+##  rprojroot     1.3-2   2018-01-03 [1] CRAN (R 4.0.0)                   
+##  rstudioapi    0.11    2020-02-07 [1] CRAN (R 4.0.0)                   
+##  rvest         0.3.6   2020-07-25 [1] CRAN (R 4.0.2)                   
+##  scales        1.1.1   2020-05-11 [1] CRAN (R 4.0.0)                   
+##  sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 4.0.0)                   
+##  stringi       1.5.3   2020-09-09 [1] CRAN (R 4.0.2)                   
+##  stringr     * 1.4.0   2019-02-10 [1] CRAN (R 4.0.0)                   
+##  tensorflow    2.2.0   2020-05-11 [1] CRAN (R 4.0.0)                   
+##  testthat      2.3.2   2020-03-02 [1] CRAN (R 4.0.0)                   
+##  tfruns        1.4     2018-08-25 [1] CRAN (R 4.0.0)                   
+##  tibble      * 3.0.3   2020-07-10 [1] CRAN (R 4.0.2)                   
+##  tidyr       * 1.1.2   2020-08-27 [1] CRAN (R 4.0.2)                   
+##  tidyselect    1.1.0   2020-05-11 [1] CRAN (R 4.0.0)                   
+##  tidyverse   * 1.3.0   2019-11-21 [1] CRAN (R 4.0.0)                   
+##  usethis       1.6.1   2020-04-29 [1] CRAN (R 4.0.0)                   
+##  vctrs         0.3.4   2020-08-29 [1] CRAN (R 4.0.2)                   
+##  whisker       0.4     2019-08-28 [1] CRAN (R 4.0.0)                   
+##  withr         2.2.0   2020-04-20 [1] CRAN (R 4.0.0)                   
+##  xfun          0.17    2020-09-09 [1] CRAN (R 4.0.2)                   
+##  xml2          1.3.2   2020-04-23 [1] CRAN (R 4.0.0)                   
+##  yaml          2.2.1   2020-02-01 [1] CRAN (R 4.0.0)                   
+##  zeallot       0.1.0   2018-01-28 [1] CRAN (R 4.0.0)                   
+## 
+## [1] /Library/Frameworks/R.framework/Versions/4.0/Resources/library</code></pre>
+</div>
+]]></content>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[Using the Keras Functional API]]></title>
+    <link href="/2020/09/keras_funct_api/"/>
+    <id>/2020/09/keras_funct_api/</id>
+    <published>2020-09-20T00:00:00+00:00</published>
+    <updated>2020-09-20T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<p><a href="https://keras.rstudio.com/articles/functional_api.html" class="uri">https://keras.rstudio.com/articles/functional_api.html</a></p>
+<p>The Keras Functional API is more for complex models, like multi-input and multi-output models, but I will show how it works in a simple example here.</p>
+<p>(keras_model_sequential). The sequential model makes the assumption that the network has exactly one input and exactly one output, and that it consists of a linear stack of layers (see figure 7.1).</p>
+<p>This is a commonly verified assumption; the configuration is so common that we’ve been able to cover many topics and practical applications in these pages so far using only keras_model_sequential. But this set of assumptions is too inflexible in a number of cases. Some networks require several independent inputs, others require multiple outputs, and some networks have internal branching between layers that makes them look like graphs of layers rather than linear stacks of layers.</p>
+<p>Some tasks, for instance, require multimodal inputs: they merge data coming from different input sources, processing each type of data using different kinds of neural layers. Imagine a deep-learning model trying to predict the most likely market price of a second-hand piece of clothing, using the following inputs: user-provided metadata (such as the item’s brand, age, and so on), a user-provided text description, and a picture of the item. If you had only the metadata available, you could one-hot encode it and use a densely connected network to predict the price. If you had only the text description available, you could use an RNN or a 1D convnet. If you had only the picture, you could use a 2D convnet. But how can you use all three at the same time? A naive approach would be to train three separate models and then do a weighted average of their predictions. But this may be suboptimal, because the information extracted by the models may be redundant. A better way is to jointly learn a more accurate model of the data by using a model that can see all available input modalities simultaneously: a model with three input branches (see figure 7.2).</p>
+<p>Similarly, some tasks need to predict multiple target attributes of input data. Given the text of a novel or short story, you might want to automatically classify it by genre (such as romance or thriller) but also predict the approximate date it was written. Of course, you could train two separate models: one for the genre and one for the date. But because these attributes aren’t statistically independent, you could build a better model by learning to jointly predict both genre and date at the same time. Such a joint model would then have two outputs, or heads (see figure 7.3). Due to correlations between genre and date, knowing the date of a novel would help the model learn rich, accurate representations of the space of novel genres, and vice versa.</p>
+<p>Additionally, many recently developed neural architectures require nonlinear network topology: networks structured as directed acyclic graphs. The Inception family of networks (developed by Szegedy et al. at Google),[1] for instance, relies on Inception modules, where the input is processed by several parallel convolutional branches whose outputs are then merged back into a single tensor (see figure 7.4). There’s also the recent trend of adding residual connections to a model, which started with the ResNet family of networks (developed by He et al. at Microsoft).[2] A residual connection consists of reinjecting previous representations into the downstream flow of data by adding a past output tensor to a later output tensor (see figure 7.5), which helps prevent information loss along the data-processing flow. There are many other examples of such graph-like networks.</p>
+<p>In the functional API, you build your input and output layers and then pass them to the keras_model function. This model can be trained just like Keras sequential models.</p>
+<p>The only part that may seem a bit magical at this point is passing only an input tensor and an output tensor to the keras_model function. Behind the scenes, Keras retrieves every layer involved in going from input_tensor to output_tensor, bringing them together into a graph-like data structure—a model. Of course, the reason it works is that output_tensor was obtained by repeatedly transforming input_tensor. If you tried to build a model from inputs and outputs that weren’t related, you’d get an error:</p>
+<p>This error tells you, in essence, that Keras couldn’t reach input_1 from the provided output tensor.</p>
+<p>When it comes to compiling, training, or evaluating a model built this way, the API is the same as that of sequential models:</p>
+<p>The functional API can be used to build models that have multiple inputs. Typically, such models at some point merge their different input branches using a layer that can combine several tensors: by adding them, concatenating them, and so on. This is usually done via a Keras merge operation such as layer_add, layer_concatenate, and so on. Let’s look at a very simple example of a multi-input model: a question-answering model.</p>
+<p>A typical question-answering model has two inputs: a natural-language question and a text snippet (such as a news article) providing information to be used for answering the question. The model must then produce an answer: in the simplest possible setup, this is a one-word answer obtained via a softmax over some predefined vocabulary (see figure 7.6).</p>
+<p>In the same way, you can use the functional API to build models with multiple outputs (or multiple heads). A simple example is a network that attempts to simultaneously predict different properties of the data, such as a network that takes as input a series of social media posts from a single anonymous person and tries to predict attributes of that person, such as age, gender, and income level (see figure 7.7).</p>
+<p>With the functional API, not only can you build models with multiple inputs and multiple outputs, but you can also implement networks with a complex internal topology. Neural networks in Keras are allowed to be arbitrary directed acyclic graphs of layers. The qualifier acyclic is important: these graphs can’t have cycles. It’s impossible for a tensor x to become the input of one of the layers that generated x. The only processing loops that are allowed (that is, recurrent connections) are those internal to recurrent layers.</p>
+<p>Several common neural-network components are implemented as graphs. Two notable ones are Inception modules and residual connections. To better understand how the functional API can be used to build graphs of layers, let’s take a look at how you can implement both of them in Keras.</p>
+<p>Inception modules
+Inception[3] is a popular type of network architecture for convolutional neural networks; it was developed by Christian Szegedy and his colleagues at Google in 2013–2014, inspired by the earlier network-in-network architecture.[4] It consists of a stack of modules that themselves look like small independent networks, split into several parallel branches. The most basic form of an Inception module has three to four branches starting with a 1 × 1 convolution, followed by a 3 × 3 convolution, and ending with the concatenation of the resulting features. This setup helps the network separately learn spatial features and channel-wise features, which is more efficient than learning them jointly. More-complex versions of an Inception module are also possible, typically involving pooling operations, different spatial convolution sizes (for example, 5 × 5 instead of 3 × 3 on some branches), and branches without a spatial convolution (only a 1 × 1 convolution). An example of such a module, taken from Inception V3, is shown in figure 7.8.</p>
+<hr />
+<p>If you have questions or would like to talk about this article (or something else data-related), you can now <a href="http://127.0.0.1:4321/page/bookme/">book 15-minute timeslots</a> with me (it’s free - one slot available per weekday):</p>
+<img src="https://www.appointletcdn.com/loader/buttons/F62459.png" data-appointlet-organization="shirin-elsinghorst" data-appointlet-service="357892">
+<script src="https://www.appointletcdn.com/loader/loader.min.js" async="" defer=""></script>
+<p><em>If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at <button><a href="https://paypal.me/ShirinGlander">paypal.me</a></button>. Thank you!</em> :-)</p>
+<hr />
+<pre class="r"><code># load libraries
+library(tidyverse)
+library(keras)</code></pre>
+<pre class="r"><code># check if keras is available
+is_keras_available()
+#[1] TRUE</code></pre>
+<div id="loading-images-data" class="section level2">
+<h2>Loading images (data)</h2>
+<pre class="r"><code># path to image folders
+train_image_files_path &lt;- &quot;/fruits/Training/&quot;</code></pre>
+<pre class="r"><code># list of fruits to modle
+fruit_list &lt;- c(&quot;Kiwi&quot;, &quot;Banana&quot;, &quot;Apricot&quot;, &quot;Avocado&quot;, &quot;Cocos&quot;, &quot;Clementine&quot;, &quot;Mandarine&quot;, &quot;Orange&quot;,
+                &quot;Limes&quot;, &quot;Lemon&quot;, &quot;Peach&quot;, &quot;Plum&quot;, &quot;Raspberry&quot;, &quot;Strawberry&quot;, &quot;Pineapple&quot;, &quot;Pomegranate&quot;)
+
+# number of output classes (i.e. fruits)
+output_n &lt;- length(fruit_list)
+
+# image size to scale down to (original images are 100 x 100 px)
+img_width &lt;- 20
+img_height &lt;- 20
+target_size &lt;- c(img_width, img_height)
+
+# RGB = 3 channels
+channels &lt;- 3
+
+# define batch size
+batch_size &lt;- 32</code></pre>
+<pre class="r"><code>train_data_gen &lt;- image_data_generator(
+  rescale = 1/255,
+  validation_split = 0.3)</code></pre>
+<p>Now we load the images into memory and resize them.</p>
+<pre class="r"><code># training images
+train_image_array_gen &lt;- flow_images_from_directory(train_image_files_path, 
+                                          train_data_gen,
+                                          subset = &#39;training&#39;,
+                                          target_size = target_size,
+                                          class_mode = &quot;categorical&quot;,
+                                          classes = fruit_list,
+                                          batch_size = batch_size,
+                                          seed = 42)
+#Found 5401 images belonging to 16 classes.
+
+# validation images
+valid_image_array_gen &lt;- flow_images_from_directory(train_image_files_path, 
+                                          train_data_gen,
+                                          subset = &#39;validation&#39;,
+                                          target_size = target_size,
+                                          class_mode = &quot;categorical&quot;,
+                                          classes = fruit_list,
+                                          batch_size = batch_size,
+                                          seed = 42)
+#Found 2308 images belonging to 16 classes.</code></pre>
+</div>
+<div id="training-the-model" class="section level2">
+<h2>Training the model</h2>
+<p>Now, I define and train the model just as before:</p>
+<pre class="r"><code># number of training samples
+train_samples &lt;- train_image_array_gen$n
+# number of validation samples
+valid_samples &lt;- valid_image_array_gen$n
+
+# define number of epochs
+epochs &lt;- 10</code></pre>
+<pre class="r"><code># input layer
+inputs &lt;- layer_input(shape = c(img_width, img_height, channels))
+
+# outputs compose input + dense layers
+predictions &lt;- inputs %&gt;%
+  layer_conv_2d(filter = 32, kernel_size = c(3,3), padding = &quot;same&quot;) %&gt;%
+  layer_activation(&quot;relu&quot;) %&gt;%
+  
+  # Second hidden layer
+  layer_conv_2d(filter = 16, kernel_size = c(3,3), padding = &quot;same&quot;) %&gt;%
+  layer_activation_leaky_relu(0.5) %&gt;%
+  layer_batch_normalization() %&gt;%
+
+  # Use max pooling
+  layer_max_pooling_2d(pool_size = c(2,2)) %&gt;%
+  layer_dropout(0.25) %&gt;%
+  
+  # Flatten max filtered output into feature vector 
+  # and feed into dense layer
+  layer_flatten() %&gt;%
+  layer_dense(100) %&gt;%
+  layer_activation(&quot;relu&quot;) %&gt;%
+  layer_dropout(0.5) %&gt;%
+  
+  # Outputs from dense layer are projected onto output layer
+  layer_dense(output_n) %&gt;% 
+  layer_activation(&quot;softmax&quot;)
+
+# create and compile model
+model &lt;- keras_model(inputs = inputs, outputs = predictions)
+
+model %&gt;% compile(
+  loss = &quot;categorical_crossentropy&quot;,
+  optimizer = optimizer_rmsprop(lr = 0.0001, decay = 1e-6),
+  metrics = &quot;accuracy&quot;
+)</code></pre>
+<pre class="r"><code># fit
+hist &lt;- model %&gt;% fit_generator(
+  # training data
+  train_image_array_gen,
+  
+  # epochs
+  steps_per_epoch = as.integer(train_samples / batch_size), 
+  epochs = epochs, 
+  
+  # validation data
+  validation_data = valid_image_array_gen,
+  validation_steps = as.integer(valid_samples / batch_size)
+)</code></pre>
+<pre class="r"><code>plot(hist)</code></pre>
+</div>
+<div id="section" class="section level2">
+<h2><img src="/img/hist.png" /></h2>
+<pre class="r"><code>devtools::session_info()</code></pre>
+<pre><code>## ─ Session info ───────────────────────────────────────────────────────────────
+##  setting  value                       
+##  version  R version 4.0.2 (2020-06-22)
+##  os       macOS Catalina 10.15.6      
+##  system   x86_64, darwin17.0          
+##  ui       X11                         
+##  language (EN)                        
+##  collate  en_US.UTF-8                 
+##  ctype    en_US.UTF-8                 
+##  tz       Europe/Berlin               
+##  date     2020-09-14                  
+## 
+## ─ Packages ───────────────────────────────────────────────────────────────────
+##  package     * version date       lib source                           
+##  assertthat    0.2.1   2019-03-21 [1] CRAN (R 4.0.0)                   
+##  backports     1.1.9   2020-08-24 [1] CRAN (R 4.0.2)                   
+##  base64enc     0.1-3   2015-07-28 [1] CRAN (R 4.0.0)                   
+##  blob          1.2.1   2020-01-20 [1] CRAN (R 4.0.2)                   
+##  blogdown      0.20.1  2020-09-09 [1] Github (rstudio/blogdown@d96fe78)
+##  bookdown      0.20    2020-06-23 [1] CRAN (R 4.0.2)                   
+##  broom         0.7.0   2020-07-09 [1] CRAN (R 4.0.2)                   
+##  callr         3.4.4   2020-09-07 [1] CRAN (R 4.0.2)                   
+##  cellranger    1.1.0   2016-07-27 [1] CRAN (R 4.0.0)                   
+##  cli           2.0.2   2020-02-28 [1] CRAN (R 4.0.0)                   
+##  colorspace    1.4-1   2019-03-18 [1] CRAN (R 4.0.0)                   
+##  crayon        1.3.4   2017-09-16 [1] CRAN (R 4.0.0)                   
+##  DBI           1.1.0   2019-12-15 [1] CRAN (R 4.0.0)                   
+##  dbplyr        1.4.4   2020-05-27 [1] CRAN (R 4.0.2)                   
+##  desc          1.2.0   2018-05-01 [1] CRAN (R 4.0.0)                   
+##  devtools      2.3.1   2020-07-21 [1] CRAN (R 4.0.2)                   
+##  digest        0.6.25  2020-02-23 [1] CRAN (R 4.0.0)                   
+##  dplyr       * 1.0.2   2020-08-18 [1] CRAN (R 4.0.2)                   
+##  ellipsis      0.3.1   2020-05-15 [1] CRAN (R 4.0.0)                   
+##  evaluate      0.14    2019-05-28 [1] CRAN (R 4.0.1)                   
+##  fansi         0.4.1   2020-01-08 [1] CRAN (R 4.0.0)                   
+##  forcats     * 0.5.0   2020-03-01 [1] CRAN (R 4.0.0)                   
+##  fs            1.5.0   2020-07-31 [1] CRAN (R 4.0.2)                   
+##  generics      0.0.2   2018-11-29 [1] CRAN (R 4.0.0)                   
+##  ggplot2     * 3.3.2   2020-06-19 [1] CRAN (R 4.0.2)                   
+##  glue          1.4.2   2020-08-27 [1] CRAN (R 4.0.2)                   
+##  gtable        0.3.0   2019-03-25 [1] CRAN (R 4.0.0)                   
+##  haven         2.3.1   2020-06-01 [1] CRAN (R 4.0.2)                   
+##  hms           0.5.3   2020-01-08 [1] CRAN (R 4.0.0)                   
+##  htmltools     0.5.0   2020-06-16 [1] CRAN (R 4.0.2)                   
+##  httr          1.4.2   2020-07-20 [1] CRAN (R 4.0.2)                   
+##  jsonlite      1.7.1   2020-09-07 [1] CRAN (R 4.0.2)                   
+##  keras       * 2.3.0.0 2020-05-19 [1] CRAN (R 4.0.2)                   
+##  knitr         1.29    2020-06-23 [1] CRAN (R 4.0.2)                   
+##  lattice       0.20-41 2020-04-02 [1] CRAN (R 4.0.2)                   
+##  lifecycle     0.2.0   2020-03-06 [1] CRAN (R 4.0.0)                   
+##  lubridate     1.7.9   2020-06-08 [1] CRAN (R 4.0.2)                   
+##  magrittr      1.5     2014-11-22 [1] CRAN (R 4.0.0)                   
+##  Matrix        1.2-18  2019-11-27 [1] CRAN (R 4.0.2)                   
+##  memoise       1.1.0   2017-04-21 [1] CRAN (R 4.0.0)                   
+##  modelr        0.1.8   2020-05-19 [1] CRAN (R 4.0.2)                   
+##  munsell       0.5.0   2018-06-12 [1] CRAN (R 4.0.0)                   
+##  pillar        1.4.6   2020-07-10 [1] CRAN (R 4.0.2)                   
+##  pkgbuild      1.1.0   2020-07-13 [1] CRAN (R 4.0.2)                   
+##  pkgconfig     2.0.3   2019-09-22 [1] CRAN (R 4.0.0)                   
+##  pkgload       1.1.0   2020-05-29 [1] CRAN (R 4.0.2)                   
+##  prettyunits   1.1.1   2020-01-24 [1] CRAN (R 4.0.0)                   
+##  processx      3.4.4   2020-09-03 [1] CRAN (R 4.0.2)                   
+##  ps            1.3.4   2020-08-11 [1] CRAN (R 4.0.2)                   
+##  purrr       * 0.3.4   2020-04-17 [1] CRAN (R 4.0.0)                   
+##  R6            2.4.1   2019-11-12 [1] CRAN (R 4.0.0)                   
+##  Rcpp          1.0.5   2020-07-06 [1] CRAN (R 4.0.2)                   
+##  readr       * 1.3.1   2018-12-21 [1] CRAN (R 4.0.0)                   
+##  readxl        1.3.1   2019-03-13 [1] CRAN (R 4.0.0)                   
+##  remotes       2.2.0   2020-07-21 [1] CRAN (R 4.0.2)                   
+##  reprex        0.3.0   2019-05-16 [1] CRAN (R 4.0.0)                   
+##  reticulate    1.16    2020-05-27 [1] CRAN (R 4.0.2)                   
+##  rlang         0.4.7   2020-07-09 [1] CRAN (R 4.0.2)                   
+##  rmarkdown     2.3     2020-06-18 [1] CRAN (R 4.0.2)                   
+##  rprojroot     1.3-2   2018-01-03 [1] CRAN (R 4.0.0)                   
+##  rstudioapi    0.11    2020-02-07 [1] CRAN (R 4.0.0)                   
+##  rvest         0.3.6   2020-07-25 [1] CRAN (R 4.0.2)                   
+##  scales        1.1.1   2020-05-11 [1] CRAN (R 4.0.0)                   
+##  sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 4.0.0)                   
+##  stringi       1.5.3   2020-09-09 [1] CRAN (R 4.0.2)                   
+##  stringr     * 1.4.0   2019-02-10 [1] CRAN (R 4.0.0)                   
+##  tensorflow    2.2.0   2020-05-11 [1] CRAN (R 4.0.0)                   
+##  testthat      2.3.2   2020-03-02 [1] CRAN (R 4.0.0)                   
+##  tfruns        1.4     2018-08-25 [1] CRAN (R 4.0.0)                   
+##  tibble      * 3.0.3   2020-07-10 [1] CRAN (R 4.0.2)                   
+##  tidyr       * 1.1.2   2020-08-27 [1] CRAN (R 4.0.2)                   
+##  tidyselect    1.1.0   2020-05-11 [1] CRAN (R 4.0.0)                   
+##  tidyverse   * 1.3.0   2019-11-21 [1] CRAN (R 4.0.0)                   
+##  usethis       1.6.1   2020-04-29 [1] CRAN (R 4.0.0)                   
+##  vctrs         0.3.4   2020-08-29 [1] CRAN (R 4.0.2)                   
+##  whisker       0.4     2019-08-28 [1] CRAN (R 4.0.0)                   
+##  withr         2.2.0   2020-04-20 [1] CRAN (R 4.0.0)                   
+##  xfun          0.17    2020-09-09 [1] CRAN (R 4.0.2)                   
+##  xml2          1.3.2   2020-04-23 [1] CRAN (R 4.0.0)                   
+##  yaml          2.2.1   2020-02-01 [1] CRAN (R 4.0.0)                   
+##  zeallot       0.1.0   2018-01-28 [1] CRAN (R 4.0.0)                   
+## 
+## [1] /Library/Frameworks/R.framework/Versions/4.0/Resources/library</code></pre>
+</div>
+]]></content>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[Update with TF 2.0: Image classification with Keras and TensorFlow.]]></title>
     <link href="/2020/09/keras_fruits_update/"/>
     <id>/2020/09/keras_fruits_update/</id>
     <published>2020-09-13T00:00:00+00:00</published>
     <updated>2020-09-13T00:00:00+00:00</updated>
-    <content type="html"><![CDATA[<p>Recently, I have been getting a few comments on my <a href="https://shirinsplayground.netlify.com/2018/06/keras_fruits/">old article on image classification with Keras</a>, saying that they are getting errors with the code. And I have also gotten a few questions about <strong>how to use a Keras model to predict on new images (of different size)</strong>. Instead of replying to them all individually, I decided to write this updated version using the most recent Keras and Tensorflow versions (all package versions and system information can be found at the bottom of this article, as usual).</p>
-<p>Specific updates made compared to the <a href="https://shirinsplayground.netlify.com/2018/06/keras_fruits/">old article</a>:</p>
+    <content type="html"><![CDATA[<p>Recently, I have been getting a few comments on my <a href="https://shirinsplayground.netlify.com/2018/06/keras_fruits/">old article on image classification with Keras</a>, saying that they are getting errors with the code. And I have also gotten a few questions about <strong>how to use a Keras model to predict on new images (of different size)</strong>. Instead of replying to them all individually, I decided to write this updated version using recent Keras and TensorFlow versions (all package versions and system information can be found at the bottom of this article, as usual).</p>
+<p>Specific changes compared to the <a href="https://shirinsplayground.netlify.com/2018/06/keras_fruits/">old article</a>:</p>
 <ul>
 <li><p>using TF 2.2.0</p></li>
 <li><p>using Keras 2.3.1</p></li>
-<li><p>used <strong>validation split</strong> instead of validation set</p></li>
+<li><p>used <strong>validation split</strong> instead of a validation set</p></li>
 <li><p>used folder Validation/Test for showing how to <strong>predict on new images</strong></p></li>
 </ul>
+<hr />
+<p><strong>Workshop announcement:</strong> Because this year’s UseR 2020 in Munich couldn’t happen as an in-person event, I will be giving my <a href="https://user2020.r-project.org/program/tutorials/">workshop on Deep Learning with Keras and TensorFlow</a> as an online event. I’ll be announcing the date once it’s been finalized but if you are interested in participating: we are looking at the first week of October (13:00 UTC).</p>
 <hr />
 <p>If you have questions or would like to talk about this article (or something else data-related), you can now <a href="http://127.0.0.1:4321/page/bookme/">book 15-minute timeslots</a> with me (it’s free - one slot available per weekday):</p>
 <img src="https://www.appointletcdn.com/loader/buttons/F62459.png" data-appointlet-organization="shirin-elsinghorst" data-appointlet-service="357892">
@@ -736,8 +1270,15 @@ penguins_pca &lt;- penguins_prep %&gt;%
 <hr />
 <pre class="r"><code># load libraries
 library(tidyverse)
+library(tensorflow)
 library(keras)</code></pre>
-<pre class="r"><code># check if keras is available
+<pre class="r"><code>tf$random$set_seed(42)
+
+# check TF version
+tf_version()
+#[1] ‘2.2’
+
+# check if keras is available
 is_keras_available()
 #[1] TRUE</code></pre>
 <div id="loading-images-data" class="section level2">
@@ -854,6 +1395,7 @@ model %&gt;% compile(
   metrics = &quot;accuracy&quot;
 )</code></pre>
 <p>Fitting the model: because I used <code>image_data_generator()</code> and <code>flow_images_from_directory()</code> I am now also using the <code>fit_generator()</code> to run the training.</p>
+<p><strong>Note:</strong> In future releases of TensorFlow, generator functions will be deprecated (i.e. <code>fit_generator()</code>, <code>evaluate_generator()</code> &amp; <code>predict_generator()</code>) and as of TensorFlow 2.1.0 the regular functions (<code>fit()</code>, <code>evaluate()</code> &amp; <code>predict()</code>) handle generators directly. However, this does not seem to be implemented in the Keras (R-) package yet (see <code>?fit.keras.engine.training.Model</code>), so I’ll be sticking to the old way of doing things for now.</p>
 <pre class="r"><code># fit
 hist &lt;- model %&gt;% fit_generator(
   # training data
@@ -868,32 +1410,35 @@ hist &lt;- model %&gt;% fit_generator(
   validation_steps = as.integer(valid_samples / batch_size)
 )</code></pre>
 <pre><code>Epoch 1/10
-168/168 [==============================] - 9s 56ms/step - loss: 2.2358 - accuracy: 0.3038 - val_loss: 2.3285 - val_accuracy: 0.5477
+168/168 [==============================] - 8s 51ms/step - loss: 1.8614 - accuracy: 0.4194 - val_loss: 2.1271 - val_accuracy: 0.6897
 Epoch 2/10
-168/168 [==============================] - 6s 38ms/step - loss: 1.1505 - accuracy: 0.6161 - val_loss: 1.2697 - val_accuracy: 0.9054
+168/168 [==============================] - 6s 37ms/step - loss: 0.7967 - accuracy: 0.7463 - val_loss: 0.9940 - val_accuracy: 0.9444
 Epoch 3/10
-168/168 [==============================] - 6s 37ms/step - loss: 0.6588 - accuracy: 0.7812 - val_loss: 0.3950 - val_accuracy: 0.9227
+168/168 [==============================] - 6s 34ms/step - loss: 0.4556 - accuracy: 0.8622 - val_loss: 0.2636 - val_accuracy: 0.9722
 Epoch 4/10
-168/168 [==============================] - 6s 35ms/step - loss: 0.4223 - accuracy: 0.8624 - val_loss: 0.1600 - val_accuracy: 0.9609
+168/168 [==============================] - 6s 37ms/step - loss: 0.3001 - accuracy: 0.9074 - val_loss: 0.1298 - val_accuracy: 0.9779
 Epoch 5/10
-168/168 [==============================] - 6s 35ms/step - loss: 0.2775 - accuracy: 0.9091 - val_loss: 0.1180 - val_accuracy: 0.9648
+168/168 [==============================] - 6s 35ms/step - loss: 0.2010 - accuracy: 0.9417 - val_loss: 0.1194 - val_accuracy: 0.9757
 Epoch 6/10
-168/168 [==============================] - 6s 39ms/step - loss: 0.1981 - accuracy: 0.9383 - val_loss: 0.0844 - val_accuracy: 0.9727
+168/168 [==============================] - 6s 34ms/step - loss: 0.1539 - accuracy: 0.9581 - val_loss: 0.0768 - val_accuracy: 0.9688
 Epoch 7/10
-168/168 [==============================] - 6s 35ms/step - loss: 0.1514 - accuracy: 0.9527 - val_loss: 0.0674 - val_accuracy: 0.9731
+168/168 [==============================] - 6s 36ms/step - loss: 0.1147 - accuracy: 0.9672 - val_loss: 0.0574 - val_accuracy: 0.9831
 Epoch 8/10
-168/168 [==============================] - 6s 34ms/step - loss: 0.1116 - accuracy: 0.9685 - val_loss: 0.0669 - val_accuracy: 0.9805
+168/168 [==============================] - 6s 34ms/step - loss: 0.0831 - accuracy: 0.9771 - val_loss: 0.0676 - val_accuracy: 0.9826
 Epoch 9/10
-168/168 [==============================] - 6s 34ms/step - loss: 0.0897 - accuracy: 0.9722 - val_loss: 0.0466 - val_accuracy: 0.9818
+168/168 [==============================] - 6s 35ms/step - loss: 0.0713 - accuracy: 0.9786 - val_loss: 0.0542 - val_accuracy: 0.9796
 Epoch 10/10
-168/168 [==============================] - 6s 34ms/step - loss: 0.0699 - accuracy: 0.9795 - val_loss: 0.0698 - val_accuracy: 0.9787</code></pre>
+168/168 [==============================] - 6s 35ms/step - loss: 0.0572 - accuracy: 0.9842 - val_loss: 0.0548 - val_accuracy: 0.9835</code></pre>
 <p>In RStudio we are seeing the output as an interactive plot in the “Viewer” pane but we can also plot it:</p>
 <pre class="r"><code>plot(hist)</code></pre>
 <p><img src="/img/hist.png" /></p>
+<pre class="r"><code>model %&gt;% save_model_hdf5(&quot;my_model.h5&quot;)</code></pre>
+<pre class="r"><code>model &lt;- load_model_hdf5(&quot;my_model.h5&quot;)</code></pre>
 </div>
 <div id="predicting-on-new-set-of-images" class="section level2">
 <h2>Predicting on “new” set of images</h2>
-<p>Here is what’s new: how to use the model I just trained for predicting on new images (alternatively, load a previously trained model and use that for predictions). Just keep in mind, that these new images here aren’t actually “new”. They come from the same data source, i.e. the same distribution and thus aren’t independent enough to give an accurate assessment of how well the model generalizes.</p>
+<p><strong>Here is what’s new</strong>: how to use the model we just trained for predicting on new images. Alternatively, load a previously trained model and use that for predictions. Just keep in mind, that these “new” images here aren’t actually new. They come from the same data source, i.e. the same distribution and thus aren’t independent enough to give an accurate assessment of how well the model generalizes.</p>
+<p>The easiest and most efficient way to predict on a set of new images (and resize them to the target width and height), is to use the <strong>image data generator</strong> just as we did for reading in the training data above. Of course, you will need to know how the training images were preprocessed, so that you can apply the same steps to your test images. Here, the image pixel values were scaled to fall between 0 and 1 and the width/height were set to 20 pixels.</p>
 <pre class="r"><code># path to image folders
 test_image_files_path &lt;- &quot;/fruits/Test/&quot;</code></pre>
 <pre class="r"><code>test_datagen &lt;- image_data_generator(rescale = 1/255)
@@ -908,23 +1453,31 @@ test_generator &lt;- flow_images_from_directory(
         shuffle = FALSE,
         seed = 42)
 #Found 2592 images belonging to 16 classes.</code></pre>
-<pre class="r"><code>test_generator$reset()
-model %&gt;%
+<p>Next, we can use the image data generator we created for our test images on two functions. First, I’ll run <code>evaluate_generator</code>, to get an overall idea of how well the model predicted the test images (note, that this requires for us to know the correct predictions for our images):</p>
+<pre class="r"><code>model %&gt;%
   evaluate_generator(test_generator, 
                      steps = as.integer(test_generator$n))</code></pre>
 <pre><code>      loss   accuracy 
-0.04565864 0.99112654 </code></pre>
+0.02915302 0.99305558 </code></pre>
+<p>Usually, what’s wanted is to get individual predictions for each test image. For that, we use the <code>predict_generator()</code> function. This function will return a matrix:</p>
+<ul>
+<li>each row represents one test image</li>
+<li>columns gives prediction probabilities for all possibles classes (if you are running a classifier)</li>
+</ul>
+<p>In order to compare predictions with actual class labels, I am preparing the true labels so that they can be merged with the predictions:</p>
 <pre class="r"><code>classes &lt;- test_generator$classes %&gt;%
   factor() %&gt;%
   table() %&gt;%
   as.tibble()
 colnames(classes)[1] &lt;- &quot;value&quot;</code></pre>
 <pre class="r"><code># create library of indices &amp; class labels
-indices &lt;- train_image_array_gen$class_indices %&gt;%
+indices &lt;- test_generator$class_indices %&gt;%
   as.data.frame() %&gt;%
   gather() %&gt;%
   mutate(value = as.character(value)) %&gt;%
   left_join(classes, by = &quot;value&quot;)</code></pre>
+<p>Now, I’m running the predictions, rename the columns to show the class labels instead of indices and I am merging the true labels, together with their corresponding labels and the total number of images in each class.</p>
+<p>(Running <code>test_generator$reset()</code> isn’t strictly necessary, but sometimes strange things happen if you are using the image data generator several times, so I always run reset first, to be on the safe side.)</p>
 <pre class="r"><code># predict on test data
 test_generator$reset()
 predictions &lt;- model %&gt;% 
@@ -932,7 +1485,7 @@ predictions &lt;- model %&gt;%
     generator = test_generator,
     steps = as.integer(test_generator$n)
     ) %&gt;%
-  round() %&gt;%
+  round(digits = 2) %&gt;%
   as.tibble()
 
 colnames(predictions) &lt;- indices$key
@@ -940,6 +1493,7 @@ colnames(predictions) &lt;- indices$key
 predictions &lt;- predictions %&gt;%
   mutate(truth_idx = as.character(test_generator$classes)) %&gt;%
   left_join(indices, by = c(&quot;truth_idx&quot; = &quot;value&quot;))</code></pre>
+<p>If you want to know which class is predicted for each image, you need to filter for the class with the highest prediction probability (here, tidyverse-style). Afterwards, for each class, I am also counting how many images were predicted with which label.</p>
 <pre class="r"><code>pred_analysis &lt;- predictions %&gt;%
   mutate(img_id = seq(1:test_generator$n)) %&gt;%
   gather(pred_lbl, y, Kiwi:Pomegranate) %&gt;%
@@ -948,6 +1502,7 @@ predictions &lt;- predictions %&gt;%
   arrange(img_id) %&gt;%
   group_by(key, n, pred_lbl) %&gt;%
   count()</code></pre>
+<p>And since plotting makes comparing much easier than looking at a table, I’m creating a tile plot that shows the percentages of test images predicted for each label:</p>
 <pre class="r"><code>p &lt;- pred_analysis %&gt;%
   mutate(percentage_pred = nn / n * 100) %&gt;%
   ggplot(aes(x = key, y = pred_lbl, 
@@ -955,10 +1510,20 @@ predictions &lt;- predictions %&gt;%
              label = round(percentage_pred, 2))) +
     geom_tile() +
     scale_fill_continuous() +
+    scale_fill_gradient(low = &quot;blue&quot;, high = &quot;red&quot;) +
     geom_text(color = &quot;white&quot;) +
-    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
+    labs(x = &quot;True class&quot;, 
+         y = &quot;Predicted class&quot;,
+         fill = &quot;Percentage\nof predictions&quot;,
+        title = &quot;True v. predicted class labels&quot;, 
+        subtitle = &quot;Percentage of test images predicted for each label&quot;,
+        caption = &quot;For every class of test images, this figure shows the percentage of images with predicted labels for each possible label.
+        E.g.: 100% of test images in the class &#39;Apricot&#39; were predicted correctly. Of test images from the class &#39;Cocos&#39; 
+        only 94.58% were predicted correctly, while 0.6% of these images were predicted to show a Strawberry and 4.82% a Pineapple.&quot;)
 p</code></pre>
 <p><img src="/img/percentage_pred.png" /></p>
+<p>And another tile plot showing the percentages of correct and falsely predicted images in each class:</p>
 <pre class="r"><code>p2 &lt;- pred_analysis %&gt;%
   mutate(prediction = case_when(
     key == pred_lbl ~ &quot;correct&quot;,
@@ -973,7 +1538,17 @@ p</code></pre>
     geom_tile() +
     scale_fill_continuous() +
     geom_text(color = &quot;white&quot;) +
-    coord_flip()
+    coord_flip() +
+    scale_fill_gradient(low = &quot;blue&quot;, high = &quot;red&quot;) +
+    labs(x = &quot;True class&quot;, 
+         y = &quot;Prediction is...&quot;,
+         fill = &quot;Percentage\nof predictions&quot;,
+        title = &quot;Percentage of correct v false predictions&quot;, 
+        subtitle = &quot;Percentage of test image classes predicted correctly v. falsely&quot;,
+        caption = &quot;For every class of test images, this figure shows the percentage of 
+        images with correctly and falsely predicted labels. E.g.: 100% of test images 
+        in the class &#39;Apricot&#39; were predicted correctly. Of test images from the class 
+        &#39;Cocos&#39; only 94.58% were predicted correctly, while 5.42% were predicted falsely.&quot;)
 p2</code></pre>
 <p><img src="/img/percentage_pred_cor.png" /></p>
 <p>As we can see, the model is quite accurate on the test data. However, we need to keep in mind that our images are very uniform, they all have the same white background and show the fruits centered and without anything else in the images. Thus, our model will not work with images that don’t look similar as the ones we trained on (that’s also why we can achieve such good results with such a small neural net).</p>
@@ -989,7 +1564,7 @@ p2</code></pre>
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       Europe/Berlin               
-##  date     2020-09-11                  
+##  date     2020-09-14                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────
 ##  package     * version date       lib source                           
@@ -1059,7 +1634,7 @@ p2</code></pre>
 ##  sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 4.0.0)                   
 ##  stringi       1.5.3   2020-09-09 [1] CRAN (R 4.0.2)                   
 ##  stringr     * 1.4.0   2019-02-10 [1] CRAN (R 4.0.0)                   
-##  tensorflow    2.2.0   2020-05-11 [1] CRAN (R 4.0.0)                   
+##  tensorflow  * 2.2.0   2020-05-11 [1] CRAN (R 4.0.0)                   
 ##  testthat      2.3.2   2020-03-02 [1] CRAN (R 4.0.0)                   
 ##  tfruns        1.4     2018-08-25 [1] CRAN (R 4.0.0)                   
 ##  tibble      * 3.0.3   2020-07-10 [1] CRAN (R 4.0.2)                   

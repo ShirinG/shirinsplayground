@@ -8,6 +8,16 @@
   </url>
   
   <url>
+    <loc>/2020/09/keras_callbacks/</loc>
+    <lastmod>2020-09-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2020/09/keras_funct_api/</loc>
+    <lastmod>2020-09-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/2020/09/keras_fruits_update/</loc>
     <lastmod>2020-09-13T00:00:00+00:00</lastmod>
   </url>
@@ -810,7 +820,7 @@
   
   <url>
     <loc>/tags/image-classification/</loc>
-    <lastmod>2020-09-13T00:00:00+00:00</lastmod>
+    <lastmod>2020-09-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -846,13 +856,13 @@
   
   <url>
     <loc>/tags/keras/</loc>
-    <lastmod>2020-09-13T00:00:00+00:00</lastmod>
+    <lastmod>2020-09-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/keras/</loc>
-    <lastmod>2020-09-13T00:00:00+00:00</lastmod>
+    <lastmod>2020-09-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -1212,7 +1222,7 @@
   
   <url>
     <loc>/tags/tensorflow/</loc>
-    <lastmod>2020-09-13T00:00:00+00:00</lastmod>
+    <lastmod>2020-09-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

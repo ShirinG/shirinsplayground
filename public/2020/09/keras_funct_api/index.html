@@ -1,0 +1,1133 @@
+
+
+  
+    
+  
+
+
+  
+
+
+
+
+  
+
+
+  
+
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hugo 0.27 with theme Tranquilpeak 0.4.1-BETA">
+    <title>Using the Keras Functional API</title>
+    <meta name="author" content="Dr. Shirin Elsinghorst">
+    <meta name="keywords" content=", R">
+
+    <link rel="icon" href="img/favicon.png">
+    
+
+    
+    <meta name="description" content="https://keras.rstudio.com/articles/functional_api.html
+The Keras Functional API is more for complex models, like multi-input and multi-output models, but I will show how it works in a simple example here.
+(keras_model_sequential). The sequential model makes the assumption that the network has exactly one input and exactly one output, and that it consists of a linear stack of layers (see figure 7.1).
+This is a commonly verified assumption; the configuration is so common that we’ve been able to cover many topics and practical applications in these pages so far using only keras_model_sequential.">
+    <meta property="og:description" content="https://keras.rstudio.com/articles/functional_api.html
+The Keras Functional API is more for complex models, like multi-input and multi-output models, but I will show how it works in a simple example here.
+(keras_model_sequential). The sequential model makes the assumption that the network has exactly one input and exactly one output, and that it consists of a linear stack of layers (see figure 7.1).
+This is a commonly verified assumption; the configuration is so common that we’ve been able to cover many topics and practical applications in these pages so far using only keras_model_sequential.">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="Using the Keras Functional API">
+    <meta property="og:url" content="/2020/09/keras_funct_api/">
+    <meta property="og:site_name" content="Shirin&#39;s playgRound">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Shirin&#39;s playgRound">
+    <meta name="twitter:description" content="https://keras.rstudio.com/articles/functional_api.html
+The Keras Functional API is more for complex models, like multi-input and multi-output models, but I will show how it works in a simple example here.
+(keras_model_sequential). The sequential model makes the assumption that the network has exactly one input and exactly one output, and that it consists of a linear stack of layers (see figure 7.1).
+This is a commonly verified assumption; the configuration is so common that we’ve been able to cover many topics and practical applications in these pages so far using only keras_model_sequential.">
+    
+      <meta name="twitter:creator" content="@ShirinGlander">
+    
+    
+
+    
+    
+
+    
+      <meta property="og:image" content="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=640">
+    
+
+    
+    
+    
+
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="/css/style-hbs5om8csx9a8yrv5hnhpi2qqdv4ykuslajwbramhqxvleqbfklxgek50hye.min.css" />
+    
+    
+
+    
+      
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-86119417-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="/">Shirin&#39;s playgRound</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <h1 class="sidebar-profile-title">Using the Keras Functional API</h1>
+        <a href="https://blog.feedspot.com/r_programming_blogs/" rel="nofollow" title="R Programming Blogs"><img alt="R Programming Blogs" src="https://blog.feedspot.com/wp-content/uploads/2018/04/r_program_216px.png?x20694"/></a>
+        <a href="/#about">
+          <img class="sidebar-profile-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Dr. Shirin Elsinghorst</h4>
+        
+          <h5 class="sidebar-profile-bio">Biologist turned Bioinformatician turned Data Scientist</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/categories/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/tags/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/page/about/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/page/bookme/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-calendar"></i>
+      
+      <span class="sidebar-button-desc">Book me</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/page/conferences_podcasts_webinars/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bullhorn"></i>
+      
+      <span class="sidebar-button-desc">Hear me talk</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/archives/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://shiring.github.io/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">My old R-blog</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/ShirinG">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://stackoverflow.com/users/6623620/shirin-glander">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-stack-overflow"></i>
+      
+      <span class="sidebar-button-desc">Stack Overflow</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/ShirinGlander">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.linkedin.com/in/shirin-glander-01120881/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-linkedin"></i>
+      
+      <span class="sidebar-button-desc">LinkedIn</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.xing.com/profile/Shirin_Elsinghorst/cv">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-xing"></i>
+      
+      <span class="sidebar-button-desc">Xing</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.meetup.com/Munster-R-Users-Group">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-meetup"></i>
+      
+      <span class="sidebar-button-desc">MünsteR</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.r-bloggers.com/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-book"></i>
+      
+      <span class="sidebar-button-desc">R-bloggers</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.r-users.com/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-book"></i>
+      
+      <span class="sidebar-button-desc">R-users</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.womentech.net/women-tech-conference?join=ODMzOQ==">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-wifi"></i>
+      
+      <span class="sidebar-button-desc">WomenInTech</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.codecentric.de/kuenstliche-intelligenz/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-angle-double-right"></i>
+      
+      <span class="sidebar-button-desc">codecentric.ai</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaOut
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-center">
+  
+    <h1 class="post-title" itemprop="headline">
+      Using the Keras Functional API
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2020-09-20T00:00:00Z">
+        
+  September 20, 2020
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="/categories/r">R</a>, 
+    
+      <a class="category-link" href="/categories/keras">keras</a>
+    
+  
+
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p><a href="https://keras.rstudio.com/articles/functional_api.html" class="uri">https://keras.rstudio.com/articles/functional_api.html</a></p>
+<p>The Keras Functional API is more for complex models, like multi-input and multi-output models, but I will show how it works in a simple example here.</p>
+<p>(keras_model_sequential). The sequential model makes the assumption that the network has exactly one input and exactly one output, and that it consists of a linear stack of layers (see figure 7.1).</p>
+<p>This is a commonly verified assumption; the configuration is so common that we’ve been able to cover many topics and practical applications in these pages so far using only keras_model_sequential. But this set of assumptions is too inflexible in a number of cases. Some networks require several independent inputs, others require multiple outputs, and some networks have internal branching between layers that makes them look like graphs of layers rather than linear stacks of layers.</p>
+<p>Some tasks, for instance, require multimodal inputs: they merge data coming from different input sources, processing each type of data using different kinds of neural layers. Imagine a deep-learning model trying to predict the most likely market price of a second-hand piece of clothing, using the following inputs: user-provided metadata (such as the item’s brand, age, and so on), a user-provided text description, and a picture of the item. If you had only the metadata available, you could one-hot encode it and use a densely connected network to predict the price. If you had only the text description available, you could use an RNN or a 1D convnet. If you had only the picture, you could use a 2D convnet. But how can you use all three at the same time? A naive approach would be to train three separate models and then do a weighted average of their predictions. But this may be suboptimal, because the information extracted by the models may be redundant. A better way is to jointly learn a more accurate model of the data by using a model that can see all available input modalities simultaneously: a model with three input branches (see figure 7.2).</p>
+<p>Similarly, some tasks need to predict multiple target attributes of input data. Given the text of a novel or short story, you might want to automatically classify it by genre (such as romance or thriller) but also predict the approximate date it was written. Of course, you could train two separate models: one for the genre and one for the date. But because these attributes aren’t statistically independent, you could build a better model by learning to jointly predict both genre and date at the same time. Such a joint model would then have two outputs, or heads (see figure 7.3). Due to correlations between genre and date, knowing the date of a novel would help the model learn rich, accurate representations of the space of novel genres, and vice versa.</p>
+<p>Additionally, many recently developed neural architectures require nonlinear network topology: networks structured as directed acyclic graphs. The Inception family of networks (developed by Szegedy et al. at Google),[1] for instance, relies on Inception modules, where the input is processed by several parallel convolutional branches whose outputs are then merged back into a single tensor (see figure 7.4). There’s also the recent trend of adding residual connections to a model, which started with the ResNet family of networks (developed by He et al. at Microsoft).[2] A residual connection consists of reinjecting previous representations into the downstream flow of data by adding a past output tensor to a later output tensor (see figure 7.5), which helps prevent information loss along the data-processing flow. There are many other examples of such graph-like networks.</p>
+<p>In the functional API, you build your input and output layers and then pass them to the keras_model function. This model can be trained just like Keras sequential models.</p>
+<p>The only part that may seem a bit magical at this point is passing only an input tensor and an output tensor to the keras_model function. Behind the scenes, Keras retrieves every layer involved in going from input_tensor to output_tensor, bringing them together into a graph-like data structure—a model. Of course, the reason it works is that output_tensor was obtained by repeatedly transforming input_tensor. If you tried to build a model from inputs and outputs that weren’t related, you’d get an error:</p>
+<p>This error tells you, in essence, that Keras couldn’t reach input_1 from the provided output tensor.</p>
+<p>When it comes to compiling, training, or evaluating a model built this way, the API is the same as that of sequential models:</p>
+<p>The functional API can be used to build models that have multiple inputs. Typically, such models at some point merge their different input branches using a layer that can combine several tensors: by adding them, concatenating them, and so on. This is usually done via a Keras merge operation such as layer_add, layer_concatenate, and so on. Let’s look at a very simple example of a multi-input model: a question-answering model.</p>
+<p>A typical question-answering model has two inputs: a natural-language question and a text snippet (such as a news article) providing information to be used for answering the question. The model must then produce an answer: in the simplest possible setup, this is a one-word answer obtained via a softmax over some predefined vocabulary (see figure 7.6).</p>
+<p>In the same way, you can use the functional API to build models with multiple outputs (or multiple heads). A simple example is a network that attempts to simultaneously predict different properties of the data, such as a network that takes as input a series of social media posts from a single anonymous person and tries to predict attributes of that person, such as age, gender, and income level (see figure 7.7).</p>
+<p>With the functional API, not only can you build models with multiple inputs and multiple outputs, but you can also implement networks with a complex internal topology. Neural networks in Keras are allowed to be arbitrary directed acyclic graphs of layers. The qualifier acyclic is important: these graphs can’t have cycles. It’s impossible for a tensor x to become the input of one of the layers that generated x. The only processing loops that are allowed (that is, recurrent connections) are those internal to recurrent layers.</p>
+<p>Several common neural-network components are implemented as graphs. Two notable ones are Inception modules and residual connections. To better understand how the functional API can be used to build graphs of layers, let’s take a look at how you can implement both of them in Keras.</p>
+<p>Inception modules
+Inception[3] is a popular type of network architecture for convolutional neural networks; it was developed by Christian Szegedy and his colleagues at Google in 2013–2014, inspired by the earlier network-in-network architecture.[4] It consists of a stack of modules that themselves look like small independent networks, split into several parallel branches. The most basic form of an Inception module has three to four branches starting with a 1 × 1 convolution, followed by a 3 × 3 convolution, and ending with the concatenation of the resulting features. This setup helps the network separately learn spatial features and channel-wise features, which is more efficient than learning them jointly. More-complex versions of an Inception module are also possible, typically involving pooling operations, different spatial convolution sizes (for example, 5 × 5 instead of 3 × 3 on some branches), and branches without a spatial convolution (only a 1 × 1 convolution). An example of such a module, taken from Inception V3, is shown in figure 7.8.</p>
+<hr />
+<p>If you have questions or would like to talk about this article (or something else data-related), you can now <a href="http://127.0.0.1:4321/page/bookme/">book 15-minute timeslots</a> with me (it’s free - one slot available per weekday):</p>
+<img src="https://www.appointletcdn.com/loader/buttons/F62459.png" data-appointlet-organization="shirin-elsinghorst" data-appointlet-service="357892">
+<script src="https://www.appointletcdn.com/loader/loader.min.js" async="" defer=""></script>
+<p><em>If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at <button><a href="https://paypal.me/ShirinGlander">paypal.me</a></button>. Thank you!</em> :-)</p>
+<hr />
+<pre class="r"><code># load libraries
+library(tidyverse)
+library(keras)</code></pre>
+<pre class="r"><code># check if keras is available
+is_keras_available()
+#[1] TRUE</code></pre>
+<div id="loading-images-data" class="section level2">
+<h2>Loading images (data)</h2>
+<pre class="r"><code># path to image folders
+train_image_files_path &lt;- &quot;/fruits/Training/&quot;</code></pre>
+<pre class="r"><code># list of fruits to modle
+fruit_list &lt;- c(&quot;Kiwi&quot;, &quot;Banana&quot;, &quot;Apricot&quot;, &quot;Avocado&quot;, &quot;Cocos&quot;, &quot;Clementine&quot;, &quot;Mandarine&quot;, &quot;Orange&quot;,
+                &quot;Limes&quot;, &quot;Lemon&quot;, &quot;Peach&quot;, &quot;Plum&quot;, &quot;Raspberry&quot;, &quot;Strawberry&quot;, &quot;Pineapple&quot;, &quot;Pomegranate&quot;)
+
+# number of output classes (i.e. fruits)
+output_n &lt;- length(fruit_list)
+
+# image size to scale down to (original images are 100 x 100 px)
+img_width &lt;- 20
+img_height &lt;- 20
+target_size &lt;- c(img_width, img_height)
+
+# RGB = 3 channels
+channels &lt;- 3
+
+# define batch size
+batch_size &lt;- 32</code></pre>
+<pre class="r"><code>train_data_gen &lt;- image_data_generator(
+  rescale = 1/255,
+  validation_split = 0.3)</code></pre>
+<p>Now we load the images into memory and resize them.</p>
+<pre class="r"><code># training images
+train_image_array_gen &lt;- flow_images_from_directory(train_image_files_path, 
+                                          train_data_gen,
+                                          subset = &#39;training&#39;,
+                                          target_size = target_size,
+                                          class_mode = &quot;categorical&quot;,
+                                          classes = fruit_list,
+                                          batch_size = batch_size,
+                                          seed = 42)
+#Found 5401 images belonging to 16 classes.
+
+# validation images
+valid_image_array_gen &lt;- flow_images_from_directory(train_image_files_path, 
+                                          train_data_gen,
+                                          subset = &#39;validation&#39;,
+                                          target_size = target_size,
+                                          class_mode = &quot;categorical&quot;,
+                                          classes = fruit_list,
+                                          batch_size = batch_size,
+                                          seed = 42)
+#Found 2308 images belonging to 16 classes.</code></pre>
+</div>
+<div id="training-the-model" class="section level2">
+<h2>Training the model</h2>
+<p>Now, I define and train the model just as before:</p>
+<pre class="r"><code># number of training samples
+train_samples &lt;- train_image_array_gen$n
+# number of validation samples
+valid_samples &lt;- valid_image_array_gen$n
+
+# define number of epochs
+epochs &lt;- 10</code></pre>
+<pre class="r"><code># input layer
+inputs &lt;- layer_input(shape = c(img_width, img_height, channels))
+
+# outputs compose input + dense layers
+predictions &lt;- inputs %&gt;%
+  layer_conv_2d(filter = 32, kernel_size = c(3,3), padding = &quot;same&quot;) %&gt;%
+  layer_activation(&quot;relu&quot;) %&gt;%
+  
+  # Second hidden layer
+  layer_conv_2d(filter = 16, kernel_size = c(3,3), padding = &quot;same&quot;) %&gt;%
+  layer_activation_leaky_relu(0.5) %&gt;%
+  layer_batch_normalization() %&gt;%
+
+  # Use max pooling
+  layer_max_pooling_2d(pool_size = c(2,2)) %&gt;%
+  layer_dropout(0.25) %&gt;%
+  
+  # Flatten max filtered output into feature vector 
+  # and feed into dense layer
+  layer_flatten() %&gt;%
+  layer_dense(100) %&gt;%
+  layer_activation(&quot;relu&quot;) %&gt;%
+  layer_dropout(0.5) %&gt;%
+  
+  # Outputs from dense layer are projected onto output layer
+  layer_dense(output_n) %&gt;% 
+  layer_activation(&quot;softmax&quot;)
+
+# create and compile model
+model &lt;- keras_model(inputs = inputs, outputs = predictions)
+
+model %&gt;% compile(
+  loss = &quot;categorical_crossentropy&quot;,
+  optimizer = optimizer_rmsprop(lr = 0.0001, decay = 1e-6),
+  metrics = &quot;accuracy&quot;
+)</code></pre>
+<pre class="r"><code># fit
+hist &lt;- model %&gt;% fit_generator(
+  # training data
+  train_image_array_gen,
+  
+  # epochs
+  steps_per_epoch = as.integer(train_samples / batch_size), 
+  epochs = epochs, 
+  
+  # validation data
+  validation_data = valid_image_array_gen,
+  validation_steps = as.integer(valid_samples / batch_size)
+)</code></pre>
+<pre class="r"><code>plot(hist)</code></pre>
+</div>
+<div id="section" class="section level2">
+<h2><img src="/img/hist.png" /></h2>
+<pre class="r"><code>devtools::session_info()</code></pre>
+<pre><code>## ─ Session info ───────────────────────────────────────────────────────────────
+##  setting  value                       
+##  version  R version 4.0.2 (2020-06-22)
+##  os       macOS Catalina 10.15.6      
+##  system   x86_64, darwin17.0          
+##  ui       X11                         
+##  language (EN)                        
+##  collate  en_US.UTF-8                 
+##  ctype    en_US.UTF-8                 
+##  tz       Europe/Berlin               
+##  date     2020-09-14                  
+## 
+## ─ Packages ───────────────────────────────────────────────────────────────────
+##  package     * version date       lib source                           
+##  assertthat    0.2.1   2019-03-21 [1] CRAN (R 4.0.0)                   
+##  backports     1.1.9   2020-08-24 [1] CRAN (R 4.0.2)                   
+##  base64enc     0.1-3   2015-07-28 [1] CRAN (R 4.0.0)                   
+##  blob          1.2.1   2020-01-20 [1] CRAN (R 4.0.2)                   
+##  blogdown      0.20.1  2020-09-09 [1] Github (rstudio/blogdown@d96fe78)
+##  bookdown      0.20    2020-06-23 [1] CRAN (R 4.0.2)                   
+##  broom         0.7.0   2020-07-09 [1] CRAN (R 4.0.2)                   
+##  callr         3.4.4   2020-09-07 [1] CRAN (R 4.0.2)                   
+##  cellranger    1.1.0   2016-07-27 [1] CRAN (R 4.0.0)                   
+##  cli           2.0.2   2020-02-28 [1] CRAN (R 4.0.0)                   
+##  colorspace    1.4-1   2019-03-18 [1] CRAN (R 4.0.0)                   
+##  crayon        1.3.4   2017-09-16 [1] CRAN (R 4.0.0)                   
+##  DBI           1.1.0   2019-12-15 [1] CRAN (R 4.0.0)                   
+##  dbplyr        1.4.4   2020-05-27 [1] CRAN (R 4.0.2)                   
+##  desc          1.2.0   2018-05-01 [1] CRAN (R 4.0.0)                   
+##  devtools      2.3.1   2020-07-21 [1] CRAN (R 4.0.2)                   
+##  digest        0.6.25  2020-02-23 [1] CRAN (R 4.0.0)                   
+##  dplyr       * 1.0.2   2020-08-18 [1] CRAN (R 4.0.2)                   
+##  ellipsis      0.3.1   2020-05-15 [1] CRAN (R 4.0.0)                   
+##  evaluate      0.14    2019-05-28 [1] CRAN (R 4.0.1)                   
+##  fansi         0.4.1   2020-01-08 [1] CRAN (R 4.0.0)                   
+##  forcats     * 0.5.0   2020-03-01 [1] CRAN (R 4.0.0)                   
+##  fs            1.5.0   2020-07-31 [1] CRAN (R 4.0.2)                   
+##  generics      0.0.2   2018-11-29 [1] CRAN (R 4.0.0)                   
+##  ggplot2     * 3.3.2   2020-06-19 [1] CRAN (R 4.0.2)                   
+##  glue          1.4.2   2020-08-27 [1] CRAN (R 4.0.2)                   
+##  gtable        0.3.0   2019-03-25 [1] CRAN (R 4.0.0)                   
+##  haven         2.3.1   2020-06-01 [1] CRAN (R 4.0.2)                   
+##  hms           0.5.3   2020-01-08 [1] CRAN (R 4.0.0)                   
+##  htmltools     0.5.0   2020-06-16 [1] CRAN (R 4.0.2)                   
+##  httr          1.4.2   2020-07-20 [1] CRAN (R 4.0.2)                   
+##  jsonlite      1.7.1   2020-09-07 [1] CRAN (R 4.0.2)                   
+##  keras       * 2.3.0.0 2020-05-19 [1] CRAN (R 4.0.2)                   
+##  knitr         1.29    2020-06-23 [1] CRAN (R 4.0.2)                   
+##  lattice       0.20-41 2020-04-02 [1] CRAN (R 4.0.2)                   
+##  lifecycle     0.2.0   2020-03-06 [1] CRAN (R 4.0.0)                   
+##  lubridate     1.7.9   2020-06-08 [1] CRAN (R 4.0.2)                   
+##  magrittr      1.5     2014-11-22 [1] CRAN (R 4.0.0)                   
+##  Matrix        1.2-18  2019-11-27 [1] CRAN (R 4.0.2)                   
+##  memoise       1.1.0   2017-04-21 [1] CRAN (R 4.0.0)                   
+##  modelr        0.1.8   2020-05-19 [1] CRAN (R 4.0.2)                   
+##  munsell       0.5.0   2018-06-12 [1] CRAN (R 4.0.0)                   
+##  pillar        1.4.6   2020-07-10 [1] CRAN (R 4.0.2)                   
+##  pkgbuild      1.1.0   2020-07-13 [1] CRAN (R 4.0.2)                   
+##  pkgconfig     2.0.3   2019-09-22 [1] CRAN (R 4.0.0)                   
+##  pkgload       1.1.0   2020-05-29 [1] CRAN (R 4.0.2)                   
+##  prettyunits   1.1.1   2020-01-24 [1] CRAN (R 4.0.0)                   
+##  processx      3.4.4   2020-09-03 [1] CRAN (R 4.0.2)                   
+##  ps            1.3.4   2020-08-11 [1] CRAN (R 4.0.2)                   
+##  purrr       * 0.3.4   2020-04-17 [1] CRAN (R 4.0.0)                   
+##  R6            2.4.1   2019-11-12 [1] CRAN (R 4.0.0)                   
+##  Rcpp          1.0.5   2020-07-06 [1] CRAN (R 4.0.2)                   
+##  readr       * 1.3.1   2018-12-21 [1] CRAN (R 4.0.0)                   
+##  readxl        1.3.1   2019-03-13 [1] CRAN (R 4.0.0)                   
+##  remotes       2.2.0   2020-07-21 [1] CRAN (R 4.0.2)                   
+##  reprex        0.3.0   2019-05-16 [1] CRAN (R 4.0.0)                   
+##  reticulate    1.16    2020-05-27 [1] CRAN (R 4.0.2)                   
+##  rlang         0.4.7   2020-07-09 [1] CRAN (R 4.0.2)                   
+##  rmarkdown     2.3     2020-06-18 [1] CRAN (R 4.0.2)                   
+##  rprojroot     1.3-2   2018-01-03 [1] CRAN (R 4.0.0)                   
+##  rstudioapi    0.11    2020-02-07 [1] CRAN (R 4.0.0)                   
+##  rvest         0.3.6   2020-07-25 [1] CRAN (R 4.0.2)                   
+##  scales        1.1.1   2020-05-11 [1] CRAN (R 4.0.0)                   
+##  sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 4.0.0)                   
+##  stringi       1.5.3   2020-09-09 [1] CRAN (R 4.0.2)                   
+##  stringr     * 1.4.0   2019-02-10 [1] CRAN (R 4.0.0)                   
+##  tensorflow    2.2.0   2020-05-11 [1] CRAN (R 4.0.0)                   
+##  testthat      2.3.2   2020-03-02 [1] CRAN (R 4.0.0)                   
+##  tfruns        1.4     2018-08-25 [1] CRAN (R 4.0.0)                   
+##  tibble      * 3.0.3   2020-07-10 [1] CRAN (R 4.0.2)                   
+##  tidyr       * 1.1.2   2020-08-27 [1] CRAN (R 4.0.2)                   
+##  tidyselect    1.1.0   2020-05-11 [1] CRAN (R 4.0.0)                   
+##  tidyverse   * 1.3.0   2019-11-21 [1] CRAN (R 4.0.0)                   
+##  usethis       1.6.1   2020-04-29 [1] CRAN (R 4.0.0)                   
+##  vctrs         0.3.4   2020-08-29 [1] CRAN (R 4.0.2)                   
+##  whisker       0.4     2019-08-28 [1] CRAN (R 4.0.0)                   
+##  withr         2.2.0   2020-04-20 [1] CRAN (R 4.0.0)                   
+##  xfun          0.17    2020-09-09 [1] CRAN (R 4.0.2)                   
+##  xml2          1.3.2   2020-04-23 [1] CRAN (R 4.0.0)                   
+##  yaml          2.2.1   2020-02-01 [1] CRAN (R 4.0.0)                   
+##  zeallot       0.1.0   2018-01-28 [1] CRAN (R 4.0.0)                   
+## 
+## [1] /Library/Frameworks/R.framework/Versions/4.0/Resources/library</code></pre>
+</div>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="//tags/r/">R</a>
+
+  <a class="tag tag--primary tag--small" href="//tags/keras/">keras</a>
+
+  <a class="tag tag--primary tag--small" href="//tags/image-classification/">image classification</a>
+
+  <a class="tag tag--primary tag--small" href="//tags/tensorflow/">tensorflow</a>
+
+                  </div>
+                
+              
+            
+            
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2020/09/keras_callbacks/" data-tooltip="Using Keras Callbacks">
+              
+                <i class="fa fa-angle-left"></i>
+                <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+              </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2020/09/keras_fruits_update/" data-tooltip="Update with TF 2.0: Image classification with Keras and TensorFlow.">
+              
+                <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2020/09/keras_funct_api/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2020/09/keras_funct_api/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2020/09/keras_funct_api/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2020 <a href='https://shirin-elsinghorst.appointlet.com/s/15-minute-intro'>Dr. Shirin Elsinghorst</a>. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2020/09/keras_callbacks/" data-tooltip="Using Keras Callbacks">
+              
+                <i class="fa fa-angle-left"></i>
+                <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+              </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2020/09/keras_fruits_update/" data-tooltip="Update with TF 2.0: Image classification with Keras and TensorFlow.">
+              
+                <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2020/09/keras_funct_api/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2020/09/keras_funct_api/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2020/09/keras_funct_api/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=%2F2020%2F09%2Fkeras_funct_api%2F">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=%2F2020%2F09%2Fkeras_funct_api%2F">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=%2F2020%2F09%2Fkeras_funct_api%2F">
+          <i class="fa fa-google-plus"></i><span>Share on Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Dr. Shirin Elsinghorst</h4>
+    
+      <div id="about-card-bio">Biologist turned Bioinformatician turned Data Scientist</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Data Scientist
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Münster, Germany
+      </div>
+    
+  </div>
+</div>
+
+    <div id="algolia-search-modal" class="modal-container">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="close-button"><i class="fa fa-close"></i></span>
+      <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
+        <span class="searchby-algolia-text text-color-light text-small">by</span>
+        <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
+      </a>
+      <i class="search-icon fa fa-search"></i>
+      <form id="algolia-search-form">
+        <input type="text" id="algolia-search-input" name="search"
+          class="form-control input--large search-input" placeholder="Search" />
+      </form>
+    </div>
+    <div class="modal-body">
+      <div class="no-result text-color-light text-center">no post found</div>
+      <div class="results">
+        
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2020/10/goodbadugly/">
+                <h3 class="media-heading">The Good, the Bad and the Ugly: how (not) to visualize data</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Oct 10, 2020
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">This is the complete code used to create the ggplot2 graphs in my talk The Good, the Bad and the Ugly: how (not) to visualize data at this year’s data2day conference. You can find the slides here.
+If you have questions or would like to talk about this article (or something else data-related), you can now book 15-minute timeslots with me (it’s free - one slot available per weekday):
+ If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at paypal.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2020/09/keras_callbacks/">
+                <h3 class="media-heading">Using Keras Callbacks</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Sep 9, 2020
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Keras comes with a number of built in callbacks.
+When you’re training a model, there are many things you can’t predict from the start. In particular, you can’t tell how many epochs will be needed to get to an optimal validation loss. The examples so far have adopted the strategy of training for enough epochs that you begin overfitting, using the first run to figure out the proper number of epochs to train for, and then finally launching a new training run from scratch using this optimal number.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2020/09/keras_funct_api/">
+                <h3 class="media-heading">Using the Keras Functional API</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Sep 9, 2020
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">https://keras.rstudio.com/articles/functional_api.html
+The Keras Functional API is more for complex models, like multi-input and multi-output models, but I will show how it works in a simple example here.
+(keras_model_sequential). The sequential model makes the assumption that the network has exactly one input and exactly one output, and that it consists of a linear stack of layers (see figure 7.1).
+This is a commonly verified assumption; the configuration is so common that we’ve been able to cover many topics and practical applications in these pages so far using only keras_model_sequential.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2020/09/keras_fruits_update/">
+                <h3 class="media-heading">Update with TF 2.0: Image classification with Keras and TensorFlow.</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Sep 9, 2020
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Recently, I have been getting a few comments on my old article on image classification with Keras, saying that they are getting errors with the code. And I have also gotten a few questions about how to use a Keras model to predict on new images (of different size). Instead of replying to them all individually, I decided to write this updated version using recent Keras and TensorFlow versions (all package versions and system information can be found at the bottom of this article, as usual).</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2020/09/baby_weight_app/">
+                <h3 class="media-heading">Baby Weight Shiny app</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Sep 9, 2020
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Alright, this is it: I am officially back! :-D
+I have not written any blogposts for over a year. Last year, I had the cutest baby boy and ever since then, I did not get around to doing much coding. One of the reasons was that, unfortunately, we did not have the easiest of starts with the little one. Feeding problems led to weight gain problems, so we had to weigh him regularly.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2019/06/meetup_july19/">
+                <h3 class="media-heading">Word2Vec Text Mining &amp; Parallelization in R. Join MünsteR for our next meetup!</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jun 6, 2019
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">In our next MünsteR R-user group meetup on Tuesday, July 9th, 2019, we will have two exciting talks about Word2Vec Text Mining &amp; Parallelization in R!
+You can RSVP here: https://www.meetup.com/de-DE/Munster-R-Users-Group/events/262236134/
+ Thorben Hellweg will talk about Parallelization in R. More information tba!
+  Maren Reuter from viadee AG will give an introduction into the functionality and use of the Word2Vec algorithm in R.
+  Text data in its raw form cannot be used as input for machine learning algorithms.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2019/04/consider_data_camp/">
+                <h3 class="media-heading">Before you take my DataCamp course please consider this info</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Apr 4, 2019
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Today, I am finally getting around to writing this very sad blog post: Before you take my DataCamp course please consider the following information about the sexual harassment scandal surrounding DataCamp!
+UPDATE from April 26th: Yesterday, DataCamp’s CEO Jonathan Cornelissen issued an apology statement and the DataCamp Board of Directors wrote an update about the situation and next steps (albeit somewhat vague) they are planning to take in order to address the situation.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2019/03/upcoming_talks_spring2019/">
+                <h3 class="media-heading">Upcoming talks in spring 2019</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Mar 3, 2019
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">This spring, I’ll be giving talks at a couple of Meetups and conferences:
+
+  March, 26th: At the data lounge Bremen, I’ll be talking about Explainable Machine Learning
+ April, 11th: At the Data Science Meetup Bielefeld, I’ll be talking about Building Interpretable Neural Networks with Keras and LIME
+  
+  May, 14th: At the M3 conference in Mannheim, a colleague and I will give our workshop on building production-ready machine learning models with Keras, Luigi, DVC and TensorFlow Serving</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2019/03/meetup_april19/">
+                <h3 class="media-heading">Getting started with RMarkdown &amp; trying to make it in the world of Kaggle. Join MünsteR for our next meetup!</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Mar 3, 2019
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">In our next MünsteR R-user group meetup on Tuesday, April 9th, 2019, we will have two exciting talks: Getting started with RMarkdown and Trying to make it in the world of Kaggle!
+You can RSVP here: http://meetu.ps/e/Gg5th/w54bW/f
+Getting started with RMarkdown  First, Niklas Wulms from the University Hospital, Münster will give an introduction to RMarkdown:
+  He started using R in 2018 and learnt the advantages of using only one framework of free software and code.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2019/02/ccai_bootcamp_launch/">
+                <h3 class="media-heading">Launching codecentric.AI Bootcamp course!</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Feb 2, 2019
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Today, I am happy to announce the launch of our codecentric.AI Bootcamp!
+This bootcamp is a free online course for everyone who wants to learn hands-on machine learning and AI techniques, from basic algorithms to deep learning, computer vision and NLP. However, the course language is German only, but for every chapter I did, you will find an English R-version here on my blog (see below for links).
+Right now, the course is in beta phase, so we are happy about everyone who tests our content and leaves feedback.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+      </div>
+    </div>
+    <div class="modal-footer">
+      <p class="results-count text-medium"
+         data-message-zero="no post found"
+         data-message-one="1 post found"
+         data-message-other="{n} posts found">
+         87 posts found
+      </p>
+    </div>
+  </div>
+</div>
+    
+  
+    
+    <div id="cover" style="background-image:url('/images/autumn-2789234_1920.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" integrity="sha256-IFHWFEbU2/+wNycDECKgjIRSirRNIDp2acEB5fvdVRU=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js" integrity="sha256-+mpyNVJsNt4rVXCw0F+pAOiB3YxmHgrbJsx4ecPuUaI=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.js" integrity="sha256-vMxgR/7FtLovVA+IPrR7+xTgIgARH7y9VZQnmmi0HDI=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.js" integrity="sha256-N0qFUh7/9vLvia87dDndewmsgsyYoNkdA212tPc+2NI=" crossorigin="anonymous"></script>
+
+
+<script src="/js/script-kr8dyqj6rb6ortyib7whfo9x9p6td6zo8t1v4fdz4ecx5kwybsdlmk1slygn.min.js"></script>
+
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = '\/2020\/09\/keras_funct_api\/';
+          
+            this.page.identifier = '\/2020\/09\/keras_funct_api\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'shirinsplayground';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+    
+  </body>
+</html>
+

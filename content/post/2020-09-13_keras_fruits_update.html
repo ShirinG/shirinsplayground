@@ -1,12 +1,12 @@
 ---
-title: "Update for Keras and TF 2.0: Image classification with keras."
-draft: true
-author: Shirin Glander
+title: "Update with TF 2.0: Image classification with Keras and TensorFlow."
+draft: false
+author: Dr. Shirin Elsinghorst
 date: '2020-09-13'
 categories: ["R", "keras"]
 tags: ["R", "keras", "image classification", "tensorflow"]
 thumbnailImagePosition: left
-thumbnailImage: 
+thumbnailImage: /img/percentage_pred.png
 metaAlignment: center
 coverMeta: out
 slug: keras_fruits_update
@@ -14,14 +14,16 @@ slug: keras_fruits_update
 
 
 
-<p>Recently, I have been getting a few comments on my <a href="https://shirinsplayground.netlify.com/2018/06/keras_fruits/">old article on image classification with Keras</a>, saying that they are getting errors with the code. And I have also gotten a few questions about <strong>how to use a Keras model to predict on new images (of different size)</strong>. Instead of replying to them all individually, I decided to write this updated version using the most recent Keras and Tensorflow versions (all package versions and system information can be found at the bottom of this article, as usual).</p>
-<p>Specific updates made compared to the <a href="https://shirinsplayground.netlify.com/2018/06/keras_fruits/">old article</a>:</p>
+<p>Recently, I have been getting a few comments on my <a href="https://shirinsplayground.netlify.com/2018/06/keras_fruits/">old article on image classification with Keras</a>, saying that they are getting errors with the code. And I have also gotten a few questions about <strong>how to use a Keras model to predict on new images (of different size)</strong>. Instead of replying to them all individually, I decided to write this updated version using recent Keras and TensorFlow versions (all package versions and system information can be found at the bottom of this article, as usual).</p>
+<p>Specific changes compared to the <a href="https://shirinsplayground.netlify.com/2018/06/keras_fruits/">old article</a>:</p>
 <ul>
 <li><p>using TF 2.2.0</p></li>
 <li><p>using Keras 2.3.1</p></li>
-<li><p>used <strong>validation split</strong> instead of validation set</p></li>
+<li><p>used <strong>validation split</strong> instead of a validation set</p></li>
 <li><p>used folder Validation/Test for showing how to <strong>predict on new images</strong></p></li>
 </ul>
+<hr />
+<p><strong>Workshop announcement:</strong> Because this year’s UseR 2020 in Munich couldn’t happen as an in-person event, I will be giving my <a href="https://user2020.r-project.org/program/tutorials/">workshop on Deep Learning with Keras and TensorFlow</a> as an online event. I’ll be announcing the date once it’s been finalized but if you are interested in participating: we are looking at the first week of October (13:00 UTC).</p>
 <hr />
 <p>If you have questions or would like to talk about this article (or something else data-related), you can now <a href="http://127.0.0.1:4321/page/bookme/">book 15-minute timeslots</a> with me (it’s free - one slot available per weekday):</p>
 <img src="https://www.appointletcdn.com/loader/buttons/F62459.png" data-appointlet-organization="shirin-elsinghorst" data-appointlet-service="357892">
@@ -35,8 +37,15 @@ slug: keras_fruits_update
 <hr />
 <pre class="r"><code># load libraries
 library(tidyverse)
+library(tensorflow)
 library(keras)</code></pre>
-<pre class="r"><code># check if keras is available
+<pre class="r"><code>tf$random$set_seed(42)
+
+# check TF version
+tf_version()
+#[1] ‘2.2’
+
+# check if keras is available
 is_keras_available()
 #[1] TRUE</code></pre>
 <div id="loading-images-data" class="section level2">
@@ -153,6 +162,7 @@ model %&gt;% compile(
   metrics = &quot;accuracy&quot;
 )</code></pre>
 <p>Fitting the model: because I used <code>image_data_generator()</code> and <code>flow_images_from_directory()</code> I am now also using the <code>fit_generator()</code> to run the training.</p>
+<p><strong>Note:</strong> In future releases of TensorFlow, generator functions will be deprecated (i.e. <code>fit_generator()</code>, <code>evaluate_generator()</code> &amp; <code>predict_generator()</code>) and as of TensorFlow 2.1.0 the regular functions (<code>fit()</code>, <code>evaluate()</code> &amp; <code>predict()</code>) handle generators directly. However, this does not seem to be implemented in the Keras (R-) package yet (see <code>?fit.keras.engine.training.Model</code>), so I’ll be sticking to the old way of doing things for now.</p>
 <pre class="r"><code># fit
 hist &lt;- model %&gt;% fit_generator(
   # training data
@@ -167,32 +177,35 @@ hist &lt;- model %&gt;% fit_generator(
   validation_steps = as.integer(valid_samples / batch_size)
 )</code></pre>
 <pre><code>Epoch 1/10
-168/168 [==============================] - 9s 56ms/step - loss: 2.2358 - accuracy: 0.3038 - val_loss: 2.3285 - val_accuracy: 0.5477
+168/168 [==============================] - 8s 51ms/step - loss: 1.8614 - accuracy: 0.4194 - val_loss: 2.1271 - val_accuracy: 0.6897
 Epoch 2/10
-168/168 [==============================] - 6s 38ms/step - loss: 1.1505 - accuracy: 0.6161 - val_loss: 1.2697 - val_accuracy: 0.9054
+168/168 [==============================] - 6s 37ms/step - loss: 0.7967 - accuracy: 0.7463 - val_loss: 0.9940 - val_accuracy: 0.9444
 Epoch 3/10
-168/168 [==============================] - 6s 37ms/step - loss: 0.6588 - accuracy: 0.7812 - val_loss: 0.3950 - val_accuracy: 0.9227
+168/168 [==============================] - 6s 34ms/step - loss: 0.4556 - accuracy: 0.8622 - val_loss: 0.2636 - val_accuracy: 0.9722
 Epoch 4/10
-168/168 [==============================] - 6s 35ms/step - loss: 0.4223 - accuracy: 0.8624 - val_loss: 0.1600 - val_accuracy: 0.9609
+168/168 [==============================] - 6s 37ms/step - loss: 0.3001 - accuracy: 0.9074 - val_loss: 0.1298 - val_accuracy: 0.9779
 Epoch 5/10
-168/168 [==============================] - 6s 35ms/step - loss: 0.2775 - accuracy: 0.9091 - val_loss: 0.1180 - val_accuracy: 0.9648
+168/168 [==============================] - 6s 35ms/step - loss: 0.2010 - accuracy: 0.9417 - val_loss: 0.1194 - val_accuracy: 0.9757
 Epoch 6/10
-168/168 [==============================] - 6s 39ms/step - loss: 0.1981 - accuracy: 0.9383 - val_loss: 0.0844 - val_accuracy: 0.9727
+168/168 [==============================] - 6s 34ms/step - loss: 0.1539 - accuracy: 0.9581 - val_loss: 0.0768 - val_accuracy: 0.9688
 Epoch 7/10
-168/168 [==============================] - 6s 35ms/step - loss: 0.1514 - accuracy: 0.9527 - val_loss: 0.0674 - val_accuracy: 0.9731
+168/168 [==============================] - 6s 36ms/step - loss: 0.1147 - accuracy: 0.9672 - val_loss: 0.0574 - val_accuracy: 0.9831
 Epoch 8/10
-168/168 [==============================] - 6s 34ms/step - loss: 0.1116 - accuracy: 0.9685 - val_loss: 0.0669 - val_accuracy: 0.9805
+168/168 [==============================] - 6s 34ms/step - loss: 0.0831 - accuracy: 0.9771 - val_loss: 0.0676 - val_accuracy: 0.9826
 Epoch 9/10
-168/168 [==============================] - 6s 34ms/step - loss: 0.0897 - accuracy: 0.9722 - val_loss: 0.0466 - val_accuracy: 0.9818
+168/168 [==============================] - 6s 35ms/step - loss: 0.0713 - accuracy: 0.9786 - val_loss: 0.0542 - val_accuracy: 0.9796
 Epoch 10/10
-168/168 [==============================] - 6s 34ms/step - loss: 0.0699 - accuracy: 0.9795 - val_loss: 0.0698 - val_accuracy: 0.9787</code></pre>
+168/168 [==============================] - 6s 35ms/step - loss: 0.0572 - accuracy: 0.9842 - val_loss: 0.0548 - val_accuracy: 0.9835</code></pre>
 <p>In RStudio we are seeing the output as an interactive plot in the “Viewer” pane but we can also plot it:</p>
 <pre class="r"><code>plot(hist)</code></pre>
 <p><img src="/img/hist.png" /></p>
+<pre class="r"><code>model %&gt;% save_model_hdf5(&quot;my_model.h5&quot;)</code></pre>
+<pre class="r"><code>model &lt;- load_model_hdf5(&quot;my_model.h5&quot;)</code></pre>
 </div>
 <div id="predicting-on-new-set-of-images" class="section level2">
 <h2>Predicting on “new” set of images</h2>
-<p>Here is what’s new: how to use the model I just trained for predicting on new images (alternatively, load a previously trained model and use that for predictions). Just keep in mind, that these new images here aren’t actually “new”. They come from the same data source, i.e. the same distribution and thus aren’t independent enough to give an accurate assessment of how well the model generalizes.</p>
+<p><strong>Here is what’s new</strong>: how to use the model we just trained for predicting on new images. Alternatively, load a previously trained model and use that for predictions. Just keep in mind, that these “new” images here aren’t actually new. They come from the same data source, i.e. the same distribution and thus aren’t independent enough to give an accurate assessment of how well the model generalizes.</p>
+<p>The easiest and most efficient way to predict on a set of new images (and resize them to the target width and height), is to use the <strong>image data generator</strong> just as we did for reading in the training data above. Of course, you will need to know how the training images were preprocessed, so that you can apply the same steps to your test images. Here, the image pixel values were scaled to fall between 0 and 1 and the width/height were set to 20 pixels.</p>
 <pre class="r"><code># path to image folders
 test_image_files_path &lt;- &quot;/fruits/Test/&quot;</code></pre>
 <pre class="r"><code>test_datagen &lt;- image_data_generator(rescale = 1/255)
@@ -207,23 +220,31 @@ test_generator &lt;- flow_images_from_directory(
         shuffle = FALSE,
         seed = 42)
 #Found 2592 images belonging to 16 classes.</code></pre>
-<pre class="r"><code>test_generator$reset()
-model %&gt;%
+<p>Next, we can use the image data generator we created for our test images on two functions. First, I’ll run <code>evaluate_generator</code>, to get an overall idea of how well the model predicted the test images (note, that this requires for us to know the correct predictions for our images):</p>
+<pre class="r"><code>model %&gt;%
   evaluate_generator(test_generator, 
                      steps = as.integer(test_generator$n))</code></pre>
 <pre><code>      loss   accuracy 
-0.04565864 0.99112654 </code></pre>
+0.02915302 0.99305558 </code></pre>
+<p>Usually, what’s wanted is to get individual predictions for each test image. For that, we use the <code>predict_generator()</code> function. This function will return a matrix:</p>
+<ul>
+<li>each row represents one test image</li>
+<li>columns gives prediction probabilities for all possibles classes (if you are running a classifier)</li>
+</ul>
+<p>In order to compare predictions with actual class labels, I am preparing the true labels so that they can be merged with the predictions:</p>
 <pre class="r"><code>classes &lt;- test_generator$classes %&gt;%
   factor() %&gt;%
   table() %&gt;%
   as.tibble()
 colnames(classes)[1] &lt;- &quot;value&quot;</code></pre>
 <pre class="r"><code># create library of indices &amp; class labels
-indices &lt;- train_image_array_gen$class_indices %&gt;%
+indices &lt;- test_generator$class_indices %&gt;%
   as.data.frame() %&gt;%
   gather() %&gt;%
   mutate(value = as.character(value)) %&gt;%
   left_join(classes, by = &quot;value&quot;)</code></pre>
+<p>Now, I’m running the predictions, rename the columns to show the class labels instead of indices and I am merging the true labels, together with their corresponding labels and the total number of images in each class.</p>
+<p>(Running <code>test_generator$reset()</code> isn’t strictly necessary, but sometimes strange things happen if you are using the image data generator several times, so I always run reset first, to be on the safe side.)</p>
 <pre class="r"><code># predict on test data
 test_generator$reset()
 predictions &lt;- model %&gt;% 
@@ -231,7 +252,7 @@ predictions &lt;- model %&gt;%
     generator = test_generator,
     steps = as.integer(test_generator$n)
     ) %&gt;%
-  round() %&gt;%
+  round(digits = 2) %&gt;%
   as.tibble()
 
 colnames(predictions) &lt;- indices$key
@@ -239,6 +260,7 @@ colnames(predictions) &lt;- indices$key
 predictions &lt;- predictions %&gt;%
   mutate(truth_idx = as.character(test_generator$classes)) %&gt;%
   left_join(indices, by = c(&quot;truth_idx&quot; = &quot;value&quot;))</code></pre>
+<p>If you want to know which class is predicted for each image, you need to filter for the class with the highest prediction probability (here, tidyverse-style). Afterwards, for each class, I am also counting how many images were predicted with which label.</p>
 <pre class="r"><code>pred_analysis &lt;- predictions %&gt;%
   mutate(img_id = seq(1:test_generator$n)) %&gt;%
   gather(pred_lbl, y, Kiwi:Pomegranate) %&gt;%
@@ -247,6 +269,7 @@ predictions &lt;- predictions %&gt;%
   arrange(img_id) %&gt;%
   group_by(key, n, pred_lbl) %&gt;%
   count()</code></pre>
+<p>And since plotting makes comparing much easier than looking at a table, I’m creating a tile plot that shows the percentages of test images predicted for each label:</p>
 <pre class="r"><code>p &lt;- pred_analysis %&gt;%
   mutate(percentage_pred = nn / n * 100) %&gt;%
   ggplot(aes(x = key, y = pred_lbl, 
@@ -254,10 +277,20 @@ predictions &lt;- predictions %&gt;%
              label = round(percentage_pred, 2))) +
     geom_tile() +
     scale_fill_continuous() +
+    scale_fill_gradient(low = &quot;blue&quot;, high = &quot;red&quot;) +
     geom_text(color = &quot;white&quot;) +
-    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
+    labs(x = &quot;True class&quot;, 
+         y = &quot;Predicted class&quot;,
+         fill = &quot;Percentage\nof predictions&quot;,
+        title = &quot;True v. predicted class labels&quot;, 
+        subtitle = &quot;Percentage of test images predicted for each label&quot;,
+        caption = &quot;For every class of test images, this figure shows the percentage of images with predicted labels for each possible label.
+        E.g.: 100% of test images in the class &#39;Apricot&#39; were predicted correctly. Of test images from the class &#39;Cocos&#39; 
+        only 94.58% were predicted correctly, while 0.6% of these images were predicted to show a Strawberry and 4.82% a Pineapple.&quot;)
 p</code></pre>
 <p><img src="/img/percentage_pred.png" /></p>
+<p>And another tile plot showing the percentages of correct and falsely predicted images in each class:</p>
 <pre class="r"><code>p2 &lt;- pred_analysis %&gt;%
   mutate(prediction = case_when(
     key == pred_lbl ~ &quot;correct&quot;,
@@ -272,7 +305,17 @@ p</code></pre>
     geom_tile() +
     scale_fill_continuous() +
     geom_text(color = &quot;white&quot;) +
-    coord_flip()
+    coord_flip() +
+    scale_fill_gradient(low = &quot;blue&quot;, high = &quot;red&quot;) +
+    labs(x = &quot;True class&quot;, 
+         y = &quot;Prediction is...&quot;,
+         fill = &quot;Percentage\nof predictions&quot;,
+        title = &quot;Percentage of correct v false predictions&quot;, 
+        subtitle = &quot;Percentage of test image classes predicted correctly v. falsely&quot;,
+        caption = &quot;For every class of test images, this figure shows the percentage of 
+        images with correctly and falsely predicted labels. E.g.: 100% of test images 
+        in the class &#39;Apricot&#39; were predicted correctly. Of test images from the class 
+        &#39;Cocos&#39; only 94.58% were predicted correctly, while 5.42% were predicted falsely.&quot;)
 p2</code></pre>
 <p><img src="/img/percentage_pred_cor.png" /></p>
 <p>As we can see, the model is quite accurate on the test data. However, we need to keep in mind that our images are very uniform, they all have the same white background and show the fruits centered and without anything else in the images. Thus, our model will not work with images that don’t look similar as the ones we trained on (that’s also why we can achieve such good results with such a small neural net).</p>
@@ -288,7 +331,7 @@ p2</code></pre>
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       Europe/Berlin               
-##  date     2020-09-11                  
+##  date     2020-09-14                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────
 ##  package     * version date       lib source                           
@@ -358,7 +401,7 @@ p2</code></pre>
 ##  sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 4.0.0)                   
 ##  stringi       1.5.3   2020-09-09 [1] CRAN (R 4.0.2)                   
 ##  stringr     * 1.4.0   2019-02-10 [1] CRAN (R 4.0.0)                   
-##  tensorflow    2.2.0   2020-05-11 [1] CRAN (R 4.0.0)                   
+##  tensorflow  * 2.2.0   2020-05-11 [1] CRAN (R 4.0.0)                   
 ##  testthat      2.3.2   2020-03-02 [1] CRAN (R 4.0.0)                   
 ##  tfruns        1.4     2018-08-25 [1] CRAN (R 4.0.0)                   
 ##  tibble      * 3.0.3   2020-07-10 [1] CRAN (R 4.0.2)                   
