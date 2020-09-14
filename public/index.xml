@@ -1242,7 +1242,7 @@ hist &lt;- model %&gt;% fit_generator(
 ]]></content>
   </entry>
   <entry>
-    <title type="html"><![CDATA[Update with TF 2.0: Image classification with Keras and TensorFlow.]]></title>
+    <title type="html"><![CDATA[Update with TF 2.0: Image classification with Keras and TensorFlow]]></title>
     <link href="/2020/09/keras_fruits_update/"/>
     <id>/2020/09/keras_fruits_update/</id>
     <published>2020-09-13T00:00:00+00:00</published>

@@ -1,5 +1,5 @@
 ---
-title: "Update with TF 2.0: Image classification with Keras and TensorFlow."
+title: "Update with TF 2.0: Image classification with Keras and TensorFlow"
 draft: false
 author: Dr. Shirin Elsinghorst
 date: '2020-09-13'
