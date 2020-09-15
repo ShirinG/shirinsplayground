@@ -86,7 +86,7 @@ train_image_files_path <- "/Users/shiringlander/Documents/Github/Data/fruits-360
 ```
 
 ```{r}
-# list of fruits to modle
+# list of fruits to model
 fruit_list <- c("Kiwi", "Banana", "Apricot", "Avocado", "Cocos", "Clementine", "Mandarine", "Orange",
                 "Limes", "Lemon", "Peach", "Plum", "Raspberry", "Strawberry", "Pineapple", "Pomegranate")
 
