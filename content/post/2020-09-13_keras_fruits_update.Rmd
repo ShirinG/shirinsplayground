@@ -28,7 +28,7 @@ Specific changes compared to the [old article](https://shirinsplayground.netlify
 
 ---
 
-**Workshop announcement:** Because this year's UseR 2020 in Munich couldn't happen as an in-person event, I will be giving my [workshop on Deep Learning with Keras and TensorFlow](https://user2020.r-project.org/program/tutorials/) as an online event. I'll be announcing the date once it's been finalized but if you are interested in participating: we are looking at the first week of October (13:00 UTC).
+**Workshop announcement:** Because this year's UseR 2020 in Munich couldn't happen as an in-person event, I will be giving my [workshop on Deep Learning with Keras and TensorFlow](https://user2020.r-project.org/program/tutorials/) as an online event on Thursday, 8th of October (13:00 UTC).
 
 ---
 
