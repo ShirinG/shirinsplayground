@@ -55,6 +55,8 @@ However, in my blogposts I have always been using Keras sequential models and ne
     
 
     
+      <meta property="og:image" content="/img/plot_model.png">
+    
     
     
 
@@ -384,14 +386,16 @@ ga('send', 'pageview');
 <p><strong>Note</strong>:</p>
 <p>I have been having an <a href="https://github.com/rstudio/blogdown/issues/473">issue</a> with <code>blogdown</code>, where the code below runs perfectly fine in my R console from within the RMarkdown file but whenever I include any function from the <code>keras</code> package, <code>blogdown::serve_site()</code> throws an error: <code>Error in render_page(f) : Failed to render 'content/post/keras.Rmd'</code>.</p>
 <p>Since I have no idea what’s going on there (<code>blogdown::serve_site()</code> builds my site without trouble as long as I don’t include <code>keras</code> functions) and haven’t gotten a reply to the <a href="https://github.com/rstudio/blogdown/issues/473">issue</a> I posted to Github, I had to write this blogpost without actually running the code while building the site.</p>
-<p>I worked around that problem by not evaluating most of the code below and instead ran the code locally on my computer. Objects and images, I then saved as <em>.RData</em> or <em>.png</em> files and manually put them back into the document. By just reading this blogpost as it rendered on my site, you won’t notice much of a difference (except where I copy/pasted the output as comments below the code) but in order to be fully transparent, you can see on <a href="https://github.com/ShirinG/shirinsplayground/blob/master/content/post/2020-09-13_keras_fruits_update.Rmd">Github</a> what I did with hidden code chunks to create this post.</p>
+<p>I worked around that problem by not evaluating most of the code below and instead ran the code locally on my computer. Objects and images, I then saved as <em>.RData</em> or <em>.png</em> files and manually put them back into the document. By just reading this blogpost as it rendered on my site, you won’t notice much of a difference (except where I copy/pasted the output as comments below the code) but in order to be fully transparent, you can see on <a href="https://github.com/ShirinG/shirinsplayground/blob/master/content/post/2020-09-20_keras_func_api.Rmd">Github</a> what I did with hidden code chunks to create this post.</p>
 <hr />
 <div id="loading-libraries" class="section level2">
 <h2>Loading libraries</h2>
 <pre class="r"><code># load libraries
 library(tidyverse)
+library(tidymodels)
 library(tensorflow)
-library(keras)</code></pre>
+library(keras)
+library(deepviz) #https://github.com/andrie/deepviz</code></pre>
 <pre class="r"><code>tf$random$set_seed(42)
 
 # check TF version
@@ -409,39 +413,19 @@ is_keras_available()
 </div>
 <div id="complex-models" class="section level2">
 <h2>Complex models</h2>
-<p>So, when would you use the <strong>Functional API</strong>? You can’t use the <code>keras_model_sequential</code> when you want to build a more complex model, e.g. in case you have multiple (types of) inputs (like matrix, images and text) or multiple outputs, or even complex connections between layers that can’t be described in a linear fashion (like directed acyclic graphs). Examples include an <a href="https://github.com/rstudio/keras/blob/master/vignettes/examples/mnist_acgan.R">Auxiliary Classifier Generative Adversarial Network (ACGAN)</a> and <a href="https://github.com/rstudio/keras/blob/master/vignettes/examples/eager_styletransfer.R">neural style transfer</a>.</p>
+<p>So, when would you use the <strong>Functional API</strong>? You can’t use the <code>keras_model_sequential</code> when you want to build a more complex model, e.g. in case you have multiple (types of) inputs (like matrix, images and text) or multiple outputs, or even complex connections between layers that can’t be described in a linear fashion (like directed acyclic graphs, e.g. in inception modules or residual blocks). Examples include an <a href="https://github.com/rstudio/keras/blob/master/vignettes/examples/mnist_acgan.R">Auxiliary Classifier Generative Adversarial Network (ACGAN)</a> and <a href="https://github.com/rstudio/keras/blob/master/vignettes/examples/eager_styletransfer.R">neural style transfer</a>.</p>
 </div>
 <div id="how-to-use-the-functional-api" class="section level2">
 <h2>How to use the Functional API</h2>
 <p>In the Functional API, you build your input and output layers and then pass them to the keras_model function. This model can be trained just like Keras sequential models.</p>
-<p>The only part that may seem a bit magical at this point is passing only an input tensor and an output tensor to the keras_model function. Behind the scenes, Keras retrieves every layer involved in going from input_tensor to output_tensor, bringing them together into a graph-like data structure—a model. Of course, the reason it works is that output_tensor was obtained by repeatedly transforming input_tensor. If you tried to build a model from inputs and outputs that weren’t related, you’d get an error:</p>
-<p>This error tells you, in essence, that Keras couldn’t reach input_1 from the provided output tensor.</p>
-<p>When it comes to compiling, training, or evaluating a model built this way, the API is the same as that of sequential models:</p>
-<p>The Functional API can be used to build models that have multiple inputs. Typically, such models at some point merge their different input branches using a layer that can combine several tensors: by adding them, concatenating them, and so on. This is usually done via a Keras merge operation such as layer_add, layer_concatenate, and so on. Let’s look at a very simple example of a multi-input model: a question-answering model.</p>
-<p>A typical question-answering model has two inputs: a natural-language question and a text snippet (such as a news article) providing information to be used for answering the question. The model must then produce an answer: in the simplest possible setup, this is a one-word answer obtained via a softmax over some predefined vocabulary (see figure 7.6).</p>
-<p>In the same way, you can use the Functional API to build models with multiple outputs (or multiple heads). A simple example is a network that attempts to simultaneously predict different properties of the data, such as a network that takes as input a series of social media posts from a single anonymous person and tries to predict attributes of that person, such as age, gender, and income level (see figure 7.7).</p>
-<p>With the Functional API, not only can you build models with multiple inputs and multiple outputs, but you can also implement networks with a complex internal topology. Neural networks in Keras are allowed to be arbitrary directed acyclic graphs of layers. The qualifier acyclic is important: these graphs can’t have cycles. It’s impossible for a tensor x to become the input of one of the layers that generated x. The only processing loops that are allowed (that is, recurrent connections) are those internal to recurrent layers.</p>
-<p>Several common neural-network components are implemented as graphs. Two notable ones are Inception modules and residual connections. To better understand how the Functional API can be used to build graphs of layers, let’s take a look at how you can implement both of them in Keras.</p>
-<p>Inception modules
-Inception[3] is a popular type of network architecture for convolutional neural networks; it was developed by Christian Szegedy and his colleagues at Google in 2013–2014, inspired by the earlier network-in-network architecture.[4] It consists of a stack of modules that themselves look like small independent networks, split into several parallel branches. The most basic form of an Inception module has three to four branches starting with a 1 × 1 convolution, followed by a 3 × 3 convolution, and ending with the concatenation of the resulting features. This setup helps the network separately learn spatial features and channel-wise features, which is more efficient than learning them jointly. More-complex versions of an Inception module are also possible, typically involving pooling operations, different spatial convolution sizes (for example, 5 × 5 instead of 3 × 3 on some branches), and branches without a spatial convolution (only a 1 × 1 convolution). An example of such a module, taken from Inception V3, is shown in figure 7.8.</p>
-<hr />
-<p>If you have questions or would like to talk about this article (or something else data-related), you can now <a href="http://127.0.0.1:4321/page/bookme/">book 15-minute timeslots</a> with me (it’s free - one slot available per weekday):</p>
-<img src="https://www.appointletcdn.com/loader/buttons/F62459.png" data-appointlet-organization="shirin-elsinghorst" data-appointlet-service="357892">
-<script src="https://www.appointletcdn.com/loader/loader.min.js" async="" defer=""></script>
-<p><em>If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at <button><a href="https://paypal.me/ShirinGlander">paypal.me</a></button>. Thank you!</em> :-)</p>
-<hr />
-<pre class="r"><code># load libraries
-library(tidyverse)
-library(keras)</code></pre>
-<pre class="r"><code># check if keras is available
-is_keras_available()
-#[1] TRUE</code></pre>
-</div>
-<div id="loading-images-data" class="section level2">
-<h2>Loading images (data)</h2>
+<p>Behind the scenes, Keras retrieves every layer involved in going from input_tensor to output_tensor, bringing them together into a graph-like data structure—a model.
+When it comes to compiling, training, or evaluating a model built this way, the API is the same as that of sequential models:</p>
+<p>The Functional API can be used to build models that have multiple inputs. Typically, such models at some point merge their different input branches using a layer that can combine several tensors: by adding them, concatenating them, and so on. This is usually done via a Keras merge operation such as layer_add, layer_concatenate, and so on.</p>
+<div id="loading-images-data" class="section level3">
+<h3>Loading images (data)</h3>
 <pre class="r"><code># path to image folders
 train_image_files_path &lt;- &quot;/fruits/Training/&quot;</code></pre>
-<pre class="r"><code># list of fruits to modle
+<pre class="r"><code># list of fruits to model
 fruit_list &lt;- c(&quot;Kiwi&quot;, &quot;Banana&quot;, &quot;Apricot&quot;, &quot;Avocado&quot;, &quot;Cocos&quot;, &quot;Clementine&quot;, &quot;Mandarine&quot;, &quot;Orange&quot;,
                 &quot;Limes&quot;, &quot;Lemon&quot;, &quot;Peach&quot;, &quot;Plum&quot;, &quot;Raspberry&quot;, &quot;Strawberry&quot;, &quot;Pineapple&quot;, &quot;Pomegranate&quot;)
 
@@ -484,8 +468,8 @@ valid_image_array_gen &lt;- flow_images_from_directory(train_image_files_path,
                                           seed = 42)
 #Found 2308 images belonging to 16 classes.</code></pre>
 </div>
-<div id="training-the-model" class="section level2">
-<h2>Training the model</h2>
+<div id="training-the-model" class="section level3">
+<h3>Training the model</h3>
 <p>Now, I define and train the model just as before:</p>
 <pre class="r"><code># number of training samples
 train_samples &lt;- train_image_array_gen$n
@@ -523,15 +507,18 @@ predictions &lt;- inputs %&gt;%
   layer_activation(&quot;softmax&quot;)
 
 # create and compile model
-model &lt;- keras_model(inputs = inputs, outputs = predictions)
+model_func &lt;- keras_model(inputs = inputs, 
+                     outputs = predictions)
 
-model %&gt;% compile(
+model_func %&gt;% compile(
   loss = &quot;categorical_crossentropy&quot;,
   optimizer = optimizer_rmsprop(lr = 0.0001, decay = 1e-6),
   metrics = &quot;accuracy&quot;
 )</code></pre>
+<pre class="r"><code>model_func %&gt;% plot_model()</code></pre>
+<p><img src="/img/plot_model_1.png" /></p>
 <pre class="r"><code># fit
-hist &lt;- model %&gt;% fit_generator(
+model %&gt;% fit_generator(
   # training data
   train_image_array_gen,
   
@@ -543,10 +530,315 @@ hist &lt;- model %&gt;% fit_generator(
   validation_data = valid_image_array_gen,
   validation_steps = as.integer(valid_samples / batch_size)
 )</code></pre>
-<pre class="r"><code>plot(hist)</code></pre>
+<pre><code>Epoch 1/10
+168/168 [==============================] - 9s 55ms/step - loss: 1.9132 - accuracy: 0.3986 - val_loss: 2.1233 - val_accuracy: 0.6797
+Epoch 2/10
+168/168 [==============================] - 6s 36ms/step - loss: 0.8035 - accuracy: 0.7469 - val_loss: 0.9889 - val_accuracy: 0.9362
+Epoch 3/10
+168/168 [==============================] - 6s 35ms/step - loss: 0.4647 - accuracy: 0.8560 - val_loss: 0.2568 - val_accuracy: 0.9648
+Epoch 4/10
+168/168 [==============================] - 6s 34ms/step - loss: 0.2953 - accuracy: 0.9126 - val_loss: 0.1357 - val_accuracy: 0.9705
+Epoch 5/10
+168/168 [==============================] - 6s 35ms/step - loss: 0.2089 - accuracy: 0.9428 - val_loss: 0.0888 - val_accuracy: 0.9692
+Epoch 6/10
+168/168 [==============================] - 6s 35ms/step - loss: 0.1505 - accuracy: 0.9568 - val_loss: 0.1001 - val_accuracy: 0.9774
+Epoch 7/10
+168/168 [==============================] - 6s 35ms/step - loss: 0.1135 - accuracy: 0.9689 - val_loss: 0.0793 - val_accuracy: 0.9805
+Epoch 8/10
+168/168 [==============================] - 6s 34ms/step - loss: 0.0957 - accuracy: 0.9734 - val_loss: 0.0628 - val_accuracy: 0.9818
+Epoch 9/10
+168/168 [==============================] - 6s 35ms/step - loss: 0.0733 - accuracy: 0.9797 - val_loss: 0.0525 - val_accuracy: 0.9831
+Epoch 10/10
+168/168 [==============================] - 6s 34ms/step - loss: 0.0607 - accuracy: 0.9844 - val_loss: 0.0438 - val_accuracy: 0.9848</code></pre>
 </div>
-<div id="section" class="section level2">
-<h2><img src="/img/hist.png" /></h2>
+<div id="inception-module" class="section level3">
+<h3>Inception module</h3>
+<p><a href="https://keras.rstudio.com/articles/functional_api.html" class="uri">https://keras.rstudio.com/articles/functional_api.html</a></p>
+<pre class="r"><code># input layer
+inputs &lt;- layer_input(shape = c(img_width, img_height, channels))
+
+tower_1 &lt;- inputs %&gt;%
+  layer_conv_2d(filters = 32, kernel_size = c(1, 1), padding=&#39;same&#39;, activation=&#39;relu&#39;) %&gt;%
+  layer_conv_2d(filters = 32, kernel_size = c(3, 3), padding=&#39;same&#39;, activation=&#39;relu&#39;)
+
+tower_2 &lt;- inputs %&gt;%
+  layer_conv_2d(filters = 32, kernel_size = c(1, 1), padding=&#39;same&#39;, activation=&#39;relu&#39;) %&gt;%
+  layer_conv_2d(filters = 32, kernel_size = c(5, 5), padding=&#39;same&#39;, activation=&#39;relu&#39;)
+
+tower_3 &lt;- inputs %&gt;%
+  layer_max_pooling_2d(pool_size = c(2, 2), strides = c(1, 1), padding = &#39;same&#39;) %&gt;%
+  layer_conv_2d(filters = 32, kernel_size = c(1, 1), padding=&#39;same&#39;, activation=&#39;relu&#39;)
+
+output &lt;- layer_concatenate(c(tower_1, tower_2, tower_3), axis = 1) %&gt;%
+
+  # Flatten max filtered output into feature vector 
+  # and feed into dense layer
+  layer_flatten() %&gt;%
+  layer_dense(100) %&gt;%
+  layer_activation(&quot;relu&quot;) %&gt;%
+  layer_dropout(0.5) %&gt;%
+  
+  # Outputs from dense layer are projected onto output layer
+  layer_dense(output_n) %&gt;% 
+  layer_activation(&quot;softmax&quot;)</code></pre>
+<pre class="r"><code># create and compile model
+model_inc &lt;- keras_model(inputs = inputs, 
+                     outputs = output) %&gt;% compile(
+  loss = &quot;categorical_crossentropy&quot;,
+  optimizer = optimizer_rmsprop(lr = 0.0001, decay = 1e-6),
+  metrics = &quot;accuracy&quot;
+)</code></pre>
+<pre class="r"><code>model_inc %&gt;% plot_model()</code></pre>
+<p><img src="/img/plot_model_2.png" /></p>
+<pre class="r"><code># fit
+model_inc %&gt;% fit_generator(
+  # training data
+  train_image_array_gen,
+  
+  # epochs
+  steps_per_epoch = as.integer(train_samples / batch_size), 
+  epochs = epochs, 
+  
+  # validation data
+  validation_data = valid_image_array_gen,
+  validation_steps = as.integer(valid_samples / batch_size)
+)</code></pre>
+<pre><code>Epoch 1/10
+168/168 [==============================] - 16s 96ms/step - loss: 1.8178 - accuracy: 0.4377 - val_loss: 1.0520 - val_accuracy: 0.7630
+Epoch 2/10
+168/168 [==============================] - 17s 102ms/step - loss: 0.9190 - accuracy: 0.7283 - val_loss: 0.4448 - val_accuracy: 0.9271
+Epoch 3/10
+168/168 [==============================] - 16s 98ms/step - loss: 0.5711 - accuracy: 0.8374 - val_loss: 0.2429 - val_accuracy: 0.9531
+Epoch 4/10
+168/168 [==============================] - 17s 101ms/step - loss: 0.3920 - accuracy: 0.8931 - val_loss: 0.1571 - val_accuracy: 0.9644
+Epoch 5/10
+168/168 [==============================] - 19s 112ms/step - loss: 0.2787 - accuracy: 0.9201 - val_loss: 0.0967 - val_accuracy: 0.9657
+Epoch 6/10
+168/168 [==============================] - 17s 102ms/step - loss: 0.2191 - accuracy: 0.9398 - val_loss: 0.1057 - val_accuracy: 0.9653
+Epoch 7/10
+168/168 [==============================] - 16s 96ms/step - loss: 0.1828 - accuracy: 0.9438 - val_loss: 0.0658 - val_accuracy: 0.9922
+Epoch 8/10
+168/168 [==============================] - 16s 98ms/step - loss: 0.1463 - accuracy: 0.9590 - val_loss: 0.0536 - val_accuracy: 0.9852
+Epoch 9/10
+168/168 [==============================] - 17s 101ms/step - loss: 0.1266 - accuracy: 0.9616 - val_loss: 0.0520 - val_accuracy: 0.9913
+Epoch 10/10
+168/168 [==============================] - 16s 96ms/step - loss: 0.1040 - accuracy: 0.9687 - val_loss: 0.0526 - val_accuracy: 0.9822</code></pre>
+</div>
+<div id="residual-blocks" class="section level3">
+<h3>Residual blocks</h3>
+<p><a href="https://keras.rstudio.com/articles/functional_api.html" class="uri">https://keras.rstudio.com/articles/functional_api.html</a></p>
+<pre class="r"><code># input layer
+inputs &lt;- layer_input(shape = c(img_width, img_height, channels))
+
+conv_block &lt;- inputs %&gt;%
+  layer_conv_2d(filter = 32, kernel_size = c(3,3), padding = &quot;same&quot;) %&gt;%
+  layer_activation(&quot;relu&quot;) %&gt;%
+  
+  # Second hidden layer
+  layer_conv_2d(filter = 3, kernel_size = c(3,3), padding = &quot;same&quot;) %&gt;%
+  layer_activation(&quot;relu&quot;)
+
+output &lt;- layer_add(c(inputs, conv_block)) %&gt;%
+
+  # Flatten max filtered output into feature vector 
+  # and feed into dense layer
+  layer_flatten() %&gt;%
+  layer_dense(100) %&gt;%
+  layer_activation(&quot;relu&quot;) %&gt;%
+  layer_dropout(0.5) %&gt;%
+  
+  # Outputs from dense layer are projected onto output layer
+  layer_dense(output_n) %&gt;% 
+  layer_activation(&quot;softmax&quot;)</code></pre>
+<pre class="r"><code># create and compile model
+model_resid &lt;- keras_model(inputs = inputs, 
+                     outputs = output) %&gt;% compile(
+  loss = &quot;categorical_crossentropy&quot;,
+  optimizer = optimizer_rmsprop(lr = 0.0001, decay = 1e-6),
+  metrics = &quot;accuracy&quot;
+)</code></pre>
+<pre class="r"><code>model_resid %&gt;% plot_model()</code></pre>
+<p><img src="/img/plot_model_3.png" /></p>
+<pre class="r"><code># fit
+model_resid %&gt;% fit_generator(
+  # training data
+  train_image_array_gen,
+  
+  # epochs
+  steps_per_epoch = as.integer(train_samples / batch_size), 
+  epochs = epochs, 
+  
+  # validation data
+  validation_data = valid_image_array_gen,
+  validation_steps = as.integer(valid_samples / batch_size)
+)</code></pre>
+<pre><code>Epoch 1/10
+168/168 [==============================] - 9s 51ms/step - loss: 2.3554 - accuracy: 0.2714 - val_loss: 1.9230 - val_accuracy: 0.5703
+Epoch 2/10
+168/168 [==============================] - 5s 30ms/step - loss: 1.7206 - accuracy: 0.4677 - val_loss: 1.3296 - val_accuracy: 0.7530
+Epoch 3/10
+168/168 [==============================] - 5s 29ms/step - loss: 1.3213 - accuracy: 0.5981 - val_loss: 0.9415 - val_accuracy: 0.8555
+Epoch 4/10
+168/168 [==============================] - 5s 29ms/step - loss: 1.0495 - accuracy: 0.6854 - val_loss: 0.6883 - val_accuracy: 0.8689
+Epoch 5/10
+168/168 [==============================] - 5s 31ms/step - loss: 0.8421 - accuracy: 0.7372 - val_loss: 0.4917 - val_accuracy: 0.8750
+Epoch 6/10
+168/168 [==============================] - 5s 29ms/step - loss: 0.6806 - accuracy: 0.7974 - val_loss: 0.4055 - val_accuracy: 0.9123
+Epoch 7/10
+168/168 [==============================] - 5s 28ms/step - loss: 0.5870 - accuracy: 0.8178 - val_loss: 0.3217 - val_accuracy: 0.9379
+Epoch 8/10
+168/168 [==============================] - 5s 30ms/step - loss: 0.4839 - accuracy: 0.8532 - val_loss: 0.2688 - val_accuracy: 0.9410
+Epoch 9/10
+168/168 [==============================] - 5s 29ms/step - loss: 0.4278 - accuracy: 0.8735 - val_loss: 0.2196 - val_accuracy: 0.9661
+Epoch 10/10
+168/168 [==============================] - 5s 29ms/step - loss: 0.3656 - accuracy: 0.8868 - val_loss: 0.1770 - val_accuracy: 0.9657</code></pre>
+</div>
+<div id="multi-outputs" class="section level3">
+<h3>Multi-outputs</h3>
+<p><a href="http://archive.ics.uci.edu/ml/datasets/Car+Evaluation" class="uri">http://archive.ics.uci.edu/ml/datasets/Car+Evaluation</a></p>
+<pre class="r"><code>car_data &lt;- readr::read_csv(&quot;car.data&quot;,
+                col_names = c(&quot;buying&quot;, &quot;maint&quot;, &quot;doors&quot;, &quot;persons&quot;, &quot;lug_boot&quot;, &quot;safety&quot;, &quot;class&quot;)) %&gt;%
+  remove_missing()</code></pre>
+<pre class="r"><code>library(caret)
+dmy &lt;- dummyVars(&quot; ~ doors + persons + buying + maint + lug_boot + class + safety&quot;, data = car_data)
+car_data &lt;- data.frame(predict(dmy, newdata = car_data))</code></pre>
+<pre class="r"><code>cormat &lt;- round(cor(car_data), 2)
+
+cormat &lt;- cormat %&gt;%
+  as_data_frame() %&gt;%
+  mutate(x = colnames(cormat)) %&gt;%
+  gather(key = &quot;y&quot;, value = &quot;value&quot;, doors2:safetymed)
+
+cormat %&gt;%
+    remove_missing() %&gt;%
+    arrange(x, y) %&gt;%
+    ggplot(aes(x = x, y = y, fill = value)) + 
+    geom_tile() +
+    scale_fill_gradient2(low = &quot;blue&quot;, high = &quot;red&quot;, mid = &quot;white&quot;, 
+     midpoint = 0, limit = c(-1,1), space = &quot;Lab&quot;, 
+     name = &quot;Pearson\nCorrelation&quot;) +
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) </code></pre>
+<p><img src="/post/2020-09-20_keras_func_api_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<pre class="r"><code>Y_log &lt;- grepl(&quot;class|safety&quot;, colnames(car_data))
+train_X &lt;- as.matrix(car_data[, !Y_log])</code></pre>
+<pre class="r"><code>Y_class &lt;- as.matrix(car_data[, &quot;classunacc&quot;])
+Y_safety &lt;- as.matrix(car_data[, grepl(&quot;safety&quot;, colnames(car_data))])
+
+train_Y_class &lt;- Y_class[, ]
+train_Y_safety &lt;- Y_safety[, ]</code></pre>
+<pre class="r"><code># input layer
+input_shape &lt;- ncol(train_X)
+input &lt;- layer_input(shape = input_shape)
+
+embedding &lt;- input %&gt;%
+  
+  layer_embedding(input_dim = input_shape, output_dim = 36) %&gt;%
+  layer_flatten()
+
+# shared layers
+dense10 &lt;- input %&gt;%
+  
+  layer_dense(10) %&gt;%
+  layer_activation_leaky_relu() %&gt;%
+  layer_alpha_dropout(0.25)
+
+# shared layers
+shared &lt;- layer_concatenate(c(embedding, dense10), axis = 1)
+
+output_n_safety &lt;- ncol(Y_safety)
+
+output_safety &lt;- shared %&gt;%
+  
+  layer_dense(5) %&gt;%
+  layer_activation(&quot;relu&quot;) %&gt;%
+  layer_alpha_dropout(0.25) %&gt;%
+  
+  layer_dense(units = output_n_safety, 
+              activation = &#39;softmax&#39;, 
+              name = &#39;output_safety&#39;)
+
+output_n_class &lt;- ncol(Y_class)
+
+output_class &lt;- shared %&gt;%
+  
+  layer_alpha_dropout(0.25) %&gt;%
+
+  layer_dense(units = output_n_class, 
+              activation = &#39;sigmoid&#39;, # with binary_crossentropy
+              name = &#39;output_class&#39;)
+
+model &lt;- keras_model(
+  inputs = input,
+  outputs = c(output_safety, output_class)
+) %&gt;% 
+  compile(
+    loss = list(output_safety = &quot;categorical_crossentropy&quot;,
+                output_class = &quot;binary_crossentropy&quot;),
+    optimizer = optimizer_adam(),
+    metrics = &quot;mse&quot;
+)</code></pre>
+<pre class="r"><code>model %&gt;% plot_model()</code></pre>
+<p><img src="/img/plot_model_4.png" /></p>
+<pre class="r"><code>model %&gt;% 
+  fit(
+    x = train_X,
+    y = list(output_safety = train_Y_safety, 
+             output_class = train_Y_class),
+    validation_split = 0.2,
+    epochs = 25,
+    batch_size = 32
+)</code></pre>
+<pre><code>Epoch 1/25
+44/44 [==============================] - 1s 21ms/step - loss: 2.0614 - output_safety_loss: 1.2896 - output_class_loss: 0.7718 - output_safety_mse: 0.2585 - output_class_mse: 0.2803 - val_loss: 1.7722 - val_output_safety_loss: 1.0987 - val_output_class_loss: 0.6735 - val_output_safety_mse: 0.2222 - val_output_class_mse: 0.2403
+Epoch 2/25
+44/44 [==============================] - 0s 6ms/step - loss: 1.9865 - output_safety_loss: 1.2517 - output_class_loss: 0.7347 - output_safety_mse: 0.2514 - output_class_mse: 0.2636 - val_loss: 1.7717 - val_output_safety_loss: 1.0988 - val_output_class_loss: 0.6729 - val_output_safety_mse: 0.2223 - val_output_class_mse: 0.2404
+Epoch 3/25
+44/44 [==============================] - 0s 5ms/step - loss: 1.8930 - output_safety_loss: 1.2187 - output_class_loss: 0.6744 - output_safety_mse: 0.2452 - output_class_mse: 0.2385 - val_loss: 1.8024 - val_output_safety_loss: 1.0989 - val_output_class_loss: 0.7035 - val_output_safety_mse: 0.2223 - val_output_class_mse: 0.2549
+Epoch 4/25
+44/44 [==============================] - 0s 5ms/step - loss: 1.8438 - output_safety_loss: 1.2163 - output_class_loss: 0.6275 - output_safety_mse: 0.2444 - output_class_mse: 0.2161 - val_loss: 1.8537 - val_output_safety_loss: 1.0990 - val_output_class_loss: 0.7548 - val_output_safety_mse: 0.2223 - val_output_class_mse: 0.2758
+Epoch 5/25
+44/44 [==============================] - 0s 5ms/step - loss: 1.8193 - output_safety_loss: 1.2125 - output_class_loss: 0.6068 - output_safety_mse: 0.2450 - output_class_mse: 0.2073 - val_loss: 1.8755 - val_output_safety_loss: 1.0990 - val_output_class_loss: 0.7766 - val_output_safety_mse: 0.2223 - val_output_class_mse: 0.2840
+Epoch 6/25
+44/44 [==============================] - 0s 5ms/step - loss: 1.7904 - output_safety_loss: 1.1899 - output_class_loss: 0.6006 - output_safety_mse: 0.2398 - output_class_mse: 0.2033 - val_loss: 1.8931 - val_output_safety_loss: 1.0991 - val_output_class_loss: 0.7941 - val_output_safety_mse: 0.2223 - val_output_class_mse: 0.2902
+Epoch 7/25
+44/44 [==============================] - 0s 6ms/step - loss: 1.7696 - output_safety_loss: 1.1811 - output_class_loss: 0.5885 - output_safety_mse: 0.2372 - output_class_mse: 0.1989 - val_loss: 1.8554 - val_output_safety_loss: 1.0991 - val_output_class_loss: 0.7564 - val_output_safety_mse: 0.2223 - val_output_class_mse: 0.2778
+Epoch 8/25
+44/44 [==============================] - 0s 5ms/step - loss: 1.7570 - output_safety_loss: 1.1919 - output_class_loss: 0.5652 - output_safety_mse: 0.2400 - output_class_mse: 0.1921 - val_loss: 1.8243 - val_output_safety_loss: 1.0992 - val_output_class_loss: 0.7251 - val_output_safety_mse: 0.2224 - val_output_class_mse: 0.2670
+Epoch 9/25
+44/44 [==============================] - 0s 5ms/step - loss: 1.7234 - output_safety_loss: 1.1578 - output_class_loss: 0.5655 - output_safety_mse: 0.2339 - output_class_mse: 0.1912 - val_loss: 1.8038 - val_output_safety_loss: 1.0992 - val_output_class_loss: 0.7046 - val_output_safety_mse: 0.2224 - val_output_class_mse: 0.2599
+Epoch 10/25
+44/44 [==============================] - 0s 5ms/step - loss: 1.7180 - output_safety_loss: 1.1670 - output_class_loss: 0.5509 - output_safety_mse: 0.2358 - output_class_mse: 0.1853 - val_loss: 1.7748 - val_output_safety_loss: 1.0993 - val_output_class_loss: 0.6755 - val_output_safety_mse: 0.2224 - val_output_class_mse: 0.2492
+Epoch 11/25
+44/44 [==============================] - 0s 5ms/step - loss: 1.6670 - output_safety_loss: 1.1498 - output_class_loss: 0.5173 - output_safety_mse: 0.2321 - output_class_mse: 0.1736 - val_loss: 1.7404 - val_output_safety_loss: 1.0992 - val_output_class_loss: 0.6412 - val_output_safety_mse: 0.2224 - val_output_class_mse: 0.2361
+Epoch 12/25
+44/44 [==============================] - 0s 5ms/step - loss: 1.6748 - output_safety_loss: 1.1461 - output_class_loss: 0.5287 - output_safety_mse: 0.2316 - output_class_mse: 0.1775 - val_loss: 1.7181 - val_output_safety_loss: 1.0992 - val_output_class_loss: 0.6189 - val_output_safety_mse: 0.2224 - val_output_class_mse: 0.2272
+Epoch 13/25
+44/44 [==============================] - 0s 5ms/step - loss: 1.6274 - output_safety_loss: 1.1239 - output_class_loss: 0.5035 - output_safety_mse: 0.2269 - output_class_mse: 0.1690 - val_loss: 1.6934 - val_output_safety_loss: 1.0991 - val_output_class_loss: 0.5943 - val_output_safety_mse: 0.2223 - val_output_class_mse: 0.2168
+Epoch 14/25
+44/44 [==============================] - 0s 5ms/step - loss: 1.6217 - output_safety_loss: 1.1345 - output_class_loss: 0.4872 - output_safety_mse: 0.2290 - output_class_mse: 0.1635 - val_loss: 1.6746 - val_output_safety_loss: 1.0991 - val_output_class_loss: 0.5755 - val_output_safety_mse: 0.2223 - val_output_class_mse: 0.2092
+Epoch 15/25
+44/44 [==============================] - 0s 5ms/step - loss: 1.5843 - output_safety_loss: 1.1255 - output_class_loss: 0.4588 - output_safety_mse: 0.2280 - output_class_mse: 0.1523 - val_loss: 1.6546 - val_output_safety_loss: 1.0990 - val_output_class_loss: 0.5556 - val_output_safety_mse: 0.2223 - val_output_class_mse: 0.2011
+Epoch 16/25
+44/44 [==============================] - 0s 5ms/step - loss: 1.5974 - output_safety_loss: 1.1255 - output_class_loss: 0.4720 - output_safety_mse: 0.2280 - output_class_mse: 0.1589 - val_loss: 1.6377 - val_output_safety_loss: 1.0990 - val_output_class_loss: 0.5386 - val_output_safety_mse: 0.2223 - val_output_class_mse: 0.1941
+Epoch 17/25
+44/44 [==============================] - 0s 6ms/step - loss: 1.5751 - output_safety_loss: 1.1243 - output_class_loss: 0.4508 - output_safety_mse: 0.2275 - output_class_mse: 0.1506 - val_loss: 1.6203 - val_output_safety_loss: 1.0990 - val_output_class_loss: 0.5213 - val_output_safety_mse: 0.2223 - val_output_class_mse: 0.1867
+Epoch 18/25
+44/44 [==============================] - 0s 5ms/step - loss: 1.5572 - output_safety_loss: 1.1044 - output_class_loss: 0.4528 - output_safety_mse: 0.2233 - output_class_mse: 0.1515 - val_loss: 1.6252 - val_output_safety_loss: 1.0989 - val_output_class_loss: 0.5263 - val_output_safety_mse: 0.2223 - val_output_class_mse: 0.1891
+Epoch 19/25
+44/44 [==============================] - 0s 5ms/step - loss: 1.5833 - output_safety_loss: 1.1199 - output_class_loss: 0.4634 - output_safety_mse: 0.2268 - output_class_mse: 0.1564 - val_loss: 1.6150 - val_output_safety_loss: 1.0988 - val_output_class_loss: 0.5162 - val_output_safety_mse: 0.2223 - val_output_class_mse: 0.1847
+Epoch 20/25
+44/44 [==============================] - 0s 5ms/step - loss: 1.5536 - output_safety_loss: 1.1153 - output_class_loss: 0.4383 - output_safety_mse: 0.2256 - output_class_mse: 0.1476 - val_loss: 1.6119 - val_output_safety_loss: 1.0988 - val_output_class_loss: 0.5131 - val_output_safety_mse: 0.2223 - val_output_class_mse: 0.1832
+Epoch 21/25
+44/44 [==============================] - 0s 5ms/step - loss: 1.5408 - output_safety_loss: 1.1114 - output_class_loss: 0.4294 - output_safety_mse: 0.2250 - output_class_mse: 0.1455 - val_loss: 1.6087 - val_output_safety_loss: 1.0987 - val_output_class_loss: 0.5100 - val_output_safety_mse: 0.2222 - val_output_class_mse: 0.1814
+Epoch 22/25
+44/44 [==============================] - 0s 5ms/step - loss: 1.5481 - output_safety_loss: 1.1143 - output_class_loss: 0.4339 - output_safety_mse: 0.2256 - output_class_mse: 0.1452 - val_loss: 1.6057 - val_output_safety_loss: 1.0987 - val_output_class_loss: 0.5070 - val_output_safety_mse: 0.2222 - val_output_class_mse: 0.1796
+Epoch 23/25
+44/44 [==============================] - 0s 7ms/step - loss: 1.5457 - output_safety_loss: 1.1100 - output_class_loss: 0.4357 - output_safety_mse: 0.2247 - output_class_mse: 0.1474 - val_loss: 1.5967 - val_output_safety_loss: 1.0987 - val_output_class_loss: 0.4980 - val_output_safety_mse: 0.2222 - val_output_class_mse: 0.1745
+Epoch 24/25
+44/44 [==============================] - 0s 5ms/step - loss: 1.5310 - output_safety_loss: 1.1046 - output_class_loss: 0.4264 - output_safety_mse: 0.2235 - output_class_mse: 0.1434 - val_loss: 1.6002 - val_output_safety_loss: 1.0987 - val_output_class_loss: 0.5016 - val_output_safety_mse: 0.2222 - val_output_class_mse: 0.1749
+Epoch 25/25
+44/44 [==============================] - 0s 5ms/step - loss: 1.5385 - output_safety_loss: 1.1073 - output_class_loss: 0.4312 - output_safety_mse: 0.2240 - output_class_mse: 0.1456 - val_loss: 1.6007 - val_output_safety_loss: 1.0987 - val_output_class_loss: 0.5020 - val_output_safety_mse: 0.2222 - val_output_class_mse: 0.1751</code></pre>
+<hr />
 <pre class="r"><code>devtools::session_info()</code></pre>
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────
 ##  setting  value                       
@@ -558,93 +850,149 @@ hist &lt;- model %&gt;% fit_generator(
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       Europe/Berlin               
-##  date     2020-09-14                  
+##  date     2020-09-16                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────
-##  package     * version date       lib source                           
-##  assertthat    0.2.1   2019-03-21 [1] CRAN (R 4.0.0)                   
-##  backports     1.1.9   2020-08-24 [1] CRAN (R 4.0.2)                   
-##  base64enc     0.1-3   2015-07-28 [1] CRAN (R 4.0.0)                   
-##  blob          1.2.1   2020-01-20 [1] CRAN (R 4.0.2)                   
-##  blogdown      0.20.1  2020-09-09 [1] Github (rstudio/blogdown@d96fe78)
-##  bookdown      0.20    2020-06-23 [1] CRAN (R 4.0.2)                   
-##  broom         0.7.0   2020-07-09 [1] CRAN (R 4.0.2)                   
-##  callr         3.4.4   2020-09-07 [1] CRAN (R 4.0.2)                   
-##  cellranger    1.1.0   2016-07-27 [1] CRAN (R 4.0.0)                   
-##  cli           2.0.2   2020-02-28 [1] CRAN (R 4.0.0)                   
-##  colorspace    1.4-1   2019-03-18 [1] CRAN (R 4.0.0)                   
-##  crayon        1.3.4   2017-09-16 [1] CRAN (R 4.0.0)                   
-##  DBI           1.1.0   2019-12-15 [1] CRAN (R 4.0.0)                   
-##  dbplyr        1.4.4   2020-05-27 [1] CRAN (R 4.0.2)                   
-##  desc          1.2.0   2018-05-01 [1] CRAN (R 4.0.0)                   
-##  devtools      2.3.1   2020-07-21 [1] CRAN (R 4.0.2)                   
-##  digest        0.6.25  2020-02-23 [1] CRAN (R 4.0.0)                   
-##  dplyr       * 1.0.2   2020-08-18 [1] CRAN (R 4.0.2)                   
-##  ellipsis      0.3.1   2020-05-15 [1] CRAN (R 4.0.0)                   
-##  evaluate      0.14    2019-05-28 [1] CRAN (R 4.0.1)                   
-##  fansi         0.4.1   2020-01-08 [1] CRAN (R 4.0.0)                   
-##  forcats     * 0.5.0   2020-03-01 [1] CRAN (R 4.0.0)                   
-##  fs            1.5.0   2020-07-31 [1] CRAN (R 4.0.2)                   
-##  generics      0.0.2   2018-11-29 [1] CRAN (R 4.0.0)                   
-##  ggplot2     * 3.3.2   2020-06-19 [1] CRAN (R 4.0.2)                   
-##  glue          1.4.2   2020-08-27 [1] CRAN (R 4.0.2)                   
-##  gtable        0.3.0   2019-03-25 [1] CRAN (R 4.0.0)                   
-##  haven         2.3.1   2020-06-01 [1] CRAN (R 4.0.2)                   
-##  hms           0.5.3   2020-01-08 [1] CRAN (R 4.0.0)                   
-##  htmltools     0.5.0   2020-06-16 [1] CRAN (R 4.0.2)                   
-##  httr          1.4.2   2020-07-20 [1] CRAN (R 4.0.2)                   
-##  jsonlite      1.7.1   2020-09-07 [1] CRAN (R 4.0.2)                   
-##  keras       * 2.3.0.0 2020-05-19 [1] CRAN (R 4.0.2)                   
-##  knitr         1.29    2020-06-23 [1] CRAN (R 4.0.2)                   
-##  lattice       0.20-41 2020-04-02 [1] CRAN (R 4.0.2)                   
-##  lifecycle     0.2.0   2020-03-06 [1] CRAN (R 4.0.0)                   
-##  lubridate     1.7.9   2020-06-08 [1] CRAN (R 4.0.2)                   
-##  magrittr      1.5     2014-11-22 [1] CRAN (R 4.0.0)                   
-##  Matrix        1.2-18  2019-11-27 [1] CRAN (R 4.0.2)                   
-##  memoise       1.1.0   2017-04-21 [1] CRAN (R 4.0.0)                   
-##  modelr        0.1.8   2020-05-19 [1] CRAN (R 4.0.2)                   
-##  munsell       0.5.0   2018-06-12 [1] CRAN (R 4.0.0)                   
-##  pillar        1.4.6   2020-07-10 [1] CRAN (R 4.0.2)                   
-##  pkgbuild      1.1.0   2020-07-13 [1] CRAN (R 4.0.2)                   
-##  pkgconfig     2.0.3   2019-09-22 [1] CRAN (R 4.0.0)                   
-##  pkgload       1.1.0   2020-05-29 [1] CRAN (R 4.0.2)                   
-##  prettyunits   1.1.1   2020-01-24 [1] CRAN (R 4.0.0)                   
-##  processx      3.4.4   2020-09-03 [1] CRAN (R 4.0.2)                   
-##  ps            1.3.4   2020-08-11 [1] CRAN (R 4.0.2)                   
-##  purrr       * 0.3.4   2020-04-17 [1] CRAN (R 4.0.0)                   
-##  R6            2.4.1   2019-11-12 [1] CRAN (R 4.0.0)                   
-##  Rcpp          1.0.5   2020-07-06 [1] CRAN (R 4.0.2)                   
-##  readr       * 1.3.1   2018-12-21 [1] CRAN (R 4.0.0)                   
-##  readxl        1.3.1   2019-03-13 [1] CRAN (R 4.0.0)                   
-##  remotes       2.2.0   2020-07-21 [1] CRAN (R 4.0.2)                   
-##  reprex        0.3.0   2019-05-16 [1] CRAN (R 4.0.0)                   
-##  reticulate    1.16    2020-05-27 [1] CRAN (R 4.0.2)                   
-##  rlang         0.4.7   2020-07-09 [1] CRAN (R 4.0.2)                   
-##  rmarkdown     2.3     2020-06-18 [1] CRAN (R 4.0.2)                   
-##  rprojroot     1.3-2   2018-01-03 [1] CRAN (R 4.0.0)                   
-##  rstudioapi    0.11    2020-02-07 [1] CRAN (R 4.0.0)                   
-##  rvest         0.3.6   2020-07-25 [1] CRAN (R 4.0.2)                   
-##  scales        1.1.1   2020-05-11 [1] CRAN (R 4.0.0)                   
-##  sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 4.0.0)                   
-##  stringi       1.5.3   2020-09-09 [1] CRAN (R 4.0.2)                   
-##  stringr     * 1.4.0   2019-02-10 [1] CRAN (R 4.0.0)                   
-##  tensorflow  * 2.2.0   2020-05-11 [1] CRAN (R 4.0.0)                   
-##  testthat      2.3.2   2020-03-02 [1] CRAN (R 4.0.0)                   
-##  tfruns        1.4     2018-08-25 [1] CRAN (R 4.0.0)                   
-##  tibble      * 3.0.3   2020-07-10 [1] CRAN (R 4.0.2)                   
-##  tidyr       * 1.1.2   2020-08-27 [1] CRAN (R 4.0.2)                   
-##  tidyselect    1.1.0   2020-05-11 [1] CRAN (R 4.0.0)                   
-##  tidyverse   * 1.3.0   2019-11-21 [1] CRAN (R 4.0.0)                   
-##  usethis       1.6.1   2020-04-29 [1] CRAN (R 4.0.0)                   
-##  vctrs         0.3.4   2020-08-29 [1] CRAN (R 4.0.2)                   
-##  whisker       0.4     2019-08-28 [1] CRAN (R 4.0.0)                   
-##  withr         2.2.0   2020-04-20 [1] CRAN (R 4.0.0)                   
-##  xfun          0.17    2020-09-09 [1] CRAN (R 4.0.2)                   
-##  xml2          1.3.2   2020-04-23 [1] CRAN (R 4.0.0)                   
-##  yaml          2.2.1   2020-02-01 [1] CRAN (R 4.0.0)                   
-##  zeallot       0.1.0   2018-01-28 [1] CRAN (R 4.0.0)                   
+##  package      * version      date       lib source                             
+##  assertthat     0.2.1        2019-03-21 [1] CRAN (R 4.0.0)                     
+##  backports      1.1.9        2020-08-24 [1] CRAN (R 4.0.2)                     
+##  base64enc      0.1-3        2015-07-28 [1] CRAN (R 4.0.0)                     
+##  blob           1.2.1        2020-01-20 [1] CRAN (R 4.0.2)                     
+##  blogdown       0.20.1       2020-09-09 [1] Github (rstudio/blogdown@d96fe78)  
+##  bookdown       0.20         2020-06-23 [1] CRAN (R 4.0.2)                     
+##  broom        * 0.7.0        2020-07-09 [1] CRAN (R 4.0.2)                     
+##  callr          3.4.4        2020-09-07 [1] CRAN (R 4.0.2)                     
+##  caret        * 6.0-86       2020-03-20 [1] CRAN (R 4.0.0)                     
+##  cellranger     1.1.0        2016-07-27 [1] CRAN (R 4.0.0)                     
+##  class          7.3-17       2020-04-26 [1] CRAN (R 4.0.2)                     
+##  cli            2.0.2        2020-02-28 [1] CRAN (R 4.0.0)                     
+##  codetools      0.2-16       2018-12-24 [1] CRAN (R 4.0.2)                     
+##  colorspace     1.4-1        2019-03-18 [1] CRAN (R 4.0.0)                     
+##  crayon         1.3.4        2017-09-16 [1] CRAN (R 4.0.0)                     
+##  data.table     1.13.0       2020-07-24 [1] CRAN (R 4.0.2)                     
+##  DBI            1.1.0        2019-12-15 [1] CRAN (R 4.0.0)                     
+##  dbplyr         1.4.4        2020-05-27 [1] CRAN (R 4.0.2)                     
+##  deepviz      * 0.0.1.9000   2020-09-15 [1] Github (andrie/deepviz@2a35de6)    
+##  desc           1.2.0        2018-05-01 [1] CRAN (R 4.0.0)                     
+##  devtools       2.3.1        2020-07-21 [1] CRAN (R 4.0.2)                     
+##  DiagrammeR     1.0.6.1      2020-05-08 [1] CRAN (R 4.0.2)                     
+##  dials        * 0.0.8        2020-07-08 [1] CRAN (R 4.0.2)                     
+##  DiceDesign     1.8-1        2019-07-31 [1] CRAN (R 4.0.2)                     
+##  digest         0.6.25       2020-02-23 [1] CRAN (R 4.0.0)                     
+##  dplyr        * 1.0.2        2020-08-18 [1] CRAN (R 4.0.2)                     
+##  ellipsis       0.3.1        2020-05-15 [1] CRAN (R 4.0.0)                     
+##  evaluate       0.14         2019-05-28 [1] CRAN (R 4.0.1)                     
+##  fansi          0.4.1        2020-01-08 [1] CRAN (R 4.0.0)                     
+##  farver         2.0.3        2020-01-16 [1] CRAN (R 4.0.0)                     
+##  forcats      * 0.5.0        2020-03-01 [1] CRAN (R 4.0.0)                     
+##  foreach        1.5.0        2020-03-30 [1] CRAN (R 4.0.0)                     
+##  fs             1.5.0        2020-07-31 [1] CRAN (R 4.0.2)                     
+##  furrr          0.1.0        2018-05-16 [1] CRAN (R 4.0.2)                     
+##  future         1.18.0       2020-07-09 [1] CRAN (R 4.0.2)                     
+##  generics       0.0.2        2018-11-29 [1] CRAN (R 4.0.0)                     
+##  ggforce        0.3.2        2020-06-23 [1] CRAN (R 4.0.2)                     
+##  ggplot2      * 3.3.2        2020-06-19 [1] CRAN (R 4.0.2)                     
+##  ggraph         2.0.3        2020-05-20 [1] CRAN (R 4.0.2)                     
+##  ggrepel        0.8.2        2020-03-08 [1] CRAN (R 4.0.2)                     
+##  globals        0.12.5       2019-12-07 [1] CRAN (R 4.0.2)                     
+##  glue           1.4.2        2020-08-27 [1] CRAN (R 4.0.2)                     
+##  gower          0.2.2        2020-06-23 [1] CRAN (R 4.0.2)                     
+##  GPfit          1.0-8        2019-02-08 [1] CRAN (R 4.0.2)                     
+##  graphlayouts   0.7.0        2020-04-25 [1] CRAN (R 4.0.2)                     
+##  gridExtra      2.3          2017-09-09 [1] CRAN (R 4.0.2)                     
+##  gtable         0.3.0        2019-03-25 [1] CRAN (R 4.0.0)                     
+##  haven          2.3.1        2020-06-01 [1] CRAN (R 4.0.2)                     
+##  hms            0.5.3        2020-01-08 [1] CRAN (R 4.0.0)                     
+##  htmltools      0.5.0        2020-06-16 [1] CRAN (R 4.0.2)                     
+##  htmlwidgets    1.5.1        2019-10-08 [1] CRAN (R 4.0.0)                     
+##  httr           1.4.2        2020-07-20 [1] CRAN (R 4.0.2)                     
+##  igraph         1.2.5        2020-03-19 [1] CRAN (R 4.0.0)                     
+##  infer        * 0.5.3        2020-07-14 [1] CRAN (R 4.0.2)                     
+##  ipred          0.9-9        2019-04-28 [1] CRAN (R 4.0.0)                     
+##  iterators      1.0.12       2019-07-26 [1] CRAN (R 4.0.0)                     
+##  jsonlite       1.7.1        2020-09-07 [1] CRAN (R 4.0.2)                     
+##  keras        * 2.3.0.0.9000 2020-09-15 [1] Github (rstudio/keras@ad737d1)     
+##  knitr          1.29         2020-06-23 [1] CRAN (R 4.0.2)                     
+##  labeling       0.3          2014-08-23 [1] CRAN (R 4.0.0)                     
+##  lattice      * 0.20-41      2020-04-02 [1] CRAN (R 4.0.2)                     
+##  lava           1.6.7        2020-03-05 [1] CRAN (R 4.0.0)                     
+##  lhs            1.0.2        2020-04-13 [1] CRAN (R 4.0.2)                     
+##  lifecycle      0.2.0        2020-03-06 [1] CRAN (R 4.0.0)                     
+##  listenv        0.8.0        2019-12-05 [1] CRAN (R 4.0.2)                     
+##  lubridate      1.7.9        2020-06-08 [1] CRAN (R 4.0.2)                     
+##  magrittr       1.5          2014-11-22 [1] CRAN (R 4.0.0)                     
+##  MASS           7.3-53       2020-09-09 [1] CRAN (R 4.0.2)                     
+##  Matrix         1.2-18       2019-11-27 [1] CRAN (R 4.0.2)                     
+##  memoise        1.1.0        2017-04-21 [1] CRAN (R 4.0.0)                     
+##  modeldata    * 0.0.2        2020-06-22 [1] CRAN (R 4.0.2)                     
+##  ModelMetrics   1.2.2.2      2020-03-17 [1] CRAN (R 4.0.0)                     
+##  modelr         0.1.8        2020-05-19 [1] CRAN (R 4.0.2)                     
+##  munsell        0.5.0        2018-06-12 [1] CRAN (R 4.0.0)                     
+##  nlme           3.1-149      2020-08-23 [1] CRAN (R 4.0.2)                     
+##  nnet           7.3-14       2020-04-26 [1] CRAN (R 4.0.2)                     
+##  parsnip      * 0.1.3        2020-08-04 [1] CRAN (R 4.0.2)                     
+##  pillar         1.4.6        2020-07-10 [1] CRAN (R 4.0.2)                     
+##  pkgbuild       1.1.0        2020-07-13 [1] CRAN (R 4.0.2)                     
+##  pkgconfig      2.0.3        2019-09-22 [1] CRAN (R 4.0.0)                     
+##  pkgload        1.1.0        2020-05-29 [1] CRAN (R 4.0.2)                     
+##  plyr           1.8.6        2020-03-03 [1] CRAN (R 4.0.0)                     
+##  polyclip       1.10-0       2019-03-14 [1] CRAN (R 4.0.2)                     
+##  prettyunits    1.1.1        2020-01-24 [1] CRAN (R 4.0.0)                     
+##  pROC           1.16.2       2020-03-19 [1] CRAN (R 4.0.0)                     
+##  processx       3.4.4        2020-09-03 [1] CRAN (R 4.0.2)                     
+##  prodlim        2019.11.13   2019-11-17 [1] CRAN (R 4.0.0)                     
+##  ps             1.3.4        2020-08-11 [1] CRAN (R 4.0.2)                     
+##  purrr        * 0.3.4        2020-04-17 [1] CRAN (R 4.0.0)                     
+##  R6             2.4.1        2019-11-12 [1] CRAN (R 4.0.0)                     
+##  RColorBrewer   1.1-2        2014-12-07 [1] CRAN (R 4.0.0)                     
+##  Rcpp           1.0.5        2020-07-06 [1] CRAN (R 4.0.2)                     
+##  readr        * 1.3.1        2018-12-21 [1] CRAN (R 4.0.0)                     
+##  readxl         1.3.1        2019-03-13 [1] CRAN (R 4.0.0)                     
+##  recipes      * 0.1.13       2020-06-23 [1] CRAN (R 4.0.2)                     
+##  remotes        2.2.0        2020-07-21 [1] CRAN (R 4.0.2)                     
+##  reprex         0.3.0        2019-05-16 [1] CRAN (R 4.0.0)                     
+##  reshape2       1.4.4        2020-04-09 [1] CRAN (R 4.0.0)                     
+##  reticulate     1.16-9001    2020-09-15 [1] Github (rstudio/reticulate@4f6a898)
+##  rlang          0.4.7        2020-07-09 [1] CRAN (R 4.0.2)                     
+##  rmarkdown      2.3          2020-06-18 [1] CRAN (R 4.0.2)                     
+##  rpart          4.1-15       2019-04-12 [1] CRAN (R 4.0.2)                     
+##  rprojroot      1.3-2        2018-01-03 [1] CRAN (R 4.0.0)                     
+##  rsample      * 0.0.7        2020-06-04 [1] CRAN (R 4.0.2)                     
+##  rstudioapi     0.11         2020-02-07 [1] CRAN (R 4.0.0)                     
+##  rvest          0.3.6        2020-07-25 [1] CRAN (R 4.0.2)                     
+##  scales       * 1.1.1        2020-05-11 [1] CRAN (R 4.0.0)                     
+##  sessioninfo    1.1.1        2018-11-05 [1] CRAN (R 4.0.0)                     
+##  stringi        1.5.3        2020-09-09 [1] CRAN (R 4.0.2)                     
+##  stringr      * 1.4.0        2019-02-10 [1] CRAN (R 4.0.0)                     
+##  survival       3.2-3        2020-06-13 [1] CRAN (R 4.0.2)                     
+##  tensorflow   * 2.2.0.9000   2020-09-15 [1] Github (rstudio/tensorflow@bb4062a)
+##  testthat       2.3.2        2020-03-02 [1] CRAN (R 4.0.0)                     
+##  tfruns         1.4          2018-08-25 [1] CRAN (R 4.0.0)                     
+##  tibble       * 3.0.3        2020-07-10 [1] CRAN (R 4.0.2)                     
+##  tidygraph      1.2.0        2020-05-12 [1] CRAN (R 4.0.2)                     
+##  tidymodels   * 0.1.1        2020-07-14 [1] CRAN (R 4.0.2)                     
+##  tidyr        * 1.1.2        2020-08-27 [1] CRAN (R 4.0.2)                     
+##  tidyselect     1.1.0        2020-05-11 [1] CRAN (R 4.0.0)                     
+##  tidyverse    * 1.3.0        2019-11-21 [1] CRAN (R 4.0.0)                     
+##  timeDate       3043.102     2018-02-21 [1] CRAN (R 4.0.0)                     
+##  tune         * 0.1.1        2020-07-08 [1] CRAN (R 4.0.2)                     
+##  tweenr         1.0.1        2018-12-14 [1] CRAN (R 4.0.2)                     
+##  usethis        1.6.1        2020-04-29 [1] CRAN (R 4.0.0)                     
+##  vctrs          0.3.4        2020-08-29 [1] CRAN (R 4.0.2)                     
+##  viridis        0.5.1        2018-03-29 [1] CRAN (R 4.0.2)                     
+##  viridisLite    0.3.0        2018-02-01 [1] CRAN (R 4.0.0)                     
+##  visNetwork     2.0.9        2019-12-06 [1] CRAN (R 4.0.2)                     
+##  whisker        0.4          2019-08-28 [1] CRAN (R 4.0.0)                     
+##  withr          2.2.0        2020-04-20 [1] CRAN (R 4.0.0)                     
+##  workflows    * 0.1.3        2020-08-10 [1] CRAN (R 4.0.2)                     
+##  xfun           0.17         2020-09-09 [1] CRAN (R 4.0.2)                     
+##  xml2           1.3.2        2020-04-23 [1] CRAN (R 4.0.0)                     
+##  yaml           2.2.1        2020-02-01 [1] CRAN (R 4.0.0)                     
+##  yardstick    * 0.0.7        2020-07-13 [1] CRAN (R 4.0.2)                     
+##  zeallot        0.1.0        2018-01-28 [1] CRAN (R 4.0.0)                     
 ## 
 ## [1] /Library/Frameworks/R.framework/Versions/4.0/Resources/library</code></pre>
+</div>
 </div>
 
               
