@@ -1,8 +1,8 @@
 ---
 title: "Using the Keras Functional API"
-draft: true
+draft: false
 author: Dr. Shirin Elsinghorst
-date: '2020-09-20'
+date: '2020-09-19'
 categories: ["R", "keras"]
 tags: ["R", "keras", "image classification", "tensorflow"]
 thumbnailImagePosition: left
@@ -20,7 +20,7 @@ I have been working with Keras for a while now, and I've also been writing quite
 
 However, in my blogposts I have always been using **Keras sequential models** and never shown how to use the [**Functional API**](https://keras.rstudio.com/articles/Functional_api.html). The reason is that the Functional API is usually applied when building more complex models, like multi-input or multi-output models. And in my blogposts I usually show simple examples that don't take too much time and computing power to run, so that everybody can follow along.
 
-But the [**Functional API**](https://keras.rstudio.com/articles/Functional_api.html) can also be used to build simple models (in fact, every model built with the sequential API can also be built with the Functional API but *not vice versa*). Let me show you how it works! :-)
+But the [**Functional API**](https://keras.rstudio.com/articles/Functional_api.html) can also be used to build simple models (in fact, every model built with the sequential API can also be built with the Functional API but *not vice versa*). Plus, the **Functional API** can be used to build complex models with multiple inputs and/or multiple outputs. So, let's look at how this works! :-)
 
 ---
 
@@ -54,7 +54,7 @@ library(tidyverse)
 library(tidymodels)
 library(tensorflow)
 library(keras)
-library(deepviz) #https://github.com/andrie/deepviz
+library(deepviz) # https://github.com/andrie/deepviz
 ```
 
 ```{r}
@@ -81,7 +81,7 @@ So, when would you use the **Functional API**? You can't use the `keras_model_se
 
 ## How to use the Functional API
 
-The main function for using the **Functional API** is called `keras_model()`. With `keras_model`, you combine input and output layers. To make it easier to understand, let's look at a simple example. Below, I'll be building the same model from [last week's blogpost](https://shirinsplayground.netlify.app/2020/09/keras_fruits_update/), where I trained an image classification model with `keras_model_sequential`.
+The main function for using the **Functional API** is called `keras_model()`. With `keras_model`, you combine input and output layers. To make it easier to understand, let's look at a simple example. Below, I'll be building the same model from [last week's blogpost](https://shirinsplayground.netlify.app/2020/09/keras_fruits_update/), where I trained an image classification model with `keras_model_sequential`. Just that now, I'll be using the **Functional API** instead.
 
 The first part is identical to before: defining the image data generator to read in the training images.
 
@@ -157,12 +157,9 @@ epochs <- 10
 
 Here's what's different with the **Functional API**:
 
+With `keras_model_sequential`, we start with that function and add layers one after the other until we get to the output layer. The first layer after `keras_model_sequential()` needs to have input parameters matching the input data's dimensions (or you start with `layer_input()` as first layer). This complete model is then compiled and fit. 
 
-
-Behind the scenes, Keras retrieves every layer involved in going from input_tensor to output_tensor, bringing them together into a graph-like data structure—a model. 
-When it comes to compiling, training, or evaluating a model built this way, the API is the same as that of sequential models:
-
-The Functional API can be used to build models that have multiple inputs. Typically, such models at some point merge their different input branches using a layer that can combine several tensors: by adding them, concatenating them, and so on. This is usually done via a Keras merge operation such as layer_add, layer_concatenate, and so on. 
+With the **Functional API**, we start by defining the input with `layer_input` as a separate object. At least one other object is defined containing additional layers and the output layer. With `keras_model()`, we then combine input and output into one model that's compiled and fit the same way a sequential model would be.
 
 ```{r}
 # input layer
@@ -195,7 +192,7 @@ predictions <- inputs %>%
 
 # create and compile model
 model_func <- keras_model(inputs = inputs, 
-                     outputs = predictions)
+                          outputs = predictions)
 
 model_func %>% compile(
   loss = "categorical_crossentropy",
@@ -203,6 +200,8 @@ model_func %>% compile(
   metrics = "accuracy"
 )
 ```
+
+This model here is very straightforward and could have been built just as easily with `keras_model_sequential`. A nice way to visualize our model architecture (particularly, when we are building complex models), is to use a plotting function (here from `deepviz`):
 
 ```{r}
 model_func %>% plot_model()
@@ -251,7 +250,9 @@ Epoch 10/10
 
 ### Inception module
 
-https://keras.rstudio.com/articles/functional_api.html
+So, now that we've seen how the **Functional API** works in general, we can have a look at some more complex examples. The first one is the [inception module](https://keras.rstudio.com/articles/functional_api.html). I'm not going to go into detail on what inception modules are and what they are useful for, but you can find a nice write-up [here](https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/43022.pdf).
+
+What's interesting in terms of building the model is that the inception module consists of **parallel (blocks of) layers**. The output of an inception module is then combined back into one. In the model below, one input (our images from above) is being fed into one inception module consisting of three parallel blocks. These blocks can consist of any layers and layer combinations we want. The three different outputs are then combined back together by using `layer_concatenate()`. We could now create additional inception modules or we create the output layer. The rest is just as before: create model with `keras_model()`, compile and fit.
 
 ```{r}
 # input layer
@@ -340,7 +341,12 @@ Epoch 10/10
 
 ### Residual blocks
 
-https://keras.rstudio.com/articles/functional_api.html
+Another useful model architecture uses residual blocks ([residual neural networks, particularly ResNet](https://en.wikipedia.org/wiki/Residual_neural_network)). Residual blocks use so called skip connections. In my example below, the input follows two paths:
+
+1. A convolution block that looks similar to the sequential model.
+2. A skip connection that leaves out this convolution block and feeds the input straight to the next layer, which is following the convolution block.
+
+We basically combine the original input back in with the convoluted output from the same input. If we want to combine two layers with the same dimensions, we can use `layer_add()`.
 
 ```{r}
 # input layer
@@ -425,7 +431,9 @@ Epoch 10/10
 
 ### Multi-outputs
 
-http://archive.ics.uci.edu/ml/datasets/Car+Evaluation
+Another common use-case for the **Functional API** is building models with multiple inputs or multiple outputs. Here, I'll show an example with one input and multiple outputs. **Note**, the example below is definitely fabricated, but I just want to demonstrate how to build a simple and small model. Most real-world examples are much bigger in terms of data and computing resources needed. You can find some nice examples [here](https://www.pyimagesearch.com/2019/02/04/keras-multiple-inputs-and-mixed-data/) and [here](https://www.pyimagesearch.com/2018/06/04/keras-multiple-outputs-and-multiple-losses/) (albeit in Python, but you'll find that the Keras code and function names look almost the same as in R).
+
+I'm using the [car evaluation dataset from UC Irvine](http://archive.ics.uci.edu/ml/datasets/Car+Evaluation):
 
 ```{r eval=TRUE, echo=FALSE}
 car_data <- readr::read_csv("/Users/shiringlander/Documents/Github/Data/cars/car.data",
@@ -439,11 +447,15 @@ car_data <- readr::read_csv("car.data",
   remove_missing()
 ```
 
+Categorical variables are converted into one-hot encoded dummy variables (in a real use-case, I'd probably not do that but use embeddings instead).
+
 ```{r eval=TRUE}
 library(caret)
 dmy <- dummyVars(" ~ doors + persons + buying + maint + lug_boot + class + safety", data = car_data)
 car_data <- data.frame(predict(dmy, newdata = car_data))
 ```
+
+Just out of curiosity, I'm having a look at how my variables correlate:
 
 ```{r eval=TRUE}
 cormat <- round(cor(car_data), 2)
@@ -464,6 +476,11 @@ cormat %>%
     theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) 
 ```
 
+Now, I'm preparing my two outputs: I want my model to predict
+
+1. car class (as binary classification: unacceptable or not)
+2. car safety (as multi-category classification: high, medium, low)
+
 ```{r}
 Y_log <- grepl("class|safety", colnames(car_data))
 train_X <- as.matrix(car_data[, !Y_log])
@@ -477,26 +494,36 @@ train_Y_class <- Y_class[, ]
 train_Y_safety <- Y_safety[, ]
 ```
 
+Now, I'm defining my model architecture (this is not in any way optimized, nor is it a particularly useful architecture, but rather used to demonstrate a few options for using and combining layers):
+
+- input layer just as before
+- two parallel blocks: one embedding & one dense layer
+- concatenating embedding & dense output
+- output 1 (safety): dense layer + softmax for categorical crossentropy
+- output 2 (class): sigmoid for binary crossentropy
+
 ```{r}
 # input layer
 input_shape <- ncol(train_X)
 input <- layer_input(shape = input_shape)
 
+# embedding layer
 embedding <- input %>%
   
   layer_embedding(input_dim = input_shape, output_dim = 36) %>%
   layer_flatten()
 
-# shared layers
+# dense layer
 dense10 <- input %>%
   
   layer_dense(10) %>%
   layer_activation_leaky_relu() %>%
   layer_alpha_dropout(0.25)
 
-# shared layers
+# shared layer
 shared <- layer_concatenate(c(embedding, dense10), axis = 1)
 
+# output safety
 output_n_safety <- ncol(Y_safety)
 
 output_safety <- shared %>%
@@ -509,6 +536,7 @@ output_safety <- shared %>%
               activation = 'softmax', 
               name = 'output_safety')
 
+# output class
 output_n_class <- ncol(Y_class)
 
 output_class <- shared %>%
@@ -519,6 +547,7 @@ output_class <- shared %>%
               activation = 'sigmoid', # with binary_crossentropy
               name = 'output_class')
 
+# create model & compile
 model <- keras_model(
   inputs = input,
   outputs = c(output_safety, output_class)

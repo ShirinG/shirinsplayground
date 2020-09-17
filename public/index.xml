@@ -1022,11 +1022,11 @@ hist &lt;- model %&gt;% fit_generator(
     <title type="html"><![CDATA[Using the Keras Functional API]]></title>
     <link href="/2020/09/keras_funct_api/"/>
     <id>/2020/09/keras_funct_api/</id>
-    <published>2020-09-20T00:00:00+00:00</published>
-    <updated>2020-09-20T00:00:00+00:00</updated>
+    <published>2020-09-19T00:00:00+00:00</published>
+    <updated>2020-09-19T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>I have been working with Keras for a while now, and I’ve also been writing quite a few <a href="https://shirinsplayground.netlify.app//tags/keras/">blogposts about it</a>; the most recent one being <a href="https://shirinsplayground.netlify.app/2020/09/keras_fruits_update/">an update to image classification using TF 2.0</a>.</p>
 <p>However, in my blogposts I have always been using <strong>Keras sequential models</strong> and never shown how to use the <a href="https://keras.rstudio.com/articles/Functional_api.html"><strong>Functional API</strong></a>. The reason is that the Functional API is usually applied when building more complex models, like multi-input or multi-output models. And in my blogposts I usually show simple examples that don’t take too much time and computing power to run, so that everybody can follow along.</p>
-<p>But the <a href="https://keras.rstudio.com/articles/Functional_api.html"><strong>Functional API</strong></a> can also be used to build simple models (in fact, every model built with the sequential API can also be built with the Functional API but <em>not vice versa</em>). Let me show you how it works! :-)</p>
+<p>But the <a href="https://keras.rstudio.com/articles/Functional_api.html"><strong>Functional API</strong></a> can also be used to build simple models (in fact, every model built with the sequential API can also be built with the Functional API but <em>not vice versa</em>). Plus, the <strong>Functional API</strong> can be used to build complex models with multiple inputs and/or multiple outputs. So, let’s look at how this works! :-)</p>
 <hr />
 <p><strong>Workshop announcement:</strong> Because this year’s UseR 2020 in Munich couldn’t happen as an in-person event, I will be giving my <a href="https://user2020.r-project.org/program/tutorials/">workshop on Deep Learning with Keras and TensorFlow</a> as an online event on Thursday, 8th of October (13:00 UTC).</p>
 <hr />
@@ -1047,7 +1047,7 @@ library(tidyverse)
 library(tidymodels)
 library(tensorflow)
 library(keras)
-library(deepviz) #https://github.com/andrie/deepviz</code></pre>
+library(deepviz) # https://github.com/andrie/deepviz</code></pre>
 <pre class="r"><code>tf$random$set_seed(42)
 
 # check TF version
@@ -1069,7 +1069,7 @@ is_keras_available()
 </div>
 <div id="how-to-use-the-functional-api" class="section level2">
 <h2>How to use the Functional API</h2>
-<p>The main function for using the <strong>Functional API</strong> is called <code>keras_model()</code>. With <code>keras_model</code>, you combine input and output layers. To make it easier to understand, let’s look at a simple example. Below, I’ll be building the same model from <a href="https://shirinsplayground.netlify.app/2020/09/keras_fruits_update/">last week’s blogpost</a>, where I trained an image classification model with <code>keras_model_sequential</code>.</p>
+<p>The main function for using the <strong>Functional API</strong> is called <code>keras_model()</code>. With <code>keras_model</code>, you combine input and output layers. To make it easier to understand, let’s look at a simple example. Below, I’ll be building the same model from <a href="https://shirinsplayground.netlify.app/2020/09/keras_fruits_update/">last week’s blogpost</a>, where I trained an image classification model with <code>keras_model_sequential</code>. Just that now, I’ll be using the <strong>Functional API</strong> instead.</p>
 <p>The first part is identical to before: defining the image data generator to read in the training images.</p>
 <pre class="r"><code># path to image folders
 train_image_files_path &lt;- &quot;/fruits/Training/&quot;</code></pre>
@@ -1122,9 +1122,8 @@ valid_samples &lt;- valid_image_array_gen$n
 # define number of epochs
 epochs &lt;- 10</code></pre>
 <p>Here’s what’s different with the <strong>Functional API</strong>:</p>
-<p>Behind the scenes, Keras retrieves every layer involved in going from input_tensor to output_tensor, bringing them together into a graph-like data structure—a model.
-When it comes to compiling, training, or evaluating a model built this way, the API is the same as that of sequential models:</p>
-<p>The Functional API can be used to build models that have multiple inputs. Typically, such models at some point merge their different input branches using a layer that can combine several tensors: by adding them, concatenating them, and so on. This is usually done via a Keras merge operation such as layer_add, layer_concatenate, and so on.</p>
+<p>With <code>keras_model_sequential</code>, we start with that function and add layers one after the other until we get to the output layer. The first layer after <code>keras_model_sequential()</code> needs to have input parameters matching the input data’s dimensions (or you start with <code>layer_input()</code> as first layer). This complete model is then compiled and fit.</p>
+<p>With the <strong>Functional API</strong>, we start by defining the input with <code>layer_input</code> as a separate object. At least one other object is defined containing additional layers and the output layer. With <code>keras_model()</code>, we then combine input and output into one model that’s compiled and fit the same way a sequential model would be.</p>
 <pre class="r"><code># input layer
 inputs &lt;- layer_input(shape = c(img_width, img_height, channels))
 
@@ -1155,13 +1154,14 @@ predictions &lt;- inputs %&gt;%
 
 # create and compile model
 model_func &lt;- keras_model(inputs = inputs, 
-                     outputs = predictions)
+                          outputs = predictions)
 
 model_func %&gt;% compile(
   loss = &quot;categorical_crossentropy&quot;,
   optimizer = optimizer_rmsprop(lr = 0.0001, decay = 1e-6),
   metrics = &quot;accuracy&quot;
 )</code></pre>
+<p>This model here is very straightforward and could have been built just as easily with <code>keras_model_sequential</code>. A nice way to visualize our model architecture (particularly, when we are building complex models), is to use a plotting function (here from <code>deepviz</code>):</p>
 <pre class="r"><code>model_func %&gt;% plot_model()</code></pre>
 <p><img src="/img/plot_model_1.png" /></p>
 <pre class="r"><code># fit
@@ -1199,7 +1199,8 @@ Epoch 10/10
 168/168 [==============================] - 6s 34ms/step - loss: 0.0607 - accuracy: 0.9844 - val_loss: 0.0438 - val_accuracy: 0.9848</code></pre>
 <div id="inception-module" class="section level3">
 <h3>Inception module</h3>
-<p><a href="https://keras.rstudio.com/articles/functional_api.html" class="uri">https://keras.rstudio.com/articles/functional_api.html</a></p>
+<p>So, now that we’ve seen how the <strong>Functional API</strong> works in general, we can have a look at some more complex examples. The first one is the <a href="https://keras.rstudio.com/articles/functional_api.html">inception module</a>. I’m not going to go into detail on what inception modules are and what they are useful for, but you can find a nice write-up <a href="https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/43022.pdf">here</a>.</p>
+<p>What’s interesting in terms of building the model is that the inception module consists of <strong>parallel (blocks of) layers</strong>. The output of an inception module is then combined back into one. In the model below, one input (our images from above) is being fed into one inception module consisting of three parallel blocks. These blocks can consist of any layers and layer combinations we want. The three different outputs are then combined back together by using <code>layer_concatenate()</code>. We could now create additional inception modules or we create the output layer. The rest is just as before: create model with <code>keras_model()</code>, compile and fit.</p>
 <pre class="r"><code># input layer
 inputs &lt;- layer_input(shape = c(img_width, img_height, channels))
 
@@ -1272,7 +1273,12 @@ Epoch 10/10
 </div>
 <div id="residual-blocks" class="section level3">
 <h3>Residual blocks</h3>
-<p><a href="https://keras.rstudio.com/articles/functional_api.html" class="uri">https://keras.rstudio.com/articles/functional_api.html</a></p>
+<p>Another useful model architecture uses residual blocks (<a href="https://en.wikipedia.org/wiki/Residual_neural_network">residual neural networks, particularly ResNet</a>). Residual blocks use so called skip connections. In my example below, the input follows two paths:</p>
+<ol style="list-style-type: decimal">
+<li>A convolution block that looks similar to the sequential model.</li>
+<li>A skip connection that leaves out this convolution block and feeds the input straight to the next layer, which is following the convolution block.</li>
+</ol>
+<p>We basically combine the original input back in with the convoluted output from the same input. If we want to combine two layers with the same dimensions, we can use <code>layer_add()</code>.</p>
 <pre class="r"><code># input layer
 inputs &lt;- layer_input(shape = c(img_width, img_height, channels))
 
@@ -1341,13 +1347,16 @@ Epoch 10/10
 </div>
 <div id="multi-outputs" class="section level3">
 <h3>Multi-outputs</h3>
-<p><a href="http://archive.ics.uci.edu/ml/datasets/Car+Evaluation" class="uri">http://archive.ics.uci.edu/ml/datasets/Car+Evaluation</a></p>
+<p>Another common use-case for the <strong>Functional API</strong> is building models with multiple inputs or multiple outputs. Here, I’ll show an example with one input and multiple outputs. <strong>Note</strong>, the example below is definitely fabricated, but I just want to demonstrate how to build a simple and small model. Most real-world examples are much bigger in terms of data and computing resources needed. You can find some nice examples <a href="https://www.pyimagesearch.com/2019/02/04/keras-multiple-inputs-and-mixed-data/">here</a> and <a href="https://www.pyimagesearch.com/2018/06/04/keras-multiple-outputs-and-multiple-losses/">here</a> (albeit in Python, but you’ll find that the Keras code and function names look almost the same as in R).</p>
+<p>I’m using the <a href="http://archive.ics.uci.edu/ml/datasets/Car+Evaluation">car evaluation dataset from UC Irvine</a>:</p>
 <pre class="r"><code>car_data &lt;- readr::read_csv(&quot;car.data&quot;,
                 col_names = c(&quot;buying&quot;, &quot;maint&quot;, &quot;doors&quot;, &quot;persons&quot;, &quot;lug_boot&quot;, &quot;safety&quot;, &quot;class&quot;)) %&gt;%
   remove_missing()</code></pre>
+<p>Categorical variables are converted into one-hot encoded dummy variables (in a real use-case, I’d probably not do that but use embeddings instead).</p>
 <pre class="r"><code>library(caret)
 dmy &lt;- dummyVars(&quot; ~ doors + persons + buying + maint + lug_boot + class + safety&quot;, data = car_data)
 car_data &lt;- data.frame(predict(dmy, newdata = car_data))</code></pre>
+<p>Just out of curiosity, I’m having a look at how my variables correlate:</p>
 <pre class="r"><code>cormat &lt;- round(cor(car_data), 2)
 
 cormat &lt;- cormat %&gt;%
@@ -1365,6 +1374,11 @@ cormat %&gt;%
      name = &quot;Pearson\nCorrelation&quot;) +
     theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) </code></pre>
 <p><img src="/post/2020-09-20_keras_func_api_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p>Now, I’m preparing my two outputs: I want my model to predict</p>
+<ol style="list-style-type: decimal">
+<li>car class (as binary classification: unacceptable or not)</li>
+<li>car safety (as multi-category classification: high, medium, low)</li>
+</ol>
 <pre class="r"><code>Y_log &lt;- grepl(&quot;class|safety&quot;, colnames(car_data))
 train_X &lt;- as.matrix(car_data[, !Y_log])</code></pre>
 <pre class="r"><code>Y_class &lt;- as.matrix(car_data[, &quot;classunacc&quot;])
@@ -1372,25 +1386,35 @@ Y_safety &lt;- as.matrix(car_data[, grepl(&quot;safety&quot;, colnames(car_data)
 
 train_Y_class &lt;- Y_class[, ]
 train_Y_safety &lt;- Y_safety[, ]</code></pre>
+<p>Now, I’m defining my model architecture (this is not in any way optimized, nor is it a particularly useful architecture, but rather used to demonstrate a few options for using and combining layers):</p>
+<ul>
+<li>input layer just as before</li>
+<li>two parallel blocks: one embedding &amp; one dense layer</li>
+<li>concatenating embedding &amp; dense output</li>
+<li>output 1 (safety): dense layer + softmax for categorical crossentropy</li>
+<li>output 2 (class): sigmoid for binary crossentropy</li>
+</ul>
 <pre class="r"><code># input layer
 input_shape &lt;- ncol(train_X)
 input &lt;- layer_input(shape = input_shape)
 
+# embedding layer
 embedding &lt;- input %&gt;%
   
   layer_embedding(input_dim = input_shape, output_dim = 36) %&gt;%
   layer_flatten()
 
-# shared layers
+# dense layer
 dense10 &lt;- input %&gt;%
   
   layer_dense(10) %&gt;%
   layer_activation_leaky_relu() %&gt;%
   layer_alpha_dropout(0.25)
 
-# shared layers
+# shared layer
 shared &lt;- layer_concatenate(c(embedding, dense10), axis = 1)
 
+# output safety
 output_n_safety &lt;- ncol(Y_safety)
 
 output_safety &lt;- shared %&gt;%
@@ -1403,6 +1427,7 @@ output_safety &lt;- shared %&gt;%
               activation = &#39;softmax&#39;, 
               name = &#39;output_safety&#39;)
 
+# output class
 output_n_class &lt;- ncol(Y_class)
 
 output_class &lt;- shared %&gt;%
@@ -1413,6 +1438,7 @@ output_class &lt;- shared %&gt;%
               activation = &#39;sigmoid&#39;, # with binary_crossentropy
               name = &#39;output_class&#39;)
 
+# create model &amp; compile
 model &lt;- keras_model(
   inputs = input,
   outputs = c(output_safety, output_class)
