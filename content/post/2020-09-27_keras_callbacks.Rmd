@@ -16,71 +16,18 @@ slug: keras_callbacks
 knitr::opts_chunk$set(eval = FALSE, echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
+This is article #3 in my recent series on how to get the most out of Keras. The two articles were:
+
+1. [Update with TF 2.0: Image classification with Keras and TensorFlow](https://shirinsplayground.netlify.app/2020/09/keras_fruits_update/)
+2. [Whose dream is this? When and how to use the Keras Functional API](https://shirinsplayground.netlify.app/2020/09/keras_funct_api/)
+
 Keras comes with a number of built in [callbacks](https://keras.rstudio.com/articles/training_callbacks.html).
 
-When you’re training a model, there are many things you can’t predict from the start. In particular, you can’t tell how many epochs will be needed to get to an optimal validation loss. The examples so far have adopted the strategy of training for enough epochs that you begin overfitting, using the first run to figure out the proper number of epochs to train for, and then finally launching a new training run from scratch using this optimal number. Of course, this approach is wasteful.
+Callbacks are useful for optimizing your training runs and are used with the `fit()` function
 
-A much better way to handle this is to stop training when you measure that the validation loss in no longer improving. This can be achieved using a Keras callback. A callback is an object that is passed to the model in the call to fit and that is called by the model at various points during training. It has access to all the available data about the state of the model and its performance, and it can take action: interrupt training, save a model, load a different weight set, or otherwise alter the state of the model.
 
-Model checkpointing—Saving the current weights of the model at different points during training.
-Early stopping—Interrupting training when the validation loss is no longer improving (and saving the best model obtained during training).
-Dynamically adjusting the value of certain parameters during training—Such as the learning rate of the optimizer.
-Logging training and validation metrics during training, or visualizing the representations learned by the model as they’re updated—The Keras progress bar that you’re familiar with is a callback!
 
-The model-checkpoint and early-stopping callbacks
-You can use callback_early_stopping to interrupt training once a target metric being monitored has stopped improving for a fixed number of epochs. For instance, this callback allows you to interrupt training as soon as you start overfitting, thus avoiding having to retrain your model for a smaller number of epochs. This callback is typically used in combination with callback_model_checkpoint, which lets you continually save the model during training (and, optionally, save only the current best model so far: the version of the model that achieved the best performance at the end of an epoch):
 
-1 Callbacks are passed to the model via the callbacks argument in fit, which takes a list of callbacks. You can pass any number of callbacks.
-2 Interrupts training when improvement stops
-3 Monitors the model’s validation accuracy
-4 Interrupts training when accuracy has stopped improving for more than one epoch (that is, two epochs)
-5 Saves the current weights after every epoch
-6 Path to the destination model file
-7 These two arguments mean you won’t overwrite the model file unless val_loss has improved, which allows you to keep the best model seen during training.
-8 You monitor accuracy, so it should be part of the model’s metrics.
-9 Note that because the callback will monitor validation loss and accuracy, you need to pass validation_data to the call to fit.
-
-The reduce-learning-rate-on-plateau callback
-You can use this callback to reduce the learning rate when the validation loss has stopped improving. Reducing or increasing the learning rate in case of a loss plateau is is an effective strategy to get out of local minima during training. The following example uses callback_reduce_lr_on_plateau:
-
-1 Monitors the model’s validation loss
-2 Divides the learning rate by 10 when triggered
-3 The callback is triggered after the validation loss has stopped improving for 10 epochs.
-4 Because the callback will monitor the validation loss, you need to pass validation_data to the call to fit.
-Writing your own callback
-If you need to take a specific action during training that isn’t covered by one of the built-in callbacks, you can write your own callback. Callbacks are implemented by creating a new R6 class that inherits from the KerasCallback class. You can then implement any number of the following transparently named methods, which are called at various points during training:
-
-1 Called at the start of every epoch
-2 Called at the end of every epoch
-3 Called right before processing each batch
-4 Called right after processing each batch
-5 Called at the start of training
-6 Called at the end of training
-These methods all are called with a logs argument, which is a named list containing information about the previous batch, epoch, or training run: training and validation metrics, and so on. Additionally, the callback has access to the following attributes:
-
-self$model—Reference to the Keras model being trained
-self$params—Named list with training parameters (verbosity, batch size, number of epochs, and so on)
-Here’s a simple example that saves a list of losses over each batch during training:
-
-1 Called at the end of every training batch
-2 Accumulates losses from every batch in a list
-3 Creates an instance of the callback
-4 Attaches the callback to model training
-5 Accumulated losses are now available from the callback instance.
-This is all you need to know about callbacks—the rest is technical details, which you can easily look up. Now you’re equipped to perform any sort of logging or preprogrammed intervention on a Keras model during training.
-
-7.2.2. Introduction to TensorBoard: the TensorFlow visualization framework
-To do good research or develop good models, you need rich, frequent feedback about what’s going on inside your models during your experiments. That’s the point of running experiments: to get information about how well a model performs—as much information as possible. Making progress is an iterative process, or loop: you start with an idea and express it as an experiment, attempting to validate or invalidate your idea. You run this experiment and process the information it generates. This inspires your next idea. The more iterations of this loop you’re able to run, the more refined and powerful your ideas become. Keras helps you go from idea to experiment in the least possible time, and fast GPUs can help you get from experiment to result as quickly as possible. But what about processing the experiment results? That’s where Tensor-Board comes in.
-
-This section introduces TensorBoard, a browser-based visualization tool that comes packaged with TensorFlow. Note that it’s only available for Keras models when you’re using Keras with the TensorFlow backend.
-
-The key purpose of TensorBoard is to help you visually monitor everything that goes on inside your model during training. If you’re monitoring more information than just the model’s final loss, you can develop a clearer vision of what the model does and doesn’t do, and you can make progress more quickly. TensorBoard gives you access to several neat features, all in your browser:
-
-Visually monitoring metrics during training
-Visualizing your model architecture
-Visualizing histograms of activations and gradients
-Exploring embeddings in 3D
-Let’s demonstrate these features on a simple example. You’ll train a 1D convnet on the IMDB sentiment-analysis task.
 
 
 ```{r}
@@ -250,6 +197,68 @@ model %>% compile(
 )
 ```
 
+## Callbacks
+
+### Early stopping
+
+- how many epochs will be needed to get to an optimal validation loss. The examples so far have adopted the strategy of training for enough epochs that you begin overfitting, using the first run to figure out the proper number of epochs to train for, and then finally launching a new training run from scratch using this optimal number. Of course, this approach is wasteful. A much better way to handle this is to stop training when you measure that the validation loss in no longer improving.
+Interrupting training when the validation loss is no longer improving (and saving the best model obtained during training). You can use callback_early_stopping to interrupt training once a target metric being monitored has stopped improving for a fixed number of epochs. For instance, this callback allows you to interrupt training as soon as you start overfitting, thus avoiding having to retrain your model for a smaller number of epochs.
+
+### Checkpoints
+
+Saving the current weights of the model at different points during training.
+This callback is typically used in combination with callback_model_checkpoint, which lets you continually save the model during training (and, optionally, save only the current best model so far: the version of the model that achieved the best performance at the end of an epoch):
+
+
+### Adjusting the learning rate
+Dynamically adjusting the value of certain parameters during training—Such as the learning rate of the optimizer.
+The reduce-learning-rate-on-plateau callback
+You can use this callback to reduce the learning rate when the validation loss has stopped improving. Reducing or increasing the learning rate in case of a loss plateau is is an effective strategy to get out of local minima during training. The following example uses callback_reduce_lr_on_plateau:
+
+1 Monitors the model’s validation loss
+2 Divides the learning rate by 10 when triggered
+3 The callback is triggered after the validation loss has stopped improving for 10 epochs.
+
+### Logging
+Logging training and validation metrics during training, or visualizing the representations learned by the model as they’re updated—The Keras progress bar that you’re familiar with is a callback!
+
+### Writing your own callback
+
+If you need to take a specific action during training that isn’t covered by one of the built-in callbacks, you can write your own callback. Callbacks are implemented by creating a new R6 class that inherits from the KerasCallback class. You can then implement any number of the following transparently named methods, which are called at various points during training:
+
+1 Called at the start of every epoch
+2 Called at the end of every epoch
+3 Called right before processing each batch
+4 Called right after processing each batch
+5 Called at the start of training
+6 Called at the end of training
+These methods all are called with a logs argument, which is a named list containing information about the previous batch, epoch, or training run: training and validation metrics, and so on. Additionally, the callback has access to the following attributes:
+
+self$model—Reference to the Keras model being trained
+self$params—Named list with training parameters (verbosity, batch size, number of epochs, and so on)
+Here’s a simple example that saves a list of losses over each batch during training:
+
+1 Called at the end of every training batch
+2 Accumulates losses from every batch in a list
+3 Creates an instance of the callback
+4 Attaches the callback to model training
+5 Accumulated losses are now available from the callback instance.
+
+### Introduction to TensorBoard: the TensorFlow visualization framework
+To do good research or develop good models, you need rich, frequent feedback about what’s going on inside your models during your experiments. That’s the point of running experiments: to get information about how well a model performs—as much information as possible. Making progress is an iterative process, or loop: you start with an idea and express it as an experiment, attempting to validate or invalidate your idea. You run this experiment and process the information it generates. This inspires your next idea. The more iterations of this loop you’re able to run, the more refined and powerful your ideas become. Keras helps you go from idea to experiment in the least possible time, and fast GPUs can help you get from experiment to result as quickly as possible. But what about processing the experiment results? That’s where Tensor-Board comes in.
+
+This section introduces TensorBoard, a browser-based visualization tool that comes packaged with TensorFlow. Note that it’s only available for Keras models when you’re using Keras with the TensorFlow backend.
+
+The key purpose of TensorBoard is to help you visually monitor everything that goes on inside your model during training. If you’re monitoring more information than just the model’s final loss, you can develop a clearer vision of what the model does and doesn’t do, and you can make progress more quickly. TensorBoard gives you access to several neat features, all in your browser:
+
+Visually monitoring metrics during training
+Visualizing your model architecture
+Visualizing histograms of activations and gradients
+Exploring embeddings in 3D
+Let’s demonstrate these features on a simple example. You’ll train a 1D convnet on the IMDB sentiment-analysis task.
+
+
+
 ```{r}
 # fit
 hist <- model %>% fit_generator(
@@ -266,9 +275,16 @@ hist <- model %>% fit_generator(
   
   # callbacks
   callbacks = list(
-    #callback_model_checkpoint("checkpoints.h5"),
     callback_early_stopping(monitor = "val_loss", min_delta = 0.001, patience = 3)#,
-    #callback_tensorboard("logs")
+    #callback_model_checkpoint("checkpoints.h5"),
+    #callback_learning_rate_scheduler,
+    #callback_reduce_lr_on_plateau,
+    #callback_progbar_logger,
+    #callback_tensorboard("logs"),
+    #callback_csv_logger,
+    #callback_lambda,
+    #callback_remote_monitor,
+    #callback_terminate_on_naan
   )
 )
 ```

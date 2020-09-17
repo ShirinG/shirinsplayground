@@ -602,8 +602,10 @@ If you have questions or would like to talk about this article (or something els
                   Sep 9, 2020
                 </span>
               </span>
-              <div class="media-content hide-xs font-merryweather">Keras comes with a number of built in callbacks.
-When you’re training a model, there are many things you can’t predict from the start. In particular, you can’t tell how many epochs will be needed to get to an optimal validation loss. The examples so far have adopted the strategy of training for enough epochs that you begin overfitting, using the first run to figure out the proper number of epochs to train for, and then finally launching a new training run from scratch using this optimal number.</div>
+              <div class="media-content hide-xs font-merryweather">This is article #3 in my recent series on how to get the most out of Keras. The two articles were:
+Update with TF 2.0: Image classification with Keras and TensorFlow Whose dream is this? When and how to use the Keras Functional API  Keras comes with a number of built in callbacks.
+Callbacks are useful for optimizing your training runs and are used with the fit() function
+The model-checkpoint and early-stopping callbacks You can use callback_early_stopping to interrupt training once a target metric being monitored has stopped improving for a fixed number of epochs.</div>
             </div>
             <div style="clear:both;"></div>
             <hr>

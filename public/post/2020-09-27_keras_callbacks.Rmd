@@ -16,16 +16,17 @@ slug: keras_callbacks
 knitr::opts_chunk$set(eval = FALSE, echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
+This is article #3 in my recent series on how to get the most out of Keras. The two articles were:
+
+1. [Update with TF 2.0: Image classification with Keras and TensorFlow](https://shirinsplayground.netlify.app/2020/09/keras_fruits_update/)
+2. [Whose dream is this? When and how to use the Keras Functional API](https://shirinsplayground.netlify.app/2020/09/keras_funct_api/)
+
 Keras comes with a number of built in [callbacks](https://keras.rstudio.com/articles/training_callbacks.html).
 
-When you’re training a model, there are many things you can’t predict from the start. In particular, you can’t tell how many epochs will be needed to get to an optimal validation loss. The examples so far have adopted the strategy of training for enough epochs that you begin overfitting, using the first run to figure out the proper number of epochs to train for, and then finally launching a new training run from scratch using this optimal number. Of course, this approach is wasteful.
+Callbacks are useful for optimizing your training runs and are used with the `fit()` function
 
-A much better way to handle this is to stop training when you measure that the validation loss in no longer improving. This can be achieved using a Keras callback. A callback is an object that is passed to the model in the call to fit and that is called by the model at various points during training. It has access to all the available data about the state of the model and its performance, and it can take action: interrupt training, save a model, load a different weight set, or otherwise alter the state of the model.
 
-Model checkpointing—Saving the current weights of the model at different points during training.
-Early stopping—Interrupting training when the validation loss is no longer improving (and saving the best model obtained during training).
-Dynamically adjusting the value of certain parameters during training—Such as the learning rate of the optimizer.
-Logging training and validation metrics during training, or visualizing the representations learned by the model as they’re updated—The Keras progress bar that you’re familiar with is a callback!
+
 
 The model-checkpoint and early-stopping callbacks
 You can use callback_early_stopping to interrupt training once a target metric being monitored has stopped improving for a fixed number of epochs. For instance, this callback allows you to interrupt training as soon as you start overfitting, thus avoiding having to retrain your model for a smaller number of epochs. This callback is typically used in combination with callback_model_checkpoint, which lets you continually save the model during training (and, optionally, save only the current best model so far: the version of the model that achieved the best performance at the end of an epoch):
@@ -250,6 +251,23 @@ model %>% compile(
 )
 ```
 
+## Callbacks
+
+### Early stopping
+
+- how many epochs will be needed to get to an optimal validation loss. The examples so far have adopted the strategy of training for enough epochs that you begin overfitting, using the first run to figure out the proper number of epochs to train for, and then finally launching a new training run from scratch using this optimal number. Of course, this approach is wasteful. A much better way to handle this is to stop training when you measure that the validation loss in no longer improving.
+Interrupting training when the validation loss is no longer improving (and saving the best model obtained during training).
+
+### Checkpoints
+
+Saving the current weights of the model at different points during training.
+
+### Adjusting the learning rate
+Dynamically adjusting the value of certain parameters during training—Such as the learning rate of the optimizer.
+
+### Logging
+Logging training and validation metrics during training, or visualizing the representations learned by the model as they’re updated—The Keras progress bar that you’re familiar with is a callback!
+
 ```{r}
 # fit
 hist <- model %>% fit_generator(
@@ -266,9 +284,16 @@ hist <- model %>% fit_generator(
   
   # callbacks
   callbacks = list(
-    #callback_model_checkpoint("checkpoints.h5"),
     callback_early_stopping(monitor = "val_loss", min_delta = 0.001, patience = 3)#,
-    #callback_tensorboard("logs")
+    #callback_model_checkpoint("checkpoints.h5"),
+    #callback_learning_rate_scheduler,
+    #callback_reduce_lr_on_plateau,
+    #callback_progbar_logger,
+    #callback_tensorboard("logs"),
+    #callback_csv_logger,
+    #callback_lambda,
+    #callback_remote_monitor,
+    #callback_terminate_on_naan
   )
 )
 ```

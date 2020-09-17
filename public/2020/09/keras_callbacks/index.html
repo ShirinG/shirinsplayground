@@ -30,18 +30,24 @@
     
 
     
-    <meta name="description" content="Keras comes with a number of built in callbacks.
-When you’re training a model, there are many things you can’t predict from the start. In particular, you can’t tell how many epochs will be needed to get to an optimal validation loss. The examples so far have adopted the strategy of training for enough epochs that you begin overfitting, using the first run to figure out the proper number of epochs to train for, and then finally launching a new training run from scratch using this optimal number.">
-    <meta property="og:description" content="Keras comes with a number of built in callbacks.
-When you’re training a model, there are many things you can’t predict from the start. In particular, you can’t tell how many epochs will be needed to get to an optimal validation loss. The examples so far have adopted the strategy of training for enough epochs that you begin overfitting, using the first run to figure out the proper number of epochs to train for, and then finally launching a new training run from scratch using this optimal number.">
+    <meta name="description" content="This is article #3 in my recent series on how to get the most out of Keras. The two articles were:
+Update with TF 2.0: Image classification with Keras and TensorFlow Whose dream is this? When and how to use the Keras Functional API  Keras comes with a number of built in callbacks.
+Callbacks are useful for optimizing your training runs and are used with the fit() function
+The model-checkpoint and early-stopping callbacks You can use callback_early_stopping to interrupt training once a target metric being monitored has stopped improving for a fixed number of epochs.">
+    <meta property="og:description" content="This is article #3 in my recent series on how to get the most out of Keras. The two articles were:
+Update with TF 2.0: Image classification with Keras and TensorFlow Whose dream is this? When and how to use the Keras Functional API  Keras comes with a number of built in callbacks.
+Callbacks are useful for optimizing your training runs and are used with the fit() function
+The model-checkpoint and early-stopping callbacks You can use callback_early_stopping to interrupt training once a target metric being monitored has stopped improving for a fixed number of epochs.">
     <meta property="og:type" content="blog">
     <meta property="og:title" content="Using Keras Callbacks">
     <meta property="og:url" content="/2020/09/keras_callbacks/">
     <meta property="og:site_name" content="Shirin&#39;s playgRound">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Shirin&#39;s playgRound">
-    <meta name="twitter:description" content="Keras comes with a number of built in callbacks.
-When you’re training a model, there are many things you can’t predict from the start. In particular, you can’t tell how many epochs will be needed to get to an optimal validation loss. The examples so far have adopted the strategy of training for enough epochs that you begin overfitting, using the first run to figure out the proper number of epochs to train for, and then finally launching a new training run from scratch using this optimal number.">
+    <meta name="twitter:description" content="This is article #3 in my recent series on how to get the most out of Keras. The two articles were:
+Update with TF 2.0: Image classification with Keras and TensorFlow Whose dream is this? When and how to use the Keras Functional API  Keras comes with a number of built in callbacks.
+Callbacks are useful for optimizing your training runs and are used with the fit() function
+The model-checkpoint and early-stopping callbacks You can use callback_early_stopping to interrupt training once a target metric being monitored has stopped improving for a fixed number of epochs.">
     
       <meta name="twitter:creator" content="@ShirinGlander">
     
@@ -370,13 +376,13 @@ ga('send', 'pageview');
           
           <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
-              <p>Keras comes with a number of built in <a href="https://keras.rstudio.com/articles/training_callbacks.html">callbacks</a>.</p>
-<p>When you’re training a model, there are many things you can’t predict from the start. In particular, you can’t tell how many epochs will be needed to get to an optimal validation loss. The examples so far have adopted the strategy of training for enough epochs that you begin overfitting, using the first run to figure out the proper number of epochs to train for, and then finally launching a new training run from scratch using this optimal number. Of course, this approach is wasteful.</p>
-<p>A much better way to handle this is to stop training when you measure that the validation loss in no longer improving. This can be achieved using a Keras callback. A callback is an object that is passed to the model in the call to fit and that is called by the model at various points during training. It has access to all the available data about the state of the model and its performance, and it can take action: interrupt training, save a model, load a different weight set, or otherwise alter the state of the model.</p>
-<p>Model checkpointing—Saving the current weights of the model at different points during training.
-Early stopping—Interrupting training when the validation loss is no longer improving (and saving the best model obtained during training).
-Dynamically adjusting the value of certain parameters during training—Such as the learning rate of the optimizer.
-Logging training and validation metrics during training, or visualizing the representations learned by the model as they’re updated—The Keras progress bar that you’re familiar with is a callback!</p>
+              <p>This is article #3 in my recent series on how to get the most out of Keras. The two articles were:</p>
+<ol style="list-style-type: decimal">
+<li><a href="https://shirinsplayground.netlify.app/2020/09/keras_fruits_update/">Update with TF 2.0: Image classification with Keras and TensorFlow</a></li>
+<li><a href="https://shirinsplayground.netlify.app/2020/09/keras_funct_api/">Whose dream is this? When and how to use the Keras Functional API</a></li>
+</ol>
+<p>Keras comes with a number of built in <a href="https://keras.rstudio.com/articles/training_callbacks.html">callbacks</a>.</p>
+<p>Callbacks are useful for optimizing your training runs and are used with the <code>fit()</code> function</p>
 <p>The model-checkpoint and early-stopping callbacks
 You can use callback_early_stopping to interrupt training once a target metric being monitored has stopped improving for a fixed number of epochs. For instance, this callback allows you to interrupt training as soon as you start overfitting, thus avoiding having to retrain your model for a smaller number of epochs. This callback is typically used in combination with callback_model_checkpoint, which lets you continually save the model during training (and, optionally, save only the current best model so far: the version of the model that achieved the best performance at the end of an epoch):</p>
 <p>1 Callbacks are passed to the model via the callbacks argument in fit, which takes a list of callbacks. You can pass any number of callbacks.
@@ -549,6 +555,27 @@ model %&gt;% compile(
   optimizer = optimizer_rmsprop(lr = 0.0001, decay = 1e-6),
   metrics = &quot;accuracy&quot;
 )</code></pre>
+</div>
+<div id="callbacks" class="section level2">
+<h2>Callbacks</h2>
+<div id="early-stopping" class="section level3">
+<h3>Early stopping</h3>
+<ul>
+<li>how many epochs will be needed to get to an optimal validation loss. The examples so far have adopted the strategy of training for enough epochs that you begin overfitting, using the first run to figure out the proper number of epochs to train for, and then finally launching a new training run from scratch using this optimal number. Of course, this approach is wasteful. A much better way to handle this is to stop training when you measure that the validation loss in no longer improving.
+Interrupting training when the validation loss is no longer improving (and saving the best model obtained during training).</li>
+</ul>
+</div>
+<div id="checkpoints" class="section level3">
+<h3>Checkpoints</h3>
+<p>Saving the current weights of the model at different points during training.</p>
+</div>
+<div id="adjusting-the-learning-rate" class="section level3">
+<h3>Adjusting the learning rate</h3>
+<p>Dynamically adjusting the value of certain parameters during training—Such as the learning rate of the optimizer.</p>
+</div>
+<div id="logging" class="section level3">
+<h3>Logging</h3>
+<p>Logging training and validation metrics during training, or visualizing the representations learned by the model as they’re updated—The Keras progress bar that you’re familiar with is a callback!</p>
 <pre class="r"><code># fit
 hist &lt;- model %&gt;% fit_generator(
   # training data
@@ -564,9 +591,16 @@ hist &lt;- model %&gt;% fit_generator(
   
   # callbacks
   callbacks = list(
-    #callback_model_checkpoint(&quot;checkpoints.h5&quot;),
     callback_early_stopping(monitor = &quot;val_loss&quot;, min_delta = 0.001, patience = 3)#,
-    #callback_tensorboard(&quot;logs&quot;)
+    #callback_model_checkpoint(&quot;checkpoints.h5&quot;),
+    #callback_learning_rate_scheduler,
+    #callback_reduce_lr_on_plateau,
+    #callback_progbar_logger,
+    #callback_tensorboard(&quot;logs&quot;),
+    #callback_csv_logger,
+    #callback_lambda,
+    #callback_remote_monitor,
+    #callback_terminate_on_naan
   )
 )</code></pre>
 <pre class="r"><code>plot(hist)</code></pre>
@@ -583,93 +617,94 @@ hist &lt;- model %&gt;% fit_generator(
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       Europe/Berlin               
-##  date     2020-09-14                  
+##  date     2020-09-17                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────
-##  package     * version date       lib source                           
-##  assertthat    0.2.1   2019-03-21 [1] CRAN (R 4.0.0)                   
-##  backports     1.1.9   2020-08-24 [1] CRAN (R 4.0.2)                   
-##  base64enc     0.1-3   2015-07-28 [1] CRAN (R 4.0.0)                   
-##  blob          1.2.1   2020-01-20 [1] CRAN (R 4.0.2)                   
-##  blogdown      0.20.1  2020-09-09 [1] Github (rstudio/blogdown@d96fe78)
-##  bookdown      0.20    2020-06-23 [1] CRAN (R 4.0.2)                   
-##  broom         0.7.0   2020-07-09 [1] CRAN (R 4.0.2)                   
-##  callr         3.4.4   2020-09-07 [1] CRAN (R 4.0.2)                   
-##  cellranger    1.1.0   2016-07-27 [1] CRAN (R 4.0.0)                   
-##  cli           2.0.2   2020-02-28 [1] CRAN (R 4.0.0)                   
-##  colorspace    1.4-1   2019-03-18 [1] CRAN (R 4.0.0)                   
-##  crayon        1.3.4   2017-09-16 [1] CRAN (R 4.0.0)                   
-##  DBI           1.1.0   2019-12-15 [1] CRAN (R 4.0.0)                   
-##  dbplyr        1.4.4   2020-05-27 [1] CRAN (R 4.0.2)                   
-##  desc          1.2.0   2018-05-01 [1] CRAN (R 4.0.0)                   
-##  devtools      2.3.1   2020-07-21 [1] CRAN (R 4.0.2)                   
-##  digest        0.6.25  2020-02-23 [1] CRAN (R 4.0.0)                   
-##  dplyr       * 1.0.2   2020-08-18 [1] CRAN (R 4.0.2)                   
-##  ellipsis      0.3.1   2020-05-15 [1] CRAN (R 4.0.0)                   
-##  evaluate      0.14    2019-05-28 [1] CRAN (R 4.0.1)                   
-##  fansi         0.4.1   2020-01-08 [1] CRAN (R 4.0.0)                   
-##  forcats     * 0.5.0   2020-03-01 [1] CRAN (R 4.0.0)                   
-##  fs            1.5.0   2020-07-31 [1] CRAN (R 4.0.2)                   
-##  generics      0.0.2   2018-11-29 [1] CRAN (R 4.0.0)                   
-##  ggplot2     * 3.3.2   2020-06-19 [1] CRAN (R 4.0.2)                   
-##  glue          1.4.2   2020-08-27 [1] CRAN (R 4.0.2)                   
-##  gtable        0.3.0   2019-03-25 [1] CRAN (R 4.0.0)                   
-##  haven         2.3.1   2020-06-01 [1] CRAN (R 4.0.2)                   
-##  hms           0.5.3   2020-01-08 [1] CRAN (R 4.0.0)                   
-##  htmltools     0.5.0   2020-06-16 [1] CRAN (R 4.0.2)                   
-##  httr          1.4.2   2020-07-20 [1] CRAN (R 4.0.2)                   
-##  jsonlite      1.7.1   2020-09-07 [1] CRAN (R 4.0.2)                   
-##  keras       * 2.3.0.0 2020-05-19 [1] CRAN (R 4.0.2)                   
-##  knitr         1.29    2020-06-23 [1] CRAN (R 4.0.2)                   
-##  lattice       0.20-41 2020-04-02 [1] CRAN (R 4.0.2)                   
-##  lifecycle     0.2.0   2020-03-06 [1] CRAN (R 4.0.0)                   
-##  lubridate     1.7.9   2020-06-08 [1] CRAN (R 4.0.2)                   
-##  magrittr      1.5     2014-11-22 [1] CRAN (R 4.0.0)                   
-##  Matrix        1.2-18  2019-11-27 [1] CRAN (R 4.0.2)                   
-##  memoise       1.1.0   2017-04-21 [1] CRAN (R 4.0.0)                   
-##  modelr        0.1.8   2020-05-19 [1] CRAN (R 4.0.2)                   
-##  munsell       0.5.0   2018-06-12 [1] CRAN (R 4.0.0)                   
-##  pillar        1.4.6   2020-07-10 [1] CRAN (R 4.0.2)                   
-##  pkgbuild      1.1.0   2020-07-13 [1] CRAN (R 4.0.2)                   
-##  pkgconfig     2.0.3   2019-09-22 [1] CRAN (R 4.0.0)                   
-##  pkgload       1.1.0   2020-05-29 [1] CRAN (R 4.0.2)                   
-##  prettyunits   1.1.1   2020-01-24 [1] CRAN (R 4.0.0)                   
-##  processx      3.4.4   2020-09-03 [1] CRAN (R 4.0.2)                   
-##  ps            1.3.4   2020-08-11 [1] CRAN (R 4.0.2)                   
-##  purrr       * 0.3.4   2020-04-17 [1] CRAN (R 4.0.0)                   
-##  R6            2.4.1   2019-11-12 [1] CRAN (R 4.0.0)                   
-##  Rcpp          1.0.5   2020-07-06 [1] CRAN (R 4.0.2)                   
-##  readr       * 1.3.1   2018-12-21 [1] CRAN (R 4.0.0)                   
-##  readxl        1.3.1   2019-03-13 [1] CRAN (R 4.0.0)                   
-##  remotes       2.2.0   2020-07-21 [1] CRAN (R 4.0.2)                   
-##  reprex        0.3.0   2019-05-16 [1] CRAN (R 4.0.0)                   
-##  reticulate    1.16    2020-05-27 [1] CRAN (R 4.0.2)                   
-##  rlang         0.4.7   2020-07-09 [1] CRAN (R 4.0.2)                   
-##  rmarkdown     2.3     2020-06-18 [1] CRAN (R 4.0.2)                   
-##  rprojroot     1.3-2   2018-01-03 [1] CRAN (R 4.0.0)                   
-##  rstudioapi    0.11    2020-02-07 [1] CRAN (R 4.0.0)                   
-##  rvest         0.3.6   2020-07-25 [1] CRAN (R 4.0.2)                   
-##  scales        1.1.1   2020-05-11 [1] CRAN (R 4.0.0)                   
-##  sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 4.0.0)                   
-##  stringi       1.5.3   2020-09-09 [1] CRAN (R 4.0.2)                   
-##  stringr     * 1.4.0   2019-02-10 [1] CRAN (R 4.0.0)                   
-##  tensorflow    2.2.0   2020-05-11 [1] CRAN (R 4.0.0)                   
-##  testthat      2.3.2   2020-03-02 [1] CRAN (R 4.0.0)                   
-##  tfruns        1.4     2018-08-25 [1] CRAN (R 4.0.0)                   
-##  tibble      * 3.0.3   2020-07-10 [1] CRAN (R 4.0.2)                   
-##  tidyr       * 1.1.2   2020-08-27 [1] CRAN (R 4.0.2)                   
-##  tidyselect    1.1.0   2020-05-11 [1] CRAN (R 4.0.0)                   
-##  tidyverse   * 1.3.0   2019-11-21 [1] CRAN (R 4.0.0)                   
-##  usethis       1.6.1   2020-04-29 [1] CRAN (R 4.0.0)                   
-##  vctrs         0.3.4   2020-08-29 [1] CRAN (R 4.0.2)                   
-##  whisker       0.4     2019-08-28 [1] CRAN (R 4.0.0)                   
-##  withr         2.2.0   2020-04-20 [1] CRAN (R 4.0.0)                   
-##  xfun          0.17    2020-09-09 [1] CRAN (R 4.0.2)                   
-##  xml2          1.3.2   2020-04-23 [1] CRAN (R 4.0.0)                   
-##  yaml          2.2.1   2020-02-01 [1] CRAN (R 4.0.0)                   
-##  zeallot       0.1.0   2018-01-28 [1] CRAN (R 4.0.0)                   
+##  package     * version      date       lib source                             
+##  assertthat    0.2.1        2019-03-21 [1] CRAN (R 4.0.0)                     
+##  backports     1.1.9        2020-08-24 [1] CRAN (R 4.0.2)                     
+##  base64enc     0.1-3        2015-07-28 [1] CRAN (R 4.0.0)                     
+##  blob          1.2.1        2020-01-20 [1] CRAN (R 4.0.2)                     
+##  blogdown      0.20.1       2020-09-09 [1] Github (rstudio/blogdown@d96fe78)  
+##  bookdown      0.20         2020-06-23 [1] CRAN (R 4.0.2)                     
+##  broom         0.7.0        2020-07-09 [1] CRAN (R 4.0.2)                     
+##  callr         3.4.4        2020-09-07 [1] CRAN (R 4.0.2)                     
+##  cellranger    1.1.0        2016-07-27 [1] CRAN (R 4.0.0)                     
+##  cli           2.0.2        2020-02-28 [1] CRAN (R 4.0.0)                     
+##  colorspace    1.4-1        2019-03-18 [1] CRAN (R 4.0.0)                     
+##  crayon        1.3.4        2017-09-16 [1] CRAN (R 4.0.0)                     
+##  DBI           1.1.0        2019-12-15 [1] CRAN (R 4.0.0)                     
+##  dbplyr        1.4.4        2020-05-27 [1] CRAN (R 4.0.2)                     
+##  desc          1.2.0        2018-05-01 [1] CRAN (R 4.0.0)                     
+##  devtools      2.3.1        2020-07-21 [1] CRAN (R 4.0.2)                     
+##  digest        0.6.25       2020-02-23 [1] CRAN (R 4.0.0)                     
+##  dplyr       * 1.0.2        2020-08-18 [1] CRAN (R 4.0.2)                     
+##  ellipsis      0.3.1        2020-05-15 [1] CRAN (R 4.0.0)                     
+##  evaluate      0.14         2019-05-28 [1] CRAN (R 4.0.1)                     
+##  fansi         0.4.1        2020-01-08 [1] CRAN (R 4.0.0)                     
+##  forcats     * 0.5.0        2020-03-01 [1] CRAN (R 4.0.0)                     
+##  fs            1.5.0        2020-07-31 [1] CRAN (R 4.0.2)                     
+##  generics      0.0.2        2018-11-29 [1] CRAN (R 4.0.0)                     
+##  ggplot2     * 3.3.2        2020-06-19 [1] CRAN (R 4.0.2)                     
+##  glue          1.4.2        2020-08-27 [1] CRAN (R 4.0.2)                     
+##  gtable        0.3.0        2019-03-25 [1] CRAN (R 4.0.0)                     
+##  haven         2.3.1        2020-06-01 [1] CRAN (R 4.0.2)                     
+##  hms           0.5.3        2020-01-08 [1] CRAN (R 4.0.0)                     
+##  htmltools     0.5.0        2020-06-16 [1] CRAN (R 4.0.2)                     
+##  httr          1.4.2        2020-07-20 [1] CRAN (R 4.0.2)                     
+##  jsonlite      1.7.1        2020-09-07 [1] CRAN (R 4.0.2)                     
+##  keras       * 2.3.0.0.9000 2020-09-15 [1] Github (rstudio/keras@ad737d1)     
+##  knitr         1.29         2020-06-23 [1] CRAN (R 4.0.2)                     
+##  lattice       0.20-41      2020-04-02 [1] CRAN (R 4.0.2)                     
+##  lifecycle     0.2.0        2020-03-06 [1] CRAN (R 4.0.0)                     
+##  lubridate     1.7.9        2020-06-08 [1] CRAN (R 4.0.2)                     
+##  magrittr      1.5          2014-11-22 [1] CRAN (R 4.0.0)                     
+##  Matrix        1.2-18       2019-11-27 [1] CRAN (R 4.0.2)                     
+##  memoise       1.1.0        2017-04-21 [1] CRAN (R 4.0.0)                     
+##  modelr        0.1.8        2020-05-19 [1] CRAN (R 4.0.2)                     
+##  munsell       0.5.0        2018-06-12 [1] CRAN (R 4.0.0)                     
+##  pillar        1.4.6        2020-07-10 [1] CRAN (R 4.0.2)                     
+##  pkgbuild      1.1.0        2020-07-13 [1] CRAN (R 4.0.2)                     
+##  pkgconfig     2.0.3        2019-09-22 [1] CRAN (R 4.0.0)                     
+##  pkgload       1.1.0        2020-05-29 [1] CRAN (R 4.0.2)                     
+##  prettyunits   1.1.1        2020-01-24 [1] CRAN (R 4.0.0)                     
+##  processx      3.4.4        2020-09-03 [1] CRAN (R 4.0.2)                     
+##  ps            1.3.4        2020-08-11 [1] CRAN (R 4.0.2)                     
+##  purrr       * 0.3.4        2020-04-17 [1] CRAN (R 4.0.0)                     
+##  R6            2.4.1        2019-11-12 [1] CRAN (R 4.0.0)                     
+##  Rcpp          1.0.5        2020-07-06 [1] CRAN (R 4.0.2)                     
+##  readr       * 1.3.1        2018-12-21 [1] CRAN (R 4.0.0)                     
+##  readxl        1.3.1        2019-03-13 [1] CRAN (R 4.0.0)                     
+##  remotes       2.2.0        2020-07-21 [1] CRAN (R 4.0.2)                     
+##  reprex        0.3.0        2019-05-16 [1] CRAN (R 4.0.0)                     
+##  reticulate    1.16-9001    2020-09-15 [1] Github (rstudio/reticulate@4f6a898)
+##  rlang         0.4.7        2020-07-09 [1] CRAN (R 4.0.2)                     
+##  rmarkdown     2.3          2020-06-18 [1] CRAN (R 4.0.2)                     
+##  rprojroot     1.3-2        2018-01-03 [1] CRAN (R 4.0.0)                     
+##  rstudioapi    0.11         2020-02-07 [1] CRAN (R 4.0.0)                     
+##  rvest         0.3.6        2020-07-25 [1] CRAN (R 4.0.2)                     
+##  scales        1.1.1        2020-05-11 [1] CRAN (R 4.0.0)                     
+##  sessioninfo   1.1.1        2018-11-05 [1] CRAN (R 4.0.0)                     
+##  stringi       1.5.3        2020-09-09 [1] CRAN (R 4.0.2)                     
+##  stringr     * 1.4.0        2019-02-10 [1] CRAN (R 4.0.0)                     
+##  tensorflow    2.2.0.9000   2020-09-15 [1] Github (rstudio/tensorflow@bb4062a)
+##  testthat      2.3.2        2020-03-02 [1] CRAN (R 4.0.0)                     
+##  tfruns        1.4          2018-08-25 [1] CRAN (R 4.0.0)                     
+##  tibble      * 3.0.3        2020-07-10 [1] CRAN (R 4.0.2)                     
+##  tidyr       * 1.1.2        2020-08-27 [1] CRAN (R 4.0.2)                     
+##  tidyselect    1.1.0        2020-05-11 [1] CRAN (R 4.0.0)                     
+##  tidyverse   * 1.3.0        2019-11-21 [1] CRAN (R 4.0.0)                     
+##  usethis       1.6.1        2020-04-29 [1] CRAN (R 4.0.0)                     
+##  vctrs         0.3.4        2020-08-29 [1] CRAN (R 4.0.2)                     
+##  whisker       0.4          2019-08-28 [1] CRAN (R 4.0.0)                     
+##  withr         2.2.0        2020-04-20 [1] CRAN (R 4.0.0)                     
+##  xfun          0.17         2020-09-09 [1] CRAN (R 4.0.2)                     
+##  xml2          1.3.2        2020-04-23 [1] CRAN (R 4.0.0)                     
+##  yaml          2.2.1        2020-02-01 [1] CRAN (R 4.0.0)                     
+##  zeallot       0.1.0        2018-01-28 [1] CRAN (R 4.0.0)                     
 ## 
 ## [1] /Library/Frameworks/R.framework/Versions/4.0/Resources/library</code></pre>
+</div>
 </div>
 
               
@@ -952,8 +987,10 @@ If you have questions or would like to talk about this article (or something els
                   Sep 9, 2020
                 </span>
               </span>
-              <div class="media-content hide-xs font-merryweather">Keras comes with a number of built in callbacks.
-When you’re training a model, there are many things you can’t predict from the start. In particular, you can’t tell how many epochs will be needed to get to an optimal validation loss. The examples so far have adopted the strategy of training for enough epochs that you begin overfitting, using the first run to figure out the proper number of epochs to train for, and then finally launching a new training run from scratch using this optimal number.</div>
+              <div class="media-content hide-xs font-merryweather">This is article #3 in my recent series on how to get the most out of Keras. The two articles were:
+Update with TF 2.0: Image classification with Keras and TensorFlow Whose dream is this? When and how to use the Keras Functional API  Keras comes with a number of built in callbacks.
+Callbacks are useful for optimizing your training runs and are used with the fit() function
+The model-checkpoint and early-stopping callbacks You can use callback_early_stopping to interrupt training once a target metric being monitored has stopped improving for a fixed number of epochs.</div>
             </div>
             <div style="clear:both;"></div>
             <hr>
