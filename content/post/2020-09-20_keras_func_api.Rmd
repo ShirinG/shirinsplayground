@@ -24,7 +24,7 @@ But the [**Functional API**](https://keras.rstudio.com/articles/Functional_api.h
 
 ---
 
-**Workshop announcement:** Because this year's UseR 2020 in Munich couldn't happen as an in-person event, I will be giving my [workshop on Deep Learning with Keras and TensorFlow](https://user2020.r-project.org/program/tutorials/) as an online event. I'll be announcing the date once it's been finalized but if you are interested in participating: we are looking at the first week of October (13:00 UTC).
+**Workshop announcement:** Because this year's UseR 2020 in Munich couldn't happen as an in-person event, I will be giving my [workshop on Deep Learning with Keras and TensorFlow](https://user2020.r-project.org/program/tutorials/) as an online event on Thursday, 8th of October (13:00 UTC).
 
 ---
 
@@ -81,17 +81,9 @@ So, when would you use the **Functional API**? You can't use the `keras_model_se
 
 ## How to use the Functional API
 
+The main function for using the **Functional API** is called `keras_model()`. With `keras_model`, you combine input and output layers. To make it easier to understand, let's look at a simple example. Below, I'll be building the same model from [last week's blogpost](https://shirinsplayground.netlify.app/2020/09/keras_fruits_update/), where I trained an image classification model with `keras_model_sequential`.
 
-
-In the Functional API, you build your input and output layers and then pass them to the keras_model function. This model can be trained just like Keras sequential models.
-
-Behind the scenes, Keras retrieves every layer involved in going from input_tensor to output_tensor, bringing them together into a graph-like data structure—a model. 
-When it comes to compiling, training, or evaluating a model built this way, the API is the same as that of sequential models:
-
-The Functional API can be used to build models that have multiple inputs. Typically, such models at some point merge their different input branches using a layer that can combine several tensors: by adding them, concatenating them, and so on. This is usually done via a Keras merge operation such as layer_add, layer_concatenate, and so on. 
-
-
-### Loading images (data)
+The first part is identical to before: defining the image data generator to read in the training images.
 
 ```{r echo=TRUE, eval=FALSE}
 # path to image folders
@@ -129,8 +121,6 @@ train_data_gen <- image_data_generator(
   validation_split = 0.3)
 ```
 
-Now we load the images into memory and resize them. 
-
 ```{r}
 # training images
 train_image_array_gen <- flow_images_from_directory(train_image_files_path, 
@@ -155,10 +145,6 @@ valid_image_array_gen <- flow_images_from_directory(train_image_files_path,
 #Found 2308 images belonging to 16 classes.
 ```
 
-### Training the model
-
-Now, I define and train the model just as before:
-
 ```{r}
 # number of training samples
 train_samples <- train_image_array_gen$n
@@ -168,6 +154,15 @@ valid_samples <- valid_image_array_gen$n
 # define number of epochs
 epochs <- 10
 ```
+
+Here's what's different with the **Functional API**:
+
+
+
+Behind the scenes, Keras retrieves every layer involved in going from input_tensor to output_tensor, bringing them together into a graph-like data structure—a model. 
+When it comes to compiling, training, or evaluating a model built this way, the API is the same as that of sequential models:
+
+The Functional API can be used to build models that have multiple inputs. Typically, such models at some point merge their different input branches using a layer that can combine several tensors: by adding them, concatenating them, and so on. This is usually done via a Keras merge operation such as layer_add, layer_concatenate, and so on. 
 
 ```{r}
 # input layer

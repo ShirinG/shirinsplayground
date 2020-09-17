@@ -18,7 +18,7 @@ slug: keras_funct_api
 <p>However, in my blogposts I have always been using <strong>Keras sequential models</strong> and never shown how to use the <a href="https://keras.rstudio.com/articles/Functional_api.html"><strong>Functional API</strong></a>. The reason is that the Functional API is usually applied when building more complex models, like multi-input or multi-output models. And in my blogposts I usually show simple examples that don’t take too much time and computing power to run, so that everybody can follow along.</p>
 <p>But the <a href="https://keras.rstudio.com/articles/Functional_api.html"><strong>Functional API</strong></a> can also be used to build simple models (in fact, every model built with the sequential API can also be built with the Functional API but <em>not vice versa</em>). Let me show you how it works! :-)</p>
 <hr />
-<p><strong>Workshop announcement:</strong> Because this year’s UseR 2020 in Munich couldn’t happen as an in-person event, I will be giving my <a href="https://user2020.r-project.org/program/tutorials/">workshop on Deep Learning with Keras and TensorFlow</a> as an online event. I’ll be announcing the date once it’s been finalized but if you are interested in participating: we are looking at the first week of October (13:00 UTC).</p>
+<p><strong>Workshop announcement:</strong> Because this year’s UseR 2020 in Munich couldn’t happen as an in-person event, I will be giving my <a href="https://user2020.r-project.org/program/tutorials/">workshop on Deep Learning with Keras and TensorFlow</a> as an online event on Thursday, 8th of October (13:00 UTC).</p>
 <hr />
 <p>If you have questions or would like to talk about this article (or something else data-related), you can now <a href="https://shirinsplayground.netlify.app/page/bookme/">book 15-minute timeslots</a> with me (it’s free - one slot available per weekday):</p>
 <img src="https://www.appointletcdn.com/loader/buttons/F62459.png" data-appointlet-organization="shirin-elsinghorst" data-appointlet-service="357892">
@@ -59,12 +59,8 @@ is_keras_available()
 </div>
 <div id="how-to-use-the-functional-api" class="section level2">
 <h2>How to use the Functional API</h2>
-<p>In the Functional API, you build your input and output layers and then pass them to the keras_model function. This model can be trained just like Keras sequential models.</p>
-<p>Behind the scenes, Keras retrieves every layer involved in going from input_tensor to output_tensor, bringing them together into a graph-like data structure—a model.
-When it comes to compiling, training, or evaluating a model built this way, the API is the same as that of sequential models:</p>
-<p>The Functional API can be used to build models that have multiple inputs. Typically, such models at some point merge their different input branches using a layer that can combine several tensors: by adding them, concatenating them, and so on. This is usually done via a Keras merge operation such as layer_add, layer_concatenate, and so on.</p>
-<div id="loading-images-data" class="section level3">
-<h3>Loading images (data)</h3>
+<p>The main function for using the <strong>Functional API</strong> is called <code>keras_model()</code>. With <code>keras_model</code>, you combine input and output layers. To make it easier to understand, let’s look at a simple example. Below, I’ll be building the same model from <a href="https://shirinsplayground.netlify.app/2020/09/keras_fruits_update/">last week’s blogpost</a>, where I trained an image classification model with <code>keras_model_sequential</code>.</p>
+<p>The first part is identical to before: defining the image data generator to read in the training images.</p>
 <pre class="r"><code># path to image folders
 train_image_files_path &lt;- &quot;/fruits/Training/&quot;</code></pre>
 <pre class="r"><code># list of fruits to model
@@ -87,7 +83,6 @@ batch_size &lt;- 32</code></pre>
 <pre class="r"><code>train_data_gen &lt;- image_data_generator(
   rescale = 1/255,
   validation_split = 0.3)</code></pre>
-<p>Now we load the images into memory and resize them.</p>
 <pre class="r"><code># training images
 train_image_array_gen &lt;- flow_images_from_directory(train_image_files_path, 
                                           train_data_gen,
@@ -109,10 +104,6 @@ valid_image_array_gen &lt;- flow_images_from_directory(train_image_files_path,
                                           batch_size = batch_size,
                                           seed = 42)
 #Found 2308 images belonging to 16 classes.</code></pre>
-</div>
-<div id="training-the-model" class="section level3">
-<h3>Training the model</h3>
-<p>Now, I define and train the model just as before:</p>
 <pre class="r"><code># number of training samples
 train_samples &lt;- train_image_array_gen$n
 # number of validation samples
@@ -120,6 +111,10 @@ valid_samples &lt;- valid_image_array_gen$n
 
 # define number of epochs
 epochs &lt;- 10</code></pre>
+<p>Here’s what’s different with the <strong>Functional API</strong>:</p>
+<p>Behind the scenes, Keras retrieves every layer involved in going from input_tensor to output_tensor, bringing them together into a graph-like data structure—a model.
+When it comes to compiling, training, or evaluating a model built this way, the API is the same as that of sequential models:</p>
+<p>The Functional API can be used to build models that have multiple inputs. Typically, such models at some point merge their different input branches using a layer that can combine several tensors: by adding them, concatenating them, and so on. This is usually done via a Keras merge operation such as layer_add, layer_concatenate, and so on.</p>
 <pre class="r"><code># input layer
 inputs &lt;- layer_input(shape = c(img_width, img_height, channels))
 
@@ -192,7 +187,6 @@ Epoch 9/10
 168/168 [==============================] - 6s 35ms/step - loss: 0.0733 - accuracy: 0.9797 - val_loss: 0.0525 - val_accuracy: 0.9831
 Epoch 10/10
 168/168 [==============================] - 6s 34ms/step - loss: 0.0607 - accuracy: 0.9844 - val_loss: 0.0438 - val_accuracy: 0.9848</code></pre>
-</div>
 <div id="inception-module" class="section level3">
 <h3>Inception module</h3>
 <p><a href="https://keras.rstudio.com/articles/functional_api.html" class="uri">https://keras.rstudio.com/articles/functional_api.html</a></p>
@@ -492,7 +486,7 @@ Epoch 25/25
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       Europe/Berlin               
-##  date     2020-09-16                  
+##  date     2020-09-17                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────
 ##  package      * version      date       lib source                             
