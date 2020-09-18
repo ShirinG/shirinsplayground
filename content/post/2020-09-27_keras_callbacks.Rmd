@@ -21,11 +21,7 @@ This is article #3 in my recent series on how to get the most out of Keras. The 
 1. [Update with TF 2.0: Image classification with Keras and TensorFlow](https://shirinsplayground.netlify.app/2020/09/keras_fruits_update/)
 2. [Whose dream is this? When and how to use the Keras Functional API](https://shirinsplayground.netlify.app/2020/09/keras_funct_api/)
 
-Keras comes with a number of built in [callbacks](https://keras.rstudio.com/articles/training_callbacks.html).
-
-Callbacks are useful for optimizing your training runs and are used with the `fit()` function.
-
-A callback is a set of functions to be applied at given stages of the training procedure. You can use callbacks to get a view on internal states and statistics of the model during training. You can pass a list of callbacks (as the keyword argument callbacks) to the fit() function. The relevant methods of the callbacks will then be called at each stage of the training.
+Keras comes with a number of built in [callbacks](https://keras.rstudio.com/articles/training_callbacks.html). Callbacks are useful for optimizing/customizing your training runs and are used with the `fit()` function.
 
 ---
 
@@ -177,12 +173,6 @@ predictions <- inputs %>%
 
 # create and compile model
 model <- keras_model(inputs = inputs, outputs = predictions)
-
-model %>% compile(
-  loss = "categorical_crossentropy",
-  optimizer = optimizer_rmsprop(lr = 0.0001, decay = 1e-6),
-  metrics = "accuracy"
-)
 ```
 
 ## Callbacks
@@ -354,80 +344,27 @@ Here’s a simple example that saves a list of losses over each batch during tra
 custom_cb <- callback_lambda(
   
   on_epoch_end = function(epoch, logs) {
-    #if (epoch %% 5 == 0) cat("\n")
-    cat("\n...\n")
+    if (epoch %% 5 == 0) {
+      cat("\nEpoch",  epoch, "end\n")
+    }
   }
   
 )
-```
-
-```{r}
-callback_lr_init <- function(logs){
-      iter <<- 0
-      lr_hist <<- c()
-      iter_hist <<- c()
-}
-callback_lr_set <- function(batch, logs){
-      iter <<- iter + 1
-      LR <- l_rate[iter] # if number of iterations > l_rate values, make LR constant to last value
-      if(is.na(LR)) LR <- l_rate[length(l_rate)]
-      k_set_value(model$optimizer$lr, LR)
-}
-callback_lr_log <- function(batch, logs){
-      lr_hist <<- c(lr_hist, k_get_value(model$optimizer$lr))
-      iter_hist <<- c(iter_hist, k_get_value(model$optimizer$iterations))
-}
- 
-
-callback_lr <- callback_lambda(on_train_begin=callback_lr_init, on_batch_begin=callback_lr_set)
-callback_logger <- callback_lambda(on_batch_end=callback_lr_log)
-```
-
-```{r}
-maxlen <- 40
-
-on_epoch_end <- function(epoch, logs) {
-  
-  cat(sprintf("epoch: %02d ---------------\n\n", epoch))
-  
-  for(diversity in c(0.2, 0.5, 1, 1.2)){
-    
-    cat(sprintf("diversity: %f ---------------\n\n", diversity))
-    
-    start_index <- sample(1:(length(text) - maxlen), size = 1)
-    sentence <- text[start_index:(start_index + maxlen - 1)]
-    generated <- ""
-    
-    for(i in 1:400){
-      
-      x <- sapply(chars, function(x){
-        as.integer(x == sentence)
-      })
-      x <- array_reshape(x, c(1, dim(x)))
-      
-      preds <- predict(model, x)
-      next_index <- sample_mod(preds, diversity)
-      next_char <- chars[next_index]
-      
-      generated <- str_c(generated, next_char, collapse = "")
-      sentence <- c(sentence[-1], next_char)
-      
-    }
-    
-    cat(generated)
-    cat("\n\n")
-    
-  }
-}
-
-custom_cb <- callback_lambda(on_epoch_end = on_epoch_end)
 ```
 
 ## Model training with callbacks
 
 ```{r}
 # fit
-hist <- model %>% fit_generator(
+model %>% 
+  
+  compile(
+  loss = "categorical_crossentropy",
+  optimizer = optimizer_rmsprop(lr = 0.0001, decay = 1e-6),
+  metrics = "accuracy"
+) %>% 
+  
+  fit_generator(
   # training data
   train_image_array_gen,
   
