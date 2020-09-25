@@ -1,6 +1,6 @@
 ---
 title: "Conferences, webinars, podcasts, workshops, books, articles and the likes"
-date: 2020-08-23
+date: Sys.Date()
 comments:       false
 showMeta:       false
 showActions:    true
@@ -25,6 +25,8 @@ Here, you can find a list of all the talks I gave at conferences, webinars, podc
 
 > I offer a workshop on deep learning with Keras and TensorFlow using R.
 Date and place depend on who and how many people are interested, so please contact me either directly or via the workshop page: https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/ (the description is in German but I also offer to give the workshop in English).
+
+**Workshop announcement:** Because this year's UseR 2020 in Munich couldn't happen as an in-person event, I will be giving my [workshop on Deep Learning with Keras and TensorFlow](https://www.eventbrite.com/e/deep-learning-with-keras-and-tensorflow-tickets-122422397687) as an online event on Thursday, 8th of October (13:00 UTC / 15:00 CEST). You can register for FREE via [Eventbrite](https://www.eventbrite.com/e/deep-learning-with-keras-and-tensorflow-tickets-122422397687).
 
 <br>
 

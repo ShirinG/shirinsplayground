@@ -720,85 +720,29 @@ penguins_pca &lt;- penguins_prep %&gt;%
 <li><a href="https://shirinsplayground.netlify.app/2020/09/keras_fruits_update/">Update with TF 2.0: Image classification with Keras and TensorFlow</a></li>
 <li><a href="https://shirinsplayground.netlify.app/2020/09/keras_funct_api/">Whose dream is this? When and how to use the Keras Functional API</a></li>
 </ol>
-<p>Keras comes with a number of built in <a href="https://keras.rstudio.com/articles/training_callbacks.html">callbacks</a>.</p>
-<p>Callbacks are useful for optimizing your training runs and are used with the <code>fit()</code> function</p>
-<p>The model-checkpoint and early-stopping callbacks
-You can use callback_early_stopping to interrupt training once a target metric being monitored has stopped improving for a fixed number of epochs. For instance, this callback allows you to interrupt training as soon as you start overfitting, thus avoiding having to retrain your model for a smaller number of epochs. This callback is typically used in combination with callback_model_checkpoint, which lets you continually save the model during training (and, optionally, save only the current best model so far: the version of the model that achieved the best performance at the end of an epoch):</p>
-<p>1 Callbacks are passed to the model via the callbacks argument in fit, which takes a list of callbacks. You can pass any number of callbacks.
-2 Interrupts training when improvement stops
-3 Monitors the model’s validation accuracy
-4 Interrupts training when accuracy has stopped improving for more than one epoch (that is, two epochs)
-5 Saves the current weights after every epoch
-6 Path to the destination model file
-7 These two arguments mean you won’t overwrite the model file unless val_loss has improved, which allows you to keep the best model seen during training.
-8 You monitor accuracy, so it should be part of the model’s metrics.
-9 Note that because the callback will monitor validation loss and accuracy, you need to pass validation_data to the call to fit.</p>
-<p>The reduce-learning-rate-on-plateau callback
-You can use this callback to reduce the learning rate when the validation loss has stopped improving. Reducing or increasing the learning rate in case of a loss plateau is is an effective strategy to get out of local minima during training. The following example uses callback_reduce_lr_on_plateau:</p>
-<p>1 Monitors the model’s validation loss
-2 Divides the learning rate by 10 when triggered
-3 The callback is triggered after the validation loss has stopped improving for 10 epochs.
-4 Because the callback will monitor the validation loss, you need to pass validation_data to the call to fit.
-Writing your own callback
-If you need to take a specific action during training that isn’t covered by one of the built-in callbacks, you can write your own callback. Callbacks are implemented by creating a new R6 class that inherits from the KerasCallback class. You can then implement any number of the following transparently named methods, which are called at various points during training:</p>
-<p>1 Called at the start of every epoch
-2 Called at the end of every epoch
-3 Called right before processing each batch
-4 Called right after processing each batch
-5 Called at the start of training
-6 Called at the end of training
-These methods all are called with a logs argument, which is a named list containing information about the previous batch, epoch, or training run: training and validation metrics, and so on. Additionally, the callback has access to the following attributes:</p>
-<p>self<span class="math inline">\(model—Reference to the Keras model being trained self\)</span>params—Named list with training parameters (verbosity, batch size, number of epochs, and so on)
-Here’s a simple example that saves a list of losses over each batch during training:</p>
-<p>1 Called at the end of every training batch
-2 Accumulates losses from every batch in a list
-3 Creates an instance of the callback
-4 Attaches the callback to model training
-5 Accumulated losses are now available from the callback instance.
-This is all you need to know about callbacks—the rest is technical details, which you can easily look up. Now you’re equipped to perform any sort of logging or preprogrammed intervention on a Keras model during training.</p>
-<p>7.2.2. Introduction to TensorBoard: the TensorFlow visualization framework
-To do good research or develop good models, you need rich, frequent feedback about what’s going on inside your models during your experiments. That’s the point of running experiments: to get information about how well a model performs—as much information as possible. Making progress is an iterative process, or loop: you start with an idea and express it as an experiment, attempting to validate or invalidate your idea. You run this experiment and process the information it generates. This inspires your next idea. The more iterations of this loop you’re able to run, the more refined and powerful your ideas become. Keras helps you go from idea to experiment in the least possible time, and fast GPUs can help you get from experiment to result as quickly as possible. But what about processing the experiment results? That’s where Tensor-Board comes in.</p>
-<p>This section introduces TensorBoard, a browser-based visualization tool that comes packaged with TensorFlow. Note that it’s only available for Keras models when you’re using Keras with the TensorFlow backend.</p>
-<p>The key purpose of TensorBoard is to help you visually monitor everything that goes on inside your model during training. If you’re monitoring more information than just the model’s final loss, you can develop a clearer vision of what the model does and doesn’t do, and you can make progress more quickly. TensorBoard gives you access to several neat features, all in your browser:</p>
-<p>Visually monitoring metrics during training
-Visualizing your model architecture
-Visualizing histograms of activations and gradients
-Exploring embeddings in 3D
-Let’s demonstrate these features on a simple example. You’ll train a 1D convnet on the IMDB sentiment-analysis task.</p>
-<pre class="r"><code># callbacks for weights and learning rate
-lr_schedule &lt;- function(epoch, lr) {
-  
-  if(epoch &lt;= 150) {
-    0.1
-  } else if(epoch &gt; 150 &amp;&amp; epoch &lt;= 225){
-    0.01
-  } else {
-    0.001
-  }
-
-}
-
-lr_reducer &lt;- callback_learning_rate_scheduler(lr_schedule)
-
-history &lt;- model %&gt;% fit(
-  x_train, y_train, 
-  batch_size = batch_size, 
-  epochs = epochs, 
-  validation_data = list(x_test, y_test), 
-  callbacks = list(
-    lr_reducer
-  )
-)</code></pre>
+<p>Keras comes with a number of built in <a href="https://keras.rstudio.com/articles/training_callbacks.html">callbacks</a>. Callbacks are useful for optimizing/customizing your training runs and are used with the <code>fit()</code> function. Here, I’ll show what callbacks come built into Keras and how to write your own custom callbacks.</p>
+<hr />
+<p><strong>Workshop announcement:</strong> Because this year’s UseR 2020 in Munich couldn’t happen as an in-person event, I will be giving my <a href="https://www.eventbrite.com/e/deep-learning-with-keras-and-tensorflow-tickets-122422397687">workshop on Deep Learning with Keras and TensorFlow</a> as an online event on Thursday, 8th of October (13:00 UTC / 15:00 CEST). You can register for FREE via <a href="https://www.eventbrite.com/e/deep-learning-with-keras-and-tensorflow-tickets-122422397687">Eventbrite</a>.</p>
 <hr />
 <p>If you have questions or would like to talk about this article (or something else data-related), you can now <a href="https://shirinsplayground.netlify.app/page/bookme/">book 15-minute timeslots</a> with me (it’s free - one slot available per weekday):</p>
 <img src="https://www.appointletcdn.com/loader/buttons/F62459.png" data-appointlet-organization="shirin-elsinghorst" data-appointlet-service="357892">
 <script src="https://www.appointletcdn.com/loader/loader.min.js" async="" defer=""></script>
 <p><em>If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at <button><a href="https://paypal.me/ShirinGlander">paypal.me</a></button>. Thank you!</em> :-)</p>
 <hr />
+<p><strong>Note</strong>:</p>
+<p>I have been having an <a href="https://github.com/rstudio/blogdown/issues/473">issue</a> with <code>blogdown</code>, where the code below runs perfectly fine in my R console from within the RMarkdown file but whenever I include any function from the <code>keras</code> package, <code>blogdown::serve_site()</code> throws an error: <code>Error in render_page(f) : Failed to render 'content/post/keras.Rmd'</code>.</p>
+<p>Since I have no idea what’s going on there (<code>blogdown::serve_site()</code> builds my site without trouble as long as I don’t include <code>keras</code> functions) and haven’t gotten a reply to the <a href="https://github.com/rstudio/blogdown/issues/473">issue</a> I posted to Github, I had to write this blogpost without actually running the code while building the site.</p>
+<p>I worked around that problem by not evaluating most of the code below and instead ran the code locally on my computer. Objects and images, I then saved as <em>.RData</em> or <em>.png</em> files and manually put them back into the document. By just reading this blogpost as it rendered on my site, you won’t notice much of a difference (except where I copy/pasted the output as comments below the code) but in order to be fully transparent, you can see on <a href="https://github.com/ShirinG/shirinsplayground/blob/master/content/post/2020-09-20_keras_func_api.Rmd">Github</a> what I did with hidden code chunks to create this post.</p>
+<hr />
 <pre class="r"><code># load libraries
 library(tidyverse)
+library(tensorflow)
 library(keras)</code></pre>
-<pre class="r"><code># check if keras is available
+<pre class="r"><code># check TF version
+tf_version()
+#[1] ‘2.2’
+
+# check if keras is available
 is_keras_available()
 #[1] TRUE</code></pre>
 <div id="loading-images-data" class="section level2">
@@ -857,7 +801,7 @@ train_samples &lt;- train_image_array_gen$n
 valid_samples &lt;- valid_image_array_gen$n
 
 # define number of epochs
-epochs &lt;- 10</code></pre>
+epochs &lt;- 100</code></pre>
 <pre class="r"><code># input layer
 inputs &lt;- layer_input(shape = c(img_width, img_height, channels))
 
@@ -884,39 +828,173 @@ predictions &lt;- inputs %&gt;%
   
   # Outputs from dense layer are projected onto output layer
   layer_dense(output_n) %&gt;% 
-  layer_activation(&quot;softmax&quot;)
-
-# create and compile model
-model &lt;- keras_model(inputs = inputs, outputs = predictions)
-
-model %&gt;% compile(
-  loss = &quot;categorical_crossentropy&quot;,
-  optimizer = optimizer_rmsprop(lr = 0.0001, decay = 1e-6),
-  metrics = &quot;accuracy&quot;
-)</code></pre>
+  layer_activation(&quot;softmax&quot;)</code></pre>
 </div>
 <div id="callbacks" class="section level2">
 <h2>Callbacks</h2>
+<p><a href="https://cran.r-project.org/web/packages/keras/vignettes/training_callbacks.html" class="uri">https://cran.r-project.org/web/packages/keras/vignettes/training_callbacks.html</a></p>
 <div id="early-stopping" class="section level3">
 <h3>Early stopping</h3>
 <ul>
 <li>how many epochs will be needed to get to an optimal validation loss. The examples so far have adopted the strategy of training for enough epochs that you begin overfitting, using the first run to figure out the proper number of epochs to train for, and then finally launching a new training run from scratch using this optimal number. Of course, this approach is wasteful. A much better way to handle this is to stop training when you measure that the validation loss in no longer improving.
-Interrupting training when the validation loss is no longer improving (and saving the best model obtained during training).</li>
+Interrupting training when the validation loss is no longer improving (and saving the best model obtained during training). You can use callback_early_stopping to interrupt training once a target metric being monitored has stopped improving for a fixed number of epochs. For instance, this callback allows you to interrupt training as soon as you start overfitting, thus avoiding having to retrain your model for a smaller number of epochs.</li>
 </ul>
+<pre class="r"><code>early_stop &lt;- callback_early_stopping(monitor = &quot;val_loss&quot;, 
+                                      min_delta = 0.001, 
+                                      patience = 5,
+                                      restore_best_weights = TRUE)</code></pre>
 </div>
 <div id="checkpoints" class="section level3">
 <h3>Checkpoints</h3>
-<p>Saving the current weights of the model at different points during training.</p>
+<p>Saving the current weights of the model at different points during training.
+This callback is typically used in combination with callback_model_checkpoint, which lets you continually save the model during training (and, optionally, save only the current best model so far: the version of the model that achieved the best performance at the end of an epoch):</p>
+<pre class="r"><code>save_cp &lt;- callback_model_checkpoint(&quot;../../../keras_model_cps/checkpoints/weights.{epoch:02d}-{val_loss:.2f}.hdf5&quot;,
+                                     save_best_only = TRUE)</code></pre>
 </div>
 <div id="adjusting-the-learning-rate" class="section level3">
 <h3>Adjusting the learning rate</h3>
-<p>Dynamically adjusting the value of certain parameters during training—Such as the learning rate of the optimizer.</p>
+<p>Dynamically adjusting the value of certain parameters during training—Such as the learning rate of the optimizer.
+The reduce-learning-rate-on-plateau callback
+You can use this callback to reduce the learning rate when the validation loss has stopped improving. Reducing or increasing the learning rate in case of a loss plateau is is an effective strategy to get out of local minima during training. The following example uses callback_reduce_lr_on_plateau:</p>
+<p>1 Monitors the model’s validation loss
+2 Divides the learning rate by 10 when triggered
+3 The callback is triggered after the validation loss has stopped improving for 10 epochs.</p>
+<p>Adapting the learning rate for your stochastic gradient descent optimization procedure can increase performance and reduce training time.</p>
+<p>Sometimes this is called learning rate annealing or adaptive learning rates. Here we will call this approach a learning rate schedule, were the default schedule is to use a constant learning rate to update network weights for each training epoch.</p>
+<p>The simplest and perhaps most used adaptation of learning rate during training are techniques that reduce the learning rate over time. These have the benefit of making large changes at the beginning of the training procedure when larger learning rate values are used, and decreasing the learning rate such that a smaller rate and therefore smaller training updates are made to weights later in the training procedure.</p>
+<p>This has the effect of quickly learning good weights early and fine tuning them later.</p>
+<p>Two popular and easy to use learning rate schedules are as follows:</p>
+<p>Decrease the learning rate gradually based on the epoch.
+Decrease the learning rate using punctuated large drops at specific epochs.</p>
+<p>Increase the initial learning rate. Because the learning rate will very likely decrease, start with a larger value to decrease from. A larger learning rate will result in a lot larger changes to the weights, at least in the beginning, allowing you to benefit from the fine tuning later.
+Use a large momentum. Using a larger momentum value will help the optimization algorithm to continue to make updates in the right direction when your learning rate shrinks to small values.
+Experiment with different schedules. It will not be clear which learning rate schedule to use so try a few with different configuration options and see what works best on your problem. Also try schedules that change exponentially and even schedules that respond to the accuracy of your model on the training or test datasets.</p>
+<pre class="r"><code>lr_schedule &lt;- function (epoch, lr) {
+  
+  if (epoch &lt;= 10) {
+    return(lr)
+  } else {
+    return(lr * tf$math$exp(-0.1))
+  }
+
+}
+
+lr_schedule &lt;- function (epoch, lr) {
+  
+  decay_rate = 0.1
+  decay_step = 10
+  
+  if (epoch %% decay_step == 0) {
+    lr * decay_rate
+  }
+  
+  return(lr)
+
+}
+
+reduce_lr &lt;- callback_learning_rate_scheduler(lr_schedule)</code></pre>
+<pre class="r"><code>reduce_lr_pt &lt;- callback_reduce_lr_on_plateau(
+  monitor = &quot;val_loss&quot;,
+  factor = 0.1,
+  patience = 5,
+  min_lr = 0.0000001,
+  verbose = 1
+)</code></pre>
+</div>
+<div id="terminate-training-on-nan" class="section level3">
+<h3>Terminate training on NaN</h3>
+<pre class="r"><code>terminate_na &lt;- callback_terminate_on_naan()</code></pre>
 </div>
 <div id="logging" class="section level3">
 <h3>Logging</h3>
 <p>Logging training and validation metrics during training, or visualizing the representations learned by the model as they’re updated—The Keras progress bar that you’re familiar with is a callback!</p>
-<pre class="r"><code># fit
-hist &lt;- model %&gt;% fit_generator(
+<pre class="r"><code>prog_bar &lt;- callback_progbar_logger(count_mode = &quot;steps&quot;)</code></pre>
+</div>
+<div id="csv-logger" class="section level3">
+<h3>CSV logger</h3>
+<pre class="r"><code>logfile &lt;- callback_csv_logger(&quot;../../../keras_model_cps/run/log.csv&quot;)</code></pre>
+</div>
+<div id="introduction-to-tensorboard-the-tensorflow-visualization-framework" class="section level3">
+<h3>Introduction to TensorBoard: the TensorFlow visualization framework</h3>
+<p>To do good research or develop good models, you need rich, frequent feedback about what’s going on inside your models during your experiments. That’s the point of running experiments: to get information about how well a model performs—as much information as possible. Making progress is an iterative process, or loop: you start with an idea and express it as an experiment, attempting to validate or invalidate your idea. You run this experiment and process the information it generates. This inspires your next idea. The more iterations of this loop you’re able to run, the more refined and powerful your ideas become. Keras helps you go from idea to experiment in the least possible time, and fast GPUs can help you get from experiment to result as quickly as possible. But what about processing the experiment results? That’s where Tensor-Board comes in.</p>
+<p>This section introduces TensorBoard, a browser-based visualization tool that comes packaged with TensorFlow. Note that it’s only available for Keras models when you’re using Keras with the TensorFlow backend.</p>
+<p>The key purpose of TensorBoard is to help you visually monitor everything that goes on inside your model during training. If you’re monitoring more information than just the model’s final loss, you can develop a clearer vision of what the model does and doesn’t do, and you can make progress more quickly. TensorBoard gives you access to several neat features, all in your browser:</p>
+<p>Visually monitoring metrics during training
+Visualizing your model architecture
+Visualizing histograms of activations and gradients
+Exploring embeddings in 3D
+Let’s demonstrate these features on a simple example. You’ll train a 1D convnet on the IMDB sentiment-analysis task.</p>
+<pre class="r"><code>tensorboard &lt;- callback_tensorboard(&quot;../../../keras_model_cps/logs&quot;)</code></pre>
+</div>
+<div id="remote-monitoring" class="section level3">
+<h3>Remote monitoring</h3>
+<pre class="r"><code>remote_monitor &lt;- callback_remote_monitor(
+  root = &quot;http://localhost:9000&quot;,
+  path = &quot;../../../keras_model_cps/publish/epoch/end/&quot;,
+  field = &quot;data&quot;,
+  headers = NULL,
+  send_as_json = FALSE
+)</code></pre>
+</div>
+<div id="writing-your-own-callback" class="section level3">
+<h3>Writing your own callback</h3>
+<p>You can create a custom callback by creating a new R6 class that inherits from the KerasCallback class.</p>
+<p>If you need to take a specific action during training that isn’t covered by one of the built-in callbacks, you can write your own callback. Callbacks are implemented by creating a new R6 class that inherits from the KerasCallback class. You can then implement any number of the following transparently named methods, which are called at various points during training:</p>
+<p>1 Called at the start of every epoch
+2 Called at the end of every epoch
+3 Called right before processing each batch
+4 Called right after processing each batch
+5 Called at the start of training
+6 Called at the end of training
+These methods all are called with a logs argument, which is a named list containing information about the previous batch, epoch, or training run: training and validation metrics, and so on. Additionally, the callback has access to the following attributes:</p>
+<p>self<span class="math inline">\(model—Reference to the Keras model being trained self\)</span>params—Named list with training parameters (verbosity, batch size, number of epochs, and so on)
+Here’s a simple example that saves a list of losses over each batch during training:</p>
+<p>1 Called at the end of every training batch
+2 Accumulates losses from every batch in a list
+3 Creates an instance of the callback
+4 Attaches the callback to model training
+5 Accumulated losses are now available from the callback instance.</p>
+<pre class="r"><code>custom_cb &lt;- callback_lambda(
+  
+  #on_train_begin = function(self, logs = NULL) {
+  #  keys = list(logs.keys())
+  #  cat(&quot;\nStarting training; got log keys:&quot;,  keys)
+  #},
+  
+  on_epoch_begin = function(self, epoch, logs = NULL) {
+    #if (epoch %% 5 == 0) {
+      print(&quot;\nEpoch&quot;, {epoch:02d}, &quot;start\n&quot;)
+    #}
+  },
+  
+  on_epoch_end = function(self, epoch, logs = NULL) {
+    
+    print(&quot;The average loss for {epoch:02d} is {val_loss:.2f}&quot;) #and mean absolute error is&quot;, logs[&quot;mean_absolute_error&quot;])
+    
+  }#,
+  
+  #on_train_end = function(self, logs = NULL) {
+  #  keys = list(logs.keys())
+  #  cat(&quot;\nStop training; got log keys:&quot;,  keys)
+  #}
+  
+)</code></pre>
+</div>
+</div>
+<div id="model-training-with-callbacks" class="section level2">
+<h2>Model training with callbacks</h2>
+<pre class="r"><code># create and compile model
+model &lt;- keras_model(inputs = inputs, 
+                     outputs = predictions) %&gt;%
+  compile(
+  loss = &quot;categorical_crossentropy&quot;,
+  optimizer = optimizer_rmsprop(lr = 0.0001, decay = 1e-6),
+  metrics = &quot;accuracy&quot;
+)
+
+hist &lt;- model %&gt;% 
+  
+  fit_generator(
   # training data
   train_image_array_gen,
   
@@ -926,24 +1004,87 @@ hist &lt;- model %&gt;% fit_generator(
   
   # validation data
   validation_data = valid_image_array_gen,
-  validation_steps = as.integer(valid_samples / batch_size)
+  validation_steps = as.integer(valid_samples / batch_size),
   
   # callbacks
   callbacks = list(
-    callback_early_stopping(monitor = &quot;val_loss&quot;, min_delta = 0.001, patience = 3)#,
-    #callback_model_checkpoint(&quot;checkpoints.h5&quot;),
-    #callback_learning_rate_scheduler,
-    #callback_reduce_lr_on_plateau,
-    #callback_progbar_logger,
-    #callback_tensorboard(&quot;logs&quot;),
-    #callback_csv_logger,
-    #callback_lambda,
-    #callback_remote_monitor,
-    #callback_terminate_on_naan
+    early_stop,
+    terminate_na,
+    save_cp,
+    logfile,
+    tensorboard,
+    #reduce_lr,
+    #reduce_lr_pt,
+    #remote_monitor,
+    custom_cb
   )
 )</code></pre>
-<pre class="r"><code>plot(hist)</code></pre>
-<pre class="r"><code>tensorboard(&quot;logs&quot;)</code></pre>
+<pre><code>Epoch 1/100
+168/168 [==============================] - 20s 117ms/step - loss: 2.1054 - accuracy: 0.3278 - val_loss: 2.0478 - val_accuracy: 0.6059
+Epoch 2/100
+168/168 [==============================] - 14s 86ms/step - loss: 1.0841 - accuracy: 0.6374 - val_loss: 0.9194 - val_accuracy: 0.8924
+Epoch 3/100
+168/168 [==============================] - 10s 62ms/step - loss: 0.6357 - accuracy: 0.7905 - val_loss: 0.3312 - val_accuracy: 0.9240
+Epoch 4/100
+168/168 [==============================] - 11s 67ms/step - loss: 0.4122 - accuracy: 0.8650 - val_loss: 0.1618 - val_accuracy: 0.9692
+Epoch 5/100
+168/168 [==============================] - 11s 68ms/step - loss: 0.2736 - accuracy: 0.9162 - val_loss: 0.0921 - val_accuracy: 0.9822
+Epoch 6/100
+168/168 [==============================] - 13s 80ms/step - loss: 0.2064 - accuracy: 0.9376 - val_loss: 0.0798 - val_accuracy: 0.9805
+Epoch 7/100
+168/168 [==============================] - 11s 64ms/step - loss: 0.1446 - accuracy: 0.9536 - val_loss: 0.0687 - val_accuracy: 0.9818
+Epoch 8/100
+168/168 [==============================] - 11s 65ms/step - loss: 0.1128 - accuracy: 0.9668 - val_loss: 0.0366 - val_accuracy: 0.9896
+Epoch 9/100
+168/168 [==============================] - 10s 62ms/step - loss: 0.0839 - accuracy: 0.9752 - val_loss: 0.0376 - val_accuracy: 0.9852
+Epoch 10/100
+168/168 [==============================] - 11s 65ms/step - loss: 0.0761 - accuracy: 0.9782 - val_loss: 0.0340 - val_accuracy: 0.9891
+Epoch 11/100
+168/168 [==============================] - 10s 60ms/step - loss: 0.0631 - accuracy: 0.9823 - val_loss: 0.0351 - val_accuracy: 0.9878
+Epoch 12/100
+168/168 [==============================] - 11s 63ms/step - loss: 0.0499 - accuracy: 0.9849 - val_loss: 0.0155 - val_accuracy: 0.9965
+Epoch 13/100
+168/168 [==============================] - 10s 61ms/step - loss: 0.0434 - accuracy: 0.9888 - val_loss: 0.0174 - val_accuracy: 0.9948
+Epoch 14/100
+168/168 [==============================] - 13s 75ms/step - loss: 0.0360 - accuracy: 0.9907 - val_loss: 0.0170 - val_accuracy: 0.9926
+Epoch 15/100
+168/168 [==============================] - 12s 70ms/step - loss: 0.0339 - accuracy: 0.9892 - val_loss: 0.0148 - val_accuracy: 0.9944
+Epoch 16/100
+168/168 [==============================] - 15s 87ms/step - loss: 0.0299 - accuracy: 0.9922 - val_loss: 0.0186 - val_accuracy: 0.9926
+Epoch 17/100
+168/168 [==============================] - 12s 74ms/step - loss: 0.0252 - accuracy: 0.9931 - val_loss: 0.0099 - val_accuracy: 0.9978
+Epoch 18/100
+168/168 [==============================] - 10s 58ms/step - loss: 0.0238 - accuracy: 0.9940 - val_loss: 0.0185 - val_accuracy: 0.9909
+Epoch 19/100
+168/168 [==============================] - 10s 58ms/step - loss: 0.0220 - accuracy: 0.9935 - val_loss: 0.0063 - val_accuracy: 1.0000
+Epoch 20/100
+168/168 [==============================] - 10s 58ms/step - loss: 0.0233 - accuracy: 0.9922 - val_loss: 0.0108 - val_accuracy: 0.9957
+Epoch 21/100
+168/168 [==============================] - 10s 60ms/step - loss: 0.0173 - accuracy: 0.9957 - val_loss: 0.0308 - val_accuracy: 0.9887
+Epoch 22/100
+168/168 [==============================] - 10s 59ms/step - loss: 0.0162 - accuracy: 0.9953 - val_loss: 0.0161 - val_accuracy: 0.9939
+Epoch 23/100
+168/168 [==============================] - 10s 58ms/step - loss: 0.0160 - accuracy: 0.9953 - val_loss: 0.0060 - val_accuracy: 0.9974
+Epoch 24/100
+168/168 [==============================] - 10s 59ms/step - loss: 0.0176 - accuracy: 0.9944 - val_loss: 0.0055 - val_accuracy: 0.9983</code></pre>
+<pre class="r"><code>hist</code></pre>
+<pre class="r"><code>hist_csv &lt;- readr::read_csv(&quot;../../../keras_model_cps/run/log.csv&quot;)
+
+hist_csv %&gt;%
+  gather(&quot;x&quot;, &quot;y&quot;, accuracy:val_loss) %&gt;%
+  mutate(y = as.numeric(y),
+         metric = gsub(&quot;val_&quot;, &quot;&quot;, x),
+         set = case_when(
+           grepl(&quot;val&quot;, x, fixed = TRUE) ~ &quot;validation&quot;,
+           TRUE ~ &quot;training&quot;)) %&gt;%
+  ggplot(aes(x = epoch, y = y, color = set)) +
+    facet_wrap(vars(metric), ncol = 1, scales = &quot;free_y&quot;) +
+    geom_line() +
+    geom_point()</code></pre>
+<pre class="r"><code>tensorboard(&quot;../../../keras_model_cps/logs&quot;)</code></pre>
+<pre><code>Started TensorBoard at http://127.0.0.1:4302 </code></pre>
+<p><img src="/img/cb_tensorboard_1.png" /></p>
+<p><img src="/img/cb_tensorboard_2.png" /></p>
 <hr />
 <pre class="r"><code>devtools::session_info()</code></pre>
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────
@@ -956,12 +1097,12 @@ hist &lt;- model %&gt;% fit_generator(
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       Europe/Berlin               
-##  date     2020-09-17                  
+##  date     2020-09-25                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────
 ##  package     * version      date       lib source                             
 ##  assertthat    0.2.1        2019-03-21 [1] CRAN (R 4.0.0)                     
-##  backports     1.1.9        2020-08-24 [1] CRAN (R 4.0.2)                     
+##  backports     1.1.10       2020-09-15 [1] CRAN (R 4.0.2)                     
 ##  base64enc     0.1-3        2015-07-28 [1] CRAN (R 4.0.0)                     
 ##  blob          1.2.1        2020-01-20 [1] CRAN (R 4.0.2)                     
 ##  blogdown      0.20.1       2020-09-09 [1] Github (rstudio/blogdown@d96fe78)  
@@ -975,7 +1116,7 @@ hist &lt;- model %&gt;% fit_generator(
 ##  DBI           1.1.0        2019-12-15 [1] CRAN (R 4.0.0)                     
 ##  dbplyr        1.4.4        2020-05-27 [1] CRAN (R 4.0.2)                     
 ##  desc          1.2.0        2018-05-01 [1] CRAN (R 4.0.0)                     
-##  devtools      2.3.1        2020-07-21 [1] CRAN (R 4.0.2)                     
+##  devtools      2.3.2        2020-09-18 [1] CRAN (R 4.0.2)                     
 ##  digest        0.6.25       2020-02-23 [1] CRAN (R 4.0.0)                     
 ##  dplyr       * 1.0.2        2020-08-18 [1] CRAN (R 4.0.2)                     
 ##  ellipsis      0.3.1        2020-05-15 [1] CRAN (R 4.0.0)                     
@@ -1026,14 +1167,14 @@ hist &lt;- model %&gt;% fit_generator(
 ##  sessioninfo   1.1.1        2018-11-05 [1] CRAN (R 4.0.0)                     
 ##  stringi       1.5.3        2020-09-09 [1] CRAN (R 4.0.2)                     
 ##  stringr     * 1.4.0        2019-02-10 [1] CRAN (R 4.0.0)                     
-##  tensorflow    2.2.0.9000   2020-09-15 [1] Github (rstudio/tensorflow@bb4062a)
+##  tensorflow  * 2.2.0.9000   2020-09-15 [1] Github (rstudio/tensorflow@bb4062a)
 ##  testthat      2.3.2        2020-03-02 [1] CRAN (R 4.0.0)                     
 ##  tfruns        1.4          2018-08-25 [1] CRAN (R 4.0.0)                     
 ##  tibble      * 3.0.3        2020-07-10 [1] CRAN (R 4.0.2)                     
 ##  tidyr       * 1.1.2        2020-08-27 [1] CRAN (R 4.0.2)                     
 ##  tidyselect    1.1.0        2020-05-11 [1] CRAN (R 4.0.0)                     
 ##  tidyverse   * 1.3.0        2019-11-21 [1] CRAN (R 4.0.0)                     
-##  usethis       1.6.1        2020-04-29 [1] CRAN (R 4.0.0)                     
+##  usethis       1.6.3        2020-09-17 [1] CRAN (R 4.0.2)                     
 ##  vctrs         0.3.4        2020-08-29 [1] CRAN (R 4.0.2)                     
 ##  whisker       0.4          2019-08-28 [1] CRAN (R 4.0.0)                     
 ##  withr         2.2.0        2020-04-20 [1] CRAN (R 4.0.0)                     
@@ -1044,6 +1185,38 @@ hist &lt;- model %&gt;% fit_generator(
 ## 
 ## [1] /Library/Frameworks/R.framework/Versions/4.0/Resources/library</code></pre>
 </div>
+]]></content>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[Free workshop on Deep Learning with Keras and TensorFlow]]></title>
+    <link href="/2020/09/keras_workshop_user20/"/>
+    <id>/2020/09/keras_workshop_user20/</id>
+    <published>2020-09-25T00:00:00+00:00</published>
+    <updated>2020-09-25T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<div id="workshop-announcement" class="section level2">
+<h2>Workshop announcement</h2>
+<p>Because this year’s UseR 2020 in Munich couldn’t happen as an in-person event, I will be giving my <a href="https://www.eventbrite.com/e/deep-learning-with-keras-and-tensorflow-tickets-122422397687">workshop on Deep Learning with Keras and TensorFlow</a> as an online event on</p>
+<ul>
+<li>Thursday, 8th of October (13:00 UTC / 15:00 CEST)</li>
+</ul>
+<p><strong>You can register for FREE via <a href="https://www.eventbrite.com/e/deep-learning-with-keras-and-tensorflow-tickets-122422397687">Eventbrite</a>.</strong></p>
+<p><img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F112586411%2F178164554504%2F1%2Foriginal.20200924-201042?w=1080&amp;auto=format%2Ccompress&amp;q=75&amp;sharp=10&amp;rect=0%2C144%2C432%2C216&amp;s=44125ca6642388631ea5f3c91ae27731" /></p>
+<blockquote>
+<p>Deep learning is an artificial intelligence that mimics the workings of a human brain in processing different data, creating patterns and interpreting information that is used for decision making. It is a subfield of machine learning in artificial intelligence and Its networks has the capability to learn, supervised or unsupervised, from data that is either structured or labelled.</p>
+</blockquote>
+<blockquote>
+<p>It is one of the hottest trends in machine learning at the moment and there are many problems where deep learning shines, such as Self Driving Cars, Natural Language Processing, Machine Translations, image recognition and Artificial Intelligence (AI) and so on.</p>
+</blockquote>
+<p><br></p>
+<ul>
+<li>You will start with RStudio by learning how to first prepare your workspace</li>
+<li>Load data and move to exploring and preprocessing the data.</li>
+<li>Normalize and split the data into training and test sets.</li>
+<li>Construct your deep learning model</li>
+<li>Compile and fit the model to your data</li>
+<li>Predict target values based on test data and</li>
+<li>Evaluate your model and interpret the results</li>
+</ul>
 </div>
 ]]></content>
   </entry>
@@ -1058,7 +1231,7 @@ hist &lt;- model %&gt;% fit_generator(
 <p>But the <a href="https://keras.rstudio.com/articles/Functional_api.html"><strong>Functional API</strong></a> can also be used to build simple models (in fact, every model built with the sequential API can also be built with the Functional API but <em>not vice versa</em>). Plus, the <strong>Functional API</strong> can be used to build complex models with multiple inputs and/or multiple outputs. So, let’s look at how this works! :-)</p>
 <p>Btw., brownie points for those, who get the reference in my title. ;-)</p>
 <hr />
-<p><strong>Workshop announcement:</strong> Because this year’s UseR 2020 in Munich couldn’t happen as an in-person event, I will be giving my <a href="https://user2020.r-project.org/program/tutorials/">workshop on Deep Learning with Keras and TensorFlow</a> as an online event on Thursday, 8th of October (13:00 UTC).</p>
+<p><strong>Workshop announcement:</strong> Because this year’s UseR 2020 in Munich couldn’t happen as an in-person event, I will be giving my <a href="https://www.eventbrite.com/e/deep-learning-with-keras-and-tensorflow-tickets-122422397687">workshop on Deep Learning with Keras and TensorFlow</a> as an online event on Thursday, 8th of October (13:00 UTC / 15:00 CEST). You can register for FREE via <a href="https://www.eventbrite.com/e/deep-learning-with-keras-and-tensorflow-tickets-122422397687">Eventbrite</a>.</p>
 <hr />
 <p>If you have questions or would like to talk about this article (or something else data-related), you can now <a href="https://shirinsplayground.netlify.app/page/bookme/">book 15-minute timeslots</a> with me (it’s free - one slot available per weekday):</p>
 <img src="https://www.appointletcdn.com/loader/buttons/F62459.png" data-appointlet-organization="shirin-elsinghorst" data-appointlet-service="357892">
@@ -1552,146 +1725,283 @@ Epoch 25/25
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       Europe/Berlin               
-##  date     2020-09-17                  
+##  date     2020-09-25                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────
-##  package      * version      date       lib source                             
-##  assertthat     0.2.1        2019-03-21 [1] CRAN (R 4.0.0)                     
-##  backports      1.1.9        2020-08-24 [1] CRAN (R 4.0.2)                     
-##  base64enc      0.1-3        2015-07-28 [1] CRAN (R 4.0.0)                     
-##  blob           1.2.1        2020-01-20 [1] CRAN (R 4.0.2)                     
-##  blogdown       0.20.1       2020-09-09 [1] Github (rstudio/blogdown@d96fe78)  
-##  bookdown       0.20         2020-06-23 [1] CRAN (R 4.0.2)                     
-##  broom        * 0.7.0        2020-07-09 [1] CRAN (R 4.0.2)                     
-##  callr          3.4.4        2020-09-07 [1] CRAN (R 4.0.2)                     
-##  caret        * 6.0-86       2020-03-20 [1] CRAN (R 4.0.0)                     
-##  cellranger     1.1.0        2016-07-27 [1] CRAN (R 4.0.0)                     
-##  class          7.3-17       2020-04-26 [1] CRAN (R 4.0.2)                     
-##  cli            2.0.2        2020-02-28 [1] CRAN (R 4.0.0)                     
-##  codetools      0.2-16       2018-12-24 [1] CRAN (R 4.0.2)                     
-##  colorspace     1.4-1        2019-03-18 [1] CRAN (R 4.0.0)                     
-##  crayon         1.3.4        2017-09-16 [1] CRAN (R 4.0.0)                     
-##  data.table     1.13.0       2020-07-24 [1] CRAN (R 4.0.2)                     
-##  DBI            1.1.0        2019-12-15 [1] CRAN (R 4.0.0)                     
-##  dbplyr         1.4.4        2020-05-27 [1] CRAN (R 4.0.2)                     
-##  deepviz      * 0.0.1.9000   2020-09-15 [1] Github (andrie/deepviz@2a35de6)    
-##  desc           1.2.0        2018-05-01 [1] CRAN (R 4.0.0)                     
-##  devtools       2.3.1        2020-07-21 [1] CRAN (R 4.0.2)                     
-##  DiagrammeR     1.0.6.1      2020-05-08 [1] CRAN (R 4.0.2)                     
-##  dials        * 0.0.8        2020-07-08 [1] CRAN (R 4.0.2)                     
-##  DiceDesign     1.8-1        2019-07-31 [1] CRAN (R 4.0.2)                     
-##  digest         0.6.25       2020-02-23 [1] CRAN (R 4.0.0)                     
-##  dplyr        * 1.0.2        2020-08-18 [1] CRAN (R 4.0.2)                     
-##  ellipsis       0.3.1        2020-05-15 [1] CRAN (R 4.0.0)                     
-##  evaluate       0.14         2019-05-28 [1] CRAN (R 4.0.1)                     
-##  fansi          0.4.1        2020-01-08 [1] CRAN (R 4.0.0)                     
-##  farver         2.0.3        2020-01-16 [1] CRAN (R 4.0.0)                     
-##  forcats      * 0.5.0        2020-03-01 [1] CRAN (R 4.0.0)                     
-##  foreach        1.5.0        2020-03-30 [1] CRAN (R 4.0.0)                     
-##  fs             1.5.0        2020-07-31 [1] CRAN (R 4.0.2)                     
-##  furrr          0.1.0        2018-05-16 [1] CRAN (R 4.0.2)                     
-##  future         1.18.0       2020-07-09 [1] CRAN (R 4.0.2)                     
-##  generics       0.0.2        2018-11-29 [1] CRAN (R 4.0.0)                     
-##  ggforce        0.3.2        2020-06-23 [1] CRAN (R 4.0.2)                     
-##  ggplot2      * 3.3.2        2020-06-19 [1] CRAN (R 4.0.2)                     
-##  ggraph         2.0.3        2020-05-20 [1] CRAN (R 4.0.2)                     
-##  ggrepel        0.8.2        2020-03-08 [1] CRAN (R 4.0.2)                     
-##  globals        0.12.5       2019-12-07 [1] CRAN (R 4.0.2)                     
-##  glue           1.4.2        2020-08-27 [1] CRAN (R 4.0.2)                     
-##  gower          0.2.2        2020-06-23 [1] CRAN (R 4.0.2)                     
-##  GPfit          1.0-8        2019-02-08 [1] CRAN (R 4.0.2)                     
-##  graphlayouts   0.7.0        2020-04-25 [1] CRAN (R 4.0.2)                     
-##  gridExtra      2.3          2017-09-09 [1] CRAN (R 4.0.2)                     
-##  gtable         0.3.0        2019-03-25 [1] CRAN (R 4.0.0)                     
-##  haven          2.3.1        2020-06-01 [1] CRAN (R 4.0.2)                     
-##  hms            0.5.3        2020-01-08 [1] CRAN (R 4.0.0)                     
-##  htmltools      0.5.0        2020-06-16 [1] CRAN (R 4.0.2)                     
-##  htmlwidgets    1.5.1        2019-10-08 [1] CRAN (R 4.0.0)                     
-##  httr           1.4.2        2020-07-20 [1] CRAN (R 4.0.2)                     
-##  igraph         1.2.5        2020-03-19 [1] CRAN (R 4.0.0)                     
-##  infer        * 0.5.3        2020-07-14 [1] CRAN (R 4.0.2)                     
-##  ipred          0.9-9        2019-04-28 [1] CRAN (R 4.0.0)                     
-##  iterators      1.0.12       2019-07-26 [1] CRAN (R 4.0.0)                     
-##  jsonlite       1.7.1        2020-09-07 [1] CRAN (R 4.0.2)                     
-##  keras        * 2.3.0.0.9000 2020-09-15 [1] Github (rstudio/keras@ad737d1)     
-##  knitr          1.29         2020-06-23 [1] CRAN (R 4.0.2)                     
-##  labeling       0.3          2014-08-23 [1] CRAN (R 4.0.0)                     
-##  lattice      * 0.20-41      2020-04-02 [1] CRAN (R 4.0.2)                     
-##  lava           1.6.7        2020-03-05 [1] CRAN (R 4.0.0)                     
-##  lhs            1.0.2        2020-04-13 [1] CRAN (R 4.0.2)                     
-##  lifecycle      0.2.0        2020-03-06 [1] CRAN (R 4.0.0)                     
-##  listenv        0.8.0        2019-12-05 [1] CRAN (R 4.0.2)                     
-##  lubridate      1.7.9        2020-06-08 [1] CRAN (R 4.0.2)                     
-##  magrittr       1.5          2014-11-22 [1] CRAN (R 4.0.0)                     
-##  MASS           7.3-53       2020-09-09 [1] CRAN (R 4.0.2)                     
-##  Matrix         1.2-18       2019-11-27 [1] CRAN (R 4.0.2)                     
-##  memoise        1.1.0        2017-04-21 [1] CRAN (R 4.0.0)                     
-##  modeldata    * 0.0.2        2020-06-22 [1] CRAN (R 4.0.2)                     
-##  ModelMetrics   1.2.2.2      2020-03-17 [1] CRAN (R 4.0.0)                     
-##  modelr         0.1.8        2020-05-19 [1] CRAN (R 4.0.2)                     
-##  munsell        0.5.0        2018-06-12 [1] CRAN (R 4.0.0)                     
-##  nlme           3.1-149      2020-08-23 [1] CRAN (R 4.0.2)                     
-##  nnet           7.3-14       2020-04-26 [1] CRAN (R 4.0.2)                     
-##  parsnip      * 0.1.3        2020-08-04 [1] CRAN (R 4.0.2)                     
-##  pillar         1.4.6        2020-07-10 [1] CRAN (R 4.0.2)                     
-##  pkgbuild       1.1.0        2020-07-13 [1] CRAN (R 4.0.2)                     
-##  pkgconfig      2.0.3        2019-09-22 [1] CRAN (R 4.0.0)                     
-##  pkgload        1.1.0        2020-05-29 [1] CRAN (R 4.0.2)                     
-##  plyr           1.8.6        2020-03-03 [1] CRAN (R 4.0.0)                     
-##  polyclip       1.10-0       2019-03-14 [1] CRAN (R 4.0.2)                     
-##  prettyunits    1.1.1        2020-01-24 [1] CRAN (R 4.0.0)                     
-##  pROC           1.16.2       2020-03-19 [1] CRAN (R 4.0.0)                     
-##  processx       3.4.4        2020-09-03 [1] CRAN (R 4.0.2)                     
-##  prodlim        2019.11.13   2019-11-17 [1] CRAN (R 4.0.0)                     
-##  ps             1.3.4        2020-08-11 [1] CRAN (R 4.0.2)                     
-##  purrr        * 0.3.4        2020-04-17 [1] CRAN (R 4.0.0)                     
-##  R6             2.4.1        2019-11-12 [1] CRAN (R 4.0.0)                     
-##  RColorBrewer   1.1-2        2014-12-07 [1] CRAN (R 4.0.0)                     
-##  Rcpp           1.0.5        2020-07-06 [1] CRAN (R 4.0.2)                     
-##  readr        * 1.3.1        2018-12-21 [1] CRAN (R 4.0.0)                     
-##  readxl         1.3.1        2019-03-13 [1] CRAN (R 4.0.0)                     
-##  recipes      * 0.1.13       2020-06-23 [1] CRAN (R 4.0.2)                     
-##  remotes        2.2.0        2020-07-21 [1] CRAN (R 4.0.2)                     
-##  reprex         0.3.0        2019-05-16 [1] CRAN (R 4.0.0)                     
-##  reshape2       1.4.4        2020-04-09 [1] CRAN (R 4.0.0)                     
-##  reticulate     1.16-9001    2020-09-15 [1] Github (rstudio/reticulate@4f6a898)
-##  rlang          0.4.7        2020-07-09 [1] CRAN (R 4.0.2)                     
-##  rmarkdown      2.3          2020-06-18 [1] CRAN (R 4.0.2)                     
-##  rpart          4.1-15       2019-04-12 [1] CRAN (R 4.0.2)                     
-##  rprojroot      1.3-2        2018-01-03 [1] CRAN (R 4.0.0)                     
-##  rsample      * 0.0.7        2020-06-04 [1] CRAN (R 4.0.2)                     
-##  rstudioapi     0.11         2020-02-07 [1] CRAN (R 4.0.0)                     
-##  rvest          0.3.6        2020-07-25 [1] CRAN (R 4.0.2)                     
-##  scales       * 1.1.1        2020-05-11 [1] CRAN (R 4.0.0)                     
-##  sessioninfo    1.1.1        2018-11-05 [1] CRAN (R 4.0.0)                     
-##  stringi        1.5.3        2020-09-09 [1] CRAN (R 4.0.2)                     
-##  stringr      * 1.4.0        2019-02-10 [1] CRAN (R 4.0.0)                     
-##  survival       3.2-3        2020-06-13 [1] CRAN (R 4.0.2)                     
-##  tensorflow   * 2.2.0.9000   2020-09-15 [1] Github (rstudio/tensorflow@bb4062a)
-##  testthat       2.3.2        2020-03-02 [1] CRAN (R 4.0.0)                     
-##  tfruns         1.4          2018-08-25 [1] CRAN (R 4.0.0)                     
-##  tibble       * 3.0.3        2020-07-10 [1] CRAN (R 4.0.2)                     
-##  tidygraph      1.2.0        2020-05-12 [1] CRAN (R 4.0.2)                     
-##  tidymodels   * 0.1.1        2020-07-14 [1] CRAN (R 4.0.2)                     
-##  tidyr        * 1.1.2        2020-08-27 [1] CRAN (R 4.0.2)                     
-##  tidyselect     1.1.0        2020-05-11 [1] CRAN (R 4.0.0)                     
-##  tidyverse    * 1.3.0        2019-11-21 [1] CRAN (R 4.0.0)                     
-##  timeDate       3043.102     2018-02-21 [1] CRAN (R 4.0.0)                     
-##  tune         * 0.1.1        2020-07-08 [1] CRAN (R 4.0.2)                     
-##  tweenr         1.0.1        2018-12-14 [1] CRAN (R 4.0.2)                     
-##  usethis        1.6.1        2020-04-29 [1] CRAN (R 4.0.0)                     
-##  vctrs          0.3.4        2020-08-29 [1] CRAN (R 4.0.2)                     
-##  viridis        0.5.1        2018-03-29 [1] CRAN (R 4.0.2)                     
-##  viridisLite    0.3.0        2018-02-01 [1] CRAN (R 4.0.0)                     
-##  visNetwork     2.0.9        2019-12-06 [1] CRAN (R 4.0.2)                     
-##  whisker        0.4          2019-08-28 [1] CRAN (R 4.0.0)                     
-##  withr          2.2.0        2020-04-20 [1] CRAN (R 4.0.0)                     
-##  workflows    * 0.1.3        2020-08-10 [1] CRAN (R 4.0.2)                     
-##  xfun           0.17         2020-09-09 [1] CRAN (R 4.0.2)                     
-##  xml2           1.3.2        2020-04-23 [1] CRAN (R 4.0.0)                     
-##  yaml           2.2.1        2020-02-01 [1] CRAN (R 4.0.0)                     
-##  yardstick    * 0.0.7        2020-07-13 [1] CRAN (R 4.0.2)                     
-##  zeallot        0.1.0        2018-01-28 [1] CRAN (R 4.0.0)                     
+##  package      * version      date       lib
+##  assertthat     0.2.1        2019-03-21 [1]
+##  backports      1.1.10       2020-09-15 [1]
+##  base64enc      0.1-3        2015-07-28 [1]
+##  blob           1.2.1        2020-01-20 [1]
+##  blogdown       0.20.1       2020-09-09 [1]
+##  bookdown       0.20         2020-06-23 [1]
+##  broom        * 0.7.0        2020-07-09 [1]
+##  callr          3.4.4        2020-09-07 [1]
+##  caret        * 6.0-86       2020-03-20 [1]
+##  cellranger     1.1.0        2016-07-27 [1]
+##  class          7.3-17       2020-04-26 [1]
+##  cli            2.0.2        2020-02-28 [1]
+##  codetools      0.2-16       2018-12-24 [1]
+##  colorspace     1.4-1        2019-03-18 [1]
+##  crayon         1.3.4        2017-09-16 [1]
+##  data.table     1.13.0       2020-07-24 [1]
+##  DBI            1.1.0        2019-12-15 [1]
+##  dbplyr         1.4.4        2020-05-27 [1]
+##  deepviz      * 0.0.1.9000   2020-09-15 [1]
+##  desc           1.2.0        2018-05-01 [1]
+##  devtools       2.3.2        2020-09-18 [1]
+##  DiagrammeR     1.0.6.1      2020-05-08 [1]
+##  dials        * 0.0.9.9000   2020-09-20 [1]
+##  DiceDesign     1.8-1        2019-07-31 [1]
+##  digest         0.6.25       2020-02-23 [1]
+##  dplyr        * 1.0.2        2020-08-18 [1]
+##  ellipsis       0.3.1        2020-05-15 [1]
+##  evaluate       0.14         2019-05-28 [1]
+##  fansi          0.4.1        2020-01-08 [1]
+##  farver         2.0.3        2020-01-16 [1]
+##  forcats      * 0.5.0        2020-03-01 [1]
+##  foreach        1.5.0        2020-03-30 [1]
+##  fs             1.5.0        2020-07-31 [1]
+##  furrr          0.1.0        2018-05-16 [1]
+##  future         1.18.0       2020-07-09 [1]
+##  generics       0.0.2        2018-11-29 [1]
+##  ggforce        0.3.2        2020-06-23 [1]
+##  ggplot2      * 3.3.2        2020-06-19 [1]
+##  ggraph         2.0.3        2020-05-20 [1]
+##  ggrepel        0.8.2        2020-03-08 [1]
+##  globals        0.13.0       2020-09-17 [1]
+##  glue           1.4.2        2020-08-27 [1]
+##  gower          0.2.2        2020-06-23 [1]
+##  GPfit          1.0-8        2019-02-08 [1]
+##  graphlayouts   0.7.0        2020-04-25 [1]
+##  gridExtra      2.3          2017-09-09 [1]
+##  gtable         0.3.0        2019-03-25 [1]
+##  haven          2.3.1        2020-06-01 [1]
+##  hms            0.5.3        2020-01-08 [1]
+##  htmltools      0.5.0        2020-06-16 [1]
+##  htmlwidgets    1.5.1        2019-10-08 [1]
+##  httr           1.4.2        2020-07-20 [1]
+##  igraph         1.2.5        2020-03-19 [1]
+##  infer        * 0.5.3        2020-07-14 [1]
+##  ipred          0.9-9        2019-04-28 [1]
+##  iterators      1.0.12       2019-07-26 [1]
+##  jsonlite       1.7.1        2020-09-07 [1]
+##  keras        * 2.3.0.0.9000 2020-09-15 [1]
+##  knitr          1.29         2020-06-23 [1]
+##  labeling       0.3          2014-08-23 [1]
+##  lattice      * 0.20-41      2020-04-02 [1]
+##  lava           1.6.7        2020-03-05 [1]
+##  lhs            1.0.2        2020-04-13 [1]
+##  lifecycle      0.2.0        2020-03-06 [1]
+##  listenv        0.8.0        2019-12-05 [1]
+##  lubridate      1.7.9        2020-06-08 [1]
+##  magrittr       1.5          2014-11-22 [1]
+##  MASS           7.3-53       2020-09-09 [1]
+##  Matrix         1.2-18       2019-11-27 [1]
+##  memoise        1.1.0        2017-04-21 [1]
+##  modeldata    * 0.0.2        2020-06-22 [1]
+##  ModelMetrics   1.2.2.2      2020-03-17 [1]
+##  modelr         0.1.8        2020-05-19 [1]
+##  munsell        0.5.0        2018-06-12 [1]
+##  nlme           3.1-149      2020-08-23 [1]
+##  nnet           7.3-14       2020-04-26 [1]
+##  parsnip      * 0.1.3        2020-08-04 [1]
+##  pillar         1.4.6        2020-07-10 [1]
+##  pkgbuild       1.1.0        2020-07-13 [1]
+##  pkgconfig      2.0.3        2019-09-22 [1]
+##  pkgload        1.1.0        2020-05-29 [1]
+##  plyr           1.8.6        2020-03-03 [1]
+##  polyclip       1.10-0       2019-03-14 [1]
+##  prettyunits    1.1.1        2020-01-24 [1]
+##  pROC           1.16.2       2020-03-19 [1]
+##  processx       3.4.4        2020-09-03 [1]
+##  prodlim        2019.11.13   2019-11-17 [1]
+##  ps             1.3.4        2020-08-11 [1]
+##  purrr        * 0.3.4        2020-04-17 [1]
+##  R6             2.4.1        2019-11-12 [1]
+##  RColorBrewer   1.1-2        2014-12-07 [1]
+##  Rcpp           1.0.5        2020-07-06 [1]
+##  readr        * 1.3.1        2018-12-21 [1]
+##  readxl         1.3.1        2019-03-13 [1]
+##  recipes      * 0.1.13.9001  2020-09-20 [1]
+##  remotes        2.2.0        2020-07-21 [1]
+##  reprex         0.3.0        2019-05-16 [1]
+##  reshape2       1.4.4        2020-04-09 [1]
+##  reticulate     1.16-9001    2020-09-15 [1]
+##  rlang          0.4.7        2020-07-09 [1]
+##  rmarkdown      2.3          2020-06-18 [1]
+##  rpart          4.1-15       2019-04-12 [1]
+##  rprojroot      1.3-2        2018-01-03 [1]
+##  rsample      * 0.0.7.9000   2020-09-20 [1]
+##  rstudioapi     0.11         2020-02-07 [1]
+##  rvest          0.3.6        2020-07-25 [1]
+##  scales       * 1.1.1        2020-05-11 [1]
+##  sessioninfo    1.1.1        2018-11-05 [1]
+##  stringi        1.5.3        2020-09-09 [1]
+##  stringr      * 1.4.0        2019-02-10 [1]
+##  survival       3.2-3        2020-06-13 [1]
+##  tensorflow   * 2.2.0.9000   2020-09-15 [1]
+##  testthat       2.3.2        2020-03-02 [1]
+##  tfruns         1.4          2018-08-25 [1]
+##  tibble       * 3.0.3        2020-07-10 [1]
+##  tidygraph      1.2.0        2020-05-12 [1]
+##  tidymodels   * 0.1.1.9000   2020-09-20 [1]
+##  tidyr        * 1.1.2        2020-08-27 [1]
+##  tidyselect     1.1.0        2020-05-11 [1]
+##  tidyverse    * 1.3.0        2019-11-21 [1]
+##  timeDate       3043.102     2018-02-21 [1]
+##  tune         * 0.1.1.9000   2020-09-20 [1]
+##  tweenr         1.0.1        2018-12-14 [1]
+##  usethis        1.6.3        2020-09-17 [1]
+##  vctrs          0.3.4        2020-08-29 [1]
+##  viridis        0.5.1        2018-03-29 [1]
+##  viridisLite    0.3.0        2018-02-01 [1]
+##  visNetwork     2.0.9        2019-12-06 [1]
+##  whisker        0.4          2019-08-28 [1]
+##  withr          2.2.0        2020-04-20 [1]
+##  workflows    * 0.2.0.9000   2020-09-20 [1]
+##  xfun           0.17         2020-09-09 [1]
+##  xml2           1.3.2        2020-04-23 [1]
+##  yaml           2.2.1        2020-02-01 [1]
+##  yardstick    * 0.0.7        2020-07-13 [1]
+##  zeallot        0.1.0        2018-01-28 [1]
+##  source                                
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.2)                        
+##  Github (rstudio/blogdown@d96fe78)     
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.2)                        
+##  Github (andrie/deepviz@2a35de6)       
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.2)                        
+##  Github (tidymodels/dials@2b79300)     
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.1)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.2)                        
+##  Github (rstudio/keras@ad737d1)        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.0)                        
+##  Github (tidymodels/recipes@c9b9987)   
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.0)                        
+##  Github (rstudio/reticulate@4f6a898)   
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.0)                        
+##  Github (tidymodels/rsample@e1f149d)   
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.2)                        
+##  Github (rstudio/tensorflow@bb4062a)   
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.2)                        
+##  Github (tidymodels/tidymodels@4422ad6)
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.0)                        
+##  Github (tidymodels/tune@8284747)      
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.0)                        
+##  Github (tidymodels/workflows@213d4cd) 
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.0)                        
+##  CRAN (R 4.0.2)                        
+##  CRAN (R 4.0.0)                        
 ## 
 ## [1] /Library/Frameworks/R.framework/Versions/4.0/Resources/library</code></pre>
 </div>
@@ -1713,7 +2023,7 @@ Epoch 25/25
 <li><p>used folder Validation/Test for showing how to <strong>predict on new images</strong></p></li>
 </ul>
 <hr />
-<p><strong>Workshop announcement:</strong> Because this year’s UseR 2020 in Munich couldn’t happen as an in-person event, I will be giving my <a href="https://user2020.r-project.org/program/tutorials/">workshop on Deep Learning with Keras and TensorFlow</a> as an online event on Thursday, 8th of October (13:00 UTC).</p>
+<p><strong>Workshop announcement:</strong> Because this year’s UseR 2020 in Munich couldn’t happen as an in-person event, I will be giving my <a href="https://www.eventbrite.com/e/deep-learning-with-keras-and-tensorflow-tickets-122422397687">workshop on Deep Learning with Keras and TensorFlow</a> as an online event on Thursday, 8th of October (13:00 UTC / 15:00 CEST). You can register for FREE via <a href="https://www.eventbrite.com/e/deep-learning-with-keras-and-tensorflow-tickets-122422397687">Eventbrite</a>.</p>
 <hr />
 <p>If you have questions or would like to talk about this article (or something else data-related), you can now <a href="https://shirinsplayground.netlify.app/page/bookme/">book 15-minute timeslots</a> with me (it’s free - one slot available per weekday):</p>
 <img src="https://www.appointletcdn.com/loader/buttons/F62459.png" data-appointlet-organization="shirin-elsinghorst" data-appointlet-service="357892">
@@ -2024,12 +2334,12 @@ p2</code></pre>
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       Europe/Berlin               
-##  date     2020-09-16                  
+##  date     2020-09-25                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────
 ##  package     * version      date       lib source                             
 ##  assertthat    0.2.1        2019-03-21 [1] CRAN (R 4.0.0)                     
-##  backports     1.1.9        2020-08-24 [1] CRAN (R 4.0.2)                     
+##  backports     1.1.10       2020-09-15 [1] CRAN (R 4.0.2)                     
 ##  base64enc     0.1-3        2015-07-28 [1] CRAN (R 4.0.0)                     
 ##  blob          1.2.1        2020-01-20 [1] CRAN (R 4.0.2)                     
 ##  blogdown      0.20.1       2020-09-09 [1] Github (rstudio/blogdown@d96fe78)  
@@ -2043,7 +2353,7 @@ p2</code></pre>
 ##  DBI           1.1.0        2019-12-15 [1] CRAN (R 4.0.0)                     
 ##  dbplyr        1.4.4        2020-05-27 [1] CRAN (R 4.0.2)                     
 ##  desc          1.2.0        2018-05-01 [1] CRAN (R 4.0.0)                     
-##  devtools      2.3.1        2020-07-21 [1] CRAN (R 4.0.2)                     
+##  devtools      2.3.2        2020-09-18 [1] CRAN (R 4.0.2)                     
 ##  digest        0.6.25       2020-02-23 [1] CRAN (R 4.0.0)                     
 ##  dplyr       * 1.0.2        2020-08-18 [1] CRAN (R 4.0.2)                     
 ##  ellipsis      0.3.1        2020-05-15 [1] CRAN (R 4.0.0)                     
@@ -2101,7 +2411,7 @@ p2</code></pre>
 ##  tidyr       * 1.1.2        2020-08-27 [1] CRAN (R 4.0.2)                     
 ##  tidyselect    1.1.0        2020-05-11 [1] CRAN (R 4.0.0)                     
 ##  tidyverse   * 1.3.0        2019-11-21 [1] CRAN (R 4.0.0)                     
-##  usethis       1.6.1        2020-04-29 [1] CRAN (R 4.0.0)                     
+##  usethis       1.6.3        2020-09-17 [1] CRAN (R 4.0.2)                     
 ##  utf8          1.1.4        2018-05-24 [1] CRAN (R 4.0.0)                     
 ##  vctrs         0.3.4        2020-08-29 [1] CRAN (R 4.0.2)                     
 ##  whisker       0.4          2019-08-28 [1] CRAN (R 4.0.0)                     
@@ -2362,351 +2672,6 @@ paste(&quot;Your reference percentile is:&quot;, starting_p)</code></pre>
 ## [49] reprex_0.3.0       rstudioapi_0.11    assertthat_0.2.1   rmarkdown_2.3     
 ## [53] httr_1.4.2         R6_2.4.1           compiler_4.0.2</code></pre>
 </div>
-]]></content>
-  </entry>
-  <entry>
-    <title type="html"><![CDATA[Conferences, webinars, podcasts, workshops, books, articles and the likes]]></title>
-    <link href="/page/conferences_podcasts_webinars/"/>
-    <id>/page/conferences_podcasts_webinars/</id>
-    <published>2020-08-23T00:00:00+00:00</published>
-    <updated>2020-08-23T00:00:00+00:00</updated>
-    <content type="html"><![CDATA[
-
-<p>Here, you can find a list of all the talks I gave at conferences, webinars, podcasts, workshops, and all the other places you can and could hear me talk. You will also find a section with magazine articles and books I&rsquo;ve written. :-)</p>
-
-<p><em>If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at <button><a href="https://paypal.me/ShirinGlander">paypal.me</a></button>. Thank you!</em> :-)</p>
-
-<h2 id="workshops-i-am-giving">Workshops I am giving</h2>
-
-<ul>
-<li><a href="https://www.datacamp.com/courses/hyperparameter-tuning-in-r">Data Camp course on Hyperparameter Tuning in R</a></li>
-</ul>
-
-<p><strong>UPDATE:</strong> Before you take this course please consider <a href="https://shirinsplayground.netlify.com/2019/04/consider_data_camp">the info about the sexual harassment scandal surrounding DataCamp</a>!</p>
-
-<blockquote>
-<p>For many machine learning problems, simply running a model out-of-the-box and getting a prediction is not enough; you want the best model with the most accurate prediction. One way to perfect your model is with hyperparameter tuning, which means optimizing the settings for that specific model. In this course, you will work with the caret, mlr and h2o packages to find the optimal combination of hyperparameters in an efficient manner using grid search, random search, adaptive resampling and automatic machine learning (AutoML). Furthermore, you will work with different datasets and tune different supervised learning models, such as random forests, gradient boosting machines, support vector machines, and even neural nets. Get ready to tune!</p>
-</blockquote>
-
-<p><br></p>
-
-<ul>
-<li><a href="https://shirinsplayground.netlify.com/2017/11/deep_learning_keras_tensorflow/">Workshop on Deep Learning with Keras and TensorFlow in R</a></li>
-</ul>
-
-<blockquote>
-<p>I offer a workshop on deep learning with Keras and TensorFlow using R.
-Date and place depend on who and how many people are interested, so please contact me either directly or via the workshop page: <a href="https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/">https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/</a> (the description is in German but I also offer to give the workshop in English).</p>
-</blockquote>
-
-<p><br></p>
-
-<ul>
-<li><a href="https://www.codecentric.de/schulung/end-2-end-vom-keras-tensorflow-modell-zur-produktion/">Workshop: End-2-End vom Keras TensorFlow-Modell zur Produktion</a></li>
-</ul>
-
-<blockquote>
-<p>Durch das stark wachsende Datenvolumen hat sich das Rollenverständnis von Data Scientists erweitert. Statt Machine-Learning-Modelle für einmalige Analysen zu erstellen,  wird häufiger in konkreten Entwicklungsprojekten gearbeitet, in denen Prototypen in produktive Anwendungen überführt werden.
-Keras ist eine High-Level-Schnittstelle, die ein schnelles, einfaches und flexibles Prototypisieren von Neuronalen Netzwerken mit TensorFlow ermöglicht. Zusammen mit Luigi lassen sich beliebig komplexe Datenverarbeitungs-Workflows in Python erstellen. Das führt dazu, dass auch Nicht-Entwickler den End-2-End-Workflow des Keras-TensorFlow-Modells zur Produktionsreife leicht
-implementieren können.</p>
-</blockquote>
-
-<ul>
-<li>Next date: <a href="https://www.m3-konferenz.de/lecture.php?id=8533&amp;source=0">We will give this workshop at the M3 conference in Mannheim on May 14th</a></li>
-</ul>
-
-<p><br></p>
-
-<ul>
-<li><a href="https://shirinsplayground.netlify.com/2018/06/intro_to_ml_workshop_heidelberg/">Machine Learning Basics in R</a></li>
-</ul>
-
-<hr />
-
-<p><br></p>
-
-<h2 id="where-you-find-my-written-word">Where you find my written word</h2>
-
-<ul>
-<li><a href="https://entwickler.de/leseproben/machine-learning-mit-python-579887732.html">For the German Entwickler Magazin, I have written an article about how to train your own image classification model with Python and Keras</a></li>
-</ul>
-
-<p><blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr"><a href="https://t.co/onaDiQV3Ci">https://t.co/onaDiQV3Ci</a><br>My article about machine learning with Python has come out in the German Entwickler Magazin. 😊</p>&mdash; Shirin Glander (@ShirinGlander) <a href="https://twitter.com/ShirinGlander/status/1116340544110825472?ref_src=twsrc%5Etfw">April 11, 2019</a></blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
-
-<p><br></p>
-
-<ul>
-<li><p><a href="https://shop.heise.de/katalog/blick-in-die-blackbox">An article about about <strong>Explaining Black-Box Machine Learning Models</strong> in the <strong>iX Developer Machine Learning</strong></a> (German)</p></li>
-
-<li><p><a href="https://shop.heise.de/katalog/ix-12-2018">A short version of this article about <strong>Explaining Black-Box Machine Learning Models</strong> in the <strong>iX <sup>12</sup>&frasl;<sub>2018</sub></strong></a> (German)</p></li>
-</ul>
-
-<p><img src="https://shiring.github.io/netlify_images/ix_article_01.jpeg" alt="" /></p>
-
-<p><br></p>
-
-<ul>
-<li>Book chapter Predictive Analytics (German): <a href="https://www.dpunkt.de/buecher/13208/9783864906107-data-science.html">Data Science Grundlagen, Architekturen und Anwendungen</a> Mai 2019, 336 Seiten, gebunden, dpunkt.verlag, ISBN Print: 978-3-86490-610-7</li>
-</ul>
-
-<p><img src="https://www.dpunkt.de/common/images/cover_masterid/300/13208.jpg" alt="" /></p>
-
-<hr />
-
-<p><br></p>
-
-<h2 id="upcoming-talks-webinars-podcasts-etc">Upcoming talks, webinars, podcasts, etc.</h2>
-
-<ul>
-<li>During the virtual data2day conference on October 20th 2020, I&rsquo;ll be talking about <a href="https://www.data2day.de/lecture.php?id=12321&amp;source=0">The Good, the Bad and the Ugly: how (not) to visualize data</a> (German)</li>
-</ul>
-
-<hr />
-
-<p><br></p>
-
-<h2 id="past-talks-webinars-podcasts-etc">Past talks, webinars, podcasts, etc.</h2>
-
-<ul>
-<li><strong>German only -</strong> <a href="https://www.slideshare.net/ShirinGlander/richtig-gut-die-qualitt-von-modellen-verstehen">RICHTIG GUT: DIE QUALITÄT VON MODELLEN VERSTEHEN</a></li>
-</ul>
-
-<p><a href="https://online.m3-konferenz.de/lecture.php?id=12337&amp;source=0">Vortrag auf der M3 Online-Konferenz am 16.06.2020</a></p>
-
-<p>Mit Machine Learning getroffene Entscheidungen sind inhärent schwierig – wenn nicht gar unmöglich – nachzuvollziehen. Ein scheinbar gutes Ergebnis mit Hilfe von maschinellen Lernverfahren ist oft schnell erzielt oder wird von anderen als bahnbrechend verkauft.
-Die Komplexität einiger der besten Modelle wie neuronaler Netze ist genau das, was sie so erfolgreich macht. Aber es macht sie gleichzeitig zu einer Black Box. Das kann problematisch sein, denn Geschäftsführer oder Vorstände werden weniger geneigt sein, einer Entscheidung zu vertrauen und nach ihr zu handeln, wenn sie sie nicht verstehen.
-Shapley Values, Local Interpretable Model-Agnostic Explanations (LIME) und Anchors sind Ansätze, diese komplexen Modelle zumindest teilweise nachvollziehbar zu machen.
-In diesem Vortrag erkläre ich, wie diese Ansätze funktionieren, und zeige Anwendungsbeispiele.</p>
-
-<p>LERNZIELE
-* Die Teilnehmer erhalten Einblick in Möglichkeit, die komplexe Modelle erklärbar machen.
-* Sie lernen, Datensätze kritisch zu hinterfragen und angemessen aufzuteilen.
-* Und sie erfahren, unter welchen Bedingungen sie Entscheidungen durch Machine Learning vertrauen können.</p>
-
-<p><br></p>
-
-<ul>
-<li>On April, 11th, at the <a href="http://meetu.ps/e/G8yg1/w54bW/f">Data Science Meetup Bielefeld, I was talking about Building Interpretable Neural Networks with Keras and LIME</a>. Slides are <a href="https://www.beautiful.ai/deck/-LaWjFBM_2crkZG-Oz4g/Data-Science-Meetup-Bielefeld">here</a>.</li>
-</ul>
-
-<p><br></p>
-
-<ul>
-<li>On March, 26th, I gave my talk about <a href="http://meetu.ps/e/GlST9/w54bW/f">Explainable Machine Learning at the data lounge Meetup Bremen</a>. Slides are <a href="https://www.beautiful.ai/deck/-L_l8U2hYD6Of0R83sM4/Data-Lounge-HB-Meetup">here</a>.</li>
-</ul>
-
-<p><br></p>
-
-<ul>
-<li>On March, 15th, I talked about <strong>Deep Learning for Software Engineers</strong> at the <a href="https://accso.de/magazin/deep-learning-fuer-neugierige-entwickler/">AccsoCon 2019</a>. You can find my slides <a href="https://www.beautiful.ai/deck/-L_l3VZxSdN73Pxr8dw-/ACCSOCON-2019">here</a>.</li>
-</ul>
-
-<p><br></p>
-
-<ul>
-<li>At the <a href="https://shirinsplayground.netlify.com/2018/11/twimlai_meetup/">This week in machine learning and AI European online Meetup on December 5th, 2018</a>, I presented and led a discussion about the Anchors paper, the next generation of machine learning interpretability tools. You can find the slides <a href="https://shirinsplayground.netlify.com/2018/12/trust_in_ml_slides_ix/">here</a>.</li>
-</ul>
-
-<p><br></p>
-
-<ul>
-<li>On November 7th, Uwe Friedrichsen and I gave our talk from the <a href="https://shirinsplayground.netlify.com/2018/01/jax2018/">JAX conference 2018: Deep Learning - a Primer</a> again at the <a href="https://shirinsplayground.netlify.com/2018/01/slides_demystifying_dl/">W-JAX</a> in Munich.</li>
-</ul>
-
-<p><br></p>
-
-<ul>
-<li>While in London for the <a href="https://shirinsplayground.netlify.com/2018/10/mcubed_slides/">M-cubed conference</a>, I also gave a talk at the R-Ladies London Meetup about <a href="https://shirinsplayground.netlify.com/2018/09/rladieslondontalk/">Interpretable Deep Learning with R, Keras and LIME</a>.</li>
-</ul>
-
-<p><br></p>
-
-<ul>
-<li>From 15th to 17th October 2018, I was in London for the <a href="https://www.mcubed.london/">M-cubed conference</a> with my talk about <a href="https://shirinsplayground.netlify.com/2018/10/mcubed_slides/">Explaining complex machine learning models with LIME</a>.</li>
-</ul>
-
-<p><br></p>
-
-<ul>
-<li>Together with a colleague from codecentric, I gave a workshop about <a href="https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953">&ldquo;END-2-END VOM KERAS TENSORFLOW-MODELL ZUR PRODUKTION&rdquo;</a> at the data2day conference, which was being held from September 25th - 27th 2018 in Heidelberg, Germany (German language):
-<a href="https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953">https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953</a></li>
-</ul>
-
-<p><br></p>
-
-<ul>
-<li>On Wednesday, October 26th, I was talking about <a href="https://shirinsplayground.netlify.com/2018/09/ffm_datascience_meetup/">&lsquo;Decoding The Black Box&rsquo; at the Frankfurt Data Sciene Meetup</a>.
-Slides can be found <a href="https://shirinsplayground.netlify.com/2018/09/ffm_datascience_meetup_slides/">here</a> and the recording is up on <a href="https://youtu.be/81UqFUk5B9I">YouTube</a>:</li>
-</ul>
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/81UqFUk5B9I" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-<p><br></p>
-
-<ul>
-<li>At the <a href="https://www.ml-summit.de">ML Summit</a> held on October 1st and 2nd in Berlin, Germany, I gave a workshop about <a href="https://ml-summit.de/specialized-topics/bildklassifikation-leicht-gemacht-mit-keras-und-tensorflow/">image classification with Keras</a>: <a href="https://ml-summit.de/specialized-topics/bildklassifikation-leicht-gemacht-mit-keras-und-tensorflow/">https://ml-summit.de/specialized-topics/bildklassifikation-leicht-gemacht-mit-keras-und-tensorflow/</a> (German language)</li>
-</ul>
-
-<p><br></p>
-
-<ul>
-<li>In August 2018 I gave a webinar for SAP about <a href="https://shirinsplayground.netlify.com/2018/08/sap_webinar_slides/">Explaining Keras Image Classification Models with LIME</a>.</li>
-</ul>
-
-<p><br></p>
-
-<ul>
-<li>In June 2018 I gave a 3-hour workshop about the basics of machine learning with R at the University of Heidelberg, Germany. <a href="https://shirinsplayground.netlify.com/2018/06/intro_to_ml_workshop_heidelberg/">Slides and workshop code can be found here</a>.</li>
-</ul>
-
-<p><br></p>
-
-<ul>
-<li>In May 2018 I was at the <a href="http://unconf18.ropensci.org/">ROpenSci unconference in Seattle, WA</a>
-You can read about my experience and the project I worked on <a href="https://shirinsplayground.netlify.com/2018/05/ropensci_unconf18/">here</a>.</li>
-</ul>
-
-<p><br></p>
-
-<ul>
-<li>At the <a href="https://aws.amazon.com/de/events/web-days-2018/">Amazon AWS AI &amp; Machine Learning Web Day on May 8th</a>, I gave a presentation on how to get started with Amazon SageMaker. The recording can be found on <a href="https://youtu.be/lQmcXAN7GJ4">YouTube</a>; slides are on <a href="https://www.slideshare.net/AWSAktuell/ai-machine-learning-web-day-wie-gelingt-der-einstieg-in-amazon-sagemaker-prsentiert-von-codecentric">Slideshare</a></li>
-</ul>
-
-<p><br></p>
-
-<ul>
-<li><a href="https://shirinsplayground.netlify.com/2018/02/m3_2018/">I talked about explaining complex machine learning models at Minds Mastering Machines Conference</a> on Wednesday, April 25th 2018 in Colone
-The presentation was in German but the slides were similar to those: <a href="https://shirinsplayground.netlify.com/2018/04/hh_datascience_meetup_2018_slides/">https://shirinsplayground.netlify.com/2018/04/hh_datascience_meetup_2018_slides/</a></li>
-</ul>
-
-<p><br></p>
-
-<ul>
-<li>My colleague Uwe Friedrichsen and I gave a talk at the <a href="https://shirinsplayground.netlify.com/2018/01/jax2018/">JAX conference 2018: Deep Learning - a Primer</a> on April 24th 2018 in Mainz.
-Slides can be found here: <a href="https://www.slideshare.net/ShirinGlander/deep-learning-a-primer-95197733">https://www.slideshare.net/ShirinGlander/deep-learning-a-primer-95197733</a></li>
-</ul>
-
-<blockquote>
-<p>Deep Learning is one of the &ldquo;hot&rdquo; topics in the AI area – a lot of hype, a lot of inflated expectation, but also quite some impressive success stories. As some AI experts already predict that Deep Learning will become &ldquo;Software 2.0&rdquo;, it might be a good time to have a closer look at the topic. In this session I will try to give a comprehensive overview of Deep Learning. We will start with a bit of history and some theoretical foundations that we will use to create a little Deep Learning taxonomy. Then we will have a look at current and upcoming application areas: Where can we apply Deep Learning successfully and what does it differentiate from other approaches? Afterwards we will examine the ecosystem: Which tools and libraries are available? What are their strengths and weaknesses? And to complete the session, we will look into some practical code examples and the typical pitfalls of Deep Learning. After this session you will have a much better idea of the why, what and how of Deep Learning, including if and how you might want to apply it to your own work. <a href="https://jax.de/big-data-machine-learning/deep-learning-a-primer/">https://jax.de/big-data-machine-learning/deep-learning-a-primer/</a></p>
-</blockquote>
-
-<p><br></p>
-
-<ul>
-<li><a href="https://shirinsplayground.netlify.com/2018/03/meetup_talk_ruhrpy_april_18/">I talked about explaining complex Machine Learning Models with LIME</a> at this meetup: <a href="https://www.meetup.com/Hamburg-Data-Science-Meetup/events/244145443/">Data Science Meetup Hamburg</a> on Thursday, April 12th 2018.
-Slides can be found here: <a href="https://shirinsplayground.netlify.com/2018/04/hh_datascience_meetup_2018_slides/">https://shirinsplayground.netlify.com/2018/04/hh_datascience_meetup_2018_slides/</a></li>
-</ul>
-
-<blockquote>
-<p>Traditional machine learning workflows focus heavily on model training and optimization; the best model is usually chosen via performance measures like accuracy or error and we tend to assume that a model is good enough for deployment if it passes certain thresholds of these performance criteria. Why a model makes the predictions it makes, however, is generally neglected. But being able to understand and interpret such models can be immensely important for improving model quality, increasing trust and transparency and for reducing bias. Because complex machine learning models are essentially black boxes and too complicated to understand, we need to use approximations to get a better sense of how they work. One such approach is LIME, which stands for Local Interpretable Model-agnostic Explanations and is a tool that helps understand and explain the decisions made by complex machine learning models.
-Dr. Shirin Glander is Data Scientist at codecentric AG. She has received a PhD in Bioinformatics and applies methods of analysis and visualization from different areas - for instance, machine learning, classical statistics, text mining, etc. -to extract and leverage information from data.</p>
-</blockquote>
-
-<p><br></p>
-
-<ul>
-<li><a href="https://shirinsplayground.netlify.com/2018/03/meetup_talk_ruhrpy_april_18/">I talked about Deep Learning with Keras in R and Python</a> at this meetup: <a href="https://www.meetup.com/Ruhr-py/events/248093628/">Ruhr.Py 2018</a> on Wednesday, April 4th 2018.
-Slides can be found here: <a href="https://shirinsplayground.netlify.com/2018/04/ruhrpy_meetup_2018_slides/">https://shirinsplayground.netlify.com/2018/04/ruhrpy_meetup_2018_slides/</a></li>
-</ul>
-
-<blockquote>
-<p>Introducing Deep Learning with Keras and Python
-Keras is a high-level API written in Python for building and prototyping neural networks. It can be used on top of TensorFlow, Theano or CNTK. In this talk we build, train and visualize a Model using Python and Keras - all interactive with Jupyter Notebooks!</p>
-</blockquote>
-
-<p><br></p>
-
-<ul>
-<li><a href="https://shirinsplayground.netlify.com/2018/02/herr_mies_wills_wissen/">I talked about machine learning with Daniel Mies (Podcast in German, though)</a></li>
-</ul>
-
-<blockquote>
-<p>In January 2018 I was interviewed for a tech podcast where I talked about machine learning, neural nets, why I love R and Rstudio and how I became a Data Scientist.</p>
-</blockquote>
-
-<p><br></p>
-
-<ul>
-<li><a href="https://shirinsplayground.netlify.com/2017/12/lime_sketchnotes/">Explaining Predictions of Machine Learning Models with LIME - Münster Data Science Meetup</a></li>
-</ul>
-
-<blockquote>
-<p>In December 2017 I talked about Explaining Predictions of Machine Learning Models with LIME at the Münster Data Science Meetup.</p>
-</blockquote>
-
-<p><br></p>
-
-<ul>
-<li><a href="https://shiring.github.io/blogging/2017/09/20/webinar_biology_to_data_science">From Biology to Industry. A Blogger’s Journey to Data Science</a></li>
-</ul>
-
-<blockquote>
-<p>In September 2017 I gave a webinar for the Applied Epidemiology Didactic of the University of Wisconsin - Madison titled “From Biology to Industry. A Blogger’s Journey to Data Science.”
-I talked about how blogging about R and Data Science helped me become a Data Scientist. I also gave a short introduction to Machine Learning, Big Data and Neural Networks.</p>
-</blockquote>
-
-<p><br></p>
-
-<ul>
-<li><a href="https://shiring.github.io/machine_learning/2017/03/31/webinar_code">Building meaningful machine learning models for disease prediction</a></li>
-</ul>
-
-<blockquote>
-<p>In March 2017 I gave a webinar for the ISDS R Group about my work on building machine-learning models to predict the course of different diseases. I went over building a model, evaluating its performance, and answering or addressing different disease related questions using machine learning. My talk covered the theory of machine learning as it is applied using R.</p>
-</blockquote>
-
-<hr />
-
-<p><br></p>
-
-<h2 id="publications">Publications</h2>
-
-<ul>
-<li><a href="https://academic.oup.com/gbe/article/10/9/2278/5042901"><strong>Assortment of flowering time and immunity alleles in natural Arabidopsis thaliana populations suggests immunity and vegetative lifespan strategies coevolve</strong></a></li>
-</ul>
-
-<p>Shirin Glander, Fei He, Gregor Schmitz, Anika Witten, Arndt Telschow, J de Meaux; Genome Biology and Evolution, 22nd June 2018, evy124, <a href="https://doi.org/10.1093/gbe/evy124">https://doi.org/10.1093/gbe/evy124</a></p>
-
-<p><br></p>
-
-<ul>
-<li><a href="https://www.sciencedirect.com/science/article/pii/S0959437X1300141X"><strong>The spectrum of mutations controlling complex traits and the genetics of fitness in plants.</strong></a></li>
-</ul>
-
-<p>K Christin Falke · Shirin Glander · Fei He · Jinyong Hu · Juliette de Meaux · Gregor Schmitz., Nov. 2011, Current Opinion in Genetics &amp; Development</p>
-
-<p><br></p>
-
-<ul>
-<li><a href="https://stm.sciencemag.org/content/11/490/eaao5563"><strong>Teriflunomide treatment for multiple sclerosis modulates T cell mitochondrial respiration with affinity-dependent effects</strong></a></li>
-</ul>
-
-<p>Luisa Klotz et al. 2019. Science Translational Medicine, May 2019</p>
-
-<p><br></p>
-
-<ul>
-<li><a href="https://www.sciencedirect.com/science/article/pii/S0896841119300381?dgcid=author"><strong>Transcriptomic and proteomic analysis of iris tissue and aqueous humor in juvenile idiopathic arthritis-associated uveitis.</strong></a></li>
-</ul>
-
-<p>Lena Wildschütz, Doreen Ackermann, Anika Witten, Maren Kasper, Martin Busch, Shirin Glander, Harutyun Melkony, Karoline Walscheid, Christoph Tappeiner, Solon Thanos, Andrei Barysenka, Jörg Koch, Carsten Heinz, Björn Laffer, Dirk Bauer, Monika Stoll, Simon König, Arnd Heiligenhaus. Journal of Autoimmunity, Volume 100, June 2019, Pages 75-83</p>
-
-<p><br></p>
-
-<ul>
-<li><a href="https://www.pnas.org/content/115/34/E8017"><strong>Nur77 serves as a molecular brake of the metabolic switch during T cell activation to restrict autoimmunity</strong></a></li>
-</ul>
-
-<p>Marie Liebmann, Stephanie Hucke, Kathrin Koch, Melanie Eschborn, Julia Ghelman, Achmet I. Chasan, Shirin Glander, Martin Schädlich, Meike Kuhlencord, Niklas M. Daber, Maria Eveslage, Marc Beyer, Michael Dietrich, Philipp Albrecht, Monika Stoll, Karin B. Busch, Heinz Wiendl, Johannes Roth, Tanja Kuhlmann, Luisa Klotz. Proceedings of the National Academy of Sciences, August 2018, DOI: 10.1073/pnas.1721049115</p>
-
-<p><br></p>
-
-<ul>
-<li><a href="https://www.nature.com/articles/ni.3745"><strong>S100-induced innate immune programming protects newborn infants from sepsis.</strong></a></li>
-</ul>
-
-<p>Ulas et al., May 2017, Nature Immunology</p>
 ]]></content>
   </entry>
   <entry>
@@ -12712,6 +12677,353 @@ and the repository exists.
     <updated>2017-07-01T00:00:00+00:00</updated>
     <content type="html"><![CDATA[<p>For all my other posts, see my old website:
 <a href="https://shiring.github.io">shiring.github.io</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[Conferences, webinars, podcasts, workshops, books, articles and the likes]]></title>
+    <link href="/page/conferences_podcasts_webinars/"/>
+    <id>/page/conferences_podcasts_webinars/</id>
+    <published>0001-01-01T00:00:00+00:00</published>
+    <updated>0001-01-01T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[
+
+<p>Here, you can find a list of all the talks I gave at conferences, webinars, podcasts, workshops, and all the other places you can and could hear me talk. You will also find a section with magazine articles and books I&rsquo;ve written. :-)</p>
+
+<p><em>If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at <button><a href="https://paypal.me/ShirinGlander">paypal.me</a></button>. Thank you!</em> :-)</p>
+
+<h2 id="workshops-i-am-giving">Workshops I am giving</h2>
+
+<ul>
+<li><a href="https://www.datacamp.com/courses/hyperparameter-tuning-in-r">Data Camp course on Hyperparameter Tuning in R</a></li>
+</ul>
+
+<p><strong>UPDATE:</strong> Before you take this course please consider <a href="https://shirinsplayground.netlify.com/2019/04/consider_data_camp">the info about the sexual harassment scandal surrounding DataCamp</a>!</p>
+
+<blockquote>
+<p>For many machine learning problems, simply running a model out-of-the-box and getting a prediction is not enough; you want the best model with the most accurate prediction. One way to perfect your model is with hyperparameter tuning, which means optimizing the settings for that specific model. In this course, you will work with the caret, mlr and h2o packages to find the optimal combination of hyperparameters in an efficient manner using grid search, random search, adaptive resampling and automatic machine learning (AutoML). Furthermore, you will work with different datasets and tune different supervised learning models, such as random forests, gradient boosting machines, support vector machines, and even neural nets. Get ready to tune!</p>
+</blockquote>
+
+<p><br></p>
+
+<ul>
+<li><a href="https://shirinsplayground.netlify.com/2017/11/deep_learning_keras_tensorflow/">Workshop on Deep Learning with Keras and TensorFlow in R</a></li>
+</ul>
+
+<blockquote>
+<p>I offer a workshop on deep learning with Keras and TensorFlow using R.
+Date and place depend on who and how many people are interested, so please contact me either directly or via the workshop page: <a href="https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/">https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/</a> (the description is in German but I also offer to give the workshop in English).</p>
+</blockquote>
+
+<p><strong>Workshop announcement:</strong> Because this year&rsquo;s UseR 2020 in Munich couldn&rsquo;t happen as an in-person event, I will be giving my <a href="https://www.eventbrite.com/e/deep-learning-with-keras-and-tensorflow-tickets-122422397687">workshop on Deep Learning with Keras and TensorFlow</a> as an online event on Thursday, 8th of October (13:00 UTC / 15:00 CEST). You can register for FREE via <a href="https://www.eventbrite.com/e/deep-learning-with-keras-and-tensorflow-tickets-122422397687">Eventbrite</a>.</p>
+
+<p><br></p>
+
+<ul>
+<li><a href="https://www.codecentric.de/schulung/end-2-end-vom-keras-tensorflow-modell-zur-produktion/">Workshop: End-2-End vom Keras TensorFlow-Modell zur Produktion</a></li>
+</ul>
+
+<blockquote>
+<p>Durch das stark wachsende Datenvolumen hat sich das Rollenverständnis von Data Scientists erweitert. Statt Machine-Learning-Modelle für einmalige Analysen zu erstellen,  wird häufiger in konkreten Entwicklungsprojekten gearbeitet, in denen Prototypen in produktive Anwendungen überführt werden.
+Keras ist eine High-Level-Schnittstelle, die ein schnelles, einfaches und flexibles Prototypisieren von Neuronalen Netzwerken mit TensorFlow ermöglicht. Zusammen mit Luigi lassen sich beliebig komplexe Datenverarbeitungs-Workflows in Python erstellen. Das führt dazu, dass auch Nicht-Entwickler den End-2-End-Workflow des Keras-TensorFlow-Modells zur Produktionsreife leicht
+implementieren können.</p>
+</blockquote>
+
+<ul>
+<li>Next date: <a href="https://www.m3-konferenz.de/lecture.php?id=8533&amp;source=0">We will give this workshop at the M3 conference in Mannheim on May 14th</a></li>
+</ul>
+
+<p><br></p>
+
+<ul>
+<li><a href="https://shirinsplayground.netlify.com/2018/06/intro_to_ml_workshop_heidelberg/">Machine Learning Basics in R</a></li>
+</ul>
+
+<hr />
+
+<p><br></p>
+
+<h2 id="where-you-find-my-written-word">Where you find my written word</h2>
+
+<ul>
+<li><a href="https://entwickler.de/leseproben/machine-learning-mit-python-579887732.html">For the German Entwickler Magazin, I have written an article about how to train your own image classification model with Python and Keras</a></li>
+</ul>
+
+<p><blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr"><a href="https://t.co/onaDiQV3Ci">https://t.co/onaDiQV3Ci</a><br>My article about machine learning with Python has come out in the German Entwickler Magazin. 😊</p>&mdash; Shirin Glander (@ShirinGlander) <a href="https://twitter.com/ShirinGlander/status/1116340544110825472?ref_src=twsrc%5Etfw">April 11, 2019</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+
+<p><br></p>
+
+<ul>
+<li><p><a href="https://shop.heise.de/katalog/blick-in-die-blackbox">An article about about <strong>Explaining Black-Box Machine Learning Models</strong> in the <strong>iX Developer Machine Learning</strong></a> (German)</p></li>
+
+<li><p><a href="https://shop.heise.de/katalog/ix-12-2018">A short version of this article about <strong>Explaining Black-Box Machine Learning Models</strong> in the <strong>iX <sup>12</sup>&frasl;<sub>2018</sub></strong></a> (German)</p></li>
+</ul>
+
+<p><img src="https://shiring.github.io/netlify_images/ix_article_01.jpeg" alt="" /></p>
+
+<p><br></p>
+
+<ul>
+<li>Book chapter Predictive Analytics (German): <a href="https://www.dpunkt.de/buecher/13208/9783864906107-data-science.html">Data Science Grundlagen, Architekturen und Anwendungen</a> Mai 2019, 336 Seiten, gebunden, dpunkt.verlag, ISBN Print: 978-3-86490-610-7</li>
+</ul>
+
+<p><img src="https://www.dpunkt.de/common/images/cover_masterid/300/13208.jpg" alt="" /></p>
+
+<hr />
+
+<p><br></p>
+
+<h2 id="upcoming-talks-webinars-podcasts-etc">Upcoming talks, webinars, podcasts, etc.</h2>
+
+<ul>
+<li>During the virtual data2day conference on October 20th 2020, I&rsquo;ll be talking about <a href="https://www.data2day.de/lecture.php?id=12321&amp;source=0">The Good, the Bad and the Ugly: how (not) to visualize data</a> (German)</li>
+</ul>
+
+<hr />
+
+<p><br></p>
+
+<h2 id="past-talks-webinars-podcasts-etc">Past talks, webinars, podcasts, etc.</h2>
+
+<ul>
+<li><strong>German only -</strong> <a href="https://www.slideshare.net/ShirinGlander/richtig-gut-die-qualitt-von-modellen-verstehen">RICHTIG GUT: DIE QUALITÄT VON MODELLEN VERSTEHEN</a></li>
+</ul>
+
+<p><a href="https://online.m3-konferenz.de/lecture.php?id=12337&amp;source=0">Vortrag auf der M3 Online-Konferenz am 16.06.2020</a></p>
+
+<p>Mit Machine Learning getroffene Entscheidungen sind inhärent schwierig – wenn nicht gar unmöglich – nachzuvollziehen. Ein scheinbar gutes Ergebnis mit Hilfe von maschinellen Lernverfahren ist oft schnell erzielt oder wird von anderen als bahnbrechend verkauft.
+Die Komplexität einiger der besten Modelle wie neuronaler Netze ist genau das, was sie so erfolgreich macht. Aber es macht sie gleichzeitig zu einer Black Box. Das kann problematisch sein, denn Geschäftsführer oder Vorstände werden weniger geneigt sein, einer Entscheidung zu vertrauen und nach ihr zu handeln, wenn sie sie nicht verstehen.
+Shapley Values, Local Interpretable Model-Agnostic Explanations (LIME) und Anchors sind Ansätze, diese komplexen Modelle zumindest teilweise nachvollziehbar zu machen.
+In diesem Vortrag erkläre ich, wie diese Ansätze funktionieren, und zeige Anwendungsbeispiele.</p>
+
+<p>LERNZIELE
+* Die Teilnehmer erhalten Einblick in Möglichkeit, die komplexe Modelle erklärbar machen.
+* Sie lernen, Datensätze kritisch zu hinterfragen und angemessen aufzuteilen.
+* Und sie erfahren, unter welchen Bedingungen sie Entscheidungen durch Machine Learning vertrauen können.</p>
+
+<p><br></p>
+
+<ul>
+<li>On April, 11th, at the <a href="http://meetu.ps/e/G8yg1/w54bW/f">Data Science Meetup Bielefeld, I was talking about Building Interpretable Neural Networks with Keras and LIME</a>. Slides are <a href="https://www.beautiful.ai/deck/-LaWjFBM_2crkZG-Oz4g/Data-Science-Meetup-Bielefeld">here</a>.</li>
+</ul>
+
+<p><br></p>
+
+<ul>
+<li>On March, 26th, I gave my talk about <a href="http://meetu.ps/e/GlST9/w54bW/f">Explainable Machine Learning at the data lounge Meetup Bremen</a>. Slides are <a href="https://www.beautiful.ai/deck/-L_l8U2hYD6Of0R83sM4/Data-Lounge-HB-Meetup">here</a>.</li>
+</ul>
+
+<p><br></p>
+
+<ul>
+<li>On March, 15th, I talked about <strong>Deep Learning for Software Engineers</strong> at the <a href="https://accso.de/magazin/deep-learning-fuer-neugierige-entwickler/">AccsoCon 2019</a>. You can find my slides <a href="https://www.beautiful.ai/deck/-L_l3VZxSdN73Pxr8dw-/ACCSOCON-2019">here</a>.</li>
+</ul>
+
+<p><br></p>
+
+<ul>
+<li>At the <a href="https://shirinsplayground.netlify.com/2018/11/twimlai_meetup/">This week in machine learning and AI European online Meetup on December 5th, 2018</a>, I presented and led a discussion about the Anchors paper, the next generation of machine learning interpretability tools. You can find the slides <a href="https://shirinsplayground.netlify.com/2018/12/trust_in_ml_slides_ix/">here</a>.</li>
+</ul>
+
+<p><br></p>
+
+<ul>
+<li>On November 7th, Uwe Friedrichsen and I gave our talk from the <a href="https://shirinsplayground.netlify.com/2018/01/jax2018/">JAX conference 2018: Deep Learning - a Primer</a> again at the <a href="https://shirinsplayground.netlify.com/2018/01/slides_demystifying_dl/">W-JAX</a> in Munich.</li>
+</ul>
+
+<p><br></p>
+
+<ul>
+<li>While in London for the <a href="https://shirinsplayground.netlify.com/2018/10/mcubed_slides/">M-cubed conference</a>, I also gave a talk at the R-Ladies London Meetup about <a href="https://shirinsplayground.netlify.com/2018/09/rladieslondontalk/">Interpretable Deep Learning with R, Keras and LIME</a>.</li>
+</ul>
+
+<p><br></p>
+
+<ul>
+<li>From 15th to 17th October 2018, I was in London for the <a href="https://www.mcubed.london/">M-cubed conference</a> with my talk about <a href="https://shirinsplayground.netlify.com/2018/10/mcubed_slides/">Explaining complex machine learning models with LIME</a>.</li>
+</ul>
+
+<p><br></p>
+
+<ul>
+<li>Together with a colleague from codecentric, I gave a workshop about <a href="https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953">&ldquo;END-2-END VOM KERAS TENSORFLOW-MODELL ZUR PRODUKTION&rdquo;</a> at the data2day conference, which was being held from September 25th - 27th 2018 in Heidelberg, Germany (German language):
+<a href="https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953">https://www.data2day.de/veranstaltung-6953-end-2-end-vom-keras-tensorflow-modell-zur-produktion.html?id=6953</a></li>
+</ul>
+
+<p><br></p>
+
+<ul>
+<li>On Wednesday, October 26th, I was talking about <a href="https://shirinsplayground.netlify.com/2018/09/ffm_datascience_meetup/">&lsquo;Decoding The Black Box&rsquo; at the Frankfurt Data Sciene Meetup</a>.
+Slides can be found <a href="https://shirinsplayground.netlify.com/2018/09/ffm_datascience_meetup_slides/">here</a> and the recording is up on <a href="https://youtu.be/81UqFUk5B9I">YouTube</a>:</li>
+</ul>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/81UqFUk5B9I" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<p><br></p>
+
+<ul>
+<li>At the <a href="https://www.ml-summit.de">ML Summit</a> held on October 1st and 2nd in Berlin, Germany, I gave a workshop about <a href="https://ml-summit.de/specialized-topics/bildklassifikation-leicht-gemacht-mit-keras-und-tensorflow/">image classification with Keras</a>: <a href="https://ml-summit.de/specialized-topics/bildklassifikation-leicht-gemacht-mit-keras-und-tensorflow/">https://ml-summit.de/specialized-topics/bildklassifikation-leicht-gemacht-mit-keras-und-tensorflow/</a> (German language)</li>
+</ul>
+
+<p><br></p>
+
+<ul>
+<li>In August 2018 I gave a webinar for SAP about <a href="https://shirinsplayground.netlify.com/2018/08/sap_webinar_slides/">Explaining Keras Image Classification Models with LIME</a>.</li>
+</ul>
+
+<p><br></p>
+
+<ul>
+<li>In June 2018 I gave a 3-hour workshop about the basics of machine learning with R at the University of Heidelberg, Germany. <a href="https://shirinsplayground.netlify.com/2018/06/intro_to_ml_workshop_heidelberg/">Slides and workshop code can be found here</a>.</li>
+</ul>
+
+<p><br></p>
+
+<ul>
+<li>In May 2018 I was at the <a href="http://unconf18.ropensci.org/">ROpenSci unconference in Seattle, WA</a>
+You can read about my experience and the project I worked on <a href="https://shirinsplayground.netlify.com/2018/05/ropensci_unconf18/">here</a>.</li>
+</ul>
+
+<p><br></p>
+
+<ul>
+<li>At the <a href="https://aws.amazon.com/de/events/web-days-2018/">Amazon AWS AI &amp; Machine Learning Web Day on May 8th</a>, I gave a presentation on how to get started with Amazon SageMaker. The recording can be found on <a href="https://youtu.be/lQmcXAN7GJ4">YouTube</a>; slides are on <a href="https://www.slideshare.net/AWSAktuell/ai-machine-learning-web-day-wie-gelingt-der-einstieg-in-amazon-sagemaker-prsentiert-von-codecentric">Slideshare</a></li>
+</ul>
+
+<p><br></p>
+
+<ul>
+<li><a href="https://shirinsplayground.netlify.com/2018/02/m3_2018/">I talked about explaining complex machine learning models at Minds Mastering Machines Conference</a> on Wednesday, April 25th 2018 in Colone
+The presentation was in German but the slides were similar to those: <a href="https://shirinsplayground.netlify.com/2018/04/hh_datascience_meetup_2018_slides/">https://shirinsplayground.netlify.com/2018/04/hh_datascience_meetup_2018_slides/</a></li>
+</ul>
+
+<p><br></p>
+
+<ul>
+<li>My colleague Uwe Friedrichsen and I gave a talk at the <a href="https://shirinsplayground.netlify.com/2018/01/jax2018/">JAX conference 2018: Deep Learning - a Primer</a> on April 24th 2018 in Mainz.
+Slides can be found here: <a href="https://www.slideshare.net/ShirinGlander/deep-learning-a-primer-95197733">https://www.slideshare.net/ShirinGlander/deep-learning-a-primer-95197733</a></li>
+</ul>
+
+<blockquote>
+<p>Deep Learning is one of the &ldquo;hot&rdquo; topics in the AI area – a lot of hype, a lot of inflated expectation, but also quite some impressive success stories. As some AI experts already predict that Deep Learning will become &ldquo;Software 2.0&rdquo;, it might be a good time to have a closer look at the topic. In this session I will try to give a comprehensive overview of Deep Learning. We will start with a bit of history and some theoretical foundations that we will use to create a little Deep Learning taxonomy. Then we will have a look at current and upcoming application areas: Where can we apply Deep Learning successfully and what does it differentiate from other approaches? Afterwards we will examine the ecosystem: Which tools and libraries are available? What are their strengths and weaknesses? And to complete the session, we will look into some practical code examples and the typical pitfalls of Deep Learning. After this session you will have a much better idea of the why, what and how of Deep Learning, including if and how you might want to apply it to your own work. <a href="https://jax.de/big-data-machine-learning/deep-learning-a-primer/">https://jax.de/big-data-machine-learning/deep-learning-a-primer/</a></p>
+</blockquote>
+
+<p><br></p>
+
+<ul>
+<li><a href="https://shirinsplayground.netlify.com/2018/03/meetup_talk_ruhrpy_april_18/">I talked about explaining complex Machine Learning Models with LIME</a> at this meetup: <a href="https://www.meetup.com/Hamburg-Data-Science-Meetup/events/244145443/">Data Science Meetup Hamburg</a> on Thursday, April 12th 2018.
+Slides can be found here: <a href="https://shirinsplayground.netlify.com/2018/04/hh_datascience_meetup_2018_slides/">https://shirinsplayground.netlify.com/2018/04/hh_datascience_meetup_2018_slides/</a></li>
+</ul>
+
+<blockquote>
+<p>Traditional machine learning workflows focus heavily on model training and optimization; the best model is usually chosen via performance measures like accuracy or error and we tend to assume that a model is good enough for deployment if it passes certain thresholds of these performance criteria. Why a model makes the predictions it makes, however, is generally neglected. But being able to understand and interpret such models can be immensely important for improving model quality, increasing trust and transparency and for reducing bias. Because complex machine learning models are essentially black boxes and too complicated to understand, we need to use approximations to get a better sense of how they work. One such approach is LIME, which stands for Local Interpretable Model-agnostic Explanations and is a tool that helps understand and explain the decisions made by complex machine learning models.
+Dr. Shirin Glander is Data Scientist at codecentric AG. She has received a PhD in Bioinformatics and applies methods of analysis and visualization from different areas - for instance, machine learning, classical statistics, text mining, etc. -to extract and leverage information from data.</p>
+</blockquote>
+
+<p><br></p>
+
+<ul>
+<li><a href="https://shirinsplayground.netlify.com/2018/03/meetup_talk_ruhrpy_april_18/">I talked about Deep Learning with Keras in R and Python</a> at this meetup: <a href="https://www.meetup.com/Ruhr-py/events/248093628/">Ruhr.Py 2018</a> on Wednesday, April 4th 2018.
+Slides can be found here: <a href="https://shirinsplayground.netlify.com/2018/04/ruhrpy_meetup_2018_slides/">https://shirinsplayground.netlify.com/2018/04/ruhrpy_meetup_2018_slides/</a></li>
+</ul>
+
+<blockquote>
+<p>Introducing Deep Learning with Keras and Python
+Keras is a high-level API written in Python for building and prototyping neural networks. It can be used on top of TensorFlow, Theano or CNTK. In this talk we build, train and visualize a Model using Python and Keras - all interactive with Jupyter Notebooks!</p>
+</blockquote>
+
+<p><br></p>
+
+<ul>
+<li><a href="https://shirinsplayground.netlify.com/2018/02/herr_mies_wills_wissen/">I talked about machine learning with Daniel Mies (Podcast in German, though)</a></li>
+</ul>
+
+<blockquote>
+<p>In January 2018 I was interviewed for a tech podcast where I talked about machine learning, neural nets, why I love R and Rstudio and how I became a Data Scientist.</p>
+</blockquote>
+
+<p><br></p>
+
+<ul>
+<li><a href="https://shirinsplayground.netlify.com/2017/12/lime_sketchnotes/">Explaining Predictions of Machine Learning Models with LIME - Münster Data Science Meetup</a></li>
+</ul>
+
+<blockquote>
+<p>In December 2017 I talked about Explaining Predictions of Machine Learning Models with LIME at the Münster Data Science Meetup.</p>
+</blockquote>
+
+<p><br></p>
+
+<ul>
+<li><a href="https://shiring.github.io/blogging/2017/09/20/webinar_biology_to_data_science">From Biology to Industry. A Blogger’s Journey to Data Science</a></li>
+</ul>
+
+<blockquote>
+<p>In September 2017 I gave a webinar for the Applied Epidemiology Didactic of the University of Wisconsin - Madison titled “From Biology to Industry. A Blogger’s Journey to Data Science.”
+I talked about how blogging about R and Data Science helped me become a Data Scientist. I also gave a short introduction to Machine Learning, Big Data and Neural Networks.</p>
+</blockquote>
+
+<p><br></p>
+
+<ul>
+<li><a href="https://shiring.github.io/machine_learning/2017/03/31/webinar_code">Building meaningful machine learning models for disease prediction</a></li>
+</ul>
+
+<blockquote>
+<p>In March 2017 I gave a webinar for the ISDS R Group about my work on building machine-learning models to predict the course of different diseases. I went over building a model, evaluating its performance, and answering or addressing different disease related questions using machine learning. My talk covered the theory of machine learning as it is applied using R.</p>
+</blockquote>
+
+<hr />
+
+<p><br></p>
+
+<h2 id="publications">Publications</h2>
+
+<ul>
+<li><a href="https://academic.oup.com/gbe/article/10/9/2278/5042901"><strong>Assortment of flowering time and immunity alleles in natural Arabidopsis thaliana populations suggests immunity and vegetative lifespan strategies coevolve</strong></a></li>
+</ul>
+
+<p>Shirin Glander, Fei He, Gregor Schmitz, Anika Witten, Arndt Telschow, J de Meaux; Genome Biology and Evolution, 22nd June 2018, evy124, <a href="https://doi.org/10.1093/gbe/evy124">https://doi.org/10.1093/gbe/evy124</a></p>
+
+<p><br></p>
+
+<ul>
+<li><a href="https://www.sciencedirect.com/science/article/pii/S0959437X1300141X"><strong>The spectrum of mutations controlling complex traits and the genetics of fitness in plants.</strong></a></li>
+</ul>
+
+<p>K Christin Falke · Shirin Glander · Fei He · Jinyong Hu · Juliette de Meaux · Gregor Schmitz., Nov. 2011, Current Opinion in Genetics &amp; Development</p>
+
+<p><br></p>
+
+<ul>
+<li><a href="https://stm.sciencemag.org/content/11/490/eaao5563"><strong>Teriflunomide treatment for multiple sclerosis modulates T cell mitochondrial respiration with affinity-dependent effects</strong></a></li>
+</ul>
+
+<p>Luisa Klotz et al. 2019. Science Translational Medicine, May 2019</p>
+
+<p><br></p>
+
+<ul>
+<li><a href="https://www.sciencedirect.com/science/article/pii/S0896841119300381?dgcid=author"><strong>Transcriptomic and proteomic analysis of iris tissue and aqueous humor in juvenile idiopathic arthritis-associated uveitis.</strong></a></li>
+</ul>
+
+<p>Lena Wildschütz, Doreen Ackermann, Anika Witten, Maren Kasper, Martin Busch, Shirin Glander, Harutyun Melkony, Karoline Walscheid, Christoph Tappeiner, Solon Thanos, Andrei Barysenka, Jörg Koch, Carsten Heinz, Björn Laffer, Dirk Bauer, Monika Stoll, Simon König, Arnd Heiligenhaus. Journal of Autoimmunity, Volume 100, June 2019, Pages 75-83</p>
+
+<p><br></p>
+
+<ul>
+<li><a href="https://www.pnas.org/content/115/34/E8017"><strong>Nur77 serves as a molecular brake of the metabolic switch during T cell activation to restrict autoimmunity</strong></a></li>
+</ul>
+
+<p>Marie Liebmann, Stephanie Hucke, Kathrin Koch, Melanie Eschborn, Julia Ghelman, Achmet I. Chasan, Shirin Glander, Martin Schädlich, Meike Kuhlencord, Niklas M. Daber, Maria Eveslage, Marc Beyer, Michael Dietrich, Philipp Albrecht, Monika Stoll, Karin B. Busch, Heinz Wiendl, Johannes Roth, Tanja Kuhlmann, Luisa Klotz. Proceedings of the National Academy of Sciences, August 2018, DOI: 10.1073/pnas.1721049115</p>
+
+<p><br></p>
+
+<ul>
+<li><a href="https://www.nature.com/articles/ni.3745"><strong>S100-induced innate immune programming protects newborn infants from sepsis.</strong></a></li>
+</ul>
+
+<p>Ulas et al., May 2017, Nature Immunology</p>
 ]]></content>
   </entry>
 </feed>

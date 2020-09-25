@@ -26,7 +26,7 @@ Btw., brownie points for those, who get the reference in my title. ;-)
 
 ---
 
-**Workshop announcement:** Because this year's UseR 2020 in Munich couldn't happen as an in-person event, I will be giving my [workshop on Deep Learning with Keras and TensorFlow](https://user2020.r-project.org/program/tutorials/) as an online event on Thursday, 8th of October (13:00 UTC).
+**Workshop announcement:** Because this year's UseR 2020 in Munich couldn't happen as an in-person event, I will be giving my [workshop on Deep Learning with Keras and TensorFlow](https://www.eventbrite.com/e/deep-learning-with-keras-and-tensorflow-tickets-122422397687) as an online event on Thursday, 8th of October (13:00 UTC / 15:00 CEST). You can register for FREE via [Eventbrite](https://www.eventbrite.com/e/deep-learning-with-keras-and-tensorflow-tickets-122422397687).
 
 ---
 

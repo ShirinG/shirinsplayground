@@ -13,7 +13,7 @@ slug: keras_callbacks
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(eval = TRUE, echo = TRUE, message = FALSE, warning = FALSE)
+knitr::opts_chunk$set(eval = FALSE, echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
 This is article #3 in my recent series on how to get the most out of Keras. The two articles were:
@@ -21,11 +21,11 @@ This is article #3 in my recent series on how to get the most out of Keras. The 
 1. [Update with TF 2.0: Image classification with Keras and TensorFlow](https://shirinsplayground.netlify.app/2020/09/keras_fruits_update/)
 2. [Whose dream is this? When and how to use the Keras Functional API](https://shirinsplayground.netlify.app/2020/09/keras_funct_api/)
 
-Keras comes with a number of built in [callbacks](https://keras.rstudio.com/articles/training_callbacks.html). Callbacks are useful for optimizing/customizing your training runs and are used with the `fit()` function.
+Keras comes with a number of built in [callbacks](https://keras.rstudio.com/articles/training_callbacks.html). Callbacks are useful for optimizing/customizing your training runs and are used with the `fit()` function. Here, I'll show what callbacks come built into Keras and how to write your own custom callbacks.
 
 ---
 
-**Workshop announcement:** Because this year's UseR 2020 in Munich couldn't happen as an in-person event, I will be giving my [workshop on Deep Learning with Keras and TensorFlow](https://user2020.r-project.org/program/tutorials/) as an online event on Thursday, 8th of October (13:00 UTC).
+**Workshop announcement:** Because this year's UseR 2020 in Munich couldn't happen as an in-person event, I will be giving my [workshop on Deep Learning with Keras and TensorFlow](https://www.eventbrite.com/e/deep-learning-with-keras-and-tensorflow-tickets-122422397687) as an online event on Thursday, 8th of October (13:00 UTC / 15:00 CEST). You can register for FREE via [Eventbrite](https://www.eventbrite.com/e/deep-learning-with-keras-and-tensorflow-tickets-122422397687).
 
 ---
 
@@ -170,9 +170,6 @@ predictions <- inputs %>%
   # Outputs from dense layer are projected onto output layer
   layer_dense(output_n) %>% 
   layer_activation("softmax")
-
-# create and compile model
-model <- keras_model(inputs = inputs, outputs = predictions)
 ```
 
 ## Callbacks
@@ -343,11 +340,27 @@ Here’s a simple example that saves a list of losses over each batch during tra
 ```{r}
 custom_cb <- callback_lambda(
   
-  on_epoch_end = function(epoch, logs) {
-    if (epoch %% 5 == 0) {
-      cat("\nEpoch",  epoch, "end\n")
-    }
-  }
+  #on_train_begin = function(self, logs = NULL) {
+  #  keys = list(logs.keys())
+  #  cat("\nStarting training; got log keys:",  keys)
+  #},
+  
+  on_epoch_begin = function(self, epoch, logs = NULL) {
+    #if (epoch %% 5 == 0) {
+      print("\nEpoch", {epoch:02d}, "start\n")
+    #}
+  },
+  
+  on_epoch_end = function(self, epoch, logs = NULL) {
+    
+    print("The average loss for {epoch:02d} is {val_loss:.2f}") #and mean absolute error is", logs["mean_absolute_error"])
+    
+  }#,
+  
+  #on_train_end = function(self, logs = NULL) {
+  #  keys = list(logs.keys())
+  #  cat("\nStop training; got log keys:",  keys)
+  #}
   
 )
 ```
@@ -355,14 +368,16 @@ custom_cb <- callback_lambda(
 ## Model training with callbacks
 
 ```{r}
-# fit
-model %>% 
-  
+# create and compile model
+model <- keras_model(inputs = inputs, 
+                     outputs = predictions) %>%
   compile(
   loss = "categorical_crossentropy",
   optimizer = optimizer_rmsprop(lr = 0.0001, decay = 1e-6),
   metrics = "accuracy"
-) %>% 
+)
+
+hist <- model %>% 
   
   fit_generator(
   # training data
