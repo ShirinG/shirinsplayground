@@ -127,7 +127,7 @@ canonifyurls = true
   identifier = "linkedin"
   name = "LinkedIn"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-linkedin\"></i>"
-  url = "https://www.linkedin.com/in/shirin-glander-01120881/"
+  url = "https://www.linkedin.com/in/shirin-e-01120881//"
 [[menu.links]]
   weight = 6
   identifier = "xing"
