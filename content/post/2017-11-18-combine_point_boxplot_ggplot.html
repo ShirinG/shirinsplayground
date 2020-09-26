@@ -28,13 +28,13 @@ fake_data &lt;- data.frame(time = dates,
                         var2 = runif(length(dates))) %&gt;%
   sample_frac(size = 0.33)
 head(fake_data)</code></pre>
-<pre><code>##                   time    var1_1    var1_2     var1_3      var2
-## 51 2017-10-01 09:30:00 0.4534363 0.9947001 0.07223936 0.8891859
-## 35 2017-10-01 08:42:00 0.4260230 0.5613454 0.77475368 0.5780837
-## 3  2017-10-01 07:06:00 0.0871770 0.2824280 0.97726978 0.4705974
-## 59 2017-10-01 09:54:00 0.6824320 0.9735636 0.67654248 0.4235517
-## 5  2017-10-01 07:12:00 0.7979666 0.5857256 0.03911439 0.6918448
-## 52 2017-10-01 09:33:00 0.7537796 0.3054030 0.61354248 0.5045606</code></pre>
+<pre><code>##                  time    var1_1    var1_2    var1_3       var2
+## 1 2017-10-01 08:33:00 0.4208415 0.2589455 0.3786275 0.80532017
+## 2 2017-10-01 08:42:00 0.4853185 0.4949028 0.9104159 0.25552958
+## 3 2017-10-01 09:42:00 0.4144495 0.6314172 0.5832432 0.74209701
+## 4 2017-10-01 09:54:00 0.9315311 0.8266359 0.1509052 0.55146543
+## 5 2017-10-01 08:36:00 0.1212433 0.3228635 0.5638170 0.43761903
+## 6 2017-10-01 09:21:00 0.2826186 0.8656590 0.8774104 0.07265883</code></pre>
 <p>Here, variable 1 (<code>var1</code>) has three measurements per time point, while variable 2 (<code>var2</code>) has one.</p>
 <p>First, for plotting with ggplot2 we want our data in a tidy long format. I also add another column for faceting that groups the variables from <code>var1</code> together.</p>
 <pre class="r"><code>fake_data_long &lt;- fake_data %&gt;%
@@ -42,12 +42,12 @@ head(fake_data)</code></pre>
   mutate(facet = ifelse(x %in% c(&quot;var1_1&quot;, &quot;var1_2&quot;, &quot;var1_3&quot;), &quot;var1&quot;, x))
 head(fake_data_long)</code></pre>
 <pre><code>##                  time      x         y facet
-## 1 2017-10-01 09:30:00 var1_1 0.4534363  var1
-## 2 2017-10-01 08:42:00 var1_1 0.4260230  var1
-## 3 2017-10-01 07:06:00 var1_1 0.0871770  var1
-## 4 2017-10-01 09:54:00 var1_1 0.6824320  var1
-## 5 2017-10-01 07:12:00 var1_1 0.7979666  var1
-## 6 2017-10-01 09:33:00 var1_1 0.7537796  var1</code></pre>
+## 1 2017-10-01 08:33:00 var1_1 0.4208415  var1
+## 2 2017-10-01 08:42:00 var1_1 0.4853185  var1
+## 3 2017-10-01 09:42:00 var1_1 0.4144495  var1
+## 4 2017-10-01 09:54:00 var1_1 0.9315311  var1
+## 5 2017-10-01 08:36:00 var1_1 0.1212433  var1
+## 6 2017-10-01 09:21:00 var1_1 0.2826186  var1</code></pre>
 <p>Now, we can plot this the following way:</p>
 <ul>
 <li>facet by variable</li>
@@ -66,42 +66,37 @@ head(fake_data_long)</code></pre>
                aes(x = time, y = y, group = time))</code></pre>
 <p><img src="/post/2017-11-18-combine_point_boxplot_ggplot_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>## R version 3.4.3 (2017-11-30)
-## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-## Running under: macOS High Sierra 10.13.4
+<pre><code>## R version 4.0.2 (2020-06-22)
+## Platform: x86_64-apple-darwin17.0 (64-bit)
+## Running under: macOS Catalina 10.15.6
 ## 
 ## Matrix products: default
-## BLAS: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRblas.0.dylib
-## LAPACK: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRlapack.dylib
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
 ## 
 ## locale:
-## [1] de_DE.UTF-8/de_DE.UTF-8/de_DE.UTF-8/C/de_DE.UTF-8/de_DE.UTF-8
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
 ## 
 ## attached base packages:
-## [1] methods   stats     graphics  grDevices utils     datasets  base     
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] bindrcpp_0.2       forcats_0.3.0      stringr_1.3.0     
-##  [4] dplyr_0.7.4        purrr_0.2.4        readr_1.1.1       
-##  [7] tidyr_0.8.0        tibble_1.4.2       ggplot2_2.2.1.9000
-## [10] tidyverse_1.2.1   
+## [1] forcats_0.5.0   stringr_1.4.0   dplyr_1.0.2     purrr_0.3.4    
+## [5] readr_1.3.1     tidyr_1.1.2     tibble_3.0.3    ggplot2_3.3.2  
+## [9] tidyverse_1.3.0
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] tidyselect_0.2.4  xfun_0.1          reshape2_1.4.3   
-##  [4] haven_1.1.1       lattice_0.20-35   colorspace_1.3-2 
-##  [7] htmltools_0.3.6   yaml_2.1.17       rlang_0.2.0.9000 
-## [10] pillar_1.2.1      withr_2.1.1.9000  foreign_0.8-69   
-## [13] glue_1.2.0        modelr_0.1.1      readxl_1.0.0     
-## [16] bindr_0.1         plyr_1.8.4        munsell_0.4.3    
-## [19] blogdown_0.5      gtable_0.2.0      cellranger_1.1.0 
-## [22] rvest_0.3.2       psych_1.7.8       evaluate_0.10.1  
-## [25] labeling_0.3      knitr_1.20        parallel_3.4.3   
-## [28] broom_0.4.3       Rcpp_0.12.15      backports_1.1.2  
-## [31] scales_0.5.0.9000 jsonlite_1.5      mnormt_1.5-5     
-## [34] hms_0.4.1         digest_0.6.15     stringi_1.1.6    
-## [37] bookdown_0.7      grid_3.4.3        rprojroot_1.3-2  
-## [40] cli_1.0.0         tools_3.4.3       magrittr_1.5     
-## [43] lazyeval_0.2.1    crayon_1.3.4      pkgconfig_2.0.1  
-## [46] xml2_1.2.0        lubridate_1.7.3   assertthat_0.2.0 
-## [49] rmarkdown_1.8     httr_1.3.1        rstudioapi_0.7   
-## [52] R6_2.2.2          nlme_3.1-131.1    compiler_3.4.3</code></pre>
+##  [1] tidyselect_1.1.0 xfun_0.17        haven_2.3.1      colorspace_1.4-1
+##  [5] vctrs_0.3.4      generics_0.0.2   htmltools_0.5.0  yaml_2.2.1      
+##  [9] blob_1.2.1       rlang_0.4.7      pillar_1.4.6     glue_1.4.2      
+## [13] withr_2.2.0      DBI_1.1.0        dbplyr_1.4.4     modelr_0.1.8    
+## [17] readxl_1.3.1     lifecycle_0.2.0  munsell_0.5.0    blogdown_0.20.1 
+## [21] gtable_0.3.0     cellranger_1.1.0 rvest_0.3.6      evaluate_0.14   
+## [25] labeling_0.3     knitr_1.29       fansi_0.4.1      broom_0.7.0     
+## [29] Rcpp_1.0.5       scales_1.1.1     backports_1.1.10 jsonlite_1.7.1  
+## [33] farver_2.0.3     fs_1.5.0         hms_0.5.3        digest_0.6.25   
+## [37] stringi_1.5.3    bookdown_0.20    grid_4.0.2       cli_2.0.2       
+## [41] tools_4.0.2      magrittr_1.5     crayon_1.3.4     pkgconfig_2.0.3 
+## [45] ellipsis_0.3.1   xml2_1.3.2       reprex_0.3.0     lubridate_1.7.9 
+## [49] assertthat_0.2.1 rmarkdown_2.3    httr_1.4.2       rstudioapi_0.11 
+## [53] R6_2.4.1         compiler_4.0.2</code></pre>

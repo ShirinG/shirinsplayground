@@ -1,6 +1,6 @@
 ---
 title: "Conferences, webinars, podcasts, workshops, books, articles and the likes"
-date: Sys.Date()
+date: '2020-09-27'
 comments:       false
 showMeta:       false
 showActions:    true

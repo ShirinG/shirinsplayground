@@ -8,6 +8,11 @@
   </url>
   
   <url>
+    <loc>/page/conferences_podcasts_webinars/</loc>
+    <lastmod>2020-09-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/2020/09/keras_callbacks/</loc>
     <lastmod>2020-09-27T00:00:00+00:00</lastmod>
   </url>
@@ -645,10 +650,6 @@
   </url>
   
   <url>
-    <loc>/page/conferences_podcasts_webinars/</loc>
-  </url>
-  
-  <url>
     <loc>/tags/customer-churn/</loc>
     <lastmod>2019-01-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -1016,7 +1017,7 @@
   
   <url>
     <loc>/page/</loc>
-    <lastmod>2020-08-23T00:00:00+00:00</lastmod>
+    <lastmod>2020-09-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
