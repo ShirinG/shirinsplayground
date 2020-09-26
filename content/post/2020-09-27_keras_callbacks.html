@@ -14,12 +14,12 @@ slug: keras_callbacks
 
 
 
-<p>This is article #3 in my recent series on how to get the most out of Keras. The two articles were:</p>
+<p>This is article #3 in my recent series on how to get the most out of Keras. The two other articles are:</p>
 <ol style="list-style-type: decimal">
 <li><a href="https://shirinsplayground.netlify.app/2020/09/keras_fruits_update/">Update with TF 2.0: Image classification with Keras and TensorFlow</a></li>
 <li><a href="https://shirinsplayground.netlify.app/2020/09/keras_funct_api/">Whose dream is this? When and how to use the Keras Functional API</a></li>
 </ol>
-<p>Keras comes with a number of built in <a href="https://keras.rstudio.com/articles/training_callbacks.html">callbacks</a>. Callbacks are useful for optimizing/customizing your training runs and are used with the <code>fit()</code> function. Here, I’ll show what callbacks come built into Keras and how to write your own custom callbacks.</p>
+<p>Keras comes with a number of built in <a href="https://keras.rstudio.com/articles/training_callbacks.html">callbacks</a>. Callbacks are useful for optimizing/customizing your training runs and are used with the <code>fit()</code> function. Here, I’ll show which callbacks come built into Keras and how to write your own custom callbacks.</p>
 <hr />
 <p><strong>Workshop announcement:</strong> Because this year’s UseR 2020 in Munich couldn’t happen as an in-person event, I will be giving my <a href="https://www.eventbrite.com/e/deep-learning-with-keras-and-tensorflow-tickets-122422397687">workshop on Deep Learning with Keras and TensorFlow</a> as an online event on Thursday, 8th of October (13:00 UTC / 15:00 CEST). You can register for FREE via <a href="https://www.eventbrite.com/e/deep-learning-with-keras-and-tensorflow-tickets-122422397687">Eventbrite</a>.</p>
 <hr />
@@ -44,8 +44,9 @@ tf_version()
 # check if keras is available
 is_keras_available()
 #[1] TRUE</code></pre>
-<div id="loading-images-data" class="section level2">
-<h2>Loading images (data)</h2>
+<div id="model-setup" class="section level2">
+<h2>Model setup</h2>
+<p>The setup part remains unchanged compared to <a href="https://shirinsplayground.netlify.app/2020/09/keras_funct_api/">before</a>.</p>
 <pre class="r"><code># path to image folders
 train_image_files_path &lt;- &quot;/fruits/Training/&quot;</code></pre>
 <pre class="r"><code># list of fruits to modle
@@ -68,7 +69,6 @@ batch_size &lt;- 32</code></pre>
 <pre class="r"><code>train_data_gen &lt;- image_data_generator(
   rescale = 1/255,
   validation_split = 0.3)</code></pre>
-<p>Now we load the images into memory and resize them.</p>
 <pre class="r"><code># training images
 train_image_array_gen &lt;- flow_images_from_directory(train_image_files_path, 
                                           train_data_gen,
@@ -90,10 +90,9 @@ valid_image_array_gen &lt;- flow_images_from_directory(train_image_files_path,
                                           batch_size = batch_size,
                                           seed = 42)
 #Found 2308 images belonging to 16 classes.</code></pre>
-</div>
-<div id="training-the-model" class="section level2">
-<h2>Training the model</h2>
-<p>Now, I define and train the model just as before:</p>
+<ul>
+<li>One change is that I’ll be increasing the number of epochs to 100. Don’t worry, we won’t actually train our model for 100 epochs, this is just to demonstrate how early stopping works. ;-)</li>
+</ul>
 <pre class="r"><code># number of training samples
 train_samples &lt;- train_image_array_gen$n
 # number of validation samples
@@ -131,57 +130,59 @@ predictions &lt;- inputs %&gt;%
 </div>
 <div id="callbacks" class="section level2">
 <h2>Callbacks</h2>
-<p><a href="https://cran.r-project.org/web/packages/keras/vignettes/training_callbacks.html" class="uri">https://cran.r-project.org/web/packages/keras/vignettes/training_callbacks.html</a></p>
+<p>You can find a list of all callbacks on <a href="https://cran.r-project.org/web/packages/keras/vignettes/training_callbacks.html">CRAN</a>. Let’s look at each one in turn:</p>
 <div id="early-stopping" class="section level3">
 <h3>Early stopping</h3>
-<ul>
-<li>how many epochs will be needed to get to an optimal validation loss. The examples so far have adopted the strategy of training for enough epochs that you begin overfitting, using the first run to figure out the proper number of epochs to train for, and then finally launching a new training run from scratch using this optimal number. Of course, this approach is wasteful. A much better way to handle this is to stop training when you measure that the validation loss in no longer improving.
-Interrupting training when the validation loss is no longer improving (and saving the best model obtained during training). You can use callback_early_stopping to interrupt training once a target metric being monitored has stopped improving for a fixed number of epochs. For instance, this callback allows you to interrupt training as soon as you start overfitting, thus avoiding having to retrain your model for a smaller number of epochs.</li>
-</ul>
+<p>The <strong>early-stopping callback</strong> is by far my most often utilized callback when training Keras functions. Usually, you want to stop training once training and validation loss no longer improve (significantly) and before you begin overfitting your model. But after how many epochs is that? You could of course start training and judge by eye, then stop training and set the number of epochs to your desired size before training your final model.</p>
+<p>A more elegant and practical approach is to set the number of epochs much higher than you think you’ll need and have the <strong>early-stopping callback</strong> handle the rest for you. You can tell <code>callback_early_stopping</code> what metric to <code>monitor</code> for improvements (usually, you want to look at the validation loss if you have a validation set), how much this metric has to change in order to be counted as “model still improves” (<code>min_delta</code>) and after how many epochs with no improvement training should stop (<code>patience</code>).</p>
+<p>Here, I also set <code>restore_best_weights = TRUE</code>, so that the weights from the best model (aka from the epoch with lowest validation loss) will be restored.</p>
 <pre class="r"><code>early_stop &lt;- callback_early_stopping(monitor = &quot;val_loss&quot;, 
                                       min_delta = 0.001, 
                                       patience = 5,
-                                      restore_best_weights = TRUE)</code></pre>
+                                      restore_best_weights = TRUE,
+                                      verbose = 1)</code></pre>
 </div>
 <div id="checkpoints" class="section level3">
 <h3>Checkpoints</h3>
-<p>Saving the current weights of the model at different points during training.
-This callback is typically used in combination with callback_model_checkpoint, which lets you continually save the model during training (and, optionally, save only the current best model so far: the version of the model that achieved the best performance at the end of an epoch):</p>
+<p>Usually, you’ll want to save your final model after training but you can also (additionally) save models during training. The <code>callback_model_checkpoint</code> saves a model after every epoch (default) or you can choose to only save a model if it’s performance is better than that from the epoch before (<code>save_best_only = TRUE</code>). You can even include epoch number and performance metric in the file name.</p>
 <pre class="r"><code>save_cp &lt;- callback_model_checkpoint(&quot;../../../keras_model_cps/checkpoints/weights.{epoch:02d}-{val_loss:.2f}.hdf5&quot;,
-                                     save_best_only = TRUE)</code></pre>
+                                     monitor = &quot;val_loss&quot;,
+                                     save_best_only = TRUE,
+                                     verbose = 1)</code></pre>
 </div>
 <div id="adjusting-the-learning-rate" class="section level3">
 <h3>Adjusting the learning rate</h3>
-<p>Dynamically adjusting the value of certain parameters during training—Such as the learning rate of the optimizer.
-The reduce-learning-rate-on-plateau callback
-You can use this callback to reduce the learning rate when the validation loss has stopped improving. Reducing or increasing the learning rate in case of a loss plateau is is an effective strategy to get out of local minima during training. The following example uses callback_reduce_lr_on_plateau:</p>
-<p>1 Monitors the model’s validation loss
-2 Divides the learning rate by 10 when triggered
-3 The callback is triggered after the validation loss has stopped improving for 10 epochs.</p>
-<p>Adapting the learning rate for your stochastic gradient descent optimization procedure can increase performance and reduce training time.</p>
-<p>Sometimes this is called learning rate annealing or adaptive learning rates. Here we will call this approach a learning rate schedule, were the default schedule is to use a constant learning rate to update network weights for each training epoch.</p>
-<p>The simplest and perhaps most used adaptation of learning rate during training are techniques that reduce the learning rate over time. These have the benefit of making large changes at the beginning of the training procedure when larger learning rate values are used, and decreasing the learning rate such that a smaller rate and therefore smaller training updates are made to weights later in the training procedure.</p>
-<p>This has the effect of quickly learning good weights early and fine tuning them later.</p>
-<p>Two popular and easy to use learning rate schedules are as follows:</p>
-<p>Decrease the learning rate gradually based on the epoch.
-Decrease the learning rate using punctuated large drops at specific epochs.</p>
-<p>Increase the initial learning rate. Because the learning rate will very likely decrease, start with a larger value to decrease from. A larger learning rate will result in a lot larger changes to the weights, at least in the beginning, allowing you to benefit from the fine tuning later.
-Use a large momentum. Using a larger momentum value will help the optimization algorithm to continue to make updates in the right direction when your learning rate shrinks to small values.
-Experiment with different schedules. It will not be clear which learning rate schedule to use so try a few with different configuration options and see what works best on your problem. Also try schedules that change exponentially and even schedules that respond to the accuracy of your model on the training or test datasets.</p>
-<pre class="r"><code>lr_schedule &lt;- function (epoch, lr) {
+<p>Adjusting the learning rate of the optimizer during training (as opposed to using a fixed learning rate throughout the entire training process) is often used to improve the final model performance. Usually, you will reduce the learning rate during training as that means that you’ll start out by taking big steps (aka weight changes) in the general “right direction” (in short: you are looking for the global minimum in your error landscape = your target) and once you get closer to your target, you’ll take smaller steps so as not to miss the target and get as close to it as possible (fine-tuning weights). But both reduction and increase of the learning rate can help you overcome local minima or saddle points in the error landscape.</p>
+<p>We can use two callbacks to adjust the learning rate:</p>
+<ol style="list-style-type: decimal">
+<li><code>callback_learning_rate_scheduler</code></li>
+</ol>
+<p>This callback takes a function with epoch number and learning rate as input. You’ll define how to change the learning rate depending on the epoch number and return the new learning rate as the function output. Here you’ll see two examples for a learning rate scheduler:</p>
+<ul>
+<li>In this scheduler, you will start with a fixed learning rate (defined later with <code>model %&gt;% compile()</code>) and use that for the first 10 epochs. After the 10th epoch, you’ll reduce the learning rate every other epoch.</li>
+</ul>
+<pre class="r"><code>lr_schedule_1 &lt;- function(epoch, lr) {
   
   if (epoch &lt;= 10) {
+    
     return(lr)
+    
   } else {
-    return(lr * tf$math$exp(-0.1))
+    
+    if (epoch %% 2 == 0) {
+      return(lr * tf$math$exp(-0.1))
+    }
   }
-
 }
 
-lr_schedule &lt;- function (epoch, lr) {
+reduce_lr_1 &lt;- callback_learning_rate_scheduler(lr_schedule_1)</code></pre>
+<ul>
+<li>Alternatively, you can define a decay rate and have the learning rate reduced by this decay rate on every decay step (e.g. every second epoch).</li>
+</ul>
+<pre class="r"><code>lr_schedule_2 &lt;- function(epoch, lr) {
   
   decay_rate = 0.1
-  decay_step = 10
+  decay_step = 2
   
   if (epoch %% decay_step == 0) {
     lr * decay_rate
@@ -191,7 +192,13 @@ lr_schedule &lt;- function (epoch, lr) {
 
 }
 
-reduce_lr &lt;- callback_learning_rate_scheduler(lr_schedule)</code></pre>
+reduce_lr_2 &lt;- callback_learning_rate_scheduler(lr_schedule_2)</code></pre>
+<p>Of course, you can change the learning rate any which way you want and that seems useful to you. However, finding a good learning rate curve isn’t trivial, so I tend to use the following callback instead:</p>
+<p><br></p>
+<ol start="2" style="list-style-type: decimal">
+<li><code>callback_reduce_lr_on_plateau</code></li>
+</ol>
+<p>This callback will reduce the learning rate once your model stagnates (i.e. when the performance metric doesn’t improve any more). This callback monitors a performance metric for improvements again, just as the <code>callback_early_stopping</code> callback above. The difference here is that training won’t stop once the monitored metric doesn’t improve for a given number of epochs but instead the learning rate is reduced by a given factor.</p>
 <pre class="r"><code>reduce_lr_pt &lt;- callback_reduce_lr_on_plateau(
   monitor = &quot;val_loss&quot;,
   factor = 0.1,
@@ -200,21 +207,24 @@ reduce_lr &lt;- callback_learning_rate_scheduler(lr_schedule)</code></pre>
   verbose = 1
 )</code></pre>
 </div>
-<div id="terminate-training-on-nan" class="section level3">
-<h3>Terminate training on NaN</h3>
+<div id="terminate-training-on-na" class="section level3">
+<h3>Terminate training on NA</h3>
+<p>This callback is pretty simple and self-explanatory: it will stop training if the loss is NA.</p>
 <pre class="r"><code>terminate_na &lt;- callback_terminate_on_naan()</code></pre>
 </div>
 <div id="logging" class="section level3">
 <h3>Logging</h3>
-<p>Logging training and validation metrics during training, or visualizing the representations learned by the model as they’re updated—The Keras progress bar that you’re familiar with is a callback!</p>
+<p>The logging callback is essentially the progress bar you will see in your standard-out (usually the console) during training. With <code>callback_progbar_logger</code> you can customize this progess bar. See the function help for more info.</p>
 <pre class="r"><code>prog_bar &lt;- callback_progbar_logger(count_mode = &quot;steps&quot;)</code></pre>
 </div>
 <div id="csv-logger" class="section level3">
 <h3>CSV logger</h3>
+<p>The <code>callback_csv_logger</code> will write epoch results to log files in csv format. We’ll look at the output of this csv-file below after finishing training.</p>
 <pre class="r"><code>logfile &lt;- callback_csv_logger(&quot;../../../keras_model_cps/run/log.csv&quot;)</code></pre>
 </div>
-<div id="introduction-to-tensorboard-the-tensorflow-visualization-framework" class="section level3">
-<h3>Introduction to TensorBoard: the TensorFlow visualization framework</h3>
+<div id="tensorboard" class="section level3">
+<h3>TensorBoard</h3>
+<p>TensorBoard is the TensorFlow visualization framework and as such can only be used if you are training with the TensorFlow backend. During training, you’ll want to be able to see what’s going on with the training process: Is it still running? Is the loss improving? By how much is it improving What epoch are we on? Etc.</p>
 <p>To do good research or develop good models, you need rich, frequent feedback about what’s going on inside your models during your experiments. That’s the point of running experiments: to get information about how well a model performs—as much information as possible. Making progress is an iterative process, or loop: you start with an idea and express it as an experiment, attempting to validate or invalidate your idea. You run this experiment and process the information it generates. This inspires your next idea. The more iterations of this loop you’re able to run, the more refined and powerful your ideas become. Keras helps you go from idea to experiment in the least possible time, and fast GPUs can help you get from experiment to result as quickly as possible. But what about processing the experiment results? That’s where Tensor-Board comes in.</p>
 <p>This section introduces TensorBoard, a browser-based visualization tool that comes packaged with TensorFlow. Note that it’s only available for Keras models when you’re using Keras with the TensorFlow backend.</p>
 <p>The key purpose of TensorBoard is to help you visually monitor everything that goes on inside your model during training. If you’re monitoring more information than just the model’s final loss, you can develop a clearer vision of what the model does and doesn’t do, and you can make progress more quickly. TensorBoard gives you access to several neat features, all in your browser:</p>
@@ -253,6 +263,41 @@ Here’s a simple example that saves a list of losses over each batch during tra
 3 Creates an instance of the callback
 4 Attaches the callback to model training
 5 Accumulated losses are now available from the callback instance.</p>
+<pre class="r"><code># define custom callback class
+LossHistory &lt;- R6::R6Class(&quot;LossHistory&quot;,
+  inherit = KerasCallback,
+  
+  public = list(
+    
+    losses = NULL,
+     
+    on_batch_end = function(batch, logs = list()) {
+      self$losses &lt;- c(self$losses, logs[[&quot;loss&quot;]])
+    }
+))
+
+# define model
+model &lt;- keras_model_sequential() 
+
+# add layers and compile
+model %&gt;% 
+  layer_dense(units = 10, input_shape = c(784)) %&gt;% 
+  layer_activation(activation = &#39;softmax&#39;) %&gt;% 
+  compile(
+    loss = &#39;categorical_crossentropy&#39;, 
+    optimizer = &#39;rmsprop&#39;
+  )
+
+# create history callback object and use it during training
+history &lt;- LossHistory$new()
+model %&gt;% fit(
+  X_train, Y_train,
+  batch_size=128, epochs=20, verbose=0,
+  callbacks= list(history)
+)
+
+# print the accumulated losses
+history$losses</code></pre>
 <pre class="r"><code>custom_cb &lt;- callback_lambda(
   
   #on_train_begin = function(self, logs = NULL) {
@@ -311,11 +356,11 @@ hist &lt;- model %&gt;%
     terminate_na,
     save_cp,
     logfile,
-    tensorboard,
+    tensorboard#,
     #reduce_lr,
     #reduce_lr_pt,
     #remote_monitor,
-    custom_cb
+    #custom_cb
   )
 )</code></pre>
 <pre><code>Epoch 1/100
@@ -396,7 +441,7 @@ hist_csv %&gt;%
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       Europe/Berlin               
-##  date     2020-09-25                  
+##  date     2020-09-26                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────
 ##  package     * version      date       lib source                             

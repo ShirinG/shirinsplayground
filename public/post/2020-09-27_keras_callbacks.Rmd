@@ -16,12 +16,12 @@ slug: keras_callbacks
 knitr::opts_chunk$set(eval = FALSE, echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
-This is article #3 in my recent series on how to get the most out of Keras. The two articles were:
+This is article #3 in my recent series on how to get the most out of Keras. The two other articles are:
 
 1. [Update with TF 2.0: Image classification with Keras and TensorFlow](https://shirinsplayground.netlify.app/2020/09/keras_fruits_update/)
 2. [Whose dream is this? When and how to use the Keras Functional API](https://shirinsplayground.netlify.app/2020/09/keras_funct_api/)
 
-Keras comes with a number of built in [callbacks](https://keras.rstudio.com/articles/training_callbacks.html). Callbacks are useful for optimizing/customizing your training runs and are used with the `fit()` function. Here, I'll show what callbacks come built into Keras and how to write your own custom callbacks.
+Keras comes with a number of built in [callbacks](https://keras.rstudio.com/articles/training_callbacks.html). Callbacks are useful for optimizing/customizing your training runs and are used with the `fit()` function. Here, I'll show which callbacks come built into Keras and how to write your own custom callbacks.
 
 ---
 
@@ -64,7 +64,9 @@ is_keras_available()
 #[1] TRUE
 ```
 
-## Loading images (data)
+## Model setup
+
+The setup part remains unchanged compared to [before](https://shirinsplayground.netlify.app/2020/09/keras_funct_api/).
 
 ```{r echo=TRUE, eval=FALSE}
 # path to image folders
@@ -102,8 +104,6 @@ train_data_gen <- image_data_generator(
   validation_split = 0.3)
 ```
 
-Now we load the images into memory and resize them. 
-
 ```{r}
 # training images
 train_image_array_gen <- flow_images_from_directory(train_image_files_path, 
@@ -128,9 +128,7 @@ valid_image_array_gen <- flow_images_from_directory(train_image_files_path,
 #Found 2308 images belonging to 16 classes.
 ```
 
-## Training the model
-
-Now, I define and train the model just as before:
+- One change is that I'll be increasing the number of epochs to 100. Don't worry, we won't actually train our model for 100 epochs, this is just to demonstrate how early stopping works. ;-)
 
 ```{r}
 # number of training samples
@@ -174,73 +172,72 @@ predictions <- inputs %>%
 
 ## Callbacks
 
-https://cran.r-project.org/web/packages/keras/vignettes/training_callbacks.html
+You can find a list of all callbacks on [CRAN](https://cran.r-project.org/web/packages/keras/vignettes/training_callbacks.html). Let's look at each one in turn:
 
 ### Early stopping
 
-- how many epochs will be needed to get to an optimal validation loss. The examples so far have adopted the strategy of training for enough epochs that you begin overfitting, using the first run to figure out the proper number of epochs to train for, and then finally launching a new training run from scratch using this optimal number. Of course, this approach is wasteful. A much better way to handle this is to stop training when you measure that the validation loss in no longer improving.
-Interrupting training when the validation loss is no longer improving (and saving the best model obtained during training). You can use callback_early_stopping to interrupt training once a target metric being monitored has stopped improving for a fixed number of epochs. For instance, this callback allows you to interrupt training as soon as you start overfitting, thus avoiding having to retrain your model for a smaller number of epochs.
+The **early-stopping callback** is by far my most often utilized callback when training Keras functions. Usually, you want to stop training once training and validation loss no longer improve (significantly) and before you begin overfitting your model. But after how many epochs is that? You could of course start training and judge by eye, then stop training and set the number of epochs to your desired size before training your final model.
+
+A more elegant and practical approach is to set the number of epochs much higher than you think you'll need and have the **early-stopping callback** handle the rest for you. You can tell `callback_early_stopping` what metric to `monitor` for improvements (usually, you want to look at the validation loss if you have a validation set), how much this metric has to change in order to be counted as "model still improves" (`min_delta`) and after how many epochs with no improvement training should stop (`patience`).
+
+Here, I also set `restore_best_weights = TRUE`, so that the weights from the best model (aka from the epoch with lowest validation loss) will be restored.
 
 ```{r}
 early_stop <- callback_early_stopping(monitor = "val_loss", 
                                       min_delta = 0.001, 
                                       patience = 5,
-                                      restore_best_weights = TRUE)
+                                      restore_best_weights = TRUE,
+                                      verbose = 1)
 ```
-
 
 ### Checkpoints
 
-Saving the current weights of the model at different points during training.
-This callback is typically used in combination with callback_model_checkpoint, which lets you continually save the model during training (and, optionally, save only the current best model so far: the version of the model that achieved the best performance at the end of an epoch):
+Usually, you'll want to save your final model after training but you can also (additionally) save models during training. The `callback_model_checkpoint` saves a model after every epoch (default) or you can choose to only save a model if it's performance is better than that from the epoch before (`save_best_only = TRUE`). You can even include epoch number and performance metric in the file name.
 
 ```{r}
 save_cp <- callback_model_checkpoint("../../../keras_model_cps/checkpoints/weights.{epoch:02d}-{val_loss:.2f}.hdf5",
-                                     save_best_only = TRUE)
+                                     monitor = "val_loss",
+                                     save_best_only = TRUE,
+                                     verbose = 1)
 ```
 
-
 ### Adjusting the learning rate
-Dynamically adjusting the value of certain parameters during training—Such as the learning rate of the optimizer.
-The reduce-learning-rate-on-plateau callback
-You can use this callback to reduce the learning rate when the validation loss has stopped improving. Reducing or increasing the learning rate in case of a loss plateau is is an effective strategy to get out of local minima during training. The following example uses callback_reduce_lr_on_plateau:
 
-1 Monitors the model’s validation loss
-2 Divides the learning rate by 10 when triggered
-3 The callback is triggered after the validation loss has stopped improving for 10 epochs.
+Adjusting the learning rate of the optimizer during training (as opposed to using a fixed learning rate throughout the entire training process) is often used to improve the final model performance. Usually, you will reduce the learning rate during training as that means that you'll start out by taking big steps (aka weight changes) in the general "right direction" (in short: you are looking for the global minimum in your error landscape = your target) and once you get closer to your target, you'll take smaller steps so as not to miss the target and get as close to it as possible (fine-tuning weights). But both reduction and increase of the learning rate can help you overcome local minima or saddle points in the error landscape.
 
-Adapting the learning rate for your stochastic gradient descent optimization procedure can increase performance and reduce training time.
+We can use two callbacks to adjust the learning rate:
 
-Sometimes this is called learning rate annealing or adaptive learning rates. Here we will call this approach a learning rate schedule, were the default schedule is to use a constant learning rate to update network weights for each training epoch.
+1. `callback_learning_rate_scheduler`
 
-The simplest and perhaps most used adaptation of learning rate during training are techniques that reduce the learning rate over time. These have the benefit of making large changes at the beginning of the training procedure when larger learning rate values are used, and decreasing the learning rate such that a smaller rate and therefore smaller training updates are made to weights later in the training procedure.
+This callback takes a function with epoch number and learning rate as input. You'll define how to change the learning rate depending on the epoch number and return the new learning rate as the function output. Here you'll see two examples for a learning rate scheduler:
 
-This has the effect of quickly learning good weights early and fine tuning them later.
-
-Two popular and easy to use learning rate schedules are as follows:
-
-Decrease the learning rate gradually based on the epoch.
-Decrease the learning rate using punctuated large drops at specific epochs.
-
-Increase the initial learning rate. Because the learning rate will very likely decrease, start with a larger value to decrease from. A larger learning rate will result in a lot larger changes to the weights, at least in the beginning, allowing you to benefit from the fine tuning later.
-Use a large momentum. Using a larger momentum value will help the optimization algorithm to continue to make updates in the right direction when your learning rate shrinks to small values.
-Experiment with different schedules. It will not be clear which learning rate schedule to use so try a few with different configuration options and see what works best on your problem. Also try schedules that change exponentially and even schedules that respond to the accuracy of your model on the training or test datasets.
+- In this scheduler, you will start with a fixed learning rate (defined later with `model %>% compile()`) and use that for the first 10 epochs. After the 10th epoch, you'll reduce the learning rate every other epoch.
 
 ```{r}
-lr_schedule <- function (epoch, lr) {
+lr_schedule_1 <- function(epoch, lr) {
   
   if (epoch <= 10) {
+    
     return(lr)
+    
   } else {
-    return(lr * tf$math$exp(-0.1))
+    
+    if (epoch %% 2 == 0) {
+      return(lr * tf$math$exp(-0.1))
+    }
   }
-
 }
 
-lr_schedule <- function (epoch, lr) {
+reduce_lr_1 <- callback_learning_rate_scheduler(lr_schedule_1)
+```
+
+- Alternatively, you can define a decay rate and have the learning rate reduced by this decay rate on every decay step (e.g. every second epoch).
+
+```{r}
+lr_schedule_2 <- function(epoch, lr) {
   
   decay_rate = 0.1
-  decay_step = 10
+  decay_step = 2
   
   if (epoch %% decay_step == 0) {
     lr * decay_rate
@@ -250,8 +247,16 @@ lr_schedule <- function (epoch, lr) {
 
 }
 
-reduce_lr <- callback_learning_rate_scheduler(lr_schedule)
+reduce_lr_2 <- callback_learning_rate_scheduler(lr_schedule_2)
 ```
+
+Of course, you can change the learning rate any which way you want and that seems useful to you. However, finding a good learning rate curve isn't trivial, so I tend to use the following callback instead:
+
+<br>
+
+2. `callback_reduce_lr_on_plateau`
+
+This callback will reduce the learning rate once your model stagnates (i.e. when the performance metric doesn't improve any more). This callback monitors a performance metric for improvements again, just as the `callback_early_stopping` callback above. The difference here is that training won't stop once the monitored metric doesn't improve for a given number of epochs but instead the learning rate is reduced by a given factor.
 
 ```{r}
 reduce_lr_pt <- callback_reduce_lr_on_plateau(
@@ -263,7 +268,9 @@ reduce_lr_pt <- callback_reduce_lr_on_plateau(
 )
 ```
 
-### Terminate training on NaN
+### Terminate training on NA
+
+This callback is pretty simple and self-explanatory: it will stop training if the loss is NA.
 
 ```{r}
 terminate_na <- callback_terminate_on_naan()
@@ -271,7 +278,7 @@ terminate_na <- callback_terminate_on_naan()
 
 ### Logging
 
-Logging training and validation metrics during training, or visualizing the representations learned by the model as they’re updated—The Keras progress bar that you’re familiar with is a callback!
+The logging callback is essentially the progress bar you will see in your standard-out (usually the console) during training. With `callback_progbar_logger` you can customize this progess bar. See the function help for more info.
 
 ```{r}
 prog_bar <- callback_progbar_logger(count_mode = "steps")
@@ -279,11 +286,15 @@ prog_bar <- callback_progbar_logger(count_mode = "steps")
 
 ### CSV logger
 
+The `callback_csv_logger` will write epoch results to log files in csv format. We'll look at the output of this csv-file below after finishing training.
+
 ```{r}
 logfile <- callback_csv_logger("../../../keras_model_cps/run/log.csv")
 ```
 
-### Introduction to TensorBoard: the TensorFlow visualization framework
+### TensorBoard
+
+TensorBoard is the TensorFlow visualization framework and as such can only be used if you are training with the TensorFlow backend. During training, you'll want to be able to see what's going on with the training process: Is it still running? Is the loss improving? By how much is it improving What epoch are we on? Etc.
 
 To do good research or develop good models, you need rich, frequent feedback about what’s going on inside your models during your experiments. That’s the point of running experiments: to get information about how well a model performs—as much information as possible. Making progress is an iterative process, or loop: you start with an idea and express it as an experiment, attempting to validate or invalidate your idea. You run this experiment and process the information it generates. This inspires your next idea. The more iterations of this loop you’re able to run, the more refined and powerful your ideas become. Keras helps you go from idea to experiment in the least possible time, and fast GPUs can help you get from experiment to result as quickly as possible. But what about processing the experiment results? That’s where Tensor-Board comes in.
 
@@ -336,6 +347,44 @@ Here’s a simple example that saves a list of losses over each batch during tra
 3 Creates an instance of the callback
 4 Attaches the callback to model training
 5 Accumulated losses are now available from the callback instance.
+
+```{r}
+# define custom callback class
+LossHistory <- R6::R6Class("LossHistory",
+  inherit = KerasCallback,
+  
+  public = list(
+    
+    losses = NULL,
+     
+    on_batch_end = function(batch, logs = list()) {
+      self$losses <- c(self$losses, logs[["loss"]])
+    }
+))
+
+# define model
+model <- keras_model_sequential() 
+
+# add layers and compile
+model %>% 
+  layer_dense(units = 10, input_shape = c(784)) %>% 
+  layer_activation(activation = 'softmax') %>% 
+  compile(
+    loss = 'categorical_crossentropy', 
+    optimizer = 'rmsprop'
+  )
+
+# create history callback object and use it during training
+history <- LossHistory$new()
+model %>% fit(
+  X_train, Y_train,
+  batch_size=128, epochs=20, verbose=0,
+  callbacks= list(history)
+)
+
+# print the accumulated losses
+history$losses
+```
 
 ```{r}
 custom_cb <- callback_lambda(
@@ -397,11 +446,11 @@ hist <- model %>%
     terminate_na,
     save_cp,
     logfile,
-    tensorboard,
+    tensorboard#,
     #reduce_lr,
     #reduce_lr_pt,
     #remote_monitor,
-    custom_cb
+    #custom_cb
   )
 )
 ```

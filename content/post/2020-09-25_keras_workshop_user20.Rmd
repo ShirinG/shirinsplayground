@@ -1,12 +1,12 @@
 ---
 title: "Free workshop on Deep Learning with Keras and TensorFlow"
-draft: true
+draft: false
 author: Dr. Shirin Elsinghorst
-date: '2020-09-25'
+date: '2020-09-26'
 categories: ["R", "keras"]
 tags: ["R", "keras", "image classification", "tensorflow"]
 thumbnailImagePosition: left
-thumbnailImage: https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F112586411%2F178164554504%2F1%2Foriginal.20200924-201042?w=1080&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C144%2C432%2C216&s=44125ca6642388631ea5f3c91ae27731
+thumbnailImage: /img/R_Meetup_flyer.png
 metaAlignment: center
 coverMeta: out
 slug: keras_workshop_user20
@@ -20,7 +20,7 @@ Because this year's UseR 2020 in Munich couldn't happen as an in-person event, I
 
 **You can register for FREE via [Eventbrite](https://www.eventbrite.com/e/deep-learning-with-keras-and-tensorflow-tickets-122422397687).**
 
-![](https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F112586411%2F178164554504%2F1%2Foriginal.20200924-201042?w=1080&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C144%2C432%2C216&s=44125ca6642388631ea5f3c91ae27731)
+![](/img/R_Meetup_flyer.png)
 
 > Deep learning is an artificial intelligence that mimics the workings of a human brain in processing different data, creating patterns and interpreting information that is used for decision making. It is a subfield of machine learning in artificial intelligence and Its networks has the capability to learn, supervised or unsupervised, from data that is either structured or labelled.
 
