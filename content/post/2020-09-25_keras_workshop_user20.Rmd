@@ -1,8 +1,8 @@
 ---
-title: "Free workshop on Deep Learning with Keras and TensorFlow"
+title: "Video + code from workshop on Deep Learning with Keras and TensorFlow"
 draft: false
 author: Dr. Shirin Elsinghorst
-date: '2020-09-26'
+date: '2020-10-19'
 categories: ["R", "keras"]
 tags: ["R", "keras", "image classification", "tensorflow"]
 thumbnailImagePosition: left
@@ -12,13 +12,15 @@ coverMeta: out
 slug: keras_workshop_user20
 ---
 
-## Workshop announcement
+## Workshop material 
 
-Because this year's UseR 2020 in Munich couldn't happen as an in-person event, I will be giving my [workshop on Deep Learning with Keras and TensorFlow](https://www.eventbrite.com/e/deep-learning-with-keras-and-tensorflow-tickets-122422397687) as an online event on 
+Because this year's UseR 2020 couldn't happen as an in-person event, I have been giving my **workshop on Deep Learning with Keras and TensorFlow** as an online event on Thursday, 8th of October.
 
-- Thursday, 8th of October (13:00 UTC / 15:00 CEST)
+You can now find the full [recording of the 2-hour session on YouTube](https://youtu.be/uBISMeExoqk) and the [notebooks with code on Gitlab](https://gitlab.com/ShirinG/keras_tutorial_user2020).
 
-**You can register for FREE via [Eventbrite](https://www.eventbrite.com/e/deep-learning-with-keras-and-tensorflow-tickets-122422397687).**
+<br>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/uBISMeExoqk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ![](/img/R_Meetup_flyer.png)
 

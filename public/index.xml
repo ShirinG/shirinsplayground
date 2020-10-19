@@ -710,6 +710,39 @@ penguins_pca &lt;- penguins_prep %&gt;%
 ]]></content>
   </entry>
   <entry>
+    <title type="html"><![CDATA[Video &#43; code from workshop on Deep Learning with Keras and TensorFlow]]></title>
+    <link href="/2020/10/keras_workshop_user20/"/>
+    <id>/2020/10/keras_workshop_user20/</id>
+    <published>2020-10-19T00:00:00+00:00</published>
+    <updated>2020-10-19T00:00:00+00:00</updated>
+    <content type="html"><![CDATA[<div id="workshop-material" class="section level2">
+<h2>Workshop material</h2>
+<p>Because this year’s UseR 2020 couldn’t happen as an in-person event, I have been giving my <strong>workshop on Deep Learning with Keras and TensorFlow</strong> as an online event on Thursday, 8th of October.</p>
+<p>You can now find the full <a href="https://youtu.be/uBISMeExoqk">recording of the 2-hour session on YouTube</a> and the <a href="https://gitlab.com/ShirinG/keras_tutorial_user2020">notebooks with code on Gitlab</a>.</p>
+<p><br></p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/uBISMeExoqk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+<p><img src="/img/R_Meetup_flyer.png" /></p>
+<blockquote>
+<p>Deep learning is an artificial intelligence that mimics the workings of a human brain in processing different data, creating patterns and interpreting information that is used for decision making. It is a subfield of machine learning in artificial intelligence and Its networks has the capability to learn, supervised or unsupervised, from data that is either structured or labelled.</p>
+</blockquote>
+<blockquote>
+<p>It is one of the hottest trends in machine learning at the moment and there are many problems where deep learning shines, such as Self Driving Cars, Natural Language Processing, Machine Translations, image recognition and Artificial Intelligence (AI) and so on.</p>
+</blockquote>
+<p><br></p>
+<ul>
+<li>You will start with RStudio by learning how to first prepare your workspace</li>
+<li>Load data and move to exploring and preprocessing the data.</li>
+<li>Normalize and split the data into training and test sets.</li>
+<li>Construct your deep learning model</li>
+<li>Compile and fit the model to your data</li>
+<li>Predict target values based on test data and</li>
+<li>Evaluate your model and interpret the results</li>
+</ul>
+</div>
+]]></content>
+  </entry>
+  <entry>
     <title type="html"><![CDATA[Conferences, webinars, podcasts, workshops, books, articles and the likes]]></title>
     <link href="/page/conferences_podcasts_webinars/"/>
     <id>/page/conferences_podcasts_webinars/</id>
@@ -743,8 +776,6 @@ penguins_pca &lt;- penguins_prep %&gt;%
 <p>I offer a workshop on deep learning with Keras and TensorFlow using R.
 Date and place depend on who and how many people are interested, so please contact me either directly or via the workshop page: <a href="https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/">https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/</a> (the description is in German but I also offer to give the workshop in English).</p>
 </blockquote>
-
-<p><strong>Workshop announcement:</strong> Because this year&rsquo;s UseR 2020 in Munich couldn&rsquo;t happen as an in-person event, I will be giving my <a href="https://www.eventbrite.com/e/deep-learning-with-keras-and-tensorflow-tickets-122422397687">workshop on Deep Learning with Keras and TensorFlow</a> as an online event on Thursday, 8th of October (13:00 UTC / 15:00 CEST). You can register for FREE via <a href="https://www.eventbrite.com/e/deep-learning-with-keras-and-tensorflow-tickets-122422397687">Eventbrite</a>.</p>
 
 <p><br></p>
 
@@ -816,7 +847,9 @@ implementieren können.</p>
 <h2 id="past-talks-webinars-podcasts-etc">Past talks, webinars, podcasts, etc.</h2>
 
 <ul>
-<li><strong>German only -</strong> <a href="https://www.slideshare.net/ShirinGlander/richtig-gut-die-qualitt-von-modellen-verstehen">RICHTIG GUT: DIE QUALITÄT VON MODELLEN VERSTEHEN</a></li>
+<li><p>Because this year&rsquo;s UseR 2020 couldn&rsquo;t happen as an in-person event, I have been giving my <strong>workshop on Deep Learning with Keras and TensorFlow</strong> as an online event on Thursday, 8th of October. You can now find the full <a href="https://youtu.be/uBISMeExoqk">recording of the 2-hour session on YouTube</a> and the <a href="https://gitlab.com/ShirinG/keras_tutorial_user2020">notebooks with code on Gitlab</a>.</p></li>
+
+<li><p><strong>German only -</strong> <a href="https://www.slideshare.net/ShirinGlander/richtig-gut-die-qualitt-von-modellen-verstehen">RICHTIG GUT: DIE QUALITÄT VON MODELLEN VERSTEHEN</a></p></li>
 </ul>
 
 <p><a href="https://online.m3-konferenz.de/lecture.php?id=12337&amp;source=0">Vortrag auf der M3 Online-Konferenz am 16.06.2020</a></p>
@@ -1482,14 +1515,14 @@ hist_csv %&gt;%
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────
 ##  setting  value                       
 ##  version  R version 4.0.2 (2020-06-22)
-##  os       macOS Catalina 10.15.6      
+##  os       macOS Catalina 10.15.7      
 ##  system   x86_64, darwin17.0          
 ##  ui       X11                         
 ##  language (EN)                        
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       Europe/Berlin               
-##  date     2020-09-26                  
+##  date     2020-10-19                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────
 ##  package     * version      date       lib source                             
@@ -1526,7 +1559,7 @@ hist_csv %&gt;%
 ##  httr          1.4.2        2020-07-20 [1] CRAN (R 4.0.2)                     
 ##  jsonlite      1.7.1        2020-09-07 [1] CRAN (R 4.0.2)                     
 ##  keras       * 2.3.0.0.9000 2020-09-15 [1] Github (rstudio/keras@ad737d1)     
-##  knitr         1.29         2020-06-23 [1] CRAN (R 4.0.2)                     
+##  knitr         1.30         2020-09-22 [1] CRAN (R 4.0.2)                     
 ##  lattice       0.20-41      2020-04-02 [1] CRAN (R 4.0.2)                     
 ##  lifecycle     0.2.0        2020-03-06 [1] CRAN (R 4.0.0)                     
 ##  lubridate     1.7.9        2020-06-08 [1] CRAN (R 4.0.2)                     
@@ -1559,7 +1592,7 @@ hist_csv %&gt;%
 ##  sessioninfo   1.1.1        2018-11-05 [1] CRAN (R 4.0.0)                     
 ##  stringi       1.5.3        2020-09-09 [1] CRAN (R 4.0.2)                     
 ##  stringr     * 1.4.0        2019-02-10 [1] CRAN (R 4.0.0)                     
-##  tensorflow  * 2.2.0.9000   2020-09-15 [1] Github (rstudio/tensorflow@bb4062a)
+##  tensorflow  * 2.2.0        2020-05-11 [1] CRAN (R 4.0.2)                     
 ##  testthat      2.3.2        2020-03-02 [1] CRAN (R 4.0.0)                     
 ##  tfruns        1.4          2018-08-25 [1] CRAN (R 4.0.0)                     
 ##  tibble      * 3.0.3        2020-07-10 [1] CRAN (R 4.0.2)                     
@@ -1569,46 +1602,13 @@ hist_csv %&gt;%
 ##  usethis       1.6.3        2020-09-17 [1] CRAN (R 4.0.2)                     
 ##  vctrs         0.3.4        2020-08-29 [1] CRAN (R 4.0.2)                     
 ##  whisker       0.4          2019-08-28 [1] CRAN (R 4.0.0)                     
-##  withr         2.2.0        2020-04-20 [1] CRAN (R 4.0.0)                     
-##  xfun          0.17         2020-09-09 [1] CRAN (R 4.0.2)                     
+##  withr         2.3.0        2020-09-22 [1] CRAN (R 4.0.2)                     
+##  xfun          0.18         2020-09-29 [1] CRAN (R 4.0.2)                     
 ##  xml2          1.3.2        2020-04-23 [1] CRAN (R 4.0.0)                     
 ##  yaml          2.2.1        2020-02-01 [1] CRAN (R 4.0.0)                     
 ##  zeallot       0.1.0        2018-01-28 [1] CRAN (R 4.0.0)                     
 ## 
 ## [1] /Library/Frameworks/R.framework/Versions/4.0/Resources/library</code></pre>
-</div>
-]]></content>
-  </entry>
-  <entry>
-    <title type="html"><![CDATA[Free workshop on Deep Learning with Keras and TensorFlow]]></title>
-    <link href="/2020/09/keras_workshop_user20/"/>
-    <id>/2020/09/keras_workshop_user20/</id>
-    <published>2020-09-26T00:00:00+00:00</published>
-    <updated>2020-09-26T00:00:00+00:00</updated>
-    <content type="html"><![CDATA[<div id="workshop-announcement" class="section level2">
-<h2>Workshop announcement</h2>
-<p>Because this year’s UseR 2020 in Munich couldn’t happen as an in-person event, I will be giving my <a href="https://www.eventbrite.com/e/deep-learning-with-keras-and-tensorflow-tickets-122422397687">workshop on Deep Learning with Keras and TensorFlow</a> as an online event on</p>
-<ul>
-<li>Thursday, 8th of October (13:00 UTC / 15:00 CEST)</li>
-</ul>
-<p><strong>You can register for FREE via <a href="https://www.eventbrite.com/e/deep-learning-with-keras-and-tensorflow-tickets-122422397687">Eventbrite</a>.</strong></p>
-<p><img src="/img/R_Meetup_flyer.png" /></p>
-<blockquote>
-<p>Deep learning is an artificial intelligence that mimics the workings of a human brain in processing different data, creating patterns and interpreting information that is used for decision making. It is a subfield of machine learning in artificial intelligence and Its networks has the capability to learn, supervised or unsupervised, from data that is either structured or labelled.</p>
-</blockquote>
-<blockquote>
-<p>It is one of the hottest trends in machine learning at the moment and there are many problems where deep learning shines, such as Self Driving Cars, Natural Language Processing, Machine Translations, image recognition and Artificial Intelligence (AI) and so on.</p>
-</blockquote>
-<p><br></p>
-<ul>
-<li>You will start with RStudio by learning how to first prepare your workspace</li>
-<li>Load data and move to exploring and preprocessing the data.</li>
-<li>Normalize and split the data into training and test sets.</li>
-<li>Construct your deep learning model</li>
-<li>Compile and fit the model to your data</li>
-<li>Predict target values based on test data and</li>
-<li>Evaluate your model and interpret the results</li>
-</ul>
 </div>
 ]]></content>
   </entry>

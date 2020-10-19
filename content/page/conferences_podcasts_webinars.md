@@ -26,8 +26,6 @@ Here, you can find a list of all the talks I gave at conferences, webinars, podc
 > I offer a workshop on deep learning with Keras and TensorFlow using R.
 Date and place depend on who and how many people are interested, so please contact me either directly or via the workshop page: https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/ (the description is in German but I also offer to give the workshop in English).
 
-**Workshop announcement:** Because this year's UseR 2020 in Munich couldn't happen as an in-person event, I will be giving my [workshop on Deep Learning with Keras and TensorFlow](https://www.eventbrite.com/e/deep-learning-with-keras-and-tensorflow-tickets-122422397687) as an online event on Thursday, 8th of October (13:00 UTC / 15:00 CEST). You can register for FREE via [Eventbrite](https://www.eventbrite.com/e/deep-learning-with-keras-and-tensorflow-tickets-122422397687).
-
 <br>
 
 - [Workshop: End-2-End vom Keras TensorFlow-Modell zur Produktion](https://www.codecentric.de/schulung/end-2-end-vom-keras-tensorflow-modell-zur-produktion/)
@@ -80,6 +78,8 @@ implementieren können.
 <br>
 
 ## Past talks, webinars, podcasts, etc.
+
+- Because this year's UseR 2020 couldn't happen as an in-person event, I have been giving my **workshop on Deep Learning with Keras and TensorFlow** as an online event on Thursday, 8th of October. You can now find the full [recording of the 2-hour session on YouTube](https://youtu.be/uBISMeExoqk) and the [notebooks with code on Gitlab](https://gitlab.com/ShirinG/keras_tutorial_user2020).
 
 - **German only -** [RICHTIG GUT: DIE QUALITÄT VON MODELLEN VERSTEHEN](https://www.slideshare.net/ShirinGlander/richtig-gut-die-qualitt-von-modellen-verstehen)
 
