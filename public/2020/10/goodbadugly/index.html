@@ -30,21 +30,18 @@
     
 
     
-    <meta name="description" content="This is the complete code used to create the ggplot2 graphs in my talk The Good, the Bad and the Ugly: how (not) to visualize data at this year’s data2day conference. You can find the slides here.
-If you have questions or would like to talk about this article (or something else data-related), you can now book 15-minute timeslots with me (it’s free - one slot available per weekday):
- If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at paypal.">
-    <meta property="og:description" content="This is the complete code used to create the ggplot2 graphs in my talk The Good, the Bad and the Ugly: how (not) to visualize data at this year’s data2day conference. You can find the slides here.
-If you have questions or would like to talk about this article (or something else data-related), you can now book 15-minute timeslots with me (it’s free - one slot available per weekday):
- If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at paypal.">
+    <meta name="description" content="Below you’ll find the complete code used to create the ggplot2 graphs in my talk The Good, the Bad and the Ugly: how (not) to visualize data at this year’s data2day conference. You can find the German slides here:
+ If you have questions or would like to talk about this article (or something else data-related), you can now book 15-minute timeslots with me (it’s free - one slot available per weekday):">
+    <meta property="og:description" content="Below you’ll find the complete code used to create the ggplot2 graphs in my talk The Good, the Bad and the Ugly: how (not) to visualize data at this year’s data2day conference. You can find the German slides here:
+ If you have questions or would like to talk about this article (or something else data-related), you can now book 15-minute timeslots with me (it’s free - one slot available per weekday):">
     <meta property="og:type" content="blog">
     <meta property="og:title" content="The Good, the Bad and the Ugly: how (not) to visualize data">
     <meta property="og:url" content="/2020/10/goodbadugly/">
     <meta property="og:site_name" content="Shirin&#39;s playgRound">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Shirin&#39;s playgRound">
-    <meta name="twitter:description" content="This is the complete code used to create the ggplot2 graphs in my talk The Good, the Bad and the Ugly: how (not) to visualize data at this year’s data2day conference. You can find the slides here.
-If you have questions or would like to talk about this article (or something else data-related), you can now book 15-minute timeslots with me (it’s free - one slot available per weekday):
- If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at paypal.">
+    <meta name="twitter:description" content="Below you’ll find the complete code used to create the ggplot2 graphs in my talk The Good, the Bad and the Ugly: how (not) to visualize data at this year’s data2day conference. You can find the German slides here:
+ If you have questions or would like to talk about this article (or something else data-related), you can now book 15-minute timeslots with me (it’s free - one slot available per weekday):">
     
       <meta name="twitter:creator" content="@ShirinGlander">
     
@@ -373,7 +370,10 @@ ga('send', 'pageview');
           
           <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
-              <p>This is the complete code used to create the <strong>ggplot2</strong> graphs in my talk <strong>The Good, the Bad and the Ugly: how (not) to visualize data</strong> at this year’s data2day conference. You can find the slides here.</p>
+              <p>Below you’ll find the complete code used to create the <strong>ggplot2</strong> graphs in my talk <strong>The Good, the Bad and the Ugly: how (not) to visualize data</strong> at this year’s data2day conference. You can find the German <a href="https://docs.google.com/presentation/d/e/2PACX-1vR4pD2EmW9Gzxr1Q3qwgjEYkU64o2-ThlX1mXqfNQ2EKteVUVt6Qg2ImEKKi9XLv-Iutb3lD8esLyU7/pub?start=false&amp;loop=false&amp;delayms=3000">slides here</a>:</p>
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vR4pD2EmW9Gzxr1Q3qwgjEYkU64o2-ThlX1mXqfNQ2EKteVUVt6Qg2ImEKKi9XLv-Iutb3lD8esLyU7/embed?start=false&amp;loop=false&amp;delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true">
+</iframe>
+<hr />
 <p>If you have questions or would like to talk about this article (or something else data-related), you can now <a href="https://shirinsplayground.netlify.app/page/bookme/">book 15-minute timeslots</a> with me (it’s free - one slot available per weekday):</p>
 <img src="https://www.appointletcdn.com/loader/buttons/F62459.png" data-appointlet-organization="shirin-elsinghorst" data-appointlet-service="357892">
 <script src="https://www.appointletcdn.com/loader/loader.min.js" async="" defer=""></script>
@@ -832,7 +832,7 @@ penguins_hist %&gt;%
   dist(method = &quot;euclidean&quot;) %&gt;%
   hclust(method = &quot;ward.D2&quot;) %&gt;% 
   as.dendrogram</code></pre>
-<pre><code>## &#39;dendrogram&#39; with 2 branches and 30 members total, at height 11.61524</code></pre>
+<pre><code>## &#39;dendrogram&#39; with 2 branches and 30 members total, at height 11.78606</code></pre>
 </div>
 <div id="waterfall-charts" class="section level3">
 <h3>Waterfall charts</h3>
@@ -926,20 +926,20 @@ penguins_pca &lt;- penguins_prep %&gt;%
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────
 ##  setting  value                       
 ##  version  R version 4.0.2 (2020-06-22)
-##  os       macOS Catalina 10.15.6      
+##  os       macOS Catalina 10.15.7      
 ##  system   x86_64, darwin17.0          
 ##  ui       X11                         
 ##  language (EN)                        
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       Europe/Berlin               
-##  date     2020-09-14                  
+##  date     2020-10-19                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────
 ##  package        * version date       lib source                           
 ##  ash              1.0-15  2015-09-01 [1] CRAN (R 4.0.2)                   
 ##  assertthat       0.2.1   2019-03-21 [1] CRAN (R 4.0.0)                   
-##  backports        1.1.9   2020-08-24 [1] CRAN (R 4.0.2)                   
+##  backports        1.1.10  2020-09-15 [1] CRAN (R 4.0.2)                   
 ##  blob             1.2.1   2020-01-20 [1] CRAN (R 4.0.2)                   
 ##  blogdown         0.20.1  2020-09-09 [1] Github (rstudio/blogdown@d96fe78)
 ##  bookdown         0.20    2020-06-23 [1] CRAN (R 4.0.2)                   
@@ -948,13 +948,12 @@ penguins_pca &lt;- penguins_prep %&gt;%
 ##  cellranger       1.1.0   2016-07-27 [1] CRAN (R 4.0.0)                   
 ##  cli              2.0.2   2020-02-28 [1] CRAN (R 4.0.0)                   
 ##  colorspace       1.4-1   2019-03-18 [1] CRAN (R 4.0.0)                   
-##  cpp11            0.2.1   2020-08-11 [1] CRAN (R 4.0.2)                   
 ##  crayon           1.3.4   2017-09-16 [1] CRAN (R 4.0.0)                   
 ##  DBI              1.1.0   2019-12-15 [1] CRAN (R 4.0.0)                   
 ##  dbplyr           1.4.4   2020-05-27 [1] CRAN (R 4.0.2)                   
 ##  dendextend     * 1.14.0  2020-08-26 [1] CRAN (R 4.0.2)                   
 ##  desc             1.2.0   2018-05-01 [1] CRAN (R 4.0.0)                   
-##  devtools         2.3.1   2020-07-21 [1] CRAN (R 4.0.2)                   
+##  devtools         2.3.2   2020-09-18 [1] CRAN (R 4.0.2)                   
 ##  digest           0.6.25  2020-02-23 [1] CRAN (R 4.0.0)                   
 ##  dplyr          * 1.0.2   2020-08-18 [1] CRAN (R 4.0.2)                   
 ##  ellipsis         0.3.1   2020-05-15 [1] CRAN (R 4.0.0)                   
@@ -986,10 +985,10 @@ penguins_pca &lt;- penguins_prep %&gt;%
 ##  htmlwidgets      1.5.1   2019-10-08 [1] CRAN (R 4.0.0)                   
 ##  httpuv           1.5.4   2020-06-06 [1] CRAN (R 4.0.2)                   
 ##  httr             1.4.2   2020-07-20 [1] CRAN (R 4.0.2)                   
-##  insight          0.9.5   2020-09-07 [1] CRAN (R 4.0.2)                   
+##  insight          0.9.6   2020-09-20 [1] CRAN (R 4.0.2)                   
 ##  jsonlite         1.7.1   2020-09-07 [1] CRAN (R 4.0.2)                   
 ##  KernSmooth       2.23-17 2020-04-26 [1] CRAN (R 4.0.2)                   
-##  knitr            1.29    2020-06-23 [1] CRAN (R 4.0.2)                   
+##  knitr            1.30    2020-09-22 [1] CRAN (R 4.0.2)                   
 ##  labeling         0.3     2014-08-23 [1] CRAN (R 4.0.0)                   
 ##  later            1.1.0.1 2020-06-05 [1] CRAN (R 4.0.2)                   
 ##  lattice        * 0.20-41 2020-04-02 [1] CRAN (R 4.0.2)                   
@@ -1039,26 +1038,26 @@ penguins_pca &lt;- penguins_prep %&gt;%
 ##  scales           1.1.1   2020-05-11 [1] CRAN (R 4.0.0)                   
 ##  sessioninfo      1.1.1   2018-11-05 [1] CRAN (R 4.0.0)                   
 ##  shiny            1.5.0   2020-06-23 [1] CRAN (R 4.0.2)                   
-##  sjlabelled       1.1.6   2020-06-25 [1] CRAN (R 4.0.2)                   
+##  sjlabelled       1.1.7   2020-09-24 [1] CRAN (R 4.0.2)                   
 ##  sjmisc           2.8.5   2020-05-28 [1] CRAN (R 4.0.2)                   
 ##  stringi          1.5.3   2020-09-09 [1] CRAN (R 4.0.2)                   
 ##  stringr        * 1.4.0   2019-02-10 [1] CRAN (R 4.0.0)                   
-##  systemfonts      0.3.1   2020-09-08 [1] CRAN (R 4.0.2)                   
+##  systemfonts      0.3.2   2020-09-29 [1] CRAN (R 4.0.2)                   
 ##  testthat         2.3.2   2020-03-02 [1] CRAN (R 4.0.0)                   
 ##  tibble         * 3.0.3   2020-07-10 [1] CRAN (R 4.0.2)                   
 ##  tidyr          * 1.1.2   2020-08-27 [1] CRAN (R 4.0.2)                   
 ##  tidyselect       1.1.0   2020-05-11 [1] CRAN (R 4.0.0)                   
 ##  tidyverse      * 1.3.0   2019-11-21 [1] CRAN (R 4.0.0)                   
 ##  treemapify     * 2.5.3   2019-01-30 [1] CRAN (R 4.0.2)                   
-##  usethis          1.6.1   2020-04-29 [1] CRAN (R 4.0.0)                   
+##  usethis          1.6.3   2020-09-17 [1] CRAN (R 4.0.2)                   
 ##  utf8             1.1.4   2018-05-24 [1] CRAN (R 4.0.0)                   
 ##  uuid             0.1-4   2020-02-26 [1] CRAN (R 4.0.2)                   
 ##  vctrs            0.3.4   2020-08-29 [1] CRAN (R 4.0.2)                   
 ##  viridis          0.5.1   2018-03-29 [1] CRAN (R 4.0.2)                   
 ##  viridisLite      0.3.0   2018-02-01 [1] CRAN (R 4.0.0)                   
 ##  waterfall      * 1.0.2   2016-04-03 [1] CRAN (R 4.0.2)                   
-##  withr            2.2.0   2020-04-20 [1] CRAN (R 4.0.0)                   
-##  xfun             0.17    2020-09-09 [1] CRAN (R 4.0.2)                   
+##  withr            2.3.0   2020-09-22 [1] CRAN (R 4.0.2)                   
+##  xfun             0.18    2020-09-29 [1] CRAN (R 4.0.2)                   
 ##  xml2             1.3.2   2020-04-23 [1] CRAN (R 4.0.0)                   
 ##  xtable           1.8-4   2019-04-21 [1] CRAN (R 4.0.0)                   
 ##  yaml             2.2.1   2020-02-01 [1] CRAN (R 4.0.0)                   
@@ -1324,9 +1323,8 @@ penguins_pca &lt;- penguins_prep %&gt;%
                   Oct 10, 2020
                 </span>
               </span>
-              <div class="media-content hide-xs font-merryweather">This is the complete code used to create the ggplot2 graphs in my talk The Good, the Bad and the Ugly: how (not) to visualize data at this year’s data2day conference. You can find the slides here.
-If you have questions or would like to talk about this article (or something else data-related), you can now book 15-minute timeslots with me (it’s free - one slot available per weekday):
- If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at paypal.</div>
+              <div class="media-content hide-xs font-merryweather">Below you’ll find the complete code used to create the ggplot2 graphs in my talk The Good, the Bad and the Ugly: how (not) to visualize data at this year’s data2day conference. You can find the German slides here:
+ If you have questions or would like to talk about this article (or something else data-related), you can now book 15-minute timeslots with me (it’s free - one slot available per weekday):</div>
             </div>
             <div style="clear:both;"></div>
             <hr>
