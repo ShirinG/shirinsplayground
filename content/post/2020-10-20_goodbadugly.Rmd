@@ -1,6 +1,6 @@
 ---
 title: "The Good, the Bad and the Ugly: how (not) to visualize data"
-draft: true
+draft: false
 author: Dr. Shirin Elsinghorst
 date: '2020-10-20'
 categories: ["R"]
