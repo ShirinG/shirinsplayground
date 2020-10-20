@@ -20,6 +20,8 @@ Below you'll find the complete code used to create the **ggplot2** graphs in my 
 
 <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vR4pD2EmW9Gzxr1Q3qwgjEYkU64o2-ThlX1mXqfNQ2EKteVUVt6Qg2ImEKKi9XLv-Iutb3lD8esLyU7/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 
+You can also find a German blog article accompanying my talk on [codecentric's blog](https://blog.codecentric.de/2020/10/goodbadugly/).
+
 ---
 
 If you have questions or would like to talk about this article (or something else data-related), you can now [book 15-minute timeslots](https://shirinsplayground.netlify.app/page/bookme/) with me (it's free - one slot available per weekday): 

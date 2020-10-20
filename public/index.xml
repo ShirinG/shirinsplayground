@@ -17,6 +17,7 @@
     <content type="html"><![CDATA[<p>Below you’ll find the complete code used to create the <strong>ggplot2</strong> graphs in my talk <strong>The Good, the Bad and the Ugly: how (not) to visualize data</strong> at this year’s data2day conference. You can find the German <a href="https://docs.google.com/presentation/d/e/2PACX-1vR4pD2EmW9Gzxr1Q3qwgjEYkU64o2-ThlX1mXqfNQ2EKteVUVt6Qg2ImEKKi9XLv-Iutb3lD8esLyU7/pub?start=false&amp;loop=false&amp;delayms=3000">slides here</a>:</p>
 <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vR4pD2EmW9Gzxr1Q3qwgjEYkU64o2-ThlX1mXqfNQ2EKteVUVt6Qg2ImEKKi9XLv-Iutb3lD8esLyU7/embed?start=false&amp;loop=false&amp;delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true">
 </iframe>
+<p>You can also find a German blog article accompanying my talk on <a href="https://blog.codecentric.de/2020/10/goodbadugly/">codecentric’s blog</a>.</p>
 <hr />
 <p>If you have questions or would like to talk about this article (or something else data-related), you can now <a href="https://shirinsplayground.netlify.app/page/bookme/">book 15-minute timeslots</a> with me (it’s free - one slot available per weekday):</p>
 <img src="https://www.appointletcdn.com/loader/buttons/F62459.png" data-appointlet-organization="shirin-elsinghorst" data-appointlet-service="357892">
@@ -476,7 +477,7 @@ penguins_hist %&gt;%
   dist(method = &quot;euclidean&quot;) %&gt;%
   hclust(method = &quot;ward.D2&quot;) %&gt;% 
   as.dendrogram</code></pre>
-<pre><code>## &#39;dendrogram&#39; with 2 branches and 30 members total, at height 12.03324</code></pre>
+<pre><code>## &#39;dendrogram&#39; with 2 branches and 30 members total, at height 11.94105</code></pre>
 </div>
 <div id="waterfall-charts" class="section level3">
 <h3>Waterfall charts</h3>
