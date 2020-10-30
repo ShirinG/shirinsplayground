@@ -79,7 +79,13 @@ implementieren können.
 
 ## Past talks, webinars, podcasts, etc.
 
+- At this year's data2day conference on October 20th 2020 I talked about **The Good, the Bad and the Ugly: how (not) to visualize data**. You can find the German [slides here](https://docs.google.com/presentation/d/e/2PACX-1vR4pD2EmW9Gzxr1Q3qwgjEYkU64o2-ThlX1mXqfNQ2EKteVUVt6Qg2ImEKKi9XLv-Iutb3lD8esLyU7/pub?start=false&loop=false&delayms=3000) and the code to create all plots [here](https://shirinsplayground.netlify.app/2020/10/goodbadugly/).
+
+<br>
+
 - Because this year's UseR 2020 couldn't happen as an in-person event, I have been giving my **workshop on Deep Learning with Keras and TensorFlow** as an online event on Thursday, 8th of October. You can now find the full [recording of the 2-hour session on YouTube](https://youtu.be/uBISMeExoqk) and the [notebooks with code on Gitlab](https://gitlab.com/ShirinG/keras_tutorial_user2020).
+
+<br>
 
 - **German only -** [RICHTIG GUT: DIE QUALITÄT VON MODELLEN VERSTEHEN](https://www.slideshare.net/ShirinGlander/richtig-gut-die-qualitt-von-modellen-verstehen)
 

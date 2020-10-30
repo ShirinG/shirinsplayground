@@ -856,9 +856,19 @@ implementieren können.</p>
 <h2 id="past-talks-webinars-podcasts-etc">Past talks, webinars, podcasts, etc.</h2>
 
 <ul>
-<li><p>Because this year&rsquo;s UseR 2020 couldn&rsquo;t happen as an in-person event, I have been giving my <strong>workshop on Deep Learning with Keras and TensorFlow</strong> as an online event on Thursday, 8th of October. You can now find the full <a href="https://youtu.be/uBISMeExoqk">recording of the 2-hour session on YouTube</a> and the <a href="https://gitlab.com/ShirinG/keras_tutorial_user2020">notebooks with code on Gitlab</a>.</p></li>
+<li>At this year&rsquo;s data2day conference on October 20th 2020 I talked about <strong>The Good, the Bad and the Ugly: how (not) to visualize data</strong>. You can find the German <a href="https://docs.google.com/presentation/d/e/2PACX-1vR4pD2EmW9Gzxr1Q3qwgjEYkU64o2-ThlX1mXqfNQ2EKteVUVt6Qg2ImEKKi9XLv-Iutb3lD8esLyU7/pub?start=false&amp;loop=false&amp;delayms=3000">slides here</a> and the code to create all plots <a href="https://shirinsplayground.netlify.app/2020/10/goodbadugly/">here</a>.</li>
+</ul>
 
-<li><p><strong>German only -</strong> <a href="https://www.slideshare.net/ShirinGlander/richtig-gut-die-qualitt-von-modellen-verstehen">RICHTIG GUT: DIE QUALITÄT VON MODELLEN VERSTEHEN</a></p></li>
+<p><br></p>
+
+<ul>
+<li>Because this year&rsquo;s UseR 2020 couldn&rsquo;t happen as an in-person event, I have been giving my <strong>workshop on Deep Learning with Keras and TensorFlow</strong> as an online event on Thursday, 8th of October. You can now find the full <a href="https://youtu.be/uBISMeExoqk">recording of the 2-hour session on YouTube</a> and the <a href="https://gitlab.com/ShirinG/keras_tutorial_user2020">notebooks with code on Gitlab</a>.</li>
+</ul>
+
+<p><br></p>
+
+<ul>
+<li><strong>German only -</strong> <a href="https://www.slideshare.net/ShirinGlander/richtig-gut-die-qualitt-von-modellen-verstehen">RICHTIG GUT: DIE QUALITÄT VON MODELLEN VERSTEHEN</a></li>
 </ul>
 
 <p><a href="https://online.m3-konferenz.de/lecture.php?id=12337&amp;source=0">Vortrag auf der M3 Online-Konferenz am 16.06.2020</a></p>
