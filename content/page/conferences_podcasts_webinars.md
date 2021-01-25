@@ -46,6 +46,12 @@ implementieren können.
 
 ## Where you find my written word
 
+- In the German [iX Developer special edition winter 2020/2021](https://shop.heise.de/ix-developer-machine-learning-2020/PDF), I wrote again about fairness, explainability and ethics in machine learning.
+
+![](/img/ix2020.jpg)
+
+<br>
+
 - [For the German Entwickler Magazin, I have written an article about how to train your own image classification model with Python and Keras](https://entwickler.de/leseproben/machine-learning-mit-python-579887732.html)
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr"><a href="https://t.co/onaDiQV3Ci">https://t.co/onaDiQV3Ci</a><br>My article about machine learning with Python has come out in the German Entwickler Magazin. 😊</p>&mdash; Shirin Glander (@ShirinGlander) <a href="https://twitter.com/ShirinGlander/status/1116340544110825472?ref_src=twsrc%5Etfw">April 11, 2019</a></blockquote>
@@ -71,7 +77,7 @@ implementieren können.
 
 ## Upcoming talks, webinars, podcasts, etc.
 
-- During the virtual data2day conference on October 20th 2020, I'll be talking about [The Good, the Bad and the Ugly: how (not) to visualize data](https://www.data2day.de/lecture.php?id=12321&source=0) (German)
+- During the ML Summit in April 2021, I'll give a virtual workshop on [how to visualize data effectively](https://ml-summit.de/machine-learing/the-good-the-bad-and-the-ugly-analysen-effektiv-visualisieren-und-kommunizieren/) (German only).
 
 ---
 
@@ -79,7 +85,8 @@ implementieren können.
 
 ## Past talks, webinars, podcasts, etc.
 
-- At this year's data2day conference on October 20th 2020 I talked about **The Good, the Bad and the Ugly: how (not) to visualize data**. You can find the German [slides here](https://docs.google.com/presentation/d/e/2PACX-1vR4pD2EmW9Gzxr1Q3qwgjEYkU64o2-ThlX1mXqfNQ2EKteVUVt6Qg2ImEKKi9XLv-Iutb3lD8esLyU7/pub?start=false&loop=false&delayms=3000) and the code to create all plots [here](https://shirinsplayground.netlify.app/2020/10/goodbadugly/).
+- At this year's data2day conference on October 20th 2020 I talked about [The Good, the Bad and the Ugly: how (not) to visualize data](https://www.data2day.de/lecture.php?id=12321&source=0). You can find the German [slides here](https://docs.google.com/presentation/d/e/2PACX-1vR4pD2EmW9Gzxr1Q3qwgjEYkU64o2-ThlX1mXqfNQ2EKteVUVt6Qg2ImEKKi9XLv-Iutb3lD8esLyU7/pub?start=false&loop=false&delayms=3000) and the code to create all plots [here](https://shirinsplayground.netlify.app/2020/10/goodbadugly/).
+You can watch the video recording of my talk (German) [here](https://vimeo.com/ondemand/data2day2020/486542615).
 
 <br>
 
