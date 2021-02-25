@@ -1,0 +1,343 @@
+---
+title: "Update to The Good, the Bad and the Ugly: how (not) to visualize Machine Learning data"
+draft: true
+author: Dr. Shirin Elsinghorst
+date: '2021-04-28'
+categories: ["R"]
+tags: ["R", "ggplot2"]
+thumbnailImagePosition: left
+thumbnailImage: post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-29-1.png
+metaAlignment: center
+coverMeta: out
+slug: goodbadugly_ml
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+Below you'll find the complete code used to create the **ggplot2** graphs in my talk **The Good, the Bad and the Ugly: how (not) to visualize Machine Learning data** at this year's Minds Mastering machines conference. You can find the German [slides here](https://docs.google.com/presentation/d/e/2PACX-1vR4pD2EmW9Gzxr1Q3qwgjEYkU64o2-ThlX1mXqfNQ2EKteVUVt6Qg2ImEKKi9XLv-Iutb3lD8esLyU7/pub?start=false&loop=false&delayms=3000):
+
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vR4pD2EmW9Gzxr1Q3qwgjEYkU64o2-ThlX1mXqfNQ2EKteVUVt6Qg2ImEKKi9XLv-Iutb3lD8esLyU7/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+
+You can find [Part 1: **The Good, the Bad and the Ugly: how (not) to visualize data** here](https://shirinsplayground.netlify.app/2020/10/goodbadugly/).
+---
+
+If you have questions or would like to talk about this article (or something else data-related), you can now [book 15-minute timeslots](https://shirinsplayground.netlify.app/page/bookme/) with me (it's free - one slot available per weekday): 
+
+<img src="https://www.appointletcdn.com/loader/buttons/F62459.png" data-appointlet-organization="shirin-elsinghorst" data-appointlet-service="357892"><script src="https://www.appointletcdn.com/loader/loader.min.js" async="" defer=""></script>
+
+*If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at <button>[paypal.me](https://paypal.me/ShirinGlander)</button>. Thank you!* :-)
+
+---
+
+```{r libraries}
+library(tidyverse)
+library(mlbench)
+```
+
+## Dataset
+
+Pima Indians Diabetes dataset from [*mlbench* package](http://search.r-project.org/library/mlbench/html/PimaIndiansDiabetes.html).
+
+```{r}
+data(PimaIndiansDiabetes)
+PimaIndiansDiabetes %>%
+  head()
+```
+
+## Colors
+
+- set [colorblind-friendly palettes](https://jfly.uni-koeln.de/color/)
+
+```{r}
+# The palette with grey:
+cbp1 <- c("#999999", "#E69F00", "#56B4E9", "#009E73",
+          "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+```
+
+```{r}
+ggplot <- function(...) ggplot2::ggplot(...) + 
+  scale_color_manual(values = cbp1) +
+  scale_fill_manual(values = cbp1) + # note: needs to be overridden when using continuous color scales
+  theme_bw()
+```
+
+## Visualizing Machine Learning models: training and results
+
+Machine learning is inherently an iterative process. Modeling can be cumbersome when you are performing the process over and over again to ensure your model is optimized and can generalize well. Add on the time you spend on model selection and model tuning, the process can easily become a frustrating one. Good exploratory data analysis combined with relevant data visualization is essential for pinpointing the right direction to take. It both shortens the machine learning process and provides more accuracy for its outcome. Data visualization tools such as TensorFlow enable data scientists to quickly identify and focus on the most important data and the most important paths to take. Even during the modeling process, model graphs can help to speed up the model-creation process by displaying the model maps conceptually. When evaluating the models, visualizing the results of hyperparameter tuning can help data scientists narrow down the groupings of hyperparameters that are most important.
+
+At each of these steps, data visualization helps the data scientist explore the data, understand the data and process the data to set it up for modeling.
+
+
+
+https://arxiv.org/pdf/1801.06889.pdf
+
+Visualizing models, decision boundaries and prediction results may give hints whether the model is indeed a good fit or it is a poor fit for the data. For example, it is high bias to ignore the nature of our data if use a straight line to fit a circular scatter of dots.
+Researchers even visualized different optimizers to see their descend to minimize loss.
+
+As part of any Data Science project, Data Visualization plays an important part in order to learn more about the available data and to identify any main pattern.
+
+Data Visualization is Essential in Every Step of Machine Learning
+
+Transform data into visual encodings
+What is it good for?
+Data exploration
+Scientific insight
+Communication
+Education
+How to ensure it works well?
+Engage the visual system in smart ways
+Take advantage of pre-attentive processing 
+
+Find visual encodings that
+● Guide viewer's attention
+● Communicate data to the viewer
+● Let viewer calculate with data
+On computer
+● Interactive exploration
+
+Framework: visualization uses in ML
+1. Training Data
+2. Model Performance
+3. Interpretability + model inspection
+4. High-dimensional data
+5. Education and communication 
+
+Main approaches
+Linear
+- Principal Component Analysis (show as much variation in data as possible)
+- Visualization of Labeled Data Using Linear Transformations (clusters match labels)
+
+Non-linear (just a few of many) Minimize distortion, according to some metric
+- Multidimensional scaling
+- Sammon mapping
+- Isomap
+- t-SNE
+- UMAP: New kid on the block Faster than t-SNE, Can efficiently embed into high dimensions (i.e. useful not just for visualization), Often seems to capture global structure better
+
+
+### EDA
+
+Ask the right question by putting the data into context first
+Since the machine learning process is iterative, asking relevant questions to kick off the process will involve putting data into context. As you progress in your machine learning process, you can refine your questions to zoom in on the most important details. Putting data into context means that you will visualize all the columns within the data to understand the following:
+
+The meaning of each column of data.
+Whether it’s a categorical or continuous variable for each column.
+Whether the data is an independent or dependent variable.
+
+Understand the data by understanding both sides: good and bad
+The next step in the machine learning process is understanding the data. There are many aspects to this. Ultimately, the iterative nature of the process will allow for a continual understanding of the data as you move through more iterations of modeling. But, to begin with, understanding the data involves asking the following:
+
+Where are the possible data errors, such as missing data, wrong data types, misleading data, and outlier data, and so on?
+Below is an example of a nullity matrix that gives you missing data information visually on columns of data.
+
+By viewing the density of missing data in various columns, a decision can be made at the data cleaning step to use a particular missing data imputation technique for a given column. Visualization tools such as Python’s seaborn.heatmap and R’s heatmap() functions help to gauge the degree of missing data in each column.
+
+Where are the imbalances of data?
+Below is an example of using a heatmap to represent the correlation of the relationships between the variables.
+
+High-density areas can be identified and groups of variables that are highly correlated, such as multicollinearity, can be further investigated. In certain algorithms, such as Decision Tree algorithms, multicollinearity can lead to overfitting.
+
+What are the relationships between the variables? How strong are these relationships (density)?
+Below is an example of using Principal Component Analysis to visualize the correlation groups of the variables in the Iris dataset.
+
+This initial visualization can tell you if there are overlaps in groups and if new features need to be defined to better fit the data. Based on the correlations, a narrower set of features may be selected during feature engineering. Some of the features may need to be decorrelated to fix issues such as multicollinearity.
+
+Data visualization can power model creation and model tuning
+With the advancement of data visualization techniques, model creation and model tuning do not have to be abstract processes. TensorFlow allows you to follow the model-creation process with data visualization at each step, and when building a TensorFlow model, you can visualize the model’s structure and follow the data to see if the model fits your design.
+
+Below is an example of the conceptual graph of a Keras model. The data flows from the bottom to the top. The graph is a representation of the definition of the model.
+
+
+in statistics, exploratory data analysis is one of the first ways to zoom in on the data that matters. In a sense, exploratory data analysis is a way to cut out the noise. It’s also a way to forge a path into the forest of data that your algorithm will comb through. Data visualization has become popular in recent years due to its power to display the results at the end of the machine learning process, but it is also increasingly being used as a tool for exploratory data analysis before applying machine learning models.
+
+Machine Learning Data Visualization Examples:
+When designing and evaluating a new algorithm, one of the first steps is exploratory data analysis (EDA). The point is to find the most efficient learning approach for a given problem. For the human researcher to understand what’s working and what’s not, the model’s results are often displayed graphically. Since these datasets cover many variables and are so “high dimensional,” several new data visualization techniques have been developed specifically for deep learning systems. Some of the most common new tools for interpreting high-dimensional relationships are:
+
+Parallel coordinate plots
+Scatterplot matrices
+Scagnostics
+Multidimensional scaling
+T-sne algorithm
+
+### Hyperparameter Optimization
+
+
+Tuning is an important part of modeling. Unlike parameters that derive their value from training, the values of hyperparameters are defined before the learning process begins. These hyperparameters control the behavior of the algorithms and have an impact on the performance of the model. Concerns of hyperparameters, such as trainability, tunability, and robustness, determine the usability of the models.
+
+Below is an example of TensorBoard’s HParams that displays groups of hyperparameters to see which ones are the most important. You can define criteria such as accuracy and dropout rate to determine the performance.
+
+One of the best solutions for this type of task is to use a parallel coordinates plot (Figure 1). Using this type of plot, we can in fact easily compare different variables (eg. features) together in order to discover possible relationships. In the case of Hyperparameters Optimization, this can be used as a simple tool to inspect what combination of parameters can give us the greatest test accuracy. Another possible use of parallel coordinates plots in Data Analysis is to inspect relationships in values between the different features in a data frame.
+
+
+### time-series
+
+When working with time-series data, it can be really handy at times to be able to quickly understand on which datapoints our model is performing poorly, in order to try to understand what limitations it might be facing.
+One possible approach is to create a summary table with the actual and predicted values and some form of metrics summarising how well/bad a data point has been predicted.
+
+### Decision Trees
+
+Decision Trees are one of the most easily explainable types of Machine Learning model. Thanks to their basilar structure, it is easily possible to examine how the algorithm decides to make its decision by looking at the conditions on the different branches of the tree. Additionally, Decision Trees can also be used as a Feature Selection technique, considering that the algorithm puts at the top levels of the tree the features which think are most valuable for our desired classification/regression task. In this way, the features at the bottom of the tree could be discarded since carrying less information.
+
+### Decision Boundaries
+
+Decision Boundaries are one of the easiest approaches to graphically understand how a Machine Learning model is making its predictions. One of the easiest ways to plot decision boundaries in Python is to use Mlxtend. This library, can in fact be used for plotting decision boundaries of either Machine Learning and Deep Learning models. A simple example is shown in Figure 6.
+One of the main limitations of plotting decision boundaries is that they can only be easily visualised in two or three dimensions. Due to these limitations, it might be therefore necessary most of the times to reduce the dimensionality of our input features (using some form of feature extraction techniques) before plotting the decision boundary.
+
+### ANNs
+
+Another technique which can be quite useful when creating new neural network architectures is visualising their structure. 
+
+Li et al, Visualizing the Loss Landscape
+of Neural Nets, 2018
+
+http://yosinski.com/deepvis
+
+http://cs231n.stanford.edu/slides/2018/cs231n_2018_lecture13.pdf
+
+https://projector.tensorflow.org/
+
+### Learning rates
+
+### Graphical representation of a model in TensorBoard
+
+With the graph visualizer, users can explore different layers of model abstraction, zooming in and out of any part of the schema. Another important benefit of TensorBoard visualization is that nodes of the same types and similar structures are painted with the same colors. Users can also look at coloring by device (CPU, GPU, or a combination of both), highlight a specific node with the “trace inputs” feature, and visualize one or several charts at a time.
+
+This visualization approach makes TensorBoard a popular tool for model performance evaluation, especially for models of complex structures like deep neural networks.
+
+Grant Reaber notes that TensorBoard makes it easy to monitor model training. Grant and his team also use this tool for custom visualizations.
+
+Illia Polosukhin also chooses TensorBoard. “TensorBoard shows metrics during model development and allows for making a decision regarding a model. For instance, it’s very comfortable to monitor how a model performs when tweaking its hyperparameters and choosing the one that performs best,” summarizes Illia.
+
+Besides displaying performance metrics, TensorBoard can show users a lot of other information like histograms, audio, text, and image data, distributions, embeddings, and scalars.
+
+### Variational Autoencoders
+
+Variational Autoencoders (VAE) are a type of probabilistic generative model used in order to create a latent representation of some input data (eg. images) able to concisely understand the original data and generate brand new data from it (eg. training a VAE model with different images of car designs, could then enable to model to create brand new imaginative car designs).
+Continuing from the example Variational Autoencoder trained using Livelossplot, we can even make our model more interesting by examining how the latent space (Figure 9) varies from one iteration to another (and therefore how much our model improved to distinguish the different classes over time).
+
+### Word Embeddings
+
+Neural Network Embeddings are a class of neural networks designed in order to learn how to convert some form of categorical data into numerical data. Using Embeddings can be considerably advantageous than using other techniques such as One Hot Encoding considering that, while converting the data, they are able to learn about its characteristics and therefore construct a more succinct representation (creating a latent space). Two of the most famous types of pre-trained word embeddings are word2vec and Glove.
+As a simple example, we are now going to plot an embed space representing different books authors. First of all, we need to create an train a model on some available data and then access the trained weights of the model embedded layer (in this case called embed) and store them in a data frame. Once this process is done, we then just have to plot the three different coordinates (Figure 11).
+
+In this example, the embedding dimensions of the network have been set directly to 3 in order to then easily create the 3D visualization. Another possible solution could have been to instead use a higher embedding output size and then apply some form of feature extraction technique (eg. t-SNE, PCA, etc…) in order to visualise the results.
+Another interesting technique which can be used to visualise categorical data is Wordclouds (Figure 12). This type of representation, can, for example, be realised by creating a dictionary of book authors names and their respective frequency count in the dataset. Authors which appears more frequently in the dataset will be then represented in the figure with greater font size.
+
+The Unreasonable Effectiveness of Recurrent Neural Networks
+Karpathy, 2015 
+
+Seq2Seq-Vis:
+Visual Debugging
+Tool for Sequenceto- Sequence
+Models
+Strobelt, 2018
+
+What does a sentence look like in embedding space?
+
+https://arxiv.org/pdf/1611.04558.pdf
+
+### translation
+
+http://seq2seq-vis.io/
+
+### Explainable AI
+
+Explainable AI is nowadays a growing field of research. Use of AI in decision-making applications (such as employment) has recently caused some concerns both for individuals and authorities. This is because, when working with deep neural networks, it is currently not possible (at least to a full extent) to understand the decision-making process the algorithm performs when having to carry out a predetermined task. Because of this lack of transparency in the decision-making process, perplexities can arise from the public regarding the trustworthiness of the model itself. Therefore, the need for Explainable AI is now becoming the next prefixed evolutionary step in order to prevent the presence of any form of bias in AI models.
+During the last few years, different visualization techniques have been introduced in order to make Machine Learning more explainable such as:
+Exploring Convolutional Neural Networks Filters and Feature maps.
+Graphs Networks.
+Bayesian-based models.
+Causal Reasoning applied to Machine Learning.
+Local/Global surrogate models.
+Introduction of Local Interpretable Model-Agnostic Explanations (LIME) and Shapley Values.
+If you are interested in finding out more about how to make Machine Learning models more explainable, two of the most interesting libraries currently available in Python in order to apply Explainable AI in Deep Learning are Captum by Pytorch and XAI.
+As this research area is in constant improvement, I will aim to cover all these different topics (and more) in a future article dedicated to just Explainable AI.
+
+### Image classifiers are effective in practice
+Exactly what they're doing is somewhat mysterious
+- And their failures (e.g. adversarial examples) add to mystery
+But: Way easier to inspect what’s going on in artificial classifiers than in human
+classifiers ;-)
+Since these are visual systems, it's natural to use visualization to inspect them
+- What features are these networks really using?
+- Do individual units have meaning?
+- What roles are played by different layers?
+- How are high-level concepts built from low-level ones?
+
+Saliency maps
+(a.k.a. "Sensitivity maps")
+Idea: consider sensitivity of class to each pixel
+i.e. grad(f), where f is function from pixels to class score.
+Many ways to extend basic idea!
+- Layer-wise relevance propagation (Binder et al.)
+- Integrated gradients (Sundararajan et al.)
+- Guided backprop (Springenberg et al.)
+- etc.
+Yet interpretation is slippery (Adebayo et al., Kindermans et al.)
+- Tend to be visually noisy. Are these sometimes Rorschach tests?
+- Are some of these methods essentially edge detectors?
+
+Visualizing and Understanding Convolutional Networks
+Zeiler & Fergus, 2013
+
+The Building Blocks of
+Interpretability
+Olah, Satyanarayan, Johnson, Carter,
+Schubert, Ye, Mordvintsev
+
+
+Lesson
+If you see something interesting in
+high-dimensional space…
+compare to a random baseline!
+
+playground.tensorflow.org
+
+Distill.pub
+Editors: Carter, Olah, Satyanarayan
+
+research.google.com/bigpicture/attacking-discrimination-in-ml
+
+Google Creative Lab
+https://quickdraw.withgoogle.com/
+
+https://poloclub.github.io/ganlab/
+
+http://lstm.seas.harvard.edu/
+
+
+Before popular data visualization tools for machine learning were developed, the machine learning process was much more abstract. Historically, ggplot2 in R provided much-needed visualization tools for exploratory data analysis. But today, with the suite of data visualizations that are available in Python, such as seaborn, scikit-learn, and matplotlib, exploratory data analysis that forms the initial part of the machine learning process can be done much more efficiently. At the same time, with TensorFlow, model-building and model-tuning processes become a lot more intuitive. Rather than spending time on scrutinizing values, with the assistance of both 2-dimensional and interactive data visualizations, data scientists can pay more attention to the big picture of the data at each level of the machine learning process to focus more on the meaning of the data, the model design, and the model performance.
+
+
+
+## Main diagram types
+
+### Pointcharts
+
+```{r}
+penguins %>%
+    remove_missing() %>%
+    ggplot(aes(x = bill_length_mm, y = flipper_length_mm)) +
+    geom_jitter(alpha = 0.5) +
+    facet_wrap(vars(species), ncol = 3) +
+    scale_x_reverse() +
+    scale_y_reverse() +
+    labs(x = "Bill length (mm)", 
+         y = "Flipper length (mm)",
+         size = "body mass (g)",
+        title = "Scatterplot", 
+        subtitle = "Penguins bill v. flipper length by species",
+        caption = "Source: https://github.com/allisonhorst/palmerpenguins")
+```
+
+
+
+---
+
+```{r}
+devtools::session_info()
+```
+
+
