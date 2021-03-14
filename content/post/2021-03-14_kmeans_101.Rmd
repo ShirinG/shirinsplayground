@@ -1,0 +1,403 @@
+---
+title: "k-Means 101: An introductory guide to k-Means clustering in R"
+draft: false
+author: Nathaniel Schmucker
+date: '2021-03-14'
+categories: ["R"]
+tags: ["R", "ggplot2"]
+thumbnailImagePosition: left
+thumbnailImage: post/2021-03-14_kmeans_101_files/figure-html/finding_right_cluster_number_2-1.png
+metaAlignment: center
+coverMeta: out
+slug: kmeans_101
+---
+
+```{r include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+*Editor's note: This is a guest post by Nathaniel Schmucker. He is the founder of [The Analyst Code](http://www.theanalystcode.com/), a blog that provides tools to instill a love of data in individuals of all backgrounds and to empower aspiring analysts.*
+
+## Introduction
+
+In this post, we will look at:
+
+* What is a k-Means analysis?
+* How does the k-Means algorithm work?
+* How do we implement k-Means in R?
+* Concluding thoughts
+
+Along the way, we will cover 5 principles to help guide you through your own exploration of k-Means and to help answer common questions.
+
+---
+
+If you have questions or would like to talk about articles from my blog (or something else data-related), you can now [book 15-minute timeslots](https://shirinsplayground.netlify.app/page/bookme/) with me (it's free - one slot available per weekday): 
+
+<img src="https://www.appointletcdn.com/loader/buttons/F62459.png" data-appointlet-organization="shirin-elsinghorst" data-appointlet-service="357892"><script src="https://www.appointletcdn.com/loader/loader.min.js" async="" defer=""></script>
+
+*If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at <button>[paypal.me](https://paypal.me/ShirinGlander)</button>. Thank you!* :-)
+
+---
+
+## What is a k-Means analysis?
+
+A k-Means analysis is one of many *clustering* techniques for identifying structural features of a set of datapoints. The k-Means algorithm groups data into a pre-specified number of clusters, *k*, where the assignment of points to clusters minimizes the total sum-of-squares distance to the cluster's mean. We can then use the mean value of all the points in a given cluster as a prototypical point characterizing the cluster.
+
+For example, we could have a dataset with the horsepower and fuel efficiency of various car models, and we want to use that data to classify the cars into natural groupings--sports cars, sedans, etc. Essentially, we want to find structure in a scatter plot of horsepower against fuel efficiency.
+
+**k-Means is easy to implement.** In R, you can use the function `kmeans()` to quickly deploy an efficient k-Means algorithm. On datasets of reasonable size (thousands of rows), the `kmeans` function runs in fractions of a second. 
+
+**k-Means is easy to interpret (in 2 dimensions).** If you have two features of your k-Means analysis (*e.g.*, you are grouping by length and width), the result of the k-Means algorithm can be plotted on an xy-coordinate system to show the extent of each cluster. It's easy to visually inspect the assignment to see if the k-Means analysis returned a meaningful insight. In more dimensions (*e.g.*, length, width, and height) you will need to either create a 3D plot, summarize your features in a table, or find another alternative to describing your analysis. This loses the intuitive power that a 2D k-Means analysis has in convincing you or your audience that your analysis should be trusted. It's not to say that your analysis is wrong; it simply takes more mental focus to understand what your analysis says.
+
+The k-Means analysis, however, is not always the best choice. k-Means does well on data that naturally falls into spherical clusters. If your data has a different shape (linear, spiral, etc.), k-Means will force clustering into circles, which can result in outputs that defy human expectations. The algorithm is not wrong; we have fed the algorithm data it was never intended to understand.
+
+Every data analyst should be comfortable using and explaining the k-Means algorithm. It is easy to implement and interpret, and very few real-world datasets violate our spherical-clustering assumption.
+
+## How does the k-Means algorithm work?
+
+1. Pick a number of clusters, k
+2. Create k random points and call each of these the center of a cluster
+3. For each point in your dataset, find the closest cluster center and assign the point to that cluster
+4. Once each point has been assigned to a cluster, calculate the new center of that cluster
+5. Repeat steps 3 and 4 until you reach a stage when no points need to be reassigned
+6. Stop. You have found your k clusters and their centers!
+
+If you want to learn more about k-Means, I would recommend this [post on Medium](https://towardsdatascience.com/k-means-clustering-algorithm-applications-evaluation-methods-and-drawbacks-aa03e644b48a), though be aware that the example code is all written in Python. If you are brave and want to go very deep in k-Means theory, take a look at the [Wikipedia page](https://en.wikipedia.org/wiki/K-means_clustering). Or, if you would like to see one application of k-Means in R, see this blog's post about using k-Means to help [assist in image classification with Keras](https://shirinsplayground.netlify.app/2018/10/keras_fruits_cluster/). For a detailed illustration of how to implement k-Means in R, along with answers to some common questions, keep reading below.
+
+## How do we implement k-Means in R?
+
+Let's begin by loading packages and functions, which we'll use later.
+
+```{r setup, warning=FALSE, message=FALSE}
+library(dplyr)
+library(tidyr)
+library(broom)
+library(purrr)
+
+library(ggplot2)
+library(plotly)
+
+# Define two functions for transforming a distribution of values
+#  into the standard normal distribution (bell curve with mean = 0
+#  and standard deviation (sd) = 1). More on this later.
+normalize_values <- function(x, mean, sd) {
+  (x-mean)/sd
+}
+
+unnormalize_values <- function(x, mean, sd) {
+  (x*sd)+mean
+}
+
+set.seed(2021) # So you can reproduce this example
+
+```
+
+The data we will use for this example is from one of R's pre-loaded datasets, `quakes`. It is a data.frame with 1000 rows and five columns describing earthquakes near Fiji since 1964. The columns are latitude (degrees), longitude (degrees), depth (km), magnitude (Richter scale), and the number of stations reporting the quake. The only preprocessing we will do now is to remove `stations` and convert this to a tibble.
+
+```{r preprocess_data}
+quakes_raw <- quakes %>% 
+  dplyr::select(-stations) %>% 
+  dplyr::as_tibble()
+
+summary(quakes_raw)
+
+```
+
+Now for the fun. For our first example, let's run a k-Means analysis on two variables: depth and magnitude. We reduce our raw data to *only* these two variables and pass it to the base R function, `kmeans()`. Before we hit "Run" on this function, though, let's talk through two principles of k-Means clustering.
+
+### Principle 1: Number of iterations
+
+The k-Means algorithm, as mentioned above, iterates through a process of assigning points to a cluster based on the closest cluster center and recalulating cluster centers, not stopping until no more points are assigned to a new cluster during the assignement step. In some cases, the number of iterations can be very large, and the algorithm can consequentially become slow. For speed and convenience, we can cap the number of iterations at 10 (the default value), but for precision, more iterations are better than fewer.
+
+### Principle 2: Local vs. global minimum
+
+The k-Means algorithm results in an assignment of points to clusters that minimizes the within-cluster sum of squares: in each iterative step, if we were to add up the total squared distances of points to the mean, we would find that the sum was less than the step before. In laymans terms, our algorithm stopped when it couldn't find a way to assign points into tighter groupings.
+
+But, just because our algorithm couldn't find a better grouping doesn't mean that we found the best grouping. Based on our random set of starting points, we found the best solution, but a different set of starting points could have found a better solution.
+
+This is a problem common across machine learning algorithms. Finding the globally best solution is substantially harder than finding the best given particular starting point. The `kmeans` function can help us ensure our final product is at least a pretty good local minimum by running multiple times and showing only the best answer. By default, the number of tries `kmeans` takes is 1, but we can easily adjust this to, say, `nstart = 5`.
+
+Now let's hit "Run" on our k-Means analysis and save the output as `kclust`. This is an object of class "kmeans," which is not the easiest to use for subsequent analysis. We'll use `augment`, `tidy`, and `glance` to extract useful summary information as tables. We'll also include a quick plot to see how our clustering did.
+
+```{r raw_2d}
+# 4-cluster k-Means analysis on depth and magnitude
+kclust <- quakes_raw %>% 
+  dplyr::select(depth, mag) %>% 
+  kmeans(centers = 4, iter.max = 10, nstart = 5)
+
+str(kclust)
+kclust
+
+# Add the cluster number onto to our original data
+point_assignments <- broom::augment(kclust, quakes_raw) 
+
+# Summarize each cluster
+cluster_info <- broom::tidy(kclust)
+
+# Summary stats about our model's fit
+model_stats <- broom::glance(kclust)
+
+head(point_assignments)
+cluster_info
+model_stats
+
+# Visually inspect our clusters
+ggplot2::ggplot() +
+  ggplot2::geom_point(
+    data = point_assignments, aes(x = depth, y = mag, color = .cluster)
+  ) + 
+  ggplot2::geom_point(
+    data = cluster_info, aes(x = depth, y = mag), size = 4, shape = "x"
+  ) +
+  ggplot2::labs(
+    title = "k-Means analysis of earthquakes near Fiji",
+    subtitle = "Clustered on raw values of depth and magnitude",
+    caption = "Source: Harvard PRIM-H project / 1000 seismic events of MB > 4.0 since 1964",
+    x = "Depth",
+    y = "Magnitude"
+  )
+
+```
+
+Reflect for a moment on what we just did. First, note that running kmeans is incredibly easy (one function!) and on 1000 data points was very fast. Second, note that our graph looks pretty strange. The algorithm has created clusters that seem only to care about depth. Does this mean magnitude is an irrelevant feature in our data? By no means! Time for Principle 3.
+
+### Principle 3: Feature scaling
+
+k-Means calculates distance to the cluster center using Euclidian distance: the length of a line segment connecting the two points. In two dimensions, this is the Pythagorean Theorem. Aha, you say! I see the problem: we are comparing magnitudes (4.0-6.4) to depth (40-680). Depth has significantly more variation (standard deviation 0.4 for magnitude vs. 215 for depth) and therefore gets overweighted when calculating distance to the mean.
+
+We need to employ feature scaling. As a general rule, if we are comparing unlike units (meters and kilograms) or independent measurements (height in meters and circumference in meters), we should normalize values, but if units are related (petal length and petal width), we should leave them as is. 
+
+Unfortunately, many cases require judgment both on whether to scale and how to scale. This is where your expert opinion as a data analyst becomes important. For the purposes of this blog post, we will normalize all of our features, including latitude and longitude, by transforming them to standard normal distributions. The geologists might object to this methodology for normalizing (magnitude is a log scale!!), but please forgive some imprecision for the sake of illustration.
+
+```{r preprocess_data_2}
+# Create a tibble to store the information we need to normalize
+#  Tibble with row 1 = mean and row 2 = standard deviation
+transformations <- dplyr::tibble(
+  lat   = c(mean(quakes_raw$lat),   sd(quakes_raw$lat)),
+  long  = c(mean(quakes_raw$long),  sd(quakes_raw$long)),
+  depth = c(mean(quakes_raw$depth), sd(quakes_raw$depth)),
+  mag   = c(mean(quakes_raw$mag),   sd(quakes_raw$mag))
+)
+
+# Use the convenient function we wrote earlier
+quakes_normalized <- quakes_raw %>% 
+  dplyr::mutate(
+    lat = normalize_values(
+      lat, transformations$lat[1], transformations$lat[2]
+    ),
+    long = normalize_values(
+      long, transformations$long[1], transformations$long[2]
+    ),
+    depth = normalize_values(
+      depth, transformations$depth[1], transformations$depth[2]
+    ),
+    mag = normalize_values(
+      mag, transformations$mag[1], transformations$mag[2]
+    )
+  )
+
+summary(quakes_normalized)
+
+```
+
+With our fully-preprocessed data, let's re-run our k-Means analysis.
+
+```{r norm_2d}
+kclust <- quakes_normalized %>% 
+  dplyr::select(depth, mag) %>% 
+  kmeans(centers = 4, iter.max = 10, nstart = 5)
+
+str(kclust)
+kclust
+
+# Unnormalize values for more intuitive summary stats and plots
+point_assignments <- broom::augment(kclust, quakes_normalized) %>% 
+  dplyr::select(-lat, -long) %>% 
+  dplyr::mutate(
+    depth = unnormalize_values(
+      depth, transformations$depth[1], transformations$depth[2]
+    ),
+    mag = unnormalize_values(
+      mag, transformations$mag[1], transformations$mag[2]
+    )
+  )
+
+cluster_info <- broom::tidy(kclust) %>% 
+  dplyr::mutate(
+    depth = unnormalize_values(
+      depth, transformations$depth[1], transformations$depth[2]
+    ),
+    mag = unnormalize_values(
+      mag, transformations$mag[1], transformations$mag[2]
+    )
+  )
+
+model_stats <- broom::glance(kclust)
+
+head(point_assignments)
+cluster_info
+model_stats
+
+ggplot2::ggplot() +
+  ggplot2::geom_point(
+    data = point_assignments, aes(x = depth, y = mag, color = .cluster)
+  ) + 
+  ggplot2::geom_point(
+    data = cluster_info, aes(x = depth, y = mag), size = 4, shape = "x"
+  ) +
+  ggplot2::labs(
+    title = "k-Means analysis of earthquakes near Fiji",
+    subtitle = "Clustered on normalized values of depth and magnitude",
+    caption = "Source: Harvard PRIM-H project / 1000 seismic events of MB > 4.0 since 1964",
+    x = "Depth",
+    y = "Magnitude"
+  )
+
+```
+
+Now for a little more fun. k-Means can be extended beyond 2 feature dimensions. Let's re-run our k-Means analysis again, but this time include all four variables: latitude, longitude, depth, and magnitude. I'll forego the 2D `ggplot2` graph and show you instead a 3D `plotly` graph, with magnitude described by each bubble's size.
+
+```{r norm_4d}
+kclust <- kmeans(quakes_normalized, centers = 4, iter.max = 10, nstart = 5)
+
+str(kclust)
+kclust
+
+point_assignments <- broom::augment(kclust, quakes_normalized) %>% 
+  dplyr::mutate(
+    lat = unnormalize_values(
+      lat, transformations$lat[1], transformations$lat[2]
+    ),
+    long = unnormalize_values(
+      long, transformations$long[1], transformations$long[2]
+    ),
+    depth = unnormalize_values(
+      depth, transformations$depth[1], transformations$depth[2]
+    ),
+    mag = unnormalize_values(
+      mag, transformations$mag[1], transformations$mag[2]
+    )
+  )
+
+cluster_info <- broom::tidy(kclust) %>% 
+  dplyr::mutate(
+    lat = unnormalize_values(
+      lat, transformations$lat[1], transformations$lat[2]
+    ),
+    long = unnormalize_values(
+      long, transformations$long[1], transformations$long[2]
+    ),
+    depth = unnormalize_values(
+      depth, transformations$depth[1], transformations$depth[2]
+    ),
+    mag = unnormalize_values(
+      mag, transformations$mag[1], transformations$mag[2]
+    )
+  )
+
+model_stats <- broom::glance(kclust)
+
+head(point_assignments)
+cluster_info
+model_stats
+
+plotly::plot_ly() %>% 
+  plotly::add_trace(
+    data = point_assignments,
+    x = ~long, y = ~lat, z = ~depth*-1, size = ~mag,
+    color = ~.cluster,
+    type = "scatter3d", mode = "markers",
+    marker = list(symbol = "circle", sizemode = "diameter"),
+    sizes = c(5, 30)
+  ) %>% 
+  plotly::layout(scene = list(
+    xaxis = list(title = "Longitude"),
+    yaxis = list(title = "Latitude"),
+    zaxis = list(title = "Depth")
+  ))
+
+```
+
+If you've made it this far, and if you are thinking about analyses that you would like to run on your own data, you may be asking yourself why we have been running these analyses with four clusters. It feels like a good number, but is it the right number? 
+
+### Principle 4: Choose the right number of clusters
+
+The k-Means algorithm cannot tell us what the ideal number of clusters is. The "right" number of clusters is subjective and depends on both the structure of your data and what your intended purpose is. Frequently, we want to find the number of clusters that most efficiently clusters points; we learned a lot by increasing from `k-1` to `k` clusters, but increasing to `k+1` clusters only reduces our sum of squares by a little bit more.
+
+Let's begin by using `purrr::map` to run `kmeans` using 1 through 12 clusters.
+
+```{r finding_right_cluster_number_1}
+# Run analysis with multiple cluster options (can be slow!)
+kclusts <- 
+  dplyr::tibble(n_clusts = 1:12) %>%
+  dplyr::mutate(
+    kclust = purrr::map(
+      n_clusts,
+      ~kmeans(quakes_normalized, centers = .x, iter.max = 10, nstart = 5)
+    ),
+    augmented = purrr::map(kclust, broom::augment, quakes_normalized),
+    tidied = purrr::map(kclust, broom::tidy),
+    glanced = purrr::map(kclust, broom::glance)
+  ) %>%
+  dplyr::select(-kclust)
+
+str(kclusts, max.level = 3)
+kclusts
+
+point_assignments <- kclusts %>%
+  dplyr::select(n_clusts, augmented) %>%
+  tidyr::unnest(augmented)
+
+cluster_info <- kclusts %>%
+  dplyr::select(n_clusts, tidied) %>% 
+  tidyr::unnest(tidied)
+
+model_stats <- kclusts %>%
+  dplyr::select(n_clusts, glanced) %>% 
+  tidyr::unnest(glanced)
+
+head(point_assignments)
+head(cluster_info)
+head(model_stats)
+
+```
+
+We can plot our 12 k-Means analyses using `ggplot2::facet_wrap`. Since we clustered on four features and our graphs only show two dimensions (latitude and longitude), it's a little hard to get a full picture of how well each k clustered our data. But, it looks like two clusters is reasonable but not very insightful, four seems pretty good, and by eight everything becomes a mess.
+
+```{r finding_right_cluster_number_2}
+# Show clusters
+ggplot2::ggplot() +
+  ggplot2::geom_point(
+    data = point_assignments, aes(x = long, y = lat, color = .cluster)
+  ) + 
+  ggplot2::geom_point(
+    data = cluster_info, aes(x = long, y = lat), size = 4, shape = "x"
+  ) +
+  ggplot2::facet_wrap(~n_clusts)
+
+```
+
+We'll build an elbow chart to help us understand how our residual error terms--the sum across all clusters of the within-cluster sum of squares--change with the number of clusters. We plot k against total within sum of squares.
+
+```{r finding_right_cluster_number_3}
+# Elbow chart
+ggplot2::ggplot(data = model_stats, aes(n_clusts, tot.withinss)) +
+  ggplot2::geom_line() +
+  ggplot2::scale_x_continuous(limits = c(1, 12), breaks = seq(1, 12, 1)) +
+  ggplot2::ggtitle("Total within sum of squares, by # clusters")
+
+```
+
+Ideally, we would see a sharp bend in this curve, where a single cluster number is a turning point from the graph having a steep negative slope to having a shallow negative slope. In this example, however, the rate of change of the slope is gradual, with no clear elbow. This is where the art comes in, and my interpretation is that 3-5 clusters balances a small sum of squares while not losing too much interpretability.
+
+### Principle 5: The human side of data science
+
+Principles 3 (Feature scaling) and 4 (Choose the right number of clusters) highlight the importance of human judgment on machine learning algorithms, and data science in general. Algorithms are very good at doing exactly as they are told. But if we feed them poor instructions or poor quality data, they will accurately calculate a useless result. [The value](https://www.theanalystcode.com/the-principles/of-analytics/) of the data analyst, data scientist, or statistician is not that they *can* run complicated analyses, but that they have skill at knowing how *best* to run those analyses.
+
+## Concluding thoughts
+
+In this post we have had a brief introduction to the k-Means clustering algorithm, gained an understanding of how it works and where its weaknesses lie, and seen it demonstrated in R using `kmeans()`. The algorithm is easy to run and visualize, and it is a helpful tool for anyone looking to cluster and characterize a large set of datapoints.
+
+```{r session_info}
+devtools::session_info()
+```

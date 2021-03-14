@@ -13,7 +13,7 @@ slug: goodbadugly_ml
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, eval = FALSE)
 ```
 
 Below you'll find the complete code used to create the **ggplot2** graphs in my talk **The Good, the Bad and the Ugly: how (not) to visualize Machine Learning data** at this year's Minds Mastering machines conference. You can find the German [slides here](https://docs.google.com/presentation/d/e/2PACX-1vR4pD2EmW9Gzxr1Q3qwgjEYkU64o2-ThlX1mXqfNQ2EKteVUVt6Qg2ImEKKi9XLv-Iutb3lD8esLyU7/pub?start=false&loop=false&delayms=3000):
@@ -21,6 +21,7 @@ Below you'll find the complete code used to create the **ggplot2** graphs in my 
 <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vR4pD2EmW9Gzxr1Q3qwgjEYkU64o2-ThlX1mXqfNQ2EKteVUVt6Qg2ImEKKi9XLv-Iutb3lD8esLyU7/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 
 You can find [Part 1: **The Good, the Bad and the Ugly: how (not) to visualize data** here](https://shirinsplayground.netlify.app/2020/10/goodbadugly/).
+
 ---
 
 If you have questions or would like to talk about this article (or something else data-related), you can now [book 15-minute timeslots](https://shirinsplayground.netlify.app/page/bookme/) with me (it's free - one slot available per weekday): 
