@@ -13,7 +13,7 @@ slug: goodbadugly_ml
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, eval = FALSE)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
 Below you'll find the complete code used to create the **ggplot2** graphs in my talk **The Good, the Bad and the Ugly: how (not) to visualize Machine Learning data** at this year's Minds Mastering machines conference. You can find the German [slides here](https://docs.google.com/presentation/d/e/2PACX-1vR4pD2EmW9Gzxr1Q3qwgjEYkU64o2-ThlX1mXqfNQ2EKteVUVt6Qg2ImEKKi9XLv-Iutb3lD8esLyU7/pub?start=false&loop=false&delayms=3000):
@@ -35,6 +35,9 @@ If you have questions or would like to talk about this article (or something els
 ```{r libraries}
 library(tidyverse)
 library(mlbench)
+library(ggfortify)
+library(GGally)
+library(scagnostics)
 ```
 
 ## Dataset
@@ -64,13 +67,14 @@ ggplot <- function(...) ggplot2::ggplot(...) +
   theme_bw()
 ```
 
-## Visualizing Machine Learning models: training and results
+## Visualizing Machine Learning models
 
-Machine learning is inherently an iterative process. Modeling can be cumbersome when you are performing the process over and over again to ensure your model is optimized and can generalize well. Add on the time you spend on model selection and model tuning, the process can easily become a frustrating one. Good exploratory data analysis combined with relevant data visualization is essential for pinpointing the right direction to take. It both shortens the machine learning process and provides more accuracy for its outcome. Data visualization tools such as TensorFlow enable data scientists to quickly identify and focus on the most important data and the most important paths to take. Even during the modeling process, model graphs can help to speed up the model-creation process by displaying the model maps conceptually. When evaluating the models, visualizing the results of hyperparameter tuning can help data scientists narrow down the groupings of hyperparameters that are most important.
+
 
 At each of these steps, data visualization helps the data scientist explore the data, understand the data and process the data to set it up for modeling.
 
 
+Data visualization tools enable data scientists to quickly identify and focus on the most important data and the most important paths to take. Even during the modeling process, model graphs can help to speed up the model-creation process by displaying the model maps conceptually. 
 
 https://arxiv.org/pdf/1801.06889.pdf
 
@@ -118,52 +122,168 @@ Non-linear (just a few of many) Minimize distortion, according to some metric
 - UMAP: New kid on the block Faster than t-SNE, Can efficiently embed into high dimensions (i.e. useful not just for visualization), Often seems to capture global structure better
 
 
-### EDA
+### Exploratory Data Analysis
 
-Ask the right question by putting the data into context first
-Since the machine learning process is iterative, asking relevant questions to kick off the process will involve putting data into context. As you progress in your machine learning process, you can refine your questions to zoom in on the most important details. Putting data into context means that you will visualize all the columns within the data to understand the following:
+Exploratory Data Analysis (EDA) is the backbone of data analysis, including those that result in a machine learning model. EDA helps us to understand the data we are working with and put it into context, so that we are able to ask the right questions (or to put our questions into the right frame). It helps us take appropriate measures for cleaning, normalization/transformation, dealing with missing values, feature preparation and engineering, etc. Particularly if our machine learning model is trained on a limited dataset (but not only then!), appropriate data preparation can vastly improve the machine learning process: models will often train faster and achieve higher accuracy.
 
-The meaning of each column of data.
-Whether it’s a categorical or continuous variable for each column.
-Whether the data is an independent or dependent variable.
+An essential part of EDA is data visualization. 
 
-Understand the data by understanding both sides: good and bad
-The next step in the machine learning process is understanding the data. There are many aspects to this. Ultimately, the iterative nature of the process will allow for a continual understanding of the data as you move through more iterations of modeling. But, to begin with, understanding the data involves asking the following:
+Typically, we want to start by exploring potential sources of errors in our data, like
 
-Where are the possible data errors, such as missing data, wrong data types, misleading data, and outlier data, and so on?
-Below is an example of a nullity matrix that gives you missing data information visually on columns of data.
+- **wrong/useless data types** (sometimes data types are automatically set in a way that is not useful for our analysis, like *factors* versus *strings*, or wrong/strange entries in an otherwise numeric column will make it categorical)
+- **missing values** (a collection of ways to visualize missingness can be found [here](https://cran.r-project.org/web/packages/naniar/vignettes/naniar-visualisation.html)),
+- **outliers** (for example by plotting a box-plot of continuous variables)
 
-By viewing the density of missing data in various columns, a decision can be made at the data cleaning step to use a particular missing data imputation technique for a given column. Visualization tools such as Python’s seaborn.heatmap and R’s heatmap() functions help to gauge the degree of missing data in each column.
+Depending on the number of features/variables we have, it makes sense to look at them all individually and in correlation with each other. Depending on whether we have a categorical or continuous variable, we might be interested in properties that are shown by 
 
-Where are the imbalances of data?
-Below is an example of using a heatmap to represent the correlation of the relationships between the variables.
+- **histograms** (frequency distribution of binned continuous variables),
+- **density distribution** (normalized distribution of continuous variables) or 
+- **bar-plots** (shows counts of categorical variables).
 
-High-density areas can be identified and groups of variables that are highly correlated, such as multicollinearity, can be further investigated. In certain algorithms, such as Decision Tree algorithms, multicollinearity can lead to overfitting.
+If our target variable is categorical, we will want to look at potential imbalances between the classes. Class imbalance will strongly affect the machine learning modeling process and will require us to consider up-/downsampling or similar techniques before we train a model.
 
-What are the relationships between the variables? How strong are these relationships (density)?
-Below is an example of using Principal Component Analysis to visualize the correlation groups of the variables in the Iris dataset.
+Correlation analysis can show us, for example
 
-This initial visualization can tell you if there are overlaps in groups and if new features need to be defined to better fit the data. Based on the correlations, a narrower set of features may be selected during feature engineering. Some of the features may need to be decorrelated to fix issues such as multicollinearity.
+- how our **target/dependent variable correlates with the remaining features** (often, just by looking at the correlation, we can identify one ore more feature that will have a strong impact on predicting the target because they are strongly correlated) or
+- whether some of the **independent variables/features correlate with each other** (multicolinearity; we might want to consider removing strongly correlated features, so that they won't contribute the "same" information multiple times to the model and thus lead to overfitting).
 
-Data visualization can power model creation and model tuning
-With the advancement of data visualization techniques, model creation and model tuning do not have to be abstract processes. TensorFlow allows you to follow the model-creation process with data visualization at each step, and when building a TensorFlow model, you can visualize the model’s structure and follow the data to see if the model fits your design.
+Additional methods can be used to visualize groups of correlated features. These methods are often especially useful if we have a large dataset with a large feature set (highly dimensional data). Some of these methods for visualizing groups of correlated features and/or for comparing multiple variables and visualizing their relationships are:
 
-Below is an example of the conceptual graph of a Keras model. The data flows from the bottom to the top. The graph is a representation of the definition of the model.
+- Dimensionality reduction, e.g. Principal Component Analysis (PCA), multidimensional scaling, T-SNE or UMAP
+- Parallel coordinate plot
+- Scatterplot matrix
+- [scagnostics](https://cran.r-project.org/web/packages/scagnostics/index.html)
 
+```{r}
+# in our dataset,
+# continuous variables are
+PimaIndiansDiabetes %>%
+  select(where(is.numeric)) %>%
+  head()
 
-in statistics, exploratory data analysis is one of the first ways to zoom in on the data that matters. In a sense, exploratory data analysis is a way to cut out the noise. It’s also a way to forge a path into the forest of data that your algorithm will comb through. Data visualization has become popular in recent years due to its power to display the results at the end of the machine learning process, but it is also increasingly being used as a tool for exploratory data analysis before applying machine learning models.
+# 'diabetes' is the only categorical variable is also our target or dependent variable
+PimaIndiansDiabetes %>%
+  select(!where(is.numeric)) %>%
+  head()
+```
 
-Machine Learning Data Visualization Examples:
-When designing and evaluating a new algorithm, one of the first steps is exploratory data analysis (EDA). The point is to find the most efficient learning approach for a given problem. For the human researcher to understand what’s working and what’s not, the model’s results are often displayed graphically. Since these datasets cover many variables and are so “high dimensional,” several new data visualization techniques have been developed specifically for deep learning systems. Some of the most common new tools for interpreting high-dimensional relationships are:
+```{r}
+# boxplot of features
+PimaIndiansDiabetes %>%
+  gather("key", "value", pregnant:age) %>%
+  ggplot(aes(x = value, fill = diabetes)) +
+    facet_wrap(vars(key), ncol = 3, scales = "free") +
+    geom_boxplot(alpha = 0.8)
+```
 
-Parallel coordinate plots
-Scatterplot matrices
-Scagnostics
-Multidimensional scaling
-T-sne algorithm
+```{r}
+# bar plot of target
+PimaIndiansDiabetes %>%
+  ggplot(aes(x = diabetes, fill = diabetes)) +
+    geom_bar(alpha = 0.8)
+```
+
+```{r}
+# histogram of features
+PimaIndiansDiabetes %>%
+  gather("key", "value", pregnant:age) %>%
+  ggplot(aes(x = value, fill = diabetes)) +
+    facet_wrap(vars(key), ncol = 3, scales = "free") +
+    geom_histogram(alpha = 0.8)
+```
+
+```{r}
+# histogram of feature
+PimaIndiansDiabetes %>%
+  gather("key", "value", pregnant:age) %>%
+  ggplot(aes(x = value, fill = diabetes)) +
+    facet_wrap(vars(key), ncol = 3, scales = "free") +
+    geom_density(alpha = 0.8)
+```
+
+```{r}
+# correlation plot of features
+mat <- PimaIndiansDiabetes %>%
+  select(where(is.numeric))
+
+cormat <- round(cor(mat), 2)
+
+cormat <- cormat %>%
+  as_data_frame() %>%
+  mutate(x = colnames(mat)) %>%
+  gather(key = "y", value = "value", pregnant:age)
+
+cormat %>%
+    remove_missing() %>%
+    arrange(x, y) %>%
+    ggplot(aes(x = x, y = y, fill = value)) + 
+    geom_tile() +
+    scale_fill_gradient2(low = "blue", high = "red", mid = "white", 
+     midpoint = 0, limit = c(-1,1), space = "Lab", 
+     name = "Pearson\nCorrelation") +
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
+    coord_fixed()
+```
+
+```{r}
+# PCA
+prep <- PimaIndiansDiabetes %>%
+  select(where(is.numeric))
+
+pca <- prep %>%
+  prcomp(scale. = TRUE)
+
+autoplot(pca, 
+                data = PimaIndiansDiabetes, 
+                colour = 'diabetes',
+                shape = 'diabetes',
+                loadings = TRUE, 
+                loadings.colour = 'blue',
+                loadings.label = TRUE, 
+                loadings.label.size = 3) +
+      scale_color_manual(values = cbp1) +
+  scale_fill_manual(values = cbp1) +
+  theme_bw()
+```
+
+```{r}
+# parallel coordinate plots
+ggparcoord(data = PimaIndiansDiabetes, 
+           columns = c(1:8), 
+           groupColumn = 9,
+           scale = "robust",
+           order = "skewness",
+           alpha = 0.7)
+```
+
+```{r}
+# scatterplot matrix
+ggpairs(PimaIndiansDiabetes, 
+        columns = c(1:8),
+        alpha = 0.7)
+```
+
+```{r}
+# scagnostics
+scagnostics_dataset <- scagnostics(PimaIndiansDiabetes)
+
+# scagnostics grid
+scagnostics_grid_dataset <- scagnosticsGrid(scagnostics_dataset)
+
+# outliers
+scagnostics_o_dataset <- scagnosticsOutliers(scagnostics_dataset)
+scagnostics_o_dataset[scagnostics_o_dataset]
+outlier <- scagnostics_grid_dataset[scagnostics_o_dataset,]
+
+# scagnostics exemplars
+scagnostics_ex_dataset <- scagnosticsExemplars(scagnostics_dataset)
+scagnostics_ex_dataset[scagnostics_ex_dataset]
+exemplars <- scagnostics_grid_dataset[scagnostics_ex_dataset,]
+```
 
 ### Hyperparameter Optimization
 
+When evaluating the models, visualizing the results of hyperparameter tuning can help data scientists narrow down the groupings of hyperparameters that are most important.
 
 Tuning is an important part of modeling. Unlike parameters that derive their value from training, the values of hyperparameters are defined before the learning process begins. These hyperparameters control the behavior of the algorithms and have an impact on the performance of the model. Concerns of hyperparameters, such as trainability, tunability, and robustness, determine the usability of the models.
 
@@ -311,6 +431,10 @@ http://lstm.seas.harvard.edu/
 
 Before popular data visualization tools for machine learning were developed, the machine learning process was much more abstract. Historically, ggplot2 in R provided much-needed visualization tools for exploratory data analysis. But today, with the suite of data visualizations that are available in Python, such as seaborn, scikit-learn, and matplotlib, exploratory data analysis that forms the initial part of the machine learning process can be done much more efficiently. At the same time, with TensorFlow, model-building and model-tuning processes become a lot more intuitive. Rather than spending time on scrutinizing values, with the assistance of both 2-dimensional and interactive data visualizations, data scientists can pay more attention to the big picture of the data at each level of the machine learning process to focus more on the meaning of the data, the model design, and the model performance.
 
+Data visualization can power model creation and model tuning
+With the advancement of data visualization techniques, model creation and model tuning do not have to be abstract processes. TensorFlow allows you to follow the model-creation process with data visualization at each step, and when building a TensorFlow model, you can visualize the model’s structure and follow the data to see if the model fits your design.
+
+Below is an example of the conceptual graph of a Keras model. The data flows from the bottom to the top. The graph is a representation of the definition of the model.
 
 
 ## Main diagram types
