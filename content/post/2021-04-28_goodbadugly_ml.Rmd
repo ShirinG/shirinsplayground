@@ -38,6 +38,7 @@ library(mlbench)
 library(ggfortify)
 library(GGally)
 library(scagnostics)
+library(mlr) 
 ```
 
 ## Dataset
@@ -281,8 +282,59 @@ scagnostics_ex_dataset[scagnostics_ex_dataset]
 exemplars <- scagnostics_grid_dataset[scagnostics_ex_dataset,]
 ```
 
-### Hyperparameter Optimization
+### Training a machine learning model
 
+```{r}
+set.seed(1000) 
+
+train_index <- sample(1:nrow(PimaIndiansDiabetes), 0.8 * nrow(PimaIndiansDiabetes)) 
+test_index <- setdiff(1:nrow(PimaIndiansDiabetes), train_index) 
+
+train <- PimaIndiansDiabetes[train_index,] 
+test <- PimaIndiansDiabetes[test_index,]
+
+list( train = summary(train), test = summary(test) )
+
+(dt_task <- makeClassifTask(data=train, target="diabetes"))
+(dt_prob <- makeLearner('classif.rpart', predict.type="prob"))
+```
+
+### Feature Selection
+In order to select which features provide the best chance to predict Positive, the generateFilterValuesData gives us a score for each feature. This can then be plotted with PlotFilterValues. The score for each variable is dependent upon which criteria you choose. Here I choose Information Gain, Chi-squared and Gain Ratio as my criteria.
+
+```{r}
+library(FSelector)
+generateFilterValuesData(dt_task, method = "information.gain") %>% plotFilterValues()
+```
+
+The generateFeatureImportanceData function also works in a similar fashion. Except it will show us the importance of each feature according to a given performance criteria. I have chosen True Positive Rate and Area Under the Curve.
+
+```{r}
+generateFeatureImportanceData(task=dt_task, learner = dt_prob,measure = tpr, interaction = FALSE)
+generateFeatureImportanceData(task=dt_task, learner = dt_prob,measure = auc, interaction = FALSE)
+```
+
+As we can see with the above output:
+The information gain and gain ratio show a score of zero or a low score for Pregnancies.
+generateFeatureImportanceData shows a score of zero for Pregnancies when looking at the TPR and AUC as a performance measure.
+Looking at all the evidence, Pregnancies will be the only variable I discard. The other variables still show predictive capabilities across certain criteria.
+Seeing as how we are only left with 4 features, there can be a risk of underfitting my model. The other argument for this would be that I do not have many rows of data to deal with in the first place. This is ongoing discussion on what is the right amount of data and features (Curse of Dimensionality).
+Looking below I have taken Pregnancies out of our train and test sets and made a new classification task with our new training set.
+
+```{r}
+set.seed(1000) 
+train <- select(train, -pregnant, -pressure, -triceps) 
+test <- select(test, -pregnant, -pressure, -triceps)
+list( train = summary(train), test = summary(test) )
+```
+
+As we now have new datasets we need to make a new classification task based on the new training set.
+
+```{r}
+(dt_task <- makeClassifTask(data=train, target="diabetes"))
+```
+
+### Hyperparameter Optimization
 When evaluating the models, visualizing the results of hyperparameter tuning can help data scientists narrow down the groupings of hyperparameters that are most important.
 
 Tuning is an important part of modeling. Unlike parameters that derive their value from training, the values of hyperparameters are defined before the learning process begins. These hyperparameters control the behavior of the algorithms and have an impact on the performance of the model. Concerns of hyperparameters, such as trainability, tunability, and robustness, determine the usability of the models.
@@ -291,20 +343,228 @@ Below is an example of TensorBoard’s HParams that displays groups of hyperpara
 
 One of the best solutions for this type of task is to use a parallel coordinates plot (Figure 1). Using this type of plot, we can in fact easily compare different variables (eg. features) together in order to discover possible relationships. In the case of Hyperparameters Optimization, this can be used as a simple tool to inspect what combination of parameters can give us the greatest test accuracy. Another possible use of parallel coordinates plots in Data Analysis is to inspect relationships in values between the different features in a data frame.
 
+Now any machine learning algorithm will require us to tune the hyperparameters at our own discretion. Tuning hyperparameters is the process of selecting a value for machine learning parameter with the target of obtaining your desired level of performance.
+Tuning a machine learning algorithm in mlr involves the following procedures:
+Define a search space.
+Define the optimization algorithm (aka tuning method).
+Define an evaluation method (i.e. re-sampling strategy and a performance measure).
 
-### time-series
+```{r}
+getParamSet("classif.rpart")
+```
 
-When working with time-series data, it can be really handy at times to be able to quickly understand on which datapoints our model is performing poorly, in order to try to understand what limitations it might be facing.
-One possible approach is to create a summary table with the actual and predicted values and some form of metrics summarising how well/bad a data point has been predicted.
+```{r}
+dt_param <- makeParamSet( 
+  makeDiscreteParam("minsplit", values=seq(5,10,1)), 
+  makeDiscreteParam("minbucket", values=seq(round(5/3,0), round(10/3,0), 1)), 
+  makeNumericParam("cp", lower = 0.01, upper = 0.05), 
+  makeDiscreteParam("maxcompete", values=6), 
+  makeDiscreteParam("usesurrogate", values=0), 
+  makeDiscreteParam("maxdepth", values=10) )
+
+ctrl = makeTuneControlGrid()
+
+rdesc = makeResampleDesc("CV", iters = 3L, stratify=TRUE)
+```
+
+```{r}
+set.seed(1000) 
+(dt_tuneparam <- tuneParams(learner=dt_prob, 
+                 resampling=rdesc, 
+                 measures=list(tpr,auc, fnr, mmce, tnr, setAggregation(tpr, test.sd)), 
+                 par.set=dt_param, 
+                 control=ctrl, 
+                 task=dt_task, 
+                 show.info = TRUE) )
+```
+
+```{r}
+data = generateHyperParsEffectData(dt_tuneparam, partial.dep = TRUE)
+plotHyperParsEffect(data, x = "maxdepth", y = "auc.test.mean", partial.dep.learn = makeLearner("regr.gbm"))
+
+plotHyperParsEffect(data, x = "C", y = "sigma", z = "mmce.test.mean",
+  plot.type = "heatmap", interpolate = "regr.earth")
+```
+
+```{r}
+list( `Optimal HyperParameters` = dt_tuneparam$x, 
+      `Optimal Metrics` = dt_tuneparam$y )
+```
+
+Using dt_tuneparam$x we can extract the optimal values and dt_tuneparam$y gives us the corresponding performance measures.
+setHyperPars will tune the learner with its optimal values.
+
+```{r}
+dtree <- setHyperPars(dt_prob, par.vals = dt_tuneparam$x)
+
+set.seed(1000) 
+dtree_train <- train(learner=dtree, task=dt_task) 
+getLearnerModel(dtree_train)
+```
+
+- As a quick approach, we could plot heatmaps with the possible pairs of different parameters to see the areas where the maximum R2 is achieved in the test and the train sets. This can be done in a couple of lines:
 
 ### Decision Trees
 
 Decision Trees are one of the most easily explainable types of Machine Learning model. Thanks to their basilar structure, it is easily possible to examine how the algorithm decides to make its decision by looking at the conditions on the different branches of the tree. Additionally, Decision Trees can also be used as a Feature Selection technique, considering that the algorithm puts at the top levels of the tree the features which think are most valuable for our desired classification/regression task. In this way, the features at the bottom of the tree could be discarded since carrying less information.
 
+```{r}
+library(rpart.plot)
+rpart.plot(dtree_train$learner.model, roundint=FALSE, varlen=3, type = 3, clip.right.labs = FALSE, yesno = 2)
+```
+
+```{r}
+rpart.rules(dtree_train$learner.model, roundint = FALSE)
+```
+
+### Prediction
+
+```{r}
+set.seed(1000) 
+(dtree_predict <- predict(dtree_train, newdata = test))
+dtree_predict %>% calculateROCMeasures()
+
+model_performance <- performance(dtree_predict, measures = list(tpr,auc,mmce, acc,tnr)) %>% 
+  as.data.frame(row.names = c("True Positive","Area Under Curve", "Mean Misclassification Error","Accuracy","True Negative")) 
+
+model_performance
+```
+
+```{r}
+(dtree_threshold <- generateThreshVsPerfData(dtree_predict, measures = list(tpr,auc, mmce,tnr)) %>% plotThreshVsPerf() + geom_point() )
+```
+
+My personal goal for this model will be to obtain an acceptable and satisfactory True Positive Rate and True Negative Rate. Since the AUC remains the same across all thresholds we need not concern ourselves with it. By changing the threshold I am deliberately creating a biased model but this is a normal machine learning problem. The Bias-Variance Tradeoff is so common and we need to learn to navigate throught it. It is a whole other topic and anyone doing machine learning will need some knowledge of it.
+Below you will see 3 different thresholds:
+The maximum threshold in which our TPR is below 100%.
+The minimum threshold in which our TPR is above 80%.
+The average of the two thresholds.
+The maximum threshold in which our TNR is above 70%.
+
+```{r}
+list( 
+`TPR Threshold for 100%` = tpr_threshold100 <- dtree_threshold$data$threshold[ which.max(dtree_threshold$data$performance[ dtree_threshold$data$measure=="True positive rate"]<1)], 
+`TPR Threshold for 80%` = tpr_threshold80 <- dtree_threshold$data$threshold[ which.min(dtree_threshold$data$performance[ dtree_threshold$data$measure=="True positive rate"]>0.80)], 
+`Average Threshold` = avg_threshold <- mean(c(tpr_threshold100,tpr_threshold80)), 
+`TNR Threshold for 80%` = tnr_threshold80 <- dtree_threshold$data$threshold[ which.max(dtree_threshold$data$performance[ dtree_threshold$data$measure=="True negative rate"]>0.70)] )
+```
+
+Using avg_threhsold to predict on our model one more time we can get the following performance metrics. However looking at the thresholds from the plot and the ones I defined above, our True Negative Rate is going to take a big hit.
+
+```{r}
+DecisionTree <- dtree_predict %>% setThreshold(avg_threshold) 
+(dt_performance <- DecisionTree %>% performance(measures = list(tpr,auc, mmce,tnr)) )
+(dt_cm <- DecisionTree %>% calculateROCMeasures() )
+```
+
+The Accuracy has reduced to 66 %. This is another consequence of changing the threshold. This is not a cause for concern because our model does what I intended for it to do — Have a high True Positive Rate. Accuracy is not an adequate measure of model performance if we only care about the accurate prediction of a certain outcome. This is the case most of the time but even then you still need to dig deep into the model performance.
+
+```{r}
+performance_threshold <- performance(DecisionTree, measures = list(tpr,auc, mmce, acc, tnr)) %>% 
+  as.data.frame(row.names = c("True Positive","Area Under Curve", "Mean Misclassification Error","Accuracy","True Negative"))
+performance_threshold
+```
+
+
 ### Decision Boundaries
 
 Decision Boundaries are one of the easiest approaches to graphically understand how a Machine Learning model is making its predictions. One of the easiest ways to plot decision boundaries in Python is to use Mlxtend. This library, can in fact be used for plotting decision boundaries of either Machine Learning and Deep Learning models. A simple example is shown in Figure 6.
 One of the main limitations of plotting decision boundaries is that they can only be easily visualised in two or three dimensions. Due to these limitations, it might be therefore necessary most of the times to reduce the dimensionality of our input features (using some form of feature extraction techniques) before plotting the decision boundary.
+
+Over the next few posts, we will investigate decision boundaries. A decision boundary is a graphical representation of the solution to a classification problem. Decision boundaries can help us to understand what kind of solution might be appropriate for a problem. They can also help us to understand the how various machine learning classifiers arrive at a solution.
+
+In this post, we will look at a problem’s optimal decision boundary, which we can find when we know exactly how our data was generated. The optimal decision boundary represents the “best” solution possible for that problem. Consequently, by looking at the complexity of this boundary and at how much error it produces, we can get an idea of the inherent difficulty of the problem.
+
+Unless we have generated the data ourselves, we won’t usually be able to find the optimal boundary. Instead, we approximate it using a classifier. A good machine learning classifier tries to approximate the optimal boundary for a problem as closely as possible.
+
+A classification problem asks: given some observations of a thing, what is the best way to assign that thing to a class based on some of its features? For instance, we might want to predict whether a person will like a movie or not based on some data we have about them, the “features” of that person.
+
+A solution to the classification problem is a rule that partitions the features and assigns each all the features of a partition to the same class. The “boundary” of this partitioning is the decision boundary of the rule.
+
+It might be that two observations have exactly the same features, but are assigned to different classes. (Two things that look the same in the ways we’ve observed might differ in ways we haven’t observed.)
+
+The boundary that this rule produces is the optimal decision boundary. It is the MAP estimate of the class label, and it is the rule that minimizes classification error under the zero-one loss function. We will look at error and loss more in a future post.
+
+We will consider binary classification problems, meaning, there will only be two possible classes, 0 or 1. For a binary classification problem, the optimal boundary occurs at those points where each class is equally probable:
+
+Decision boundaries are most easily visualized whenever we have continuous features, most especially when we have two continuous features, because then the decision boundary will exist in a plane.
+
+With two continuous features, the feature space will form a plane, and a decision boundary in this feature space is a set of one or more curves that divide the plane into distinct regions. Inside of a region, all observations will be assigned to the same class.
+
+As mentioned above, whenever we know exactly how our data was generated, we can produce the optimal decision boundary. Though this won’t usually be possible in practice, investigating the optimal boundaries produced from simulated data can still help us to understand their properties.
+
+We will look at the optimal boundary for a binary classification problem on a with features on a couple of common distributions: a multivariate normal distribution and a mixture of normal distributions.
+
+In a binary classification problem, whenever the features for each class jointly have a multivariate normal distribution, the optimal decision boundary is relatively simple. We will start our investigation here.
+
+With two features, the feature space is a plane. It can be shown that the optimal decision boundary in this case will either be a line or a conic section (that is, an ellipse, a parabola, or a hyperbola). With higher dimesional feature spaces, the decision boundary will form a hyperplane or a quadric surface.
+
+We will consider classification problems with two classes, 𝐶=0,1, and two features, 𝑋 and 𝑌. Each class will be Bernoulli distributed and the features for each class will be distributed normally. Specifically,
+
+Our goal is to produce two kinds of visualizations: one, of a sample from these distributions, and two, the contours of the class-conditional densities for each feature. We’ll use the mvnfast package to help us with computations on the joint M
+
+```{r}
+#remotes::install_github("grantmcdermott/parttree")
+library(parsnip)
+library(parttree)
+set.seed(123) ## For consistent jitter
+
+## Build our tree using parsnip (but with rpart as the model engine)
+ti_tree =
+  decision_tree() %>%
+  set_engine("rpart") %>%
+  set_mode("classification") %>%
+  fit(diabetes ~ glucose + age, data = PimaIndiansDiabetes)
+
+## Plot the data and model partitions
+PimaIndiansDiabetes %>%
+  ggplot(aes(x=glucose, y=age)) +
+  geom_jitter(aes(col=diabetes), alpha=0.7) +
+  geom_parttree(data = ti_tree, aes(fill=diabetes), alpha = 0.1) +
+  theme_minimal()
+```
+
+https://michael.hahsler.net/SMU/EMIS7332/R/viz_classifier.html
+
+```{r}
+decisionplot <- function(model, data, class = NULL, predict_type = "class",
+  resolution = 100, showgrid = TRUE, ...) {
+
+  if(!is.null(class)) cl <- data[,class] else cl <- 1
+  data <- data[,1:2]
+  k <- length(unique(cl))
+
+  plot(data, col = as.integer(cl)+1L, pch = as.integer(cl)+1L, ...)
+
+  # make grid
+  r <- sapply(data, range, na.rm = TRUE)
+  xs <- seq(r[1,1], r[2,1], length.out = resolution)
+  ys <- seq(r[1,2], r[2,2], length.out = resolution)
+  g <- cbind(rep(xs, each=resolution), rep(ys, time = resolution))
+  colnames(g) <- colnames(r)
+  g <- as.data.frame(g)
+
+  ### guess how to get class labels from predict
+  ### (unfortunately not very consistent between models)
+  p <- predict(model, g, type = predict_type)
+  if(is.list(p)) p <- p$class
+  p <- as.factor(p)
+
+  if(showgrid) points(g, col = as.integer(p)+1L, pch = ".")
+
+  z <- matrix(as.integer(p), nrow = resolution, byrow = TRUE)
+  contour(xs, ys, z, add = TRUE, drawlabels = FALSE,
+    lwd = 2, levels = (1:(k-1))+.5)
+
+  invisible(z)
+}
+```
+
+```{r}
+library(e1071)
+model <- naiveBayes(diabetes ~ ., data=PimaIndiansDiabetes)
+decisionplot(model, PimaIndiansDiabetes, class = "diabetes", main = "naive Bayes")
+```
 
 ### ANNs
 
@@ -318,6 +578,13 @@ http://yosinski.com/deepvis
 http://cs231n.stanford.edu/slides/2018/cs231n_2018_lecture13.pdf
 
 https://projector.tensorflow.org/
+
+![https://shirinsplayground.netlify.app/2020/09/keras_funct_api/](https://shirinsplayground.netlify.com/img/plot_model_4.png)
+https://shirinsplayground.netlify.app/2020/10/keras_workshop_user20/
+
+![https://shirinsplayground.netlify.app/2020/09/keras_fruits_update/](https://shirinsplayground.netlify.com/img/hist.png)
+![https://shirinsplayground.netlify.app/2020/09/keras_fruits_update/](https://shirinsplayground.netlify.com/img/percentage_pred.png)
+![https://shirinsplayground.netlify.app/2020/09/keras_fruits_update/](https://shirinsplayground.netlify.com/img/percentage_pred_cor.png)
 
 ### Learning rates
 
@@ -363,6 +630,12 @@ https://arxiv.org/pdf/1611.04558.pdf
 
 http://seq2seq-vis.io/
 
+### time-series
+
+When working with time-series data, it can be really handy at times to be able to quickly understand on which datapoints our model is performing poorly, in order to try to understand what limitations it might be facing.
+One possible approach is to create a summary table with the actual and predicted values and some form of metrics summarising how well/bad a data point has been predicted.
+
+
 ### Explainable AI
 
 Explainable AI is nowadays a growing field of research. Use of AI in decision-making applications (such as employment) has recently caused some concerns both for individuals and authorities. This is because, when working with deep neural networks, it is currently not possible (at least to a full extent) to understand the decision-making process the algorithm performs when having to carry out a predetermined task. Because of this lack of transparency in the decision-making process, perplexities can arise from the public regarding the trustworthiness of the model itself. Therefore, the need for Explainable AI is now becoming the next prefixed evolutionary step in order to prevent the presence of any form of bias in AI models.
@@ -375,6 +648,8 @@ Local/Global surrogate models.
 Introduction of Local Interpretable Model-Agnostic Explanations (LIME) and Shapley Values.
 If you are interested in finding out more about how to make Machine Learning models more explainable, two of the most interesting libraries currently available in Python in order to apply Explainable AI in Deep Learning are Captum by Pytorch and XAI.
 As this research area is in constant improvement, I will aim to cover all these different topics (and more) in a future article dedicated to just Explainable AI.
+
+https://shirinsplayground.netlify.app/2018/12/customer_churn_code/
 
 ### Image classifiers are effective in practice
 Exactly what they're doing is somewhat mysterious
@@ -435,27 +710,6 @@ Data visualization can power model creation and model tuning
 With the advancement of data visualization techniques, model creation and model tuning do not have to be abstract processes. TensorFlow allows you to follow the model-creation process with data visualization at each step, and when building a TensorFlow model, you can visualize the model’s structure and follow the data to see if the model fits your design.
 
 Below is an example of the conceptual graph of a Keras model. The data flows from the bottom to the top. The graph is a representation of the definition of the model.
-
-
-## Main diagram types
-
-### Pointcharts
-
-```{r}
-penguins %>%
-    remove_missing() %>%
-    ggplot(aes(x = bill_length_mm, y = flipper_length_mm)) +
-    geom_jitter(alpha = 0.5) +
-    facet_wrap(vars(species), ncol = 3) +
-    scale_x_reverse() +
-    scale_y_reverse() +
-    labs(x = "Bill length (mm)", 
-         y = "Flipper length (mm)",
-         size = "body mass (g)",
-        title = "Scatterplot", 
-        subtitle = "Penguins bill v. flipper length by species",
-        caption = "Source: https://github.com/allisonhorst/palmerpenguins")
-```
 
 
 

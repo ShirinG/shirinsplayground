@@ -25,10 +25,6 @@ Keras comes with a number of built in [callbacks](https://keras.rstudio.com/arti
 
 ---
 
-**Workshop announcement:** Because this year's UseR 2020 in Munich couldn't happen as an in-person event, I will be giving my [workshop on Deep Learning with Keras and TensorFlow](https://www.eventbrite.com/e/deep-learning-with-keras-and-tensorflow-tickets-122422397687) as an online event on Thursday, 8th of October (13:00 UTC / 15:00 CEST). You can register for FREE via [Eventbrite](https://www.eventbrite.com/e/deep-learning-with-keras-and-tensorflow-tickets-122422397687).
-
----
-
 If you have questions or would like to talk about this article (or something else data-related), you can now [book 15-minute timeslots](https://shirinsplayground.netlify.app/page/bookme/) with me (it's free - one slot available per weekday): 
 
 <img src="https://www.appointletcdn.com/loader/buttons/F62459.png" data-appointlet-organization="shirin-elsinghorst" data-appointlet-service="357892"><script src="https://www.appointletcdn.com/loader/loader.min.js" async="" defer=""></script>
