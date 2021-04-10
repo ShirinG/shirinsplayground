@@ -1,5 +1,5 @@
 ---
-title: "Update to The Good, the Bad and the Ugly: how (not) to visualize Machine Learning data"
+title: "Update to The Good, the Bad and the Ugly: how to visualize Machine Learning data"
 draft: true
 author: Dr. Shirin Elsinghorst
 date: '2021-04-28'
@@ -16,7 +16,7 @@ slug: goodbadugly_ml
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
-Below you'll find the complete code used to create the **ggplot2** graphs in my talk **The Good, the Bad and the Ugly: how (not) to visualize Machine Learning data** at this year's Minds Mastering machines conference. You can find the German [slides here](https://docs.google.com/presentation/d/e/2PACX-1vR4pD2EmW9Gzxr1Q3qwgjEYkU64o2-ThlX1mXqfNQ2EKteVUVt6Qg2ImEKKi9XLv-Iutb3lD8esLyU7/pub?start=false&loop=false&delayms=3000):
+Below you'll find the complete code used to create the **ggplot2** graphs in my talk **The Good, the Bad and the Ugly: how to visualize Machine Learning data** at this year's Minds Mastering machines conference. You can find the German [slides here](https://docs.google.com/presentation/d/e/2PACX-1vR4pD2EmW9Gzxr1Q3qwgjEYkU64o2-ThlX1mXqfNQ2EKteVUVt6Qg2ImEKKi9XLv-Iutb3lD8esLyU7/pub?start=false&loop=false&delayms=3000):
 
 <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vR4pD2EmW9Gzxr1Q3qwgjEYkU64o2-ThlX1mXqfNQ2EKteVUVt6Qg2ImEKKi9XLv-Iutb3lD8esLyU7/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 
@@ -31,6 +31,8 @@ If you have questions or would like to talk about this article (or something els
 *If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at <button>[paypal.me](https://paypal.me/ShirinGlander)</button>. Thank you!* :-)
 
 ---
+
+## Libraries
 
 ```{r libraries}
 library(tidyverse)
@@ -70,62 +72,21 @@ ggplot <- function(...) ggplot2::ggplot(...) +
 
 ## Visualizing Machine Learning models
 
+Visualizing different steps of the machine learning pipeline can help us
 
+- explore the data (EDA),
+- understand the data (and identify potential problems),
+- pre-process the data in a suitable way for optimal model performance,
+- supervise the learning process,
+- optimize modeling,
+- interpret the model and
+- compare and evaluate model predictions.
 
-At each of these steps, data visualization helps the data scientist explore the data, understand the data and process the data to set it up for modeling.
-
-
-Data visualization tools enable data scientists to quickly identify and focus on the most important data and the most important paths to take. Even during the modeling process, model graphs can help to speed up the model-creation process by displaying the model maps conceptually. 
-
-https://arxiv.org/pdf/1801.06889.pdf
-
-Visualizing models, decision boundaries and prediction results may give hints whether the model is indeed a good fit or it is a poor fit for the data. For example, it is high bias to ignore the nature of our data if use a straight line to fit a circular scatter of dots.
-Researchers even visualized different optimizers to see their descend to minimize loss.
-
-As part of any Data Science project, Data Visualization plays an important part in order to learn more about the available data and to identify any main pattern.
-
-Data Visualization is Essential in Every Step of Machine Learning
-
-Transform data into visual encodings
-What is it good for?
-Data exploration
-Scientific insight
-Communication
-Education
-How to ensure it works well?
-Engage the visual system in smart ways
-Take advantage of pre-attentive processing 
-
-Find visual encodings that
-● Guide viewer's attention
-● Communicate data to the viewer
-● Let viewer calculate with data
-On computer
-● Interactive exploration
-
-Framework: visualization uses in ML
-1. Training Data
-2. Model Performance
-3. Interpretability + model inspection
-4. High-dimensional data
-5. Education and communication 
-
-Main approaches
-Linear
-- Principal Component Analysis (show as much variation in data as possible)
-- Visualization of Labeled Data Using Linear Transformations (clusters match labels)
-
-Non-linear (just a few of many) Minimize distortion, according to some metric
-- Multidimensional scaling
-- Sammon mapping
-- Isomap
-- t-SNE
-- UMAP: New kid on the block Faster than t-SNE, Can efficiently embed into high dimensions (i.e. useful not just for visualization), Often seems to capture global structure better
-
+Visualization also greatly simplifies communication of our model and results to decision-makers or the public.
 
 ### Exploratory Data Analysis
 
-Exploratory Data Analysis (EDA) is the backbone of data analysis, including those that result in a machine learning model. EDA helps us to understand the data we are working with and put it into context, so that we are able to ask the right questions (or to put our questions into the right frame). It helps us take appropriate measures for cleaning, normalization/transformation, dealing with missing values, feature preparation and engineering, etc. Particularly if our machine learning model is trained on a limited dataset (but not only then!), appropriate data preparation can vastly improve the machine learning process: models will often train faster and achieve higher accuracy.
+Exploratory Data Analysis (EDA) is the backbone of data analysis, including those that result in a machine learning model. EDA helps us to understand the data we are working with and put it into context, so that we are able to ask the right questions (or to put our questions into the right frame). It also helps us take appropriate measures for cleaning, normalization/transformation, dealing with missing values, feature preparation and engineering, etc. Particularly if our machine learning model is trained on a limited dataset (but not only then!), appropriate data preparation can vastly improve the machine learning process: models will often train faster and achieve higher accuracy.
 
 An essential part of EDA is data visualization. 
 
@@ -143,45 +104,57 @@ Depending on the number of features/variables we have, it makes sense to look at
 
 If our target variable is categorical, we will want to look at potential imbalances between the classes. Class imbalance will strongly affect the machine learning modeling process and will require us to consider up-/downsampling or similar techniques before we train a model.
 
-Correlation analysis can show us, for example
+**Correlation analysis** can show us, for example
 
 - how our **target/dependent variable correlates with the remaining features** (often, just by looking at the correlation, we can identify one ore more feature that will have a strong impact on predicting the target because they are strongly correlated) or
-- whether some of the **independent variables/features correlate with each other** (multicolinearity; we might want to consider removing strongly correlated features, so that they won't contribute the "same" information multiple times to the model and thus lead to overfitting).
+- whether some of the **independent variables/features correlate with each other** (**multicolinearity**; we might want to consider removing strongly correlated features, so that they won't contribute the "same" information multiple times to the model and thus lead to overfitting).
 
-Additional methods can be used to visualize groups of correlated features. These methods are often especially useful if we have a large dataset with a large feature set (highly dimensional data). Some of these methods for visualizing groups of correlated features and/or for comparing multiple variables and visualizing their relationships are:
+Additional methods can be used to visualize groups of related features. These methods are often especially useful if we have a large dataset with a large feature set (highly dimensional data). Some of these methods for visualizing groups of related features and/or for comparing multiple variables and visualizing their relationships are:
 
-- Dimensionality reduction, e.g. Principal Component Analysis (PCA), multidimensional scaling, T-SNE or UMAP
-- Parallel coordinate plot
-- Scatterplot matrix
+- **Dimensionality reduction**:
+  - *Principal Component Analysis* (PCA, linear, shows as much variation in data as possible)
+  - *Multidimensional scaling* (MDS, non-linear)
+  - *Sammon mapping* (non-linear)
+  - *T-Distributed Stochastic Neighbor Embedding* ([t-SNE](https://cran.r-project.org/web/packages/tsne/tsne.pdf), non-linear)
+  - *Uniform Manifold Approximation and Projection* ([UMAP](https://cran.r-project.org/web/packages/umap/vignettes/umap.html), non-linear, faster than T-SNE, often captures global variation better than T-SNE and PCA)
+  - *Isometric Feature Mapping Ordination* ([Isomap](https://www.rdocumentation.org/packages/vegan/versions/2.4-2/topics/isomap))
+- [Parallel coordinate plots](https://towardsdatascience.com/parallel-coordinates-plots-6fcfa066dcb3)
 - [scagnostics](https://cran.r-project.org/web/packages/scagnostics/index.html)
 
 ```{r}
 # in our dataset,
 # continuous variables are
 PimaIndiansDiabetes %>%
-  select(where(is.numeric)) %>%
+  dplyr::select(where(is.numeric)) %>%
   head()
 
 # 'diabetes' is the only categorical variable is also our target or dependent variable
 PimaIndiansDiabetes %>%
-  select(!where(is.numeric)) %>%
+  dplyr::select(!where(is.numeric)) %>%
   head()
-```
-
-```{r}
-# boxplot of features
-PimaIndiansDiabetes %>%
-  gather("key", "value", pregnant:age) %>%
-  ggplot(aes(x = value, fill = diabetes)) +
-    facet_wrap(vars(key), ncol = 3, scales = "free") +
-    geom_boxplot(alpha = 0.8)
 ```
 
 ```{r}
 # bar plot of target
 PimaIndiansDiabetes %>%
   ggplot(aes(x = diabetes, fill = diabetes)) +
-    geom_bar(alpha = 0.8)
+    geom_bar(alpha = 0.8) +
+    theme(legend.position = "none") +
+    labs(x = "Diabetes outcome", 
+         y = "count",
+        title = "Barplot of categorical features", 
+        caption = "Source: Pima Indians Diabetes Database")
+```
+
+```{r}
+# boxplot of continuous features
+PimaIndiansDiabetes %>%
+  gather("key", "value", pregnant:age) %>%
+  ggplot(aes(x = value, fill = diabetes)) +
+    facet_wrap(vars(key), ncol = 3, scales = "free") +
+    geom_boxplot(alpha = 0.8) +
+    theme(axis.text.y = element_blank(),
+          axis.ticks.y = element_blank())
 ```
 
 ```{r}
@@ -190,22 +163,32 @@ PimaIndiansDiabetes %>%
   gather("key", "value", pregnant:age) %>%
   ggplot(aes(x = value, fill = diabetes)) +
     facet_wrap(vars(key), ncol = 3, scales = "free") +
-    geom_histogram(alpha = 0.8)
+    geom_histogram(alpha = 0.8) +
+    labs(x = "value of feature in facet", 
+         y = "count",
+         fill = "Diabetes",
+        title = "Histogram of features", 
+        caption = "Source: Pima Indians Diabetes Database")
 ```
 
 ```{r}
-# histogram of feature
+# density plot of of features
 PimaIndiansDiabetes %>%
   gather("key", "value", pregnant:age) %>%
   ggplot(aes(x = value, fill = diabetes)) +
     facet_wrap(vars(key), ncol = 3, scales = "free") +
-    geom_density(alpha = 0.8)
+    geom_density(alpha = 0.8) +
+    labs(x = "value of feature in facet", 
+         y = "density",
+         fill = "Diabetes",
+        title = "Density of continuous features", 
+        caption = "Source: Pima Indians Diabetes Database")
 ```
 
 ```{r}
 # correlation plot of features
 mat <- PimaIndiansDiabetes %>%
-  select(where(is.numeric))
+  dplyr::select(where(is.numeric))
 
 cormat <- round(cor(mat), 2)
 
@@ -223,13 +206,27 @@ cormat %>%
      midpoint = 0, limit = c(-1,1), space = "Lab", 
      name = "Pearson\nCorrelation") +
     theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
-    coord_fixed()
+    coord_fixed() +
+    labs(x = "feature", 
+         y = "feature",
+        title = "Correlation between features", 
+        caption = "Source: Pima Indians Diabetes Database")
+```
+```{r fig.width=5}
+# scatterplot matrix
+ggpairs(PimaIndiansDiabetes, 
+        columns = c(1:8),
+        alpha = 0.7) +
+    labs(x = "feature", 
+         y = "feature",
+        title = "Scatterplot matrix", 
+        caption = "Source: Pima Indians Diabetes Database")
 ```
 
 ```{r}
 # PCA
 prep <- PimaIndiansDiabetes %>%
-  select(where(is.numeric))
+  dplyr::select(where(is.numeric))
 
 pca <- prep %>%
   prcomp(scale. = TRUE)
@@ -244,7 +241,25 @@ autoplot(pca,
                 loadings.label.size = 3) +
       scale_color_manual(values = cbp1) +
   scale_fill_manual(values = cbp1) +
-  theme_bw()
+  theme_bw() +
+    labs(title = "Principal Component Analysis (PCA)", 
+        caption = "Source: Pima Indians Diabetes Database")
+```
+
+```{r}
+# MDS
+d <- dist(prep) # euclidean distances between the rows
+fit <- cmdscale(d,eig=TRUE, k=2) # k is the number of dim
+fit$points %>%
+  head()
+```
+
+```{r}
+# Sammon mapping
+library(MASS)
+sam <- sammon(dist(prep))
+sam$points %>%
+  head()
 ```
 
 ```{r}
@@ -255,13 +270,6 @@ ggparcoord(data = PimaIndiansDiabetes,
            scale = "robust",
            order = "skewness",
            alpha = 0.7)
-```
-
-```{r}
-# scatterplot matrix
-ggpairs(PimaIndiansDiabetes, 
-        columns = c(1:8),
-        alpha = 0.7)
 ```
 
 ```{r}
@@ -284,6 +292,10 @@ exemplars <- scagnostics_grid_dataset[scagnostics_ex_dataset,]
 
 ### Training a machine learning model
 
+(using `mlr` package)
+
+- create training and test set
+
 ```{r}
 set.seed(1000) 
 
@@ -294,9 +306,17 @@ train <- PimaIndiansDiabetes[train_index,]
 test <- PimaIndiansDiabetes[test_index,]
 
 list( train = summary(train), test = summary(test) )
+```
 
-(dt_task <- makeClassifTask(data=train, target="diabetes"))
-(dt_prob <- makeLearner('classif.rpart', predict.type="prob"))
+- create classification task and learner
+
+```{r}
+listLearners()
+```
+
+```{r}
+(dt_task <- makeClassifTask(data = train, target = "diabetes"))
+(dt_prob <- makeLearner('classif.gbm', predict.type = "prob"))
 ```
 
 ### Feature Selection
@@ -304,14 +324,54 @@ In order to select which features provide the best chance to predict Positive, t
 
 ```{r}
 library(FSelector)
-generateFilterValuesData(dt_task, method = "information.gain") %>% plotFilterValues()
+listFilterMethods()
+listFilterEnsembleMethods()
 ```
+
+```{r}
+generateFilterValuesData(dt_task, method = "FSelector_information.gain") %>% 
+  plotFilterValues() +
+  theme_bw() +
+    labs(x = "feature",
+         y = "information gain",
+         title = "Information gain of features in GBM",
+         caption = "Source: Pima Indians Diabetes Database")
+```
+
+Estimate how important individual features or groups of features are by contrasting prediction performances. 
 
 The generateFeatureImportanceData function also works in a similar fashion. Except it will show us the importance of each feature according to a given performance criteria. I have chosen True Positive Rate and Area Under the Curve.
 
 ```{r}
-generateFeatureImportanceData(task=dt_task, learner = dt_prob,measure = tpr, interaction = FALSE)
-generateFeatureImportanceData(task=dt_task, learner = dt_prob,measure = auc, interaction = FALSE)
+feat_imp_tpr <- generateFeatureImportanceData(task = dt_task, 
+                              learner = dt_prob,
+                              measure = tpr, 
+                              interaction = FALSE)
+
+feat_imp_tpr$res %>%
+  gather() %>%
+  ggplot(aes(x = reorder(key, value), y = value)) +
+    geom_bar(stat = "identity") +
+    labs(x = "feature",
+         title = "True positive rate of features in GBM",
+         subtitle = "calculated with permutation importance",
+         caption = "Source: Pima Indians Diabetes Database")
+```
+
+```{r}
+feat_imp_auc <- generateFeatureImportanceData(task = dt_task, 
+                              learner = dt_prob,
+                              measure = auc, 
+                              interaction = FALSE)
+
+feat_imp_auc$res %>%
+  gather() %>%
+  ggplot(aes(x = reorder(key, value), y = value)) +
+    geom_bar(stat = "identity") +
+    labs(x = "feature",
+         title = "Area under the curve of features in GBM",
+         subtitle = "calculated with permutation importance",
+         caption = "Source: Pima Indians Diabetes Database")
 ```
 
 As we can see with the above output:
@@ -323,18 +383,19 @@ Looking below I have taken Pregnancies out of our train and test sets and made a
 
 ```{r}
 set.seed(1000) 
-train <- select(train, -pregnant, -pressure, -triceps) 
-test <- select(test, -pregnant, -pressure, -triceps)
+train <- dplyr::select(train, -pedigree, -pressure, -triceps) 
+test <- dplyr::select(test, -pedigree, -pressure, -triceps)
 list( train = summary(train), test = summary(test) )
 ```
 
 As we now have new datasets we need to make a new classification task based on the new training set.
 
 ```{r}
-(dt_task <- makeClassifTask(data=train, target="diabetes"))
+(dt_task <- makeClassifTask(data = train, target = "diabetes"))
 ```
 
 ### Hyperparameter Optimization
+
 When evaluating the models, visualizing the results of hyperparameter tuning can help data scientists narrow down the groupings of hyperparameters that are most important.
 
 Tuning is an important part of modeling. Unlike parameters that derive their value from training, the values of hyperparameters are defined before the learning process begins. These hyperparameters control the behavior of the algorithms and have an impact on the performance of the model. Concerns of hyperparameters, such as trainability, tunability, and robustness, determine the usability of the models.
@@ -350,40 +411,51 @@ Define the optimization algorithm (aka tuning method).
 Define an evaluation method (i.e. re-sampling strategy and a performance measure).
 
 ```{r}
-getParamSet("classif.rpart")
+getParamSet("classif.gbm")
 ```
 
 ```{r}
 dt_param <- makeParamSet( 
-  makeDiscreteParam("minsplit", values=seq(5,10,1)), 
-  makeDiscreteParam("minbucket", values=seq(round(5/3,0), round(10/3,0), 1)), 
-  makeNumericParam("cp", lower = 0.01, upper = 0.05), 
-  makeDiscreteParam("maxcompete", values=6), 
-  makeDiscreteParam("usesurrogate", values=0), 
-  makeDiscreteParam("maxdepth", values=10) )
+  makeIntegerParam("n.trees", lower = 20, upper = 150),
+  makeNumericParam("shrinkage", lower = 0.01, upper = 0.1))
 
 ctrl = makeTuneControlGrid()
 
-rdesc = makeResampleDesc("CV", iters = 3L, stratify=TRUE)
+rdesc = makeResampleDesc("CV", 
+                         iters = 3L, 
+                         stratify = TRUE)
 ```
 
 ```{r}
 set.seed(1000) 
-(dt_tuneparam <- tuneParams(learner=dt_prob, 
-                 resampling=rdesc, 
-                 measures=list(tpr,auc, fnr, mmce, tnr, setAggregation(tpr, test.sd)), 
-                 par.set=dt_param, 
-                 control=ctrl, 
-                 task=dt_task, 
-                 show.info = TRUE) )
+(dt_tuneparam <- tuneParams(learner = dt_prob, 
+                             resampling = rdesc, 
+                             measures = list(tpr,auc, fnr, mmce, tnr, setAggregation(tpr, test.sd)), 
+                             par.set = dt_param, 
+                             control = ctrl, 
+                             task = dt_task, 
+                             show.info = TRUE))
 ```
 
 ```{r}
-data = generateHyperParsEffectData(dt_tuneparam, partial.dep = TRUE)
-plotHyperParsEffect(data, x = "maxdepth", y = "auc.test.mean", partial.dep.learn = makeLearner("regr.gbm"))
+data = generateHyperParsEffectData(dt_tuneparam, 
+                                   partial.dep = TRUE)
 
-plotHyperParsEffect(data, x = "C", y = "sigma", z = "mmce.test.mean",
-  plot.type = "heatmap", interpolate = "regr.earth")
+plotHyperParsEffect(data, x = "n.trees", y = "tpr.test.mean", partial.dep.learn = makeLearner("regr.gbm"))
+plotHyperParsEffect(data, x = "shrinkage", y = "tpr.test.mean", partial.dep.learn = makeLearner("regr.gbm"))
+```
+
+```{r}
+plotHyperParsEffect(data, 
+                    x = "n.trees", 
+                    y = "shrinkage",
+                    z = "tpr.test.mean", 
+                    plot.type = "heatmap",
+                    partial.dep.learn = makeLearner("regr.gbm")) +
+  theme_bw() +
+    labs(title = "Hyperparameter effects data",
+         subtitle = "of GBM model with reduced feature set",
+         caption = "Source: Pima Indians Diabetes Database")
 ```
 
 ```{r}
@@ -587,6 +659,8 @@ https://shirinsplayground.netlify.app/2020/10/keras_workshop_user20/
 ![https://shirinsplayground.netlify.app/2020/09/keras_fruits_update/](https://shirinsplayground.netlify.com/img/percentage_pred_cor.png)
 
 ### Learning rates
+
+http://web.cse.ohio-state.edu/~wang.6195/vis-final/index.html
 
 ### Graphical representation of a model in TensorBoard
 
