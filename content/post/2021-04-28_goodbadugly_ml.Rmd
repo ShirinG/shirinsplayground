@@ -84,6 +84,13 @@ Visualizing different steps of the machine learning pipeline can help us
 
 Visualization also greatly simplifies communication of our model and results to decision-makers or the public.
 
+>Before popular data visualization tools for machine learning were developed, the machine learning process was much more abstract. Historically, ggplot2 in R provided much-needed visualization tools for exploratory data analysis. But today, with the suite of data visualizations that are available in Python, such as seaborn, scikit-learn, and matplotlib, exploratory data analysis that forms the initial part of the machine learning process can be done much more efficiently. At the same time, with TensorFlow, model-building and model-tuning processes become a lot more intuitive. Rather than spending time on scrutinizing values, with the assistance of both 2-dimensional and interactive data visualizations, data scientists can pay more attention to the big picture of the data at each level of the machine learning process to focus more on the meaning of the data, the model design, and the model performance.
+
+>Data visualization can power model creation and model tuning
+With the advancement of data visualization techniques, model creation and model tuning do not have to be abstract processes. TensorFlow allows you to follow the model-creation process with data visualization at each step, and when building a TensorFlow model, you can visualize the model’s structure and follow the data to see if the model fits your design.
+
+>Below is an example of the conceptual graph of a Keras model. The data flows from the bottom to the top. The graph is a representation of the definition of the model.
+
 ### Exploratory Data Analysis
 
 Exploratory Data Analysis (EDA) is the backbone of data analysis, including those that result in a machine learning model. EDA helps us to understand the data we are working with and put it into context, so that we are able to ask the right questions (or to put our questions into the right frame). It also helps us take appropriate measures for cleaning, normalization/transformation, dealing with missing values, feature preparation and engineering, etc. Particularly if our machine learning model is trained on a limited dataset (but not only then!), appropriate data preparation can vastly improve the machine learning process: models will often train faster and achieve higher accuracy.
@@ -613,7 +620,18 @@ PimaIndiansDiabetes %>%
          caption = "Source: Pima Indians Diabetes Database")
 ```
 
+### Time-series
+
+When working with time-series data, it can be really handy at times to be able to quickly understand on which datapoints our model is performing poorly, in order to try to understand what limitations it might be facing.
+One possible approach is to create a summary table with the actual and predicted values and some form of metrics summarising how well/bad a data point has been predicted.
+
+![https://shiring.github.io/forecasting/2017/06/09/retail_forcasting_part2](https://shiring.github.io/forecasting/2017/06/09/retail_forcasting_part2_files/figure-markdown_github/unnamed-chunk-28-1.png)
+
+![https://shiring.github.io/forecasting/2017/06/13/retail_forcasting_part3](https://shiring.github.io/forecasting/2017/06/13/retail_forcasting_part3_files/figure-markdown_github/unnamed-chunk-12-1.png)
+
 ### Artificial Neural Networks (ANNs)
+
+- [playground.tensorflow.org](playground.tensorflow.org)
 
 - [Deep Learning with R](https://www.manning.com/books/deep-learning-with-r)
 
@@ -627,6 +645,16 @@ PimaIndiansDiabetes %>%
 
 - [Visualizing Data using the Embedding Projector in TensorBoard](https://projector.tensorflow.org/)
 
+- [Visualizing and Understanding Convolutional Networks, Zeiler & Fergus, 2013](https://arxiv.org/pdf/1311.2901.pdf)
+
+- [The Building Blocks of Interpretability, Olah, Satyanarayan, Johnson, Carter, Schubert, Ye, Mordvintsev](https://distill.pub/2018/building-blocks/)
+
+- [Google Creative Lab](https://quickdraw.withgoogle.com/)
+
+- [Play with Generative Adversarial Networks (GANs) in your browser](https://poloclub.github.io/ganlab/)
+
+- [Visual Analysis for Recurrent Neural Networks](http://lstm.seas.harvard.edu/)
+
 - Another technique which can be quite useful when creating new neural network architectures is visualising their structure. 
 
 ![https://shirinsplayground.netlify.app/2020/09/keras_funct_api/](https://shirinsplayground.netlify.com/img/plot_model_4.png)
@@ -636,11 +664,11 @@ PimaIndiansDiabetes %>%
 ![https://shirinsplayground.netlify.app/2020/09/keras_fruits_update/](https://shirinsplayground.netlify.com/img/percentage_pred.png)
 ![https://shirinsplayground.netlify.app/2020/09/keras_fruits_update/](https://shirinsplayground.netlify.com/img/percentage_pred_cor.png)
 
-### Learning rates
-
-http://web.cse.ohio-state.edu/~wang.6195/vis-final/index.html
+- [Visualize the effectiveness of different learning rates](http://web.cse.ohio-state.edu/~wang.6195/vis-final/index.html) & [Setting the learning rate of your neural network.](https://www.jeremyjordan.me/nn-learning-rate/)
 
 ### Graphical representation of a model in TensorBoard
+
+https://www.tensorflow.org/tensorboard
 
 With the graph visualizer, users can explore different layers of model abstraction, zooming in and out of any part of the schema. Another important benefit of TensorBoard visualization is that nodes of the same types and similar structures are painted with the same colors. Users can also look at coloring by device (CPU, GPU, or a combination of both), highlight a specific node with the “trace inputs” feature, and visualize one or several charts at a time.
 
@@ -648,14 +676,7 @@ This visualization approach makes TensorBoard a popular tool for model performan
 
 Grant Reaber notes that TensorBoard makes it easy to monitor model training. Grant and his team also use this tool for custom visualizations.
 
-Illia Polosukhin also chooses TensorBoard. “TensorBoard shows metrics during model development and allows for making a decision regarding a model. For instance, it’s very comfortable to monitor how a model performs when tweaking its hyperparameters and choosing the one that performs best,” summarizes Illia.
-
 Besides displaying performance metrics, TensorBoard can show users a lot of other information like histograms, audio, text, and image data, distributions, embeddings, and scalars.
-
-### Variational Autoencoders
-
-Variational Autoencoders (VAE) are a type of probabilistic generative model used in order to create a latent representation of some input data (eg. images) able to concisely understand the original data and generate brand new data from it (eg. training a VAE model with different images of car designs, could then enable to model to create brand new imaginative car designs).
-Continuing from the example Variational Autoencoder trained using Livelossplot, we can even make our model more interesting by examining how the latent space (Figure 9) varies from one iteration to another (and therefore how much our model improved to distinguish the different classes over time).
 
 ### Word Embeddings
 
@@ -665,28 +686,11 @@ As a simple example, we are now going to plot an embed space representing differ
 In this example, the embedding dimensions of the network have been set directly to 3 in order to then easily create the 3D visualization. Another possible solution could have been to instead use a higher embedding output size and then apply some form of feature extraction technique (eg. t-SNE, PCA, etc…) in order to visualise the results.
 Another interesting technique which can be used to visualise categorical data is Wordclouds (Figure 12). This type of representation, can, for example, be realised by creating a dictionary of book authors names and their respective frequency count in the dataset. Authors which appears more frequently in the dataset will be then represented in the figure with greater font size.
 
-The Unreasonable Effectiveness of Recurrent Neural Networks
-Karpathy, 2015 
+- [The Unreasonable Effectiveness of Recurrent Neural Networks, Karpathy, 2015](http://karpathy.github.io/2015/05/21/rnn-effectiveness/)
 
-Seq2Seq-Vis:
-Visual Debugging
-Tool for Sequenceto- Sequence
-Models
-Strobelt, 2018
+- [Seq2Seq-Vis: Visual Debugging Tool for Sequenceto- Sequence Models, Strobelt, 2018](https://arxiv.org/pdf/1804.09299.pdf)
 
-What does a sentence look like in embedding space?
-
-https://arxiv.org/pdf/1611.04558.pdf
-
-### translation
-
-http://seq2seq-vis.io/
-
-### time-series
-
-When working with time-series data, it can be really handy at times to be able to quickly understand on which datapoints our model is performing poorly, in order to try to understand what limitations it might be facing.
-One possible approach is to create a summary table with the actual and predicted values and some form of metrics summarising how well/bad a data point has been predicted.
-
+- [Google’s Multilingual Neural Machine Translation System: Enabling Zero-Shot Translation](https://arxiv.org/pdf/1611.04558.pdf)
 
 ### Explainable AI
 
@@ -701,69 +705,11 @@ Introduction of Local Interpretable Model-Agnostic Explanations (LIME) and Shapl
 If you are interested in finding out more about how to make Machine Learning models more explainable, two of the most interesting libraries currently available in Python in order to apply Explainable AI in Deep Learning are Captum by Pytorch and XAI.
 As this research area is in constant improvement, I will aim to cover all these different topics (and more) in a future article dedicated to just Explainable AI.
 
-https://shirinsplayground.netlify.app/2018/12/customer_churn_code/
+![https://shirinsplayground.netlify.app/2021/03/update_customer_churn/](https://shirinsplayground.netlify.com/post/2021-03-25_update_customer_churn_files/figure-html/unnamed-chunk-53-1.png)
 
-### Image classifiers are effective in practice
-Exactly what they're doing is somewhat mysterious
-- And their failures (e.g. adversarial examples) add to mystery
-But: Way easier to inspect what’s going on in artificial classifiers than in human
-classifiers ;-)
-Since these are visual systems, it's natural to use visualization to inspect them
-- What features are these networks really using?
-- Do individual units have meaning?
-- What roles are played by different layers?
-- How are high-level concepts built from low-level ones?
+- [Interpretable Machine Learning, A Guide for Making Black Box Models Explainable. Christoph Molnar](https://christophm.github.io/interpretable-ml-book/)
 
-Saliency maps
-(a.k.a. "Sensitivity maps")
-Idea: consider sensitivity of class to each pixel
-i.e. grad(f), where f is function from pixels to class score.
-Many ways to extend basic idea!
-- Layer-wise relevance propagation (Binder et al.)
-- Integrated gradients (Sundararajan et al.)
-- Guided backprop (Springenberg et al.)
-- etc.
-Yet interpretation is slippery (Adebayo et al., Kindermans et al.)
-- Tend to be visually noisy. Are these sometimes Rorschach tests?
-- Are some of these methods essentially edge detectors?
-
-Visualizing and Understanding Convolutional Networks
-Zeiler & Fergus, 2013
-
-The Building Blocks of
-Interpretability
-Olah, Satyanarayan, Johnson, Carter,
-Schubert, Ye, Mordvintsev
-
-
-Lesson
-If you see something interesting in
-high-dimensional space…
-compare to a random baseline!
-
-playground.tensorflow.org
-
-Distill.pub
-Editors: Carter, Olah, Satyanarayan
-
-research.google.com/bigpicture/attacking-discrimination-in-ml
-
-Google Creative Lab
-https://quickdraw.withgoogle.com/
-
-https://poloclub.github.io/ganlab/
-
-http://lstm.seas.harvard.edu/
-
-
-Before popular data visualization tools for machine learning were developed, the machine learning process was much more abstract. Historically, ggplot2 in R provided much-needed visualization tools for exploratory data analysis. But today, with the suite of data visualizations that are available in Python, such as seaborn, scikit-learn, and matplotlib, exploratory data analysis that forms the initial part of the machine learning process can be done much more efficiently. At the same time, with TensorFlow, model-building and model-tuning processes become a lot more intuitive. Rather than spending time on scrutinizing values, with the assistance of both 2-dimensional and interactive data visualizations, data scientists can pay more attention to the big picture of the data at each level of the machine learning process to focus more on the meaning of the data, the model design, and the model performance.
-
-Data visualization can power model creation and model tuning
-With the advancement of data visualization techniques, model creation and model tuning do not have to be abstract processes. TensorFlow allows you to follow the model-creation process with data visualization at each step, and when building a TensorFlow model, you can visualize the model’s structure and follow the data to see if the model fits your design.
-
-Below is an example of the conceptual graph of a Keras model. The data flows from the bottom to the top. The graph is a representation of the definition of the model.
-
-
+- [Equality of Opportunity in Supervised Learning](https://arxiv.org/abs/1610.02413)
 
 ---
 
