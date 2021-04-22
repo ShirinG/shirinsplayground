@@ -77,13 +77,19 @@ implementieren können.
 
 ## Upcoming talks, webinars, podcasts, etc.
 
-- During the ML Summit in April 2021, I'll give a virtual workshop on [how to visualize data effectively](https://ml-summit.de/machine-learing/the-good-the-bad-and-the-ugly-analysen-effektiv-visualisieren-und-kommunizieren/) (German only).
+- *Tuesday, April 27th 3pm CEST*: During the online **Minds Mastering Machines** conference, I'll be giving a talk about [The Good, the Bad and the Ugly: how to visualize machine learning data](https://www.m3-konferenz.de/lecture_compact1.php?id=12769&source=0)
 
 ---
 
 <br>
 
 ## Past talks, webinars, podcasts, etc.
+
+- At the ML Summit in April 2021, gave a workshop on [how to visualize data effectively](https://ml-summit.de/machine-learing/the-good-the-bad-and-the-ugly-analysen-effektiv-visualisieren-und-kommunizieren/).
+
+The code & resources are available on [Github](https://github.com/ShirinG/data_viz_workshop_2021).
+
+<br>
 
 - At this year's data2day conference on October 20th 2020 I talked about [The Good, the Bad and the Ugly: how (not) to visualize data](https://www.data2day.de/lecture.php?id=12321&source=0). You can find the German [slides here](https://docs.google.com/presentation/d/e/2PACX-1vR4pD2EmW9Gzxr1Q3qwgjEYkU64o2-ThlX1mXqfNQ2EKteVUVt6Qg2ImEKKi9XLv-Iutb3lD8esLyU7/pub?start=false&loop=false&delayms=3000) and the code to create all plots [here](https://shirinsplayground.netlify.app/2020/10/goodbadugly/).
 You can watch the video recording of my talk (German) [here](https://vimeo.com/ondemand/data2day2020/486542615).
@@ -102,11 +108,6 @@ Mit Machine Learning getroffene Entscheidungen sind inhärent schwierig – wenn
 Die Komplexität einiger der besten Modelle wie neuronaler Netze ist genau das, was sie so erfolgreich macht. Aber es macht sie gleichzeitig zu einer Black Box. Das kann problematisch sein, denn Geschäftsführer oder Vorstände werden weniger geneigt sein, einer Entscheidung zu vertrauen und nach ihr zu handeln, wenn sie sie nicht verstehen.
 Shapley Values, Local Interpretable Model-Agnostic Explanations (LIME) und Anchors sind Ansätze, diese komplexen Modelle zumindest teilweise nachvollziehbar zu machen.
 In diesem Vortrag erkläre ich, wie diese Ansätze funktionieren, und zeige Anwendungsbeispiele.
-
-LERNZIELE
-* Die Teilnehmer erhalten Einblick in Möglichkeit, die komplexe Modelle erklärbar machen.
-* Sie lernen, Datensätze kritisch zu hinterfragen und angemessen aufzuteilen.
-* Und sie erfahren, unter welchen Bedingungen sie Entscheidungen durch Machine Learning vertrauen können.
 
 <br>
 

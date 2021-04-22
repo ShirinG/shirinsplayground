@@ -1,12 +1,12 @@
 ---
-title: "Update to The Good, the Bad and the Ugly: how to visualize Machine Learning data"
-draft: true
+title: "The Good, the Bad and the Ugly: how to visualize Machine Learning data"
+draft: false
 author: Dr. Shirin Elsinghorst
-date: '2021-04-28'
+date: '2021-04-27'
 categories: ["R"]
 tags: ["R", "ggplot2"]
 thumbnailImagePosition: left
-thumbnailImage: post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-29-1.png
+thumbnailImage: post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-29-1.png
 metaAlignment: center
 coverMeta: out
 slug: goodbadugly_ml
@@ -16,9 +16,9 @@ slug: goodbadugly_ml
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
-Below you'll find the complete code used to create the **ggplot2** graphs in my talk **The Good, the Bad and the Ugly: how to visualize Machine Learning data** at this year's Minds Mastering machines conference. You can find the German [slides here](https://docs.google.com/presentation/d/e/2PACX-1vR4pD2EmW9Gzxr1Q3qwgjEYkU64o2-ThlX1mXqfNQ2EKteVUVt6Qg2ImEKKi9XLv-Iutb3lD8esLyU7/pub?start=false&loop=false&delayms=3000):
+Below you'll find the complete code and resources used to create the graphs in my talk **The Good, the Bad and the Ugly: how to visualize Machine Learning data** at this year's Minds Mastering machines conference. You can find the German [slides here](https://docs.google.com/presentation/d/e/2PACX-1vR_C7MZcv2QxJp4-3qr3ecoDBUz-YJJ1uJz21xCJmXw9teyzvvry4OMxKJ5-cPr-_1gntODVbvjVDrK/pub?start=false&loop=false&delayms=3000):
 
-<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vR4pD2EmW9Gzxr1Q3qwgjEYkU64o2-ThlX1mXqfNQ2EKteVUVt6Qg2ImEKKi9XLv-Iutb3lD8esLyU7/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vR_C7MZcv2QxJp4-3qr3ecoDBUz-YJJ1uJz21xCJmXw9teyzvvry4OMxKJ5-cPr-_1gntODVbvjVDrK/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 
 You can find [Part 1: **The Good, the Bad and the Ugly: how (not) to visualize data** here](https://shirinsplayground.netlify.app/2020/10/goodbadugly/).
 
@@ -83,13 +83,6 @@ Visualizing different steps of the machine learning pipeline can help us
 - compare and evaluate model predictions.
 
 Visualization also greatly simplifies communication of our model and results to decision-makers or the public.
-
->Before popular data visualization tools for machine learning were developed, the machine learning process was much more abstract. Historically, ggplot2 in R provided much-needed visualization tools for exploratory data analysis. But today, with the suite of data visualizations that are available in Python, such as seaborn, scikit-learn, and matplotlib, exploratory data analysis that forms the initial part of the machine learning process can be done much more efficiently. At the same time, with TensorFlow, model-building and model-tuning processes become a lot more intuitive. Rather than spending time on scrutinizing values, with the assistance of both 2-dimensional and interactive data visualizations, data scientists can pay more attention to the big picture of the data at each level of the machine learning process to focus more on the meaning of the data, the model design, and the model performance.
-
->Data visualization can power model creation and model tuning
-With the advancement of data visualization techniques, model creation and model tuning do not have to be abstract processes. TensorFlow allows you to follow the model-creation process with data visualization at each step, and when building a TensorFlow model, you can visualize the model’s structure and follow the data to see if the model fits your design.
-
->Below is an example of the conceptual graph of a Keras model. The data flows from the bottom to the top. The graph is a representation of the definition of the model.
 
 ### Exploratory Data Analysis
 
@@ -219,7 +212,7 @@ cormat %>%
         title = "Correlation between features", 
         caption = "Source: Pima Indians Diabetes Database")
 ```
-```{r fig.width=5}
+```{r fig.width=10, fig.height=10}
 # scatterplot matrix
 ggpairs(PimaIndiansDiabetes, 
         columns = c(1:8),
@@ -318,7 +311,8 @@ list( train = summary(train), test = summary(test) )
 - create classification task and learner
 
 ```{r}
-listLearners()
+listLearners() %>%
+  head()
 ```
 
 ```{r}
@@ -327,12 +321,15 @@ listLearners()
 ```
 
 ### Feature Selection
-In order to select which features provide the best chance to predict Positive, the generateFilterValuesData gives us a score for each feature. This can then be plotted with PlotFilterValues. The score for each variable is dependent upon which criteria you choose. Here I choose Information Gain, Chi-squared and Gain Ratio as my criteria.
 
 ```{r}
 library(FSelector)
-listFilterMethods()
-listFilterEnsembleMethods()
+
+listFilterMethods() %>%
+  head()
+
+listFilterEnsembleMethods() %>%
+  head()
 ```
 
 ```{r}
@@ -344,10 +341,6 @@ generateFilterValuesData(dt_task, method = "FSelector_information.gain") %>%
          title = "Information gain of features in GBM",
          caption = "Source: Pima Indians Diabetes Database")
 ```
-
-Estimate how important individual features or groups of features are by contrasting prediction performances. 
-
-The generateFeatureImportanceData function also works in a similar fashion. Except it will show us the importance of each feature according to a given performance criteria. I have chosen True Positive Rate and Area Under the Curve.
 
 ```{r}
 feat_imp_tpr <- generateFeatureImportanceData(task = dt_task, 
@@ -381,41 +374,18 @@ feat_imp_auc$res %>%
          caption = "Source: Pima Indians Diabetes Database")
 ```
 
-As we can see with the above output:
-The information gain and gain ratio show a score of zero or a low score for Pregnancies.
-generateFeatureImportanceData shows a score of zero for Pregnancies when looking at the TPR and AUC as a performance measure.
-Looking at all the evidence, Pregnancies will be the only variable I discard. The other variables still show predictive capabilities across certain criteria.
-Seeing as how we are only left with 4 features, there can be a risk of underfitting my model. The other argument for this would be that I do not have many rows of data to deal with in the first place. This is ongoing discussion on what is the right amount of data and features (Curse of Dimensionality).
-Looking below I have taken Pregnancies out of our train and test sets and made a new classification task with our new training set.
-
 ```{r}
 set.seed(1000) 
 train <- dplyr::select(train, -pedigree, -pressure, -triceps) 
 test <- dplyr::select(test, -pedigree, -pressure, -triceps)
-list( train = summary(train), test = summary(test) )
+list(train = summary(train), test = summary(test))
 ```
-
-As we now have new datasets we need to make a new classification task based on the new training set.
 
 ```{r}
 (dt_task <- makeClassifTask(data = train, target = "diabetes"))
 ```
 
 ### Hyperparameter Optimization
-
-When evaluating the models, visualizing the results of hyperparameter tuning can help data scientists narrow down the groupings of hyperparameters that are most important.
-
-Tuning is an important part of modeling. Unlike parameters that derive their value from training, the values of hyperparameters are defined before the learning process begins. These hyperparameters control the behavior of the algorithms and have an impact on the performance of the model. Concerns of hyperparameters, such as trainability, tunability, and robustness, determine the usability of the models.
-
-Below is an example of TensorBoard’s HParams that displays groups of hyperparameters to see which ones are the most important. You can define criteria such as accuracy and dropout rate to determine the performance.
-
-One of the best solutions for this type of task is to use a parallel coordinates plot (Figure 1). Using this type of plot, we can in fact easily compare different variables (eg. features) together in order to discover possible relationships. In the case of Hyperparameters Optimization, this can be used as a simple tool to inspect what combination of parameters can give us the greatest test accuracy. Another possible use of parallel coordinates plots in Data Analysis is to inspect relationships in values between the different features in a data frame.
-
-Now any machine learning algorithm will require us to tune the hyperparameters at our own discretion. Tuning hyperparameters is the process of selecting a value for machine learning parameter with the target of obtaining your desired level of performance.
-Tuning a machine learning algorithm in mlr involves the following procedures:
-Define a search space.
-Define the optimization algorithm (aka tuning method).
-Define an evaluation method (i.e. re-sampling strategy and a performance measure).
 
 ```{r}
 getParamSet("classif.gbm")
@@ -441,7 +411,7 @@ set.seed(1000)
                              par.set = dt_param, 
                              control = ctrl, 
                              task = dt_task, 
-                             show.info = TRUE))
+                             show.info = FALSE))
 ```
 
 ```{r}
@@ -470,9 +440,6 @@ list( `Optimal HyperParameters` = dt_tuneparam$x,
       `Optimal Metrics` = dt_tuneparam$y )
 ```
 
-Using dt_tuneparam$x we can extract the optimal values and dt_tuneparam$y gives us the corresponding performance measures.
-setHyperPars will tune the learner with its optimal values.
-
 ```{r}
 gbm_final <- setHyperPars(dt_prob, par.vals = dt_tuneparam$x)
 
@@ -481,11 +448,7 @@ gbm_final_train <- train(learner = gbm_final, task = dt_task)
 getLearnerModel(gbm_final_train)
 ```
 
-- As a quick approach, we could plot heatmaps with the possible pairs of different parameters to see the areas where the maximum R2 is achieved in the test and the train sets. This can be done in a couple of lines:
-
 ### Decision Trees
-
-Decision Trees are one of the most easily explainable types of Machine Learning model. Thanks to their basilar structure, it is easily possible to examine how the algorithm decides to make its decision by looking at the conditions on the different branches of the tree. Additionally, Decision Trees can also be used as a Feature Selection technique, considering that the algorithm puts at the top levels of the tree the features which think are most valuable for our desired classification/regression task. In this way, the features at the bottom of the tree could be discarded since carrying less information.
 
 - Recursive Partitioning ([`rpart`](https://cran.r-project.org/web/packages/rpart/vignettes/longintro.pdf) & [`rpart.plot`](http://www.milbo.org/rpart-plot/prp.pdf))
 
@@ -551,7 +514,8 @@ gbm_final_threshold %>%
 ```
 
 ```{r}
-gbm_final_threshold$data
+gbm_final_threshold$data %>%
+  head()
 ```
 
 ```{r}
@@ -570,31 +534,6 @@ performance_threshold
 ```
 
 ### Decision Boundaries
-
-Decision Boundaries are one of the easiest approaches to graphically understand how a Machine Learning model is making its predictions. 
-One of the main limitations of plotting decision boundaries is that they can only be easily visualised in two or three dimensions. Due to these limitations, it might be therefore necessary most of the times to reduce the dimensionality of our input features (using some form of feature extraction techniques) before plotting the decision boundary.
-
-A decision boundary is a graphical representation of the solution to a classification problem. Decision boundaries can help us to understand what kind of solution might be appropriate for a problem. They can also help us to understand the how various machine learning classifiers arrive at a solution.
-
-The optimal decision boundary represents the “best” solution possible for that problem. Consequently, by looking at the complexity of this boundary and at how much error it produces, we can get an idea of the inherent difficulty of the problem.
-
-Unless we have generated the data ourselves, we won’t usually be able to find the optimal boundary. Instead, we approximate it using a classifier. A good machine learning classifier tries to approximate the optimal boundary for a problem as closely as possible.
-
-A solution to the classification problem is a rule that partitions the features and assigns each all the features of a partition to the same class. The “boundary” of this partitioning is the decision boundary of the rule.
-
-It might be that two observations have exactly the same features, but are assigned to different classes. (Two things that look the same in the ways we’ve observed might differ in ways we haven’t observed.)
-
-The boundary that this rule produces is the optimal decision boundary. It is the MAP estimate of the class label, and it is the rule that minimizes classification error under the zero-one loss function. 
-
-We will consider binary classification problems, meaning, there will only be two possible classes.
-
-Decision boundaries are most easily visualized whenever we have continuous features, most especially when we have two continuous features, because then the decision boundary will exist in a plane.
-
-With two continuous features, the feature space will form a plane, and a decision boundary in this feature space is a set of one or more curves that divide the plane into distinct regions. Inside of a region, all observations will be assigned to the same class.
-
-As mentioned above, whenever we know exactly how our data was generated, we can produce the optimal decision boundary. Though this won’t usually be possible in practice, investigating the optimal boundaries produced from simulated data can still help us to understand their properties.
-
-With two features, the feature space is a plane. It can be shown that the optimal decision boundary in this case will either be a line or a conic section (that is, an ellipse, a parabola, or a hyperbola). With higher dimesional feature spaces, the decision boundary will form a hyperplane or a quadric surface.
 
 ```{r}
 #remotes::install_github("grantmcdermott/parttree")
@@ -621,9 +560,6 @@ PimaIndiansDiabetes %>%
 ```
 
 ### Time-series
-
-When working with time-series data, it can be really handy at times to be able to quickly understand on which datapoints our model is performing poorly, in order to try to understand what limitations it might be facing.
-One possible approach is to create a summary table with the actual and predicted values and some form of metrics summarising how well/bad a data point has been predicted.
 
 ![https://shiring.github.io/forecasting/2017/06/09/retail_forcasting_part2](https://shiring.github.io/forecasting/2017/06/09/retail_forcasting_part2_files/figure-markdown_github/unnamed-chunk-28-1.png)
 
@@ -655,10 +591,10 @@ One possible approach is to create a summary table with the actual and predicted
 
 - [Visual Analysis for Recurrent Neural Networks](http://lstm.seas.harvard.edu/)
 
-- Another technique which can be quite useful when creating new neural network architectures is visualising their structure. 
+- [Whose dream is this? When and how to use the Keras Functional API](https://shirinsplayground.netlify.app/2020/09/keras_funct_api/)
 
 ![https://shirinsplayground.netlify.app/2020/09/keras_funct_api/](https://shirinsplayground.netlify.com/img/plot_model_4.png)
-- [Deep Learning with Keras and TensorFlow](https://shirinsplayground.netlify.app/2020/10/keras_workshop_user20/)
+- [Deep Learning with Keras and TensorFlow](https://shirinsplayground.netlify.app/2020/10/keras_workshop_user20/) & [Update with TF 2.0: Image classification with Keras and TensorFlow](https://shirinsplayground.netlify.app/2020/09/keras_fruits_update/)
 
 ![https://shirinsplayground.netlify.app/2020/09/keras_fruits_update/](https://shirinsplayground.netlify.com/img/hist.png)
 ![https://shirinsplayground.netlify.app/2020/09/keras_fruits_update/](https://shirinsplayground.netlify.com/img/percentage_pred.png)
@@ -670,21 +606,7 @@ One possible approach is to create a summary table with the actual and predicted
 
 https://www.tensorflow.org/tensorboard
 
-With the graph visualizer, users can explore different layers of model abstraction, zooming in and out of any part of the schema. Another important benefit of TensorBoard visualization is that nodes of the same types and similar structures are painted with the same colors. Users can also look at coloring by device (CPU, GPU, or a combination of both), highlight a specific node with the “trace inputs” feature, and visualize one or several charts at a time.
-
-This visualization approach makes TensorBoard a popular tool for model performance evaluation, especially for models of complex structures like deep neural networks.
-
-Grant Reaber notes that TensorBoard makes it easy to monitor model training. Grant and his team also use this tool for custom visualizations.
-
-Besides displaying performance metrics, TensorBoard can show users a lot of other information like histograms, audio, text, and image data, distributions, embeddings, and scalars.
-
 ### Word Embeddings
-
-Neural Network Embeddings are a class of neural networks designed in order to learn how to convert some form of categorical data into numerical data. Using Embeddings can be considerably advantageous than using other techniques such as One Hot Encoding considering that, while converting the data, they are able to learn about its characteristics and therefore construct a more succinct representation (creating a latent space). Two of the most famous types of pre-trained word embeddings are word2vec and Glove.
-As a simple example, we are now going to plot an embed space representing different books authors. First of all, we need to create an train a model on some available data and then access the trained weights of the model embedded layer (in this case called embed) and store them in a data frame. Once this process is done, we then just have to plot the three different coordinates (Figure 11).
-
-In this example, the embedding dimensions of the network have been set directly to 3 in order to then easily create the 3D visualization. Another possible solution could have been to instead use a higher embedding output size and then apply some form of feature extraction technique (eg. t-SNE, PCA, etc…) in order to visualise the results.
-Another interesting technique which can be used to visualise categorical data is Wordclouds (Figure 12). This type of representation, can, for example, be realised by creating a dictionary of book authors names and their respective frequency count in the dataset. Authors which appears more frequently in the dataset will be then represented in the figure with greater font size.
 
 - [The Unreasonable Effectiveness of Recurrent Neural Networks, Karpathy, 2015](http://karpathy.github.io/2015/05/21/rnn-effectiveness/)
 
@@ -693,17 +615,6 @@ Another interesting technique which can be used to visualise categorical data is
 - [Google’s Multilingual Neural Machine Translation System: Enabling Zero-Shot Translation](https://arxiv.org/pdf/1611.04558.pdf)
 
 ### Explainable AI
-
-Explainable AI is nowadays a growing field of research. Use of AI in decision-making applications (such as employment) has recently caused some concerns both for individuals and authorities. This is because, when working with deep neural networks, it is currently not possible (at least to a full extent) to understand the decision-making process the algorithm performs when having to carry out a predetermined task. Because of this lack of transparency in the decision-making process, perplexities can arise from the public regarding the trustworthiness of the model itself. Therefore, the need for Explainable AI is now becoming the next prefixed evolutionary step in order to prevent the presence of any form of bias in AI models.
-During the last few years, different visualization techniques have been introduced in order to make Machine Learning more explainable such as:
-Exploring Convolutional Neural Networks Filters and Feature maps.
-Graphs Networks.
-Bayesian-based models.
-Causal Reasoning applied to Machine Learning.
-Local/Global surrogate models.
-Introduction of Local Interpretable Model-Agnostic Explanations (LIME) and Shapley Values.
-If you are interested in finding out more about how to make Machine Learning models more explainable, two of the most interesting libraries currently available in Python in order to apply Explainable AI in Deep Learning are Captum by Pytorch and XAI.
-As this research area is in constant improvement, I will aim to cover all these different topics (and more) in a future article dedicated to just Explainable AI.
 
 ![https://shirinsplayground.netlify.app/2021/03/update_customer_churn/](https://shirinsplayground.netlify.com/post/2021-03-25_update_customer_churn_files/figure-html/unnamed-chunk-53-1.png)
 

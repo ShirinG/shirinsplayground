@@ -1,12 +1,12 @@
 ---
-title: "Update to The Good, the Bad and the Ugly: how (not) to visualize Machine Learning data"
-draft: true
+title: "The Good, the Bad and the Ugly: how to visualize Machine Learning data"
+draft: false
 author: Dr. Shirin Elsinghorst
-date: '2021-04-28'
+date: '2021-04-27'
 categories: ["R"]
 tags: ["R", "ggplot2"]
 thumbnailImagePosition: left
-thumbnailImage: post/2020-10-20_goodbadugly_files/figure-html/unnamed-chunk-29-1.png
+thumbnailImage: post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-29-1.png
 metaAlignment: center
 coverMeta: out
 slug: goodbadugly_ml
@@ -14,8 +14,8 @@ slug: goodbadugly_ml
 
 
 
-<p>Below you’ll find the complete code used to create the <strong>ggplot2</strong> graphs in my talk <strong>The Good, the Bad and the Ugly: how (not) to visualize Machine Learning data</strong> at this year’s Minds Mastering machines conference. You can find the German <a href="https://docs.google.com/presentation/d/e/2PACX-1vR4pD2EmW9Gzxr1Q3qwgjEYkU64o2-ThlX1mXqfNQ2EKteVUVt6Qg2ImEKKi9XLv-Iutb3lD8esLyU7/pub?start=false&amp;loop=false&amp;delayms=3000">slides here</a>:</p>
-<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vR4pD2EmW9Gzxr1Q3qwgjEYkU64o2-ThlX1mXqfNQ2EKteVUVt6Qg2ImEKKi9XLv-Iutb3lD8esLyU7/embed?start=false&amp;loop=false&amp;delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true">
+<p>Below you’ll find the complete code and resources used to create the graphs in my talk <strong>The Good, the Bad and the Ugly: how to visualize Machine Learning data</strong> at this year’s Minds Mastering machines conference. You can find the German <a href="https://docs.google.com/presentation/d/e/2PACX-1vR_C7MZcv2QxJp4-3qr3ecoDBUz-YJJ1uJz21xCJmXw9teyzvvry4OMxKJ5-cPr-_1gntODVbvjVDrK/pub?start=false&amp;loop=false&amp;delayms=3000">slides here</a>:</p>
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vR_C7MZcv2QxJp4-3qr3ecoDBUz-YJJ1uJz21xCJmXw9teyzvvry4OMxKJ5-cPr-_1gntODVbvjVDrK/embed?start=false&amp;loop=false&amp;delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true">
 </iframe>
 <p>You can find <a href="https://shirinsplayground.netlify.app/2020/10/goodbadugly/">Part 1: <strong>The Good, the Bad and the Ugly: how (not) to visualize data</strong> here</a>.</p>
 <hr />
@@ -24,14 +24,28 @@ slug: goodbadugly_ml
 <script src="https://www.appointletcdn.com/loader/loader.min.js" async="" defer=""></script>
 <p><em>If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at <button><a href="https://paypal.me/ShirinGlander">paypal.me</a></button>. Thank you!</em> :-)</p>
 <hr />
+<div id="libraries" class="section level2">
+<h2>Libraries</h2>
 <pre class="r"><code>library(tidyverse)
-library(mlbench)</code></pre>
+library(mlbench)
+library(ggfortify)
+library(GGally)
+library(scagnostics)
+library(mlr) </code></pre>
+</div>
 <div id="dataset" class="section level2">
 <h2>Dataset</h2>
 <p>Pima Indians Diabetes dataset from <a href="http://search.r-project.org/library/mlbench/html/PimaIndiansDiabetes.html"><em>mlbench</em> package</a>.</p>
 <pre class="r"><code>data(PimaIndiansDiabetes)
 PimaIndiansDiabetes %&gt;%
   head()</code></pre>
+<pre><code>##   pregnant glucose pressure triceps insulin mass pedigree age diabetes
+## 1        6     148       72      35       0 33.6    0.627  50      pos
+## 2        1      85       66      29       0 26.6    0.351  31      neg
+## 3        8     183       64       0       0 23.3    0.672  32      pos
+## 4        1      89       66      23      94 28.1    0.167  21      neg
+## 5        0     137       40      35     168 43.1    2.288  33      pos
+## 6        5     116       74       0       0 25.6    0.201  30      neg</code></pre>
 </div>
 <div id="colors" class="section level2">
 <h2>Colors</h2>
@@ -46,216 +60,1335 @@ cbp1 &lt;- c(&quot;#999999&quot;, &quot;#E69F00&quot;, &quot;#56B4E9&quot;, &quo
   scale_fill_manual(values = cbp1) + # note: needs to be overridden when using continuous color scales
   theme_bw()</code></pre>
 </div>
-<div id="visualizing-machine-learning-models-training-and-results" class="section level2">
-<h2>Visualizing Machine Learning models: training and results</h2>
-<p>Machine learning is inherently an iterative process. Modeling can be cumbersome when you are performing the process over and over again to ensure your model is optimized and can generalize well. Add on the time you spend on model selection and model tuning, the process can easily become a frustrating one. Good exploratory data analysis combined with relevant data visualization is essential for pinpointing the right direction to take. It both shortens the machine learning process and provides more accuracy for its outcome. Data visualization tools such as TensorFlow enable data scientists to quickly identify and focus on the most important data and the most important paths to take. Even during the modeling process, model graphs can help to speed up the model-creation process by displaying the model maps conceptually. When evaluating the models, visualizing the results of hyperparameter tuning can help data scientists narrow down the groupings of hyperparameters that are most important.</p>
-<p>At each of these steps, data visualization helps the data scientist explore the data, understand the data and process the data to set it up for modeling.</p>
-<p><a href="https://arxiv.org/pdf/1801.06889.pdf" class="uri">https://arxiv.org/pdf/1801.06889.pdf</a></p>
-<p>Visualizing models, decision boundaries and prediction results may give hints whether the model is indeed a good fit or it is a poor fit for the data. For example, it is high bias to ignore the nature of our data if use a straight line to fit a circular scatter of dots.
-Researchers even visualized different optimizers to see their descend to minimize loss.</p>
-<p>As part of any Data Science project, Data Visualization plays an important part in order to learn more about the available data and to identify any main pattern.</p>
-<p>Data Visualization is Essential in Every Step of Machine Learning</p>
-<p>Transform data into visual encodings
-What is it good for?
-Data exploration
-Scientific insight
-Communication
-Education
-How to ensure it works well?
-Engage the visual system in smart ways
-Take advantage of pre-attentive processing</p>
-<p>Find visual encodings that
-● Guide viewer’s attention
-● Communicate data to the viewer
-● Let viewer calculate with data
-On computer
-● Interactive exploration</p>
-<p>Framework: visualization uses in ML
-1. Training Data
-2. Model Performance
-3. Interpretability + model inspection
-4. High-dimensional data
-5. Education and communication</p>
-<p>Main approaches
-Linear
-- Principal Component Analysis (show as much variation in data as possible)
-- Visualization of Labeled Data Using Linear Transformations (clusters match labels)</p>
-<p>Non-linear (just a few of many) Minimize distortion, according to some metric
-- Multidimensional scaling
-- Sammon mapping
-- Isomap
-- t-SNE
-- UMAP: New kid on the block Faster than t-SNE, Can efficiently embed into high dimensions (i.e. useful not just for visualization), Often seems to capture global structure better</p>
-<div id="eda" class="section level3">
-<h3>EDA</h3>
-<p>Ask the right question by putting the data into context first
-Since the machine learning process is iterative, asking relevant questions to kick off the process will involve putting data into context. As you progress in your machine learning process, you can refine your questions to zoom in on the most important details. Putting data into context means that you will visualize all the columns within the data to understand the following:</p>
-<p>The meaning of each column of data.
-Whether it’s a categorical or continuous variable for each column.
-Whether the data is an independent or dependent variable.</p>
-<p>Understand the data by understanding both sides: good and bad
-The next step in the machine learning process is understanding the data. There are many aspects to this. Ultimately, the iterative nature of the process will allow for a continual understanding of the data as you move through more iterations of modeling. But, to begin with, understanding the data involves asking the following:</p>
-<p>Where are the possible data errors, such as missing data, wrong data types, misleading data, and outlier data, and so on?
-Below is an example of a nullity matrix that gives you missing data information visually on columns of data.</p>
-<p>By viewing the density of missing data in various columns, a decision can be made at the data cleaning step to use a particular missing data imputation technique for a given column. Visualization tools such as Python’s seaborn.heatmap and R’s heatmap() functions help to gauge the degree of missing data in each column.</p>
-<p>Where are the imbalances of data?
-Below is an example of using a heatmap to represent the correlation of the relationships between the variables.</p>
-<p>High-density areas can be identified and groups of variables that are highly correlated, such as multicollinearity, can be further investigated. In certain algorithms, such as Decision Tree algorithms, multicollinearity can lead to overfitting.</p>
-<p>What are the relationships between the variables? How strong are these relationships (density)?
-Below is an example of using Principal Component Analysis to visualize the correlation groups of the variables in the Iris dataset.</p>
-<p>This initial visualization can tell you if there are overlaps in groups and if new features need to be defined to better fit the data. Based on the correlations, a narrower set of features may be selected during feature engineering. Some of the features may need to be decorrelated to fix issues such as multicollinearity.</p>
-<p>Data visualization can power model creation and model tuning
-With the advancement of data visualization techniques, model creation and model tuning do not have to be abstract processes. TensorFlow allows you to follow the model-creation process with data visualization at each step, and when building a TensorFlow model, you can visualize the model’s structure and follow the data to see if the model fits your design.</p>
-<p>Below is an example of the conceptual graph of a Keras model. The data flows from the bottom to the top. The graph is a representation of the definition of the model.</p>
-<p>in statistics, exploratory data analysis is one of the first ways to zoom in on the data that matters. In a sense, exploratory data analysis is a way to cut out the noise. It’s also a way to forge a path into the forest of data that your algorithm will comb through. Data visualization has become popular in recent years due to its power to display the results at the end of the machine learning process, but it is also increasingly being used as a tool for exploratory data analysis before applying machine learning models.</p>
-<p>Machine Learning Data Visualization Examples:
-When designing and evaluating a new algorithm, one of the first steps is exploratory data analysis (EDA). The point is to find the most efficient learning approach for a given problem. For the human researcher to understand what’s working and what’s not, the model’s results are often displayed graphically. Since these datasets cover many variables and are so “high dimensional,” several new data visualization techniques have been developed specifically for deep learning systems. Some of the most common new tools for interpreting high-dimensional relationships are:</p>
-<p>Parallel coordinate plots
-Scatterplot matrices
-Scagnostics
-Multidimensional scaling
-T-sne algorithm</p>
+<div id="visualizing-machine-learning-models" class="section level2">
+<h2>Visualizing Machine Learning models</h2>
+<p>Visualizing different steps of the machine learning pipeline can help us</p>
+<ul>
+<li>explore the data (EDA),</li>
+<li>understand the data (and identify potential problems),</li>
+<li>pre-process the data in a suitable way for optimal model performance,</li>
+<li>supervise the learning process,</li>
+<li>optimize modeling,</li>
+<li>interpret the model and</li>
+<li>compare and evaluate model predictions.</li>
+</ul>
+<p>Visualization also greatly simplifies communication of our model and results to decision-makers or the public.</p>
+<div id="exploratory-data-analysis" class="section level3">
+<h3>Exploratory Data Analysis</h3>
+<p>Exploratory Data Analysis (EDA) is the backbone of data analysis, including those that result in a machine learning model. EDA helps us to understand the data we are working with and put it into context, so that we are able to ask the right questions (or to put our questions into the right frame). It also helps us take appropriate measures for cleaning, normalization/transformation, dealing with missing values, feature preparation and engineering, etc. Particularly if our machine learning model is trained on a limited dataset (but not only then!), appropriate data preparation can vastly improve the machine learning process: models will often train faster and achieve higher accuracy.</p>
+<p>An essential part of EDA is data visualization.</p>
+<p>Typically, we want to start by exploring potential sources of errors in our data, like</p>
+<ul>
+<li><strong>wrong/useless data types</strong> (sometimes data types are automatically set in a way that is not useful for our analysis, like <em>factors</em> versus <em>strings</em>, or wrong/strange entries in an otherwise numeric column will make it categorical)</li>
+<li><strong>missing values</strong> (a collection of ways to visualize missingness can be found <a href="https://cran.r-project.org/web/packages/naniar/vignettes/naniar-visualisation.html">here</a>),</li>
+<li><strong>outliers</strong> (for example by plotting a box-plot of continuous variables)</li>
+</ul>
+<p>Depending on the number of features/variables we have, it makes sense to look at them all individually and in correlation with each other. Depending on whether we have a categorical or continuous variable, we might be interested in properties that are shown by</p>
+<ul>
+<li><strong>histograms</strong> (frequency distribution of binned continuous variables),</li>
+<li><strong>density distribution</strong> (normalized distribution of continuous variables) or</li>
+<li><strong>bar-plots</strong> (shows counts of categorical variables).</li>
+</ul>
+<p>If our target variable is categorical, we will want to look at potential imbalances between the classes. Class imbalance will strongly affect the machine learning modeling process and will require us to consider up-/downsampling or similar techniques before we train a model.</p>
+<p><strong>Correlation analysis</strong> can show us, for example</p>
+<ul>
+<li>how our <strong>target/dependent variable correlates with the remaining features</strong> (often, just by looking at the correlation, we can identify one ore more feature that will have a strong impact on predicting the target because they are strongly correlated) or</li>
+<li>whether some of the <strong>independent variables/features correlate with each other</strong> (<strong>multicolinearity</strong>; we might want to consider removing strongly correlated features, so that they won’t contribute the “same” information multiple times to the model and thus lead to overfitting).</li>
+</ul>
+<p>Additional methods can be used to visualize groups of related features. These methods are often especially useful if we have a large dataset with a large feature set (highly dimensional data). Some of these methods for visualizing groups of related features and/or for comparing multiple variables and visualizing their relationships are:</p>
+<ul>
+<li><strong>Dimensionality reduction</strong>:
+<ul>
+<li><em>Principal Component Analysis</em> (PCA, linear, shows as much variation in data as possible)</li>
+<li><em>Multidimensional scaling</em> (MDS, non-linear)</li>
+<li><em>Sammon mapping</em> (non-linear)</li>
+<li><em>T-Distributed Stochastic Neighbor Embedding</em> (<a href="https://cran.r-project.org/web/packages/tsne/tsne.pdf">t-SNE</a>, non-linear)</li>
+<li><em>Uniform Manifold Approximation and Projection</em> (<a href="https://cran.r-project.org/web/packages/umap/vignettes/umap.html">UMAP</a>, non-linear, faster than T-SNE, often captures global variation better than T-SNE and PCA)</li>
+<li><em>Isometric Feature Mapping Ordination</em> (<a href="https://www.rdocumentation.org/packages/vegan/versions/2.4-2/topics/isomap">Isomap</a>)</li>
+</ul></li>
+<li><a href="https://towardsdatascience.com/parallel-coordinates-plots-6fcfa066dcb3">Parallel coordinate plots</a></li>
+<li><a href="https://cran.r-project.org/web/packages/scagnostics/index.html">scagnostics</a></li>
+</ul>
+<pre class="r"><code># in our dataset,
+# continuous variables are
+PimaIndiansDiabetes %&gt;%
+  dplyr::select(where(is.numeric)) %&gt;%
+  head()</code></pre>
+<pre><code>##   pregnant glucose pressure triceps insulin mass pedigree age
+## 1        6     148       72      35       0 33.6    0.627  50
+## 2        1      85       66      29       0 26.6    0.351  31
+## 3        8     183       64       0       0 23.3    0.672  32
+## 4        1      89       66      23      94 28.1    0.167  21
+## 5        0     137       40      35     168 43.1    2.288  33
+## 6        5     116       74       0       0 25.6    0.201  30</code></pre>
+<pre class="r"><code># &#39;diabetes&#39; is the only categorical variable is also our target or dependent variable
+PimaIndiansDiabetes %&gt;%
+  dplyr::select(!where(is.numeric)) %&gt;%
+  head()</code></pre>
+<pre><code>##   diabetes
+## 1      pos
+## 2      neg
+## 3      pos
+## 4      neg
+## 5      pos
+## 6      neg</code></pre>
+<pre class="r"><code># bar plot of target
+PimaIndiansDiabetes %&gt;%
+  ggplot(aes(x = diabetes, fill = diabetes)) +
+    geom_bar(alpha = 0.8) +
+    theme(legend.position = &quot;none&quot;) +
+    labs(x = &quot;Diabetes outcome&quot;, 
+         y = &quot;count&quot;,
+        title = &quot;Barplot of categorical features&quot;, 
+        caption = &quot;Source: Pima Indians Diabetes Database&quot;)</code></pre>
+<p><img src="/post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<pre class="r"><code># boxplot of continuous features
+PimaIndiansDiabetes %&gt;%
+  gather(&quot;key&quot;, &quot;value&quot;, pregnant:age) %&gt;%
+  ggplot(aes(x = value, fill = diabetes)) +
+    facet_wrap(vars(key), ncol = 3, scales = &quot;free&quot;) +
+    geom_boxplot(alpha = 0.8) +
+    theme(axis.text.y = element_blank(),
+          axis.ticks.y = element_blank())</code></pre>
+<p><img src="/post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<pre class="r"><code># histogram of features
+PimaIndiansDiabetes %&gt;%
+  gather(&quot;key&quot;, &quot;value&quot;, pregnant:age) %&gt;%
+  ggplot(aes(x = value, fill = diabetes)) +
+    facet_wrap(vars(key), ncol = 3, scales = &quot;free&quot;) +
+    geom_histogram(alpha = 0.8) +
+    labs(x = &quot;value of feature in facet&quot;, 
+         y = &quot;count&quot;,
+         fill = &quot;Diabetes&quot;,
+        title = &quot;Histogram of features&quot;, 
+        caption = &quot;Source: Pima Indians Diabetes Database&quot;)</code></pre>
+<p><img src="/post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<pre class="r"><code># density plot of of features
+PimaIndiansDiabetes %&gt;%
+  gather(&quot;key&quot;, &quot;value&quot;, pregnant:age) %&gt;%
+  ggplot(aes(x = value, fill = diabetes)) +
+    facet_wrap(vars(key), ncol = 3, scales = &quot;free&quot;) +
+    geom_density(alpha = 0.8) +
+    labs(x = &quot;value of feature in facet&quot;, 
+         y = &quot;density&quot;,
+         fill = &quot;Diabetes&quot;,
+        title = &quot;Density of continuous features&quot;, 
+        caption = &quot;Source: Pima Indians Diabetes Database&quot;)</code></pre>
+<p><img src="/post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<pre class="r"><code># correlation plot of features
+mat &lt;- PimaIndiansDiabetes %&gt;%
+  dplyr::select(where(is.numeric))
+
+cormat &lt;- round(cor(mat), 2)
+
+cormat &lt;- cormat %&gt;%
+  as_data_frame() %&gt;%
+  mutate(x = colnames(mat)) %&gt;%
+  gather(key = &quot;y&quot;, value = &quot;value&quot;, pregnant:age)
+
+cormat %&gt;%
+    remove_missing() %&gt;%
+    arrange(x, y) %&gt;%
+    ggplot(aes(x = x, y = y, fill = value)) + 
+    geom_tile() +
+    scale_fill_gradient2(low = &quot;blue&quot;, high = &quot;red&quot;, mid = &quot;white&quot;, 
+     midpoint = 0, limit = c(-1,1), space = &quot;Lab&quot;, 
+     name = &quot;Pearson\nCorrelation&quot;) +
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
+    coord_fixed() +
+    labs(x = &quot;feature&quot;, 
+         y = &quot;feature&quot;,
+        title = &quot;Correlation between features&quot;, 
+        caption = &quot;Source: Pima Indians Diabetes Database&quot;)</code></pre>
+<p><img src="/post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<pre class="r"><code># scatterplot matrix
+ggpairs(PimaIndiansDiabetes, 
+        columns = c(1:8),
+        alpha = 0.7) +
+    labs(x = &quot;feature&quot;, 
+         y = &quot;feature&quot;,
+        title = &quot;Scatterplot matrix&quot;, 
+        caption = &quot;Source: Pima Indians Diabetes Database&quot;)</code></pre>
+<p><img src="/post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-10-1.png" width="960" /></p>
+<pre class="r"><code># PCA
+prep &lt;- PimaIndiansDiabetes %&gt;%
+  dplyr::select(where(is.numeric))
+
+pca &lt;- prep %&gt;%
+  prcomp(scale. = TRUE)
+
+autoplot(pca, 
+                data = PimaIndiansDiabetes, 
+                colour = &#39;diabetes&#39;,
+                shape = &#39;diabetes&#39;,
+                loadings = TRUE, 
+                loadings.colour = &#39;blue&#39;,
+                loadings.label = TRUE, 
+                loadings.label.size = 3) +
+      scale_color_manual(values = cbp1) +
+  scale_fill_manual(values = cbp1) +
+  theme_bw() +
+    labs(title = &quot;Principal Component Analysis (PCA)&quot;, 
+        caption = &quot;Source: Pima Indians Diabetes Database&quot;)</code></pre>
+<p><img src="/post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<pre class="r"><code># MDS
+d &lt;- dist(prep) # euclidean distances between the rows
+fit &lt;- cmdscale(d,eig=TRUE, k=2) # k is the number of dim
+fit$points %&gt;%
+  head()</code></pre>
+<pre><code>##        [,1]       [,2]
+## 1 -75.71465 -35.950783
+## 2 -82.35827  28.908213
+## 3 -74.63064 -67.906496
+## 4  11.07742  34.898486
+## 5  89.74379  -2.746937
+## 6 -80.97792  -3.946887</code></pre>
+<pre class="r"><code># Sammon mapping
+library(MASS)
+sam &lt;- sammon(dist(prep))</code></pre>
+<pre><code>## Initial stress        : 0.03033
+## stress after   0 iters: 0.03033</code></pre>
+<pre class="r"><code>sam$points %&gt;%
+  head()</code></pre>
+<pre><code>##        [,1]       [,2]
+## 1 -75.71465 -35.950783
+## 2 -82.35827  28.908213
+## 3 -74.63064 -67.906496
+## 4  11.07742  34.898486
+## 5  89.74379  -2.746937
+## 6 -80.97792  -3.946887</code></pre>
+<pre class="r"><code># parallel coordinate plots
+ggparcoord(data = PimaIndiansDiabetes, 
+           columns = c(1:8), 
+           groupColumn = 9,
+           scale = &quot;robust&quot;,
+           order = &quot;skewness&quot;,
+           alpha = 0.7)</code></pre>
+<p><img src="/post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<pre class="r"><code># scagnostics
+scagnostics_dataset &lt;- scagnostics(PimaIndiansDiabetes)
+
+# scagnostics grid
+scagnostics_grid_dataset &lt;- scagnosticsGrid(scagnostics_dataset)
+
+# outliers
+scagnostics_o_dataset &lt;- scagnosticsOutliers(scagnostics_dataset)
+scagnostics_o_dataset[scagnostics_o_dataset]</code></pre>
+<pre><code>## pregnant * age 
+##           TRUE</code></pre>
+<pre class="r"><code>outlier &lt;- scagnostics_grid_dataset[scagnostics_o_dataset,]
+
+# scagnostics exemplars
+scagnostics_ex_dataset &lt;- scagnosticsExemplars(scagnostics_dataset)
+scagnostics_ex_dataset[scagnostics_ex_dataset]</code></pre>
+<pre><code>## pregnant * triceps         mass * age triceps * diabetes 
+##               TRUE               TRUE               TRUE</code></pre>
+<pre class="r"><code>exemplars &lt;- scagnostics_grid_dataset[scagnostics_ex_dataset,]</code></pre>
+</div>
+<div id="training-a-machine-learning-model" class="section level3">
+<h3>Training a machine learning model</h3>
+<p>(using <code>mlr</code> package)</p>
+<ul>
+<li>create training and test set</li>
+</ul>
+<pre class="r"><code>set.seed(1000) 
+
+train_index &lt;- sample(1:nrow(PimaIndiansDiabetes), 0.8 * nrow(PimaIndiansDiabetes)) 
+test_index &lt;- setdiff(1:nrow(PimaIndiansDiabetes), train_index) 
+
+train &lt;- PimaIndiansDiabetes[train_index,] 
+test &lt;- PimaIndiansDiabetes[test_index,]
+
+list( train = summary(train), test = summary(test) )</code></pre>
+<pre><code>## $train
+##     pregnant         glucose         pressure         triceps     
+##  Min.   : 0.000   Min.   :  0.0   Min.   :  0.00   Min.   : 0.00  
+##  1st Qu.: 1.000   1st Qu.:100.0   1st Qu.: 64.00   1st Qu.: 0.00  
+##  Median : 3.000   Median :119.0   Median : 72.00   Median :23.00  
+##  Mean   : 3.894   Mean   :123.1   Mean   : 68.89   Mean   :20.66  
+##  3rd Qu.: 6.000   3rd Qu.:143.0   3rd Qu.: 80.00   3rd Qu.:32.75  
+##  Max.   :17.000   Max.   :199.0   Max.   :114.00   Max.   :99.00  
+##     insulin            mass          pedigree           age        diabetes 
+##  Min.   :  0.00   Min.   : 0.00   Min.   :0.0780   Min.   :21.00   neg:386  
+##  1st Qu.:  0.00   1st Qu.:27.10   1st Qu.:0.2442   1st Qu.:24.00   pos:228  
+##  Median : 36.50   Median :32.00   Median :0.3780   Median :29.00            
+##  Mean   : 81.65   Mean   :31.92   Mean   :0.4742   Mean   :33.42            
+##  3rd Qu.:131.50   3rd Qu.:36.38   3rd Qu.:0.6355   3rd Qu.:41.00            
+##  Max.   :846.00   Max.   :59.40   Max.   :2.4200   Max.   :81.00            
+## 
+## $test
+##     pregnant         glucose         pressure         triceps     
+##  Min.   : 0.000   Min.   :  0.0   Min.   :  0.00   Min.   : 0.00  
+##  1st Qu.: 1.000   1st Qu.: 93.0   1st Qu.: 62.00   1st Qu.: 0.00  
+##  Median : 2.000   Median :108.0   Median : 72.00   Median :23.00  
+##  Mean   : 3.649   Mean   :112.3   Mean   : 69.96   Mean   :20.03  
+##  3rd Qu.: 6.000   3rd Qu.:133.8   3rd Qu.: 79.50   3rd Qu.:32.00  
+##  Max.   :14.000   Max.   :197.0   Max.   :122.00   Max.   :56.00  
+##     insulin           mass          pedigree           age        diabetes 
+##  Min.   :  0.0   Min.   : 0.00   Min.   :0.0850   Min.   :21.00   neg:114  
+##  1st Qu.:  0.0   1st Qu.:27.80   1st Qu.:0.2395   1st Qu.:23.25   pos: 40  
+##  Median : 20.5   Median :32.40   Median :0.3380   Median :29.00            
+##  Mean   : 72.4   Mean   :32.29   Mean   :0.4627   Mean   :32.54            
+##  3rd Qu.:100.0   3rd Qu.:36.88   3rd Qu.:0.6008   3rd Qu.:39.75            
+##  Max.   :744.0   Max.   :67.10   Max.   :2.3290   Max.   :67.00</code></pre>
+<ul>
+<li>create classification task and learner</li>
+</ul>
+<pre class="r"><code>listLearners() %&gt;%
+  head()</code></pre>
+<pre><code>##                 class                               name  short.name
+## 1         classif.ada                       ada Boosting         ada
+## 2  classif.adaboostm1                    ada Boosting M1  adaboostm1
+## 3 classif.bartMachine Bayesian Additive Regression Trees bartmachine
+## 4    classif.binomial                Binomial Regression    binomial
+## 5    classif.boosting                    Adabag Boosting      adabag
+## 6         classif.bst                  Gradient Boosting         bst
+##        package
+## 1    ada,rpart
+## 2        RWeka
+## 3  bartMachine
+## 4        stats
+## 5 adabag,rpart
+## 6    bst,rpart
+##                                                                                                                                                note
+## 1                                                                                                  `xval` has been set to `0` by default for speed.
+## 2                                                                                       NAs are directly passed to WEKA with `na.action = na.pass`.
+## 3                                                               `use_missing_data` has been set to `TRUE` by default to allow missing data support.
+## 4  Delegates to `glm` with freely choosable binomial link function via learner parameter `link`. We set &#39;model&#39; to FALSE by default to save memory.
+## 5                                                                                                  `xval` has been set to `0` by default for speed.
+## 6 Renamed parameter `learner` to `Learner` due to nameclash with `setHyperPars`. Default changes: `Learner = &quot;ls&quot;`, `xval = 0`, and `maxdepth = 1`.
+##      type installed numerics factors ordered missings weights  prob oneclass
+## 1 classif     FALSE     TRUE    TRUE   FALSE    FALSE   FALSE  TRUE    FALSE
+## 2 classif      TRUE     TRUE    TRUE   FALSE    FALSE   FALSE  TRUE    FALSE
+## 3 classif     FALSE     TRUE    TRUE   FALSE     TRUE   FALSE  TRUE    FALSE
+## 4 classif      TRUE     TRUE    TRUE   FALSE    FALSE    TRUE  TRUE    FALSE
+## 5 classif     FALSE     TRUE    TRUE   FALSE     TRUE   FALSE  TRUE    FALSE
+## 6 classif     FALSE     TRUE   FALSE   FALSE    FALSE   FALSE FALSE    FALSE
+##   twoclass multiclass class.weights featimp oobpreds functionals
+## 1     TRUE      FALSE         FALSE   FALSE    FALSE       FALSE
+## 2     TRUE       TRUE         FALSE   FALSE    FALSE       FALSE
+## 3     TRUE      FALSE         FALSE   FALSE    FALSE       FALSE
+## 4     TRUE      FALSE         FALSE   FALSE    FALSE       FALSE
+## 5     TRUE       TRUE         FALSE    TRUE    FALSE       FALSE
+## 6     TRUE      FALSE         FALSE   FALSE    FALSE       FALSE
+##   single.functional    se lcens rcens icens
+## 1             FALSE FALSE FALSE FALSE FALSE
+## 2             FALSE FALSE FALSE FALSE FALSE
+## 3             FALSE FALSE FALSE FALSE FALSE
+## 4             FALSE FALSE FALSE FALSE FALSE
+## 5             FALSE FALSE FALSE FALSE FALSE
+## 6             FALSE FALSE FALSE FALSE FALSE</code></pre>
+<pre class="r"><code>(dt_task &lt;- makeClassifTask(data = train, target = &quot;diabetes&quot;))</code></pre>
+<pre><code>## Supervised task: train
+## Type: classif
+## Target: diabetes
+## Observations: 614
+## Features:
+##    numerics     factors     ordered functionals 
+##           8           0           0           0 
+## Missings: FALSE
+## Has weights: FALSE
+## Has blocking: FALSE
+## Has coordinates: FALSE
+## Classes: 2
+## neg pos 
+## 386 228 
+## Positive class: neg</code></pre>
+<pre class="r"><code>(dt_prob &lt;- makeLearner(&#39;classif.gbm&#39;, predict.type = &quot;prob&quot;))</code></pre>
+<pre><code>## Learner classif.gbm from package gbm
+## Type: classif
+## Name: Gradient Boosting Machine; Short name: gbm
+## Class: classif.gbm
+## Properties: twoclass,multiclass,missings,numerics,factors,prob,weights,featimp
+## Predict-Type: prob
+## Hyperparameters: keep.data=FALSE</code></pre>
+</div>
+<div id="feature-selection" class="section level3">
+<h3>Feature Selection</h3>
+<pre class="r"><code>library(FSelector)
+
+listFilterMethods() %&gt;%
+  head()</code></pre>
+<pre><code>##                           id   package                                     desc
+## 1                 anova.test           ANOVA Test for binary and multiclass ...
+## 2                        auc           AUC filter for binary classification ...
+## 3                   carscore      care                               CAR scores
+## 4      FSelector_chi.squared FSelector Chi-squared statistic of independence...
+## 5       FSelector_gain.ratio FSelector Chi-squared statistic of independence...
+## 6 FSelector_information.gain FSelector Entropy-based information gain betwee...</code></pre>
+<pre class="r"><code>listFilterEnsembleMethods() %&gt;%
+  head()</code></pre>
+<pre><code>##         id
+## 1  E-Borda
+## 2    E-max
+## 3   E-mean
+## 4 E-median
+## 5    E-min
+##                                                                                                     desc
+## 1                  Borda ensemble filter. Takes the sum across all base filter methods for each feature.
+## 2 Maximum ensemble filter. Takes the best maximum value across all base filter methods for each feature.
+## 3                  Mean ensemble filter. Takes the mean across all base filter methods for each feature.
+## 4              Median ensemble filter. Takes the median across all base filter methods for each feature.
+## 5 Minimum ensemble filter. Takes the best minimum value across all base filter methods for each feature.</code></pre>
+<pre class="r"><code>generateFilterValuesData(dt_task, method = &quot;FSelector_information.gain&quot;) %&gt;% 
+  plotFilterValues() +
+  theme_bw() +
+    labs(x = &quot;feature&quot;,
+         y = &quot;information gain&quot;,
+         title = &quot;Information gain of features in GBM&quot;,
+         caption = &quot;Source: Pima Indians Diabetes Database&quot;)</code></pre>
+<p><img src="/post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<pre class="r"><code>feat_imp_tpr &lt;- generateFeatureImportanceData(task = dt_task, 
+                              learner = dt_prob,
+                              measure = tpr, 
+                              interaction = FALSE)</code></pre>
+<pre><code>## Distribution not specified, assuming bernoulli ...</code></pre>
+<pre class="r"><code>feat_imp_tpr$res %&gt;%
+  gather() %&gt;%
+  ggplot(aes(x = reorder(key, value), y = value)) +
+    geom_bar(stat = &quot;identity&quot;) +
+    labs(x = &quot;feature&quot;,
+         title = &quot;True positive rate of features in GBM&quot;,
+         subtitle = &quot;calculated with permutation importance&quot;,
+         caption = &quot;Source: Pima Indians Diabetes Database&quot;)</code></pre>
+<p><img src="/post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<pre class="r"><code>feat_imp_auc &lt;- generateFeatureImportanceData(task = dt_task, 
+                              learner = dt_prob,
+                              measure = auc, 
+                              interaction = FALSE)</code></pre>
+<pre><code>## Distribution not specified, assuming bernoulli ...</code></pre>
+<pre class="r"><code>feat_imp_auc$res %&gt;%
+  gather() %&gt;%
+  ggplot(aes(x = reorder(key, value), y = value)) +
+    geom_bar(stat = &quot;identity&quot;) +
+    labs(x = &quot;feature&quot;,
+         title = &quot;Area under the curve of features in GBM&quot;,
+         subtitle = &quot;calculated with permutation importance&quot;,
+         caption = &quot;Source: Pima Indians Diabetes Database&quot;)</code></pre>
+<p><img src="/post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<pre class="r"><code>set.seed(1000) 
+train &lt;- dplyr::select(train, -pedigree, -pressure, -triceps) 
+test &lt;- dplyr::select(test, -pedigree, -pressure, -triceps)
+list(train = summary(train), test = summary(test))</code></pre>
+<pre><code>## $train
+##     pregnant         glucose         insulin            mass      
+##  Min.   : 0.000   Min.   :  0.0   Min.   :  0.00   Min.   : 0.00  
+##  1st Qu.: 1.000   1st Qu.:100.0   1st Qu.:  0.00   1st Qu.:27.10  
+##  Median : 3.000   Median :119.0   Median : 36.50   Median :32.00  
+##  Mean   : 3.894   Mean   :123.1   Mean   : 81.65   Mean   :31.92  
+##  3rd Qu.: 6.000   3rd Qu.:143.0   3rd Qu.:131.50   3rd Qu.:36.38  
+##  Max.   :17.000   Max.   :199.0   Max.   :846.00   Max.   :59.40  
+##       age        diabetes 
+##  Min.   :21.00   neg:386  
+##  1st Qu.:24.00   pos:228  
+##  Median :29.00            
+##  Mean   :33.42            
+##  3rd Qu.:41.00            
+##  Max.   :81.00            
+## 
+## $test
+##     pregnant         glucose         insulin           mass      
+##  Min.   : 0.000   Min.   :  0.0   Min.   :  0.0   Min.   : 0.00  
+##  1st Qu.: 1.000   1st Qu.: 93.0   1st Qu.:  0.0   1st Qu.:27.80  
+##  Median : 2.000   Median :108.0   Median : 20.5   Median :32.40  
+##  Mean   : 3.649   Mean   :112.3   Mean   : 72.4   Mean   :32.29  
+##  3rd Qu.: 6.000   3rd Qu.:133.8   3rd Qu.:100.0   3rd Qu.:36.88  
+##  Max.   :14.000   Max.   :197.0   Max.   :744.0   Max.   :67.10  
+##       age        diabetes 
+##  Min.   :21.00   neg:114  
+##  1st Qu.:23.25   pos: 40  
+##  Median :29.00            
+##  Mean   :32.54            
+##  3rd Qu.:39.75            
+##  Max.   :67.00</code></pre>
+<pre class="r"><code>(dt_task &lt;- makeClassifTask(data = train, target = &quot;diabetes&quot;))</code></pre>
+<pre><code>## Supervised task: train
+## Type: classif
+## Target: diabetes
+## Observations: 614
+## Features:
+##    numerics     factors     ordered functionals 
+##           5           0           0           0 
+## Missings: FALSE
+## Has weights: FALSE
+## Has blocking: FALSE
+## Has coordinates: FALSE
+## Classes: 2
+## neg pos 
+## 386 228 
+## Positive class: neg</code></pre>
 </div>
 <div id="hyperparameter-optimization" class="section level3">
 <h3>Hyperparameter Optimization</h3>
-<p>Tuning is an important part of modeling. Unlike parameters that derive their value from training, the values of hyperparameters are defined before the learning process begins. These hyperparameters control the behavior of the algorithms and have an impact on the performance of the model. Concerns of hyperparameters, such as trainability, tunability, and robustness, determine the usability of the models.</p>
-<p>Below is an example of TensorBoard’s HParams that displays groups of hyperparameters to see which ones are the most important. You can define criteria such as accuracy and dropout rate to determine the performance.</p>
-<p>One of the best solutions for this type of task is to use a parallel coordinates plot (Figure 1). Using this type of plot, we can in fact easily compare different variables (eg. features) together in order to discover possible relationships. In the case of Hyperparameters Optimization, this can be used as a simple tool to inspect what combination of parameters can give us the greatest test accuracy. Another possible use of parallel coordinates plots in Data Analysis is to inspect relationships in values between the different features in a data frame.</p>
-</div>
-<div id="time-series" class="section level3">
-<h3>time-series</h3>
-<p>When working with time-series data, it can be really handy at times to be able to quickly understand on which datapoints our model is performing poorly, in order to try to understand what limitations it might be facing.
-One possible approach is to create a summary table with the actual and predicted values and some form of metrics summarising how well/bad a data point has been predicted.</p>
+<pre class="r"><code>getParamSet(&quot;classif.gbm&quot;)</code></pre>
+<pre><code>##                       Type len       Def
+## distribution      discrete   - bernoulli
+## n.trees            integer   -       100
+## cv.folds           integer   -         0
+## interaction.depth  integer   -         1
+## n.minobsinnode     integer   -        10
+## shrinkage          numeric   -       0.1
+## bag.fraction       numeric   -       0.5
+## train.fraction     numeric   -         1
+## keep.data          logical   -      TRUE
+## verbose            logical   -     FALSE
+## n.cores            integer   -         1
+##                                                     Constr Req Tunable Trafo
+## distribution      gaussian,bernoulli,huberized,adaboost...   -    TRUE     -
+## n.trees                                           1 to Inf   -    TRUE     -
+## cv.folds                                       -Inf to Inf   -    TRUE     -
+## interaction.depth                                 1 to Inf   -    TRUE     -
+## n.minobsinnode                                    1 to Inf   -    TRUE     -
+## shrinkage                                         0 to Inf   -    TRUE     -
+## bag.fraction                                        0 to 1   -    TRUE     -
+## train.fraction                                      0 to 1   -    TRUE     -
+## keep.data                                                -   -   FALSE     -
+## verbose                                                  -   -   FALSE     -
+## n.cores                                        -Inf to Inf   -   FALSE     -</code></pre>
+<pre class="r"><code>dt_param &lt;- makeParamSet( 
+  makeIntegerParam(&quot;n.trees&quot;, lower = 20, upper = 150),
+  makeNumericParam(&quot;shrinkage&quot;, lower = 0.01, upper = 0.1))
+
+ctrl = makeTuneControlGrid()
+
+rdesc = makeResampleDesc(&quot;CV&quot;, 
+                         iters = 3L, 
+                         stratify = TRUE)</code></pre>
+<pre class="r"><code>set.seed(1000) 
+(dt_tuneparam &lt;- tuneParams(learner = dt_prob, 
+                             resampling = rdesc, 
+                             measures = list(tpr,auc, fnr, mmce, tnr, setAggregation(tpr, test.sd)), 
+                             par.set = dt_param, 
+                             control = ctrl, 
+                             task = dt_task, 
+                             show.info = FALSE))</code></pre>
+<pre><code>## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...</code></pre>
+<pre><code>## Tune result:
+## Op. pars: n.trees=20; shrinkage=0.02
+## tpr.test.mean=1.0000000,auc.test.mean=0.7878691,fnr.test.mean=0.0000000,mmce.test.mean=0.3713375,tnr.test.mean=0.0000000,tpr.test.sd=0.0000000</code></pre>
+<pre class="r"><code>data = generateHyperParsEffectData(dt_tuneparam, 
+                                   partial.dep = TRUE)
+
+plotHyperParsEffect(data, x = &quot;n.trees&quot;, y = &quot;tpr.test.mean&quot;, partial.dep.learn = makeLearner(&quot;regr.gbm&quot;))</code></pre>
+<p><img src="/post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<pre class="r"><code>plotHyperParsEffect(data, x = &quot;shrinkage&quot;, y = &quot;tpr.test.mean&quot;, partial.dep.learn = makeLearner(&quot;regr.gbm&quot;))</code></pre>
+<p><img src="/post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-28-2.png" width="672" /></p>
+<pre class="r"><code>plotHyperParsEffect(data, 
+                    x = &quot;n.trees&quot;, 
+                    y = &quot;shrinkage&quot;,
+                    z = &quot;tpr.test.mean&quot;, 
+                    plot.type = &quot;heatmap&quot;,
+                    partial.dep.learn = makeLearner(&quot;regr.gbm&quot;)) +
+  theme_bw() +
+    labs(title = &quot;Hyperparameter effects data&quot;,
+         subtitle = &quot;of GBM model with reduced feature set&quot;,
+         caption = &quot;Source: Pima Indians Diabetes Database&quot;)</code></pre>
+<p><img src="/post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+<pre class="r"><code>list( `Optimal HyperParameters` = dt_tuneparam$x, 
+      `Optimal Metrics` = dt_tuneparam$y )</code></pre>
+<pre><code>## $`Optimal HyperParameters`
+## $`Optimal HyperParameters`$n.trees
+## [1] 20
+## 
+## $`Optimal HyperParameters`$shrinkage
+## [1] 0.02
+## 
+## 
+## $`Optimal Metrics`
+##  tpr.test.mean  auc.test.mean  fnr.test.mean mmce.test.mean  tnr.test.mean 
+##      1.0000000      0.7878691      0.0000000      0.3713375      0.0000000 
+##    tpr.test.sd 
+##      0.0000000</code></pre>
+<pre class="r"><code>gbm_final &lt;- setHyperPars(dt_prob, par.vals = dt_tuneparam$x)
+
+set.seed(1000) 
+gbm_final_train &lt;- train(learner = gbm_final, task = dt_task) </code></pre>
+<pre><code>## Distribution not specified, assuming bernoulli ...</code></pre>
+<pre class="r"><code>getLearnerModel(gbm_final_train)</code></pre>
+<pre><code>## gbm::gbm(formula = f, data = d, n.trees = 20L, shrinkage = 0.02, 
+##     keep.data = FALSE)
+## A gradient boosted model with bernoulli loss function.
+## 20 iterations were performed.
+## There were 5 predictors of which 3 had non-zero influence.</code></pre>
 </div>
 <div id="decision-trees" class="section level3">
 <h3>Decision Trees</h3>
-<p>Decision Trees are one of the most easily explainable types of Machine Learning model. Thanks to their basilar structure, it is easily possible to examine how the algorithm decides to make its decision by looking at the conditions on the different branches of the tree. Additionally, Decision Trees can also be used as a Feature Selection technique, considering that the algorithm puts at the top levels of the tree the features which think are most valuable for our desired classification/regression task. In this way, the features at the bottom of the tree could be discarded since carrying less information.</p>
+<ul>
+<li>Recursive Partitioning (<a href="https://cran.r-project.org/web/packages/rpart/vignettes/longintro.pdf"><code>rpart</code></a> &amp; <a href="http://www.milbo.org/rpart-plot/prp.pdf"><code>rpart.plot</code></a>)</li>
+</ul>
+<pre class="r"><code>library(rpart)
+library(rpart.plot)
+
+rpart_tree &lt;- rpart(diabetes ~ .,
+                    data = train,
+                    method = &quot;class&quot;)</code></pre>
+<pre class="r"><code>rpart.plot(rpart_tree, 
+           roundint=FALSE, 
+           type = 3, 
+           clip.right.labs = FALSE)</code></pre>
+<p><img src="/post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+<pre class="r"><code>rpart.rules(rpart_tree, roundint = FALSE)</code></pre>
+<pre><code>##  diabetes                                                                           
+##      0.05 when glucose &lt;  128        &amp; mass &lt;  27       &amp; age &gt;= 29                 
+##      0.10 when glucose &lt;  128                           &amp; age &lt;  29                 
+##      0.17 when glucose is 128 to 146 &amp; mass &lt;  30                                   
+##      0.25 when glucose &gt;=        146 &amp; mass &lt;  30       &amp; age &lt;  29                 
+##      0.28 when glucose &lt;  128        &amp; mass &gt;=       29 &amp; age &gt;= 29 &amp; insulin &lt;  143
+##      0.38 when glucose is 128 to 158 &amp; mass is 32 to 42 &amp; age &lt;  43                 
+##      0.62 when glucose &gt;=        146 &amp; mass &lt;  30       &amp; age &gt;= 29                 
+##      0.63 when glucose &lt;  128        &amp; mass is 27 to 29 &amp; age &gt;= 29 &amp; insulin &lt;  143
+##      0.77 when glucose &lt;  128        &amp; mass &gt;=       27 &amp; age &gt;= 29 &amp; insulin &gt;= 143
+##      0.82 when glucose is 128 to 158 &amp; mass &gt;=       42 &amp; age &lt;  43                 
+##      0.86 when glucose is 128 to 158 &amp; mass &gt;=       30 &amp; age &gt;= 43                 
+##      0.86 when glucose &gt;=        158 &amp; mass &gt;=       30                             
+##      0.88 when glucose is 128 to 158 &amp; mass is 30 to 32 &amp; age &lt;  43</code></pre>
+</div>
+<div id="prediction" class="section level3">
+<h3>Prediction</h3>
+<pre class="r"><code>set.seed(1000) 
+(gbm_final_predict &lt;- predict(gbm_final_train, newdata = test))</code></pre>
+<pre><code>## Prediction: 154 observations
+## predict.type: prob
+## threshold: neg=0.50,pos=0.50
+## time: 0.00
+##    truth  prob.pos  prob.neg response
+## 12   pos 0.4807717 0.5192283      neg
+## 18   pos 0.3229851 0.6770149      neg
+## 19   neg 0.3229851 0.6770149      neg
+## 20   pos 0.3300235 0.6699765      neg
+## 34   neg 0.3091184 0.6908816      neg
+## 38   pos 0.3229851 0.6770149      neg
+## ... (#rows: 154, #cols: 4)</code></pre>
+<pre class="r"><code>gbm_final_predict %&gt;% calculateROCMeasures()</code></pre>
+<pre><code>##      predicted
+## true  neg       pos                        
+##   neg 114       0        tpr: 1   fnr: 0   
+##   pos 40        0        fpr: 1   tnr: 0   
+##       ppv: 0.74 for: NaN lrp: 1   acc: 0.74
+##       fdr: 0.26 npv: NaN lrm: NaN dor: NaN 
+## 
+## 
+## Abbreviations:
+## tpr - True positive rate (Sensitivity, Recall)
+## fpr - False positive rate (Fall-out)
+## fnr - False negative rate (Miss rate)
+## tnr - True negative rate (Specificity)
+## ppv - Positive predictive value (Precision)
+## for - False omission rate
+## lrp - Positive likelihood ratio (LR+)
+## fdr - False discovery rate
+## npv - Negative predictive value
+## acc - Accuracy
+## lrm - Negative likelihood ratio (LR-)
+## dor - Diagnostic odds ratio</code></pre>
+<pre class="r"><code>model_performance &lt;- performance(gbm_final_predict, 
+                                 measures = list(tpr, auc, mmce, acc, tnr)) %&gt;% 
+  as.data.frame(row.names = c(&quot;True Positive Rate&quot;,&quot;Area Under Curve&quot;, &quot;Mean Misclassification Error&quot;,&quot;Accuracy&quot;,&quot;True Negative Rate&quot;)) 
+
+model_performance</code></pre>
+<pre><code>##                                      .
+## True Positive Rate           1.0000000
+## Area Under Curve             0.7695175
+## Mean Misclassification Error 0.2597403
+## Accuracy                     0.7402597
+## True Negative Rate           0.0000000</code></pre>
+<pre class="r"><code>gbm_final_threshold &lt;- generateThreshVsPerfData(gbm_final_predict, 
+                                                 measures = list(tpr, auc, mmce, tnr))</code></pre>
+<pre class="r"><code>gbm_final_threshold %&gt;% 
+   plotROCCurves() + 
+   geom_point() +
+    theme_bw() +
+    labs(title = &quot;ROC curve from predictions&quot;,
+         subtitle = &quot;of GBM model with reduced feature set&quot;,
+         caption = &quot;Source: Pima Indians Diabetes Database&quot;)</code></pre>
+<p><img src="/post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+<pre class="r"><code>gbm_final_threshold %&gt;% 
+   plotThreshVsPerf() + 
+   geom_point() +
+    theme_bw() +
+    labs(title = &quot;Threshold vs. performance&quot;,
+         subtitle = &quot;for 2-class classification of GBM model with reduced feature set&quot;,
+         caption = &quot;Source: Pima Indians Diabetes Database&quot;)</code></pre>
+<p><img src="/post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<pre class="r"><code>gbm_final_threshold$data %&gt;%
+  head()</code></pre>
+<pre><code>##   tpr       auc      mmce tnr  threshold
+## 1   1 0.7695175 0.2597403   0 0.00000000
+## 2   1 0.7695175 0.2597403   0 0.01010101
+## 3   1 0.7695175 0.2597403   0 0.02020202
+## 4   1 0.7695175 0.2597403   0 0.03030303
+## 5   1 0.7695175 0.2597403   0 0.04040404
+## 6   1 0.7695175 0.2597403   0 0.05050505</code></pre>
+<pre class="r"><code>gbm_final_thr &lt;- gbm_final_predict %&gt;% 
+  setThreshold(0.59595960) 
+
+(dt_performance &lt;- gbm_final_thr %&gt;% performance(measures = list(tpr, auc, mmce, tnr)) )</code></pre>
+<pre><code>##       tpr       auc      mmce       tnr 
+## 0.8070175 0.7695175 0.2727273 0.5000000</code></pre>
+<pre class="r"><code>(dt_cm &lt;- gbm_final_thr %&gt;% calculateROCMeasures() )</code></pre>
+<pre><code>##      predicted
+## true  neg       pos                          
+##   neg 92        22        tpr: 0.81 fnr: 0.19
+##   pos 20        20        fpr: 0.5  tnr: 0.5 
+##       ppv: 0.82 for: 0.52 lrp: 1.61 acc: 0.73
+##       fdr: 0.18 npv: 0.48 lrm: 0.39 dor: 4.18
+## 
+## 
+## Abbreviations:
+## tpr - True positive rate (Sensitivity, Recall)
+## fpr - False positive rate (Fall-out)
+## fnr - False negative rate (Miss rate)
+## tnr - True negative rate (Specificity)
+## ppv - Positive predictive value (Precision)
+## for - False omission rate
+## lrp - Positive likelihood ratio (LR+)
+## fdr - False discovery rate
+## npv - Negative predictive value
+## acc - Accuracy
+## lrm - Negative likelihood ratio (LR-)
+## dor - Diagnostic odds ratio</code></pre>
+<pre class="r"><code>performance_threshold &lt;- performance(gbm_final_thr, measures = list(tpr, auc, mmce, acc, tnr)) %&gt;% 
+  as.data.frame(row.names = c(&quot;True Positive Rate&quot;, &quot;Area Under Curve&quot;, &quot;Mean Misclassification Error&quot;, &quot;Accuracy&quot;, &quot;True Negative Rate&quot;))
+
+performance_threshold</code></pre>
+<pre><code>##                                      .
+## True Positive Rate           0.8070175
+## Area Under Curve             0.7695175
+## Mean Misclassification Error 0.2727273
+## Accuracy                     0.7272727
+## True Negative Rate           0.5000000</code></pre>
 </div>
 <div id="decision-boundaries" class="section level3">
 <h3>Decision Boundaries</h3>
-<p>Decision Boundaries are one of the easiest approaches to graphically understand how a Machine Learning model is making its predictions. One of the easiest ways to plot decision boundaries in Python is to use Mlxtend. This library, can in fact be used for plotting decision boundaries of either Machine Learning and Deep Learning models. A simple example is shown in Figure 6.
-One of the main limitations of plotting decision boundaries is that they can only be easily visualised in two or three dimensions. Due to these limitations, it might be therefore necessary most of the times to reduce the dimensionality of our input features (using some form of feature extraction techniques) before plotting the decision boundary.</p>
+<pre class="r"><code>#remotes::install_github(&quot;grantmcdermott/parttree&quot;)
+library(parsnip)
+library(parttree)
+set.seed(123) ## For consistent jitter
+
+## Build our tree using parsnip (but with rpart as the model engine)
+ti_tree =
+  decision_tree() %&gt;%
+  set_engine(&quot;rpart&quot;) %&gt;%
+  set_mode(&quot;classification&quot;) %&gt;%
+  fit(diabetes ~ glucose + mass, data = PimaIndiansDiabetes)
+
+## Plot the data and model partitions
+PimaIndiansDiabetes %&gt;%
+  ggplot(aes(x = glucose, y = mass)) +
+  geom_jitter(aes(col = diabetes), alpha = 0.7) +
+  geom_parttree(data = ti_tree, aes(fill = diabetes), alpha = 0.1) +
+  theme_bw() +
+    labs(title = &quot;Decision boundaries&quot;,
+         subtitle = &quot;for 2-class classification of RPART model (glucose + mass)&quot;,
+         caption = &quot;Source: Pima Indians Diabetes Database&quot;)</code></pre>
+<p><img src="/post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
 </div>
-<div id="anns" class="section level3">
-<h3>ANNs</h3>
-<p>Another technique which can be quite useful when creating new neural network architectures is visualising their structure.</p>
-<p>Li et al, Visualizing the Loss Landscape
-of Neural Nets, 2018</p>
-<p><a href="http://yosinski.com/deepvis" class="uri">http://yosinski.com/deepvis</a></p>
-<p><a href="http://cs231n.stanford.edu/slides/2018/cs231n_2018_lecture13.pdf" class="uri">http://cs231n.stanford.edu/slides/2018/cs231n_2018_lecture13.pdf</a></p>
-<p><a href="https://projector.tensorflow.org/" class="uri">https://projector.tensorflow.org/</a></p>
+<div id="time-series" class="section level3">
+<h3>Time-series</h3>
+<div class="figure">
+<img src="https://shiring.github.io/forecasting/2017/06/09/retail_forcasting_part2_files/figure-markdown_github/unnamed-chunk-28-1.png" alt="" />
+<p class="caption"><a href="https://shiring.github.io/forecasting/2017/06/09/retail_forcasting_part2" class="uri">https://shiring.github.io/forecasting/2017/06/09/retail_forcasting_part2</a></p>
 </div>
-<div id="learning-rates" class="section level3">
-<h3>Learning rates</h3>
+<div class="figure">
+<img src="https://shiring.github.io/forecasting/2017/06/13/retail_forcasting_part3_files/figure-markdown_github/unnamed-chunk-12-1.png" alt="" />
+<p class="caption"><a href="https://shiring.github.io/forecasting/2017/06/13/retail_forcasting_part3" class="uri">https://shiring.github.io/forecasting/2017/06/13/retail_forcasting_part3</a></p>
+</div>
+</div>
+<div id="artificial-neural-networks-anns" class="section level3">
+<h3>Artificial Neural Networks (ANNs)</h3>
+<ul>
+<li><p><a href="playground.tensorflow.org">playground.tensorflow.org</a></p></li>
+<li><p><a href="https://www.manning.com/books/deep-learning-with-r">Deep Learning with R</a></p></li>
+</ul>
+<ol style="list-style-type: decimal">
+<li><a href="https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/5.4-visualizing-what-convnets-learn.nb.html">Visualizing what convnets learn</a></li>
+<li><a href="https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/8.2-deep-dream.nb.html">Deep Dreaming</a></li>
+<li><a href="https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/8.3-neural-style-transfer.nb.html">Neural style transfer</a></li>
+</ol>
+<ul>
+<li><p><a href="https://arxiv.org/pdf/1712.09913.pdf">Li et al, Visualizing the Loss Landscape of Neural Nets, 2018</a></p></li>
+<li><p><a href="http://yosinski.com/deepvis">Understanding Neural Networks Through Deep Visualization, Jason Yosinski, Jeff Clune, Anh Nguyen, Thomas Fuchs, and Hod Lipson</a></p></li>
+<li><p><a href="https://projector.tensorflow.org/">Visualizing Data using the Embedding Projector in TensorBoard</a></p></li>
+<li><p><a href="https://arxiv.org/pdf/1311.2901.pdf">Visualizing and Understanding Convolutional Networks, Zeiler &amp; Fergus, 2013</a></p></li>
+<li><p><a href="https://distill.pub/2018/building-blocks/">The Building Blocks of Interpretability, Olah, Satyanarayan, Johnson, Carter, Schubert, Ye, Mordvintsev</a></p></li>
+<li><p><a href="https://quickdraw.withgoogle.com/">Google Creative Lab</a></p></li>
+<li><p><a href="https://poloclub.github.io/ganlab/">Play with Generative Adversarial Networks (GANs) in your browser</a></p></li>
+<li><p><a href="http://lstm.seas.harvard.edu/">Visual Analysis for Recurrent Neural Networks</a></p></li>
+<li><p><a href="https://shirinsplayground.netlify.app/2020/09/keras_funct_api/">Whose dream is this? When and how to use the Keras Functional API</a></p></li>
+</ul>
+<p><img src="https://shirinsplayground.netlify.com/img/plot_model_4.png" alt="https://shirinsplayground.netlify.app/2020/09/keras_funct_api/" />
+- <a href="https://shirinsplayground.netlify.app/2020/10/keras_workshop_user20/">Deep Learning with Keras and TensorFlow</a> &amp; <a href="https://shirinsplayground.netlify.app/2020/09/keras_fruits_update/">Update with TF 2.0: Image classification with Keras and TensorFlow</a></p>
+<p><img src="https://shirinsplayground.netlify.com/img/hist.png" alt="https://shirinsplayground.netlify.app/2020/09/keras_fruits_update/" />
+<img src="https://shirinsplayground.netlify.com/img/percentage_pred.png" alt="https://shirinsplayground.netlify.app/2020/09/keras_fruits_update/" />
+<img src="https://shirinsplayground.netlify.com/img/percentage_pred_cor.png" alt="https://shirinsplayground.netlify.app/2020/09/keras_fruits_update/" /></p>
+<ul>
+<li><a href="http://web.cse.ohio-state.edu/~wang.6195/vis-final/index.html">Visualize the effectiveness of different learning rates</a> &amp; <a href="https://www.jeremyjordan.me/nn-learning-rate/">Setting the learning rate of your neural network.</a></li>
+</ul>
 </div>
 <div id="graphical-representation-of-a-model-in-tensorboard" class="section level3">
 <h3>Graphical representation of a model in TensorBoard</h3>
-<p>With the graph visualizer, users can explore different layers of model abstraction, zooming in and out of any part of the schema. Another important benefit of TensorBoard visualization is that nodes of the same types and similar structures are painted with the same colors. Users can also look at coloring by device (CPU, GPU, or a combination of both), highlight a specific node with the “trace inputs” feature, and visualize one or several charts at a time.</p>
-<p>This visualization approach makes TensorBoard a popular tool for model performance evaluation, especially for models of complex structures like deep neural networks.</p>
-<p>Grant Reaber notes that TensorBoard makes it easy to monitor model training. Grant and his team also use this tool for custom visualizations.</p>
-<p>Illia Polosukhin also chooses TensorBoard. “TensorBoard shows metrics during model development and allows for making a decision regarding a model. For instance, it’s very comfortable to monitor how a model performs when tweaking its hyperparameters and choosing the one that performs best,” summarizes Illia.</p>
-<p>Besides displaying performance metrics, TensorBoard can show users a lot of other information like histograms, audio, text, and image data, distributions, embeddings, and scalars.</p>
-</div>
-<div id="variational-autoencoders" class="section level3">
-<h3>Variational Autoencoders</h3>
-<p>Variational Autoencoders (VAE) are a type of probabilistic generative model used in order to create a latent representation of some input data (eg. images) able to concisely understand the original data and generate brand new data from it (eg. training a VAE model with different images of car designs, could then enable to model to create brand new imaginative car designs).
-Continuing from the example Variational Autoencoder trained using Livelossplot, we can even make our model more interesting by examining how the latent space (Figure 9) varies from one iteration to another (and therefore how much our model improved to distinguish the different classes over time).</p>
+<p><a href="https://www.tensorflow.org/tensorboard" class="uri">https://www.tensorflow.org/tensorboard</a></p>
 </div>
 <div id="word-embeddings" class="section level3">
 <h3>Word Embeddings</h3>
-<p>Neural Network Embeddings are a class of neural networks designed in order to learn how to convert some form of categorical data into numerical data. Using Embeddings can be considerably advantageous than using other techniques such as One Hot Encoding considering that, while converting the data, they are able to learn about its characteristics and therefore construct a more succinct representation (creating a latent space). Two of the most famous types of pre-trained word embeddings are word2vec and Glove.
-As a simple example, we are now going to plot an embed space representing different books authors. First of all, we need to create an train a model on some available data and then access the trained weights of the model embedded layer (in this case called embed) and store them in a data frame. Once this process is done, we then just have to plot the three different coordinates (Figure 11).</p>
-<p>In this example, the embedding dimensions of the network have been set directly to 3 in order to then easily create the 3D visualization. Another possible solution could have been to instead use a higher embedding output size and then apply some form of feature extraction technique (eg. t-SNE, PCA, etc…) in order to visualise the results.
-Another interesting technique which can be used to visualise categorical data is Wordclouds (Figure 12). This type of representation, can, for example, be realised by creating a dictionary of book authors names and their respective frequency count in the dataset. Authors which appears more frequently in the dataset will be then represented in the figure with greater font size.</p>
-<p>The Unreasonable Effectiveness of Recurrent Neural Networks
-Karpathy, 2015</p>
-<p>Seq2Seq-Vis:
-Visual Debugging
-Tool for Sequenceto- Sequence
-Models
-Strobelt, 2018</p>
-<p>What does a sentence look like in embedding space?</p>
-<p><a href="https://arxiv.org/pdf/1611.04558.pdf" class="uri">https://arxiv.org/pdf/1611.04558.pdf</a></p>
-</div>
-<div id="translation" class="section level3">
-<h3>translation</h3>
-<p><a href="http://seq2seq-vis.io/" class="uri">http://seq2seq-vis.io/</a></p>
+<ul>
+<li><p><a href="http://karpathy.github.io/2015/05/21/rnn-effectiveness/">The Unreasonable Effectiveness of Recurrent Neural Networks, Karpathy, 2015</a></p></li>
+<li><p><a href="https://arxiv.org/pdf/1804.09299.pdf">Seq2Seq-Vis: Visual Debugging Tool for Sequenceto- Sequence Models, Strobelt, 2018</a></p></li>
+<li><p><a href="https://arxiv.org/pdf/1611.04558.pdf">Google’s Multilingual Neural Machine Translation System: Enabling Zero-Shot Translation</a></p></li>
+</ul>
 </div>
 <div id="explainable-ai" class="section level3">
 <h3>Explainable AI</h3>
-<p>Explainable AI is nowadays a growing field of research. Use of AI in decision-making applications (such as employment) has recently caused some concerns both for individuals and authorities. This is because, when working with deep neural networks, it is currently not possible (at least to a full extent) to understand the decision-making process the algorithm performs when having to carry out a predetermined task. Because of this lack of transparency in the decision-making process, perplexities can arise from the public regarding the trustworthiness of the model itself. Therefore, the need for Explainable AI is now becoming the next prefixed evolutionary step in order to prevent the presence of any form of bias in AI models.
-During the last few years, different visualization techniques have been introduced in order to make Machine Learning more explainable such as:
-Exploring Convolutional Neural Networks Filters and Feature maps.
-Graphs Networks.
-Bayesian-based models.
-Causal Reasoning applied to Machine Learning.
-Local/Global surrogate models.
-Introduction of Local Interpretable Model-Agnostic Explanations (LIME) and Shapley Values.
-If you are interested in finding out more about how to make Machine Learning models more explainable, two of the most interesting libraries currently available in Python in order to apply Explainable AI in Deep Learning are Captum by Pytorch and XAI.
-As this research area is in constant improvement, I will aim to cover all these different topics (and more) in a future article dedicated to just Explainable AI.</p>
+<div class="figure">
+<img src="https://shirinsplayground.netlify.com/post/2021-03-25_update_customer_churn_files/figure-html/unnamed-chunk-53-1.png" alt="" />
+<p class="caption"><a href="https://shirinsplayground.netlify.app/2021/03/update_customer_churn/" class="uri">https://shirinsplayground.netlify.app/2021/03/update_customer_churn/</a></p>
 </div>
-<div id="image-classifiers-are-effective-in-practice" class="section level3">
-<h3>Image classifiers are effective in practice</h3>
-<p>Exactly what they’re doing is somewhat mysterious
-- And their failures (e.g. adversarial examples) add to mystery
-But: Way easier to inspect what’s going on in artificial classifiers than in human
-classifiers ;-)
-Since these are visual systems, it’s natural to use visualization to inspect them
-- What features are these networks really using?
-- Do individual units have meaning?
-- What roles are played by different layers?
-- How are high-level concepts built from low-level ones?</p>
-<p>Saliency maps
-(a.k.a. “Sensitivity maps”)
-Idea: consider sensitivity of class to each pixel
-i.e. grad(f), where f is function from pixels to class score.
-Many ways to extend basic idea!
-- Layer-wise relevance propagation (Binder et al.)
-- Integrated gradients (Sundararajan et al.)
-- Guided backprop (Springenberg et al.)
-- etc.
-Yet interpretation is slippery (Adebayo et al., Kindermans et al.)
-- Tend to be visually noisy. Are these sometimes Rorschach tests?
-- Are some of these methods essentially edge detectors?</p>
-<p>Visualizing and Understanding Convolutional Networks
-Zeiler &amp; Fergus, 2013</p>
-<p>The Building Blocks of
-Interpretability
-Olah, Satyanarayan, Johnson, Carter,
-Schubert, Ye, Mordvintsev</p>
-<p>Lesson
-If you see something interesting in
-high-dimensional space…
-compare to a random baseline!</p>
-<p>playground.tensorflow.org</p>
-<p>Distill.pub
-Editors: Carter, Olah, Satyanarayan</p>
-<p>research.google.com/bigpicture/attacking-discrimination-in-ml</p>
-<p>Google Creative Lab
-<a href="https://quickdraw.withgoogle.com/" class="uri">https://quickdraw.withgoogle.com/</a></p>
-<p><a href="https://poloclub.github.io/ganlab/" class="uri">https://poloclub.github.io/ganlab/</a></p>
-<p><a href="http://lstm.seas.harvard.edu/" class="uri">http://lstm.seas.harvard.edu/</a></p>
-<p>Before popular data visualization tools for machine learning were developed, the machine learning process was much more abstract. Historically, ggplot2 in R provided much-needed visualization tools for exploratory data analysis. But today, with the suite of data visualizations that are available in Python, such as seaborn, scikit-learn, and matplotlib, exploratory data analysis that forms the initial part of the machine learning process can be done much more efficiently. At the same time, with TensorFlow, model-building and model-tuning processes become a lot more intuitive. Rather than spending time on scrutinizing values, with the assistance of both 2-dimensional and interactive data visualizations, data scientists can pay more attention to the big picture of the data at each level of the machine learning process to focus more on the meaning of the data, the model design, and the model performance.</p>
-</div>
-</div>
-<div id="main-diagram-types" class="section level2">
-<h2>Main diagram types</h2>
-<div id="pointcharts" class="section level3">
-<h3>Pointcharts</h3>
-<pre class="r"><code>penguins %&gt;%
-    remove_missing() %&gt;%
-    ggplot(aes(x = bill_length_mm, y = flipper_length_mm)) +
-    geom_jitter(alpha = 0.5) +
-    facet_wrap(vars(species), ncol = 3) +
-    scale_x_reverse() +
-    scale_y_reverse() +
-    labs(x = &quot;Bill length (mm)&quot;, 
-         y = &quot;Flipper length (mm)&quot;,
-         size = &quot;body mass (g)&quot;,
-        title = &quot;Scatterplot&quot;, 
-        subtitle = &quot;Penguins bill v. flipper length by species&quot;,
-        caption = &quot;Source: https://github.com/allisonhorst/palmerpenguins&quot;)</code></pre>
+<ul>
+<li><p><a href="https://christophm.github.io/interpretable-ml-book/">Interpretable Machine Learning, A Guide for Making Black Box Models Explainable. Christoph Molnar</a></p></li>
+<li><p><a href="https://arxiv.org/abs/1610.02413">Equality of Opportunity in Supervised Learning</a></p></li>
+</ul>
 <hr />
 <pre class="r"><code>devtools::session_info()</code></pre>
+<pre><code>## ─ Session info ───────────────────────────────────────────────────────────────
+##  setting  value                       
+##  version  R version 4.0.4 (2021-02-15)
+##  os       macOS Big Sur 10.16         
+##  system   x86_64, darwin17.0          
+##  ui       X11                         
+##  language (EN)                        
+##  collate  en_US.UTF-8                 
+##  ctype    en_US.UTF-8                 
+##  tz       Europe/Berlin               
+##  date     2021-04-22                  
+## 
+## ─ Packages ───────────────────────────────────────────────────────────────────
+##  package      * version    date       lib
+##  assertthat     0.2.1      2019-03-21 [2]
+##  backports      1.2.1      2020-12-09 [2]
+##  BBmisc         1.11       2017-03-10 [2]
+##  blogdown       1.2        2021-03-04 [2]
+##  bookdown       0.21       2020-10-13 [2]
+##  broom          0.7.5      2021-02-19 [2]
+##  bslib          0.2.4      2021-01-25 [2]
+##  cachem         1.0.4      2021-02-13 [2]
+##  callr          3.5.1      2020-10-13 [2]
+##  cellranger     1.1.0      2016-07-27 [2]
+##  checkmate      2.0.0      2020-02-06 [2]
+##  cli            2.3.1      2021-02-23 [2]
+##  colorspace     2.0-0      2020-11-11 [2]
+##  crayon         1.4.1      2021-02-08 [2]
+##  data.table     1.14.0     2021-02-21 [2]
+##  DBI            1.1.1      2021-01-15 [2]
+##  dbplyr         2.1.0      2021-02-03 [2]
+##  desc           1.3.0      2021-03-05 [2]
+##  devtools       2.3.2      2020-09-18 [2]
+##  digest         0.6.27     2020-10-24 [2]
+##  dplyr        * 1.0.5      2021-03-05 [2]
+##  ellipsis       0.3.1      2020-05-15 [2]
+##  entropy        1.2.1      2014-11-14 [1]
+##  evaluate       0.14       2019-05-28 [2]
+##  fansi          0.4.2      2021-01-15 [2]
+##  farver         2.1.0      2021-02-28 [2]
+##  fastmap        1.1.0      2021-01-25 [2]
+##  fastmatch      1.1-0      2017-01-28 [2]
+##  forcats      * 0.5.1      2021-01-27 [2]
+##  fs             1.5.0      2020-07-31 [2]
+##  FSelector    * 0.33       2021-02-16 [1]
+##  gbm            2.1.8      2020-07-15 [2]
+##  generics       0.1.0      2020-10-31 [2]
+##  GGally       * 2.1.1      2021-03-08 [1]
+##  ggfortify    * 0.4.11     2020-10-02 [2]
+##  ggplot2      * 3.3.3      2020-12-30 [2]
+##  glue           1.4.2      2020-08-27 [2]
+##  gridExtra      2.3        2017-09-09 [2]
+##  gtable         0.3.0      2019-03-25 [2]
+##  haven          2.3.1      2020-06-01 [2]
+##  highr          0.8        2019-03-20 [2]
+##  hms            1.0.0      2021-01-13 [2]
+##  htmltools      0.5.1.1    2021-01-22 [2]
+##  httr           1.4.2      2020-07-20 [2]
+##  jquerylib      0.1.3      2020-12-17 [2]
+##  jsonlite       1.7.2      2020-12-09 [2]
+##  knitr          1.31       2021-01-27 [2]
+##  labeling       0.4.2      2020-10-20 [2]
+##  lattice        0.20-41    2020-04-02 [2]
+##  lifecycle      1.0.0      2021-02-15 [2]
+##  lubridate      1.7.10     2021-02-26 [2]
+##  magrittr       2.0.1      2020-11-17 [2]
+##  MASS         * 7.3-53.1   2021-02-12 [2]
+##  Matrix         1.3-2      2021-01-06 [2]
+##  memoise        2.0.0      2021-01-26 [2]
+##  mlbench      * 2.1-3      2021-01-29 [1]
+##  mlr          * 2.19.0     2021-02-22 [2]
+##  mmpf         * 0.0.5      2018-10-24 [2]
+##  modelr         0.1.8      2020-05-19 [2]
+##  munsell        0.5.0      2018-06-12 [2]
+##  parallelMap    1.5.0      2020-03-26 [2]
+##  ParamHelpers * 1.14       2020-03-24 [2]
+##  parsnip      * 0.1.5      2021-01-19 [2]
+##  parttree     * 0.0.1.9000 2021-03-14 [1]
+##  pillar         1.5.1      2021-03-05 [2]
+##  pkgbuild       1.2.0      2020-12-15 [2]
+##  pkgconfig      2.0.3      2019-09-22 [2]
+##  pkgload        1.2.0      2021-02-23 [2]
+##  plyr           1.8.6      2020-03-03 [2]
+##  prettyunits    1.1.1      2020-01-24 [2]
+##  processx       3.4.5      2020-11-30 [2]
+##  ps             1.6.0      2021-02-28 [2]
+##  purrr        * 0.3.4      2020-04-17 [2]
+##  R6             2.5.0      2020-10-28 [2]
+##  randomForest   4.6-14     2018-03-25 [2]
+##  RColorBrewer   1.1-2      2014-12-07 [2]
+##  Rcpp           1.0.6      2021-01-15 [2]
+##  readr        * 1.4.0      2020-10-05 [2]
+##  readxl         1.3.1      2019-03-13 [1]
+##  remotes        2.2.0      2020-07-21 [2]
+##  reprex         1.0.0      2021-01-27 [2]
+##  reshape        0.8.8      2018-10-23 [1]
+##  rJava        * 0.9-13     2020-07-06 [2]
+##  rlang          0.4.10     2020-12-30 [2]
+##  rmarkdown      2.7        2021-02-19 [2]
+##  rpart        * 4.1-15     2019-04-12 [2]
+##  rpart.plot   * 3.0.9      2020-09-17 [1]
+##  rprojroot      2.0.2      2020-11-15 [2]
+##  rstudioapi     0.13       2020-11-12 [2]
+##  rvest          1.0.0      2021-03-09 [2]
+##  RWeka          0.4-43     2020-08-23 [1]
+##  RWekajars      3.9.3-2    2019-10-19 [1]
+##  sass           0.3.1      2021-01-24 [2]
+##  scagnostics  * 0.2-4.1    2018-04-04 [1]
+##  scales         1.1.1      2020-05-11 [2]
+##  sessioninfo    1.1.1      2018-11-05 [2]
+##  stringi        1.5.3      2020-09-09 [2]
+##  stringr      * 1.4.0      2019-02-10 [2]
+##  survival       3.2-7      2020-09-28 [2]
+##  testthat       3.0.2      2021-02-14 [2]
+##  tibble       * 3.1.0      2021-02-25 [2]
+##  tidyr        * 1.1.3      2021-03-03 [2]
+##  tidyselect     1.1.0      2020-05-11 [2]
+##  tidyverse    * 1.3.0      2019-11-21 [2]
+##  usethis        2.0.1      2021-02-10 [2]
+##  utf8           1.2.1      2021-03-12 [2]
+##  vctrs          0.3.6      2020-12-17 [2]
+##  withr          2.4.1      2021-01-26 [2]
+##  xfun           0.22       2021-03-11 [2]
+##  XML            3.99-0.5   2020-07-23 [2]
+##  xml2           1.3.2      2020-04-23 [2]
+##  yaml           2.2.1      2020-02-01 [2]
+##  source                                  
+##  CRAN (R 4.0.0)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.4)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.0)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.4)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.4)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.0)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.1)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.0)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.0)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.4)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.4)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.4)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.0)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  Github (grantmcdermott/parttree@9d25d2c)
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.0)                          
+##  CRAN (R 4.0.4)                          
+##  CRAN (R 4.0.0)                          
+##  CRAN (R 4.0.0)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.0)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.0)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.4)                          
+##  CRAN (R 4.0.4)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.0)                          
+##  CRAN (R 4.0.0)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.0)                          
+##  CRAN (R 4.0.4)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.0)                          
+##  CRAN (R 4.0.0)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.4)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.0)                          
+##  CRAN (R 4.0.0)                          
+## 
+## [1] /Users/shiringlander/Library/R/4.0/library
+## [2] /Library/Frameworks/R.framework/Versions/4.0/Resources/library</code></pre>
 </div>
 </div>
