@@ -625,6 +625,7 @@ https://www.tensorflow.org/tensorboard
 ---
 
 ```{r}
+# session info
 devtools::session_info()
 ```
 
