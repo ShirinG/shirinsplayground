@@ -280,7 +280,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$", "^Thumbs\\.db$"
 
 [mediaTypes]
 [mediaTypes."application/atom"]
-suffix = "xml"
+suffix = ["xml"]
 
 [outputFormats.Atom]
 mediaType = "application/atom"
