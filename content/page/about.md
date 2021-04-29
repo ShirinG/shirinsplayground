@@ -37,9 +37,7 @@ This blog will showcase some of the analyses I have been doing with different da
 - [Linkedin](https://www.linkedin.com/in/shirin-e-01120881/)
 - [Twitter](http://twitter.com/ShirinGlander)
 
-Because I have been getting too many emails with questions and requests for help than I can answer, you can now [book 15-minute time-slots with me](/page/bookme/). I will offer one 15-minute-slot per day on a first-come-first-serve basis. These 15 minutes will be free of charge but any help you might require beyond that, will have to be billed (details to be discussed in person). Click the button below to schedule a time-slot:
-
-<img src="https://www.appointletcdn.com/loader/buttons/F62459.png" data-appointlet-organization="shirin-elsinghorst" data-appointlet-service="357892"><script src="https://www.appointletcdn.com/loader/loader.min.js" async="" defer=""></script>
+Because I have been getting too many emails with questions and requests for help than I can answer, you can now [book 15-minute time-slots with me](/page/bookme/). I will offer one 15-minute-slot per day on a first-come-first-serve basis. These 15 minutes will be free of charge but any help you might require beyond that, will have to be billed (details to be discussed in person).
 
 ---
 
