@@ -51,7 +51,7 @@ canonifyurls = true
   identifier = "home"
   name = "Home"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-home\"></i>"
-  url = "/posts/"
+  url = "/post/"
   
 [[menu.main]]
   weight = 2
