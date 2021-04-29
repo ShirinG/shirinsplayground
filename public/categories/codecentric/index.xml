@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>codecentric on Shirin&#39;s playgRound</title>
+    <link>https://shirinsplayground.netlify.com/categories/codecentric/</link>
+    <description>Recent content in codecentric on Shirin&#39;s playgRound</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 10 Jan 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/categories/codecentric/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Looking beyond accuracy to improve trust in machine learning</title>
+      <link>https://shirinsplayground.netlify.com/2018/01/looking_beyond_accuracy_to_improve_trust_in_ml/</link>
+      <pubDate>Wed, 10 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2018/01/looking_beyond_accuracy_to_improve_trust_in_ml/</guid>
+      <description>I have written another blogpost about Looking beyond accuracy to improve trust in machine learning at my company codecentric&amp;rsquo;s blog:
+ Traditional machine learning workflows focus heavily on model training and optimization; the best model is usually chosen via performance measures like accuracy or error and we tend to assume that a model is good enough for deployment if it passes certain thresholds of these performance criteria. Why a model makes the predictions it makes, however, is generally neglected.</description>
+    </item>
+    
+  </channel>
+</rss>

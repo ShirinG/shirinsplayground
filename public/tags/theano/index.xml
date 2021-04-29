@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Theano on Shirin&#39;s playgRound</title>
+    <link>https://shirinsplayground.netlify.com/tags/theano/</link>
+    <description>Recent content in Theano on Shirin&#39;s playgRound</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 20 Dec 2017 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/tags/theano/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Registration now open for workshop on Deep Learning with Keras and TensorFlow using R</title>
+      <link>https://shirinsplayground.netlify.com/2017/12/keras_sketchnotes/</link>
+      <pubDate>Wed, 20 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2017/12/keras_sketchnotes/</guid>
+      <description>Recently, I announced my workshop on Deep Learning with Keras and TensorFlow.
+The next dates for it are January 18th and 19th in Solingen, Germany.
+You can register now by following this link: https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow
+If any non-German-speaking people want to attend, I’m happy to give the course in English!
+Contact me if you have further questions.
+As a little bonus, I am also sharing my sketch notes from a Podcast I listened to when first getting into Keras:</description>
+    </item>
+    
+  </channel>
+</rss>

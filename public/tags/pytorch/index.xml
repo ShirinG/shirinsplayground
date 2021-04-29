@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>PyTorch on Shirin&#39;s playgRound</title>
+    <link>https://shirinsplayground.netlify.com/tags/pytorch/</link>
+    <description>Recent content in PyTorch on Shirin&#39;s playgRound</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 18 Jun 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/tags/pytorch/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Sketchnotes from TWiML&amp;AI: Practical Deep Learning with Rachel Thomas</title>
+      <link>https://shirinsplayground.netlify.com/2018/06/twimlai138/</link>
+      <pubDate>Mon, 18 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2018/06/twimlai138/</guid>
+      <description>These are my sketchnotes for Sam Charrington’s podcast This Week in Machine Learning and AI about Practical Deep Learning with Rachel Thomas:
+Sketchnotes from TWiMLAI talk: Practical Deep Learning with Rachel Thomas
+ You can listen to the podcast here.
+ In this episode, i’m joined by Rachel Thomas, founder and researcher at Fast AI. If you’re not familiar with Fast AI, the company offers a series of courses including Practical Deep Learning for Coders, Cutting Edge Deep Learning for Coders and Rachel’s Computational Linear Algebra course.</description>
+    </item>
+    
+  </channel>
+</rss>

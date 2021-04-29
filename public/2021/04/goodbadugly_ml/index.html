@@ -1,0 +1,2267 @@
+
+
+  
+    
+  
+
+
+  
+
+
+
+
+  
+
+
+  
+
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hugo 0.82.1 with theme Tranquilpeak 0.4.1-BETA">
+    <title>The Good, the Bad and the Ugly: how to visualize Machine Learning data</title>
+    <meta name="author" content="Dr. Shirin Elsinghorst">
+    <meta name="keywords" content=", R">
+
+    <link rel="icon" href="img/favicon.png">
+    
+
+    
+    <meta name="description" content="Below you’ll find the complete code and resources used to create the graphs in my talk The Good, the Bad and the Ugly: how to visualize Machine Learning data at this year’s Minds Mastering machines conference. You can find the German slides here:
+ You can find Part 1: The Good, the Bad and the Ugly: how (not) to visualize data here.
+If you have questions or would like to talk about this article (or something else data-related), you can now book 15-minute timeslots with me (it’s free - one slot available per weekday):">
+    <meta property="og:description" content="Below you’ll find the complete code and resources used to create the graphs in my talk The Good, the Bad and the Ugly: how to visualize Machine Learning data at this year’s Minds Mastering machines conference. You can find the German slides here:
+ You can find Part 1: The Good, the Bad and the Ugly: how (not) to visualize data here.
+If you have questions or would like to talk about this article (or something else data-related), you can now book 15-minute timeslots with me (it’s free - one slot available per weekday):">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="The Good, the Bad and the Ugly: how to visualize Machine Learning data">
+    <meta property="og:url" content="/2021/04/goodbadugly_ml/">
+    <meta property="og:site_name" content="Shirin&#39;s playgRound">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Shirin&#39;s playgRound">
+    <meta name="twitter:description" content="Below you’ll find the complete code and resources used to create the graphs in my talk The Good, the Bad and the Ugly: how to visualize Machine Learning data at this year’s Minds Mastering machines conference. You can find the German slides here:
+ You can find Part 1: The Good, the Bad and the Ugly: how (not) to visualize data here.
+If you have questions or would like to talk about this article (or something else data-related), you can now book 15-minute timeslots with me (it’s free - one slot available per weekday):">
+    
+      <meta name="twitter:creator" content="@ShirinGlander">
+    
+    
+
+    
+    
+
+    
+      <meta property="og:image" content="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=640">
+    
+
+    
+      <meta property="og:image" content="https://shirinsplayground.netlify.com/post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-29-1.png">
+    
+    
+    
+
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://shirinsplayground.netlify.com/css/style-hbs5om8csx9a8yrv5hnhpi2qqdv4ykuslajwbramhqxvleqbfklxgek50hye.min.css" />
+    
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-86119417-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://shirinsplayground.netlify.com/">Shirin&#39;s playgRound</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://shirinsplayground.netlify.com/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <h1 class="sidebar-profile-title">The Good, the Bad and the Ugly: how to visualize Machine Learning data</h1>
+        <a href="https://blog.feedspot.com/r_programming_blogs/" rel="nofollow" title="R Programming Blogs"><img alt="R Programming Blogs" src="https://blog.feedspot.com/wp-content/uploads/2018/04/r_program_216px.png?x20694"/></a>
+        <a href="https://shirinsplayground.netlify.com/#about">
+          <img class="sidebar-profile-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Dr. Shirin Elsinghorst</h4>
+        
+          <h5 class="sidebar-profile-bio">Biologist turned Bioinformatician turned Data Scientist</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://shirinsplayground.netlify.com/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://shirinsplayground.netlify.com/categories/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://shirinsplayground.netlify.com/tags/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://shirinsplayground.netlify.com/page/about/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://shirinsplayground.netlify.com/page/bookme/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-calendar"></i>
+      
+      <span class="sidebar-button-desc">Book me</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://shirinsplayground.netlify.com/page/conferences_podcasts_webinars/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bullhorn"></i>
+      
+      <span class="sidebar-button-desc">Hear me talk</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://shirinsplayground.netlify.com/archives/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://shirinsplayground.netlify.com/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://shiring.github.io/" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">My old R-blog</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/ShirinG" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://stackoverflow.com/users/6623620/shirin-glander" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-stack-overflow"></i>
+      
+      <span class="sidebar-button-desc">Stack Overflow</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/ShirinGlander" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.linkedin.com/in/shirin-e-01120881//" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-linkedin"></i>
+      
+      <span class="sidebar-button-desc">LinkedIn</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.xing.com/profile/Shirin_Elsinghorst/cv" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-xing"></i>
+      
+      <span class="sidebar-button-desc">Xing</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.meetup.com/Munster-R-Users-Group" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-meetup"></i>
+      
+      <span class="sidebar-button-desc">MünsteR</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.r-bloggers.com/" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-book"></i>
+      
+      <span class="sidebar-button-desc">R-bloggers</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.r-users.com/" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-book"></i>
+      
+      <span class="sidebar-button-desc">R-users</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.womentech.net/women-tech-conference?join=ODMzOQ==" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-wifi"></i>
+      
+      <span class="sidebar-button-desc">WomenInTech</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.codecentric.de/kuenstliche-intelligenz/" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-angle-double-right"></i>
+      
+      <span class="sidebar-button-desc">codecentric.ai</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaOut
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-center">
+  
+    <h1 class="post-title" itemprop="headline">
+      The Good, the Bad and the Ugly: how to visualize Machine Learning data
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2021-04-27T00:00:00Z">
+        
+  April 27, 2021
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://shirinsplayground.netlify.com/categories/r">R</a>
+    
+  
+
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              
+
+
+<p>Below you’ll find the complete code and resources used to create the graphs in my talk <strong>The Good, the Bad and the Ugly: how to visualize Machine Learning data</strong> at this year’s Minds Mastering machines conference. You can find the German <a href="https://docs.google.com/presentation/d/e/2PACX-1vR_C7MZcv2QxJp4-3qr3ecoDBUz-YJJ1uJz21xCJmXw9teyzvvry4OMxKJ5-cPr-_1gntODVbvjVDrK/pub?start=false&amp;loop=false&amp;delayms=3000">slides here</a>:</p>
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vR_C7MZcv2QxJp4-3qr3ecoDBUz-YJJ1uJz21xCJmXw9teyzvvry4OMxKJ5-cPr-_1gntODVbvjVDrK/embed?start=false&amp;loop=false&amp;delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true">
+</iframe>
+<p>You can find <a href="https://shirinsplayground.netlify.app/2020/10/goodbadugly/">Part 1: <strong>The Good, the Bad and the Ugly: how (not) to visualize data</strong> here</a>.</p>
+<hr />
+<p>If you have questions or would like to talk about this article (or something else data-related), you can now <a href="https://shirinsplayground.netlify.app/page/bookme/">book 15-minute timeslots</a> with me (it’s free - one slot available per weekday):</p>
+<img src="https://www.appointletcdn.com/loader/buttons/F62459.png" data-appointlet-organization="shirin-elsinghorst" data-appointlet-service="357892">
+<script src="https://www.appointletcdn.com/loader/loader.min.js" async="" defer=""></script>
+<p><em>If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at <button><a href="https://paypal.me/ShirinGlander">paypal.me</a></button>. Thank you!</em> :-)</p>
+<hr />
+<div id="libraries" class="section level2">
+<h2>Libraries</h2>
+<pre class="r"><code>library(tidyverse)
+library(mlbench)
+library(ggfortify)
+library(GGally)
+library(scagnostics)
+library(mlr) </code></pre>
+</div>
+<div id="dataset" class="section level2">
+<h2>Dataset</h2>
+<p>Pima Indians Diabetes dataset from <a href="http://search.r-project.org/library/mlbench/html/PimaIndiansDiabetes.html"><em>mlbench</em> package</a>.</p>
+<pre class="r"><code>data(PimaIndiansDiabetes)
+PimaIndiansDiabetes %&gt;%
+  head()</code></pre>
+<pre><code>##   pregnant glucose pressure triceps insulin mass pedigree age diabetes
+## 1        6     148       72      35       0 33.6    0.627  50      pos
+## 2        1      85       66      29       0 26.6    0.351  31      neg
+## 3        8     183       64       0       0 23.3    0.672  32      pos
+## 4        1      89       66      23      94 28.1    0.167  21      neg
+## 5        0     137       40      35     168 43.1    2.288  33      pos
+## 6        5     116       74       0       0 25.6    0.201  30      neg</code></pre>
+</div>
+<div id="colors" class="section level2">
+<h2>Colors</h2>
+<ul>
+<li>set <a href="https://jfly.uni-koeln.de/color/">colorblind-friendly palettes</a></li>
+</ul>
+<pre class="r"><code># The palette with grey:
+cbp1 &lt;- c(&quot;#999999&quot;, &quot;#E69F00&quot;, &quot;#56B4E9&quot;, &quot;#009E73&quot;,
+          &quot;#F0E442&quot;, &quot;#0072B2&quot;, &quot;#D55E00&quot;, &quot;#CC79A7&quot;)</code></pre>
+<pre class="r"><code>ggplot &lt;- function(...) ggplot2::ggplot(...) + 
+  scale_color_manual(values = cbp1) +
+  scale_fill_manual(values = cbp1) + # note: needs to be overridden when using continuous color scales
+  theme_bw()</code></pre>
+</div>
+<div id="visualizing-machine-learning-models" class="section level2">
+<h2>Visualizing Machine Learning models</h2>
+<p>Visualizing different steps of the machine learning pipeline can help us</p>
+<ul>
+<li>explore the data (EDA),</li>
+<li>understand the data (and identify potential problems),</li>
+<li>pre-process the data in a suitable way for optimal model performance,</li>
+<li>supervise the learning process,</li>
+<li>optimize modeling,</li>
+<li>interpret the model and</li>
+<li>compare and evaluate model predictions.</li>
+</ul>
+<p>Visualization also greatly simplifies communication of our model and results to decision-makers or the public.</p>
+<div id="exploratory-data-analysis" class="section level3">
+<h3>Exploratory Data Analysis</h3>
+<p>Exploratory Data Analysis (EDA) is the backbone of data analysis, including those that result in a machine learning model. EDA helps us to understand the data we are working with and put it into context, so that we are able to ask the right questions (or to put our questions into the right frame). It also helps us take appropriate measures for cleaning, normalization/transformation, dealing with missing values, feature preparation and engineering, etc. Particularly if our machine learning model is trained on a limited dataset (but not only then!), appropriate data preparation can vastly improve the machine learning process: models will often train faster and achieve higher accuracy.</p>
+<p>An essential part of EDA is data visualization.</p>
+<p>Typically, we want to start by exploring potential sources of errors in our data, like</p>
+<ul>
+<li><strong>wrong/useless data types</strong> (sometimes data types are automatically set in a way that is not useful for our analysis, like <em>factors</em> versus <em>strings</em>, or wrong/strange entries in an otherwise numeric column will make it categorical)</li>
+<li><strong>missing values</strong> (a collection of ways to visualize missingness can be found <a href="https://cran.r-project.org/web/packages/naniar/vignettes/naniar-visualisation.html">here</a>),</li>
+<li><strong>outliers</strong> (for example by plotting a box-plot of continuous variables)</li>
+</ul>
+<p>Depending on the number of features/variables we have, it makes sense to look at them all individually and in correlation with each other. Depending on whether we have a categorical or continuous variable, we might be interested in properties that are shown by</p>
+<ul>
+<li><strong>histograms</strong> (frequency distribution of binned continuous variables),</li>
+<li><strong>density distribution</strong> (normalized distribution of continuous variables) or</li>
+<li><strong>bar-plots</strong> (shows counts of categorical variables).</li>
+</ul>
+<p>If our target variable is categorical, we will want to look at potential imbalances between the classes. Class imbalance will strongly affect the machine learning modeling process and will require us to consider up-/downsampling or similar techniques before we train a model.</p>
+<p><strong>Correlation analysis</strong> can show us, for example</p>
+<ul>
+<li>how our <strong>target/dependent variable correlates with the remaining features</strong> (often, just by looking at the correlation, we can identify one ore more feature that will have a strong impact on predicting the target because they are strongly correlated) or</li>
+<li>whether some of the <strong>independent variables/features correlate with each other</strong> (<strong>multicolinearity</strong>; we might want to consider removing strongly correlated features, so that they won’t contribute the “same” information multiple times to the model and thus lead to overfitting).</li>
+</ul>
+<p>Additional methods can be used to visualize groups of related features. These methods are often especially useful if we have a large dataset with a large feature set (highly dimensional data). Some of these methods for visualizing groups of related features and/or for comparing multiple variables and visualizing their relationships are:</p>
+<ul>
+<li><strong>Dimensionality reduction</strong>:
+<ul>
+<li><em>Principal Component Analysis</em> (PCA, linear, shows as much variation in data as possible)</li>
+<li><em>Multidimensional scaling</em> (MDS, non-linear)</li>
+<li><em>Sammon mapping</em> (non-linear)</li>
+<li><em>T-Distributed Stochastic Neighbor Embedding</em> (<a href="https://cran.r-project.org/web/packages/tsne/tsne.pdf">t-SNE</a>, non-linear)</li>
+<li><em>Uniform Manifold Approximation and Projection</em> (<a href="https://cran.r-project.org/web/packages/umap/vignettes/umap.html">UMAP</a>, non-linear, faster than T-SNE, often captures global variation better than T-SNE and PCA)</li>
+<li><em>Isometric Feature Mapping Ordination</em> (<a href="https://www.rdocumentation.org/packages/vegan/versions/2.4-2/topics/isomap">Isomap</a>)</li>
+</ul></li>
+<li><a href="https://towardsdatascience.com/parallel-coordinates-plots-6fcfa066dcb3">Parallel coordinate plots</a></li>
+<li><a href="https://cran.r-project.org/web/packages/scagnostics/index.html">scagnostics</a></li>
+</ul>
+<pre class="r"><code># in our dataset,
+# continuous variables are
+PimaIndiansDiabetes %&gt;%
+  dplyr::select(where(is.numeric)) %&gt;%
+  head()</code></pre>
+<pre><code>##   pregnant glucose pressure triceps insulin mass pedigree age
+## 1        6     148       72      35       0 33.6    0.627  50
+## 2        1      85       66      29       0 26.6    0.351  31
+## 3        8     183       64       0       0 23.3    0.672  32
+## 4        1      89       66      23      94 28.1    0.167  21
+## 5        0     137       40      35     168 43.1    2.288  33
+## 6        5     116       74       0       0 25.6    0.201  30</code></pre>
+<pre class="r"><code># &#39;diabetes&#39; is the only categorical variable is also our target or dependent variable
+PimaIndiansDiabetes %&gt;%
+  dplyr::select(!where(is.numeric)) %&gt;%
+  head()</code></pre>
+<pre><code>##   diabetes
+## 1      pos
+## 2      neg
+## 3      pos
+## 4      neg
+## 5      pos
+## 6      neg</code></pre>
+<pre class="r"><code># bar plot of target
+PimaIndiansDiabetes %&gt;%
+  ggplot(aes(x = diabetes, fill = diabetes)) +
+    geom_bar(alpha = 0.8) +
+    theme(legend.position = &quot;none&quot;) +
+    labs(x = &quot;Diabetes outcome&quot;, 
+         y = &quot;count&quot;,
+        title = &quot;Barplot of categorical features&quot;, 
+        caption = &quot;Source: Pima Indians Diabetes Database&quot;)</code></pre>
+<p><img src="https://shirinsplayground.netlify.com/post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<pre class="r"><code># boxplot of continuous features
+PimaIndiansDiabetes %&gt;%
+  gather(&quot;key&quot;, &quot;value&quot;, pregnant:age) %&gt;%
+  ggplot(aes(x = value, fill = diabetes)) +
+    facet_wrap(vars(key), ncol = 3, scales = &quot;free&quot;) +
+    geom_boxplot(alpha = 0.8) +
+    theme(axis.text.y = element_blank(),
+          axis.ticks.y = element_blank())</code></pre>
+<p><img src="https://shirinsplayground.netlify.com/post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<pre class="r"><code># histogram of features
+PimaIndiansDiabetes %&gt;%
+  gather(&quot;key&quot;, &quot;value&quot;, pregnant:age) %&gt;%
+  ggplot(aes(x = value, fill = diabetes)) +
+    facet_wrap(vars(key), ncol = 3, scales = &quot;free&quot;) +
+    geom_histogram(alpha = 0.8) +
+    labs(x = &quot;value of feature in facet&quot;, 
+         y = &quot;count&quot;,
+         fill = &quot;Diabetes&quot;,
+        title = &quot;Histogram of features&quot;, 
+        caption = &quot;Source: Pima Indians Diabetes Database&quot;)</code></pre>
+<p><img src="https://shirinsplayground.netlify.com/post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<pre class="r"><code># density plot of of features
+PimaIndiansDiabetes %&gt;%
+  gather(&quot;key&quot;, &quot;value&quot;, pregnant:age) %&gt;%
+  ggplot(aes(x = value, fill = diabetes)) +
+    facet_wrap(vars(key), ncol = 3, scales = &quot;free&quot;) +
+    geom_density(alpha = 0.8) +
+    labs(x = &quot;value of feature in facet&quot;, 
+         y = &quot;density&quot;,
+         fill = &quot;Diabetes&quot;,
+        title = &quot;Density of continuous features&quot;, 
+        caption = &quot;Source: Pima Indians Diabetes Database&quot;)</code></pre>
+<p><img src="https://shirinsplayground.netlify.com/post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<pre class="r"><code># correlation plot of features
+mat &lt;- PimaIndiansDiabetes %&gt;%
+  dplyr::select(where(is.numeric))
+
+cormat &lt;- round(cor(mat), 2)
+
+cormat &lt;- cormat %&gt;%
+  as_data_frame() %&gt;%
+  mutate(x = colnames(mat)) %&gt;%
+  gather(key = &quot;y&quot;, value = &quot;value&quot;, pregnant:age)
+
+cormat %&gt;%
+    remove_missing() %&gt;%
+    arrange(x, y) %&gt;%
+    ggplot(aes(x = x, y = y, fill = value)) + 
+    geom_tile() +
+    scale_fill_gradient2(low = &quot;blue&quot;, high = &quot;red&quot;, mid = &quot;white&quot;, 
+     midpoint = 0, limit = c(-1,1), space = &quot;Lab&quot;, 
+     name = &quot;Pearson\nCorrelation&quot;) +
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
+    coord_fixed() +
+    labs(x = &quot;feature&quot;, 
+         y = &quot;feature&quot;,
+        title = &quot;Correlation between features&quot;, 
+        caption = &quot;Source: Pima Indians Diabetes Database&quot;)</code></pre>
+<p><img src="https://shirinsplayground.netlify.com/post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<pre class="r"><code># scatterplot matrix
+ggpairs(PimaIndiansDiabetes, 
+        columns = c(1:8),
+        alpha = 0.7) +
+    labs(x = &quot;feature&quot;, 
+         y = &quot;feature&quot;,
+        title = &quot;Scatterplot matrix&quot;, 
+        caption = &quot;Source: Pima Indians Diabetes Database&quot;)</code></pre>
+<p><img src="https://shirinsplayground.netlify.com/post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-10-1.png" width="960" /></p>
+<pre class="r"><code># PCA
+prep &lt;- PimaIndiansDiabetes %&gt;%
+  dplyr::select(where(is.numeric))
+
+pca &lt;- prep %&gt;%
+  prcomp(scale. = TRUE)
+
+autoplot(pca, 
+                data = PimaIndiansDiabetes, 
+                colour = &#39;diabetes&#39;,
+                shape = &#39;diabetes&#39;,
+                loadings = TRUE, 
+                loadings.colour = &#39;blue&#39;,
+                loadings.label = TRUE, 
+                loadings.label.size = 3) +
+      scale_color_manual(values = cbp1) +
+  scale_fill_manual(values = cbp1) +
+  theme_bw() +
+    labs(title = &quot;Principal Component Analysis (PCA)&quot;, 
+        caption = &quot;Source: Pima Indians Diabetes Database&quot;)</code></pre>
+<p><img src="https://shirinsplayground.netlify.com/post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<pre class="r"><code># MDS
+d &lt;- dist(prep) # euclidean distances between the rows
+fit &lt;- cmdscale(d,eig=TRUE, k=2) # k is the number of dim
+fit$points %&gt;%
+  head()</code></pre>
+<pre><code>##        [,1]       [,2]
+## 1 -75.71465 -35.950783
+## 2 -82.35827  28.908213
+## 3 -74.63064 -67.906496
+## 4  11.07742  34.898486
+## 5  89.74379  -2.746937
+## 6 -80.97792  -3.946887</code></pre>
+<pre class="r"><code># Sammon mapping
+library(MASS)
+sam &lt;- sammon(dist(prep))</code></pre>
+<pre><code>## Initial stress        : 0.03033
+## stress after   0 iters: 0.03033</code></pre>
+<pre class="r"><code>sam$points %&gt;%
+  head()</code></pre>
+<pre><code>##        [,1]       [,2]
+## 1 -75.71465 -35.950783
+## 2 -82.35827  28.908213
+## 3 -74.63064 -67.906496
+## 4  11.07742  34.898486
+## 5  89.74379  -2.746937
+## 6 -80.97792  -3.946887</code></pre>
+<pre class="r"><code># parallel coordinate plots
+ggparcoord(data = PimaIndiansDiabetes, 
+           columns = c(1:8), 
+           groupColumn = 9,
+           scale = &quot;robust&quot;,
+           order = &quot;skewness&quot;,
+           alpha = 0.7)</code></pre>
+<p><img src="https://shirinsplayground.netlify.com/post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<pre class="r"><code># scagnostics
+scagnostics_dataset &lt;- scagnostics(PimaIndiansDiabetes)
+
+# scagnostics grid
+scagnostics_grid_dataset &lt;- scagnosticsGrid(scagnostics_dataset)
+
+# outliers
+scagnostics_o_dataset &lt;- scagnosticsOutliers(scagnostics_dataset)
+scagnostics_o_dataset[scagnostics_o_dataset]</code></pre>
+<pre><code>## pregnant * age 
+##           TRUE</code></pre>
+<pre class="r"><code>outlier &lt;- scagnostics_grid_dataset[scagnostics_o_dataset,]
+
+# scagnostics exemplars
+scagnostics_ex_dataset &lt;- scagnosticsExemplars(scagnostics_dataset)
+scagnostics_ex_dataset[scagnostics_ex_dataset]</code></pre>
+<pre><code>## pregnant * triceps         mass * age triceps * diabetes 
+##               TRUE               TRUE               TRUE</code></pre>
+<pre class="r"><code>exemplars &lt;- scagnostics_grid_dataset[scagnostics_ex_dataset,]</code></pre>
+</div>
+<div id="training-a-machine-learning-model" class="section level3">
+<h3>Training a machine learning model</h3>
+<p>(using <code>mlr</code> package)</p>
+<ul>
+<li>create training and test set</li>
+</ul>
+<pre class="r"><code>set.seed(1000) 
+
+train_index &lt;- sample(1:nrow(PimaIndiansDiabetes), 0.8 * nrow(PimaIndiansDiabetes)) 
+test_index &lt;- setdiff(1:nrow(PimaIndiansDiabetes), train_index) 
+
+train &lt;- PimaIndiansDiabetes[train_index,] 
+test &lt;- PimaIndiansDiabetes[test_index,]
+
+list( train = summary(train), test = summary(test) )</code></pre>
+<pre><code>## $train
+##     pregnant         glucose         pressure         triceps     
+##  Min.   : 0.000   Min.   :  0.0   Min.   :  0.00   Min.   : 0.00  
+##  1st Qu.: 1.000   1st Qu.:100.0   1st Qu.: 64.00   1st Qu.: 0.00  
+##  Median : 3.000   Median :119.0   Median : 72.00   Median :23.00  
+##  Mean   : 3.894   Mean   :123.1   Mean   : 68.89   Mean   :20.66  
+##  3rd Qu.: 6.000   3rd Qu.:143.0   3rd Qu.: 80.00   3rd Qu.:32.75  
+##  Max.   :17.000   Max.   :199.0   Max.   :114.00   Max.   :99.00  
+##     insulin            mass          pedigree           age        diabetes 
+##  Min.   :  0.00   Min.   : 0.00   Min.   :0.0780   Min.   :21.00   neg:386  
+##  1st Qu.:  0.00   1st Qu.:27.10   1st Qu.:0.2442   1st Qu.:24.00   pos:228  
+##  Median : 36.50   Median :32.00   Median :0.3780   Median :29.00            
+##  Mean   : 81.65   Mean   :31.92   Mean   :0.4742   Mean   :33.42            
+##  3rd Qu.:131.50   3rd Qu.:36.38   3rd Qu.:0.6355   3rd Qu.:41.00            
+##  Max.   :846.00   Max.   :59.40   Max.   :2.4200   Max.   :81.00            
+## 
+## $test
+##     pregnant         glucose         pressure         triceps     
+##  Min.   : 0.000   Min.   :  0.0   Min.   :  0.00   Min.   : 0.00  
+##  1st Qu.: 1.000   1st Qu.: 93.0   1st Qu.: 62.00   1st Qu.: 0.00  
+##  Median : 2.000   Median :108.0   Median : 72.00   Median :23.00  
+##  Mean   : 3.649   Mean   :112.3   Mean   : 69.96   Mean   :20.03  
+##  3rd Qu.: 6.000   3rd Qu.:133.8   3rd Qu.: 79.50   3rd Qu.:32.00  
+##  Max.   :14.000   Max.   :197.0   Max.   :122.00   Max.   :56.00  
+##     insulin           mass          pedigree           age        diabetes 
+##  Min.   :  0.0   Min.   : 0.00   Min.   :0.0850   Min.   :21.00   neg:114  
+##  1st Qu.:  0.0   1st Qu.:27.80   1st Qu.:0.2395   1st Qu.:23.25   pos: 40  
+##  Median : 20.5   Median :32.40   Median :0.3380   Median :29.00            
+##  Mean   : 72.4   Mean   :32.29   Mean   :0.4627   Mean   :32.54            
+##  3rd Qu.:100.0   3rd Qu.:36.88   3rd Qu.:0.6008   3rd Qu.:39.75            
+##  Max.   :744.0   Max.   :67.10   Max.   :2.3290   Max.   :67.00</code></pre>
+<ul>
+<li>create classification task and learner</li>
+</ul>
+<pre class="r"><code>listLearners() %&gt;%
+  head()</code></pre>
+<pre><code>##                 class                               name  short.name
+## 1         classif.ada                       ada Boosting         ada
+## 2  classif.adaboostm1                    ada Boosting M1  adaboostm1
+## 3 classif.bartMachine Bayesian Additive Regression Trees bartmachine
+## 4    classif.binomial                Binomial Regression    binomial
+## 5    classif.boosting                    Adabag Boosting      adabag
+## 6         classif.bst                  Gradient Boosting         bst
+##        package
+## 1    ada,rpart
+## 2        RWeka
+## 3  bartMachine
+## 4        stats
+## 5 adabag,rpart
+## 6    bst,rpart
+##                                                                                                                                                note
+## 1                                                                                                  `xval` has been set to `0` by default for speed.
+## 2                                                                                       NAs are directly passed to WEKA with `na.action = na.pass`.
+## 3                                                               `use_missing_data` has been set to `TRUE` by default to allow missing data support.
+## 4  Delegates to `glm` with freely choosable binomial link function via learner parameter `link`. We set &#39;model&#39; to FALSE by default to save memory.
+## 5                                                                                                  `xval` has been set to `0` by default for speed.
+## 6 Renamed parameter `learner` to `Learner` due to nameclash with `setHyperPars`. Default changes: `Learner = &quot;ls&quot;`, `xval = 0`, and `maxdepth = 1`.
+##      type installed numerics factors ordered missings weights  prob oneclass
+## 1 classif     FALSE     TRUE    TRUE   FALSE    FALSE   FALSE  TRUE    FALSE
+## 2 classif      TRUE     TRUE    TRUE   FALSE    FALSE   FALSE  TRUE    FALSE
+## 3 classif     FALSE     TRUE    TRUE   FALSE     TRUE   FALSE  TRUE    FALSE
+## 4 classif      TRUE     TRUE    TRUE   FALSE    FALSE    TRUE  TRUE    FALSE
+## 5 classif     FALSE     TRUE    TRUE   FALSE     TRUE   FALSE  TRUE    FALSE
+## 6 classif     FALSE     TRUE   FALSE   FALSE    FALSE   FALSE FALSE    FALSE
+##   twoclass multiclass class.weights featimp oobpreds functionals
+## 1     TRUE      FALSE         FALSE   FALSE    FALSE       FALSE
+## 2     TRUE       TRUE         FALSE   FALSE    FALSE       FALSE
+## 3     TRUE      FALSE         FALSE   FALSE    FALSE       FALSE
+## 4     TRUE      FALSE         FALSE   FALSE    FALSE       FALSE
+## 5     TRUE       TRUE         FALSE    TRUE    FALSE       FALSE
+## 6     TRUE      FALSE         FALSE   FALSE    FALSE       FALSE
+##   single.functional    se lcens rcens icens
+## 1             FALSE FALSE FALSE FALSE FALSE
+## 2             FALSE FALSE FALSE FALSE FALSE
+## 3             FALSE FALSE FALSE FALSE FALSE
+## 4             FALSE FALSE FALSE FALSE FALSE
+## 5             FALSE FALSE FALSE FALSE FALSE
+## 6             FALSE FALSE FALSE FALSE FALSE</code></pre>
+<pre class="r"><code>(dt_task &lt;- makeClassifTask(data = train, target = &quot;diabetes&quot;))</code></pre>
+<pre><code>## Supervised task: train
+## Type: classif
+## Target: diabetes
+## Observations: 614
+## Features:
+##    numerics     factors     ordered functionals 
+##           8           0           0           0 
+## Missings: FALSE
+## Has weights: FALSE
+## Has blocking: FALSE
+## Has coordinates: FALSE
+## Classes: 2
+## neg pos 
+## 386 228 
+## Positive class: neg</code></pre>
+<pre class="r"><code>(dt_prob &lt;- makeLearner(&#39;classif.gbm&#39;, predict.type = &quot;prob&quot;))</code></pre>
+<pre><code>## Learner classif.gbm from package gbm
+## Type: classif
+## Name: Gradient Boosting Machine; Short name: gbm
+## Class: classif.gbm
+## Properties: twoclass,multiclass,missings,numerics,factors,prob,weights,featimp
+## Predict-Type: prob
+## Hyperparameters: keep.data=FALSE</code></pre>
+</div>
+<div id="feature-selection" class="section level3">
+<h3>Feature Selection</h3>
+<pre class="r"><code>library(FSelector)
+
+listFilterMethods() %&gt;%
+  head()</code></pre>
+<pre><code>##                           id   package                                     desc
+## 1                 anova.test           ANOVA Test for binary and multiclass ...
+## 2                        auc           AUC filter for binary classification ...
+## 3                   carscore      care                               CAR scores
+## 4      FSelector_chi.squared FSelector Chi-squared statistic of independence...
+## 5       FSelector_gain.ratio FSelector Chi-squared statistic of independence...
+## 6 FSelector_information.gain FSelector Entropy-based information gain betwee...</code></pre>
+<pre class="r"><code>listFilterEnsembleMethods() %&gt;%
+  head()</code></pre>
+<pre><code>##         id
+## 1  E-Borda
+## 2    E-max
+## 3   E-mean
+## 4 E-median
+## 5    E-min
+##                                                                                                     desc
+## 1                  Borda ensemble filter. Takes the sum across all base filter methods for each feature.
+## 2 Maximum ensemble filter. Takes the best maximum value across all base filter methods for each feature.
+## 3                  Mean ensemble filter. Takes the mean across all base filter methods for each feature.
+## 4              Median ensemble filter. Takes the median across all base filter methods for each feature.
+## 5 Minimum ensemble filter. Takes the best minimum value across all base filter methods for each feature.</code></pre>
+<pre class="r"><code>generateFilterValuesData(dt_task, method = &quot;FSelector_information.gain&quot;) %&gt;% 
+  plotFilterValues() +
+  theme_bw() +
+    labs(x = &quot;feature&quot;,
+         y = &quot;information gain&quot;,
+         title = &quot;Information gain of features in GBM&quot;,
+         caption = &quot;Source: Pima Indians Diabetes Database&quot;)</code></pre>
+<p><img src="https://shirinsplayground.netlify.com/post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<pre class="r"><code>feat_imp_tpr &lt;- generateFeatureImportanceData(task = dt_task, 
+                              learner = dt_prob,
+                              measure = tpr, 
+                              interaction = FALSE)</code></pre>
+<pre><code>## Distribution not specified, assuming bernoulli ...</code></pre>
+<pre class="r"><code>feat_imp_tpr$res %&gt;%
+  gather() %&gt;%
+  ggplot(aes(x = reorder(key, value), y = value)) +
+    geom_bar(stat = &quot;identity&quot;) +
+    labs(x = &quot;feature&quot;,
+         title = &quot;True positive rate of features in GBM&quot;,
+         subtitle = &quot;calculated with permutation importance&quot;,
+         caption = &quot;Source: Pima Indians Diabetes Database&quot;)</code></pre>
+<p><img src="https://shirinsplayground.netlify.com/post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<pre class="r"><code>feat_imp_auc &lt;- generateFeatureImportanceData(task = dt_task, 
+                              learner = dt_prob,
+                              measure = auc, 
+                              interaction = FALSE)</code></pre>
+<pre><code>## Distribution not specified, assuming bernoulli ...</code></pre>
+<pre class="r"><code>feat_imp_auc$res %&gt;%
+  gather() %&gt;%
+  ggplot(aes(x = reorder(key, value), y = value)) +
+    geom_bar(stat = &quot;identity&quot;) +
+    labs(x = &quot;feature&quot;,
+         title = &quot;Area under the curve of features in GBM&quot;,
+         subtitle = &quot;calculated with permutation importance&quot;,
+         caption = &quot;Source: Pima Indians Diabetes Database&quot;)</code></pre>
+<p><img src="https://shirinsplayground.netlify.com/post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<pre class="r"><code>set.seed(1000) 
+train &lt;- dplyr::select(train, -pedigree, -pressure, -triceps) 
+test &lt;- dplyr::select(test, -pedigree, -pressure, -triceps)
+list(train = summary(train), test = summary(test))</code></pre>
+<pre><code>## $train
+##     pregnant         glucose         insulin            mass      
+##  Min.   : 0.000   Min.   :  0.0   Min.   :  0.00   Min.   : 0.00  
+##  1st Qu.: 1.000   1st Qu.:100.0   1st Qu.:  0.00   1st Qu.:27.10  
+##  Median : 3.000   Median :119.0   Median : 36.50   Median :32.00  
+##  Mean   : 3.894   Mean   :123.1   Mean   : 81.65   Mean   :31.92  
+##  3rd Qu.: 6.000   3rd Qu.:143.0   3rd Qu.:131.50   3rd Qu.:36.38  
+##  Max.   :17.000   Max.   :199.0   Max.   :846.00   Max.   :59.40  
+##       age        diabetes 
+##  Min.   :21.00   neg:386  
+##  1st Qu.:24.00   pos:228  
+##  Median :29.00            
+##  Mean   :33.42            
+##  3rd Qu.:41.00            
+##  Max.   :81.00            
+## 
+## $test
+##     pregnant         glucose         insulin           mass      
+##  Min.   : 0.000   Min.   :  0.0   Min.   :  0.0   Min.   : 0.00  
+##  1st Qu.: 1.000   1st Qu.: 93.0   1st Qu.:  0.0   1st Qu.:27.80  
+##  Median : 2.000   Median :108.0   Median : 20.5   Median :32.40  
+##  Mean   : 3.649   Mean   :112.3   Mean   : 72.4   Mean   :32.29  
+##  3rd Qu.: 6.000   3rd Qu.:133.8   3rd Qu.:100.0   3rd Qu.:36.88  
+##  Max.   :14.000   Max.   :197.0   Max.   :744.0   Max.   :67.10  
+##       age        diabetes 
+##  Min.   :21.00   neg:114  
+##  1st Qu.:23.25   pos: 40  
+##  Median :29.00            
+##  Mean   :32.54            
+##  3rd Qu.:39.75            
+##  Max.   :67.00</code></pre>
+<pre class="r"><code>(dt_task &lt;- makeClassifTask(data = train, target = &quot;diabetes&quot;))</code></pre>
+<pre><code>## Supervised task: train
+## Type: classif
+## Target: diabetes
+## Observations: 614
+## Features:
+##    numerics     factors     ordered functionals 
+##           5           0           0           0 
+## Missings: FALSE
+## Has weights: FALSE
+## Has blocking: FALSE
+## Has coordinates: FALSE
+## Classes: 2
+## neg pos 
+## 386 228 
+## Positive class: neg</code></pre>
+</div>
+<div id="hyperparameter-optimization" class="section level3">
+<h3>Hyperparameter Optimization</h3>
+<pre class="r"><code>getParamSet(&quot;classif.gbm&quot;)</code></pre>
+<pre><code>##                       Type len       Def
+## distribution      discrete   - bernoulli
+## n.trees            integer   -       100
+## cv.folds           integer   -         0
+## interaction.depth  integer   -         1
+## n.minobsinnode     integer   -        10
+## shrinkage          numeric   -       0.1
+## bag.fraction       numeric   -       0.5
+## train.fraction     numeric   -         1
+## keep.data          logical   -      TRUE
+## verbose            logical   -     FALSE
+## n.cores            integer   -         1
+##                                                     Constr Req Tunable Trafo
+## distribution      gaussian,bernoulli,huberized,adaboost...   -    TRUE     -
+## n.trees                                           1 to Inf   -    TRUE     -
+## cv.folds                                       -Inf to Inf   -    TRUE     -
+## interaction.depth                                 1 to Inf   -    TRUE     -
+## n.minobsinnode                                    1 to Inf   -    TRUE     -
+## shrinkage                                         0 to Inf   -    TRUE     -
+## bag.fraction                                        0 to 1   -    TRUE     -
+## train.fraction                                      0 to 1   -    TRUE     -
+## keep.data                                                -   -   FALSE     -
+## verbose                                                  -   -   FALSE     -
+## n.cores                                        -Inf to Inf   -   FALSE     -</code></pre>
+<pre class="r"><code>dt_param &lt;- makeParamSet( 
+  makeIntegerParam(&quot;n.trees&quot;, lower = 20, upper = 150),
+  makeNumericParam(&quot;shrinkage&quot;, lower = 0.01, upper = 0.1))
+
+ctrl = makeTuneControlGrid()
+
+rdesc = makeResampleDesc(&quot;CV&quot;, 
+                         iters = 3L, 
+                         stratify = TRUE)</code></pre>
+<pre class="r"><code>set.seed(1000) 
+(dt_tuneparam &lt;- tuneParams(learner = dt_prob, 
+                             resampling = rdesc, 
+                             measures = list(tpr,auc, fnr, mmce, tnr, setAggregation(tpr, test.sd)), 
+                             par.set = dt_param, 
+                             control = ctrl, 
+                             task = dt_task, 
+                             show.info = FALSE))</code></pre>
+<pre><code>## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...
+## Distribution not specified, assuming bernoulli ...</code></pre>
+<pre><code>## Tune result:
+## Op. pars: n.trees=20; shrinkage=0.02
+## tpr.test.mean=1.0000000,auc.test.mean=0.7878691,fnr.test.mean=0.0000000,mmce.test.mean=0.3713375,tnr.test.mean=0.0000000,tpr.test.sd=0.0000000</code></pre>
+<pre class="r"><code>data = generateHyperParsEffectData(dt_tuneparam, 
+                                   partial.dep = TRUE)
+
+plotHyperParsEffect(data, x = &quot;n.trees&quot;, y = &quot;tpr.test.mean&quot;, partial.dep.learn = makeLearner(&quot;regr.gbm&quot;))</code></pre>
+<p><img src="https://shirinsplayground.netlify.com/post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<pre class="r"><code>plotHyperParsEffect(data, x = &quot;shrinkage&quot;, y = &quot;tpr.test.mean&quot;, partial.dep.learn = makeLearner(&quot;regr.gbm&quot;))</code></pre>
+<p><img src="https://shirinsplayground.netlify.com/post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-28-2.png" width="672" /></p>
+<pre class="r"><code>plotHyperParsEffect(data, 
+                    x = &quot;n.trees&quot;, 
+                    y = &quot;shrinkage&quot;,
+                    z = &quot;tpr.test.mean&quot;, 
+                    plot.type = &quot;heatmap&quot;,
+                    partial.dep.learn = makeLearner(&quot;regr.gbm&quot;)) +
+  theme_bw() +
+    labs(title = &quot;Hyperparameter effects data&quot;,
+         subtitle = &quot;of GBM model with reduced feature set&quot;,
+         caption = &quot;Source: Pima Indians Diabetes Database&quot;)</code></pre>
+<p><img src="https://shirinsplayground.netlify.com/post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+<pre class="r"><code>list( `Optimal HyperParameters` = dt_tuneparam$x, 
+      `Optimal Metrics` = dt_tuneparam$y )</code></pre>
+<pre><code>## $`Optimal HyperParameters`
+## $`Optimal HyperParameters`$n.trees
+## [1] 20
+## 
+## $`Optimal HyperParameters`$shrinkage
+## [1] 0.02
+## 
+## 
+## $`Optimal Metrics`
+##  tpr.test.mean  auc.test.mean  fnr.test.mean mmce.test.mean  tnr.test.mean 
+##      1.0000000      0.7878691      0.0000000      0.3713375      0.0000000 
+##    tpr.test.sd 
+##      0.0000000</code></pre>
+<pre class="r"><code>gbm_final &lt;- setHyperPars(dt_prob, par.vals = dt_tuneparam$x)
+
+set.seed(1000) 
+gbm_final_train &lt;- train(learner = gbm_final, task = dt_task) </code></pre>
+<pre><code>## Distribution not specified, assuming bernoulli ...</code></pre>
+<pre class="r"><code>getLearnerModel(gbm_final_train)</code></pre>
+<pre><code>## gbm::gbm(formula = f, data = d, n.trees = 20L, shrinkage = 0.02, 
+##     keep.data = FALSE)
+## A gradient boosted model with bernoulli loss function.
+## 20 iterations were performed.
+## There were 5 predictors of which 3 had non-zero influence.</code></pre>
+</div>
+<div id="decision-trees" class="section level3">
+<h3>Decision Trees</h3>
+<ul>
+<li>Recursive Partitioning (<a href="https://cran.r-project.org/web/packages/rpart/vignettes/longintro.pdf"><code>rpart</code></a> &amp; <a href="http://www.milbo.org/rpart-plot/prp.pdf"><code>rpart.plot</code></a>)</li>
+</ul>
+<pre class="r"><code>library(rpart)
+library(rpart.plot)
+
+rpart_tree &lt;- rpart(diabetes ~ .,
+                    data = train,
+                    method = &quot;class&quot;)</code></pre>
+<pre class="r"><code>rpart.plot(rpart_tree, 
+           roundint=FALSE, 
+           type = 3, 
+           clip.right.labs = FALSE)</code></pre>
+<p><img src="https://shirinsplayground.netlify.com/post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+<pre class="r"><code>rpart.rules(rpart_tree, roundint = FALSE)</code></pre>
+<pre><code>##  diabetes                                                                           
+##      0.05 when glucose &lt;  128        &amp; mass &lt;  27       &amp; age &gt;= 29                 
+##      0.10 when glucose &lt;  128                           &amp; age &lt;  29                 
+##      0.17 when glucose is 128 to 146 &amp; mass &lt;  30                                   
+##      0.25 when glucose &gt;=        146 &amp; mass &lt;  30       &amp; age &lt;  29                 
+##      0.28 when glucose &lt;  128        &amp; mass &gt;=       29 &amp; age &gt;= 29 &amp; insulin &lt;  143
+##      0.38 when glucose is 128 to 158 &amp; mass is 32 to 42 &amp; age &lt;  43                 
+##      0.62 when glucose &gt;=        146 &amp; mass &lt;  30       &amp; age &gt;= 29                 
+##      0.63 when glucose &lt;  128        &amp; mass is 27 to 29 &amp; age &gt;= 29 &amp; insulin &lt;  143
+##      0.77 when glucose &lt;  128        &amp; mass &gt;=       27 &amp; age &gt;= 29 &amp; insulin &gt;= 143
+##      0.82 when glucose is 128 to 158 &amp; mass &gt;=       42 &amp; age &lt;  43                 
+##      0.86 when glucose is 128 to 158 &amp; mass &gt;=       30 &amp; age &gt;= 43                 
+##      0.86 when glucose &gt;=        158 &amp; mass &gt;=       30                             
+##      0.88 when glucose is 128 to 158 &amp; mass is 30 to 32 &amp; age &lt;  43</code></pre>
+</div>
+<div id="prediction" class="section level3">
+<h3>Prediction</h3>
+<pre class="r"><code>set.seed(1000) 
+(gbm_final_predict &lt;- predict(gbm_final_train, newdata = test))</code></pre>
+<pre><code>## Prediction: 154 observations
+## predict.type: prob
+## threshold: neg=0.50,pos=0.50
+## time: 0.00
+##    truth  prob.pos  prob.neg response
+## 12   pos 0.4807717 0.5192283      neg
+## 18   pos 0.3229851 0.6770149      neg
+## 19   neg 0.3229851 0.6770149      neg
+## 20   pos 0.3300235 0.6699765      neg
+## 34   neg 0.3091184 0.6908816      neg
+## 38   pos 0.3229851 0.6770149      neg
+## ... (#rows: 154, #cols: 4)</code></pre>
+<pre class="r"><code>gbm_final_predict %&gt;% calculateROCMeasures()</code></pre>
+<pre><code>##      predicted
+## true  neg       pos                        
+##   neg 114       0        tpr: 1   fnr: 0   
+##   pos 40        0        fpr: 1   tnr: 0   
+##       ppv: 0.74 for: NaN lrp: 1   acc: 0.74
+##       fdr: 0.26 npv: NaN lrm: NaN dor: NaN 
+## 
+## 
+## Abbreviations:
+## tpr - True positive rate (Sensitivity, Recall)
+## fpr - False positive rate (Fall-out)
+## fnr - False negative rate (Miss rate)
+## tnr - True negative rate (Specificity)
+## ppv - Positive predictive value (Precision)
+## for - False omission rate
+## lrp - Positive likelihood ratio (LR+)
+## fdr - False discovery rate
+## npv - Negative predictive value
+## acc - Accuracy
+## lrm - Negative likelihood ratio (LR-)
+## dor - Diagnostic odds ratio</code></pre>
+<pre class="r"><code>model_performance &lt;- performance(gbm_final_predict, 
+                                 measures = list(tpr, auc, mmce, acc, tnr)) %&gt;% 
+  as.data.frame(row.names = c(&quot;True Positive Rate&quot;,&quot;Area Under Curve&quot;, &quot;Mean Misclassification Error&quot;,&quot;Accuracy&quot;,&quot;True Negative Rate&quot;)) 
+
+model_performance</code></pre>
+<pre><code>##                                      .
+## True Positive Rate           1.0000000
+## Area Under Curve             0.7695175
+## Mean Misclassification Error 0.2597403
+## Accuracy                     0.7402597
+## True Negative Rate           0.0000000</code></pre>
+<pre class="r"><code>gbm_final_threshold &lt;- generateThreshVsPerfData(gbm_final_predict, 
+                                                 measures = list(tpr, auc, mmce, tnr))</code></pre>
+<pre class="r"><code>gbm_final_threshold %&gt;% 
+   plotROCCurves() + 
+   geom_point() +
+    theme_bw() +
+    labs(title = &quot;ROC curve from predictions&quot;,
+         subtitle = &quot;of GBM model with reduced feature set&quot;,
+         caption = &quot;Source: Pima Indians Diabetes Database&quot;)</code></pre>
+<p><img src="https://shirinsplayground.netlify.com/post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+<pre class="r"><code>gbm_final_threshold %&gt;% 
+   plotThreshVsPerf() + 
+   geom_point() +
+    theme_bw() +
+    labs(title = &quot;Threshold vs. performance&quot;,
+         subtitle = &quot;for 2-class classification of GBM model with reduced feature set&quot;,
+         caption = &quot;Source: Pima Indians Diabetes Database&quot;)</code></pre>
+<p><img src="https://shirinsplayground.netlify.com/post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<pre class="r"><code>gbm_final_threshold$data %&gt;%
+  head()</code></pre>
+<pre><code>##   tpr       auc      mmce tnr  threshold
+## 1   1 0.7695175 0.2597403   0 0.00000000
+## 2   1 0.7695175 0.2597403   0 0.01010101
+## 3   1 0.7695175 0.2597403   0 0.02020202
+## 4   1 0.7695175 0.2597403   0 0.03030303
+## 5   1 0.7695175 0.2597403   0 0.04040404
+## 6   1 0.7695175 0.2597403   0 0.05050505</code></pre>
+<pre class="r"><code>gbm_final_thr &lt;- gbm_final_predict %&gt;% 
+  setThreshold(0.59595960) 
+
+(dt_performance &lt;- gbm_final_thr %&gt;% performance(measures = list(tpr, auc, mmce, tnr)) )</code></pre>
+<pre><code>##       tpr       auc      mmce       tnr 
+## 0.8070175 0.7695175 0.2727273 0.5000000</code></pre>
+<pre class="r"><code>(dt_cm &lt;- gbm_final_thr %&gt;% calculateROCMeasures() )</code></pre>
+<pre><code>##      predicted
+## true  neg       pos                          
+##   neg 92        22        tpr: 0.81 fnr: 0.19
+##   pos 20        20        fpr: 0.5  tnr: 0.5 
+##       ppv: 0.82 for: 0.52 lrp: 1.61 acc: 0.73
+##       fdr: 0.18 npv: 0.48 lrm: 0.39 dor: 4.18
+## 
+## 
+## Abbreviations:
+## tpr - True positive rate (Sensitivity, Recall)
+## fpr - False positive rate (Fall-out)
+## fnr - False negative rate (Miss rate)
+## tnr - True negative rate (Specificity)
+## ppv - Positive predictive value (Precision)
+## for - False omission rate
+## lrp - Positive likelihood ratio (LR+)
+## fdr - False discovery rate
+## npv - Negative predictive value
+## acc - Accuracy
+## lrm - Negative likelihood ratio (LR-)
+## dor - Diagnostic odds ratio</code></pre>
+<pre class="r"><code>performance_threshold &lt;- performance(gbm_final_thr, measures = list(tpr, auc, mmce, acc, tnr)) %&gt;% 
+  as.data.frame(row.names = c(&quot;True Positive Rate&quot;, &quot;Area Under Curve&quot;, &quot;Mean Misclassification Error&quot;, &quot;Accuracy&quot;, &quot;True Negative Rate&quot;))
+
+performance_threshold</code></pre>
+<pre><code>##                                      .
+## True Positive Rate           0.8070175
+## Area Under Curve             0.7695175
+## Mean Misclassification Error 0.2727273
+## Accuracy                     0.7272727
+## True Negative Rate           0.5000000</code></pre>
+</div>
+<div id="decision-boundaries" class="section level3">
+<h3>Decision Boundaries</h3>
+<pre class="r"><code>#remotes::install_github(&quot;grantmcdermott/parttree&quot;)
+library(parsnip)
+library(parttree)
+set.seed(123) ## For consistent jitter
+
+## Build our tree using parsnip (but with rpart as the model engine)
+ti_tree =
+  decision_tree() %&gt;%
+  set_engine(&quot;rpart&quot;) %&gt;%
+  set_mode(&quot;classification&quot;) %&gt;%
+  fit(diabetes ~ glucose + mass, data = PimaIndiansDiabetes)
+
+## Plot the data and model partitions
+PimaIndiansDiabetes %&gt;%
+  ggplot(aes(x = glucose, y = mass)) +
+  geom_jitter(aes(col = diabetes), alpha = 0.7) +
+  geom_parttree(data = ti_tree, aes(fill = diabetes), alpha = 0.1) +
+  theme_bw() +
+    labs(title = &quot;Decision boundaries&quot;,
+         subtitle = &quot;for 2-class classification of RPART model (glucose + mass)&quot;,
+         caption = &quot;Source: Pima Indians Diabetes Database&quot;)</code></pre>
+<p><img src="https://shirinsplayground.netlify.com/post/2021-04-28_goodbadugly_ml_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
+</div>
+<div id="time-series" class="section level3">
+<h3>Time-series</h3>
+<div class="figure">
+<img src="https://shiring.github.io/forecasting/2017/06/09/retail_forcasting_part2_files/figure-markdown_github/unnamed-chunk-28-1.png" alt="" />
+<p class="caption"><a href="https://shiring.github.io/forecasting/2017/06/09/retail_forcasting_part2" class="uri">https://shiring.github.io/forecasting/2017/06/09/retail_forcasting_part2</a></p>
+</div>
+<div class="figure">
+<img src="https://shiring.github.io/forecasting/2017/06/13/retail_forcasting_part3_files/figure-markdown_github/unnamed-chunk-12-1.png" alt="" />
+<p class="caption"><a href="https://shiring.github.io/forecasting/2017/06/13/retail_forcasting_part3" class="uri">https://shiring.github.io/forecasting/2017/06/13/retail_forcasting_part3</a></p>
+</div>
+</div>
+<div id="artificial-neural-networks-anns" class="section level3">
+<h3>Artificial Neural Networks (ANNs)</h3>
+<ul>
+<li><p><a href="playground.tensorflow.org">playground.tensorflow.org</a></p></li>
+<li><p><a href="https://www.manning.com/books/deep-learning-with-r">Deep Learning with R</a></p></li>
+</ul>
+<ol style="list-style-type: decimal">
+<li><a href="https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/5.4-visualizing-what-convnets-learn.nb.html">Visualizing what convnets learn</a></li>
+<li><a href="https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/8.2-deep-dream.nb.html">Deep Dreaming</a></li>
+<li><a href="https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/8.3-neural-style-transfer.nb.html">Neural style transfer</a></li>
+</ol>
+<ul>
+<li><p><a href="https://arxiv.org/pdf/1712.09913.pdf">Li et al, Visualizing the Loss Landscape of Neural Nets, 2018</a></p></li>
+<li><p><a href="http://yosinski.com/deepvis">Understanding Neural Networks Through Deep Visualization, Jason Yosinski, Jeff Clune, Anh Nguyen, Thomas Fuchs, and Hod Lipson</a></p></li>
+<li><p><a href="https://projector.tensorflow.org/">Visualizing Data using the Embedding Projector in TensorBoard</a></p></li>
+<li><p><a href="https://arxiv.org/pdf/1311.2901.pdf">Visualizing and Understanding Convolutional Networks, Zeiler &amp; Fergus, 2013</a></p></li>
+<li><p><a href="https://distill.pub/2018/building-blocks/">The Building Blocks of Interpretability, Olah, Satyanarayan, Johnson, Carter, Schubert, Ye, Mordvintsev</a></p></li>
+<li><p><a href="https://quickdraw.withgoogle.com/">Google Creative Lab</a></p></li>
+<li><p><a href="https://poloclub.github.io/ganlab/">Play with Generative Adversarial Networks (GANs) in your browser</a></p></li>
+<li><p><a href="http://lstm.seas.harvard.edu/">Visual Analysis for Recurrent Neural Networks</a></p></li>
+<li><p><a href="https://shirinsplayground.netlify.app/2020/09/keras_funct_api/">Whose dream is this? When and how to use the Keras Functional API</a></p></li>
+</ul>
+<p><img src="https://shirinsplayground.netlify.com/img/plot_model_4.png" alt="https://shirinsplayground.netlify.app/2020/09/keras_funct_api/" />
+- <a href="https://shirinsplayground.netlify.app/2020/10/keras_workshop_user20/">Deep Learning with Keras and TensorFlow</a> &amp; <a href="https://shirinsplayground.netlify.app/2020/09/keras_fruits_update/">Update with TF 2.0: Image classification with Keras and TensorFlow</a></p>
+<p><img src="https://shirinsplayground.netlify.com/img/hist.png" alt="https://shirinsplayground.netlify.app/2020/09/keras_fruits_update/" />
+<img src="https://shirinsplayground.netlify.com/img/percentage_pred.png" alt="https://shirinsplayground.netlify.app/2020/09/keras_fruits_update/" />
+<img src="https://shirinsplayground.netlify.com/img/percentage_pred_cor.png" alt="https://shirinsplayground.netlify.app/2020/09/keras_fruits_update/" /></p>
+<ul>
+<li><a href="http://web.cse.ohio-state.edu/~wang.6195/vis-final/index.html">Visualize the effectiveness of different learning rates</a> &amp; <a href="https://www.jeremyjordan.me/nn-learning-rate/">Setting the learning rate of your neural network.</a></li>
+</ul>
+</div>
+<div id="graphical-representation-of-a-model-in-tensorboard" class="section level3">
+<h3>Graphical representation of a model in TensorBoard</h3>
+<p><a href="https://www.tensorflow.org/tensorboard" class="uri">https://www.tensorflow.org/tensorboard</a></p>
+</div>
+<div id="word-embeddings" class="section level3">
+<h3>Word Embeddings</h3>
+<ul>
+<li><p><a href="http://karpathy.github.io/2015/05/21/rnn-effectiveness/">The Unreasonable Effectiveness of Recurrent Neural Networks, Karpathy, 2015</a></p></li>
+<li><p><a href="https://arxiv.org/pdf/1804.09299.pdf">Seq2Seq-Vis: Visual Debugging Tool for Sequenceto- Sequence Models, Strobelt, 2018</a></p></li>
+<li><p><a href="https://arxiv.org/pdf/1611.04558.pdf">Google’s Multilingual Neural Machine Translation System: Enabling Zero-Shot Translation</a></p></li>
+</ul>
+</div>
+<div id="explainable-ai" class="section level3">
+<h3>Explainable AI</h3>
+<div class="figure">
+<img src="https://shirinsplayground.netlify.com/post/2021-03-25_update_customer_churn_files/figure-html/unnamed-chunk-53-1.png" alt="" />
+<p class="caption"><a href="https://shirinsplayground.netlify.app/2021/03/update_customer_churn/" class="uri">https://shirinsplayground.netlify.app/2021/03/update_customer_churn/</a></p>
+</div>
+<ul>
+<li><p><a href="https://christophm.github.io/interpretable-ml-book/">Interpretable Machine Learning, A Guide for Making Black Box Models Explainable. Christoph Molnar</a></p></li>
+<li><p><a href="https://arxiv.org/abs/1610.02413">Equality of Opportunity in Supervised Learning</a></p></li>
+</ul>
+<hr />
+<pre class="r"><code># session info
+devtools::session_info()</code></pre>
+<pre><code>## ─ Session info ───────────────────────────────────────────────────────────────
+##  setting  value                       
+##  version  R version 4.0.4 (2021-02-15)
+##  os       macOS Big Sur 10.16         
+##  system   x86_64, darwin17.0          
+##  ui       X11                         
+##  language (EN)                        
+##  collate  en_US.UTF-8                 
+##  ctype    en_US.UTF-8                 
+##  tz       Europe/Berlin               
+##  date     2021-04-27                  
+## 
+## ─ Packages ───────────────────────────────────────────────────────────────────
+##  package      * version    date       lib
+##  assertthat     0.2.1      2019-03-21 [2]
+##  backports      1.2.1      2020-12-09 [2]
+##  BBmisc         1.11       2017-03-10 [2]
+##  blogdown       1.2        2021-03-04 [2]
+##  bookdown       0.21       2020-10-13 [2]
+##  broom          0.7.5      2021-02-19 [2]
+##  bslib          0.2.4      2021-01-25 [2]
+##  cachem         1.0.4      2021-02-13 [2]
+##  callr          3.5.1      2020-10-13 [2]
+##  cellranger     1.1.0      2016-07-27 [2]
+##  checkmate      2.0.0      2020-02-06 [2]
+##  cli            2.3.1      2021-02-23 [2]
+##  colorspace     2.0-0      2020-11-11 [2]
+##  crayon         1.4.1      2021-02-08 [2]
+##  data.table     1.14.0     2021-02-21 [2]
+##  DBI            1.1.1      2021-01-15 [2]
+##  dbplyr         2.1.0      2021-02-03 [2]
+##  desc           1.3.0      2021-03-05 [2]
+##  devtools       2.3.2      2020-09-18 [2]
+##  digest         0.6.27     2020-10-24 [2]
+##  dplyr        * 1.0.5      2021-03-05 [2]
+##  ellipsis       0.3.1      2020-05-15 [2]
+##  entropy        1.2.1      2014-11-14 [1]
+##  evaluate       0.14       2019-05-28 [2]
+##  fansi          0.4.2      2021-01-15 [2]
+##  farver         2.1.0      2021-02-28 [2]
+##  fastmap        1.1.0      2021-01-25 [2]
+##  fastmatch      1.1-0      2017-01-28 [2]
+##  forcats      * 0.5.1      2021-01-27 [2]
+##  fs             1.5.0      2020-07-31 [2]
+##  FSelector    * 0.33       2021-02-16 [1]
+##  gbm            2.1.8      2020-07-15 [2]
+##  generics       0.1.0      2020-10-31 [2]
+##  GGally       * 2.1.1      2021-03-08 [1]
+##  ggfortify    * 0.4.11     2020-10-02 [2]
+##  ggplot2      * 3.3.3      2020-12-30 [2]
+##  glue           1.4.2      2020-08-27 [2]
+##  gridExtra      2.3        2017-09-09 [2]
+##  gtable         0.3.0      2019-03-25 [2]
+##  haven          2.3.1      2020-06-01 [2]
+##  highr          0.8        2019-03-20 [2]
+##  hms            1.0.0      2021-01-13 [2]
+##  htmltools      0.5.1.1    2021-01-22 [2]
+##  httr           1.4.2      2020-07-20 [2]
+##  jquerylib      0.1.3      2020-12-17 [2]
+##  jsonlite       1.7.2      2020-12-09 [2]
+##  knitr          1.31       2021-01-27 [2]
+##  labeling       0.4.2      2020-10-20 [2]
+##  lattice        0.20-41    2020-04-02 [2]
+##  lifecycle      1.0.0      2021-02-15 [2]
+##  lubridate      1.7.10     2021-02-26 [2]
+##  magrittr       2.0.1      2020-11-17 [2]
+##  MASS         * 7.3-53.1   2021-02-12 [2]
+##  Matrix         1.3-2      2021-01-06 [2]
+##  memoise        2.0.0      2021-01-26 [2]
+##  mlbench      * 2.1-3      2021-01-29 [1]
+##  mlr          * 2.19.0     2021-02-22 [2]
+##  mmpf         * 0.0.5      2018-10-24 [2]
+##  modelr         0.1.8      2020-05-19 [2]
+##  munsell        0.5.0      2018-06-12 [2]
+##  parallelMap    1.5.0      2020-03-26 [2]
+##  ParamHelpers * 1.14       2020-03-24 [2]
+##  parsnip      * 0.1.5      2021-01-19 [2]
+##  parttree     * 0.0.1.9000 2021-03-14 [1]
+##  pillar         1.5.1      2021-03-05 [2]
+##  pkgbuild       1.2.0      2020-12-15 [2]
+##  pkgconfig      2.0.3      2019-09-22 [2]
+##  pkgload        1.2.0      2021-02-23 [2]
+##  plyr           1.8.6      2020-03-03 [2]
+##  prettyunits    1.1.1      2020-01-24 [2]
+##  processx       3.4.5      2020-11-30 [2]
+##  ps             1.6.0      2021-02-28 [2]
+##  purrr        * 0.3.4      2020-04-17 [2]
+##  R6             2.5.0      2020-10-28 [2]
+##  randomForest   4.6-14     2018-03-25 [2]
+##  RColorBrewer   1.1-2      2014-12-07 [2]
+##  Rcpp           1.0.6      2021-01-15 [2]
+##  readr        * 1.4.0      2020-10-05 [2]
+##  readxl         1.3.1      2019-03-13 [1]
+##  remotes        2.2.0      2020-07-21 [2]
+##  reprex         1.0.0      2021-01-27 [2]
+##  reshape        0.8.8      2018-10-23 [1]
+##  rJava        * 0.9-13     2020-07-06 [2]
+##  rlang          0.4.10     2020-12-30 [2]
+##  rmarkdown      2.7        2021-02-19 [2]
+##  rpart        * 4.1-15     2019-04-12 [2]
+##  rpart.plot   * 3.0.9      2020-09-17 [1]
+##  rprojroot      2.0.2      2020-11-15 [2]
+##  rstudioapi     0.13       2020-11-12 [2]
+##  rvest          1.0.0      2021-03-09 [2]
+##  RWeka          0.4-43     2020-08-23 [1]
+##  RWekajars      3.9.3-2    2019-10-19 [1]
+##  sass           0.3.1      2021-01-24 [2]
+##  scagnostics  * 0.2-4.1    2018-04-04 [1]
+##  scales         1.1.1      2020-05-11 [2]
+##  sessioninfo    1.1.1      2018-11-05 [2]
+##  stringi        1.5.3      2020-09-09 [2]
+##  stringr      * 1.4.0      2019-02-10 [2]
+##  survival       3.2-7      2020-09-28 [2]
+##  testthat       3.0.2      2021-02-14 [2]
+##  tibble       * 3.1.0      2021-02-25 [2]
+##  tidyr        * 1.1.3      2021-03-03 [2]
+##  tidyselect     1.1.0      2020-05-11 [2]
+##  tidyverse    * 1.3.0      2019-11-21 [2]
+##  usethis        2.0.1      2021-02-10 [2]
+##  utf8           1.2.1      2021-03-12 [2]
+##  vctrs          0.3.6      2020-12-17 [2]
+##  withr          2.4.1      2021-01-26 [2]
+##  xfun           0.22       2021-03-11 [2]
+##  XML            3.99-0.5   2020-07-23 [2]
+##  xml2           1.3.2      2020-04-23 [2]
+##  yaml           2.2.1      2020-02-01 [2]
+##  source                                  
+##  CRAN (R 4.0.0)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.4)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.0)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.4)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.4)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.0)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.1)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.0)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.0)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.4)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.4)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.4)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.0)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  Github (grantmcdermott/parttree@9d25d2c)
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.0)                          
+##  CRAN (R 4.0.4)                          
+##  CRAN (R 4.0.0)                          
+##  CRAN (R 4.0.0)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.0)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.0)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.4)                          
+##  CRAN (R 4.0.4)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.0)                          
+##  CRAN (R 4.0.0)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.0)                          
+##  CRAN (R 4.0.4)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.0)                          
+##  CRAN (R 4.0.0)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.4)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.2)                          
+##  CRAN (R 4.0.0)                          
+##  CRAN (R 4.0.0)                          
+## 
+## [1] /Users/shiringlander/Library/R/4.0/library
+## [2] /Library/Frameworks/R.framework/Versions/4.0/Resources/library</code></pre>
+</div>
+</div>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://shirinsplayground.netlify.com//tags/r/">R</a>
+
+  <a class="tag tag--primary tag--small" href="https://shirinsplayground.netlify.com//tags/ggplot2/">ggplot2</a>
+
+                  </div>
+                
+              
+            
+            
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                <i class="fa fa-angle-left"></i>
+                <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+              </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://shirinsplayground.netlify.com/2021/03/update_customer_churn/" data-tooltip="Update to Code for case study - Customer Churn with Keras/TensorFlow and H2O">
+              
+                <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://shirinsplayground.netlify.com/2021/04/goodbadugly_ml/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://shirinsplayground.netlify.com/2021/04/goodbadugly_ml/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://shirinsplayground.netlify.com/2021/04/goodbadugly_ml/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2021 <a href='https://shirin-elsinghorst.appointlet.com/s/15-minute-intro'>Dr. Shirin Elsinghorst</a>. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                <i class="fa fa-angle-left"></i>
+                <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+              </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://shirinsplayground.netlify.com/2021/03/update_customer_churn/" data-tooltip="Update to Code for case study - Customer Churn with Keras/TensorFlow and H2O">
+              
+                <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://shirinsplayground.netlify.com/2021/04/goodbadugly_ml/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://shirinsplayground.netlify.com/2021/04/goodbadugly_ml/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://shirinsplayground.netlify.com/2021/04/goodbadugly_ml/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fshirinsplayground.netlify.com%2F2021%2F04%2Fgoodbadugly_ml%2F">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fshirinsplayground.netlify.com%2F2021%2F04%2Fgoodbadugly_ml%2F">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2Fshirinsplayground.netlify.com%2F2021%2F04%2Fgoodbadugly_ml%2F">
+          <i class="fa fa-google-plus"></i><span>Share on Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Dr. Shirin Elsinghorst</h4>
+    
+      <div id="about-card-bio">Biologist turned Bioinformatician turned Data Scientist</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Data Scientist
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Münster, Germany
+      </div>
+    
+  </div>
+</div>
+
+    <div id="algolia-search-modal" class="modal-container">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="close-button"><i class="fa fa-close"></i></span>
+      <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
+        <span class="searchby-algolia-text text-color-light text-small">by</span>
+        <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
+      </a>
+      <i class="search-icon fa fa-search"></i>
+      <form id="algolia-search-form">
+        <input type="text" id="algolia-search-input" name="search"
+          class="form-control input--large search-input" placeholder="Search" />
+      </form>
+    </div>
+    <div class="modal-body">
+      <div class="no-result text-color-light text-center">no post found</div>
+      <div class="results">
+        
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://shirinsplayground.netlify.com/post/">
+                <h3 class="media-heading">Posts</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Apr 4, 2021
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather"></div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://shirinsplayground.netlify.com/2021/04/goodbadugly_ml/">
+                <h3 class="media-heading">The Good, the Bad and the Ugly: how to visualize Machine Learning data</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Apr 4, 2021
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Below you’ll find the complete code and resources used to create the graphs in my talk The Good, the Bad and the Ugly: how to visualize Machine Learning data at this year’s Minds Mastering machines conference. You can find the German slides here:
+ You can find Part 1: The Good, the Bad and the Ugly: how (not) to visualize data here.
+If you have questions or would like to talk about this article (or something else data-related), you can now book 15-minute timeslots with me (it’s free - one slot available per weekday):</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://shirinsplayground.netlify.com/2021/03/update_customer_churn/">
+                <h3 class="media-heading">Update to Code for case study - Customer Churn with Keras/TensorFlow and H2O</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Mar 3, 2021
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">This is an UPDATE to this old post with updated links &amp; descriptions
+This is code that accompanies a book chapter on customer churn that I have written for the German dpunkt Verlag. The book is in German, however.
+The code you find below can be used to recreate all figures and analyses from this book chapter. Because the content is exclusively for the book, my descriptions around the code had to be minimal.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://shirinsplayground.netlify.com/2021/03/kmeans_101/">
+                <h3 class="media-heading">k-Means 101: An introductory guide to k-Means clustering in R</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Mar 3, 2021
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Editor’s note: This is a guest post by Nathaniel Schmucker. He is the founder of The Analyst Code, a blog that provides tools to instill a love of data in individuals of all backgrounds and to empower aspiring analysts.
+Introduction In this post, we will look at:
+ What is a k-Means analysis? How does the k-Means algorithm work? How do we implement k-Means in R?</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://shirinsplayground.netlify.com/2020/10/goodbadugly/">
+                <h3 class="media-heading">The Good, the Bad and the Ugly: how (not) to visualize data</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Oct 10, 2020
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Below you’ll find the complete code used to create the ggplot2 graphs in my talk The Good, the Bad and the Ugly: how (not) to visualize data at this year’s data2day conference. You can find the German slides here:
+ You can also find a German blog article accompanying my talk on codecentric’s blog.
+If you have questions or would like to talk about this article (or something else data-related), you can now book 15-minute timeslots with me (it’s free - one slot available per weekday):</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://shirinsplayground.netlify.com/2020/10/keras_workshop_user20/">
+                <h3 class="media-heading">Video &#43; code from workshop on Deep Learning with Keras and TensorFlow</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Oct 10, 2020
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Workshop material Because this year’s UseR 2020 couldn’t happen as an in-person event, I have been giving my workshop on Deep Learning with Keras and TensorFlow as an online event on Thursday, 8th of October.
+You can now find the full recording of the 2-hour session on YouTube and the notebooks with code on Gitlab.
+
+ 
+If you have questions or would like to talk about this article (or something else data-related), you can now book 15-minute timeslots with me (it’s free - one slot available per weekday):</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://shirinsplayground.netlify.com/2020/09/keras_funct_api/">
+                <h3 class="media-heading">Whose dream is this? When and how to use the Keras Functional API</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Sep 9, 2020
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">I have been working with Keras for a while now, and I’ve also been writing quite a few blogposts about it; the most recent one being an update to image classification using TF 2.0.
+However, in my blogposts I have always been using Keras sequential models and never shown how to use the Functional API. The reason is that the Functional API is usually applied when building more complex models, like multi-input or multi-output models.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://shirinsplayground.netlify.com/2020/09/keras_fruits_update/">
+                <h3 class="media-heading">Update with TF 2.0: Image classification with Keras and TensorFlow</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Sep 9, 2020
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Recently, I have been getting a few comments on my old article on image classification with Keras, saying that they are getting errors with the code. And I have also gotten a few questions about how to use a Keras model to predict on new images (of different size). Instead of replying to them all individually, I decided to write this updated version using recent Keras and TensorFlow versions (all package versions and system information can be found at the bottom of this article, as usual).</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://shirinsplayground.netlify.com/2020/09/baby_weight_app/">
+                <h3 class="media-heading">Baby Weight Shiny app</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Sep 9, 2020
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Alright, this is it: I am officially back! :-D
+I have not written any blogposts for over a year. Last year, I had the cutest baby boy and ever since then, I did not get around to doing much coding. One of the reasons was that, unfortunately, we did not have the easiest of starts with the little one. Feeding problems led to weight gain problems, so we had to weigh him regularly.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://shirinsplayground.netlify.com/2019/06/meetup_july19/">
+                <h3 class="media-heading">Word2Vec Text Mining &amp; Parallelization in R. Join MünsteR for our next meetup!</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jun 6, 2019
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">In our next MünsteR R-user group meetup on Tuesday, July 9th, 2019, we will have two exciting talks about Word2Vec Text Mining &amp; Parallelization in R!
+You can RSVP here: https://www.meetup.com/de-DE/Munster-R-Users-Group/events/262236134/
+ Thorben Hellweg will talk about Parallelization in R. More information tba!
+  Maren Reuter from viadee AG will give an introduction into the functionality and use of the Word2Vec algorithm in R.
+  Text data in its raw form cannot be used as input for machine learning algorithms.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+      </div>
+    </div>
+    <div class="modal-footer">
+      <p class="results-count text-medium"
+         data-message-zero="no post found"
+         data-message-one="1 post found"
+         data-message-other="{n} posts found">
+         90 posts found
+      </p>
+    </div>
+  </div>
+</div>
+    
+  
+    
+    <div id="cover" style="background-image:url('https://shirinsplayground.netlify.com/images/autumn-2789234_1920.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" integrity="sha256-IFHWFEbU2/+wNycDECKgjIRSirRNIDp2acEB5fvdVRU=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js" integrity="sha256-+mpyNVJsNt4rVXCw0F+pAOiB3YxmHgrbJsx4ecPuUaI=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.js" integrity="sha256-vMxgR/7FtLovVA+IPrR7+xTgIgARH7y9VZQnmmi0HDI=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.js" integrity="sha256-N0qFUh7/9vLvia87dDndewmsgsyYoNkdA212tPc+2NI=" crossorigin="anonymous"></script>
+
+
+<script src="https://shirinsplayground.netlify.com/js/script-kr8dyqj6rb6ortyib7whfo9x9p6td6zo8t1v4fdz4ecx5kwybsdlmk1slygn.min.js"></script>
+
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = 'https:\/\/shirinsplayground.netlify.com\/2021\/04\/goodbadugly_ml\/';
+          
+            this.page.identifier = '\/2021\/04\/goodbadugly_ml\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'shirinsplayground';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+    
+  </body>
+</html>
+

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>missing data on Shirin&#39;s playgRound</title>
+    <link>https://shirinsplayground.netlify.com/tags/missing-data/</link>
+    <description>Recent content in missing data on Shirin&#39;s playgRound</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 28 Nov 2017 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/tags/missing-data/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MICE (Multiple Imputation by Chained Equations) in R - sketchnotes from MünsteR Meetup</title>
+      <link>https://shirinsplayground.netlify.com/2017/11/mice_sketchnotes/</link>
+      <pubDate>Tue, 28 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2017/11/mice_sketchnotes/</guid>
+      <description>Last night, the MünsteR R user-group had another great meetup:
+Karin Groothuis-Oudshoorn, Assistant Professor at the University of Twente, presented her R package mice about Multivariate Imputation by Chained Equations.
+It was a very interesting talk and here are my sketchnotes that I took during it:
+MICE talk sketchnotes
+ Here is the link to the paper referenced in my notes: https://www.jstatsoft.org/article/view/v045i03
+ “The mice package implements a method to deal with missing data.</description>
+    </item>
+    
+  </channel>
+</rss>

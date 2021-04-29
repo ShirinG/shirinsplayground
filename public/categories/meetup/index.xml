@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>meetup on Shirin&#39;s playgRound</title>
+    <link>https://shirinsplayground.netlify.com/categories/meetup/</link>
+    <description>Recent content in meetup on Shirin&#39;s playgRound</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 26 Jun 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/categories/meetup/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Word2Vec Text Mining &amp; Parallelization in R. Join MünsteR for our next meetup!</title>
+      <link>https://shirinsplayground.netlify.com/2019/06/meetup_july19/</link>
+      <pubDate>Wed, 26 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2019/06/meetup_july19/</guid>
+      <description>In our next MünsteR R-user group meetup on Tuesday, July 9th, 2019, we will have two exciting talks about Word2Vec Text Mining &amp;amp; Parallelization in R!
+You can RSVP here: https://www.meetup.com/de-DE/Munster-R-Users-Group/events/262236134/
+ Thorben Hellweg will talk about Parallelization in R. More information tba!
+  Maren Reuter from viadee AG will give an introduction into the functionality and use of the Word2Vec algorithm in R.
+  Text data in its raw form cannot be used as input for machine learning algorithms.</description>
+    </item>
+    
+    <item>
+      <title>Getting started with RMarkdown &amp; trying to make it in the world of Kaggle. Join MünsteR for our next meetup!</title>
+      <link>https://shirinsplayground.netlify.com/2019/03/meetup_april19/</link>
+      <pubDate>Wed, 06 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2019/03/meetup_april19/</guid>
+      <description>In our next MünsteR R-user group meetup on Tuesday, April 9th, 2019, we will have two exciting talks: Getting started with RMarkdown and Trying to make it in the world of Kaggle!
+You can RSVP here: http://meetu.ps/e/Gg5th/w54bW/f
+Getting started with RMarkdown  First, Niklas Wulms from the University Hospital, Münster will give an introduction to RMarkdown:
+  He started using R in 2018 and learnt the advantages of using only one framework of free software and code.</description>
+    </item>
+    
+    <item>
+      <title>Don’t reinvent the wheel: making use of shiny extension packages. Join MünsteR for our next meetup!</title>
+      <link>https://shirinsplayground.netlify.com/2019/01/meetup_feb19/</link>
+      <pubDate>Tue, 08 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2019/01/meetup_feb19/</guid>
+      <description>In our next MünsteR R-user group meetup on Tuesday, February 5th, 2019, titled Don’t reinvent the wheel: making use of shiny extension packages., Suthira Owlarn will introduce the shiny package and show how she used it to build an interactive web app for her sequencing datasets.
+You can RSVP here: http://meetu.ps/e/Gg5th/w54bW/f
+ Shiny is a popular R package for building interactive web apps and dashboards – no web development knowledge required!</description>
+    </item>
+    
+    <item>
+      <title>TWIMLAI European Online Meetup about Trust in Predictions of ML Models</title>
+      <link>https://shirinsplayground.netlify.com/2018/11/twimlai_meetup/</link>
+      <pubDate>Tue, 13 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2018/11/twimlai_meetup/</guid>
+      <description> At the upcoming This week in machine learning and AI European online Meetup, I’ll be presenting and leading a discussion about the Anchors paper, the next generation of machine learning interpretability tools. Come and join the fun! :-)
+ Date: Tuesday 4th December 2018 Time: 19:00 PM CET/CEST  Join: https://twimlai.com/meetups/trust-in-predictions-of-ml-models/
+ </description>
+    </item>
+    
+    <item>
+      <title>Slides from my talk at the R-Ladies Meetup about Interpretable Deep Learning with R, Keras and LIME</title>
+      <link>https://shirinsplayground.netlify.com/2018/10/rladieslondon_slides/</link>
+      <pubDate>Wed, 17 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2018/10/rladieslondon_slides/</guid>
+      <description>During my stay in London for the m3 conference, I also gave a talk at the R-Ladies London Meetup on Tuesday, October 16th, about one of my favorite topics: Interpretable Deep Learning with R, Keras and LIME.
+ Keras is a high-level open-source deep learning framework that by default works on top of TensorFlow. Keras is minimalistic, efficient and highly flexible because it works with a modular layer system to define, compile and fit neural networks.</description>
+    </item>
+    
+    <item>
+      <title>Using R to help plan the future of transport. Join MünsteR for our next meetup!</title>
+      <link>https://shirinsplayground.netlify.com/2018/10/meetup_nov18/</link>
+      <pubDate>Wed, 10 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2018/10/meetup_nov18/</guid>
+      <description>In our next MünsteR R-user group meetup on Tuesday, November 20th, 2018, titled Using R to help plan the future of transport, Mark Padgham will provide an overview of several inter-related R packages for analysing urban dynamics.
+You can RSVP here: http://meetu.ps/e/F7zDN/w54bW/f
+ The primary motivation for developing these packages has been their use in Active Transport Futures - a group of researchers and coders striving to aid cities to better plan for futures in which active travel, particularly walking and cycling, plays an increasingly prominent role (lots of open source code at github.</description>
+    </item>
+    
+    <item>
+      <title>Slides from talk: &#39;Decoding The Black Box&#39; at the Frankfurt Data Science Meetup</title>
+      <link>https://shirinsplayground.netlify.com/2018/09/ffm_datascience_meetup_slides/</link>
+      <pubDate>Thu, 27 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2018/09/ffm_datascience_meetup_slides/</guid>
+      <description>On Wednesday, September 26th, I gave a talk about ‘Decoding The Black Box’ at the Frankfurt Data Science Meetup.
+My slides were created with beautiful.ai and can be found here.
+   DECODING THE BLACK BOX
+  And finally we will have with us Dr.Shirin Glander, whom we were inviting for a long time back. Shirin lives in Münster and works as a Data Scientist at codecentric, she has lots of practical experience.</description>
+    </item>
+    
+    <item>
+      <title>I&#39;ll be talking about &#39;Decoding The Black Box&#39; at the Frankfurt Data Science Meetup</title>
+      <link>https://shirinsplayground.netlify.com/2018/09/ffm_datascience_meetup/</link>
+      <pubDate>Wed, 19 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2018/09/ffm_datascience_meetup/</guid>
+      <description>I have yet another Meetup talk to announce:
+On Wednesday, September 26th, I’ll be talking about ‘Decoding The Black Box’ at the Frankfurt Data Science Meetup.
+Particularly cool with this meetup is that they will livestream the event at www.youtube.com/c/FrankfurtDataScience!
+ TALK#2: DECODING THE BLACK BOX
+  And finally we will have with us Dr.Shirin Glander, whom we were inviting for a long time back. Shirin lives in Münster and works as a Data Scientist at codecentric, she has lots of practical experience.</description>
+    </item>
+    
+    <item>
+      <title>I&#39;ll be talking at the R-Ladies Meetup about Interpretable Deep Learning with R, Keras and LIME</title>
+      <link>https://shirinsplayground.netlify.com/2018/09/rladieslondontalk/</link>
+      <pubDate>Mon, 17 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2018/09/rladieslondontalk/</guid>
+      <description>Today I am very happy to announce that during my stay in London for the m3 conference, I’ll also be giving a talk at the R-Ladies London Meetup on Tuesday, October 16th, about one of my favorite topics: Interpretable Deep Learning with R, Keras and LIME.
+You can register via Eventbrite: https://www.eventbrite.co.uk/e/interpretable-deep-learning-with-r-lime-and-keras-tickets-50118369392
+ ABOUT THE TALK
+  Keras is a high-level open-source deep learning framework that by default works on top of TensorFlow.</description>
+    </item>
+    
+    <item>
+      <title>MünsteR Meetup on Blog Mining: Deriving the success of blog posts from metadata and text data.</title>
+      <link>https://shirinsplayground.netlify.com/2018/08/meetup_august18/</link>
+      <pubDate>Wed, 01 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2018/08/meetup_august18/</guid>
+      <description>In our next MünsteR R-user group meetup on Tuesday, August 28th, 2018 Jenny Saatkamp will give a talk titled Blog Mining: Deriving the success of blog posts from metadata and text data. You can RSVP here: http://meetu.ps/e/F7zDN/w54bW/f
+ In our next MünsteR Meetup, Jenny Saatkamp will present her Blog Mining analysis, which is based on 1.500 blog posts from the codecentric company blog (https://blog.codecentric.de/) and makes use of different mining techniques for metadata and text data.</description>
+    </item>
+    
+    <item>
+      <title>Look, something shiny: How to use R Shiny to make Münster traffic data accessible. Join MünsteR for our next meetup!</title>
+      <link>https://shirinsplayground.netlify.com/2018/04/meetup_june18/</link>
+      <pubDate>Thu, 19 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2018/04/meetup_june18/</guid>
+      <description>In our next MünsteR R-user group meetup on Monday, June 11th, 2018 Thomas Kluth and Thorben Jensen will give a talk titled Look, something shiny: How to use R Shiny to make Münster traffic data accessible. You can RSVP here: http://meetu.ps/e/F7zDN/w54bW/f
+ About a year ago, we stumbled upon rich datasets on traffic dynamics of Münster: count data of bikes, cars, and bus passengers of high resolution. Since that day we have been crunching, modeling, and visualizing it.</description>
+    </item>
+    
+    <item>
+      <title>HH Data Science Meetup slides: Explaining complex machine learning models with LIME</title>
+      <link>https://shirinsplayground.netlify.com/2018/04/hh_datascience_meetup_2018_slides/</link>
+      <pubDate>Wed, 18 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2018/04/hh_datascience_meetup_2018_slides/</guid>
+      <description>On April 12th, 2018 I gave a talk about Explaining complex machine learning models with LIME at the Hamburg Data Science Meetup - so if you’re intersted: the slides can be found here: https://www.slideshare.net/ShirinGlander/hh-data-science-meetup-explaining-complex-machine-learning-models-with-lime-94218890
+ Traditional machine learning workflows focus heavily on model training and optimization; the best model is usually chosen via performance measures like accuracy or error and we tend to assume that a model is good enough for deployment if it passes certain thresholds of these performance criteria.</description>
+    </item>
+    
+    <item>
+      <title>Meetup slides: Introducing Deep Learning with Keras</title>
+      <link>https://shirinsplayground.netlify.com/2018/04/ruhrpy_meetup_2018_slides/</link>
+      <pubDate>Wed, 11 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2018/04/ruhrpy_meetup_2018_slides/</guid>
+      <description>On April 4th, 2018 I gave a talk about Deep Learning with Keras at the Ruhr.Py Meetup in Essen, Germany. The talk was not specific to Python, though - so if you’re intersted: the slides can be found here: https://www.slideshare.net/ShirinGlander/ruhrpy-introducing-deep-learning-with-keras-and-python
+  Ruhr.PY - Introducing Deep Learning with Keras and Python  von Shirin Glander  There is also a video recording of my talk, which you can see here: https://youtu.</description>
+    </item>
+    
+    <item>
+      <title>Join MünsteR for our next meetup on deep learning with Keras and R</title>
+      <link>https://shirinsplayground.netlify.com/2018/03/meetup_april18/</link>
+      <pubDate>Wed, 28 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2018/03/meetup_april18/</guid>
+      <description>In our next MünsteR R-user group meetup on Tuesday, April 17th, 2018 Kai Lichtenberg will talk about deep learning with Keras. You can RSVP here: http://meetu.ps/e/DDY1B/w54bW/f
+ Although neural networks have been around for quite a while now, deep learning really just took of a few years ago. It pretty much all started when Alex Krizhevsky and Geoffrey Hinton utterly crushed classic image recognition in the 2012 ImageNet Large Scale Visual Recognition Challenge by implementing a deep neural network with CUDA on graphics cards.</description>
+    </item>
+    
+    <item>
+      <title>My upcoming meetup talks about Deep Learning with Keras and explaining complex Machine Learning Models with LIME</title>
+      <link>https://shirinsplayground.netlify.com/2018/03/meetup_talk_ruhrpy_april_18/</link>
+      <pubDate>Wed, 28 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2018/03/meetup_talk_ruhrpy_april_18/</guid>
+      <description>I’ll be talking about Deep Learning with Keras in R and Python at the following upcoming meetup:
+ Ruhr.Py 2018 on Wednesday, April 4th   Introducing Deep Learning with Keras and Python Keras is a high-level API written in Python for building and prototyping neural networks. It can be used on top of TensorFlow, Theano or CNTK. In this talk we build, train and visualize a Model using Python and Keras - all interactive with Jupyter Notebooks!</description>
+    </item>
+    
+    <item>
+      <title>Join MünsteR for our next meetup on obtaining functional implications of gene expression data with R</title>
+      <link>https://shirinsplayground.netlify.com/2018/01/meetup_march18/</link>
+      <pubDate>Wed, 24 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2018/01/meetup_march18/</guid>
+      <description>In our next MünsteR R-user group meetup on March 5th, 2018 Frank Rühle will talk about bioinformatics and how to analyse genome data.
+You can RSVP here: http://meetu.ps/e/DDY1B/w54bW/f
+ Next-Generation sequencing and array-based technologies provided a plethora of gene expression data in the public genomics databases. But how to get meaningful information and functional implications out of this vast amount of data? Various R-packages have been published by the Bioconductor user community for distinct kinds of analysis strategies.</description>
+    </item>
+    
+    <item>
+      <title>MICE (Multiple Imputation by Chained Equations) in R - sketchnotes from MünsteR Meetup</title>
+      <link>https://shirinsplayground.netlify.com/2017/11/mice_sketchnotes/</link>
+      <pubDate>Tue, 28 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2017/11/mice_sketchnotes/</guid>
+      <description>Last night, the MünsteR R user-group had another great meetup:
+Karin Groothuis-Oudshoorn, Assistant Professor at the University of Twente, presented her R package mice about Multivariate Imputation by Chained Equations.
+It was a very interesting talk and here are my sketchnotes that I took during it:
+MICE talk sketchnotes
+ Here is the link to the paper referenced in my notes: https://www.jstatsoft.org/article/view/v045i03
+ “The mice package implements a method to deal with missing data.</description>
+    </item>
+    
+  </channel>
+</rss>

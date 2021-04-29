@@ -1,15 +1,22 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Webinar on Shirin&#39;s playgRound</title>
+    <title>webinar on Shirin&#39;s playgRound</title>
     <link>https://shirinsplayground.netlify.com/categories/webinar/</link>
-    <description>Recent content in Webinar on Shirin&#39;s playgRound</description>
+    <description>Recent content in webinar on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 20 Sep 2017 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://shirinsplayground.netlify.com/categories/webinar/index.xml" rel="self" type="application/rss+xml" />
-    
+    <lastBuildDate>Tue, 21 Aug 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/categories/webinar/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Slides from my SAP webinar: Explaining Keras Image Classification Models with LIME</title>
+      <link>https://shirinsplayground.netlify.com/2018/08/sap_webinar_slides/</link>
+      <pubDate>Tue, 21 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2018/08/sap_webinar_slides/</guid>
+      <description>Here I am sharing the slides for a webinar I gave for SAP about Explaining Keras Image Classification Models with LIME.
+Slides can be found here: https://www.slideshare.net/ShirinGlander/sap-webinar-explaining-keras-image-classification-models-with-lime
+ Keras is a high-level open-source deep learning framework that by default works on top of TensorFlow. Keras is minimalistic, efficient and highly flexible because it works with a modular layer system to define, compile and fit neural networks. It has been written in Python but can also be used from within R.</description>
+    </item>
     
     <item>
       <title>From Biology to Industry. A Blogger’s Journey to Data Science.</title>

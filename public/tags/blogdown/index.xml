@@ -1,16 +1,12 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Blogdown on Shirin&#39;s playgRound</title>
+    <title>blogdown on Shirin&#39;s playgRound</title>
     <link>https://shirinsplayground.netlify.com/tags/blogdown/</link>
-    <description>Recent content in Blogdown on Shirin&#39;s playgRound</description>
+    <description>Recent content in blogdown on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 19 Sep 2017 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://shirinsplayground.netlify.com/tags/blogdown/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Tue, 19 Sep 2017 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/tags/blogdown/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Why I use R for Data Science - An Ode to R</title>
       <link>https://shirinsplayground.netlify.com/2017/09/ode_to_r/</link>

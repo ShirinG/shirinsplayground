@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>predictive processing on Shirin&#39;s playgRound</title>
+    <link>https://shirinsplayground.netlify.com/tags/predictive-processing/</link>
+    <description>Recent content in predictive processing on Shirin&#39;s playgRound</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 14 Jan 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/tags/predictive-processing/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Sketchnotes from TWiML&amp;AI #91: Philosophy of Intelligence with Matthew Crosby</title>
+      <link>https://shirinsplayground.netlify.com/2018/01/twimlai91/</link>
+      <pubDate>Sun, 14 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2018/01/twimlai91/</guid>
+      <description>These are my sketchnotes for Sam Charrington’s podcast This Week in Machine Learning and AI about Philosophy of Intelligence with Matthew Crosby: https://twimlai.com/twiml-talk-92-learning-state-representations-yael-niv/
+Sketchnotes from TWiMLAI talk #92: Philosophy of Intelligence with Matthew Crosby
+ You can listen to the podcast here.
+ This week on the podcast we’re featuring a series of conversations from the NIPs conference in Long Beach, California. I attended a bunch of talks and learned a ton, organized an impromptu roundtable on Building AI Products, and met a bunch of great people, including some former TWiML Talk guests.</description>
+    </item>
+    
+  </channel>
+</rss>

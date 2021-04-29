@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Python on Shirin&#39;s playgRound</title>
+    <link>https://shirinsplayground.netlify.com/categories/python/</link>
+    <description>Recent content in Python on Shirin&#39;s playgRound</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 18 Apr 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/categories/python/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>HH Data Science Meetup slides: Explaining complex machine learning models with LIME</title>
+      <link>https://shirinsplayground.netlify.com/2018/04/hh_datascience_meetup_2018_slides/</link>
+      <pubDate>Wed, 18 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2018/04/hh_datascience_meetup_2018_slides/</guid>
+      <description>On April 12th, 2018 I gave a talk about Explaining complex machine learning models with LIME at the Hamburg Data Science Meetup - so if you’re intersted: the slides can be found here: https://www.slideshare.net/ShirinGlander/hh-data-science-meetup-explaining-complex-machine-learning-models-with-lime-94218890
+ Traditional machine learning workflows focus heavily on model training and optimization; the best model is usually chosen via performance measures like accuracy or error and we tend to assume that a model is good enough for deployment if it passes certain thresholds of these performance criteria.</description>
+    </item>
+    
+    <item>
+      <title>Meetup slides: Introducing Deep Learning with Keras</title>
+      <link>https://shirinsplayground.netlify.com/2018/04/ruhrpy_meetup_2018_slides/</link>
+      <pubDate>Wed, 11 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2018/04/ruhrpy_meetup_2018_slides/</guid>
+      <description>On April 4th, 2018 I gave a talk about Deep Learning with Keras at the Ruhr.Py Meetup in Essen, Germany. The talk was not specific to Python, though - so if you’re intersted: the slides can be found here: https://www.slideshare.net/ShirinGlander/ruhrpy-introducing-deep-learning-with-keras-and-python
+  Ruhr.PY - Introducing Deep Learning with Keras and Python  von Shirin Glander  There is also a video recording of my talk, which you can see here: https://youtu.</description>
+    </item>
+    
+    <item>
+      <title>Registration now open for workshop on Deep Learning with Keras and TensorFlow using R</title>
+      <link>https://shirinsplayground.netlify.com/2017/12/keras_sketchnotes/</link>
+      <pubDate>Wed, 20 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2017/12/keras_sketchnotes/</guid>
+      <description>Recently, I announced my workshop on Deep Learning with Keras and TensorFlow.
+The next dates for it are January 18th and 19th in Solingen, Germany.
+You can register now by following this link: https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow
+If any non-German-speaking people want to attend, I’m happy to give the course in English!
+Contact me if you have further questions.
+As a little bonus, I am also sharing my sketch notes from a Podcast I listened to when first getting into Keras:</description>
+    </item>
+    
+    <item>
+      <title>Explaining Predictions of Machine Learning Models with LIME - Münster Data Science Meetup</title>
+      <link>https://shirinsplayground.netlify.com/2017/12/lime_sketchnotes/</link>
+      <pubDate>Tue, 12 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2017/12/lime_sketchnotes/</guid>
+      <description>Slides from Münster Data Science Meetup These are my slides from the Münster Data Science Meetup on December 12th, 2017.
+knitr::include_url(&amp;quot;https://shiring.github.io/netlify_images/lime_meetup_slides_wvsh6s.pdf&amp;quot;)  
+My sketchnotes were collected from these two podcasts:
+ https://twimlai.com/twiml-talk-7-carlos-guestrin-explaining-predictions-machine-learning-models/ https://dataskeptic.com/blog/episodes/2016/trusting-machine-learning-models-with-lime  Sketchnotes: TWiML Talk #7 with Carlos Guestrin – Explaining the Predictions of Machine Learning Models &amp;amp; Data Skeptic Podcast - Trusting Machine Learning Models with Lime
+  Example Code  the following libraries were loaded:  library(tidyverse) # for tidy data analysis library(farff) # for reading arff file library(missForest) # for imputing missing values library(dummies) # for creating dummy variables library(caret) # for modeling library(lime) # for explaining predictions Data The Chronic Kidney Disease dataset was downloaded from UC Irvine’s Machine Learning repository: http://archive.</description>
+    </item>
+    
+  </channel>
+</rss>

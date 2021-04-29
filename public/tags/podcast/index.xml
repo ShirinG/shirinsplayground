@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>podcast on Shirin&#39;s playgRound</title>
+    <link>https://shirinsplayground.netlify.com/tags/podcast/</link>
+    <description>Recent content in podcast on Shirin&#39;s playgRound</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 01 Feb 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/tags/podcast/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>I talk about machine learning with Daniel Mies (Podcast in German, though)</title>
+      <link>https://shirinsplayground.netlify.com/2018/02/herr_mies_wills_wissen/</link>
+      <pubDate>Thu, 01 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2018/02/herr_mies_wills_wissen/</guid>
+      <description>For those of you out there who speak German:
+I was interviewed for a tech podcast where I talked about machine learning, neural nets, why I love R and Rstudio and how I became a Data Scientist.
+You can download and listen to the podcast here: https://mies.me/2018/01/31/hmww17-machine-learning-mit-dr-shirin-glander/
+  In der aktuellen Episode gibt Dr. Shirin Glander (Twitter, Homepage) uns ein paar Einblicke in das Thema Machine Learning. Wir klären zunächst, was Machine Learning ist und welche Möglichkeiten es bietet bevor wir etwas mehr in die Tiefe gehen.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>neural nets on Shirin&#39;s playgRound</title>
+    <link>https://shirinsplayground.netlify.com/tags/neural-nets/</link>
+    <description>Recent content in neural nets on Shirin&#39;s playgRound</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 06 Nov 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/tags/neural-nets/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>&#39;How do neural nets learn?&#39; A step by step explanation using the H2O Deep Learning algorithm.</title>
+      <link>https://shirinsplayground.netlify.com/2018/11/neural_nets_explained/</link>
+      <pubDate>Tue, 06 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2018/11/neural_nets_explained/</guid>
+      <description>In my last blogpost about Random Forests I introduced the codecentric.ai Bootcamp. The next part I published was about Neural Networks and Deep Learning. Every video of our bootcamp will have example code and tasks to promote hands-on learning. While the practical parts of the bootcamp will be using Python, below you will find the English R version of this Neural Nets Practical Example, where I explain how neural nets learn and how the concepts and techniques translate to training neural nets in R with the H2O Deep Learning function.</description>
+    </item>
+    
+    <item>
+      <title>Code for Workshop: Introduction to Machine Learning with R</title>
+      <link>https://shirinsplayground.netlify.com/2018/06/intro_to_ml_workshop_heidelberg/</link>
+      <pubDate>Fri, 29 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2018/06/intro_to_ml_workshop_heidelberg/</guid>
+      <description>These are the slides from my workshop: Introduction to Machine Learning with R which I gave at the University of Heidelberg, Germany on June 28th 2018. The entire code accompanying the workshop can be found below the video.
+The workshop covered the basics of machine learning. With an example dataset I went through a standard machine learning workflow in R with the packages caret and h2o:
+ reading in data exploratory data analysis missingness feature engineering training and test split model training with Random Forests, Gradient Boosting, Neural Nets, etc.</description>
+    </item>
+    
+    <item>
+      <title>My upcoming meetup talks about Deep Learning with Keras and explaining complex Machine Learning Models with LIME</title>
+      <link>https://shirinsplayground.netlify.com/2018/03/meetup_talk_ruhrpy_april_18/</link>
+      <pubDate>Wed, 28 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2018/03/meetup_talk_ruhrpy_april_18/</guid>
+      <description>I’ll be talking about Deep Learning with Keras in R and Python at the following upcoming meetup:
+ Ruhr.Py 2018 on Wednesday, April 4th   Introducing Deep Learning with Keras and Python Keras is a high-level API written in Python for building and prototyping neural networks. It can be used on top of TensorFlow, Theano or CNTK. In this talk we build, train and visualize a Model using Python and Keras - all interactive with Jupyter Notebooks!</description>
+    </item>
+    
+    <item>
+      <title>I talk about machine learning with Daniel Mies (Podcast in German, though)</title>
+      <link>https://shirinsplayground.netlify.com/2018/02/herr_mies_wills_wissen/</link>
+      <pubDate>Thu, 01 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2018/02/herr_mies_wills_wissen/</guid>
+      <description>For those of you out there who speak German:
+I was interviewed for a tech podcast where I talked about machine learning, neural nets, why I love R and Rstudio and how I became a Data Scientist.
+You can download and listen to the podcast here: https://mies.me/2018/01/31/hmww17-machine-learning-mit-dr-shirin-glander/
+  In der aktuellen Episode gibt Dr. Shirin Glander (Twitter, Homepage) uns ein paar Einblicke in das Thema Machine Learning. Wir klären zunächst, was Machine Learning ist und welche Möglichkeiten es bietet bevor wir etwas mehr in die Tiefe gehen.</description>
+    </item>
+    
+  </channel>
+</rss>

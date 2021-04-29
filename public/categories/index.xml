@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Shirin&#39;s playgRound</title>
@@ -6,40 +6,243 @@
     <description>Recent content in Categories on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 01 Jul 2017 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://shirinsplayground.netlify.com/categories/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Tue, 27 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Archive</title>
-      <link>https://shirinsplayground.netlify.com/categories/archive/</link>
-      <pubDate>Sat, 01 Jul 2017 00:00:00 +0000</pubDate>
+      <title>R</title>
+      <link>https://shirinsplayground.netlify.com/categories/r/</link>
+      <pubDate>Tue, 27 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/categories/archive/</guid>
+      <guid>https://shirinsplayground.netlify.com/categories/r/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Blogdown</title>
-      <link>https://shirinsplayground.netlify.com/categories/blogdown/</link>
-      <pubDate>Tue, 12 Sep 2017 00:00:00 +0000</pubDate>
+      <title>keras</title>
+      <link>https://shirinsplayground.netlify.com/categories/keras/</link>
+      <pubDate>Mon, 19 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/categories/blogdown/</guid>
+      <guid>https://shirinsplayground.netlify.com/categories/keras/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Conference</title>
+      <title>meetup</title>
+      <link>https://shirinsplayground.netlify.com/categories/meetup/</link>
+      <pubDate>Wed, 26 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/categories/meetup/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>MünsteR</title>
+      <link>https://shirinsplayground.netlify.com/categories/m%C3%BCnster/</link>
+      <pubDate>Wed, 26 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/categories/m%C3%BCnster/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>DataCamp</title>
+      <link>https://shirinsplayground.netlify.com/categories/datacamp/</link>
+      <pubDate>Sun, 21 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/categories/datacamp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>codecentric.ai</title>
+      <link>https://shirinsplayground.netlify.com/categories/codecentric.ai/</link>
+      <pubDate>Fri, 08 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/categories/codecentric.ai/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>machine learning</title>
+      <link>https://shirinsplayground.netlify.com/categories/machine-learning/</link>
+      <pubDate>Wed, 09 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/categories/machine-learning/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>workshop</title>
+      <link>https://shirinsplayground.netlify.com/categories/workshop/</link>
+      <pubDate>Mon, 07 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/categories/workshop/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>gradient boosting</title>
+      <link>https://shirinsplayground.netlify.com/categories/gradient-boosting/</link>
+      <pubDate>Thu, 29 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/categories/gradient-boosting/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>xgboost</title>
+      <link>https://shirinsplayground.netlify.com/categories/xgboost/</link>
+      <pubDate>Thu, 29 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/categories/xgboost/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>slides</title>
+      <link>https://shirinsplayground.netlify.com/categories/slides/</link>
+      <pubDate>Tue, 20 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/categories/slides/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>neural nets</title>
+      <link>https://shirinsplayground.netlify.com/categories/neural-nets/</link>
+      <pubDate>Tue, 06 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/categories/neural-nets/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>random forest</title>
+      <link>https://shirinsplayground.netlify.com/categories/random-forest/</link>
+      <pubDate>Tue, 30 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/categories/random-forest/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>R-Ladies</title>
+      <link>https://shirinsplayground.netlify.com/categories/r-ladies/</link>
+      <pubDate>Wed, 17 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/categories/r-ladies/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>conferences</title>
+      <link>https://shirinsplayground.netlify.com/categories/conferences/</link>
+      <pubDate>Tue, 16 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/categories/conferences/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>sketchnotes</title>
+      <link>https://shirinsplayground.netlify.com/categories/sketchnotes/</link>
+      <pubDate>Fri, 12 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/categories/sketchnotes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>twimlai</title>
+      <link>https://shirinsplayground.netlify.com/categories/twimlai/</link>
+      <pubDate>Fri, 12 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/categories/twimlai/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>conference</title>
       <link>https://shirinsplayground.netlify.com/categories/conference/</link>
-      <pubDate>Thu, 28 Sep 2017 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 29 Aug 2018 00:00:00 +0000</pubDate>
       
       <guid>https://shirinsplayground.netlify.com/categories/conference/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Data2day</title>
+      <title>jax</title>
+      <link>https://shirinsplayground.netlify.com/categories/jax/</link>
+      <pubDate>Wed, 29 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/categories/jax/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>webinar</title>
+      <link>https://shirinsplayground.netlify.com/categories/webinar/</link>
+      <pubDate>Tue, 21 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/categories/webinar/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>LIME</title>
+      <link>https://shirinsplayground.netlify.com/categories/lime/</link>
+      <pubDate>Wed, 18 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/categories/lime/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Python</title>
+      <link>https://shirinsplayground.netlify.com/categories/python/</link>
+      <pubDate>Wed, 18 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/categories/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>network</title>
+      <link>https://shirinsplayground.netlify.com/categories/network/</link>
+      <pubDate>Sun, 04 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/categories/network/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>m3</title>
+      <link>https://shirinsplayground.netlify.com/categories/m3/</link>
+      <pubDate>Thu, 01 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/categories/m3/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>podcast</title>
+      <link>https://shirinsplayground.netlify.com/categories/podcast/</link>
+      <pubDate>Thu, 01 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/categories/podcast/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>codecentric</title>
+      <link>https://shirinsplayground.netlify.com/categories/codecentric/</link>
+      <pubDate>Wed, 10 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/categories/codecentric/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>data2day</title>
       <link>https://shirinsplayground.netlify.com/categories/data2day/</link>
       <pubDate>Thu, 28 Sep 2017 00:00:00 +0000</pubDate>
       
@@ -48,7 +251,16 @@
     </item>
     
     <item>
-      <title>Github</title>
+      <title>blogdown</title>
+      <link>https://shirinsplayground.netlify.com/categories/blogdown/</link>
+      <pubDate>Tue, 12 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/categories/blogdown/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>github</title>
       <link>https://shirinsplayground.netlify.com/categories/github/</link>
       <pubDate>Mon, 04 Sep 2017 00:00:00 +0000</pubDate>
       
@@ -57,7 +269,7 @@
     </item>
     
     <item>
-      <title>Gitlab</title>
+      <title>gitlab</title>
       <link>https://shirinsplayground.netlify.com/categories/gitlab/</link>
       <pubDate>Mon, 04 Sep 2017 00:00:00 +0000</pubDate>
       
@@ -66,25 +278,7 @@
     </item>
     
     <item>
-      <title>Machine Learning</title>
-      <link>https://shirinsplayground.netlify.com/categories/machine-learning/</link>
-      <pubDate>Wed, 06 Sep 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://shirinsplayground.netlify.com/categories/machine-learning/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>R</title>
-      <link>https://shirinsplayground.netlify.com/categories/r/</link>
-      <pubDate>Thu, 02 Nov 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://shirinsplayground.netlify.com/categories/r/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Text Analysis</title>
+      <title>text analysis</title>
       <link>https://shirinsplayground.netlify.com/categories/text-analysis/</link>
       <pubDate>Fri, 28 Jul 2017 00:00:00 +0000</pubDate>
       
@@ -93,11 +287,11 @@
     </item>
     
     <item>
-      <title>Webinar</title>
-      <link>https://shirinsplayground.netlify.com/categories/webinar/</link>
-      <pubDate>Wed, 20 Sep 2017 00:00:00 +0000</pubDate>
+      <title>archive</title>
+      <link>https://shirinsplayground.netlify.com/categories/archive/</link>
+      <pubDate>Sat, 01 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/categories/webinar/</guid>
+      <guid>https://shirinsplayground.netlify.com/categories/archive/</guid>
       <description></description>
     </item>
     

@@ -21,7 +21,7 @@
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="generator" content="Hugo 0.27 with theme Tranquilpeak 0.4.1-BETA">
+    <meta name="generator" content="Hugo 0.82.1 with theme Tranquilpeak 0.4.1-BETA">
     <title>Explaining Black-Box Machine Learning Models - Code Part 1: tabular data &#43; caret &#43; iml</title>
     <meta name="author" content="Dr. Shirin Elsinghorst">
     <meta name="keywords" content=", R">
@@ -58,7 +58,7 @@ Explaining supervised classification models built on tabular data using caret an
     
 
     
-      <meta property="og:image" content="/post/2018-07-20_explaining_ml_models_code_caret_iml_files/figure-html/eda_plots-1.png">
+      <meta property="og:image" content="https://shirinsplayground.netlify.com/post/2018-07-20_explaining_ml_models_code_caret_iml_files/figure-html/eda_plots-1.png">
     
     
     
@@ -71,22 +71,24 @@ Explaining supervised classification models built on tabular data using caret an
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
     
     
-    <link rel="stylesheet" href="/css/style-hbs5om8csx9a8yrv5hnhpi2qqdv4ykuslajwbramhqxvleqbfklxgek50hye.min.css" />
+    <link rel="stylesheet" href="https://shirinsplayground.netlify.com/css/style-hbs5om8csx9a8yrv5hnhpi2qqdv4ykuslajwbramhqxvleqbfklxgek50hye.min.css" />
     
     
 
     
       
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-ga('create', 'UA-86119417-1', 'auto');
-ga('send', 'pageview');
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-86119417-1', 'auto');
+	
+	ga('send', 'pageview');
+}
 </script>
-
     
     
   </head>
@@ -96,12 +98,12 @@ ga('send', 'pageview');
       <header id="header" data-behavior="4">
   <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
   <div class="header-title">
-    <a class="header-title-link" href="/">Shirin&#39;s playgRound</a>
+    <a class="header-title-link" href="https://shirinsplayground.netlify.com/">Shirin&#39;s playgRound</a>
   </div>
   
     
       <a class="header-right-picture "
-         href="/#about">
+         href="https://shirinsplayground.netlify.com/#about">
     
     
     
@@ -119,7 +121,7 @@ ga('send', 'pageview');
       <div class="sidebar-profile">
         <h1 class="sidebar-profile-title">Explaining Black-Box Machine Learning Models - Code Part 1: tabular data &#43; caret &#43; iml</h1>
         <a href="https://blog.feedspot.com/r_programming_blogs/" rel="nofollow" title="R Programming Blogs"><img alt="R Programming Blogs" src="https://blog.feedspot.com/wp-content/uploads/2018/04/r_program_216px.png?x20694"/></a>
-        <a href="/#about">
+        <a href="https://shirinsplayground.netlify.com/#about">
           <img class="sidebar-profile-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=110" alt="Author&#39;s picture" />
         </a>
         <h4 class="sidebar-profile-name">Dr. Shirin Elsinghorst</h4>
@@ -132,7 +134,7 @@ ga('send', 'pageview');
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/">
+      <a class="sidebar-button-link " href="https://shirinsplayground.netlify.com/">
     
       <i class="sidebar-button-icon fa fa-lg fa-home"></i>
       
@@ -142,7 +144,7 @@ ga('send', 'pageview');
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/categories/">
+      <a class="sidebar-button-link " href="https://shirinsplayground.netlify.com/categories/">
     
       <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
       
@@ -152,7 +154,7 @@ ga('send', 'pageview');
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/tags/">
+      <a class="sidebar-button-link " href="https://shirinsplayground.netlify.com/tags/">
     
       <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
       
@@ -162,7 +164,7 @@ ga('send', 'pageview');
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/page/about/">
+      <a class="sidebar-button-link " href="https://shirinsplayground.netlify.com/page/about/">
     
       <i class="sidebar-button-icon fa fa-lg fa-question"></i>
       
@@ -172,7 +174,7 @@ ga('send', 'pageview');
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/page/bookme/">
+      <a class="sidebar-button-link " href="https://shirinsplayground.netlify.com/page/bookme/">
     
       <i class="sidebar-button-icon fa fa-lg fa-calendar"></i>
       
@@ -182,7 +184,7 @@ ga('send', 'pageview');
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/page/conferences_podcasts_webinars/">
+      <a class="sidebar-button-link " href="https://shirinsplayground.netlify.com/page/conferences_podcasts_webinars/">
     
       <i class="sidebar-button-icon fa fa-lg fa-bullhorn"></i>
       
@@ -192,7 +194,7 @@ ga('send', 'pageview');
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/archives/">
+      <a class="sidebar-button-link " href="https://shirinsplayground.netlify.com/archives/">
     
       <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
       
@@ -202,7 +204,7 @@ ga('send', 'pageview');
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/index.xml">
+      <a class="sidebar-button-link " href="https://shirinsplayground.netlify.com/index.xml">
     
       <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
       
@@ -216,7 +218,7 @@ ga('send', 'pageview');
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://shiring.github.io/">
+      <a class="sidebar-button-link " href="https://shiring.github.io/" target="_blank" rel="noopener">
     
       <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
       
@@ -226,7 +228,7 @@ ga('send', 'pageview');
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://github.com/ShirinG">
+      <a class="sidebar-button-link " href="https://github.com/ShirinG" target="_blank" rel="noopener">
     
       <i class="sidebar-button-icon fa fa-lg fa-github"></i>
       
@@ -236,7 +238,7 @@ ga('send', 'pageview');
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://stackoverflow.com/users/6623620/shirin-glander">
+      <a class="sidebar-button-link " href="https://stackoverflow.com/users/6623620/shirin-glander" target="_blank" rel="noopener">
     
       <i class="sidebar-button-icon fa fa-lg fa-stack-overflow"></i>
       
@@ -246,7 +248,7 @@ ga('send', 'pageview');
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://twitter.com/ShirinGlander">
+      <a class="sidebar-button-link " href="https://twitter.com/ShirinGlander" target="_blank" rel="noopener">
     
       <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
       
@@ -256,7 +258,7 @@ ga('send', 'pageview');
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://www.linkedin.com/in/shirin-e-01120881//">
+      <a class="sidebar-button-link " href="https://www.linkedin.com/in/shirin-e-01120881//" target="_blank" rel="noopener">
     
       <i class="sidebar-button-icon fa fa-lg fa-linkedin"></i>
       
@@ -266,7 +268,7 @@ ga('send', 'pageview');
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://www.xing.com/profile/Shirin_Elsinghorst/cv">
+      <a class="sidebar-button-link " href="https://www.xing.com/profile/Shirin_Elsinghorst/cv" target="_blank" rel="noopener">
     
       <i class="sidebar-button-icon fa fa-lg fa-xing"></i>
       
@@ -276,7 +278,7 @@ ga('send', 'pageview');
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://www.meetup.com/Munster-R-Users-Group">
+      <a class="sidebar-button-link " href="https://www.meetup.com/Munster-R-Users-Group" target="_blank" rel="noopener">
     
       <i class="sidebar-button-icon fa fa-lg fa-meetup"></i>
       
@@ -290,7 +292,7 @@ ga('send', 'pageview');
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://www.r-bloggers.com/">
+      <a class="sidebar-button-link " href="https://www.r-bloggers.com/" target="_blank" rel="noopener">
     
       <i class="sidebar-button-icon fa fa-lg fa-book"></i>
       
@@ -300,7 +302,7 @@ ga('send', 'pageview');
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://www.r-users.com/">
+      <a class="sidebar-button-link " href="https://www.r-users.com/" target="_blank" rel="noopener">
     
       <i class="sidebar-button-icon fa fa-lg fa-book"></i>
       
@@ -310,7 +312,7 @@ ga('send', 'pageview');
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://www.womentech.net/women-tech-conference?join=ODMzOQ==">
+      <a class="sidebar-button-link " href="https://www.womentech.net/women-tech-conference?join=ODMzOQ==" target="_blank" rel="noopener">
     
       <i class="sidebar-button-icon fa fa-lg fa-wifi"></i>
       
@@ -320,7 +322,7 @@ ga('send', 'pageview');
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://www.codecentric.de/kuenstliche-intelligenz/">
+      <a class="sidebar-button-link " href="https://www.codecentric.de/kuenstliche-intelligenz/" target="_blank" rel="noopener">
     
       <i class="sidebar-button-icon fa fa-lg fa-angle-double-right"></i>
       
@@ -362,7 +364,7 @@ ga('send', 'pageview');
   
     <span>in</span>
     
-      <a class="category-link" href="/categories/r">R</a>
+      <a class="category-link" href="https://shirinsplayground.netlify.com/categories/r">R</a>
     
   
 
@@ -373,7 +375,10 @@ ga('send', 'pageview');
           
           <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
-              <p>This is code that will encompany an article that will appear in a special edition of a German IT magazine. The article is about explaining black-box machine learning models. In that article I’m showcasing three practical examples:</p>
+              
+
+
+<p>This is code that will encompany an article that will appear in a special edition of a German IT magazine. The article is about explaining black-box machine learning models. In that article I’m showcasing three practical examples:</p>
 <p><br></p>
 <ol style="list-style-type: decimal">
 <li>Explaining supervised classification models built on tabular data using <code>caret</code> and the <code>iml</code> package</li>
@@ -469,7 +474,7 @@ glimpse(wine_data)</code></pre>
     geom_density_ridges(alpha = 0.8) +
     guides(fill = FALSE, color = FALSE)</code></pre>
 <pre class="r"><code>grid.arrange(p1, p2, ncol = 2, widths = c(0.3, 0.7))</code></pre>
-<p><img src="/post/2018-07-20_explaining_ml_models_code_caret_iml_files/figure-html/eda_plots-1.png" width="960" /></p>
+<p><img src="https://shirinsplayground.netlify.com/post/2018-07-20_explaining_ml_models_code_caret_iml_files/figure-html/eda_plots-1.png" width="960" /></p>
 </div>
 <div id="model" class="section level3">
 <h3>Model</h3>
@@ -581,7 +586,7 @@ p2 &lt;- roc_imp %&gt;%
     geom_bar(stat = &quot;identity&quot;, fill = &quot;#1F77B4&quot;, alpha = 0.8) +
     coord_flip()</code></pre>
 <pre class="r"><code>grid.arrange(p1, p2, ncol = 2, widths = c(0.5, 0.5))</code></pre>
-<p><img src="/post/2018-07-20_explaining_ml_models_code_caret_iml_files/figure-html/feature_imp_plots-1.png" width="960" /></p>
+<p><img src="https://shirinsplayground.netlify.com/post/2018-07-20_explaining_ml_models_code_caret_iml_files/figure-html/feature_imp_plots-1.png" width="960" /></p>
 </div>
 <div id="iml" class="section level4">
 <h4>iml</h4>
@@ -639,10 +644,10 @@ glimpse(pdp_obj$results)</code></pre>
 <p>“The partial dependence plot calculates and plots the dependence of f(X) on a single or two features. It’s the aggregate of all individual conditional expectation curves, that describe how, for a single observation, the prediction changes when the feature changes.” iml help for <code>Partial</code></p>
 </blockquote>
 <pre class="r"><code>pdp_obj$plot()</code></pre>
-<p><img src="/post/2018-07-20_explaining_ml_models_code_caret_iml_files/figure-html/pd_plots-1.png" width="960" /></p>
+<p><img src="https://shirinsplayground.netlify.com/post/2018-07-20_explaining_ml_models_code_caret_iml_files/figure-html/pd_plots-1.png" width="960" /></p>
 <pre class="r"><code>pdp_obj2 &lt;- Partial$new(predictor, feature = c(&quot;sulphates&quot;, &quot;pH&quot;))
 pdp_obj2$plot()</code></pre>
-<p><img src="/post/2018-07-20_explaining_ml_models_code_caret_iml_files/figure-html/pd_plots_2-1.png" width="960" /></p>
+<p><img src="https://shirinsplayground.netlify.com/post/2018-07-20_explaining_ml_models_code_caret_iml_files/figure-html/pd_plots_2-1.png" width="960" /></p>
 </div>
 <div id="feature-interaction" class="section level5">
 <h5>Feature interaction</h5>
@@ -659,7 +664,7 @@ interact$results %&gt;%
     scale_fill_tableau() +
     coord_flip() +
     guides(fill = FALSE)</code></pre>
-<p><img src="/post/2018-07-20_explaining_ml_models_code_caret_iml_files/figure-html/interaction_plot-1.png" width="672" /></p>
+<p><img src="https://shirinsplayground.netlify.com/post/2018-07-20_explaining_ml_models_code_caret_iml_files/figure-html/interaction_plot-1.png" width="672" /></p>
 </div>
 <div id="tree-surrogate" class="section level5">
 <h5>Tree Surrogate</h5>
@@ -681,7 +686,7 @@ tree$results %&gt;%
     geom_bar(alpha = 0.8) +
     scale_fill_tableau() +
     guides(fill = FALSE)</code></pre>
-<p><img src="/post/2018-07-20_explaining_ml_models_code_caret_iml_files/figure-html/tree_surr_plot-1.png" width="960" /></p>
+<p><img src="https://shirinsplayground.netlify.com/post/2018-07-20_explaining_ml_models_code_caret_iml_files/figure-html/tree_surr_plot-1.png" width="960" /></p>
 </div>
 <div id="localmodel-local-interpretable-model-agnostic-explanations" class="section level5">
 <h5>LocalModel: Local Interpretable Model-agnostic Explanations</h5>
@@ -726,7 +731,7 @@ p2 &lt;- lime_explain$results %&gt;%
     labs(title = paste0(&quot;Test case #&quot;, i)) +
     guides(fill = FALSE)</code></pre>
 <pre class="r"><code>grid.arrange(p1, p2, ncol = 2)</code></pre>
-<p><img src="/post/2018-07-20_explaining_ml_models_code_caret_iml_files/figure-html/lime_plot_1-1.png" width="960" /></p>
+<p><img src="https://shirinsplayground.netlify.com/post/2018-07-20_explaining_ml_models_code_caret_iml_files/figure-html/lime_plot_1-1.png" width="960" /></p>
 </div>
 <div id="shapley-value-for-explaining-single-predictions" class="section level5">
 <h5>Shapley value for explaining single predictions</h5>
@@ -759,7 +764,7 @@ shapley$results %&gt;%
     scale_fill_tableau() +
     coord_flip() +
     guides(fill = FALSE)</code></pre>
-<p><img src="/post/2018-07-20_explaining_ml_models_code_caret_iml_files/figure-html/shapley_plot-1.png" width="672" /></p>
+<p><img src="https://shirinsplayground.netlify.com/post/2018-07-20_explaining_ml_models_code_caret_iml_files/figure-html/shapley_plot-1.png" width="672" /></p>
 </div>
 </div>
 <div id="breakdown" class="section level4">
@@ -803,10 +808,10 @@ data.frame(y = br$contribution,
   ggplot(aes(x = reorder(x, y), y = y)) +
     geom_bar(stat = &quot;identity&quot;, fill = &quot;#1F77B4&quot;, alpha = 0.8) +
     coord_flip()</code></pre>
-<p><img src="/post/2018-07-20_explaining_ml_models_code_caret_iml_files/figure-html/breakdown_plot_1-1.png" width="672" /></p>
+<p><img src="https://shirinsplayground.netlify.com/post/2018-07-20_explaining_ml_models_code_caret_iml_files/figure-html/breakdown_plot_1-1.png" width="672" /></p>
 <p>If we set <code>keep_distributions = TRUE</code>, we can plot these distributions of partial predictions, as well as the average.</p>
 <pre class="r"><code>plot(br, plot_distributions = TRUE)</code></pre>
-<p><img src="/post/2018-07-20_explaining_ml_models_code_caret_iml_files/figure-html/breakdown_plot_2-1.png" width="672" /></p>
+<p><img src="https://shirinsplayground.netlify.com/post/2018-07-20_explaining_ml_models_code_caret_iml_files/figure-html/breakdown_plot_2-1.png" width="672" /></p>
 </div>
 <div id="dalex-descriptive-machine-learning-explanations" class="section level4">
 <h4>DALEX: Descriptive mAchine Learning EXplanations</h4>
@@ -826,16 +831,16 @@ explainer_classif_rf &lt;- DALEX::explain(rf_model, label = &quot;rf&quot;,
 <p>With DALEX we can do several things, for example analyze model performance as the distribution of residuals.</p>
 <pre class="r"><code>mp_classif_rf &lt;- model_performance(explainer_classif_rf)</code></pre>
 <pre class="r"><code>plot(mp_classif_rf)</code></pre>
-<p><img src="/post/2018-07-20_explaining_ml_models_code_caret_iml_files/figure-html/dalex_perf_plot_1-1.png" width="672" /></p>
+<p><img src="https://shirinsplayground.netlify.com/post/2018-07-20_explaining_ml_models_code_caret_iml_files/figure-html/dalex_perf_plot_1-1.png" width="672" /></p>
 <pre class="r"><code>plot(mp_classif_rf, geom = &quot;boxplot&quot;)</code></pre>
-<p><img src="/post/2018-07-20_explaining_ml_models_code_caret_iml_files/figure-html/dalex_perf_plot_2-1.png" width="672" /></p>
+<p><img src="https://shirinsplayground.netlify.com/post/2018-07-20_explaining_ml_models_code_caret_iml_files/figure-html/dalex_perf_plot_2-1.png" width="672" /></p>
 </div>
 <div id="feature-importance-1" class="section level5">
 <h5>Feature importance</h5>
 <p>Feature importance can be measured with <code>variable_importance()</code> function, which gives the loss from variable dropout.</p>
 <pre class="r"><code>vi_classif_rf &lt;- variable_importance(explainer_classif_rf, loss_function = loss_root_mean_square)</code></pre>
 <pre class="r"><code>plot(vi_classif_rf)</code></pre>
-<p><img src="/post/2018-07-20_explaining_ml_models_code_caret_iml_files/figure-html/dalex_var_imp_plot-1.png" width="672" /></p>
+<p><img src="https://shirinsplayground.netlify.com/post/2018-07-20_explaining_ml_models_code_caret_iml_files/figure-html/dalex_var_imp_plot-1.png" width="672" /></p>
 </div>
 <div id="variable-response" class="section level5">
 <h5>Variable response</h5>
@@ -846,10 +851,10 @@ explainer_classif_rf &lt;- DALEX::explain(rf_model, label = &quot;rf&quot;,
 <p>As <code>type</code> we can choose between ‘pdp’ for Partial Dependence Plots and ‘ale’ for Accumulated Local Effects.</p>
 <pre class="r"><code>pdp_classif_rf  &lt;- variable_response(explainer_classif_rf, variable = &quot;alcohol&quot;, type = &quot;pdp&quot;)</code></pre>
 <pre class="r"><code>plot(pdp_classif_rf)</code></pre>
-<p><img src="/post/2018-07-20_explaining_ml_models_code_caret_iml_files/figure-html/dalex_var_resp_plot_1-1.png" width="672" /></p>
+<p><img src="https://shirinsplayground.netlify.com/post/2018-07-20_explaining_ml_models_code_caret_iml_files/figure-html/dalex_var_resp_plot_1-1.png" width="672" /></p>
 <pre class="r"><code>ale_classif_rf  &lt;- variable_response(explainer_classif_rf, variable = &quot;alcohol&quot;, type = &quot;ale&quot;)
 plot(ale_classif_rf)</code></pre>
-<p><img src="/post/2018-07-20_explaining_ml_models_code_caret_iml_files/figure-html/dalex_var_resp_plot_2-1.png" width="672" /></p>
+<p><img src="https://shirinsplayground.netlify.com/post/2018-07-20_explaining_ml_models_code_caret_iml_files/figure-html/dalex_var_resp_plot_2-1.png" width="672" /></p>
 <hr />
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>## R version 3.5.1 (2018-07-02)
@@ -933,13 +938,13 @@ plot(ale_classif_rf)</code></pre>
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">TAGGED IN</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="//tags/machine-learning/">machine learning</a>
+  <a class="tag tag--primary tag--small" href="https://shirinsplayground.netlify.com//tags/machine-learning/">machine learning</a>
 
-  <a class="tag tag--primary tag--small" href="//tags/caret/">caret</a>
+  <a class="tag tag--primary tag--small" href="https://shirinsplayground.netlify.com//tags/caret/">caret</a>
 
-  <a class="tag tag--primary tag--small" href="//tags/iml/">iml</a>
+  <a class="tag tag--primary tag--small" href="https://shirinsplayground.netlify.com//tags/iml/">iml</a>
 
-  <a class="tag tag--primary tag--small" href="//tags/lime/">lime</a>
+  <a class="tag tag--primary tag--small" href="https://shirinsplayground.netlify.com//tags/lime/">lime</a>
 
                   </div>
                 
@@ -951,7 +956,7 @@ plot(ale_classif_rf)</code></pre>
         <ul class="post-actions post-action-nav">
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="/2018/07/explaining_ml_models_code_text_lime/" data-tooltip="Explaining Black-Box Machine Learning Models - Code Part 2: Text classification with LIME">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://shirinsplayground.netlify.com/2018/07/explaining_ml_models_code_text_lime/" data-tooltip="Explaining Black-Box Machine Learning Models - Code Part 2: Text classification with LIME">
               
                 <i class="fa fa-angle-left"></i>
                 <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
@@ -959,7 +964,7 @@ plot(ale_classif_rf)</code></pre>
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="/2018/07/mcubed_mlsummit_data2day/" data-tooltip="My upcoming conference talks &amp; workshops: M-cubed, ML Summit &amp; data2day">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://shirinsplayground.netlify.com/2018/07/mcubed_mlsummit_data2day/" data-tooltip="My upcoming conference talks &amp; workshops: M-cubed, ML Summit &amp; data2day">
               
                 <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
                 <i class="fa fa-angle-right"></i>
@@ -976,19 +981,19 @@ plot(ale_classif_rf)</code></pre>
         </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2018/07/explaining_ml_models_code_caret_iml/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://shirinsplayground.netlify.com/2018/07/explaining_ml_models_code_caret_iml/">
               <i class="fa fa-facebook-official"></i>
             </a>
           </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2018/07/explaining_ml_models_code_caret_iml/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://shirinsplayground.netlify.com/2018/07/explaining_ml_models_code_caret_iml/">
               <i class="fa fa-twitter"></i>
             </a>
           </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2018/07/explaining_ml_models_code_caret_iml/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://shirinsplayground.netlify.com/2018/07/explaining_ml_models_code_caret_iml/">
               <i class="fa fa-google-plus"></i>
             </a>
           </li>
@@ -1035,7 +1040,7 @@ plot(ale_classif_rf)</code></pre>
         <ul class="post-actions post-action-nav">
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="/2018/07/explaining_ml_models_code_text_lime/" data-tooltip="Explaining Black-Box Machine Learning Models - Code Part 2: Text classification with LIME">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://shirinsplayground.netlify.com/2018/07/explaining_ml_models_code_text_lime/" data-tooltip="Explaining Black-Box Machine Learning Models - Code Part 2: Text classification with LIME">
               
                 <i class="fa fa-angle-left"></i>
                 <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
@@ -1043,7 +1048,7 @@ plot(ale_classif_rf)</code></pre>
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="/2018/07/mcubed_mlsummit_data2day/" data-tooltip="My upcoming conference talks &amp; workshops: M-cubed, ML Summit &amp; data2day">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://shirinsplayground.netlify.com/2018/07/mcubed_mlsummit_data2day/" data-tooltip="My upcoming conference talks &amp; workshops: M-cubed, ML Summit &amp; data2day">
               
                 <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
                 <i class="fa fa-angle-right"></i>
@@ -1060,19 +1065,19 @@ plot(ale_classif_rf)</code></pre>
         </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2018/07/explaining_ml_models_code_caret_iml/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://shirinsplayground.netlify.com/2018/07/explaining_ml_models_code_caret_iml/">
               <i class="fa fa-facebook-official"></i>
             </a>
           </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2018/07/explaining_ml_models_code_caret_iml/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://shirinsplayground.netlify.com/2018/07/explaining_ml_models_code_caret_iml/">
               <i class="fa fa-twitter"></i>
             </a>
           </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2018/07/explaining_ml_models_code_caret_iml/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://shirinsplayground.netlify.com/2018/07/explaining_ml_models_code_caret_iml/">
               <i class="fa fa-google-plus"></i>
             </a>
           </li>
@@ -1102,19 +1107,19 @@ plot(ale_classif_rf)</code></pre>
   <ul class="share-options">
     
       <li class="share-option">
-        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=%2F2018%2F07%2Fexplaining_ml_models_code_caret_iml%2F">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fshirinsplayground.netlify.com%2F2018%2F07%2Fexplaining_ml_models_code_caret_iml%2F">
           <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
         </a>
       </li>
     
       <li class="share-option">
-        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=%2F2018%2F07%2Fexplaining_ml_models_code_caret_iml%2F">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fshirinsplayground.netlify.com%2F2018%2F07%2Fexplaining_ml_models_code_caret_iml%2F">
           <i class="fa fa-twitter"></i><span>Share on Twitter</span>
         </a>
       </li>
     
       <li class="share-option">
-        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=%2F2018%2F07%2Fexplaining_ml_models_code_caret_iml%2F">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2Fshirinsplayground.netlify.com%2F2018%2F07%2Fexplaining_ml_models_code_caret_iml%2F">
           <i class="fa fa-google-plus"></i><span>Share on Google&#43;</span>
         </a>
       </li>
@@ -1175,7 +1180,81 @@ plot(ale_classif_rf)</code></pre>
           <div class="media">
             
             <div class="media-body">
-              <a class="link-unstyled" href="/2020/10/goodbadugly/">
+              <a class="link-unstyled" href="https://shirinsplayground.netlify.com/post/">
+                <h3 class="media-heading">Posts</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Apr 4, 2021
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather"></div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://shirinsplayground.netlify.com/2021/04/goodbadugly_ml/">
+                <h3 class="media-heading">The Good, the Bad and the Ugly: how to visualize Machine Learning data</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Apr 4, 2021
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Below you’ll find the complete code and resources used to create the graphs in my talk The Good, the Bad and the Ugly: how to visualize Machine Learning data at this year’s Minds Mastering machines conference. You can find the German slides here:
+ You can find Part 1: The Good, the Bad and the Ugly: how (not) to visualize data here.
+If you have questions or would like to talk about this article (or something else data-related), you can now book 15-minute timeslots with me (it’s free - one slot available per weekday):</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://shirinsplayground.netlify.com/2021/03/update_customer_churn/">
+                <h3 class="media-heading">Update to Code for case study - Customer Churn with Keras/TensorFlow and H2O</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Mar 3, 2021
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">This is an UPDATE to this old post with updated links &amp; descriptions
+This is code that accompanies a book chapter on customer churn that I have written for the German dpunkt Verlag. The book is in German, however.
+The code you find below can be used to recreate all figures and analyses from this book chapter. Because the content is exclusively for the book, my descriptions around the code had to be minimal.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://shirinsplayground.netlify.com/2021/03/kmeans_101/">
+                <h3 class="media-heading">k-Means 101: An introductory guide to k-Means clustering in R</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Mar 3, 2021
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Editor’s note: This is a guest post by Nathaniel Schmucker. He is the founder of The Analyst Code, a blog that provides tools to instill a love of data in individuals of all backgrounds and to empower aspiring analysts.
+Introduction In this post, we will look at:
+ What is a k-Means analysis? How does the k-Means algorithm work? How do we implement k-Means in R?</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://shirinsplayground.netlify.com/2020/10/goodbadugly/">
                 <h3 class="media-heading">The Good, the Bad and the Ugly: how (not) to visualize data</h3>
               </a>
               <span class="media-meta">
@@ -1194,7 +1273,7 @@ If you have questions or would like to talk about this article (or something els
           <div class="media">
             
             <div class="media-body">
-              <a class="link-unstyled" href="/2020/10/keras_workshop_user20/">
+              <a class="link-unstyled" href="https://shirinsplayground.netlify.com/2020/10/keras_workshop_user20/">
                 <h3 class="media-heading">Video &#43; code from workshop on Deep Learning with Keras and TensorFlow</h3>
               </a>
               <span class="media-meta">
@@ -1215,25 +1294,7 @@ If you have questions or would like to talk about this article (or something els
           <div class="media">
             
             <div class="media-body">
-              <a class="link-unstyled" href="/2020/09/keras_callbacks/">
-                <h3 class="media-heading">Using Keras Callbacks</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Sep 9, 2020
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">This is article #3 in my recent series on how to get the most out of Keras. The two other articles are:
-Update with TF 2.0: Image classification with Keras and TensorFlow Whose dream is this? When and how to use the Keras Functional API  Keras comes with a number of built in callbacks. Callbacks are useful for optimizing/customizing your training runs and are used with the fit() function. Here, I’ll show which callbacks come built into Keras and how to write your own custom callbacks.</div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="/2020/09/keras_funct_api/">
+              <a class="link-unstyled" href="https://shirinsplayground.netlify.com/2020/09/keras_funct_api/">
                 <h3 class="media-heading">Whose dream is this? When and how to use the Keras Functional API</h3>
               </a>
               <span class="media-meta">
@@ -1251,7 +1312,7 @@ However, in my blogposts I have always been using Keras sequential models and ne
           <div class="media">
             
             <div class="media-body">
-              <a class="link-unstyled" href="/2020/09/keras_fruits_update/">
+              <a class="link-unstyled" href="https://shirinsplayground.netlify.com/2020/09/keras_fruits_update/">
                 <h3 class="media-heading">Update with TF 2.0: Image classification with Keras and TensorFlow</h3>
               </a>
               <span class="media-meta">
@@ -1268,7 +1329,7 @@ However, in my blogposts I have always been using Keras sequential models and ne
           <div class="media">
             
             <div class="media-body">
-              <a class="link-unstyled" href="/2020/09/baby_weight_app/">
+              <a class="link-unstyled" href="https://shirinsplayground.netlify.com/2020/09/baby_weight_app/">
                 <h3 class="media-heading">Baby Weight Shiny app</h3>
               </a>
               <span class="media-meta">
@@ -1286,7 +1347,7 @@ I have not written any blogposts for over a year. Last year, I had the cutest ba
           <div class="media">
             
             <div class="media-body">
-              <a class="link-unstyled" href="/2019/06/meetup_july19/">
+              <a class="link-unstyled" href="https://shirinsplayground.netlify.com/2019/06/meetup_july19/">
                 <h3 class="media-heading">Word2Vec Text Mining &amp; Parallelization in R. Join MünsteR for our next meetup!</h3>
               </a>
               <span class="media-meta">
@@ -1304,66 +1365,6 @@ You can RSVP here: https://www.meetup.com/de-DE/Munster-R-Users-Group/events/262
             <hr>
           </div>
         
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="/2019/04/consider_data_camp/">
-                <h3 class="media-heading">Before you take my DataCamp course please consider this info</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Apr 4, 2019
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">Today, I am finally getting around to writing this very sad blog post: Before you take my DataCamp course please consider the following information about the sexual harassment scandal surrounding DataCamp!
-UPDATE from April 26th: Yesterday, DataCamp’s CEO Jonathan Cornelissen issued an apology statement and the DataCamp Board of Directors wrote an update about the situation and next steps (albeit somewhat vague) they are planning to take in order to address the situation.</div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="/2019/03/upcoming_talks_spring2019/">
-                <h3 class="media-heading">Upcoming talks in spring 2019</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Mar 3, 2019
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">This spring, I’ll be giving talks at a couple of Meetups and conferences:
-
-  March, 26th: At the data lounge Bremen, I’ll be talking about Explainable Machine Learning
- April, 11th: At the Data Science Meetup Bielefeld, I’ll be talking about Building Interpretable Neural Networks with Keras and LIME
-  
-  May, 14th: At the M3 conference in Mannheim, a colleague and I will give our workshop on building production-ready machine learning models with Keras, Luigi, DVC and TensorFlow Serving</div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="/2019/03/meetup_april19/">
-                <h3 class="media-heading">Getting started with RMarkdown &amp; trying to make it in the world of Kaggle. Join MünsteR for our next meetup!</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Mar 3, 2019
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">In our next MünsteR R-user group meetup on Tuesday, April 9th, 2019, we will have two exciting talks: Getting started with RMarkdown and Trying to make it in the world of Kaggle!
-You can RSVP here: http://meetu.ps/e/Gg5th/w54bW/f
-Getting started with RMarkdown  First, Niklas Wulms from the University Hospital, Münster will give an introduction to RMarkdown:
-  He started using R in 2018 and learnt the advantages of using only one framework of free software and code.</div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
       </div>
     </div>
     <div class="modal-footer">
@@ -1371,7 +1372,7 @@ Getting started with RMarkdown  First, Niklas Wulms from the University Hospital
          data-message-zero="no post found"
          data-message-one="1 post found"
          data-message-other="{n} posts found">
-         88 posts found
+         90 posts found
       </p>
     </div>
   </div>
@@ -1379,7 +1380,7 @@ Getting started with RMarkdown  First, Niklas Wulms from the University Hospital
     
   
     
-    <div id="cover" style="background-image:url('/images/autumn-2789234_1920.jpg');"></div>
+    <div id="cover" style="background-image:url('https://shirinsplayground.netlify.com/images/autumn-2789234_1920.jpg');"></div>
   
 
 
@@ -1390,7 +1391,7 @@ Getting started with RMarkdown  First, Niklas Wulms from the University Hospital
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.js" integrity="sha256-N0qFUh7/9vLvia87dDndewmsgsyYoNkdA212tPc+2NI=" crossorigin="anonymous"></script>
 
 
-<script src="/js/script-kr8dyqj6rb6ortyib7whfo9x9p6td6zo8t1v4fdz4ecx5kwybsdlmk1slygn.min.js"></script>
+<script src="https://shirinsplayground.netlify.com/js/script-kr8dyqj6rb6ortyib7whfo9x9p6td6zo8t1v4fdz4ecx5kwybsdlmk1slygn.min.js"></script>
 
 
 <script>
@@ -1409,7 +1410,7 @@ $(document).ready(function() {
     
       <script>
         var disqus_config = function () {
-          this.page.url = '\/2018\/07\/explaining_ml_models_code_caret_iml\/';
+          this.page.url = 'https:\/\/shirinsplayground.netlify.com\/2018\/07\/explaining_ml_models_code_caret_iml\/';
           
             this.page.identifier = '\/2018\/07\/explaining_ml_models_code_caret_iml\/'
           

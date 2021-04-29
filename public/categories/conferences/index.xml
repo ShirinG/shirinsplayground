@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>conferences on Shirin&#39;s playgRound</title>
+    <link>https://shirinsplayground.netlify.com/categories/conferences/</link>
+    <description>Recent content in conferences on Shirin&#39;s playgRound</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 16 Oct 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/categories/conferences/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Slides from my m-cubed talk about Explaining complex machine learning models with LIME</title>
+      <link>https://shirinsplayground.netlify.com/2018/10/mcubed_slides/</link>
+      <pubDate>Tue, 16 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2018/10/mcubed_slides/</guid>
+      <description>The last two days, I was in London for the M-cubed conference.
+Here are the slides from my talk about Explaining complex machine learning models with LIME:
+ Traditional machine learning workflows focus heavily on model training and optimization; the best model is usually chosen via performance measures like accuracy or error and we tend to assume that a model is good enough for deployment if it passes certain thresholds of these performance criteria.</description>
+    </item>
+    
+    <item>
+      <title>My upcoming conference talks &amp; workshops: M-cubed, ML Summit &amp; data2day</title>
+      <link>https://shirinsplayground.netlify.com/2018/07/mcubed_mlsummit_data2day/</link>
+      <pubDate>Thu, 12 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2018/07/mcubed_mlsummit_data2day/</guid>
+      <description>I’ll be giving talks and workshops at the following three upcoming conferences; hope to meet some of you there!
+
+ From 15th to 17th October 2018, I’ll be in London for the M-cubed conference. My talk about Explaining complex machine learning models with LIME will take place on October 16   Traditional machine learning workflows focus heavily on model training and optimization; the best model is usually chosen via performance measures like accuracy or error and we tend to assume that a model is good enough for deployment if it passes certain thresholds of these performance criteria.</description>
+    </item>
+    
+  </channel>
+</rss>

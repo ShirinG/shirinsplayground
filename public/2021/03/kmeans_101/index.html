@@ -1,0 +1,1648 @@
+
+
+  
+    
+  
+
+
+  
+
+
+
+
+  
+
+
+  
+
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hugo 0.82.1 with theme Tranquilpeak 0.4.1-BETA">
+    <title>k-Means 101: An introductory guide to k-Means clustering in R</title>
+    <meta name="author" content="Dr. Shirin Elsinghorst">
+    <meta name="keywords" content=", R">
+
+    <link rel="icon" href="img/favicon.png">
+    
+
+    
+    <meta name="description" content="Editor’s note: This is a guest post by Nathaniel Schmucker. He is the founder of The Analyst Code, a blog that provides tools to instill a love of data in individuals of all backgrounds and to empower aspiring analysts.
+Introduction In this post, we will look at:
+ What is a k-Means analysis? How does the k-Means algorithm work? How do we implement k-Means in R?">
+    <meta property="og:description" content="Editor’s note: This is a guest post by Nathaniel Schmucker. He is the founder of The Analyst Code, a blog that provides tools to instill a love of data in individuals of all backgrounds and to empower aspiring analysts.
+Introduction In this post, we will look at:
+ What is a k-Means analysis? How does the k-Means algorithm work? How do we implement k-Means in R?">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="k-Means 101: An introductory guide to k-Means clustering in R">
+    <meta property="og:url" content="/2021/03/kmeans_101/">
+    <meta property="og:site_name" content="Shirin&#39;s playgRound">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Shirin&#39;s playgRound">
+    <meta name="twitter:description" content="Editor’s note: This is a guest post by Nathaniel Schmucker. He is the founder of The Analyst Code, a blog that provides tools to instill a love of data in individuals of all backgrounds and to empower aspiring analysts.
+Introduction In this post, we will look at:
+ What is a k-Means analysis? How does the k-Means algorithm work? How do we implement k-Means in R?">
+    
+      <meta name="twitter:creator" content="@ShirinGlander">
+    
+    
+
+    
+    
+
+    
+      <meta property="og:image" content="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=640">
+    
+
+    
+      <meta property="og:image" content="https://shirinsplayground.netlify.com/post/2021-03-14_kmeans_101_files/figure-html/finding_right_cluster_number_2-1.png">
+    
+    
+    
+
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://shirinsplayground.netlify.com/css/style-hbs5om8csx9a8yrv5hnhpi2qqdv4ykuslajwbramhqxvleqbfklxgek50hye.min.css" />
+    
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-86119417-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://shirinsplayground.netlify.com/">Shirin&#39;s playgRound</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://shirinsplayground.netlify.com/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <h1 class="sidebar-profile-title">k-Means 101: An introductory guide to k-Means clustering in R</h1>
+        <a href="https://blog.feedspot.com/r_programming_blogs/" rel="nofollow" title="R Programming Blogs"><img alt="R Programming Blogs" src="https://blog.feedspot.com/wp-content/uploads/2018/04/r_program_216px.png?x20694"/></a>
+        <a href="https://shirinsplayground.netlify.com/#about">
+          <img class="sidebar-profile-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Dr. Shirin Elsinghorst</h4>
+        
+          <h5 class="sidebar-profile-bio">Biologist turned Bioinformatician turned Data Scientist</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://shirinsplayground.netlify.com/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://shirinsplayground.netlify.com/categories/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://shirinsplayground.netlify.com/tags/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://shirinsplayground.netlify.com/page/about/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://shirinsplayground.netlify.com/page/bookme/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-calendar"></i>
+      
+      <span class="sidebar-button-desc">Book me</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://shirinsplayground.netlify.com/page/conferences_podcasts_webinars/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bullhorn"></i>
+      
+      <span class="sidebar-button-desc">Hear me talk</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://shirinsplayground.netlify.com/archives/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://shirinsplayground.netlify.com/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://shiring.github.io/" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">My old R-blog</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/ShirinG" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://stackoverflow.com/users/6623620/shirin-glander" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-stack-overflow"></i>
+      
+      <span class="sidebar-button-desc">Stack Overflow</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/ShirinGlander" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.linkedin.com/in/shirin-e-01120881//" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-linkedin"></i>
+      
+      <span class="sidebar-button-desc">LinkedIn</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.xing.com/profile/Shirin_Elsinghorst/cv" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-xing"></i>
+      
+      <span class="sidebar-button-desc">Xing</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.meetup.com/Munster-R-Users-Group" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-meetup"></i>
+      
+      <span class="sidebar-button-desc">MünsteR</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.r-bloggers.com/" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-book"></i>
+      
+      <span class="sidebar-button-desc">R-bloggers</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.r-users.com/" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-book"></i>
+      
+      <span class="sidebar-button-desc">R-users</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.womentech.net/women-tech-conference?join=ODMzOQ==" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-wifi"></i>
+      
+      <span class="sidebar-button-desc">WomenInTech</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.codecentric.de/kuenstliche-intelligenz/" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-angle-double-right"></i>
+      
+      <span class="sidebar-button-desc">codecentric.ai</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaOut
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-center">
+  
+    <h1 class="post-title" itemprop="headline">
+      k-Means 101: An introductory guide to k-Means clustering in R
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2021-03-14T00:00:00Z">
+        
+  March 14, 2021
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://shirinsplayground.netlify.com/categories/r">R</a>
+    
+  
+
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              
+<script src="https://shirinsplayground.netlify.com/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="https://shirinsplayground.netlify.com/rmarkdown-libs/plotly-binding/plotly.js"></script>
+<script src="https://shirinsplayground.netlify.com/rmarkdown-libs/typedarray/typedarray.min.js"></script>
+<script src="https://shirinsplayground.netlify.com/rmarkdown-libs/jquery/jquery.min.js"></script>
+<link href="https://shirinsplayground.netlify.com/rmarkdown-libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<script src="https://shirinsplayground.netlify.com/rmarkdown-libs/crosstalk/js/crosstalk.min.js"></script>
+<link href="https://shirinsplayground.netlify.com/rmarkdown-libs/plotly-htmlwidgets-css/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="https://shirinsplayground.netlify.com/rmarkdown-libs/plotly-main/plotly-latest.min.js"></script>
+
+
+<p><em>Editor’s note: This is a guest post by Nathaniel Schmucker. He is the founder of <a href="http://www.theanalystcode.com/">The Analyst Code</a>, a blog that provides tools to instill a love of data in individuals of all backgrounds and to empower aspiring analysts.</em></p>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>In this post, we will look at:</p>
+<ul>
+<li>What is a k-Means analysis?</li>
+<li>How does the k-Means algorithm work?</li>
+<li>How do we implement k-Means in R?</li>
+<li>Concluding thoughts</li>
+</ul>
+<p>Along the way, we will cover 5 principles to help guide you through your own exploration of k-Means and to help answer common questions.</p>
+<hr />
+<p>If you have questions or would like to talk about articles from my blog (or something else data-related), you can now <a href="https://shirinsplayground.netlify.app/page/bookme/">book 15-minute timeslots</a> with me (it’s free - one slot available per weekday):</p>
+<img src="https://www.appointletcdn.com/loader/buttons/F62459.png" data-appointlet-organization="shirin-elsinghorst" data-appointlet-service="357892">
+<script src="https://www.appointletcdn.com/loader/loader.min.js" async="" defer=""></script>
+<p><em>If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at <button><a href="https://paypal.me/ShirinGlander">paypal.me</a></button>. Thank you!</em> :-)</p>
+<hr />
+</div>
+<div id="what-is-a-k-means-analysis" class="section level2">
+<h2>What is a k-Means analysis?</h2>
+<p>A k-Means analysis is one of many <em>clustering</em> techniques for identifying structural features of a set of datapoints. The k-Means algorithm groups data into a pre-specified number of clusters, <em>k</em>, where the assignment of points to clusters minimizes the total sum-of-squares distance to the cluster’s mean. We can then use the mean value of all the points in a given cluster as a prototypical point characterizing the cluster.</p>
+<p>For example, we could have a dataset with the horsepower and fuel efficiency of various car models, and we want to use that data to classify the cars into natural groupings–sports cars, sedans, etc. Essentially, we want to find structure in a scatter plot of horsepower against fuel efficiency.</p>
+<p><strong>k-Means is easy to implement.</strong> In R, you can use the function <code>kmeans()</code> to quickly deploy an efficient k-Means algorithm. On datasets of reasonable size (thousands of rows), the <code>kmeans</code> function runs in fractions of a second.</p>
+<p><strong>k-Means is easy to interpret (in 2 dimensions).</strong> If you have two features of your k-Means analysis (<em>e.g.</em>, you are grouping by length and width), the result of the k-Means algorithm can be plotted on an xy-coordinate system to show the extent of each cluster. It’s easy to visually inspect the assignment to see if the k-Means analysis returned a meaningful insight. In more dimensions (<em>e.g.</em>, length, width, and height) you will need to either create a 3D plot, summarize your features in a table, or find another alternative to describing your analysis. This loses the intuitive power that a 2D k-Means analysis has in convincing you or your audience that your analysis should be trusted. It’s not to say that your analysis is wrong; it simply takes more mental focus to understand what your analysis says.</p>
+<p>The k-Means analysis, however, is not always the best choice. k-Means does well on data that naturally falls into spherical clusters. If your data has a different shape (linear, spiral, etc.), k-Means will force clustering into circles, which can result in outputs that defy human expectations. The algorithm is not wrong; we have fed the algorithm data it was never intended to understand.</p>
+<p>Every data analyst should be comfortable using and explaining the k-Means algorithm. It is easy to implement and interpret, and very few real-world datasets violate our spherical-clustering assumption.</p>
+</div>
+<div id="how-does-the-k-means-algorithm-work" class="section level2">
+<h2>How does the k-Means algorithm work?</h2>
+<ol style="list-style-type: decimal">
+<li>Pick a number of clusters, k</li>
+<li>Create k random points and call each of these the center of a cluster</li>
+<li>For each point in your dataset, find the closest cluster center and assign the point to that cluster</li>
+<li>Once each point has been assigned to a cluster, calculate the new center of that cluster</li>
+<li>Repeat steps 3 and 4 until you reach a stage when no points need to be reassigned</li>
+<li>Stop. You have found your k clusters and their centers!</li>
+</ol>
+<p>If you want to learn more about k-Means, I would recommend this <a href="https://towardsdatascience.com/k-means-clustering-algorithm-applications-evaluation-methods-and-drawbacks-aa03e644b48a">post on Medium</a>, though be aware that the example code is all written in Python. If you are brave and want to go very deep in k-Means theory, take a look at the <a href="https://en.wikipedia.org/wiki/K-means_clustering">Wikipedia page</a>. Or, if you would like to see one application of k-Means in R, see this blog’s post about using k-Means to help <a href="https://shirinsplayground.netlify.app/2018/10/keras_fruits_cluster/">assist in image classification with Keras</a>. For a detailed illustration of how to implement k-Means in R, along with answers to some common questions, keep reading below.</p>
+</div>
+<div id="how-do-we-implement-k-means-in-r" class="section level2">
+<h2>How do we implement k-Means in R?</h2>
+<p>Let’s begin by loading packages and functions, which we’ll use later.</p>
+<pre class="r"><code>library(dplyr)
+library(tidyr)
+library(broom)
+library(purrr)
+
+library(ggplot2)
+library(plotly)
+
+# Define two functions for transforming a distribution of values
+#  into the standard normal distribution (bell curve with mean = 0
+#  and standard deviation (sd) = 1). More on this later.
+normalize_values &lt;- function(x, mean, sd) {
+  (x-mean)/sd
+}
+
+unnormalize_values &lt;- function(x, mean, sd) {
+  (x*sd)+mean
+}
+
+set.seed(2021) # So you can reproduce this example</code></pre>
+<p>The data we will use for this example is from one of R’s pre-loaded datasets, <code>quakes</code>. It is a data.frame with 1000 rows and five columns describing earthquakes near Fiji since 1964. The columns are latitude (degrees), longitude (degrees), depth (km), magnitude (Richter scale), and the number of stations reporting the quake. The only preprocessing we will do now is to remove <code>stations</code> and convert this to a tibble.</p>
+<pre class="r"><code>quakes_raw &lt;- quakes %&gt;% 
+  dplyr::select(-stations) %&gt;% 
+  dplyr::as_tibble()
+
+summary(quakes_raw)</code></pre>
+<pre><code>##       lat              long           depth            mag      
+##  Min.   :-38.59   Min.   :165.7   Min.   : 40.0   Min.   :4.00  
+##  1st Qu.:-23.47   1st Qu.:179.6   1st Qu.: 99.0   1st Qu.:4.30  
+##  Median :-20.30   Median :181.4   Median :247.0   Median :4.60  
+##  Mean   :-20.64   Mean   :179.5   Mean   :311.4   Mean   :4.62  
+##  3rd Qu.:-17.64   3rd Qu.:183.2   3rd Qu.:543.0   3rd Qu.:4.90  
+##  Max.   :-10.72   Max.   :188.1   Max.   :680.0   Max.   :6.40</code></pre>
+<p>Now for the fun. For our first example, let’s run a k-Means analysis on two variables: depth and magnitude. We reduce our raw data to <em>only</em> these two variables and pass it to the base R function, <code>kmeans()</code>. Before we hit “Run” on this function, though, let’s talk through two principles of k-Means clustering.</p>
+<div id="principle-1-number-of-iterations" class="section level3">
+<h3>Principle 1: Number of iterations</h3>
+<p>The k-Means algorithm, as mentioned above, iterates through a process of assigning points to a cluster based on the closest cluster center and recalulating cluster centers, not stopping until no more points are assigned to a new cluster during the assignement step. In some cases, the number of iterations can be very large, and the algorithm can consequentially become slow. For speed and convenience, we can cap the number of iterations at 10 (the default value), but for precision, more iterations are better than fewer.</p>
+</div>
+<div id="principle-2-local-vs.-global-minimum" class="section level3">
+<h3>Principle 2: Local vs. global minimum</h3>
+<p>The k-Means algorithm results in an assignment of points to clusters that minimizes the within-cluster sum of squares: in each iterative step, if we were to add up the total squared distances of points to the mean, we would find that the sum was less than the step before. In laymans terms, our algorithm stopped when it couldn’t find a way to assign points into tighter groupings.</p>
+<p>But, just because our algorithm couldn’t find a better grouping doesn’t mean that we found the best grouping. Based on our random set of starting points, we found the best solution, but a different set of starting points could have found a better solution.</p>
+<p>This is a problem common across machine learning algorithms. Finding the globally best solution is substantially harder than finding the best given particular starting point. The <code>kmeans</code> function can help us ensure our final product is at least a pretty good local minimum by running multiple times and showing only the best answer. By default, the number of tries <code>kmeans</code> takes is 1, but we can easily adjust this to, say, <code>nstart = 5</code>.</p>
+<p>Now let’s hit “Run” on our k-Means analysis and save the output as <code>kclust</code>. This is an object of class “kmeans,” which is not the easiest to use for subsequent analysis. We’ll use <code>augment</code>, <code>tidy</code>, and <code>glance</code> to extract useful summary information as tables. We’ll also include a quick plot to see how our clustering did.</p>
+<pre class="r"><code># 4-cluster k-Means analysis on depth and magnitude
+kclust &lt;- quakes_raw %&gt;% 
+  dplyr::select(depth, mag) %&gt;% 
+  kmeans(centers = 4, iter.max = 10, nstart = 5)
+
+str(kclust)</code></pre>
+<pre><code>## List of 9
+##  $ cluster     : int [1:1000] 3 3 2 3 3 4 2 4 4 3 ...
+##  $ centers     : num [1:4, 1:2] 444.84 82.52 581.64 229.99 4.49 ...
+##   ..- attr(*, &quot;dimnames&quot;)=List of 2
+##   .. ..$ : chr [1:4] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot;
+##   .. ..$ : chr [1:2] &quot;depth&quot; &quot;mag&quot;
+##  $ totss       : num 46409257
+##  $ withinss    : num [1:4] 379494 414571 412840 427964
+##  $ tot.withinss: num 1634868
+##  $ betweenss   : num 44774389
+##  $ size        : int [1:4] 129 361 304 206
+##  $ iter        : int 2
+##  $ ifault      : int 0
+##  - attr(*, &quot;class&quot;)= chr &quot;kmeans&quot;</code></pre>
+<pre class="r"><code>kclust</code></pre>
+<pre><code>## K-means clustering with 4 clusters of sizes 129, 361, 304, 206
+## 
+## Cluster means:
+##       depth      mag
+## 1 444.83721 4.488372
+## 2  82.52355 4.763989
+## 3 581.64145 4.544408
+## 4 229.98544 4.563592
+## 
+## Clustering vector:
+##    [1] 3 3 2 3 3 4 2 4 4 3 3 4 3 3 2 4 2 3 3 3 3 4 1 2 1 3 2 1 3 4 3 2 4 1 2 3 4
+##   [38] 3 3 4 4 2 1 2 4 2 4 2 1 2 3 4 2 3 1 3 1 3 3 3 3 4 3 2 3 4 3 3 3 2 2 4 2 1
+##   [75] 3 3 4 4 4 4 2 1 3 4 1 4 2 3 2 2 2 4 1 4 4 1 1 4 2 1 2 3 3 2 3 4 2 2 2 2 4
+##  [112] 1 1 3 3 3 2 2 4 4 2 2 3 3 4 2 3 3 2 4 4 3 2 1 3 2 2 4 2 4 3 3 4 4 3 4 2 2
+##  [149] 1 3 2 2 4 2 2 3 2 1 2 2 3 1 4 2 2 2 4 4 3 4 3 1 3 2 1 4 3 4 3 1 3 2 4 1 3
+##  [186] 2 4 3 3 4 4 4 3 3 1 3 4 4 3 3 1 1 1 4 3 4 3 1 1 3 1 1 4 2 3 3 4 3 4 1 2 2
+##  [223] 2 1 1 2 4 2 4 2 3 1 1 2 3 3 2 3 2 1 4 2 2 2 4 3 3 2 3 2 4 2 3 2 4 3 4 4 3
+##  [260] 3 4 3 4 3 4 2 2 2 1 3 2 3 1 1 3 3 3 1 3 3 1 3 2 1 4 3 3 2 3 3 3 2 3 1 4 2
+##  [297] 3 3 4 4 3 4 2 3 3 1 3 3 1 2 3 3 1 1 4 1 1 4 1 4 2 4 3 2 2 2 1 2 2 2 2 3 2
+##  [334] 4 3 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 3 2 2 3 2 1 2 2 3 2 3 1 4 2 1 2 1 4
+##  [371] 3 4 3 3 4 2 3 2 2 2 4 4 2 4 3 4 3 1 4 2 2 2 3 1 3 3 3 2 3 3 2 2 2 3 2 3 1
+##  [408] 2 1 2 2 2 2 1 2 4 2 4 4 2 1 2 2 3 2 4 3 1 2 3 1 3 3 3 4 2 4 1 1 4 4 2 2 3
+##  [445] 2 2 2 1 3 1 4 3 2 4 4 2 3 2 3 3 2 3 3 3 4 3 2 4 3 4 4 2 2 2 2 4 2 2 1 2 3
+##  [482] 4 4 2 3 2 4 3 3 3 2 4 3 1 4 2 2 2 1 4 2 2 4 2 3 3 2 2 2 1 2 2 2 3 3 2 2 2
+##  [519] 2 1 2 3 2 2 2 3 2 4 1 2 2 2 4 2 2 2 3 2 2 3 2 2 2 2 2 2 2 3 2 3 1 2 2 2 2
+##  [556] 2 2 2 3 2 3 2 2 4 1 4 4 3 4 2 4 2 1 2 3 2 3 3 1 2 2 3 2 3 3 2 2 1 3 3 3 1
+##  [593] 4 2 2 2 2 1 4 2 2 2 3 3 3 4 2 2 1 4 2 2 4 3 2 1 2 2 3 2 2 4 3 3 2 3 2 1 2
+##  [630] 1 3 2 2 3 4 1 4 4 2 3 3 4 2 2 3 4 2 2 2 3 3 3 2 3 3 2 3 2 3 3 4 1 3 3 3 3
+##  [667] 3 4 1 4 3 4 3 3 2 2 2 1 3 3 4 4 1 3 2 4 3 1 3 3 3 1 3 3 1 3 3 4 4 3 4 3 3
+##  [704] 1 4 2 3 2 4 1 2 4 2 4 3 3 3 2 4 1 2 3 3 3 4 4 1 1 3 1 3 1 4 1 4 2 2 3 3 1
+##  [741] 3 2 2 4 4 2 4 2 3 1 3 2 3 2 1 4 2 2 2 2 4 3 4 2 2 2 4 4 4 2 2 1 4 3 3 3 4
+##  [778] 3 4 3 2 2 2 2 2 2 2 3 2 1 3 3 3 4 3 4 4 1 2 3 2 1 2 3 3 4 3 3 1 1 3 2 2 2
+##  [815] 3 3 4 2 3 3 1 2 3 1 2 1 4 2 2 4 4 2 4 1 4 2 4 1 2 4 3 2 2 2 1 3 1 1 3 1 2
+##  [852] 2 2 2 3 4 3 4 4 4 3 3 3 3 2 4 1 4 2 4 3 2 2 3 3 3 1 3 3 3 4 3 2 2 4 3 4 2
+##  [889] 2 2 4 3 2 4 3 3 2 3 4 3 4 2 2 3 3 3 1 2 4 2 3 2 4 3 2 2 4 2 2 3 4 2 3 3 4
+##  [926] 3 2 2 4 2 4 3 3 2 2 2 3 2 3 3 3 4 3 2 2 2 1 2 2 2 3 2 4 3 3 1 2 2 3 4 2 2
+##  [963] 2 4 2 3 1 3 2 2 4 2 2 4 2 4 4 2 3 2 3 2 2 2 2 4 2 2 3 2 3 1 4 3 2 1 4 4 2
+## [1000] 4
+## 
+## Within cluster sum of squares by cluster:
+## [1] 379494.0 414570.5 412840.2 427963.8
+##  (between_SS / total_SS =  96.5 %)
+## 
+## Available components:
+## 
+## [1] &quot;cluster&quot;      &quot;centers&quot;      &quot;totss&quot;        &quot;withinss&quot;     &quot;tot.withinss&quot;
+## [6] &quot;betweenss&quot;    &quot;size&quot;         &quot;iter&quot;         &quot;ifault&quot;</code></pre>
+<pre class="r"><code># Add the cluster number onto to our original data
+point_assignments &lt;- broom::augment(kclust, quakes_raw) 
+
+# Summarize each cluster
+cluster_info &lt;- broom::tidy(kclust)
+
+# Summary stats about our model&#39;s fit
+model_stats &lt;- broom::glance(kclust)
+
+head(point_assignments)</code></pre>
+<pre><code>## # A tibble: 6 x 5
+##     lat  long depth   mag .cluster
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;fct&gt;   
+## 1 -20.4  182.   562   4.8 3       
+## 2 -20.6  181.   650   4.2 3       
+## 3 -26    184.    42   5.4 2       
+## 4 -18.0  182.   626   4.1 3       
+## 5 -20.4  182.   649   4   3       
+## 6 -19.7  184.   195   4   4</code></pre>
+<pre class="r"><code>cluster_info</code></pre>
+<pre><code>## # A tibble: 4 x 5
+##   depth   mag  size withinss cluster
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;    &lt;dbl&gt; &lt;fct&gt;  
+## 1 445.   4.49   129  379494. 1      
+## 2  82.5  4.76   361  414571. 2      
+## 3 582.   4.54   304  412840. 3      
+## 4 230.   4.56   206  427964. 4</code></pre>
+<pre class="r"><code>model_stats</code></pre>
+<pre><code>## # A tibble: 1 x 4
+##       totss tot.withinss betweenss  iter
+##       &lt;dbl&gt;        &lt;dbl&gt;     &lt;dbl&gt; &lt;int&gt;
+## 1 46409257.     1634868. 44774389.     2</code></pre>
+<pre class="r"><code># Visually inspect our clusters
+ggplot2::ggplot() +
+  ggplot2::geom_point(
+    data = point_assignments, aes(x = depth, y = mag, color = .cluster)
+  ) + 
+  ggplot2::geom_point(
+    data = cluster_info, aes(x = depth, y = mag), size = 4, shape = &quot;x&quot;
+  ) +
+  ggplot2::labs(
+    title = &quot;k-Means analysis of earthquakes near Fiji&quot;,
+    subtitle = &quot;Clustered on raw values of depth and magnitude&quot;,
+    caption = &quot;Source: Harvard PRIM-H project / 1000 seismic events of MB &gt; 4.0 since 1964&quot;,
+    x = &quot;Depth&quot;,
+    y = &quot;Magnitude&quot;
+  )</code></pre>
+<p><img src="https://shirinsplayground.netlify.com/post/2021-03-14_kmeans_101_files/figure-html/raw_2d-1.png" width="672" /></p>
+<p>Reflect for a moment on what we just did. First, note that running kmeans is incredibly easy (one function!) and on 1000 data points was very fast. Second, note that our graph looks pretty strange. The algorithm has created clusters that seem only to care about depth. Does this mean magnitude is an irrelevant feature in our data? By no means! Time for Principle 3.</p>
+</div>
+<div id="principle-3-feature-scaling" class="section level3">
+<h3>Principle 3: Feature scaling</h3>
+<p>k-Means calculates distance to the cluster center using Euclidian distance: the length of a line segment connecting the two points. In two dimensions, this is the Pythagorean Theorem. Aha, you say! I see the problem: we are comparing magnitudes (4.0-6.4) to depth (40-680). Depth has significantly more variation (standard deviation 0.4 for magnitude vs. 215 for depth) and therefore gets overweighted when calculating distance to the mean.</p>
+<p>We need to employ feature scaling. As a general rule, if we are comparing unlike units (meters and kilograms) or independent measurements (height in meters and circumference in meters), we should normalize values, but if units are related (petal length and petal width), we should leave them as is.</p>
+<p>Unfortunately, many cases require judgment both on whether to scale and how to scale. This is where your expert opinion as a data analyst becomes important. For the purposes of this blog post, we will normalize all of our features, including latitude and longitude, by transforming them to standard normal distributions. The geologists might object to this methodology for normalizing (magnitude is a log scale!!), but please forgive some imprecision for the sake of illustration.</p>
+<pre class="r"><code># Create a tibble to store the information we need to normalize
+#  Tibble with row 1 = mean and row 2 = standard deviation
+transformations &lt;- dplyr::tibble(
+  lat   = c(mean(quakes_raw$lat),   sd(quakes_raw$lat)),
+  long  = c(mean(quakes_raw$long),  sd(quakes_raw$long)),
+  depth = c(mean(quakes_raw$depth), sd(quakes_raw$depth)),
+  mag   = c(mean(quakes_raw$mag),   sd(quakes_raw$mag))
+)
+
+# Use the convenient function we wrote earlier
+quakes_normalized &lt;- quakes_raw %&gt;% 
+  dplyr::mutate(
+    lat = normalize_values(
+      lat, transformations$lat[1], transformations$lat[2]
+    ),
+    long = normalize_values(
+      long, transformations$long[1], transformations$long[2]
+    ),
+    depth = normalize_values(
+      depth, transformations$depth[1], transformations$depth[2]
+    ),
+    mag = normalize_values(
+      mag, transformations$mag[1], transformations$mag[2]
+    )
+  )
+
+summary(quakes_normalized)</code></pre>
+<pre><code>##       lat                long              depth              mag          
+##  Min.   :-3.56890   Min.   :-2.27235   Min.   :-1.2591   Min.   :-1.54032  
+##  1st Qu.:-0.56221   1st Qu.: 0.02603   1st Qu.:-0.9853   1st Qu.:-0.79548  
+##  Median : 0.06816   Median : 0.32095   Median :-0.2987   Median :-0.05065  
+##  Mean   : 0.00000   Mean   : 0.00000   Mean   : 0.0000   Mean   : 0.00000  
+##  3rd Qu.: 0.59761   3rd Qu.: 0.61586   3rd Qu.: 1.0747   3rd Qu.: 0.69419  
+##  Max.   : 1.97319   Max.   : 1.42812   Max.   : 1.7103   Max.   : 4.41837</code></pre>
+<p>With our fully-preprocessed data, let’s re-run our k-Means analysis.</p>
+<pre class="r"><code>kclust &lt;- quakes_normalized %&gt;% 
+  dplyr::select(depth, mag) %&gt;% 
+  kmeans(centers = 4, iter.max = 10, nstart = 5)
+
+str(kclust)</code></pre>
+<pre><code>## List of 9
+##  $ cluster     : int [1:1000] 4 2 1 2 2 3 3 3 3 2 ...
+##  $ centers     : num [1:4, 1:2] -0.915 1.006 -0.779 1.108 1.43 ...
+##   ..- attr(*, &quot;dimnames&quot;)=List of 2
+##   .. ..$ : chr [1:4] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot;
+##   .. ..$ : chr [1:2] &quot;depth&quot; &quot;mag&quot;
+##  $ totss       : num 1998
+##  $ withinss    : num [1:4] 103.7 87.8 170.3 107
+##  $ tot.withinss: num 469
+##  $ betweenss   : num 1529
+##  $ size        : int [1:4] 168 262 393 177
+##  $ iter        : int 3
+##  $ ifault      : int 0
+##  - attr(*, &quot;class&quot;)= chr &quot;kmeans&quot;</code></pre>
+<pre class="r"><code>kclust</code></pre>
+<pre><code>## K-means clustering with 4 clusters of sizes 168, 262, 393, 177
+## 
+## Cluster means:
+##        depth        mag
+## 1 -0.9151439  1.4301570
+## 2  1.0063484 -0.8817196
+## 3 -0.7787787 -0.3241978
+## 4  1.1081408  0.6675362
+## 
+## Clustering vector:
+##    [1] 4 2 1 2 2 3 3 3 3 2 2 3 2 2 1 3 1 2 2 2 2 3 2 3 4 2 3 4 2 3 4 3 3 2 3 2 3
+##   [38] 4 2 3 3 3 2 3 3 1 3 3 2 1 2 3 3 2 2 2 2 2 2 2 4 3 4 3 4 3 2 4 2 1 3 3 3 4
+##   [75] 2 2 3 3 2 1 1 2 4 3 2 3 3 2 3 3 1 3 4 3 3 2 2 1 1 4 3 4 4 3 4 3 3 3 1 1 3
+##  [112] 2 2 4 2 2 1 3 3 3 3 3 4 2 3 1 2 4 3 3 3 2 3 4 2 3 1 3 1 3 4 2 1 3 2 3 3 1
+##  [149] 4 2 1 1 3 3 3 4 3 2 1 3 2 4 3 3 3 1 1 1 4 3 2 4 2 3 2 1 4 3 2 3 2 3 3 2 2
+##  [186] 1 3 4 4 3 1 3 4 2 4 2 3 3 2 4 2 2 4 3 2 3 4 2 4 2 4 2 3 1 2 2 3 4 3 2 3 3
+##  [223] 1 2 2 1 3 3 1 1 4 2 2 1 2 2 3 4 3 4 3 3 1 3 1 4 2 3 4 3 3 3 4 1 3 2 3 3 2
+##  [260] 4 1 4 3 2 3 1 3 3 4 2 3 4 2 2 4 4 4 2 2 4 2 2 3 2 3 4 2 3 2 4 4 3 4 4 1 1
+##  [297] 4 2 3 3 2 3 3 4 2 4 2 4 4 3 4 4 4 2 1 2 2 1 2 4 3 1 2 3 1 3 2 3 3 1 1 2 3
+##  [334] 1 4 3 3 1 3 3 3 3 3 3 3 3 3 3 1 3 3 1 2 1 3 4 1 1 3 3 2 3 4 2 3 3 4 3 2 3
+##  [371] 4 1 4 4 3 1 2 1 3 1 1 3 1 1 4 1 2 2 3 1 3 3 2 2 4 2 4 1 4 4 3 3 3 4 3 2 2
+##  [408] 3 2 3 3 3 3 2 3 1 3 3 3 3 2 3 3 4 3 3 4 4 3 2 2 4 2 4 3 3 3 2 2 3 3 3 3 4
+##  [445] 1 3 3 4 4 2 3 2 3 3 3 3 2 3 4 4 3 4 4 2 1 2 3 3 2 3 3 3 3 1 3 3 1 3 2 3 2
+##  [482] 2 3 1 2 1 3 2 4 4 3 3 2 2 3 1 3 3 2 3 1 3 3 3 4 2 3 3 3 4 3 1 3 4 2 3 3 3
+##  [519] 3 4 3 2 3 3 1 2 3 1 2 3 1 3 2 3 3 3 4 3 1 4 1 3 3 3 3 3 1 4 1 2 2 3 3 3 3
+##  [556] 3 3 1 4 3 4 3 1 1 2 3 3 4 3 1 1 3 2 1 2 3 4 2 4 1 3 2 1 4 4 3 3 2 4 4 2 2
+##  [593] 3 3 3 3 1 2 3 3 1 3 4 4 4 3 3 1 4 3 3 3 3 2 1 4 1 1 2 3 3 3 4 4 1 2 3 2 1
+##  [630] 4 2 3 3 2 3 1 2 4 3 4 4 3 1 3 4 3 3 3 1 2 4 4 1 2 4 3 4 3 2 2 3 4 4 4 2 4
+##  [667] 4 3 4 3 2 1 4 2 1 3 3 4 4 4 1 3 4 2 3 3 2 2 4 2 2 4 2 2 2 2 4 3 3 4 3 4 4
+##  [704] 2 3 3 4 1 3 2 3 1 1 1 4 2 4 3 3 2 3 2 4 4 3 3 2 3 4 2 4 4 2 2 3 3 3 2 4 2
+##  [741] 4 1 3 3 1 1 3 3 2 2 2 1 4 1 2 3 1 1 1 3 3 2 3 1 1 3 3 3 3 3 1 2 3 2 2 2 3
+##  [778] 2 3 2 3 3 1 3 1 3 1 4 3 4 2 4 2 3 2 3 3 2 3 2 1 2 3 2 2 3 4 4 2 4 4 1 3 3
+##  [815] 4 2 3 3 4 2 4 3 2 2 3 2 3 3 3 3 2 3 3 2 2 3 3 4 1 1 4 3 1 1 2 2 4 2 4 4 3
+##  [852] 3 1 3 2 3 4 2 3 3 2 4 2 2 3 3 2 3 1 1 2 3 1 2 2 2 2 2 4 2 3 2 1 3 1 2 3 1
+##  [889] 1 1 3 2 1 3 2 2 1 2 1 2 3 1 1 2 2 2 2 1 3 1 4 3 3 2 1 1 3 3 3 4 1 1 2 2 1
+##  [926] 2 1 1 3 3 3 2 4 3 1 1 2 1 2 4 2 3 4 1 3 3 2 1 3 3 2 1 3 2 2 2 3 1 2 3 3 3
+##  [963] 3 3 1 2 4 2 3 1 3 1 3 1 1 3 3 3 2 1 4 3 1 3 3 3 1 3 2 3 2 2 1 2 3 2 3 3 3
+## [1000] 1
+## 
+## Within cluster sum of squares by cluster:
+## [1] 103.74605  87.77469 170.27538 106.98076
+##  (between_SS / total_SS =  76.5 %)
+## 
+## Available components:
+## 
+## [1] &quot;cluster&quot;      &quot;centers&quot;      &quot;totss&quot;        &quot;withinss&quot;     &quot;tot.withinss&quot;
+## [6] &quot;betweenss&quot;    &quot;size&quot;         &quot;iter&quot;         &quot;ifault&quot;</code></pre>
+<pre class="r"><code># Unnormalize values for more intuitive summary stats and plots
+point_assignments &lt;- broom::augment(kclust, quakes_normalized) %&gt;% 
+  dplyr::select(-lat, -long) %&gt;% 
+  dplyr::mutate(
+    depth = unnormalize_values(
+      depth, transformations$depth[1], transformations$depth[2]
+    ),
+    mag = unnormalize_values(
+      mag, transformations$mag[1], transformations$mag[2]
+    )
+  )
+
+cluster_info &lt;- broom::tidy(kclust) %&gt;% 
+  dplyr::mutate(
+    depth = unnormalize_values(
+      depth, transformations$depth[1], transformations$depth[2]
+    ),
+    mag = unnormalize_values(
+      mag, transformations$mag[1], transformations$mag[2]
+    )
+  )
+
+model_stats &lt;- broom::glance(kclust)
+
+head(point_assignments)</code></pre>
+<pre><code>## # A tibble: 6 x 3
+##   depth   mag .cluster
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;   
+## 1   562   4.8 4       
+## 2   650   4.2 2       
+## 3    42   5.4 1       
+## 4   626   4.1 2       
+## 5   649   4   2       
+## 6   195   4   3</code></pre>
+<pre class="r"><code>cluster_info</code></pre>
+<pre><code>## # A tibble: 4 x 5
+##   depth   mag  size withinss cluster
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;    &lt;dbl&gt; &lt;fct&gt;  
+## 1  114.  5.20   168    104.  1      
+## 2  528.  4.27   262     87.8 2      
+## 3  144.  4.49   393    170.  3      
+## 4  550.  4.89   177    107.  4</code></pre>
+<pre class="r"><code>model_stats</code></pre>
+<pre><code>## # A tibble: 1 x 4
+##   totss tot.withinss betweenss  iter
+##   &lt;dbl&gt;        &lt;dbl&gt;     &lt;dbl&gt; &lt;int&gt;
+## 1 1998.         469.     1529.     3</code></pre>
+<pre class="r"><code>ggplot2::ggplot() +
+  ggplot2::geom_point(
+    data = point_assignments, aes(x = depth, y = mag, color = .cluster)
+  ) + 
+  ggplot2::geom_point(
+    data = cluster_info, aes(x = depth, y = mag), size = 4, shape = &quot;x&quot;
+  ) +
+  ggplot2::labs(
+    title = &quot;k-Means analysis of earthquakes near Fiji&quot;,
+    subtitle = &quot;Clustered on normalized values of depth and magnitude&quot;,
+    caption = &quot;Source: Harvard PRIM-H project / 1000 seismic events of MB &gt; 4.0 since 1964&quot;,
+    x = &quot;Depth&quot;,
+    y = &quot;Magnitude&quot;
+  )</code></pre>
+<p><img src="https://shirinsplayground.netlify.com/post/2021-03-14_kmeans_101_files/figure-html/norm_2d-1.png" width="672" /></p>
+<p>Now for a little more fun. k-Means can be extended beyond 2 feature dimensions. Let’s re-run our k-Means analysis again, but this time include all four variables: latitude, longitude, depth, and magnitude. I’ll forego the 2D <code>ggplot2</code> graph and show you instead a 3D <code>plotly</code> graph, with magnitude described by each bubble’s size.</p>
+<pre class="r"><code>kclust &lt;- kmeans(quakes_normalized, centers = 4, iter.max = 10, nstart = 5)
+
+str(kclust)</code></pre>
+<pre><code>## List of 9
+##  $ cluster     : int [1:1000] 3 3 2 3 3 1 4 2 2 3 ...
+##  $ centers     : num [1:4, 1:4] 0.2945 -1.7356 -0.0138 0.9338 0.8927 ...
+##   ..- attr(*, &quot;dimnames&quot;)=List of 2
+##   .. ..$ : chr [1:4] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot;
+##   .. ..$ : chr [1:4] &quot;lat&quot; &quot;long&quot; &quot;depth&quot; &quot;mag&quot;
+##  $ totss       : num 3996
+##  $ withinss    : num [1:4] 344 253 591 358
+##  $ tot.withinss: num 1546
+##  $ betweenss   : num 2450
+##  $ size        : int [1:4] 244 143 418 195
+##  $ iter        : int 4
+##  $ ifault      : int 0
+##  - attr(*, &quot;class&quot;)= chr &quot;kmeans&quot;</code></pre>
+<pre class="r"><code>kclust</code></pre>
+<pre><code>## K-means clustering with 4 clusters of sizes 244, 143, 418, 195
+## 
+## Cluster means:
+##           lat       long      depth         mag
+## 1  0.29451805  0.8926707 -0.7392667 -0.08422757
+## 2 -1.73556818  0.3865266 -0.8379212  0.32263747
+## 3 -0.01380115  0.2206365  1.0758663 -0.25081626
+## 4  0.93380886 -1.8733897 -0.7667092  0.40643880
+## 
+## Clustering vector:
+##    [1] 3 3 2 3 3 1 4 2 2 3 3 4 3 3 4 1 4 3 3 3 3 4 3 2 3 3 4 3 3 1 3 4 1 3 1 3 4
+##   [38] 3 3 4 2 1 3 1 4 2 2 4 3 1 3 1 4 3 3 3 3 3 3 3 3 1 3 4 3 1 3 3 3 1 1 1 4 3
+##   [75] 3 3 1 4 3 2 2 3 3 1 3 1 4 3 1 1 4 4 3 4 1 3 2 1 4 3 1 3 3 2 3 1 2 4 2 2 1
+##  [112] 3 3 3 3 3 4 4 4 4 4 1 3 3 2 4 3 3 2 1 1 3 4 3 3 4 1 1 2 1 4 3 4 2 3 1 1 4
+##  [149] 3 3 2 4 1 4 4 3 4 3 4 4 3 3 4 2 2 2 2 1 3 4 3 3 3 1 3 2 3 1 3 1 3 1 1 3 3
+##  [186] 1 3 3 3 1 1 4 3 3 2 3 1 1 3 3 3 3 1 2 4 1 3 3 2 3 2 1 2 1 3 3 2 3 1 3 1 4
+##  [223] 1 3 3 4 1 1 2 4 3 3 3 1 3 3 2 3 4 3 1 1 4 1 1 3 3 1 3 4 4 4 3 4 2 3 1 4 3
+##  [260] 3 1 3 4 3 1 2 4 4 3 3 1 3 3 3 3 3 3 3 3 3 2 3 1 3 1 3 3 1 3 3 3 4 3 3 1 1
+##  [297] 3 3 2 4 3 1 1 3 3 3 3 3 3 2 4 4 3 3 1 3 3 4 3 4 4 1 3 2 4 2 3 4 1 4 1 3 2
+##  [334] 4 3 2 2 2 2 2 2 2 2 2 2 2 2 2 1 2 2 4 3 2 2 3 4 1 2 4 3 1 3 2 4 2 3 1 3 1
+##  [371] 3 1 3 3 1 1 3 1 1 1 4 4 2 4 3 2 3 3 4 2 1 2 3 3 3 3 3 1 3 4 2 4 2 3 1 3 3
+##  [408] 4 3 2 1 1 4 3 1 4 4 2 2 1 3 2 1 3 2 2 3 3 4 3 1 3 3 3 1 2 4 3 3 1 4 1 4 3
+##  [445] 1 1 1 3 3 3 2 3 4 1 1 4 3 1 3 3 1 3 3 3 2 3 4 1 3 2 1 1 1 4 1 2 2 2 3 1 3
+##  [482] 1 1 2 3 2 2 3 3 3 2 4 3 3 1 4 1 2 3 1 1 1 1 4 3 3 4 4 4 3 2 1 1 3 3 1 4 1
+##  [519] 1 3 1 3 2 4 2 3 4 4 3 2 4 4 1 4 1 4 3 4 4 3 4 4 4 4 4 4 4 3 1 3 3 4 4 1 1
+##  [556] 1 1 2 3 4 3 1 2 1 3 1 2 3 1 2 4 1 3 1 3 1 3 3 3 2 4 3 4 3 3 1 4 3 3 3 3 3
+##  [593] 4 4 1 4 4 3 1 1 2 2 3 3 3 2 1 1 3 2 2 4 4 3 1 3 1 4 3 4 2 2 3 3 4 3 2 3 4
+##  [630] 3 3 2 2 3 1 3 1 4 1 3 3 4 2 1 3 1 2 1 2 3 3 3 4 3 3 4 3 2 3 3 2 3 3 3 3 3
+##  [667] 3 1 3 1 3 4 3 3 4 2 1 3 3 3 4 1 3 3 1 4 3 3 3 3 3 3 3 3 3 3 3 1 4 3 4 3 3
+##  [704] 3 1 1 3 1 1 3 1 4 1 4 3 3 3 2 1 3 4 3 3 3 4 4 3 1 3 3 3 2 2 3 4 1 1 3 3 3
+##  [741] 3 1 1 2 1 2 2 1 3 3 3 1 3 4 3 4 1 1 4 1 1 3 1 1 4 4 1 1 4 1 1 3 1 3 3 3 1
+##  [778] 3 4 3 4 4 2 1 1 2 4 3 1 3 3 3 3 2 3 2 4 3 1 3 2 3 1 3 3 1 3 3 3 3 3 1 4 1
+##  [815] 3 3 1 1 3 3 3 1 3 3 4 3 4 1 1 1 2 1 1 3 3 1 4 3 1 4 3 1 2 4 3 3 3 3 3 3 1
+##  [852] 4 4 1 3 1 3 1 2 4 3 3 3 3 4 4 3 1 4 4 3 4 4 3 3 3 3 3 3 3 1 3 4 4 2 3 4 4
+##  [889] 1 2 4 3 4 1 3 3 1 3 1 3 2 1 2 3 3 3 3 4 4 2 3 4 1 3 4 4 1 1 1 3 4 1 3 3 2
+##  [926] 3 4 2 2 4 1 3 3 1 1 1 3 1 3 3 3 2 3 2 1 2 3 2 1 1 3 2 1 3 3 3 2 1 3 1 1 4
+##  [963] 4 1 1 3 3 3 4 2 2 2 1 4 1 1 1 2 3 4 3 4 2 2 1 4 4 4 3 1 3 3 1 3 1 3 4 1 1
+## [1000] 4
+## 
+## Within cluster sum of squares by cluster:
+## [1] 343.7673 252.9391 590.9476 358.4645
+##  (between_SS / total_SS =  61.3 %)
+## 
+## Available components:
+## 
+## [1] &quot;cluster&quot;      &quot;centers&quot;      &quot;totss&quot;        &quot;withinss&quot;     &quot;tot.withinss&quot;
+## [6] &quot;betweenss&quot;    &quot;size&quot;         &quot;iter&quot;         &quot;ifault&quot;</code></pre>
+<pre class="r"><code>point_assignments &lt;- broom::augment(kclust, quakes_normalized) %&gt;% 
+  dplyr::mutate(
+    lat = unnormalize_values(
+      lat, transformations$lat[1], transformations$lat[2]
+    ),
+    long = unnormalize_values(
+      long, transformations$long[1], transformations$long[2]
+    ),
+    depth = unnormalize_values(
+      depth, transformations$depth[1], transformations$depth[2]
+    ),
+    mag = unnormalize_values(
+      mag, transformations$mag[1], transformations$mag[2]
+    )
+  )
+
+cluster_info &lt;- broom::tidy(kclust) %&gt;% 
+  dplyr::mutate(
+    lat = unnormalize_values(
+      lat, transformations$lat[1], transformations$lat[2]
+    ),
+    long = unnormalize_values(
+      long, transformations$long[1], transformations$long[2]
+    ),
+    depth = unnormalize_values(
+      depth, transformations$depth[1], transformations$depth[2]
+    ),
+    mag = unnormalize_values(
+      mag, transformations$mag[1], transformations$mag[2]
+    )
+  )
+
+model_stats &lt;- broom::glance(kclust)
+
+head(point_assignments)</code></pre>
+<pre><code>## # A tibble: 6 x 5
+##     lat  long depth   mag .cluster
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;   
+## 1 -20.4  182.   562   4.8 3       
+## 2 -20.6  181.   650   4.2 3       
+## 3 -26    184.    42   5.4 2       
+## 4 -18.0  182.   626   4.1 3       
+## 5 -20.4  182.   649   4   3       
+## 6 -19.7  184.   195   4   1</code></pre>
+<pre class="r"><code>cluster_info</code></pre>
+<pre><code>## # A tibble: 4 x 7
+##     lat  long depth   mag  size withinss cluster
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;    &lt;dbl&gt; &lt;fct&gt;  
+## 1 -19.2  185.  152.  4.59   244     344. 1      
+## 2 -29.4  182.  131.  4.75   143     253. 2      
+## 3 -20.7  181.  543.  4.52   418     591. 3      
+## 4 -15.9  168.  146.  4.78   195     358. 4</code></pre>
+<pre class="r"><code>model_stats</code></pre>
+<pre><code>## # A tibble: 1 x 4
+##   totss tot.withinss betweenss  iter
+##   &lt;dbl&gt;        &lt;dbl&gt;     &lt;dbl&gt; &lt;int&gt;
+## 1  3996        1546.     2450.     4</code></pre>
+<pre class="r"><code>plotly::plot_ly() %&gt;% 
+  plotly::add_trace(
+    data = point_assignments,
+    x = ~long, y = ~lat, z = ~depth*-1, size = ~mag,
+    color = ~.cluster,
+    type = &quot;scatter3d&quot;, mode = &quot;markers&quot;,
+    marker = list(symbol = &quot;circle&quot;, sizemode = &quot;diameter&quot;),
+    sizes = c(5, 30)
+  ) %&gt;% 
+  plotly::layout(scene = list(
+    xaxis = list(title = &quot;Longitude&quot;),
+    yaxis = list(title = &quot;Latitude&quot;),
+    zaxis = list(title = &quot;Depth&quot;)
+  ))</code></pre>
+<div id="htmlwidget-1" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"visdat":{"768565dce991":["function () ","plotlyVisDat"],"7685a6a62d6":["function () ","data"]},"cur_data":"7685a6a62d6","attrs":{"7685a6a62d6":{"alpha_stroke":1,"sizes":[5,30],"spans":[1,20],"x":{},"y":{},"z":{},"size":{},"color":{},"type":"scatter3d","mode":"markers","marker":{"symbol":"circle","sizemode":"diameter"},"inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"xaxis":{"title":"Longitude"},"yaxis":{"title":"Latitude"},"zaxis":{"title":"Depth"}},"hovermode":"closest","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"x":[184.31,184.95,182.37,185.05,186,186.1,186.04,185.25,184.42,182.4,184.93,187.81,185.8,184.35,184.7,183.4,184.31,186.3,186.44,185.26,183.41,185.61,183.5,185.23,178.9,183.51,185.43,187.32,182.8,184.16,184.4,185.17,182.56,183.84,184.68,185.16,184.24,183.5,184.3,187.09,185.13,184.09,182.53,182.75,183.59,182.32,184.1,185.68,183.83,185.7,184.48,182.9,185.75,185.35,182.74,182.84,183.68,185.51,186.9,184.89,184.23,183.05,181.41,177.77,184.68,185.32,186.21,185.86,184.14,185.74,183.78,183.48,185.77,183.87,185.48,182.68,185.72,183.2,182.93,184.08,184.06,186.75,186.66,186.42,186.71,186.16,188.13,184.5,186.8,184.56,185.2,186.2,186.8,183.4,183.2,185.32,184.68,183.81,183.52,185.64,182.8,184.7,185.6,186.8,185.43,184.36,185.48,185.94,185.9,185.2,184.87,183.3,185.31,185.3,184.46,187.1,186.3,183.81,184.28,187,187.2,184.52,186.9,185.77,183.2,184.6,187.15,184.61,184.6,184.42,184.46,184.47,182.8,183.91,183.84,187.55,186.51,187.8,186.74,185,182.39,184.03,185.5,185.62,186.26,184.91,183.22,183.97,186.54,185.01,184,186.73,184.83,184.28,186.08,184.27,186.4,185.19,184.48,187.48,186.78,183.23,186.73,185.86,185.27,182.78,186.87,183.95,186.83,185.3,183,183.34,185.77,185.9,185.6,186.73,184.3,185.33,183.86,184.52,184.51,186.3,185.1,184.53,183.6,186.1,184.62,185.5,183.8,184.8,184.97,186.59,183,185.1,186.52,186.36,185.3,185.23,183.11,185.1,184.37,185.9,185.26,185.25,185.93,186.72,185.4,185.17,185.96,184.84,184.52,183.78,185.8,185.11,185.86,185.98,184.47,183.45,182.8,184.41,185.13,185.18,184.75,186.16,183.99,184.13,184.9,184.49,184.5,184.95,183.58,184.6,184.23,183.95,184.5,184.68,185.74,183.71,187.15,184.53,183.86,188.1,184.2,187.8],"y":[-19.68,-15.94,-19.84,-15.55,-16.3,-15.31,-15.49,-18.97,-19.26,-21.16,-17.1,-15.46,-15.31,-19.86,-19.21,-20.12,-19.66,-15.43,-15.41,-15.44,-18.16,-16.98,-19.44,-15.75,-19.9,-19.19,-17.43,-16.14,-23.95,-18.84,-20.1,-17.8,-23.83,-19.89,-15.2,-17.42,-15.02,-24.6,-19.88,-17.67,-15.85,-20.02,-23.85,-24,-16.23,-21.97,-16.17,-20.47,-20.21,-16.52,-22.43,-21.55,-16.24,-19.62,-20.08,-24.36,-18.2,-16.65,-15.5,-16.09,-19.02,-19.41,-19.76,-16.45,-17.95,-21.13,-15.24,-16.4,-19.68,-16.44,-21.48,-21.79,-20.76,-19.1,-21.54,-17.1,-16.9,-18.3,-23.44,-19.89,-20.31,-15.33,-15.36,-15.29,-15.36,-20.36,-15.87,-15.7,-17.68,-22.24,-21.5,-19.7,-17.04,-18.4,-21.8,-16.1,-21.05,-22.55,-22.28,-15.72,-23.19,-20.81,-19,-15.66,-16.03,-19.14,-18,-16.95,-20.83,-19.6,-14.85,-22.7,-17.14,-15.9,-18.89,-16.51,-20.1,-21.06,-20.9,-16.99,-15.17,-20.75,-19.5,-20.66,-21,-23.28,-15.61,-23.28,-23.44,-23.12,-23.65,-23.92,-21.92,-19.92,-19.6,-18.85,-20.41,-16.49,-16.62,-21.79,-23.89,-23.07,-22,-21.57,-15.65,-22.04,-20.08,-19.51,-17.4,-20.81,-23.29,-15.48,-15.85,-18.6,-15.97,-20.16,-15.35,-15.43,-19.45,-16.11,-17.74,-21.56,-15.45,-21.47,-18.35,-19.28,-15.4,-22.06,-19.02,-22.1,-19.3,-22.55,-21.29,-17.1,-21.13,-16.43,-20.7,-17.78,-21.57,-19.1,-19.85,-20.7,-20.24,-19.6,-21.8,-20.4,-15,-21.56,-22.9,-23.2,-19.13,-19.34,-23.73,-15.39,-16.21,-19.36,-15.5,-15.67,-21.78,-15.7,-19.2,-15.85,-20.89,-15.8,-15.18,-18.78,-18.5,-15.65,-17.08,-18.4,-22.82,-21.07,-21.29,-15.24,-19.3,-15.28,-19.57,-23.08,-25.06,-20.56,-17.63,-20.88,-20.25,-19.33,-22.41,-23.7,-23.5,-23.73,-18.68,-20.88,-21.71,-23.9,-19.69,-22.04,-24.1,-23.3,-17.03,-20.77,-15.54,-16,-20.05,-17.7,-20.13,-17.4],"z":[-195,-306,-328,-292,-48,-96,-94,-129,-223,-260,-286,-40,-152,-201,-197,-284,-170,-123,-69,-224,-306,-108,-293,-280,-81,-307,-189,-42,-199,-210,-186,-97,-229,-244,-99,-206,-339,-67,-161,-45,-290,-234,-204,-175,-367,-261,-338,-93,-242,-90,-65,-207,-154,-57,-298,-148,-107,-218,-46,-304,-270,-300,-105,-138,-260,-123,-158,-148,-242,-126,-200,-210,-118,-61,-51,-403,-135,-103,-158,-219,-249,-48,-112,-153,-130,-102,-52,-118,-112,-99,-139,-47,-70,-343,-325,-257,-136,-82,-90,-138,-237,-162,-107,-45,-297,-269,-143,-95,-104,-125,-294,-180,-223,-57,-242,-62,-63,-203,-58,-70,-50,-144,-58,-69,-296,-44,-49,-76,-63,-104,-93,-40,-273,-264,-309,-44,-63,-40,-82,-74,-243,-89,-52,-66,-64,-47,-294,-280,-85,-79,-164,-82,-299,-255,-143,-210,-98,-249,-246,-61,-104,-271,-83,-55,-201,-348,-78,-134,-45,-50,-302,-66,-57,-127,-85,-75,-182,-223,-156,-230,-184,-80,-86,-199,-213,-74,-40,-47,-71,-97,-210,-56,-118,-237,-111,-100,-93,-66,-225,-70,-220,-121,-54,-82,-77,-68,-243,-315,-180,-221,-49,-180,-69,-262,-48,-162,-202,-90,-133,-138,-219,-51,-107,-44,-128,-51,-61,-60,-174,-82,-234,-41,-223,-109,-68,-102,-178,-251,-60,-108,-243,-45,-244,-40],"type":"scatter3d","mode":"markers","marker":{"color":"rgba(102,194,165,1)","size":[5,8.125,9.16666666666667,13.3333333333333,10.2083333333333,11.25,8.125,16.4583333333333,5,6.04166666666666,12.2916666666667,20.625,5,10.2083333333333,6.04166666666666,8.125,8.125,7.08333333333333,8.125,7.08333333333333,17.5,6.04166666666666,7.08333333333333,10.2083333333333,8.125,8.125,10.2083333333333,16.4583333333333,11.25,7.08333333333333,7.08333333333333,9.16666666666667,8.125,18.5416666666667,6.04166666666666,10.2083333333333,11.25,8.125,9.16666666666667,14.375,11.25,18.5416666666667,11.25,10.2083333333333,12.2916666666667,8.125,8.125,19.5833333333333,9.16666666666667,12.2916666666667,14.375,7.08333333333333,10.2083333333333,14.375,10.2083333333333,6.04166666666666,13.3333333333333,15.4166666666667,12.2916666666667,11.25,16.4583333333333,7.08333333333333,9.16666666666667,11.25,9.16666666666667,12.2916666666667,15.4166666666667,15.4166666666667,13.3333333333333,12.2916666666667,14.375,17.5,11.25,18.5416666666667,15.4166666666667,20.625,5,10.2083333333333,6.04166666666666,19.5833333333333,9.16666666666667,22.7083333333333,16.4583333333333,11.25,20.625,8.125,15.4166666666667,9.16666666666667,10.2083333333333,13.3333333333333,9.16666666666667,13.3333333333333,6.04166666666666,6.04166666666666,9.16666666666667,12.2916666666667,12.2916666666667,16.4583333333333,12.2916666666667,8.125,8.125,8.125,10.2083333333333,9.16666666666667,13.3333333333333,12.2916666666667,9.16666666666667,8.125,10.2083333333333,9.16666666666667,6.04166666666666,5,6.04166666666666,9.16666666666667,13.3333333333333,14.375,11.25,10.2083333333333,20.625,12.2916666666667,12.2916666666667,8.125,9.16666666666667,8.125,5,13.3333333333333,15.4166666666667,12.2916666666667,13.3333333333333,7.08333333333333,7.08333333333333,12.2916666666667,18.5416666666667,7.08333333333333,10.2083333333333,13.3333333333333,15.4166666666667,10.2083333333333,13.3333333333333,6.04166666666666,12.2916666666667,12.2916666666667,9.16666666666667,14.375,16.4583333333333,14.375,8.125,5,7.08333333333333,12.2916666666667,13.3333333333333,9.16666666666667,9.16666666666667,9.16666666666667,11.25,9.16666666666667,9.16666666666667,5,8.125,10.2083333333333,16.4583333333333,9.16666666666667,12.2916666666667,14.375,12.2916666666667,10.2083333333333,12.2916666666667,10.2083333333333,17.5,11.25,15.4166666666667,11.25,18.5416666666667,19.5833333333333,18.5416666666667,6.04166666666666,8.125,6.04166666666666,16.4583333333333,6.04166666666666,9.16666666666667,5,16.4583333333333,8.125,9.16666666666667,8.125,16.4583333333333,10.2083333333333,8.125,10.2083333333333,6.04166666666666,17.5,8.125,10.2083333333333,13.3333333333333,12.2916666666667,9.16666666666667,9.16666666666667,11.25,6.04166666666666,7.08333333333333,6.04166666666666,16.4583333333333,9.16666666666667,6.04166666666666,13.3333333333333,5,6.04166666666666,7.08333333333333,7.08333333333333,15.4166666666667,8.125,14.375,14.375,15.4166666666667,9.16666666666667,7.08333333333333,12.2916666666667,5,15.4166666666667,10.2083333333333,11.25,21.6666666666667,19.5833333333333,17.5,13.3333333333333,12.2916666666667,12.2916666666667,10.2083333333333,14.375,12.2916666666667,10.2083333333333,6.04166666666666,19.5833333333333,12.2916666666667,14.375,7.08333333333333,9.16666666666667,10.2083333333333,12.2916666666667,14.375,7.08333333333333,10.2083333333333,10.2083333333333],"sizemode":"diameter","symbol":"circle","line":{"color":"rgba(102,194,165,1)"}},"name":"1","textfont":{"color":"rgba(102,194,165,1)","size":[5,8.125,9.16666666666667,13.3333333333333,10.2083333333333,11.25,8.125,16.4583333333333,5,6.04166666666666,12.2916666666667,20.625,5,10.2083333333333,6.04166666666666,8.125,8.125,7.08333333333333,8.125,7.08333333333333,17.5,6.04166666666666,7.08333333333333,10.2083333333333,8.125,8.125,10.2083333333333,16.4583333333333,11.25,7.08333333333333,7.08333333333333,9.16666666666667,8.125,18.5416666666667,6.04166666666666,10.2083333333333,11.25,8.125,9.16666666666667,14.375,11.25,18.5416666666667,11.25,10.2083333333333,12.2916666666667,8.125,8.125,19.5833333333333,9.16666666666667,12.2916666666667,14.375,7.08333333333333,10.2083333333333,14.375,10.2083333333333,6.04166666666666,13.3333333333333,15.4166666666667,12.2916666666667,11.25,16.4583333333333,7.08333333333333,9.16666666666667,11.25,9.16666666666667,12.2916666666667,15.4166666666667,15.4166666666667,13.3333333333333,12.2916666666667,14.375,17.5,11.25,18.5416666666667,15.4166666666667,20.625,5,10.2083333333333,6.04166666666666,19.5833333333333,9.16666666666667,22.7083333333333,16.4583333333333,11.25,20.625,8.125,15.4166666666667,9.16666666666667,10.2083333333333,13.3333333333333,9.16666666666667,13.3333333333333,6.04166666666666,6.04166666666666,9.16666666666667,12.2916666666667,12.2916666666667,16.4583333333333,12.2916666666667,8.125,8.125,8.125,10.2083333333333,9.16666666666667,13.3333333333333,12.2916666666667,9.16666666666667,8.125,10.2083333333333,9.16666666666667,6.04166666666666,5,6.04166666666666,9.16666666666667,13.3333333333333,14.375,11.25,10.2083333333333,20.625,12.2916666666667,12.2916666666667,8.125,9.16666666666667,8.125,5,13.3333333333333,15.4166666666667,12.2916666666667,13.3333333333333,7.08333333333333,7.08333333333333,12.2916666666667,18.5416666666667,7.08333333333333,10.2083333333333,13.3333333333333,15.4166666666667,10.2083333333333,13.3333333333333,6.04166666666666,12.2916666666667,12.2916666666667,9.16666666666667,14.375,16.4583333333333,14.375,8.125,5,7.08333333333333,12.2916666666667,13.3333333333333,9.16666666666667,9.16666666666667,9.16666666666667,11.25,9.16666666666667,9.16666666666667,5,8.125,10.2083333333333,16.4583333333333,9.16666666666667,12.2916666666667,14.375,12.2916666666667,10.2083333333333,12.2916666666667,10.2083333333333,17.5,11.25,15.4166666666667,11.25,18.5416666666667,19.5833333333333,18.5416666666667,6.04166666666666,8.125,6.04166666666666,16.4583333333333,6.04166666666666,9.16666666666667,5,16.4583333333333,8.125,9.16666666666667,8.125,16.4583333333333,10.2083333333333,8.125,10.2083333333333,6.04166666666666,17.5,8.125,10.2083333333333,13.3333333333333,12.2916666666667,9.16666666666667,9.16666666666667,11.25,6.04166666666666,7.08333333333333,6.04166666666666,16.4583333333333,9.16666666666667,6.04166666666666,13.3333333333333,5,6.04166666666666,7.08333333333333,7.08333333333333,15.4166666666667,8.125,14.375,14.375,15.4166666666667,9.16666666666667,7.08333333333333,12.2916666666667,5,15.4166666666667,10.2083333333333,11.25,21.6666666666667,19.5833333333333,17.5,13.3333333333333,12.2916666666667,12.2916666666667,10.2083333333333,14.375,12.2916666666667,10.2083333333333,6.04166666666666,19.5833333333333,12.2916666666667,14.375,7.08333333333333,9.16666666666667,10.2083333333333,12.2916666666667,14.375,7.08333333333333,10.2083333333333,10.2083333333333]},"error_y":{"color":"rgba(102,194,165,1)","width":[]},"error_x":{"color":"rgba(102,194,165,1)","width":[]},"line":{"color":"rgba(102,194,165,1)"},"frame":null},{"x":[184.1,181.93,181.74,182,176.78,182.3,181.7,181.11,180.21,181.11,181.6,180.6,185.9,177.81,180.6,181.7,182.6,181.43,184.5,180.2,179.9,179.43,182.12,180.2,179.61,183.35,180.62,180.13,181.71,182.4,182.53,182.68,182.1,184.2,180.1,181.2,181.5,182.31,182.3,182.6,182.18,182.1,182.18,182.38,182.18,182.28,181.7,182.5,182.5,182.39,182.47,182.4,182.39,182.43,182.61,182.02,182.36,182.53,179.9,183.61,182.82,181.66,183.88,183.68,182.16,181.4,181.6,181.7,181.8,182.77,180.9,182.4,182.93,182.5,181.16,180.57,181.6,177.47,183.2,181.21,183.4,180.5,181.63,181.2,183.63,183.33,181.15,180.8,183.95,182.1,182.26,179.82,183.4,181.96,182.25,179.8,180.2,182.4,181.3,179.1,181.75,183.47,183.59,183.4,176.03,177.52,182.1,180.8,182.85,182.5,181.2,180.8,175.7,181.59,181.3,184.85,183.4,182,180.6,184.7,180.9,182.65,181.15,182.69,177.1,180,180.94,182.39,182.22,182.72,182.54,182.1,183.99,182.4,182.92,178.52,183.44,184.64,182.38,184.5,183.5,183.6,183.5],"y":[-26,-28.11,-28.74,-30.2,-37.37,-30.1,-26.4,-28.98,-34.02,-27.24,-33,-34.89,-22.55,-36.95,-31.24,-27.72,-25.2,-29.91,-23.34,-35.56,-35.48,-34.2,-26,-32.22,-32.2,-26.72,-30.28,-30.66,-28.25,-26.67,-23.73,-28.23,-29.1,-26.17,-30.72,-30.64,-32.62,-29.5,-26.1,-27.33,-27.18,-25.8,-27.19,-27.27,-27.1,-27.22,-27.38,-27.27,-27.54,-27.2,-27.71,-27.6,-27.38,-27.21,-28.96,-30.17,-27.27,-27.18,-32.14,-26.78,-25.5,-28.83,-27,-27.17,-30.8,-30.4,-33.2,-32.7,-34.1,-26.6,-32.6,-33,-27.63,-26.46,-29.9,-31.94,-32.9,-37.93,-29.09,-32.42,-23.58,-34.4,-30.24,-30.04,-26.54,-24.68,-32.45,-33.57,-22.91,-30.69,-27.75,-34.68,-27.28,-27.98,-28.1,-32.82,-33.03,-30.09,-33.29,-34.63,-34.12,-28.56,-28.56,-28.15,-38.46,-37.03,-27.6,-30.01,-24.97,-26.1,-26.02,-30.3,-38.59,-31.03,-30.51,-24.04,-27.87,-28,-31.8,-23.8,-30.63,-25.42,-30.01,-26.72,-38.28,-32.14,-33.09,-28.05,-27.64,-29.33,-25.81,-27.84,-23.6,-30.39,-27.89,-35.94,-27.08,-23.95,-25.79,-23.75,-28.1,-28.22,-27.99],"z":[-42,-194,-211,-125,-263,-56,-329,-304,-75,-365,-72,-42,-42,-146,-328,-94,-149,-205,-56,-42,-59,-40,-205,-216,-422,-190,-350,-411,-226,-186,-232,-74,-179,-65,-413,-175,-55,-129,-49,-42,-56,-68,-69,-45,-43,-65,-80,-51,-68,-69,-103,-61,-69,-55,-54,-56,-65,-60,-406,-40,-124,-221,-56,-44,-41,-40,-153,-211,-246,-119,-57,-176,-80,-184,-215,-168,-169,-65,-54,-47,-94,-201,-80,-49,-66,-70,-41,-51,-64,-62,-174,-75,-70,-53,-68,-176,-186,-51,-60,-278,-75,-48,-53,-57,-148,-153,-154,-286,-137,-133,-361,-275,-162,-57,-203,-70,-87,-199,-178,-42,-334,-102,-210,-162,-100,-331,-47,-117,-162,-57,-201,-193,-118,-63,-87,-138,-63,-43,-172,-54,-42,-75,-71],"type":"scatter3d","mode":"markers","marker":{"color":"rgba(252,141,98,1)","size":[19.5833333333333,9.16666666666667,12.2916666666667,12.2916666666667,12.2916666666667,14.375,10.2083333333333,18.5416666666667,17.5,10.2083333333333,12.2916666666667,9.16666666666667,22.7083333333333,15.4166666666667,9.16666666666667,13.3333333333333,14.375,9.16666666666667,22.7083333333333,11.25,13.3333333333333,15.4166666666667,21.6666666666667,22.7083333333333,11.25,10.2083333333333,12.2916666666667,12.2916666666667,6.04166666666666,7.08333333333333,15.4166666666667,9.16666666666667,9.16666666666667,14.375,9.16666666666667,5,13.3333333333333,9.16666666666667,9.16666666666667,9.16666666666667,10.2083333333333,10.2083333333333,19.5833333333333,10.2083333333333,12.2916666666667,7.08333333333333,13.3333333333333,10.2083333333333,8.125,8.125,8.125,11.25,10.2083333333333,11.25,11.25,20.625,12.2916666666667,11.25,8.125,11.25,15.4166666666667,16.4583333333333,14.375,13.3333333333333,12.2916666666667,8.125,7.08333333333333,9.16666666666667,8.125,10.2083333333333,12.2916666666667,11.25,8.125,8.125,16.4583333333333,12.2916666666667,11.25,19.5833333333333,11.25,14.375,17.5,9.16666666666667,10.2083333333333,13.3333333333333,12.2916666666667,12.2916666666667,20.625,12.2916666666667,24.7916666666667,14.375,10.2083333333333,21.6666666666667,16.4583333333333,17.5,11.25,12.2916666666667,11.25,9.16666666666667,12.2916666666667,12.2916666666667,12.2916666666667,13.3333333333333,9.16666666666667,15.4166666666667,11.25,21.6666666666667,11.25,13.3333333333333,13.3333333333333,7.08333333333333,12.2916666666667,5,12.2916666666667,17.5,9.16666666666667,15.4166666666667,12.2916666666667,5,10.2083333333333,15.4166666666667,7.08333333333333,15.4166666666667,8.125,17.5,19.5833333333333,10.2083333333333,14.375,16.4583333333333,16.4583333333333,19.5833333333333,12.2916666666667,13.3333333333333,19.5833333333333,11.25,20.625,20.625,12.2916666666667,19.5833333333333,9.16666666666667,17.5,9.16666666666667,14.375,8.125],"sizemode":"diameter","symbol":"circle","line":{"color":"rgba(252,141,98,1)"}},"name":"2","textfont":{"color":"rgba(252,141,98,1)","size":[19.5833333333333,9.16666666666667,12.2916666666667,12.2916666666667,12.2916666666667,14.375,10.2083333333333,18.5416666666667,17.5,10.2083333333333,12.2916666666667,9.16666666666667,22.7083333333333,15.4166666666667,9.16666666666667,13.3333333333333,14.375,9.16666666666667,22.7083333333333,11.25,13.3333333333333,15.4166666666667,21.6666666666667,22.7083333333333,11.25,10.2083333333333,12.2916666666667,12.2916666666667,6.04166666666666,7.08333333333333,15.4166666666667,9.16666666666667,9.16666666666667,14.375,9.16666666666667,5,13.3333333333333,9.16666666666667,9.16666666666667,9.16666666666667,10.2083333333333,10.2083333333333,19.5833333333333,10.2083333333333,12.2916666666667,7.08333333333333,13.3333333333333,10.2083333333333,8.125,8.125,8.125,11.25,10.2083333333333,11.25,11.25,20.625,12.2916666666667,11.25,8.125,11.25,15.4166666666667,16.4583333333333,14.375,13.3333333333333,12.2916666666667,8.125,7.08333333333333,9.16666666666667,8.125,10.2083333333333,12.2916666666667,11.25,8.125,8.125,16.4583333333333,12.2916666666667,11.25,19.5833333333333,11.25,14.375,17.5,9.16666666666667,10.2083333333333,13.3333333333333,12.2916666666667,12.2916666666667,20.625,12.2916666666667,24.7916666666667,14.375,10.2083333333333,21.6666666666667,16.4583333333333,17.5,11.25,12.2916666666667,11.25,9.16666666666667,12.2916666666667,12.2916666666667,12.2916666666667,13.3333333333333,9.16666666666667,15.4166666666667,11.25,21.6666666666667,11.25,13.3333333333333,13.3333333333333,7.08333333333333,12.2916666666667,5,12.2916666666667,17.5,9.16666666666667,15.4166666666667,12.2916666666667,5,10.2083333333333,15.4166666666667,7.08333333333333,15.4166666666667,8.125,17.5,19.5833333333333,10.2083333333333,14.375,16.4583333333333,16.4583333333333,19.5833333333333,12.2916666666667,13.3333333333333,19.5833333333333,11.25,20.625,20.625,12.2916666666667,19.5833333333333,9.16666666666667,17.5,9.16666666666667,14.375,8.125]},"error_y":{"color":"rgba(252,141,98,1)","width":[]},"error_x":{"color":"rgba(252,141,98,1)","width":[]},"line":{"color":"rgba(252,141,98,1)"},"frame":null},{"x":[181.62,181.03,181.66,181.96,179.59,180.69,182.11,181.66,181.5,179.78,180.31,181.16,180.16,180.28,181.49,180.79,181.47,179.24,180.8,179.33,181.28,181.4,179.82,180.08,182.35,180.67,182.16,182.13,181,180.6,181.35,179.2,181.55,172.38,181.41,181.6,179.62,181.86,179.99,181.23,180.04,181.71,180.99,182.38,181.7,179.96,182.02,182.4,179.92,178.41,180.39,180.69,182.31,182.45,178.3,178.35,178.31,180.4,182.43,183.84,178.57,181.22,180.3,180.82,181.4,173.5,180.17,181.5,181.32,180,180.5,179.52,180,181.83,180.34,180.9,182.29,180.64,181.48,181.75,183,181.85,181.9,181.85,179.88,182,179.5,181.19,181.74,180.3,182.18,182.2,180.54,181.69,182.3,180.27,181.58,181.52,182.39,182.1,180.16,180.94,180.81,182.82,180.13,179.93,180.63,180.22,181.67,181.65,180.01,181.38,180.88,179.36,179.89,181.51,181.47,182.37,180.85,180.38,179.9,181.99,180.38,181.4,180.18,179.22,180.52,182.51,180.54,185,179.85,180.6,181.57,182.28,181.49,181.5,179.69,178.4,181.51,169.28,181.38,171.39,179.7,181.36,180.53,181.39,181.91,181.41,181.02,181.03,179.5,182.04,181.2,180,179.07,181.32,181.32,181.58,179.6,182.37,182.51,179.99,181.09,181.4,181.6,182.01,181.49,180.98,181.26,181.9,181.2,179.6,181.42,181.3,178.59,181.5,182.3,180.23,180.1,180.38,179.71,181.24,182.6,180.96,180.26,182.23,178.47,182.3,182.04,182.54,181.59,181.5,180.15,179.68,181.59,179.99,180.63,180.62,180.7,180.86,181.9,181.11,180.23,180.68,181.3,181.2,181.13,170.62,180.23,183.54,180.22,180.09,182.3,180.02,180.17,181.82,179.79,182.54,180.84,183.13,181.31,181.59,181.91,181.41,182.22,180.47,181.57,180.97,181.18,182.41,182.04,181.31,181.69,182.64,181.33,181.87,181.25,179.87,181.42,179.27,181.06,181.9,182.93,180.81,180.86,174.46,180.92,181.87,181.53,181.54,179.02,180.31,179.91,179.86,182.37,181.02,180.92,182.21,180.18,181.09,181.41,181.38,181.88,181.98,180.12,170.34,180.98,180.6,180.58,182.3,180.87,180.11,181.04,180.87,180.98,180.09,181.32,181.71,182.62,180.24,179.15,181.66,180.94,181.74,181.24,183.32,181.54,181.5,181.4,182.41,182.44,181.53,179.86,179.9,181.58,181.57,177.01,181.51,180,179.98,181.72,180.49,172.76,181.51,182.9,181.48,178.3,178.29,182.8,180,181.69,181.48,179.67,178.42,181.4,181.17,181.61,180.64,180.3,181.84,180.85,180.03,180.92,182.73,180.77,180.5,181,180.9,181.5,180.27,181.58,181.65,178.43,181.9,180.7,182.1,181.63,180.21,169.52,181.06,181.3,181.75,182.02,179.84,180.89,181.72,180.49,180.67,180.4,179.54,179.62,182.44,182.4,182.44,182.29,179.97,181.62,180.05,181.23,180.26,179.98,180.48,181.39,181.41,171.17,180.78,180.78,181.89,181.7,181.37,181.57,180.58,181.2,182.43,182.2,181.28,179.77,181.63,181.4,178.98,180.28,181.25,180.15,180.58,181.27,181.62,181.42,181.33,179.85,179.97,181.51,181.44,181.61,181.77,181.02,180.21,180.21,181.71,181.16,181.73,181.01,182.39,182.32,181.62,179.95,180.06,180.26,181.2,181.59,180.13,180.74,182.26,181.67,181.3,181.42,181.42,181.37,179.54],"y":[-20.42,-20.62,-17.97,-20.42,-17.47,-21.44,-18.54,-21,-17.83,-23.5,-22.63,-20.84,-23.3,-19.66,-17.94,-16.46,-20.97,-22.58,-23.55,-25.82,-17.64,-17.66,-24.97,-24.12,-18.75,-21.37,-20.1,-19.85,-22.7,-22.06,-17.8,-24.2,-20.69,-13.82,-20.68,-20.14,-21.96,-20.42,-23.74,-17.7,-23.54,-21.81,-23.84,-19.57,-17.7,-23.64,-20.64,-19.73,-24.57,-26.2,-21.88,-21.33,-16.85,-19.06,-26.11,-26.2,-26.13,-22.05,-19.22,-19.3,-26.53,-17.05,-23.71,-21.3,-20.65,-14.31,-23.58,-17.9,-20.65,-24.81,-17.98,-24.34,-23.43,-17.82,-25.68,-20.2,-15.03,-22.64,-17.84,-18.04,-20.3,-20.45,-22.3,-19.85,-24.27,-17.87,-24.08,-20.36,-20.41,-17.72,-19.67,-17.7,-21.96,-20.32,-20.2,-23.55,-20.94,-18.13,-18.31,-20.37,-23.77,-19.4,-24.64,-16,-23.84,-23.54,-21.68,-24.96,-18.11,-17.95,-23.36,-17.8,-20.32,-23.81,-23.79,-20.9,-17.88,-20.21,-21.29,-22.09,-23.8,-20.16,-22.13,-17.44,-23.33,-24.78,-22,-19.13,-22.32,-17.7,-24.4,-19.3,-18.07,-20.6,-18.48,-20.92,-25.31,-24.57,-17.94,-13.09,-21.09,-14.99,-23.3,-17.68,-22,-21.38,-18.6,-21.34,-17.4,-17.32,-26.16,-19.83,-21.04,-23.91,-23.49,-17.46,-17.79,-17.98,-21.98,-20.43,-15.83,-23.73,-17.59,-19.77,-18.2,-20.04,-17.82,-27.23,-20.94,-17.46,-21.04,-23.7,-17.72,-17.84,-26.18,-17.95,-20.51,-23.61,-25.04,-24.19,-22.1,-20.58,-20.61,-17.47,-23.33,-18.55,-26.16,-20.3,-20.56,-19.83,-20.85,-21.11,-25.31,-24.09,-18.06,-23.53,-18.18,-18,-18.08,-18.05,-20.9,-17.68,-23.56,-21.39,-17.9,-17.61,-21.07,-13.84,-23.45,-16.04,-24.03,-23.46,-19.41,-25.59,-23.46,-17.81,-26.18,-19.22,-21.31,-15.26,-17.7,-17.56,-19.61,-21.16,-20.65,-22.06,-17.99,-25.04,-17.71,-17.02,-18.18,-17.74,-20.49,-18.51,-20.57,-20.04,-20.89,-24.96,-20.95,-23.31,-20.95,-21.58,-17.02,-21.24,-21.24,-19.89,-24.5,-19.6,-17.78,-18.07,-24.18,-23.78,-23.97,-25.25,-18.48,-21.46,-21.3,-18.82,-23.93,-21.23,-20.72,-20.48,-18.12,-18.17,-23.1,-14.28,-17.59,-17.94,-17.88,-19.19,-18.14,-23.46,-18.44,-18.21,-18.26,-23.82,-17.8,-18.12,-19.34,-23.47,-23.11,-20.54,-25.48,-18.19,-18.89,-17.61,-20.93,-17.6,-17.96,-18.8,-20.61,-20.74,-25.23,-23.9,-18.07,-18.04,-17.64,-17.98,-25,-23.73,-20.97,-22.16,-13.36,-21.22,-17.2,-17.91,-26.53,-26.5,-17.1,-23.5,-21.26,-17.97,-24.89,-25.14,-20.3,-25.28,-20.63,-22.14,-25.6,-18.04,-21.08,-24.41,-21.18,-16.4,-21.63,-21.6,-21.77,-21.05,-17.9,-23.61,-21.19,-18.07,-26,-20.21,-20.74,-20.45,-18.11,-23.42,-12.93,-21.14,-21.08,-20.07,-20.9,-25.04,-21.85,-18.1,-22.12,-21.75,-22.1,-24.97,-22.14,-21.48,-21.62,-19.7,-19.4,-24.33,-17.99,-26.06,-17.56,-25.63,-25.46,-22.23,-21.55,-17.9,-14.82,-21.03,-21.4,-17.93,-20.87,-22.85,-20.91,-22.09,-17.8,-18.94,-18.85,-21.91,-22.03,-18.1,-21.2,-24.39,-22.24,-17.74,-23.87,-22.2,-17.82,-20.18,-17.46,-17.44,-24.71,-23.39,-20.27,-17.85,-17.98,-18.4,-20.99,-23.47,-23.92,-18.14,-20.77,-17.95,-20.83,-19.94,-18.98,-17.93,-23.47,-23.49,-23.85,-20.97,-17.99,-23.5,-21.4,-18.83,-20.82,-17.86,-20.73,-15.45,-17.95,-25.93],"z":[-562,-650,-626,-649,-622,-583,-554,-600,-590,-570,-598,-576,-512,-431,-537,-498,-582,-553,-349,-600,-574,-585,-511,-493,-554,-593,-489,-562,-445,-584,-535,-530,-582,-613,-593,-587,-627,-530,-506,-546,-564,-323,-367,-579,-450,-538,-497,-375,-484,-583,-608,-636,-388,-477,-617,-606,-609,-606,-571,-517,-600,-527,-510,-624,-582,-614,-462,-573,-597,-452,-626,-504,-553,-640,-434,-627,-399,-544,-542,-640,-375,-534,-309,-576,-523,-569,-605,-637,-538,-595,-360,-445,-603,-508,-533,-535,-573,-618,-342,-397,-505,-664,-397,-431,-525,-574,-617,-470,-597,-619,-553,-587,-680,-521,-526,-548,-562,-482,-607,-590,-498,-504,-577,-529,-528,-492,-561,-579,-565,-383,-522,-671,-572,-529,-641,-546,-507,-562,-601,-654,-555,-637,-500,-515,-583,-501,-442,-464,-479,-497,-492,-575,-483,-534,-544,-573,-587,-590,-583,-502,-423,-527,-536,-630,-553,-605,-573,-401,-556,-417,-591,-646,-565,-535,-548,-593,-492,-475,-481,-484,-579,-602,-488,-546,-530,-563,-537,-476,-499,-524,-499,-538,-467,-538,-604,-538,-639,-636,-628,-632,-556,-568,-474,-617,-593,-537,-594,-638,-520,-384,-508,-543,-589,-485,-541,-598,-460,-570,-586,-393,-549,-543,-590,-543,-506,-587,-579,-393,-574,-420,-609,-575,-559,-405,-605,-577,-599,-480,-559,-566,-611,-409,-406,-605,-615,-546,-377,-597,-511,-546,-550,-518,-518,-491,-376,-584,-617,-417,-525,-613,-595,-556,-649,-651,-533,-642,-548,-627,-622,-390,-624,-539,-624,-631,-631,-498,-539,-594,-573,-511,-564,-559,-390,-616,-655,-356,-564,-548,-655,-385,-518,-598,-476,-579,-603,-587,-545,-586,-488,-524,-487,-586,-618,-524,-383,-555,-605,-609,-390,-550,-487,-578,-498,-554,-608,-367,-599,-591,-440,-611,-627,-500,-619,-391,-592,-595,-618,-616,-589,-537,-490,-593,-644,-576,-589,-500,-568,-510,-663,-625,-557,-582,-402,-474,-577,-544,-532,-595,-603,-505,-587,-364,-350,-397,-326,-510,-574,-432,-580,-464,-479,-581,-513,-586,-658,-638,-615,-567,-560,-397,-530,-580,-530,-566,-501,-548,-587,-592,-560,-562,-601,-559,-524,-594,-538,-558,-524,-545,-477,-541,-609,-589,-598,-600,-626,-553,-524,-574,-568,-583,-622,-544,-442,-561,-543,-530,-497,-605,-595,-512,-613,-575,-577,-614,-575,-409,-642,-470],"type":"scatter3d","mode":"markers","marker":{"color":"rgba(141,160,203,1)","size":[13.3333333333333,7.08333333333333,6.04166666666666,5,8.125,9.16666666666667,9.16666666666667,9.16666666666667,10.2083333333333,9.16666666666667,9.16666666666667,10.2083333333333,9.16666666666667,19.5833333333333,5,17.5,10.2083333333333,11.25,5,8.125,11.25,6.04166666666666,9.16666666666667,8.125,7.08333333333333,8.125,7.08333333333333,9.16666666666667,10.2083333333333,5,9.16666666666667,8.125,12.2916666666667,15.4166666666667,14.375,6.04166666666666,15.4166666666667,10.2083333333333,17.5,9.16666666666667,8.125,7.08333333333333,10.2083333333333,11.25,5,10.2083333333333,17.5,5,12.2916666666667,11.25,12.2916666666667,11.25,7.08333333333333,5,13.3333333333333,9.16666666666667,7.08333333333333,12.2916666666667,10.2083333333333,7.08333333333333,15.4166666666667,7.08333333333333,11.25,8.125,5,7.08333333333333,18.5416666666667,5,12.2916666666667,8.125,6.04166666666666,13.3333333333333,12.2916666666667,8.125,11.25,6.04166666666666,6.04166666666666,15.4166666666667,6.04166666666666,10.2083333333333,7.08333333333333,6.04166666666666,8.125,14.375,11.25,11.25,6.04166666666666,7.08333333333333,8.125,17.5,8.125,5,17.5,10.2083333333333,7.08333333333333,8.125,8.125,11.25,7.08333333333333,7.08333333333333,10.2083333333333,12.2916666666667,8.125,9.16666666666667,10.2083333333333,5,15.4166666666667,13.3333333333333,11.25,8.125,18.5416666666667,16.4583333333333,7.08333333333333,7.08333333333333,14.375,12.2916666666667,9.16666666666667,11.25,10.2083333333333,14.375,6.04166666666666,7.08333333333333,22.7083333333333,11.25,15.4166666666667,8.125,10.2083333333333,17.5,7.08333333333333,5,12.2916666666667,7.08333333333333,10.2083333333333,15.4166666666667,15.4166666666667,11.25,11.25,21.6666666666667,5,9.16666666666667,11.25,8.125,12.2916666666667,6.04166666666666,14.375,11.25,19.5833333333333,10.2083333333333,9.16666666666667,6.04166666666666,10.2083333333333,9.16666666666667,7.08333333333333,10.2083333333333,16.4583333333333,6.04166666666666,15.4166666666667,7.08333333333333,19.5833333333333,16.4583333333333,7.08333333333333,16.4583333333333,16.4583333333333,16.4583333333333,9.16666666666667,16.4583333333333,7.08333333333333,10.2083333333333,9.16666666666667,7.08333333333333,14.375,7.08333333333333,18.5416666666667,22.7083333333333,19.5833333333333,8.125,8.125,9.16666666666667,8.125,8.125,16.4583333333333,12.2916666666667,11.25,7.08333333333333,12.2916666666667,5,13.3333333333333,10.2083333333333,10.2083333333333,11.25,16.4583333333333,20.625,10.2083333333333,8.125,10.2083333333333,19.5833333333333,11.25,15.4166666666667,17.5,9.16666666666667,9.16666666666667,9.16666666666667,10.2083333333333,10.2083333333333,6.04166666666666,6.04166666666666,14.375,11.25,7.08333333333333,7.08333333333333,7.08333333333333,11.25,7.08333333333333,14.375,11.25,6.04166666666666,12.2916666666667,6.04166666666666,10.2083333333333,9.16666666666667,12.2916666666667,11.25,11.25,8.125,8.125,11.25,14.375,7.08333333333333,17.5,10.2083333333333,9.16666666666667,11.25,10.2083333333333,17.5,8.125,12.2916666666667,11.25,9.16666666666667,11.25,16.4583333333333,8.125,9.16666666666667,5,11.25,14.375,22.7083333333333,13.3333333333333,7.08333333333333,13.3333333333333,8.125,18.5416666666667,16.4583333333333,10.2083333333333,7.08333333333333,13.3333333333333,7.08333333333333,10.2083333333333,21.6666666666667,11.25,11.25,11.25,7.08333333333333,19.5833333333333,13.3333333333333,9.16666666666667,12.2916666666667,16.4583333333333,10.2083333333333,7.08333333333333,14.375,20.625,15.4166666666667,7.08333333333333,17.5,13.3333333333333,13.3333333333333,6.04166666666666,11.25,10.2083333333333,13.3333333333333,12.2916666666667,14.375,11.25,8.125,6.04166666666666,7.08333333333333,15.4166666666667,6.04166666666666,8.125,17.5,7.08333333333333,10.2083333333333,9.16666666666667,9.16666666666667,15.4166666666667,15.4166666666667,17.5,17.5,10.2083333333333,11.25,8.125,11.25,9.16666666666667,13.3333333333333,6.04166666666666,5,14.375,15.4166666666667,5,12.2916666666667,9.16666666666667,12.2916666666667,7.08333333333333,6.04166666666666,11.25,8.125,11.25,10.2083333333333,5,7.08333333333333,24.7916666666667,10.2083333333333,10.2083333333333,5,8.125,5,6.04166666666666,8.125,5,15.4166666666667,15.4166666666667,6.04166666666666,14.375,6.04166666666666,9.16666666666667,10.2083333333333,8.125,10.2083333333333,9.16666666666667,10.2083333333333,14.375,12.2916666666667,8.125,11.25,11.25,11.25,5,11.25,6.04166666666666,14.375,6.04166666666666,8.125,5,5,6.04166666666666,13.3333333333333,13.3333333333333,7.08333333333333,6.04166666666666,13.3333333333333,10.2083333333333,15.4166666666667,16.4583333333333,10.2083333333333,12.2916666666667,5,12.2916666666667,6.04166666666666,7.08333333333333,7.08333333333333,7.08333333333333,9.16666666666667,5,8.125,7.08333333333333,10.2083333333333,13.3333333333333,9.16666666666667,7.08333333333333,10.2083333333333,7.08333333333333,6.04166666666666,9.16666666666667,10.2083333333333,5,10.2083333333333,7.08333333333333,7.08333333333333,7.08333333333333,11.25,9.16666666666667,21.6666666666667,8.125,6.04166666666666,10.2083333333333,7.08333333333333,11.25,5,7.08333333333333,12.2916666666667,8.125,11.25,7.08333333333333,10.2083333333333,6.04166666666666,5,8.125,10.2083333333333,6.04166666666666,13.3333333333333,7.08333333333333,8.125,15.4166666666667,5,8.125,8.125,5,9.16666666666667],"sizemode":"diameter","symbol":"circle","line":{"color":"rgba(141,160,203,1)"}},"name":"3","textfont":{"color":"rgba(141,160,203,1)","size":[13.3333333333333,7.08333333333333,6.04166666666666,5,8.125,9.16666666666667,9.16666666666667,9.16666666666667,10.2083333333333,9.16666666666667,9.16666666666667,10.2083333333333,9.16666666666667,19.5833333333333,5,17.5,10.2083333333333,11.25,5,8.125,11.25,6.04166666666666,9.16666666666667,8.125,7.08333333333333,8.125,7.08333333333333,9.16666666666667,10.2083333333333,5,9.16666666666667,8.125,12.2916666666667,15.4166666666667,14.375,6.04166666666666,15.4166666666667,10.2083333333333,17.5,9.16666666666667,8.125,7.08333333333333,10.2083333333333,11.25,5,10.2083333333333,17.5,5,12.2916666666667,11.25,12.2916666666667,11.25,7.08333333333333,5,13.3333333333333,9.16666666666667,7.08333333333333,12.2916666666667,10.2083333333333,7.08333333333333,15.4166666666667,7.08333333333333,11.25,8.125,5,7.08333333333333,18.5416666666667,5,12.2916666666667,8.125,6.04166666666666,13.3333333333333,12.2916666666667,8.125,11.25,6.04166666666666,6.04166666666666,15.4166666666667,6.04166666666666,10.2083333333333,7.08333333333333,6.04166666666666,8.125,14.375,11.25,11.25,6.04166666666666,7.08333333333333,8.125,17.5,8.125,5,17.5,10.2083333333333,7.08333333333333,8.125,8.125,11.25,7.08333333333333,7.08333333333333,10.2083333333333,12.2916666666667,8.125,9.16666666666667,10.2083333333333,5,15.4166666666667,13.3333333333333,11.25,8.125,18.5416666666667,16.4583333333333,7.08333333333333,7.08333333333333,14.375,12.2916666666667,9.16666666666667,11.25,10.2083333333333,14.375,6.04166666666666,7.08333333333333,22.7083333333333,11.25,15.4166666666667,8.125,10.2083333333333,17.5,7.08333333333333,5,12.2916666666667,7.08333333333333,10.2083333333333,15.4166666666667,15.4166666666667,11.25,11.25,21.6666666666667,5,9.16666666666667,11.25,8.125,12.2916666666667,6.04166666666666,14.375,11.25,19.5833333333333,10.2083333333333,9.16666666666667,6.04166666666666,10.2083333333333,9.16666666666667,7.08333333333333,10.2083333333333,16.4583333333333,6.04166666666666,15.4166666666667,7.08333333333333,19.5833333333333,16.4583333333333,7.08333333333333,16.4583333333333,16.4583333333333,16.4583333333333,9.16666666666667,16.4583333333333,7.08333333333333,10.2083333333333,9.16666666666667,7.08333333333333,14.375,7.08333333333333,18.5416666666667,22.7083333333333,19.5833333333333,8.125,8.125,9.16666666666667,8.125,8.125,16.4583333333333,12.2916666666667,11.25,7.08333333333333,12.2916666666667,5,13.3333333333333,10.2083333333333,10.2083333333333,11.25,16.4583333333333,20.625,10.2083333333333,8.125,10.2083333333333,19.5833333333333,11.25,15.4166666666667,17.5,9.16666666666667,9.16666666666667,9.16666666666667,10.2083333333333,10.2083333333333,6.04166666666666,6.04166666666666,14.375,11.25,7.08333333333333,7.08333333333333,7.08333333333333,11.25,7.08333333333333,14.375,11.25,6.04166666666666,12.2916666666667,6.04166666666666,10.2083333333333,9.16666666666667,12.2916666666667,11.25,11.25,8.125,8.125,11.25,14.375,7.08333333333333,17.5,10.2083333333333,9.16666666666667,11.25,10.2083333333333,17.5,8.125,12.2916666666667,11.25,9.16666666666667,11.25,16.4583333333333,8.125,9.16666666666667,5,11.25,14.375,22.7083333333333,13.3333333333333,7.08333333333333,13.3333333333333,8.125,18.5416666666667,16.4583333333333,10.2083333333333,7.08333333333333,13.3333333333333,7.08333333333333,10.2083333333333,21.6666666666667,11.25,11.25,11.25,7.08333333333333,19.5833333333333,13.3333333333333,9.16666666666667,12.2916666666667,16.4583333333333,10.2083333333333,7.08333333333333,14.375,20.625,15.4166666666667,7.08333333333333,17.5,13.3333333333333,13.3333333333333,6.04166666666666,11.25,10.2083333333333,13.3333333333333,12.2916666666667,14.375,11.25,8.125,6.04166666666666,7.08333333333333,15.4166666666667,6.04166666666666,8.125,17.5,7.08333333333333,10.2083333333333,9.16666666666667,9.16666666666667,15.4166666666667,15.4166666666667,17.5,17.5,10.2083333333333,11.25,8.125,11.25,9.16666666666667,13.3333333333333,6.04166666666666,5,14.375,15.4166666666667,5,12.2916666666667,9.16666666666667,12.2916666666667,7.08333333333333,6.04166666666666,11.25,8.125,11.25,10.2083333333333,5,7.08333333333333,24.7916666666667,10.2083333333333,10.2083333333333,5,8.125,5,6.04166666666666,8.125,5,15.4166666666667,15.4166666666667,6.04166666666666,14.375,6.04166666666666,9.16666666666667,10.2083333333333,8.125,10.2083333333333,9.16666666666667,10.2083333333333,14.375,12.2916666666667,8.125,11.25,11.25,11.25,5,11.25,6.04166666666666,14.375,6.04166666666666,8.125,5,5,6.04166666666666,13.3333333333333,13.3333333333333,7.08333333333333,6.04166666666666,13.3333333333333,10.2083333333333,15.4166666666667,16.4583333333333,10.2083333333333,12.2916666666667,5,12.2916666666667,6.04166666666666,7.08333333333333,7.08333333333333,7.08333333333333,9.16666666666667,5,8.125,7.08333333333333,10.2083333333333,13.3333333333333,9.16666666666667,7.08333333333333,10.2083333333333,7.08333333333333,6.04166666666666,9.16666666666667,10.2083333333333,5,10.2083333333333,7.08333333333333,7.08333333333333,7.08333333333333,11.25,9.16666666666667,21.6666666666667,8.125,6.04166666666666,10.2083333333333,7.08333333333333,11.25,5,7.08333333333333,12.2916666666667,8.125,11.25,7.08333333333333,10.2083333333333,6.04166666666666,5,8.125,10.2083333333333,6.04166666666666,13.3333333333333,7.08333333333333,8.125,15.4166666666667,5,8.125,8.125,5,9.16666666666667]},"error_y":{"color":"rgba(141,160,203,1)","width":[]},"error_x":{"color":"rgba(141,160,203,1)","width":[]},"line":{"color":"rgba(141,160,203,1)"},"frame":null},{"x":[166.1,167,169.92,165.96,166.32,167.51,166.74,169.23,169.33,169.41,166.32,173.2,166.22,166.2,167.06,170.5,167.53,167.06,169.71,166.54,169.49,172.23,172.29,167.4,169.48,166.97,167.89,168.98,168.02,169.46,167.1,173.49,167.62,165.8,167.68,166.07,169.84,166.24,167.16,169.42,169.31,169.09,171.65,166.66,171.52,166.53,166,169.5,166.26,167.24,170.4,169.33,169.01,167.24,168.8,166.2,169.32,169.58,169.63,169.24,167.1,167.32,166.36,165.77,166.24,166.6,166.29,171.4,166.47,169.21,167.95,167.14,167.33,165.99,170.3,166.14,167.51,169.14,167.26,167.26,169.15,169.48,166.37,168.52,167.7,167.32,167.5,166.06,169.04,172.91,166.87,165.98,165.96,165.76,166.02,167.38,167.18,167.01,167.01,166.83,166.94,167.25,166.69,167.34,167.42,166.9,166.85,166.8,166.91,167.54,166.18,168.71,166.62,166.49,167.26,167.16,166.36,168.75,167.15,166.28,169.76,166.78,170.99,168.98,168.69,165.67,171.5,172.65,167.39,167.91,166.07,171.72,166.1,167.1,169.37,169.1,167.32,167.18,167.91,170.45,171.4,168.08,169.71,167.24,169.66,167.03,167.43,166.75,167.41,166.55,165.8,171.44,171.46,166.64,169.46,167.1,168.93,166.9,168.63,169.44,169.9,166.56,167.23,167.24,166.66,169.63,174.21,167.02,167.05,167.01,166.2,166.3,169.5,170.04,167.11,166.53,170.52,169.53,171.51,165.97,169.75,167.95,167.32,166.01,167.44,166.72,166.98,169.05,170.7,170.56,166.93,171.66,170.3,167.06,170.56],"y":[-11.7,-12.26,-20.7,-13.64,-10.98,-14.72,-16.32,-18.73,-18.82,-19.23,-11.77,-22.75,-11.49,-11.55,-12.11,-21.5,-15.48,-13.36,-19.72,-13.66,-20.24,-13.66,-13.47,-14.6,-18.96,-14.65,-17.93,-19.52,-16.24,-12.66,-13.23,-21.27,-15.56,-11.8,-15.54,-11.75,-20.9,-11.34,-13.86,-18.89,-18.56,-12.95,-22.36,-13.65,-22.34,-13.44,-14.7,-19.15,-10.97,-14.85,-22.5,-19.18,-19.06,-14.95,-18.73,-13.34,-18.64,-13.05,-12.93,-18.77,-12.59,-14.82,-12.49,-10.78,-11.41,-12.25,-12.01,-22.19,-11.64,-18.8,-16.24,-13.47,-14.32,-10.72,-13.45,-11.63,-15.36,-20.07,-14.28,-14.43,-19.47,-18.89,-12.66,-17.97,-16.96,-15.03,-15.61,-10.79,-18.49,-22.54,-13.07,-11.81,-11.76,-12.08,-11.67,-15.43,-15.44,-13.26,-15.77,-15.79,-16.28,-16.1,-15.96,-15.95,-15.9,-15.29,-15.86,-16.2,-15.71,-16.45,-11.54,-20.33,-15.08,-13.56,-14.46,-15.9,-11.25,-20.09,-13.62,-12.72,-20.48,-12.84,-22.75,-17.99,-20.06,-12.85,-22.37,-22.87,-12.05,-16.23,-11.4,-22.87,-10.78,-15.34,-18.92,-18.69,-14.3,-13.9,-15.93,-21.44,-22.42,-16.31,-18.76,-14.57,-20.64,-12.16,-12.34,-13.7,-12.27,-11.37,-10.8,-22.26,-22.33,-14.12,-18.91,-15.83,-18.54,-13.4,-17.38,-18.97,-21.6,-13.79,-15.18,-13.16,-12.01,-19.1,-21.14,-12.23,-11.38,-11.02,-12,-11.7,-19.64,-21.35,-12.57,-13.8,-21.53,-19.17,-22.33,-10.96,-21.52,-15.99,-14.86,-14.1,-15.78,-12.57,-15.86,-18.56,-23,-22.95,-12.37,-22.33,-22.7,-12.28,-21.59],"z":[-82,-249,-139,-50,-211,-155,-50,-206,-230,-246,-70,-46,-84,-96,-265,-117,-128,-236,-271,-50,-100,-46,-64,-178,-248,-82,-49,-63,-53,-658,-220,-48,-127,-112,-140,-69,-93,-103,-202,-239,-223,-629,-130,-71,-106,-44,-48,-150,-180,-97,-106,-254,-158,-130,-82,-67,-260,-644,-641,-218,-325,-123,-74,-93,-83,-219,-59,-150,-130,-221,-188,-226,-204,-195,-641,-109,-123,-66,-211,-151,-149,-259,-165,-146,-45,-136,-135,-142,-211,-54,-132,-51,-45,-63,-102,-137,-140,-213,-64,-45,-50,-68,-150,-47,-40,-100,-85,-98,-58,-125,-89,-40,-42,-83,-195,-41,-130,-50,-209,-70,-134,-150,-67,-234,-49,-75,-116,-56,-332,-182,-93,-47,-195,-128,-248,-218,-208,-221,-183,-166,-86,-204,-287,-162,-89,-264,-50,-46,-50,-188,-175,-83,-119,-63,-248,-43,-100,-228,-209,-242,-43,-68,-71,-278,-99,-266,-40,-242,-133,-62,-94,-139,-204,-56,-231,-42,-129,-268,-112,-76,-61,-190,-137,-69,-40,-137,-60,-217,-43,-42,-291,-125,-69,-248,-165],"type":"scatter3d","mode":"markers","marker":{"color":"rgba(231,138,195,1)","size":[13.3333333333333,11.25,26.875,25.8333333333333,7.08333333333333,11.25,12.2916666666667,10.2083333333333,9.16666666666667,11.25,9.16666666666667,11.25,11.25,8.125,10.2083333333333,12.2916666666667,16.4583333333333,12.2916666666667,7.08333333333333,16.4583333333333,11.25,18.5416666666667,12.2916666666667,13.3333333333333,7.08333333333333,13.3333333333333,16.4583333333333,10.2083333333333,12.2916666666667,11.25,15.4166666666667,14.375,30,7.08333333333333,12.2916666666667,7.08333333333333,14.375,11.25,11.25,10.2083333333333,12.2916666666667,10.2083333333333,11.25,14.375,15.4166666666667,12.2916666666667,18.5416666666667,7.08333333333333,12.2916666666667,10.2083333333333,14.375,12.2916666666667,9.16666666666667,11.25,9.16666666666667,13.3333333333333,11.25,14.375,16.4583333333333,18.5416666666667,14.375,13.3333333333333,14.375,11.25,18.5416666666667,15.4166666666667,14.375,16.4583333333333,12.2916666666667,9.16666666666667,16.4583333333333,9.16666666666667,15.4166666666667,5,18.5416666666667,11.25,12.2916666666667,13.3333333333333,16.4583333333333,9.16666666666667,9.16666666666667,9.16666666666667,8.125,13.3333333333333,12.2916666666667,11.25,9.16666666666667,15.4166666666667,13.3333333333333,20.625,9.16666666666667,12.2916666666667,9.16666666666667,10.2083333333333,11.25,10.2083333333333,11.25,16.4583333333333,20.625,11.25,11.25,12.2916666666667,7.08333333333333,19.5833333333333,20.625,7.08333333333333,10.2083333333333,10.2083333333333,13.3333333333333,11.25,19.5833333333333,13.3333333333333,12.2916666666667,10.2083333333333,17.5,13.3333333333333,16.4583333333333,11.25,12.2916666666667,13.3333333333333,11.25,14.375,13.3333333333333,12.2916666666667,16.4583333333333,9.16666666666667,14.375,16.4583333333333,15.4166666666667,10.2083333333333,21.6666666666667,11.25,14.375,18.5416666666667,18.5416666666667,7.08333333333333,13.3333333333333,7.08333333333333,21.6666666666667,16.4583333333333,12.2916666666667,10.2083333333333,9.16666666666667,10.2083333333333,14.375,9.16666666666667,16.4583333333333,18.5416666666667,10.2083333333333,12.2916666666667,7.08333333333333,10.2083333333333,12.2916666666667,18.5416666666667,9.16666666666667,10.2083333333333,9.16666666666667,13.3333333333333,12.2916666666667,15.4166666666667,17.5,12.2916666666667,17.5,8.125,13.3333333333333,13.3333333333333,22.7083333333333,25.8333333333333,10.2083333333333,14.375,15.4166666666667,7.08333333333333,11.25,15.4166666666667,13.3333333333333,20.625,17.5,8.125,11.25,14.375,16.4583333333333,18.5416666666667,14.375,13.3333333333333,13.3333333333333,8.125,13.3333333333333,14.375,14.375,12.2916666666667,7.08333333333333,17.5,13.3333333333333,12.2916666666667,25.8333333333333],"sizemode":"diameter","symbol":"circle","line":{"color":"rgba(231,138,195,1)"}},"name":"4","textfont":{"color":"rgba(231,138,195,1)","size":[13.3333333333333,11.25,26.875,25.8333333333333,7.08333333333333,11.25,12.2916666666667,10.2083333333333,9.16666666666667,11.25,9.16666666666667,11.25,11.25,8.125,10.2083333333333,12.2916666666667,16.4583333333333,12.2916666666667,7.08333333333333,16.4583333333333,11.25,18.5416666666667,12.2916666666667,13.3333333333333,7.08333333333333,13.3333333333333,16.4583333333333,10.2083333333333,12.2916666666667,11.25,15.4166666666667,14.375,30,7.08333333333333,12.2916666666667,7.08333333333333,14.375,11.25,11.25,10.2083333333333,12.2916666666667,10.2083333333333,11.25,14.375,15.4166666666667,12.2916666666667,18.5416666666667,7.08333333333333,12.2916666666667,10.2083333333333,14.375,12.2916666666667,9.16666666666667,11.25,9.16666666666667,13.3333333333333,11.25,14.375,16.4583333333333,18.5416666666667,14.375,13.3333333333333,14.375,11.25,18.5416666666667,15.4166666666667,14.375,16.4583333333333,12.2916666666667,9.16666666666667,16.4583333333333,9.16666666666667,15.4166666666667,5,18.5416666666667,11.25,12.2916666666667,13.3333333333333,16.4583333333333,9.16666666666667,9.16666666666667,9.16666666666667,8.125,13.3333333333333,12.2916666666667,11.25,9.16666666666667,15.4166666666667,13.3333333333333,20.625,9.16666666666667,12.2916666666667,9.16666666666667,10.2083333333333,11.25,10.2083333333333,11.25,16.4583333333333,20.625,11.25,11.25,12.2916666666667,7.08333333333333,19.5833333333333,20.625,7.08333333333333,10.2083333333333,10.2083333333333,13.3333333333333,11.25,19.5833333333333,13.3333333333333,12.2916666666667,10.2083333333333,17.5,13.3333333333333,16.4583333333333,11.25,12.2916666666667,13.3333333333333,11.25,14.375,13.3333333333333,12.2916666666667,16.4583333333333,9.16666666666667,14.375,16.4583333333333,15.4166666666667,10.2083333333333,21.6666666666667,11.25,14.375,18.5416666666667,18.5416666666667,7.08333333333333,13.3333333333333,7.08333333333333,21.6666666666667,16.4583333333333,12.2916666666667,10.2083333333333,9.16666666666667,10.2083333333333,14.375,9.16666666666667,16.4583333333333,18.5416666666667,10.2083333333333,12.2916666666667,7.08333333333333,10.2083333333333,12.2916666666667,18.5416666666667,9.16666666666667,10.2083333333333,9.16666666666667,13.3333333333333,12.2916666666667,15.4166666666667,17.5,12.2916666666667,17.5,8.125,13.3333333333333,13.3333333333333,22.7083333333333,25.8333333333333,10.2083333333333,14.375,15.4166666666667,7.08333333333333,11.25,15.4166666666667,13.3333333333333,20.625,17.5,8.125,11.25,14.375,16.4583333333333,18.5416666666667,14.375,13.3333333333333,13.3333333333333,8.125,13.3333333333333,14.375,14.375,12.2916666666667,7.08333333333333,17.5,13.3333333333333,12.2916666666667,25.8333333333333]},"error_y":{"color":"rgba(231,138,195,1)","width":[]},"error_x":{"color":"rgba(231,138,195,1)","width":[]},"line":{"color":"rgba(231,138,195,1)"},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p>If you’ve made it this far, and if you are thinking about analyses that you would like to run on your own data, you may be asking yourself why we have been running these analyses with four clusters. It feels like a good number, but is it the right number?</p>
+</div>
+<div id="principle-4-choose-the-right-number-of-clusters" class="section level3">
+<h3>Principle 4: Choose the right number of clusters</h3>
+<p>The k-Means algorithm cannot tell us what the ideal number of clusters is. The “right” number of clusters is subjective and depends on both the structure of your data and what your intended purpose is. Frequently, we want to find the number of clusters that most efficiently clusters points; we learned a lot by increasing from <code>k-1</code> to <code>k</code> clusters, but increasing to <code>k+1</code> clusters only reduces our sum of squares by a little bit more.</p>
+<p>Let’s begin by using <code>purrr::map</code> to run <code>kmeans</code> using 1 through 12 clusters.</p>
+<pre class="r"><code># Run analysis with multiple cluster options (can be slow!)
+kclusts &lt;- 
+  dplyr::tibble(n_clusts = 1:12) %&gt;%
+  dplyr::mutate(
+    kclust = purrr::map(
+      n_clusts,
+      ~kmeans(quakes_normalized, centers = .x, iter.max = 10, nstart = 5)
+    ),
+    augmented = purrr::map(kclust, broom::augment, quakes_normalized),
+    tidied = purrr::map(kclust, broom::tidy),
+    glanced = purrr::map(kclust, broom::glance)
+  ) %&gt;%
+  dplyr::select(-kclust)
+
+str(kclusts, max.level = 3)</code></pre>
+<pre><code>## tibble [12 × 4] (S3: tbl_df/tbl/data.frame)
+##  $ n_clusts : int [1:12] 1 2 3 4 5 6 7 8 9 10 ...
+##  $ augmented:List of 12
+##   ..$ : tibble [1,000 × 5] (S3: tbl_df/tbl/data.frame)
+##   ..$ : tibble [1,000 × 5] (S3: tbl_df/tbl/data.frame)
+##   ..$ : tibble [1,000 × 5] (S3: tbl_df/tbl/data.frame)
+##   ..$ : tibble [1,000 × 5] (S3: tbl_df/tbl/data.frame)
+##   ..$ : tibble [1,000 × 5] (S3: tbl_df/tbl/data.frame)
+##   ..$ : tibble [1,000 × 5] (S3: tbl_df/tbl/data.frame)
+##   ..$ : tibble [1,000 × 5] (S3: tbl_df/tbl/data.frame)
+##   ..$ : tibble [1,000 × 5] (S3: tbl_df/tbl/data.frame)
+##   ..$ : tibble [1,000 × 5] (S3: tbl_df/tbl/data.frame)
+##   ..$ : tibble [1,000 × 5] (S3: tbl_df/tbl/data.frame)
+##   ..$ : tibble [1,000 × 5] (S3: tbl_df/tbl/data.frame)
+##   ..$ : tibble [1,000 × 5] (S3: tbl_df/tbl/data.frame)
+##  $ tidied   :List of 12
+##   ..$ : tibble [1 × 7] (S3: tbl_df/tbl/data.frame)
+##   ..$ : tibble [2 × 7] (S3: tbl_df/tbl/data.frame)
+##   ..$ : tibble [3 × 7] (S3: tbl_df/tbl/data.frame)
+##   ..$ : tibble [4 × 7] (S3: tbl_df/tbl/data.frame)
+##   ..$ : tibble [5 × 7] (S3: tbl_df/tbl/data.frame)
+##   ..$ : tibble [6 × 7] (S3: tbl_df/tbl/data.frame)
+##   ..$ : tibble [7 × 7] (S3: tbl_df/tbl/data.frame)
+##   ..$ : tibble [8 × 7] (S3: tbl_df/tbl/data.frame)
+##   ..$ : tibble [9 × 7] (S3: tbl_df/tbl/data.frame)
+##   ..$ : tibble [10 × 7] (S3: tbl_df/tbl/data.frame)
+##   ..$ : tibble [11 × 7] (S3: tbl_df/tbl/data.frame)
+##   ..$ : tibble [12 × 7] (S3: tbl_df/tbl/data.frame)
+##  $ glanced  :List of 12
+##   ..$ : tibble [1 × 4] (S3: tbl_df/tbl/data.frame)
+##   ..$ : tibble [1 × 4] (S3: tbl_df/tbl/data.frame)
+##   ..$ : tibble [1 × 4] (S3: tbl_df/tbl/data.frame)
+##   ..$ : tibble [1 × 4] (S3: tbl_df/tbl/data.frame)
+##   ..$ : tibble [1 × 4] (S3: tbl_df/tbl/data.frame)
+##   ..$ : tibble [1 × 4] (S3: tbl_df/tbl/data.frame)
+##   ..$ : tibble [1 × 4] (S3: tbl_df/tbl/data.frame)
+##   ..$ : tibble [1 × 4] (S3: tbl_df/tbl/data.frame)
+##   ..$ : tibble [1 × 4] (S3: tbl_df/tbl/data.frame)
+##   ..$ : tibble [1 × 4] (S3: tbl_df/tbl/data.frame)
+##   ..$ : tibble [1 × 4] (S3: tbl_df/tbl/data.frame)
+##   ..$ : tibble [1 × 4] (S3: tbl_df/tbl/data.frame)</code></pre>
+<pre class="r"><code>kclusts</code></pre>
+<pre><code>## # A tibble: 12 x 4
+##    n_clusts augmented            tidied            glanced         
+##       &lt;int&gt; &lt;list&gt;               &lt;list&gt;            &lt;list&gt;          
+##  1        1 &lt;tibble [1,000 × 5]&gt; &lt;tibble [1 × 7]&gt;  &lt;tibble [1 × 4]&gt;
+##  2        2 &lt;tibble [1,000 × 5]&gt; &lt;tibble [2 × 7]&gt;  &lt;tibble [1 × 4]&gt;
+##  3        3 &lt;tibble [1,000 × 5]&gt; &lt;tibble [3 × 7]&gt;  &lt;tibble [1 × 4]&gt;
+##  4        4 &lt;tibble [1,000 × 5]&gt; &lt;tibble [4 × 7]&gt;  &lt;tibble [1 × 4]&gt;
+##  5        5 &lt;tibble [1,000 × 5]&gt; &lt;tibble [5 × 7]&gt;  &lt;tibble [1 × 4]&gt;
+##  6        6 &lt;tibble [1,000 × 5]&gt; &lt;tibble [6 × 7]&gt;  &lt;tibble [1 × 4]&gt;
+##  7        7 &lt;tibble [1,000 × 5]&gt; &lt;tibble [7 × 7]&gt;  &lt;tibble [1 × 4]&gt;
+##  8        8 &lt;tibble [1,000 × 5]&gt; &lt;tibble [8 × 7]&gt;  &lt;tibble [1 × 4]&gt;
+##  9        9 &lt;tibble [1,000 × 5]&gt; &lt;tibble [9 × 7]&gt;  &lt;tibble [1 × 4]&gt;
+## 10       10 &lt;tibble [1,000 × 5]&gt; &lt;tibble [10 × 7]&gt; &lt;tibble [1 × 4]&gt;
+## 11       11 &lt;tibble [1,000 × 5]&gt; &lt;tibble [11 × 7]&gt; &lt;tibble [1 × 4]&gt;
+## 12       12 &lt;tibble [1,000 × 5]&gt; &lt;tibble [12 × 7]&gt; &lt;tibble [1 × 4]&gt;</code></pre>
+<pre class="r"><code>point_assignments &lt;- kclusts %&gt;%
+  dplyr::select(n_clusts, augmented) %&gt;%
+  tidyr::unnest(augmented)
+
+cluster_info &lt;- kclusts %&gt;%
+  dplyr::select(n_clusts, tidied) %&gt;% 
+  tidyr::unnest(tidied)
+
+model_stats &lt;- kclusts %&gt;%
+  dplyr::select(n_clusts, glanced) %&gt;% 
+  tidyr::unnest(glanced)
+
+head(point_assignments)</code></pre>
+<pre><code>## # A tibble: 6 x 6
+##   n_clusts      lat  long  depth    mag .cluster
+##      &lt;int&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;   
+## 1        1  0.0443  0.356  1.16   0.446 1       
+## 2        1  0.00452 0.258  1.57  -1.04  1       
+## 3        1 -1.07    0.764 -1.25   1.94  1       
+## 4        1  0.531   0.362  1.46  -1.29  1       
+## 5        1  0.0443  0.412  1.57  -1.54  1       
+## 6        1  0.191   0.799 -0.540 -1.54  1</code></pre>
+<pre class="r"><code>head(cluster_info)</code></pre>
+<pre><code>## # A tibble: 6 x 8
+##   n_clusts       lat      long     depth       mag  size withinss cluster
+##      &lt;int&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;int&gt;    &lt;dbl&gt; &lt;fct&gt;  
+## 1        1 -8.27e-17  7.74e-16  1.43e-16 -1.07e-16  1000    3996. 1      
+## 2        2  9.46e- 1 -1.85e+ 0 -6.68e- 1  3.96e- 1   204     417. 1      
+## 3        2 -2.42e- 1  4.74e- 1  1.71e- 1 -1.01e- 1   796    2318. 2      
+## 4        3 -5.16e- 1  7.10e- 1 -8.32e- 1  1.14e- 1   361     922. 1      
+## 5        3  9.33e- 1 -1.87e+ 0 -7.67e- 1  4.04e- 1   196     361. 2      
+## 6        3  7.50e- 3  2.47e- 1  1.02e+ 0 -2.71e- 1   443     662. 3</code></pre>
+<pre class="r"><code>head(model_stats)</code></pre>
+<pre><code>## # A tibble: 6 x 5
+##   n_clusts totss tot.withinss betweenss  iter
+##      &lt;int&gt; &lt;dbl&gt;        &lt;dbl&gt;     &lt;dbl&gt; &lt;int&gt;
+## 1        1  3996        3996.  5.46e-12     1
+## 2        2  3996        2735.  1.26e+ 3     1
+## 3        3  3996        1945.  2.05e+ 3     4
+## 4        4  3996        1546.  2.45e+ 3     3
+## 5        5  3996        1269.  2.73e+ 3     5
+## 6        6  3996        1095.  2.90e+ 3     4</code></pre>
+<p>We can plot our 12 k-Means analyses using <code>ggplot2::facet_wrap</code>. Since we clustered on four features and our graphs only show two dimensions (latitude and longitude), it’s a little hard to get a full picture of how well each k clustered our data. But, it looks like two clusters is reasonable but not very insightful, four seems pretty good, and by eight everything becomes a mess.</p>
+<pre class="r"><code># Show clusters
+ggplot2::ggplot() +
+  ggplot2::geom_point(
+    data = point_assignments, aes(x = long, y = lat, color = .cluster)
+  ) + 
+  ggplot2::geom_point(
+    data = cluster_info, aes(x = long, y = lat), size = 4, shape = &quot;x&quot;
+  ) +
+  ggplot2::facet_wrap(~n_clusts)</code></pre>
+<p><img src="https://shirinsplayground.netlify.com/post/2021-03-14_kmeans_101_files/figure-html/finding_right_cluster_number_2-1.png" width="672" /></p>
+<p>We’ll build an elbow chart to help us understand how our residual error terms–the sum across all clusters of the within-cluster sum of squares–change with the number of clusters. We plot k against total within sum of squares.</p>
+<pre class="r"><code># Elbow chart
+ggplot2::ggplot(data = model_stats, aes(n_clusts, tot.withinss)) +
+  ggplot2::geom_line() +
+  ggplot2::scale_x_continuous(limits = c(1, 12), breaks = seq(1, 12, 1)) +
+  ggplot2::ggtitle(&quot;Total within sum of squares, by # clusters&quot;)</code></pre>
+<p><img src="https://shirinsplayground.netlify.com/post/2021-03-14_kmeans_101_files/figure-html/finding_right_cluster_number_3-1.png" width="672" /></p>
+<p>Ideally, we would see a sharp bend in this curve, where a single cluster number is a turning point from the graph having a steep negative slope to having a shallow negative slope. In this example, however, the rate of change of the slope is gradual, with no clear elbow. This is where the art comes in, and my interpretation is that 3-5 clusters balances a small sum of squares while not losing too much interpretability.</p>
+</div>
+<div id="principle-5-the-human-side-of-data-science" class="section level3">
+<h3>Principle 5: The human side of data science</h3>
+<p>Principles 3 (Feature scaling) and 4 (Choose the right number of clusters) highlight the importance of human judgment on machine learning algorithms, and data science in general. Algorithms are very good at doing exactly as they are told. But if we feed them poor instructions or poor quality data, they will accurately calculate a useless result. <a href="https://www.theanalystcode.com/the-principles/of-analytics/">The value</a> of the data analyst, data scientist, or statistician is not that they <em>can</em> run complicated analyses, but that they have skill at knowing how <em>best</em> to run those analyses.</p>
+</div>
+</div>
+<div id="concluding-thoughts" class="section level2">
+<h2>Concluding thoughts</h2>
+<p>In this post we have had a brief introduction to the k-Means clustering algorithm, gained an understanding of how it works and where its weaknesses lie, and seen it demonstrated in R using <code>kmeans()</code>. The algorithm is easy to run and visualize, and it is a helpful tool for anyone looking to cluster and characterize a large set of datapoints.</p>
+<pre class="r"><code>devtools::session_info()</code></pre>
+<pre><code>## ─ Session info ───────────────────────────────────────────────────────────────
+##  setting  value                       
+##  version  R version 4.0.4 (2021-02-15)
+##  os       macOS Catalina 10.15.7      
+##  system   x86_64, darwin17.0          
+##  ui       X11                         
+##  language (EN)                        
+##  collate  en_US.UTF-8                 
+##  ctype    en_US.UTF-8                 
+##  tz       Europe/Berlin               
+##  date     2021-03-14                  
+## 
+## ─ Packages ───────────────────────────────────────────────────────────────────
+##  package      * version date       lib source        
+##  assertthat     0.2.1   2019-03-21 [2] CRAN (R 4.0.0)
+##  backports      1.2.1   2020-12-09 [2] CRAN (R 4.0.2)
+##  blogdown       1.2     2021-03-04 [2] CRAN (R 4.0.2)
+##  bookdown       0.21    2020-10-13 [2] CRAN (R 4.0.2)
+##  broom        * 0.7.5   2021-02-19 [2] CRAN (R 4.0.4)
+##  bslib          0.2.4   2021-01-25 [2] CRAN (R 4.0.2)
+##  cachem         1.0.4   2021-02-13 [2] CRAN (R 4.0.2)
+##  callr          3.5.1   2020-10-13 [2] CRAN (R 4.0.2)
+##  cli            2.3.1   2021-02-23 [2] CRAN (R 4.0.4)
+##  colorspace     2.0-0   2020-11-11 [2] CRAN (R 4.0.2)
+##  crayon         1.4.1   2021-02-08 [2] CRAN (R 4.0.2)
+##  crosstalk      1.1.1   2021-01-12 [2] CRAN (R 4.0.2)
+##  data.table     1.14.0  2021-02-21 [2] CRAN (R 4.0.4)
+##  DBI            1.1.1   2021-01-15 [2] CRAN (R 4.0.2)
+##  desc           1.3.0   2021-03-05 [2] CRAN (R 4.0.2)
+##  devtools       2.3.2   2020-09-18 [2] CRAN (R 4.0.2)
+##  digest         0.6.27  2020-10-24 [2] CRAN (R 4.0.2)
+##  dplyr        * 1.0.5   2021-03-05 [2] CRAN (R 4.0.2)
+##  ellipsis       0.3.1   2020-05-15 [2] CRAN (R 4.0.0)
+##  evaluate       0.14    2019-05-28 [2] CRAN (R 4.0.1)
+##  fansi          0.4.2   2021-01-15 [2] CRAN (R 4.0.2)
+##  farver         2.1.0   2021-02-28 [2] CRAN (R 4.0.2)
+##  fastmap        1.1.0   2021-01-25 [2] CRAN (R 4.0.2)
+##  fs             1.5.0   2020-07-31 [2] CRAN (R 4.0.2)
+##  generics       0.1.0   2020-10-31 [2] CRAN (R 4.0.2)
+##  ggplot2      * 3.3.3   2020-12-30 [2] CRAN (R 4.0.2)
+##  glue           1.4.2   2020-08-27 [2] CRAN (R 4.0.2)
+##  gtable         0.3.0   2019-03-25 [2] CRAN (R 4.0.0)
+##  highr          0.8     2019-03-20 [2] CRAN (R 4.0.0)
+##  htmltools      0.5.1.1 2021-01-22 [2] CRAN (R 4.0.2)
+##  htmlwidgets    1.5.3   2020-12-10 [2] CRAN (R 4.0.2)
+##  httr           1.4.2   2020-07-20 [2] CRAN (R 4.0.2)
+##  jquerylib      0.1.3   2020-12-17 [2] CRAN (R 4.0.2)
+##  jsonlite       1.7.2   2020-12-09 [2] CRAN (R 4.0.2)
+##  knitr          1.31    2021-01-27 [2] CRAN (R 4.0.2)
+##  labeling       0.4.2   2020-10-20 [2] CRAN (R 4.0.2)
+##  lazyeval       0.2.2   2019-03-15 [2] CRAN (R 4.0.0)
+##  lifecycle      1.0.0   2021-02-15 [2] CRAN (R 4.0.2)
+##  magrittr       2.0.1   2020-11-17 [2] CRAN (R 4.0.2)
+##  memoise        2.0.0   2021-01-26 [2] CRAN (R 4.0.2)
+##  munsell        0.5.0   2018-06-12 [2] CRAN (R 4.0.0)
+##  pillar         1.5.1   2021-03-05 [2] CRAN (R 4.0.2)
+##  pkgbuild       1.2.0   2020-12-15 [2] CRAN (R 4.0.2)
+##  pkgconfig      2.0.3   2019-09-22 [2] CRAN (R 4.0.0)
+##  pkgload        1.2.0   2021-02-23 [2] CRAN (R 4.0.4)
+##  plotly       * 4.9.3   2021-01-10 [2] CRAN (R 4.0.2)
+##  prettyunits    1.1.1   2020-01-24 [2] CRAN (R 4.0.0)
+##  processx       3.4.5   2020-11-30 [2] CRAN (R 4.0.2)
+##  ps             1.6.0   2021-02-28 [2] CRAN (R 4.0.2)
+##  purrr        * 0.3.4   2020-04-17 [2] CRAN (R 4.0.0)
+##  R6             2.5.0   2020-10-28 [2] CRAN (R 4.0.2)
+##  RColorBrewer   1.1-2   2014-12-07 [2] CRAN (R 4.0.0)
+##  remotes        2.2.0   2020-07-21 [2] CRAN (R 4.0.2)
+##  rlang          0.4.10  2020-12-30 [2] CRAN (R 4.0.2)
+##  rmarkdown      2.7     2021-02-19 [2] CRAN (R 4.0.4)
+##  rprojroot      2.0.2   2020-11-15 [2] CRAN (R 4.0.2)
+##  rstudioapi     0.13    2020-11-12 [2] CRAN (R 4.0.2)
+##  sass           0.3.1   2021-01-24 [2] CRAN (R 4.0.2)
+##  scales         1.1.1   2020-05-11 [2] CRAN (R 4.0.0)
+##  sessioninfo    1.1.1   2018-11-05 [2] CRAN (R 4.0.0)
+##  stringi        1.5.3   2020-09-09 [2] CRAN (R 4.0.2)
+##  stringr        1.4.0   2019-02-10 [2] CRAN (R 4.0.0)
+##  testthat       3.0.2   2021-02-14 [2] CRAN (R 4.0.2)
+##  tibble         3.1.0   2021-02-25 [2] CRAN (R 4.0.2)
+##  tidyr        * 1.1.3   2021-03-03 [2] CRAN (R 4.0.2)
+##  tidyselect     1.1.0   2020-05-11 [2] CRAN (R 4.0.0)
+##  usethis        2.0.1   2021-02-10 [2] CRAN (R 4.0.2)
+##  utf8           1.2.1   2021-03-12 [2] CRAN (R 4.0.4)
+##  vctrs          0.3.6   2020-12-17 [2] CRAN (R 4.0.2)
+##  viridisLite    0.3.0   2018-02-01 [2] CRAN (R 4.0.0)
+##  withr          2.4.1   2021-01-26 [2] CRAN (R 4.0.2)
+##  xfun           0.22    2021-03-11 [2] CRAN (R 4.0.2)
+##  yaml           2.2.1   2020-02-01 [2] CRAN (R 4.0.0)
+## 
+## [1] /Users/shiringlander/Library/R/4.0/library
+## [2] /Library/Frameworks/R.framework/Versions/4.0/Resources/library</code></pre>
+</div>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://shirinsplayground.netlify.com//tags/r/">R</a>
+
+  <a class="tag tag--primary tag--small" href="https://shirinsplayground.netlify.com//tags/ggplot2/">ggplot2</a>
+
+                  </div>
+                
+              
+            
+            
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://shirinsplayground.netlify.com/2021/03/update_customer_churn/" data-tooltip="Update to Code for case study - Customer Churn with Keras/TensorFlow and H2O">
+              
+                <i class="fa fa-angle-left"></i>
+                <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+              </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://shirinsplayground.netlify.com/2020/10/goodbadugly/" data-tooltip="The Good, the Bad and the Ugly: how (not) to visualize data">
+              
+                <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://shirinsplayground.netlify.com/2021/03/kmeans_101/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://shirinsplayground.netlify.com/2021/03/kmeans_101/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://shirinsplayground.netlify.com/2021/03/kmeans_101/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2021 <a href='https://shirin-elsinghorst.appointlet.com/s/15-minute-intro'>Dr. Shirin Elsinghorst</a>. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://shirinsplayground.netlify.com/2021/03/update_customer_churn/" data-tooltip="Update to Code for case study - Customer Churn with Keras/TensorFlow and H2O">
+              
+                <i class="fa fa-angle-left"></i>
+                <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+              </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://shirinsplayground.netlify.com/2020/10/goodbadugly/" data-tooltip="The Good, the Bad and the Ugly: how (not) to visualize data">
+              
+                <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://shirinsplayground.netlify.com/2021/03/kmeans_101/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://shirinsplayground.netlify.com/2021/03/kmeans_101/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://shirinsplayground.netlify.com/2021/03/kmeans_101/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fshirinsplayground.netlify.com%2F2021%2F03%2Fkmeans_101%2F">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fshirinsplayground.netlify.com%2F2021%2F03%2Fkmeans_101%2F">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2Fshirinsplayground.netlify.com%2F2021%2F03%2Fkmeans_101%2F">
+          <i class="fa fa-google-plus"></i><span>Share on Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="//www.gravatar.com/avatar/7f7f818e55624edfef8aa93860a1a3d4?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Dr. Shirin Elsinghorst</h4>
+    
+      <div id="about-card-bio">Biologist turned Bioinformatician turned Data Scientist</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Data Scientist
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Münster, Germany
+      </div>
+    
+  </div>
+</div>
+
+    <div id="algolia-search-modal" class="modal-container">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="close-button"><i class="fa fa-close"></i></span>
+      <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
+        <span class="searchby-algolia-text text-color-light text-small">by</span>
+        <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
+      </a>
+      <i class="search-icon fa fa-search"></i>
+      <form id="algolia-search-form">
+        <input type="text" id="algolia-search-input" name="search"
+          class="form-control input--large search-input" placeholder="Search" />
+      </form>
+    </div>
+    <div class="modal-body">
+      <div class="no-result text-color-light text-center">no post found</div>
+      <div class="results">
+        
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://shirinsplayground.netlify.com/post/">
+                <h3 class="media-heading">Posts</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Apr 4, 2021
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather"></div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://shirinsplayground.netlify.com/2021/04/goodbadugly_ml/">
+                <h3 class="media-heading">The Good, the Bad and the Ugly: how to visualize Machine Learning data</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Apr 4, 2021
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Below you’ll find the complete code and resources used to create the graphs in my talk The Good, the Bad and the Ugly: how to visualize Machine Learning data at this year’s Minds Mastering machines conference. You can find the German slides here:
+ You can find Part 1: The Good, the Bad and the Ugly: how (not) to visualize data here.
+If you have questions or would like to talk about this article (or something else data-related), you can now book 15-minute timeslots with me (it’s free - one slot available per weekday):</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://shirinsplayground.netlify.com/2021/03/update_customer_churn/">
+                <h3 class="media-heading">Update to Code for case study - Customer Churn with Keras/TensorFlow and H2O</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Mar 3, 2021
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">This is an UPDATE to this old post with updated links &amp; descriptions
+This is code that accompanies a book chapter on customer churn that I have written for the German dpunkt Verlag. The book is in German, however.
+The code you find below can be used to recreate all figures and analyses from this book chapter. Because the content is exclusively for the book, my descriptions around the code had to be minimal.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://shirinsplayground.netlify.com/2021/03/kmeans_101/">
+                <h3 class="media-heading">k-Means 101: An introductory guide to k-Means clustering in R</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Mar 3, 2021
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Editor’s note: This is a guest post by Nathaniel Schmucker. He is the founder of The Analyst Code, a blog that provides tools to instill a love of data in individuals of all backgrounds and to empower aspiring analysts.
+Introduction In this post, we will look at:
+ What is a k-Means analysis? How does the k-Means algorithm work? How do we implement k-Means in R?</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://shirinsplayground.netlify.com/2020/10/goodbadugly/">
+                <h3 class="media-heading">The Good, the Bad and the Ugly: how (not) to visualize data</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Oct 10, 2020
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Below you’ll find the complete code used to create the ggplot2 graphs in my talk The Good, the Bad and the Ugly: how (not) to visualize data at this year’s data2day conference. You can find the German slides here:
+ You can also find a German blog article accompanying my talk on codecentric’s blog.
+If you have questions or would like to talk about this article (or something else data-related), you can now book 15-minute timeslots with me (it’s free - one slot available per weekday):</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://shirinsplayground.netlify.com/2020/10/keras_workshop_user20/">
+                <h3 class="media-heading">Video &#43; code from workshop on Deep Learning with Keras and TensorFlow</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Oct 10, 2020
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Workshop material Because this year’s UseR 2020 couldn’t happen as an in-person event, I have been giving my workshop on Deep Learning with Keras and TensorFlow as an online event on Thursday, 8th of October.
+You can now find the full recording of the 2-hour session on YouTube and the notebooks with code on Gitlab.
+
+ 
+If you have questions or would like to talk about this article (or something else data-related), you can now book 15-minute timeslots with me (it’s free - one slot available per weekday):</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://shirinsplayground.netlify.com/2020/09/keras_funct_api/">
+                <h3 class="media-heading">Whose dream is this? When and how to use the Keras Functional API</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Sep 9, 2020
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">I have been working with Keras for a while now, and I’ve also been writing quite a few blogposts about it; the most recent one being an update to image classification using TF 2.0.
+However, in my blogposts I have always been using Keras sequential models and never shown how to use the Functional API. The reason is that the Functional API is usually applied when building more complex models, like multi-input or multi-output models.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://shirinsplayground.netlify.com/2020/09/keras_fruits_update/">
+                <h3 class="media-heading">Update with TF 2.0: Image classification with Keras and TensorFlow</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Sep 9, 2020
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Recently, I have been getting a few comments on my old article on image classification with Keras, saying that they are getting errors with the code. And I have also gotten a few questions about how to use a Keras model to predict on new images (of different size). Instead of replying to them all individually, I decided to write this updated version using recent Keras and TensorFlow versions (all package versions and system information can be found at the bottom of this article, as usual).</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://shirinsplayground.netlify.com/2020/09/baby_weight_app/">
+                <h3 class="media-heading">Baby Weight Shiny app</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Sep 9, 2020
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Alright, this is it: I am officially back! :-D
+I have not written any blogposts for over a year. Last year, I had the cutest baby boy and ever since then, I did not get around to doing much coding. One of the reasons was that, unfortunately, we did not have the easiest of starts with the little one. Feeding problems led to weight gain problems, so we had to weigh him regularly.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://shirinsplayground.netlify.com/2019/06/meetup_july19/">
+                <h3 class="media-heading">Word2Vec Text Mining &amp; Parallelization in R. Join MünsteR for our next meetup!</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jun 6, 2019
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">In our next MünsteR R-user group meetup on Tuesday, July 9th, 2019, we will have two exciting talks about Word2Vec Text Mining &amp; Parallelization in R!
+You can RSVP here: https://www.meetup.com/de-DE/Munster-R-Users-Group/events/262236134/
+ Thorben Hellweg will talk about Parallelization in R. More information tba!
+  Maren Reuter from viadee AG will give an introduction into the functionality and use of the Word2Vec algorithm in R.
+  Text data in its raw form cannot be used as input for machine learning algorithms.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+      </div>
+    </div>
+    <div class="modal-footer">
+      <p class="results-count text-medium"
+         data-message-zero="no post found"
+         data-message-one="1 post found"
+         data-message-other="{n} posts found">
+         90 posts found
+      </p>
+    </div>
+  </div>
+</div>
+    
+  
+    
+    <div id="cover" style="background-image:url('https://shirinsplayground.netlify.com/images/autumn-2789234_1920.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" integrity="sha256-IFHWFEbU2/+wNycDECKgjIRSirRNIDp2acEB5fvdVRU=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js" integrity="sha256-+mpyNVJsNt4rVXCw0F+pAOiB3YxmHgrbJsx4ecPuUaI=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.js" integrity="sha256-vMxgR/7FtLovVA+IPrR7+xTgIgARH7y9VZQnmmi0HDI=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.js" integrity="sha256-N0qFUh7/9vLvia87dDndewmsgsyYoNkdA212tPc+2NI=" crossorigin="anonymous"></script>
+
+
+<script src="https://shirinsplayground.netlify.com/js/script-kr8dyqj6rb6ortyib7whfo9x9p6td6zo8t1v4fdz4ecx5kwybsdlmk1slygn.min.js"></script>
+
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = 'https:\/\/shirinsplayground.netlify.com\/2021\/03\/kmeans_101\/';
+          
+            this.page.identifier = '\/2021\/03\/kmeans_101\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'shirinsplayground';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+    
+  </body>
+</html>
+

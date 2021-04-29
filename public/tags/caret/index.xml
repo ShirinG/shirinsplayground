@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>caret on Shirin&#39;s playgRound</title>
+    <link>https://shirinsplayground.netlify.com/tags/caret/</link>
+    <description>Recent content in caret on Shirin&#39;s playgRound</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 20 Jul 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/tags/caret/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Explaining Black-Box Machine Learning Models - Code Part 1: tabular data &#43; caret &#43; iml</title>
+      <link>https://shirinsplayground.netlify.com/2018/07/explaining_ml_models_code_caret_iml/</link>
+      <pubDate>Fri, 20 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2018/07/explaining_ml_models_code_caret_iml/</guid>
+      <description>This is code that will encompany an article that will appear in a special edition of a German IT magazine. The article is about explaining black-box machine learning models. In that article I’m showcasing three practical examples:
+
+Explaining supervised classification models built on tabular data using caret and the iml package Explaining image classification models with keras and lime Explaining text classification models with xgboost and lime</description>
+    </item>
+    
+    <item>
+      <title>Code for Workshop: Introduction to Machine Learning with R</title>
+      <link>https://shirinsplayground.netlify.com/2018/06/intro_to_ml_workshop_heidelberg/</link>
+      <pubDate>Fri, 29 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2018/06/intro_to_ml_workshop_heidelberg/</guid>
+      <description>These are the slides from my workshop: Introduction to Machine Learning with R which I gave at the University of Heidelberg, Germany on June 28th 2018. The entire code accompanying the workshop can be found below the video.
+The workshop covered the basics of machine learning. With an example dataset I went through a standard machine learning workflow in R with the packages caret and h2o:
+ reading in data exploratory data analysis missingness feature engineering training and test split model training with Random Forests, Gradient Boosting, Neural Nets, etc.</description>
+    </item>
+    
+    <item>
+      <title>Update: Can we predict flu outcome with Machine Learning in R?</title>
+      <link>https://shirinsplayground.netlify.com/2018/04/flu_prediction/</link>
+      <pubDate>Sun, 22 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2018/04/flu_prediction/</guid>
+      <description>Since I migrated my blog from Github Pages to blogdown and Netlify, I wanted to start migrating (most of) my old posts too - and use that opportunity to update them and make sure the code still works.
+Here I am updating my very first machine learning post from 27 Nov 2016: Can we predict flu deaths with Machine Learning and R?. Changes are marked as bold comments.
+The main changes I made are:</description>
+    </item>
+    
+  </channel>
+</rss>

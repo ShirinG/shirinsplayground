@@ -1,1336 +1,721 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
   <url>
-    <loc>/2020/10/goodbadugly/</loc>
+    <loc>https://shirinsplayground.netlify.com/categories/</loc>
+    <lastmod>2021-04-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/ggplot2/</loc>
+    <lastmod>2021-04-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/post/</loc>
+    <lastmod>2021-04-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/r/</loc>
+    <lastmod>2021-04-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/categories/r/</loc>
+    <lastmod>2021-04-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/</loc>
+    <lastmod>2021-04-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/</loc>
+    <lastmod>2021-04-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2021/04/goodbadugly_ml/</loc>
+    <lastmod>2021-04-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/customer-churn/</loc>
+    <lastmod>2021-03-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/machine-learning/</loc>
+    <lastmod>2021-03-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/predictive-analytics/</loc>
+    <lastmod>2021-03-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2021/03/update_customer_churn/</loc>
+    <lastmod>2021-03-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2021/03/kmeans_101/</loc>
+    <lastmod>2021-03-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2020/10/goodbadugly/</loc>
     <lastmod>2020-10-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2020/10/keras_workshop_user20/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/image-classification/</loc>
     <lastmod>2020-10-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/page/conferences_podcasts_webinars/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/keras/</loc>
+    <lastmod>2020-10-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/categories/keras/</loc>
+    <lastmod>2020-10-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/tensorflow/</loc>
+    <lastmod>2020-10-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2020/10/keras_workshop_user20/</loc>
+    <lastmod>2020-10-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/page/conferences_podcasts_webinars/</loc>
     <lastmod>2020-09-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2020/09/keras_callbacks/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/page/</loc>
     <lastmod>2020-09-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2020/09/keras_funct_api/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2020/09/keras_funct_api/</loc>
     <lastmod>2020-09-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2020/09/keras_fruits_update/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2020/09/keras_fruits_update/</loc>
     <lastmod>2020-09-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2020/09/baby_weight_app/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2020/09/baby_weight_app/</loc>
     <lastmod>2020-09-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/page/bookme/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/ggplot/</loc>
+    <lastmod>2020-09-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/plotly/</loc>
+    <lastmod>2020-09-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/shiny/</loc>
+    <lastmod>2020-09-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/tidyverse/</loc>
+    <lastmod>2020-09-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/page/bookme/</loc>
     <lastmod>2020-08-23T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/page/about/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/page/about/</loc>
     <lastmod>2020-08-23T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2019/06/meetup_july19/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/meetup/</loc>
     <lastmod>2019-06-26T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2019/04/consider_data_camp/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/categories/meetup/</loc>
+    <lastmod>2019-06-26T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/m%C3%BCnster/</loc>
+    <lastmod>2019-06-26T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/categories/m%C3%BCnster/</loc>
+    <lastmod>2019-06-26T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2019/06/meetup_july19/</loc>
+    <lastmod>2019-06-26T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2019/04/consider_data_camp/</loc>
     <lastmod>2019-04-21T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2019/03/upcoming_talks_spring2019/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/datacamp/</loc>
+    <lastmod>2019-04-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/categories/datacamp/</loc>
+    <lastmod>2019-04-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/conferences/</loc>
     <lastmod>2019-03-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2019/03/meetup_april19/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2019/03/upcoming_talks_spring2019/</loc>
+    <lastmod>2019-03-22T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2019/03/meetup_april19/</loc>
     <lastmod>2019-03-06T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2019/02/ccai_bootcamp_launch/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/codecentric.ai/</loc>
     <lastmod>2019-02-08T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2019/01/review_beyond_spreadsheets_with_r/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/categories/codecentric.ai/</loc>
+    <lastmod>2019-02-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2019/02/ccai_bootcamp_launch/</loc>
+    <lastmod>2019-02-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2019/01/review_beyond_spreadsheets_with_r/</loc>
     <lastmod>2019-01-31T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2019/01/text_classification_keras_data_prep/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2019/01/text_classification_keras_data_prep/</loc>
     <lastmod>2019-01-23T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2019/01/data_camp_hyperparameter_tuning/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/nlp/</loc>
+    <lastmod>2019-01-23T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/h2o/</loc>
     <lastmod>2019-01-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2019/01/lecture_slides_real_world_ds/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/hyperparameter-tuning/</loc>
+    <lastmod>2019-01-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2019/01/data_camp_hyperparameter_tuning/</loc>
+    <lastmod>2019-01-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/case-studies/</loc>
     <lastmod>2019-01-16T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2019/01/how_cnns_learn/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/deep-learning/</loc>
+    <lastmod>2019-01-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/fraud-detection/</loc>
+    <lastmod>2019-01-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2019/01/lecture_slides_real_world_ds/</loc>
+    <lastmod>2019-01-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/predictive-maintenance/</loc>
+    <lastmod>2019-01-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/cnn/</loc>
     <lastmod>2019-01-09T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2019/01/meetup_feb19/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2019/01/how_cnns_learn/</loc>
+    <lastmod>2019-01-09T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/categories/machine-learning/</loc>
+    <lastmod>2019-01-09T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2019/01/meetup_feb19/</loc>
     <lastmod>2019-01-08T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2019/01/end2end_ws_berlin_feb19/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/data-science/</loc>
     <lastmod>2019-01-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/12/customer_churn_code/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2019/01/end2end_ws_berlin_feb19/</loc>
+    <lastmod>2019-01-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/workshop/</loc>
+    <lastmod>2019-01-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/categories/workshop/</loc>
+    <lastmod>2019-01-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/12/customer_churn_code/</loc>
     <lastmod>2018-12-12T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/12/trust_in_ml_slides_ix/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/anchors/</loc>
     <lastmod>2018-12-06T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/11/ml_basics_gbm/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/lime/</loc>
+    <lastmod>2018-12-06T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/12/trust_in_ml_slides_ix/</loc>
+    <lastmod>2018-12-06T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/twimlai/</loc>
+    <lastmod>2018-12-06T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/gradient-boosting/</loc>
     <lastmod>2018-11-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/11/slides_demystifying_dl/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/categories/gradient-boosting/</loc>
+    <lastmod>2018-11-29T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/11/ml_basics_gbm/</loc>
+    <lastmod>2018-11-29T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/xgboost/</loc>
+    <lastmod>2018-11-29T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/categories/xgboost/</loc>
+    <lastmod>2018-11-29T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/slides/</loc>
     <lastmod>2018-11-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/11/twimlai_meetup/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/categories/slides/</loc>
+    <lastmod>2018-11-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/11/slides_demystifying_dl/</loc>
+    <lastmod>2018-11-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/11/twimlai_meetup/</loc>
     <lastmod>2018-11-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/11/neural_nets_explained/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/11/neural_nets_explained/</loc>
     <lastmod>2018-11-06T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/10/ml_basics_rf/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/neural-nets/</loc>
+    <lastmod>2018-11-06T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/categories/neural-nets/</loc>
+    <lastmod>2018-11-06T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/10/ml_basics_rf/</loc>
     <lastmod>2018-10-30T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/10/rladieslondon_slides/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/random-forest/</loc>
+    <lastmod>2018-10-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/categories/random-forest/</loc>
+    <lastmod>2018-10-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/r-ladies/</loc>
     <lastmod>2018-10-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/10/mcubed_slides/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/categories/r-ladies/</loc>
+    <lastmod>2018-10-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/10/rladieslondon_slides/</loc>
+    <lastmod>2018-10-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/categories/conferences/</loc>
     <lastmod>2018-10-16T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/10/twimlai189/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/10/mcubed_slides/</loc>
+    <lastmod>2018-10-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/sketchnotes/</loc>
     <lastmod>2018-10-12T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/10/meetup_nov18/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/categories/sketchnotes/</loc>
+    <lastmod>2018-10-12T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/10/twimlai189/</loc>
+    <lastmod>2018-10-12T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/categories/twimlai/</loc>
+    <lastmod>2018-10-12T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/gis/</loc>
     <lastmod>2018-10-10T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/10/keras_fruits_cluster/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/osm/</loc>
+    <lastmod>2018-10-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/10/meetup_nov18/</loc>
+    <lastmod>2018-10-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/clustering/</loc>
     <lastmod>2018-10-06T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/09/ffm_datascience_meetup_slides/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/image/</loc>
+    <lastmod>2018-10-06T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/10/keras_fruits_cluster/</loc>
+    <lastmod>2018-10-06T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/09/ffm_datascience_meetup_slides/</loc>
     <lastmod>2018-09-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/09/ffm_datascience_meetup/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/09/ffm_datascience_meetup/</loc>
     <lastmod>2018-09-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/09/deep_learning_keras_tensorflow_18_09/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/09/deep_learning_keras_tensorflow_18_09/</loc>
     <lastmod>2018-09-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/09/rladieslondontalk/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/09/rladieslondontalk/</loc>
     <lastmod>2018-09-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/08/wjax2018/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/conference/</loc>
     <lastmod>2018-08-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/08/sap_webinar_slides/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/categories/conference/</loc>
+    <lastmod>2018-08-29T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/jax/</loc>
+    <lastmod>2018-08-29T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/categories/jax/</loc>
+    <lastmod>2018-08-29T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/08/wjax2018/</loc>
+    <lastmod>2018-08-29T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/08/sap_webinar_slides/</loc>
     <lastmod>2018-08-21T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/08/meetup_august18/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/categories/webinar/</loc>
+    <lastmod>2018-08-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/08/meetup_august18/</loc>
     <lastmod>2018-08-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/07/explaining_ml_models_code_text_lime/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/text-mining/</loc>
+    <lastmod>2018-08-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/07/explaining_ml_models_code_text_lime/</loc>
     <lastmod>2018-07-26T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/07/explaining_ml_models_code_caret_iml/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/caret/</loc>
     <lastmod>2018-07-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/07/mcubed_mlsummit_data2day/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/07/explaining_ml_models_code_caret_iml/</loc>
+    <lastmod>2018-07-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/iml/</loc>
+    <lastmod>2018-07-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/07/mcubed_mlsummit_data2day/</loc>
     <lastmod>2018-07-12T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/06/googlelanguager/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/06/googlelanguager/</loc>
     <lastmod>2018-06-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/06/intro_to_ml_workshop_heidelberg/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/06/intro_to_ml_workshop_heidelberg/</loc>
     <lastmod>2018-06-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/06/text_to_speech_r/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/06/text_to_speech_r/</loc>
     <lastmod>2018-06-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/06/keras_fruits_lime/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/06/keras_fruits_lime/</loc>
     <lastmod>2018-06-21T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/06/twimlai138/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/fast-ai/</loc>
     <lastmod>2018-06-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/06/keras_fruits/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/pytorch/</loc>
+    <lastmod>2018-06-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/06/twimlai138/</loc>
+    <lastmod>2018-06-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/06/keras_fruits/</loc>
     <lastmod>2018-06-15T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/05/ropensci_unconf18/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/greta/</loc>
     <lastmod>2018-05-30T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/05/deep_learning_keras_tensorflow_18_07/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/05/ropensci_unconf18/</loc>
+    <lastmod>2018-05-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/05/deep_learning_keras_tensorflow_18_07/</loc>
     <lastmod>2018-05-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/05/twimlai_adversarial_attacks/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/adversarial-attacks/</loc>
     <lastmod>2018-05-14T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/04/pkgnet/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/reinforcement-learning/</loc>
+    <lastmod>2018-05-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/05/twimlai_adversarial_attacks/</loc>
+    <lastmod>2018-05-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/04/pkgnet/</loc>
     <lastmod>2018-04-30T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/04/jax2018_slides/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/ggraph/</loc>
+    <lastmod>2018-04-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/pkgnet/</loc>
+    <lastmod>2018-04-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/tidygraph/</loc>
+    <lastmod>2018-04-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/04/jax2018_slides/</loc>
     <lastmod>2018-04-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/04/twimlai121/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/purrr/</loc>
     <lastmod>2018-04-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/04/flu_prediction/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/reproducibility/</loc>
     <lastmod>2018-04-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/04/meetup_june18/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/04/twimlai121/</loc>
+    <lastmod>2018-04-22T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/04/flu_prediction/</loc>
+    <lastmod>2018-04-22T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/04/meetup_june18/</loc>
     <lastmod>2018-04-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/04/hh_datascience_meetup_2018_slides/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/google/</loc>
     <lastmod>2018-04-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/04/twimlai124/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/04/hh_datascience_meetup_2018_slides/</loc>
     <lastmod>2018-04-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/04/ruhrpy_meetup_2018_slides/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/categories/lime/</loc>
+    <lastmod>2018-04-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/python/</loc>
+    <lastmod>2018-04-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/categories/python/</loc>
+    <lastmod>2018-04-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/04/twimlai124/</loc>
+    <lastmod>2018-04-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/tpu/</loc>
+    <lastmod>2018-04-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/04/ruhrpy_meetup_2018_slides/</loc>
     <lastmod>2018-04-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/03/meetup_april18/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/03/meetup_april18/</loc>
     <lastmod>2018-03-28T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/03/meetup_talk_ruhrpy_april_18/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/03/meetup_talk_ruhrpy_april_18/</loc>
     <lastmod>2018-03-28T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/03/twimlai115/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/horovod/</loc>
     <lastmod>2018-03-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/03/got_network/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/michelangelo/</loc>
+    <lastmod>2018-03-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/03/twimlai115/</loc>
+    <lastmod>2018-03-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/03/got_network/</loc>
     <lastmod>2018-03-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/02/twimlai111/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/asoiaf/</loc>
+    <lastmod>2018-03-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/game-of-thrones/</loc>
+    <lastmod>2018-03-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/network/</loc>
+    <lastmod>2018-03-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/categories/network/</loc>
+    <lastmod>2018-03-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/ai-common-sense/</loc>
     <lastmod>2018-02-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/02/deep_learning_keras_tensorflow_18_04/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/comparative-understanding/</loc>
+    <lastmod>2018-02-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/02/twimlai111/</loc>
+    <lastmod>2018-02-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/video/</loc>
+    <lastmod>2018-02-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/02/deep_learning_keras_tensorflow_18_04/</loc>
     <lastmod>2018-02-06T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/02/m3_2018/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/ai/</loc>
     <lastmod>2018-02-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/02/herr_mies_wills_wissen/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/02/m3_2018/</loc>
     <lastmod>2018-02-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/01/jax2018/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/02/herr_mies_wills_wissen/</loc>
+    <lastmod>2018-02-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/m3/</loc>
+    <lastmod>2018-02-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/categories/m3/</loc>
+    <lastmod>2018-02-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/podcast/</loc>
+    <lastmod>2018-02-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/categories/podcast/</loc>
+    <lastmod>2018-02-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/01/jax2018/</loc>
     <lastmod>2018-01-30T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/01/twimlai94/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/genetic-algorithm/</loc>
     <lastmod>2018-01-28T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/01/meetup_march18/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/neuroevolution/</loc>
+    <lastmod>2018-01-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/novelty-search/</loc>
+    <lastmod>2018-01-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/01/twimlai94/</loc>
+    <lastmod>2018-01-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/bioinformatics/</loc>
     <lastmod>2018-01-24T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/01/twimlai92/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/01/meetup_march18/</loc>
+    <lastmod>2018-01-24T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/neuroscience/</loc>
     <lastmod>2018-01-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/01/plumber/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/01/twimlai92/</loc>
+    <lastmod>2018-01-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/state-representation/</loc>
+    <lastmod>2018-01-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/api/</loc>
     <lastmod>2018-01-16T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/01/twimlai91/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/01/plumber/</loc>
+    <lastmod>2018-01-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/plumber/</loc>
+    <lastmod>2018-01-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/intelligence/</loc>
     <lastmod>2018-01-14T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/01/looking_beyond_accuracy_to_improve_trust_in_ml/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/moral-patiency/</loc>
+    <lastmod>2018-01-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/predictive-processing/</loc>
+    <lastmod>2018-01-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/01/twimlai91/</loc>
+    <lastmod>2018-01-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/bias/</loc>
     <lastmod>2018-01-10T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2018/01/twimlai88_sketchnotes/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/codecentric/</loc>
     <lastmod>2018-01-10T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2017/12/keras_sketchnotes/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/categories/codecentric/</loc>
+    <lastmod>2018-01-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/fairness/</loc>
+    <lastmod>2018-01-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/01/looking_beyond_accuracy_to_improve_trust_in_ml/</loc>
+    <lastmod>2018-01-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2018/01/twimlai88_sketchnotes/</loc>
+    <lastmod>2018-01-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2017/12/keras_sketchnotes/</loc>
     <lastmod>2017-12-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2017/12/lime_sketchnotes/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/tensor/</loc>
+    <lastmod>2017-12-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/theano/</loc>
+    <lastmod>2017-12-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2017/12/lime_sketchnotes/</loc>
     <lastmod>2017-12-12T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2017/11/mice_sketchnotes/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/imputation/</loc>
     <lastmod>2017-11-28T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2017/11/deep_learning_keras_tensorflow/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/mice/</loc>
+    <lastmod>2017-11-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2017/11/mice_sketchnotes/</loc>
+    <lastmod>2017-11-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/missing-data/</loc>
+    <lastmod>2017-11-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2017/11/deep_learning_keras_tensorflow/</loc>
     <lastmod>2017-11-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2017/11/combine_point_boxplot_ggplot/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2017/11/combine_point_boxplot_ggplot/</loc>
     <lastmod>2017-11-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2017/11/predictive_maintenance_dashboard/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2017/11/predictive_maintenance_dashboard/</loc>
     <lastmod>2017-11-02T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2017/09/data2day/</loc>
-    <lastmod>2017-09-28T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2017/09/from-biology-to-industry.-a-bloggers-journey-to-data-science./</loc>
-    <lastmod>2017-09-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2017/09/ode_to_r/</loc>
-    <lastmod>2017-09-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2017/09/moving-my-blog-to-blogdown/</loc>
-    <lastmod>2017-09-12T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2017/09/data-science-fraud-detection/</loc>
-    <lastmod>2017-09-06T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2017/09/migrating-github-gitlab/</loc>
-    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2017/07/twitter-analysis-codecentric/</loc>
-    <lastmod>2017-07-28T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2017/07/find-all-my-other-posts-on-my-old-website/</loc>
-    <lastmod>2017-07-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/adversarial-attacks/</loc>
-    <lastmod>2018-05-14T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/ai/</loc>
-    <lastmod>2018-02-01T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/ai-common-sense/</loc>
-    <lastmod>2018-02-19T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/anchors/</loc>
-    <lastmod>2018-12-06T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/anomaly-detection/</loc>
-    <lastmod>2017-09-06T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/api/</loc>
-    <lastmod>2018-01-16T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/archive/</loc>
-    <lastmod>2017-07-01T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/archive/</loc>
-    <lastmod>2017-07-01T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/archives/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/artificial-intelligence/</loc>
-    <lastmod>2017-09-28T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/asoiaf/</loc>
-    <lastmod>2018-03-04T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/autoencoder/</loc>
-    <lastmod>2017-09-06T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/bias/</loc>
-    <lastmod>2018-01-10T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/bioinformatics/</loc>
-    <lastmod>2018-01-24T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/blogdown/</loc>
-    <lastmod>2017-09-19T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/blogdown/</loc>
-    <lastmod>2017-09-12T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/blogging/</loc>
-    <lastmod>2017-09-20T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/bookdown/</loc>
-    <lastmod>2017-09-19T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/business-intelligence/</loc>
-    <lastmod>2017-09-28T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/caret/</loc>
-    <lastmod>2018-07-20T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/case-studies/</loc>
-    <lastmod>2019-01-16T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/</loc>
-    <lastmod>2017-07-01T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/clustering/</loc>
-    <lastmod>2018-10-06T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/cnn/</loc>
-    <lastmod>2019-01-09T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/codecentric/</loc>
-    <lastmod>2018-01-10T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/codecentric/</loc>
-    <lastmod>2018-01-10T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/codecentric.ai/</loc>
-    <lastmod>2019-02-08T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/codecentric.ai/</loc>
-    <lastmod>2019-02-08T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/comparative-understanding/</loc>
-    <lastmod>2018-02-19T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/conference/</loc>
-    <lastmod>2018-08-29T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/conference/</loc>
-    <lastmod>2018-08-29T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/conferences/</loc>
-    <lastmod>2019-03-22T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/conferences/</loc>
-    <lastmod>2018-10-16T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/customer-churn/</loc>
-    <lastmod>2019-01-16T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/data-science/</loc>
-    <lastmod>2019-01-07T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/data2day/</loc>
-    <lastmod>2017-09-28T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/data2day/</loc>
-    <lastmod>2017-09-28T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/datacamp/</loc>
-    <lastmod>2019-04-21T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/datacamp/</loc>
-    <lastmod>2019-04-21T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/deep-learning/</loc>
-    <lastmod>2019-01-16T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/fairness/</loc>
-    <lastmod>2018-01-10T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/fast-ai/</loc>
-    <lastmod>2018-06-18T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/flexdashboard/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/flexdashboard/</loc>
     <lastmod>2017-11-02T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/fraud-detection/</loc>
-    <lastmod>2019-01-16T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/game-of-thrones/</loc>
-    <lastmod>2018-03-04T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/genetic-algorithm/</loc>
-    <lastmod>2018-01-28T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/ggplot/</loc>
-    <lastmod>2020-09-07T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/ggplot2/</loc>
-    <lastmod>2020-10-20T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/ggraph/</loc>
-    <lastmod>2018-04-30T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/gis/</loc>
-    <lastmod>2018-10-10T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/github/</loc>
-    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/github/</loc>
-    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/gitlab/</loc>
-    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/gitlab/</loc>
-    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/google/</loc>
-    <lastmod>2018-04-18T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/gradient-boosting/</loc>
-    <lastmod>2018-11-29T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/gradient-boosting/</loc>
-    <lastmod>2018-11-29T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/greta/</loc>
-    <lastmod>2018-05-30T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/h2o/</loc>
-    <lastmod>2019-01-17T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/horovod/</loc>
-    <lastmod>2018-03-07T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/hyperparameter-tuning/</loc>
-    <lastmod>2019-01-17T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/image/</loc>
-    <lastmod>2018-10-06T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/image-classification/</loc>
-    <lastmod>2020-10-19T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/iml/</loc>
-    <lastmod>2018-07-20T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/imputation/</loc>
-    <lastmod>2017-11-28T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/intelligence/</loc>
-    <lastmod>2018-01-14T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/jax/</loc>
-    <lastmod>2018-08-29T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/jax/</loc>
-    <lastmod>2018-08-29T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/keras/</loc>
-    <lastmod>2020-10-19T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/keras/</loc>
-    <lastmod>2020-10-19T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/lime/</loc>
-    <lastmod>2018-12-06T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/lime/</loc>
-    <lastmod>2018-04-18T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/m3/</loc>
-    <lastmod>2018-02-01T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/m3/</loc>
-    <lastmod>2018-02-01T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/machine-learning/</loc>
-    <lastmod>2019-01-23T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/machine-learning/</loc>
-    <lastmod>2019-01-09T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/meetup/</loc>
-    <lastmod>2019-06-26T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/meetup/</loc>
-    <lastmod>2019-06-26T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/mice/</loc>
-    <lastmod>2017-11-28T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/michelangelo/</loc>
-    <lastmod>2018-03-07T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/missing-data/</loc>
-    <lastmod>2017-11-28T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/moral-patiency/</loc>
-    <lastmod>2018-01-14T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/m%C3%BCnster/</loc>
-    <lastmod>2019-06-26T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/m%C3%BCnster/</loc>
-    <lastmod>2019-06-26T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/network/</loc>
-    <lastmod>2018-03-04T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/network/</loc>
-    <lastmod>2018-03-04T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/network-analysis/</loc>
-    <lastmod>2017-07-28T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/neural-nets/</loc>
-    <lastmod>2018-11-06T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/neural-nets/</loc>
-    <lastmod>2018-11-06T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/neuroevolution/</loc>
-    <lastmod>2018-01-28T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/neuroscience/</loc>
-    <lastmod>2018-01-19T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/nlp/</loc>
-    <lastmod>2019-01-23T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/novelty-search/</loc>
-    <lastmod>2018-01-28T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/osm/</loc>
-    <lastmod>2018-10-10T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/page/</loc>
-    <lastmod>2020-09-27T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/pca/</loc>
-    <lastmod>2017-09-06T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/pkgnet/</loc>
-    <lastmod>2018-04-30T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/plotly/</loc>
-    <lastmod>2020-09-07T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/plumber/</loc>
-    <lastmod>2018-01-16T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/podcast/</loc>
-    <lastmod>2018-02-01T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/podcast/</loc>
-    <lastmod>2018-02-01T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/post/</loc>
-    <lastmod>2020-10-20T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/predictive-analytics/</loc>
-    <lastmod>2018-12-12T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/predictive-maintenance/</loc>
-    <lastmod>2019-01-16T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/predictive-processing/</loc>
-    <lastmod>2018-01-14T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/purrr/</loc>
-    <lastmod>2018-04-22T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/python/</loc>
-    <lastmod>2018-04-18T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/python/</loc>
-    <lastmod>2018-04-18T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/pytorch/</loc>
-    <lastmod>2018-06-18T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/r/</loc>
-    <lastmod>2020-10-20T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/r/</loc>
-    <lastmod>2020-10-20T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/r-ladies/</loc>
-    <lastmod>2018-10-17T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/r-ladies/</loc>
-    <lastmod>2018-10-17T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/r-markdown/</loc>
-    <lastmod>2017-09-19T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/random-forest/</loc>
-    <lastmod>2018-10-30T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/random-forest/</loc>
-    <lastmod>2018-10-30T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/reinforcement-learning/</loc>
-    <lastmod>2018-05-14T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/reproducibility/</loc>
-    <lastmod>2018-04-22T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/scalability/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/artificial-intelligence/</loc>
     <lastmod>2017-09-28T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/shiny/</loc>
-    <lastmod>2020-09-07T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/</loc>
-    <lastmod>2020-10-20T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/sketchnotes/</loc>
-    <lastmod>2018-10-12T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/sketchnotes/</loc>
-    <lastmod>2018-10-12T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/slides/</loc>
-    <lastmod>2018-11-20T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/slides/</loc>
-    <lastmod>2018-11-20T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/state-representation/</loc>
-    <lastmod>2018-01-19T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/t-sne/</loc>
-    <lastmod>2017-09-06T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/</loc>
-    <lastmod>2018-05-14T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/tensor/</loc>
-    <lastmod>2017-12-20T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/tensorflow/</loc>
-    <lastmod>2020-10-19T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/text-analysis/</loc>
-    <lastmod>2017-07-28T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/text-analysis/</loc>
-    <lastmod>2017-07-28T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/text-mining/</loc>
-    <lastmod>2018-08-01T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/theano/</loc>
-    <lastmod>2017-12-20T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/tidygraph/</loc>
-    <lastmod>2018-04-30T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/tidyverse/</loc>
-    <lastmod>2020-09-07T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/tpu/</loc>
-    <lastmod>2018-04-18T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/twimlai/</loc>
-    <lastmod>2018-12-06T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/twimlai/</loc>
-    <lastmod>2018-10-12T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/twitter/</loc>
-    <lastmod>2017-07-28T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/video/</loc>
-    <lastmod>2018-02-19T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/webinar/</loc>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2017/09/data2day/</loc>
+    <lastmod>2017-09-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/business-intelligence/</loc>
+    <lastmod>2017-09-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/data2day/</loc>
+    <lastmod>2017-09-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/categories/data2day/</loc>
+    <lastmod>2017-09-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/scalability/</loc>
+    <lastmod>2017-09-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/blogging/</loc>
     <lastmod>2017-09-20T00:00:00+00:00</lastmod>
-    <priority>0</priority>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2017/09/from-biology-to-industry.-a-bloggers-journey-to-data-science./</loc>
+    <lastmod>2017-09-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/webinar/</loc>
+    <lastmod>2017-09-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/blogdown/</loc>
+    <lastmod>2017-09-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/bookdown/</loc>
+    <lastmod>2017-09-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/r-markdown/</loc>
+    <lastmod>2017-09-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2017/09/ode_to_r/</loc>
+    <lastmod>2017-09-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/categories/blogdown/</loc>
+    <lastmod>2017-09-12T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2017/09/moving-my-blog-to-blogdown/</loc>
+    <lastmod>2017-09-12T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/anomaly-detection/</loc>
+    <lastmod>2017-09-06T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/autoencoder/</loc>
+    <lastmod>2017-09-06T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2017/09/data-science-fraud-detection/</loc>
+    <lastmod>2017-09-06T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/pca/</loc>
+    <lastmod>2017-09-06T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/t-sne/</loc>
+    <lastmod>2017-09-06T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/github/</loc>
+    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/categories/github/</loc>
+    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/gitlab/</loc>
+    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/categories/gitlab/</loc>
+    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2017/09/migrating-github-gitlab/</loc>
+    <lastmod>2017-09-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/network-analysis/</loc>
+    <lastmod>2017-07-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2017/07/twitter-analysis-codecentric/</loc>
+    <lastmod>2017-07-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/text-analysis/</loc>
+    <lastmod>2017-07-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/categories/text-analysis/</loc>
+    <lastmod>2017-07-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/twitter/</loc>
+    <lastmod>2017-07-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/tags/archive/</loc>
+    <lastmod>2017-07-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/categories/archive/</loc>
+    <lastmod>2017-07-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/2017/07/find-all-my-other-posts-on-my-old-website/</loc>
+    <lastmod>2017-07-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.com/archives/</loc>
   </url>
-  
-  <url>
-    <loc>/categories/webinar/</loc>
-    <lastmod>2018-08-21T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/workshop/</loc>
-    <lastmod>2019-01-07T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/workshop/</loc>
-    <lastmod>2019-01-07T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/xgboost/</loc>
-    <lastmod>2018-11-29T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/xgboost/</loc>
-    <lastmod>2018-11-29T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
 </urlset>

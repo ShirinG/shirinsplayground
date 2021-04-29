@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Pages on Shirin&#39;s playgRound</title>
@@ -6,19 +6,33 @@
     <description>Recent content in Pages on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 12 Sep 2017 16:06:06 +0200</lastBuildDate>
+    <lastBuildDate>Sun, 27 Sep 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/page/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Conferences, webinars, podcasts, workshops, books, articles and the likes</title>
+      <link>https://shirinsplayground.netlify.com/page/conferences_podcasts_webinars/</link>
+      <pubDate>Sun, 27 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/page/conferences_podcasts_webinars/</guid>
+      <description>Here, you can find a list of all the talks I gave at conferences, webinars, podcasts, workshops, and all the other places you can and could hear me talk. You will also find a section with magazine articles and books I&amp;rsquo;ve written. :-)
+If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at paypal.me. Thank you!</description>
+    </item>
     
-	<atom:link href="https://shirinsplayground.netlify.com/page/index.xml" rel="self" type="application/rss+xml" />
-    
+    <item>
+      <title>Have a question - book me!</title>
+      <link>https://shirinsplayground.netlify.com/page/bookme/</link>
+      <pubDate>Sun, 23 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/page/bookme/</guid>
+      <description>Because I have been getting too many emails with questions and requests for help than I can answer, you can now book 15-minute time-slots with me. I will offer one 15-minute-slot per day on a first-come-first-serve basis. These 15 minutes will be free of charge and we will meet via Zoom, Skype or Google Meet. During these 15 minutes we can discuss your problem or question. Any help you might require beyond that, will have to be billed (details to be discussed in person).</description>
+    </item>
     
     <item>
       <title>Welcome to my page!</title>
       <link>https://shirinsplayground.netlify.com/page/about/</link>
-      <pubDate>Tue, 12 Sep 2017 16:06:06 +0200</pubDate>
+      <pubDate>Sun, 23 Aug 2020 00:00:00 +0000</pubDate>
       
       <guid>https://shirinsplayground.netlify.com/page/about/</guid>
-      <description>I&amp;rsquo;m Shirin, a biologist turned bioinformatician turned data scientist.
-I&amp;rsquo;m especially interested in machine learning and data visualization. While I am using R most every day at work, I wanted to have an incentive to regularly explore other types of analyses and other types of data that I don&amp;rsquo;t normally work with. I have also very often benefited from other people&amp;rsquo;s published code in that it gave me ideas for my own work; and I hope that sharing my own analyses will inspire others as much as I often am by what can be be done with data.</description>
+      <description>I’m Shirin (Elsinghorst, born Glander), a biologist turned bioinformatician turned data scientist. During my PhD and Postdoc I worked with Next Generation Sequencing data. However, I then chose to become a data scientist for a German IT company, called codecentric. In this capacity, I have been working on many different projects, e.g. building fraud detection models, creating a chatbot, implementing predictive maintenance, and more. My preferred tool for data analysis has been R but I also work with Python.</description>
     </item>
     
   </channel>

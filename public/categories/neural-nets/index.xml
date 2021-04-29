@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>neural nets on Shirin&#39;s playgRound</title>
+    <link>https://shirinsplayground.netlify.com/categories/neural-nets/</link>
+    <description>Recent content in neural nets on Shirin&#39;s playgRound</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 06 Nov 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/categories/neural-nets/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>&#39;How do neural nets learn?&#39; A step by step explanation using the H2O Deep Learning algorithm.</title>
+      <link>https://shirinsplayground.netlify.com/2018/11/neural_nets_explained/</link>
+      <pubDate>Tue, 06 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2018/11/neural_nets_explained/</guid>
+      <description>In my last blogpost about Random Forests I introduced the codecentric.ai Bootcamp. The next part I published was about Neural Networks and Deep Learning. Every video of our bootcamp will have example code and tasks to promote hands-on learning. While the practical parts of the bootcamp will be using Python, below you will find the English R version of this Neural Nets Practical Example, where I explain how neural nets learn and how the concepts and techniques translate to training neural nets in R with the H2O Deep Learning function.</description>
+    </item>
+    
+  </channel>
+</rss>

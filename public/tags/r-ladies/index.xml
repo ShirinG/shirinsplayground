@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>R-Ladies on Shirin&#39;s playgRound</title>
+    <link>https://shirinsplayground.netlify.com/tags/r-ladies/</link>
+    <description>Recent content in R-Ladies on Shirin&#39;s playgRound</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 17 Oct 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/tags/r-ladies/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Slides from my talk at the R-Ladies Meetup about Interpretable Deep Learning with R, Keras and LIME</title>
+      <link>https://shirinsplayground.netlify.com/2018/10/rladieslondon_slides/</link>
+      <pubDate>Wed, 17 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2018/10/rladieslondon_slides/</guid>
+      <description>During my stay in London for the m3 conference, I also gave a talk at the R-Ladies London Meetup on Tuesday, October 16th, about one of my favorite topics: Interpretable Deep Learning with R, Keras and LIME.
+ Keras is a high-level open-source deep learning framework that by default works on top of TensorFlow. Keras is minimalistic, efficient and highly flexible because it works with a modular layer system to define, compile and fit neural networks.</description>
+    </item>
+    
+    <item>
+      <title>I&#39;ll be talking at the R-Ladies Meetup about Interpretable Deep Learning with R, Keras and LIME</title>
+      <link>https://shirinsplayground.netlify.com/2018/09/rladieslondontalk/</link>
+      <pubDate>Mon, 17 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2018/09/rladieslondontalk/</guid>
+      <description>Today I am very happy to announce that during my stay in London for the m3 conference, I’ll also be giving a talk at the R-Ladies London Meetup on Tuesday, October 16th, about one of my favorite topics: Interpretable Deep Learning with R, Keras and LIME.
+You can register via Eventbrite: https://www.eventbrite.co.uk/e/interpretable-deep-learning-with-r-lime-and-keras-tickets-50118369392
+ ABOUT THE TALK
+  Keras is a high-level open-source deep learning framework that by default works on top of TensorFlow.</description>
+    </item>
+    
+  </channel>
+</rss>

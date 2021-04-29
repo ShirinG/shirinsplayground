@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>bioinformatics on Shirin&#39;s playgRound</title>
+    <link>https://shirinsplayground.netlify.com/tags/bioinformatics/</link>
+    <description>Recent content in bioinformatics on Shirin&#39;s playgRound</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 24 Jan 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/tags/bioinformatics/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Join MünsteR for our next meetup on obtaining functional implications of gene expression data with R</title>
+      <link>https://shirinsplayground.netlify.com/2018/01/meetup_march18/</link>
+      <pubDate>Wed, 24 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2018/01/meetup_march18/</guid>
+      <description>In our next MünsteR R-user group meetup on March 5th, 2018 Frank Rühle will talk about bioinformatics and how to analyse genome data.
+You can RSVP here: http://meetu.ps/e/DDY1B/w54bW/f
+ Next-Generation sequencing and array-based technologies provided a plethora of gene expression data in the public genomics databases. But how to get meaningful information and functional implications out of this vast amount of data? Various R-packages have been published by the Bioconductor user community for distinct kinds of analysis strategies.</description>
+    </item>
+    
+  </channel>
+</rss>

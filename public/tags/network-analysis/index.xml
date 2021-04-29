@@ -1,16 +1,12 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Network Analysis on Shirin&#39;s playgRound</title>
+    <title>network analysis on Shirin&#39;s playgRound</title>
     <link>https://shirinsplayground.netlify.com/tags/network-analysis/</link>
-    <description>Recent content in Network Analysis on Shirin&#39;s playgRound</description>
+    <description>Recent content in network analysis on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 28 Jul 2017 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://shirinsplayground.netlify.com/tags/network-analysis/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Fri, 28 Jul 2017 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/tags/network-analysis/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Social Network Analysis and Topic Modeling of codecentric’s Twitter friends and followers</title>
       <link>https://shirinsplayground.netlify.com/2017/07/twitter-analysis-codecentric/</link>

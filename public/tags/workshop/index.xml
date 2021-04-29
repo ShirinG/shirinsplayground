@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>workshop on Shirin&#39;s playgRound</title>
+    <link>https://shirinsplayground.netlify.com/tags/workshop/</link>
+    <description>Recent content in workshop on Shirin&#39;s playgRound</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 07 Jan 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/tags/workshop/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>February 21st &amp; 22nd: End-2-End from a Keras/TensorFlow model to production</title>
+      <link>https://shirinsplayground.netlify.com/2019/01/end2end_ws_berlin_feb19/</link>
+      <pubDate>Mon, 07 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2019/01/end2end_ws_berlin_feb19/</guid>
+      <description>Registration is now open for my 1.5-day workshop on how to develop end-2-end from a Keras/TensorFlow model to production.
+It will take place on February 21st &amp;amp; 22nd in Berlin, Germany. The workshop will cost 950.00 Euro + MwST. We will start at 9 am on Thursday and finish around 3 pm on Friday.
+Please register by sending an email to shirin.glander@gmail.com with the following information:
+ name company/institute/affiliation address for invoice phone number reference to this blog  The course material will be in English and we will speak a mix of German and English, depending on the participants’ preferences.</description>
+    </item>
+    
+    <item>
+      <title>November 8th &amp; 9th in Munich: Workshop on Deep Learning with Keras and TensorFlow in R</title>
+      <link>https://shirinsplayground.netlify.com/2018/09/deep_learning_keras_tensorflow_18_09/</link>
+      <pubDate>Wed, 19 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2018/09/deep_learning_keras_tensorflow_18_09/</guid>
+      <description>Registration is now open for my 1.5-day workshop on deep learning with Keras and TensorFlow using R.
+It will take place on November 8th &amp;amp; 9th in Munich, Germany.
+
+ 
+You can read about one participant’s experience in my workshop:
+ Big Data – a buzz word you can find everywhere these days, from nerdy blogs to scientific research papers and even in the news. But how does Big Data Analysis work, exactly?</description>
+    </item>
+    
+    <item>
+      <title>July 5th &amp; 6th in Münster: Workshop on Deep Learning with Keras and TensorFlow in R</title>
+      <link>https://shirinsplayground.netlify.com/2018/05/deep_learning_keras_tensorflow_18_07/</link>
+      <pubDate>Tue, 22 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2018/05/deep_learning_keras_tensorflow_18_07/</guid>
+      <description>Registration is now open for my 1.5-day workshop on deep learning with Keras and TensorFlow using R.
+It will take place on July 5th &amp;amp; 6th in Münster, Germany.
+
+ 
+You can read about one participant’s experience in my last workshop:
+ Big Data – a buzz word you can find everywhere these days, from nerdy blogs to scientific research papers and even in the news. But how does Big Data Analysis work, exactly?</description>
+    </item>
+    
+    <item>
+      <title>April 12th &amp; 13th in Hamburg: Workshop on Deep Learning with Keras and TensorFlow in R</title>
+      <link>https://shirinsplayground.netlify.com/2018/02/deep_learning_keras_tensorflow_18_04/</link>
+      <pubDate>Tue, 06 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2018/02/deep_learning_keras_tensorflow_18_04/</guid>
+      <description>Registration is now open for my 1.5-day workshop on deep learning with Keras and TensorFlow using R.
+It will take place on April 12th and 13th in Hamburg, Germany.
+You can read about one participant’s experience in my last workshop:
+ Big Data – a buzz word you can find everywhere these days, from nerdy blogs to scientific research papers and even in the news. But how does Big Data Analysis work, exactly?</description>
+    </item>
+    
+    <item>
+      <title>Workshop on Deep Learning with Keras and TensorFlow in R</title>
+      <link>https://shirinsplayground.netlify.com/2017/11/deep_learning_keras_tensorflow/</link>
+      <pubDate>Mon, 20 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.com/2017/11/deep_learning_keras_tensorflow/</guid>
+      <description>You can now book me and my 1-day workshop on deep learning with Keras and TensorFlow using R.
+In my workshop, you will learn
+ the basics of deep learning what cross-entropy and loss is about activation functions how to optimize weights and biases with backpropagation and gradient descent how to build (deep) neural networks with Keras and TensorFlow how to save and load models and model weights how to visualize models with TensorBoard how to make predictions on test data  Date and place depend on who and how many people are interested, so please contact me either directly or via the workshop page: https://www.</description>
+    </item>
+    
+  </channel>
+</rss>
