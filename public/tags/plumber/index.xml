@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>plumber on Shirin&#39;s playgRound</title>
-    <link>https://shirinsplayground.netlify.com/tags/plumber/</link>
+    <link>https://shirinsplayground.netlify.app/tags/plumber/</link>
     <description>Recent content in plumber on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 16 Jan 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/tags/plumber/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 16 Jan 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.app/tags/plumber/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>How to make your machine learning model available as an API with the plumber package</title>
-      <link>https://shirinsplayground.netlify.com/2018/01/plumber/</link>
+      <link>https://shirinsplayground.netlify.app/2018/01/plumber/</link>
       <pubDate>Tue, 16 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/01/plumber/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/01/plumber/</guid>
       <description>The plumber package for R makes it easy to expose existing R code as a webservice via an API (https://www.rplumber.io/, Trestle Technology, LLC 2017).
 You take an existing R script and make it accessible with plumber by simply adding a few lines of comments. If you have worked with Roxygen before, e.g. when building a package, you will already be familiar with the core concepts. If not, here are the most important things to know:</description>
     </item>

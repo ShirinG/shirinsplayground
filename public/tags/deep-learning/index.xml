@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>deep learning on Shirin&#39;s playgRound</title>
-    <link>https://shirinsplayground.netlify.com/tags/deep-learning/</link>
+    <link>https://shirinsplayground.netlify.app/tags/deep-learning/</link>
     <description>Recent content in deep learning on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 16 Jan 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/tags/deep-learning/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 16 Jan 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.app/tags/deep-learning/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Lecture slides: Real-World Data Science (Fraud Detection, Customer Churn &amp; Predictive Maintenance)</title>
-      <link>https://shirinsplayground.netlify.com/2019/01/lecture_slides_real_world_ds/</link>
+      <link>https://shirinsplayground.netlify.app/2019/01/lecture_slides_real_world_ds/</link>
       <pubDate>Wed, 16 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2019/01/lecture_slides_real_world_ds/</guid>
+      <guid>https://shirinsplayground.netlify.app/2019/01/lecture_slides_real_world_ds/</guid>
       <description>These are slides from a lecture I gave at the School of Applied Sciences in Münster. In this lecture, I talked about Real-World Data Science and showed examples on Fraud Detection, Customer Churn &amp;amp; Predictive Maintenance.
 
   Real-World Data Science (Fraud Detection, Customer Churn &amp;amp; Predictive Maintenance)  von Shirin Glander  The slides were created with xaringan.</description>
@@ -20,20 +20,20 @@
     
     <item>
       <title>How do Convolutional Neural Nets (CNNs) learn? &#43; Keras example</title>
-      <link>https://shirinsplayground.netlify.com/2019/01/how_cnns_learn/</link>
+      <link>https://shirinsplayground.netlify.app/2019/01/how_cnns_learn/</link>
       <pubDate>Wed, 09 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2019/01/how_cnns_learn/</guid>
+      <guid>https://shirinsplayground.netlify.app/2019/01/how_cnns_learn/</guid>
       <description>As with the other videos from our codecentric.ai Bootcamp (Random Forests, Neural Nets &amp;amp; Gradient Boosting), I am again sharing an English version of the script (plus R code) for this most recent addition on How Convolutional Neural Nets work.
 In this lesson, I am going to explain how computers learn to see; meaning, how do they learn to recognize images or object on images? One of the most commonly used approaches to teach computers “vision” are Convolutional Neural Nets.</description>
     </item>
     
     <item>
       <title>Slides from my talks about Demystifying Big Data and Deep Learning (and how to get started)</title>
-      <link>https://shirinsplayground.netlify.com/2018/11/slides_demystifying_dl/</link>
+      <link>https://shirinsplayground.netlify.app/2018/11/slides_demystifying_dl/</link>
       <pubDate>Tue, 20 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/11/slides_demystifying_dl/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/11/slides_demystifying_dl/</guid>
       <description> On November 7th, Uwe Friedrichsen and I gave our talk from the JAX conference 2018: Deep Learning - a Primer again at the W-JAX in Munich.
 A few weeks before, I gave a similar talk at two events about Demystifying Big Data and Deep Learning (and how to get started).
 Here are the two very similar presentations from these talks:
@@ -42,19 +42,19 @@ Here are the two very similar presentations from these talks:
     
     <item>
       <title>&#39;How do neural nets learn?&#39; A step by step explanation using the H2O Deep Learning algorithm.</title>
-      <link>https://shirinsplayground.netlify.com/2018/11/neural_nets_explained/</link>
+      <link>https://shirinsplayground.netlify.app/2018/11/neural_nets_explained/</link>
       <pubDate>Tue, 06 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/11/neural_nets_explained/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/11/neural_nets_explained/</guid>
       <description>In my last blogpost about Random Forests I introduced the codecentric.ai Bootcamp. The next part I published was about Neural Networks and Deep Learning. Every video of our bootcamp will have example code and tasks to promote hands-on learning. While the practical parts of the bootcamp will be using Python, below you will find the English R version of this Neural Nets Practical Example, where I explain how neural nets learn and how the concepts and techniques translate to training neural nets in R with the H2O Deep Learning function.</description>
     </item>
     
     <item>
       <title>W-JAX 2018 talk: Deep Learning - a Primer</title>
-      <link>https://shirinsplayground.netlify.com/2018/08/wjax2018/</link>
+      <link>https://shirinsplayground.netlify.app/2018/08/wjax2018/</link>
       <pubDate>Wed, 29 Aug 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/08/wjax2018/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/08/wjax2018/</guid>
       <description>On November 7th, I’ll be in Munich for the W-JAX conference where I’ll be giving the talk that my colleague Uwe Friedrichsen and I gave at the JAX conference this April again: Deep Learning - a Primer.
 Let me know if any of you here are going to be there and would like to meet up!
 
@@ -64,10 +64,10 @@ Slides from the original talk can be found here: https://www.slideshare.net/Shir
     
     <item>
       <title>Slides from my SAP webinar: Explaining Keras Image Classification Models with LIME</title>
-      <link>https://shirinsplayground.netlify.com/2018/08/sap_webinar_slides/</link>
+      <link>https://shirinsplayground.netlify.app/2018/08/sap_webinar_slides/</link>
       <pubDate>Tue, 21 Aug 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/08/sap_webinar_slides/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/08/sap_webinar_slides/</guid>
       <description>Here I am sharing the slides for a webinar I gave for SAP about Explaining Keras Image Classification Models with LIME.
 Slides can be found here: https://www.slideshare.net/ShirinGlander/sap-webinar-explaining-keras-image-classification-models-with-lime
  Keras is a high-level open-source deep learning framework that by default works on top of TensorFlow. Keras is minimalistic, efficient and highly flexible because it works with a modular layer system to define, compile and fit neural networks. It has been written in Python but can also be used from within R.</description>
@@ -75,10 +75,10 @@ Slides can be found here: https://www.slideshare.net/ShirinGlander/sap-webinar-e
     
     <item>
       <title>Slides from my JAX 2018 talk: Deep Learning - a Primer</title>
-      <link>https://shirinsplayground.netlify.com/2018/04/jax2018_slides/</link>
+      <link>https://shirinsplayground.netlify.app/2018/04/jax2018_slides/</link>
       <pubDate>Fri, 27 Apr 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/04/jax2018_slides/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/04/jax2018_slides/</guid>
       <description>Here I am sharing the slides for a talk that my colleague Uwe Friedrichsen and I gave about Deep Learning - a Primer at the JAX conference on Tuesday, April 24th 2018 in Mainz, Germany.
 Slides can be found here: https://www.slideshare.net/ShirinGlander/deep-learning-a-primer-95197733
  Deep Learning is one of the “hot” topics in the AI area – a lot of hype, a lot of inflated expectation, but also quite some impressive success stories.</description>
@@ -86,50 +86,50 @@ Slides can be found here: https://www.slideshare.net/ShirinGlander/deep-learning
     
     <item>
       <title>HH Data Science Meetup slides: Explaining complex machine learning models with LIME</title>
-      <link>https://shirinsplayground.netlify.com/2018/04/hh_datascience_meetup_2018_slides/</link>
+      <link>https://shirinsplayground.netlify.app/2018/04/hh_datascience_meetup_2018_slides/</link>
       <pubDate>Wed, 18 Apr 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/04/hh_datascience_meetup_2018_slides/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/04/hh_datascience_meetup_2018_slides/</guid>
       <description>On April 12th, 2018 I gave a talk about Explaining complex machine learning models with LIME at the Hamburg Data Science Meetup - so if you’re intersted: the slides can be found here: https://www.slideshare.net/ShirinGlander/hh-data-science-meetup-explaining-complex-machine-learning-models-with-lime-94218890
  Traditional machine learning workflows focus heavily on model training and optimization; the best model is usually chosen via performance measures like accuracy or error and we tend to assume that a model is good enough for deployment if it passes certain thresholds of these performance criteria.</description>
     </item>
     
     <item>
       <title>Meetup slides: Introducing Deep Learning with Keras</title>
-      <link>https://shirinsplayground.netlify.com/2018/04/ruhrpy_meetup_2018_slides/</link>
+      <link>https://shirinsplayground.netlify.app/2018/04/ruhrpy_meetup_2018_slides/</link>
       <pubDate>Wed, 11 Apr 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/04/ruhrpy_meetup_2018_slides/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/04/ruhrpy_meetup_2018_slides/</guid>
       <description>On April 4th, 2018 I gave a talk about Deep Learning with Keras at the Ruhr.Py Meetup in Essen, Germany. The talk was not specific to Python, though - so if you’re intersted: the slides can be found here: https://www.slideshare.net/ShirinGlander/ruhrpy-introducing-deep-learning-with-keras-and-python
   Ruhr.PY - Introducing Deep Learning with Keras and Python  von Shirin Glander  There is also a video recording of my talk, which you can see here: https://youtu.</description>
     </item>
     
     <item>
       <title>Join MünsteR for our next meetup on deep learning with Keras and R</title>
-      <link>https://shirinsplayground.netlify.com/2018/03/meetup_april18/</link>
+      <link>https://shirinsplayground.netlify.app/2018/03/meetup_april18/</link>
       <pubDate>Wed, 28 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/03/meetup_april18/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/03/meetup_april18/</guid>
       <description>In our next MünsteR R-user group meetup on Tuesday, April 17th, 2018 Kai Lichtenberg will talk about deep learning with Keras. You can RSVP here: http://meetu.ps/e/DDY1B/w54bW/f
  Although neural networks have been around for quite a while now, deep learning really just took of a few years ago. It pretty much all started when Alex Krizhevsky and Geoffrey Hinton utterly crushed classic image recognition in the 2012 ImageNet Large Scale Visual Recognition Challenge by implementing a deep neural network with CUDA on graphics cards.</description>
     </item>
     
     <item>
       <title>My upcoming meetup talks about Deep Learning with Keras and explaining complex Machine Learning Models with LIME</title>
-      <link>https://shirinsplayground.netlify.com/2018/03/meetup_talk_ruhrpy_april_18/</link>
+      <link>https://shirinsplayground.netlify.app/2018/03/meetup_talk_ruhrpy_april_18/</link>
       <pubDate>Wed, 28 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/03/meetup_talk_ruhrpy_april_18/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/03/meetup_talk_ruhrpy_april_18/</guid>
       <description>I’ll be talking about Deep Learning with Keras in R and Python at the following upcoming meetup:
  Ruhr.Py 2018 on Wednesday, April 4th   Introducing Deep Learning with Keras and Python Keras is a high-level API written in Python for building and prototyping neural networks. It can be used on top of TensorFlow, Theano or CNTK. In this talk we build, train and visualize a Model using Python and Keras - all interactive with Jupyter Notebooks!</description>
     </item>
     
     <item>
       <title>I talk about machine learning with Daniel Mies (Podcast in German, though)</title>
-      <link>https://shirinsplayground.netlify.com/2018/02/herr_mies_wills_wissen/</link>
+      <link>https://shirinsplayground.netlify.app/2018/02/herr_mies_wills_wissen/</link>
       <pubDate>Thu, 01 Feb 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/02/herr_mies_wills_wissen/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/02/herr_mies_wills_wissen/</guid>
       <description>For those of you out there who speak German:
 I was interviewed for a tech podcast where I talked about machine learning, neural nets, why I love R and Rstudio and how I became a Data Scientist.
 You can download and listen to the podcast here: https://mies.me/2018/01/31/hmww17-machine-learning-mit-dr-shirin-glander/
@@ -138,10 +138,10 @@ You can download and listen to the podcast here: https://mies.me/2018/01/31/hmww
     
     <item>
       <title>JAX 2018 talk announcement: Deep Learning - a Primer</title>
-      <link>https://shirinsplayground.netlify.com/2018/01/jax2018/</link>
+      <link>https://shirinsplayground.netlify.app/2018/01/jax2018/</link>
       <pubDate>Tue, 30 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/01/jax2018/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/01/jax2018/</guid>
       <description>I am happy to announce that on Tuesday, April 24th 2018 Uwe Friedrichsen and I will give a talk about Deep Learning - a Primer at the JAX conference in Mainz, Germany.
  Deep Learning is one of the “hot” topics in the AI area – a lot of hype, a lot of inflated expectation, but also quite some impressive success stories. As some AI experts already predict that Deep Learning will become “Software 2.</description>
     </item>

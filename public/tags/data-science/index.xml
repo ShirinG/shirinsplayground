@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>data science on Shirin&#39;s playgRound</title>
-    <link>https://shirinsplayground.netlify.com/tags/data-science/</link>
+    <link>https://shirinsplayground.netlify.app/tags/data-science/</link>
     <description>Recent content in data science on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 07 Jan 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/tags/data-science/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 07 Jan 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.app/tags/data-science/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>February 21st &amp; 22nd: End-2-End from a Keras/TensorFlow model to production</title>
-      <link>https://shirinsplayground.netlify.com/2019/01/end2end_ws_berlin_feb19/</link>
+      <link>https://shirinsplayground.netlify.app/2019/01/end2end_ws_berlin_feb19/</link>
       <pubDate>Mon, 07 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2019/01/end2end_ws_berlin_feb19/</guid>
+      <guid>https://shirinsplayground.netlify.app/2019/01/end2end_ws_berlin_feb19/</guid>
       <description>Registration is now open for my 1.5-day workshop on how to develop end-2-end from a Keras/TensorFlow model to production.
 It will take place on February 21st &amp;amp; 22nd in Berlin, Germany. The workshop will cost 950.00 Euro + MwST. We will start at 9 am on Thursday and finish around 3 pm on Friday.
 Please register by sending an email to shirin.glander@gmail.com with the following information:
@@ -21,10 +21,10 @@ Please register by sending an email to shirin.glander@gmail.com with the followi
     
     <item>
       <title>November 8th &amp; 9th in Munich: Workshop on Deep Learning with Keras and TensorFlow in R</title>
-      <link>https://shirinsplayground.netlify.com/2018/09/deep_learning_keras_tensorflow_18_09/</link>
+      <link>https://shirinsplayground.netlify.app/2018/09/deep_learning_keras_tensorflow_18_09/</link>
       <pubDate>Wed, 19 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/09/deep_learning_keras_tensorflow_18_09/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/09/deep_learning_keras_tensorflow_18_09/</guid>
       <description>Registration is now open for my 1.5-day workshop on deep learning with Keras and TensorFlow using R.
 It will take place on November 8th &amp;amp; 9th in Munich, Germany.
 
@@ -35,10 +35,10 @@ You can read about one participant’s experience in my workshop:
     
     <item>
       <title>July 5th &amp; 6th in Münster: Workshop on Deep Learning with Keras and TensorFlow in R</title>
-      <link>https://shirinsplayground.netlify.com/2018/05/deep_learning_keras_tensorflow_18_07/</link>
+      <link>https://shirinsplayground.netlify.app/2018/05/deep_learning_keras_tensorflow_18_07/</link>
       <pubDate>Tue, 22 May 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/05/deep_learning_keras_tensorflow_18_07/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/05/deep_learning_keras_tensorflow_18_07/</guid>
       <description>Registration is now open for my 1.5-day workshop on deep learning with Keras and TensorFlow using R.
 It will take place on July 5th &amp;amp; 6th in Münster, Germany.
 
@@ -49,10 +49,10 @@ You can read about one participant’s experience in my last workshop:
     
     <item>
       <title>April 12th &amp; 13th in Hamburg: Workshop on Deep Learning with Keras and TensorFlow in R</title>
-      <link>https://shirinsplayground.netlify.com/2018/02/deep_learning_keras_tensorflow_18_04/</link>
+      <link>https://shirinsplayground.netlify.app/2018/02/deep_learning_keras_tensorflow_18_04/</link>
       <pubDate>Tue, 06 Feb 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/02/deep_learning_keras_tensorflow_18_04/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/02/deep_learning_keras_tensorflow_18_04/</guid>
       <description>Registration is now open for my 1.5-day workshop on deep learning with Keras and TensorFlow using R.
 It will take place on April 12th and 13th in Hamburg, Germany.
 You can read about one participant’s experience in my last workshop:
@@ -61,20 +61,20 @@ You can read about one participant’s experience in my last workshop:
     
     <item>
       <title>Looking beyond accuracy to improve trust in machine learning</title>
-      <link>https://shirinsplayground.netlify.com/2018/01/looking_beyond_accuracy_to_improve_trust_in_ml/</link>
+      <link>https://shirinsplayground.netlify.app/2018/01/looking_beyond_accuracy_to_improve_trust_in_ml/</link>
       <pubDate>Wed, 10 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/01/looking_beyond_accuracy_to_improve_trust_in_ml/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/01/looking_beyond_accuracy_to_improve_trust_in_ml/</guid>
       <description>I have written another blogpost about Looking beyond accuracy to improve trust in machine learning at my company codecentric&amp;rsquo;s blog:
  Traditional machine learning workflows focus heavily on model training and optimization; the best model is usually chosen via performance measures like accuracy or error and we tend to assume that a model is good enough for deployment if it passes certain thresholds of these performance criteria. Why a model makes the predictions it makes, however, is generally neglected.</description>
     </item>
     
     <item>
       <title>Registration now open for workshop on Deep Learning with Keras and TensorFlow using R</title>
-      <link>https://shirinsplayground.netlify.com/2017/12/keras_sketchnotes/</link>
+      <link>https://shirinsplayground.netlify.app/2017/12/keras_sketchnotes/</link>
       <pubDate>Wed, 20 Dec 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2017/12/keras_sketchnotes/</guid>
+      <guid>https://shirinsplayground.netlify.app/2017/12/keras_sketchnotes/</guid>
       <description>Recently, I announced my workshop on Deep Learning with Keras and TensorFlow.
 The next dates for it are January 18th and 19th in Solingen, Germany.
 You can register now by following this link: https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow
@@ -85,10 +85,10 @@ As a little bonus, I am also sharing my sketch notes from a Podcast I listened t
     
     <item>
       <title>Explaining Predictions of Machine Learning Models with LIME - Münster Data Science Meetup</title>
-      <link>https://shirinsplayground.netlify.com/2017/12/lime_sketchnotes/</link>
+      <link>https://shirinsplayground.netlify.app/2017/12/lime_sketchnotes/</link>
       <pubDate>Tue, 12 Dec 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2017/12/lime_sketchnotes/</guid>
+      <guid>https://shirinsplayground.netlify.app/2017/12/lime_sketchnotes/</guid>
       <description>Slides from Münster Data Science Meetup These are my slides from the Münster Data Science Meetup on December 12th, 2017.
 knitr::include_url(&amp;quot;https://shiring.github.io/netlify_images/lime_meetup_slides_wvsh6s.pdf&amp;quot;)  
 My sketchnotes were collected from these two podcasts:
@@ -98,10 +98,10 @@ My sketchnotes were collected from these two podcasts:
     
     <item>
       <title>MICE (Multiple Imputation by Chained Equations) in R - sketchnotes from MünsteR Meetup</title>
-      <link>https://shirinsplayground.netlify.com/2017/11/mice_sketchnotes/</link>
+      <link>https://shirinsplayground.netlify.app/2017/11/mice_sketchnotes/</link>
       <pubDate>Tue, 28 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2017/11/mice_sketchnotes/</guid>
+      <guid>https://shirinsplayground.netlify.app/2017/11/mice_sketchnotes/</guid>
       <description>Last night, the MünsteR R user-group had another great meetup:
 Karin Groothuis-Oudshoorn, Assistant Professor at the University of Twente, presented her R package mice about Multivariate Imputation by Chained Equations.
 It was a very interesting talk and here are my sketchnotes that I took during it:
@@ -112,10 +112,10 @@ MICE talk sketchnotes
     
     <item>
       <title>Workshop on Deep Learning with Keras and TensorFlow in R</title>
-      <link>https://shirinsplayground.netlify.com/2017/11/deep_learning_keras_tensorflow/</link>
+      <link>https://shirinsplayground.netlify.app/2017/11/deep_learning_keras_tensorflow/</link>
       <pubDate>Mon, 20 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2017/11/deep_learning_keras_tensorflow/</guid>
+      <guid>https://shirinsplayground.netlify.app/2017/11/deep_learning_keras_tensorflow/</guid>
       <description>You can now book me and my 1-day workshop on deep learning with Keras and TensorFlow using R.
 In my workshop, you will learn
  the basics of deep learning what cross-entropy and loss is about activation functions how to optimize weights and biases with backpropagation and gradient descent how to build (deep) neural networks with Keras and TensorFlow how to save and load models and model weights how to visualize models with TensorBoard how to make predictions on test data  Date and place depend on who and how many people are interested, so please contact me either directly or via the workshop page: https://www.</description>
@@ -123,30 +123,30 @@ In my workshop, you will learn
     
     <item>
       <title>How to combine point and boxplots in timeline charts with ggplot2 facets</title>
-      <link>https://shirinsplayground.netlify.com/2017/11/combine_point_boxplot_ggplot/</link>
+      <link>https://shirinsplayground.netlify.app/2017/11/combine_point_boxplot_ggplot/</link>
       <pubDate>Sat, 18 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2017/11/combine_point_boxplot_ggplot/</guid>
+      <guid>https://shirinsplayground.netlify.app/2017/11/combine_point_boxplot_ggplot/</guid>
       <description>In a recent project, I was looking to plot data from different variables along the same time axis. The difficulty was, that some of these variables I wanted to have as point plots, while others I wanted as box-plots.
 Because I work with the tidyverse, I wanted to produce these plots with ggplot2. Faceting was the obvious first step but it took me quite a while to figure out how to best combine facets with point plots (where I have one value per time point) with and box-plots (where I have multiple values per time point).</description>
     </item>
     
     <item>
       <title>Explore Predictive Maintenance with flexdashboard</title>
-      <link>https://shirinsplayground.netlify.com/2017/11/predictive_maintenance_dashboard/</link>
+      <link>https://shirinsplayground.netlify.app/2017/11/predictive_maintenance_dashboard/</link>
       <pubDate>Thu, 02 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2017/11/predictive_maintenance_dashboard/</guid>
+      <guid>https://shirinsplayground.netlify.app/2017/11/predictive_maintenance_dashboard/</guid>
       <description>I have written the following post about Predictive Maintenance and flexdashboard at my company codecentric’s blog:
  Predictive Maintenance is an increasingly popular strategy associated with Industry 4.0; it uses advanced analytics and machine learning to optimize machine costs and output (see Google Trends plot below). A common use-case for Predictive Maintenance is to proactively monitor machines, so as to predict when a check-up is needed to reduce failure and maximize performance.</description>
     </item>
     
     <item>
       <title>Blockchain &amp; distributed ML - my report from the data2day conference</title>
-      <link>https://shirinsplayground.netlify.com/2017/09/data2day/</link>
+      <link>https://shirinsplayground.netlify.app/2017/09/data2day/</link>
       <pubDate>Thu, 28 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2017/09/data2day/</guid>
+      <guid>https://shirinsplayground.netlify.app/2017/09/data2day/</guid>
       <description>Yesterday and today I attended the data2day, a conference about Big Data, Machine Learning and Data Science in Heidelberg, Germany. Topics and workshops covered a range of topics surrounding (big) data analysis and Machine Learning, like Deep Learning, Reinforcement Learning, TensorFlow applications, etc. Distributed systems and scalability were a major part of a lot of the talks as well, reflecting the growing desire to build bigger and more complex models that can’t (or would take too long to) run on a single computer.</description>
     </item>
     

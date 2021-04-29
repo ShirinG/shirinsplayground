@@ -41,8 +41,9 @@
         }
     }
     // Used to animate the sidebar (pushed effect)
+    @include prefix(transition, 'margin-left 0.5s', 'webkit' 'moz');
     &.pushed {
-        @include prefix(transform, translate3d(#{map-get($sidebar, md-screen-width)}, 0, 0), 'webkit' 'moz');
+        margin-left: #{map-get($sidebar, md-screen-width)};
     }
 }
 
@@ -52,7 +53,7 @@
 
     // Author information
     .sidebar-profile {
-        // height:         200px;
+        height:         130px;
         padding-top:    40px;
         padding-bottom: 7.5px;
 
@@ -103,8 +104,9 @@
         }
     }
     // Used to animate the sidebar (pushed effect)
+    @include prefix(transition, 'margin-left 0.5s', 'webkit' 'moz');
     &.pushed {
-        @include prefix(transform, translate3d(#{map-get($sidebar, lg-screen-width)}, 0, 0), 'webkit' 'moz');
+        margin-left: #{map-get($sidebar, lg-screen-width)};
     }
 }
 
@@ -194,7 +196,8 @@
         }
     }
     // Used to animate the sidebar (pushed effect)
+    @include prefix(transition, 'width 0.5s, margin-left 0.5s', 'webkit' 'moz');
     &.pushed {
-        @include prefix(transform, translate3d(#{map-get($sidebar, xlg-screen-width)}, 0, 0), 'webkit' 'moz');
+        margin-left: #{map-get($sidebar, xlg-screen-width)};
     }
 }

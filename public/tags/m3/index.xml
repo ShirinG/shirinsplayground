@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>m3 on Shirin&#39;s playgRound</title>
-    <link>https://shirinsplayground.netlify.com/tags/m3/</link>
+    <link>https://shirinsplayground.netlify.app/tags/m3/</link>
     <description>Recent content in m3 on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 01 Feb 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/tags/m3/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 01 Feb 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.app/tags/m3/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Announcing my talk about explainability of machine learning models at Minds Mastering Machines conference</title>
-      <link>https://shirinsplayground.netlify.com/2018/02/m3_2018/</link>
+      <link>https://shirinsplayground.netlify.app/2018/02/m3_2018/</link>
       <pubDate>Thu, 01 Feb 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/02/m3_2018/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/02/m3_2018/</guid>
       <description>On Wednesday, April 25th 2018 I am going to talk about explainability of machine learning models at the Minds Mastering Machines conference in Cologne. The conference will be in German, though.
   ERKLÄRBARKEIT VON MACHINE LEARNING: WIE KÖNNEN WIR VERTRAUEN IN KOMPLEXE MODELLE SCHAFFEN?
   Mit Machine-Learning getroffene Entscheidungen sind inhärent schwierig – wenn nicht gar unmöglich – nachzuvollziehen. Die Komplexität einiger der besten Modelle, wie Neuronale Netzwerke, ist genau das, was sie so erfolgreich macht.</description>

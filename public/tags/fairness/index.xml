@@ -2,27 +2,27 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>fairness on Shirin&#39;s playgRound</title>
-    <link>https://shirinsplayground.netlify.com/tags/fairness/</link>
+    <link>https://shirinsplayground.netlify.app/tags/fairness/</link>
     <description>Recent content in fairness on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Jan 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/tags/fairness/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 10 Jan 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.app/tags/fairness/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Looking beyond accuracy to improve trust in machine learning</title>
-      <link>https://shirinsplayground.netlify.com/2018/01/looking_beyond_accuracy_to_improve_trust_in_ml/</link>
+      <link>https://shirinsplayground.netlify.app/2018/01/looking_beyond_accuracy_to_improve_trust_in_ml/</link>
       <pubDate>Wed, 10 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/01/looking_beyond_accuracy_to_improve_trust_in_ml/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/01/looking_beyond_accuracy_to_improve_trust_in_ml/</guid>
       <description>I have written another blogpost about Looking beyond accuracy to improve trust in machine learning at my company codecentric&amp;rsquo;s blog:
  Traditional machine learning workflows focus heavily on model training and optimization; the best model is usually chosen via performance measures like accuracy or error and we tend to assume that a model is good enough for deployment if it passes certain thresholds of these performance criteria. Why a model makes the predictions it makes, however, is generally neglected.</description>
     </item>
     
     <item>
       <title>TWiMLAI talk 88 sketchnotes: Using Deep Learning and Google Street View to Estimate Demographics with Timnit Gebru</title>
-      <link>https://shirinsplayground.netlify.com/2018/01/twimlai88_sketchnotes/</link>
+      <link>https://shirinsplayground.netlify.app/2018/01/twimlai88_sketchnotes/</link>
       <pubDate>Wed, 10 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/01/twimlai88_sketchnotes/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/01/twimlai88_sketchnotes/</guid>
       <description> These are my sketchnotes taken from the “This week in Machine Learning &amp;amp; AI” podcast number 88 about Using Deep Learning and Google Street View to Estimate Demographics with Timnit Gebru:
 Sketchnotes from TWiMLAI talk #88: Using Deep Learning and Google Street View to Estimate Demographics with Timnit Gebru
  </description>

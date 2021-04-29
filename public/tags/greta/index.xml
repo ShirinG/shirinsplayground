@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>greta on Shirin&#39;s playgRound</title>
-    <link>https://shirinsplayground.netlify.com/tags/greta/</link>
+    <link>https://shirinsplayground.netlify.app/tags/greta/</link>
     <description>Recent content in greta on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 30 May 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/tags/greta/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 30 May 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.app/tags/greta/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>rOpenSci unconference 2018 &#43; introduction to TensorFlow Probability &amp; the &#39;greta&#39; package</title>
-      <link>https://shirinsplayground.netlify.com/2018/05/ropensci_unconf18/</link>
+      <link>https://shirinsplayground.netlify.app/2018/05/ropensci_unconf18/</link>
       <pubDate>Wed, 30 May 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/05/ropensci_unconf18/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/05/ropensci_unconf18/</guid>
       <description>On May 21st and 22nd, I had the honor of having been chosen to attend the rOpenSci unconference 2018 in Seattle. It was a great event and I got to meet many amazing people!
 rOpenSci rOpenSci is a non-profit organisation that maintains a number of widely used R packages and is very active in promoting a community spirit around the R-world. Their core values are to have open and reproducible research, shared data and easy-to-use tools and to make all this accessible to a large number of people.</description>
     </item>

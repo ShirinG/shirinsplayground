@@ -1,16 +1,38 @@
-{{ if not (eq .Params.showActions false) }}
-  <div class="post-actions-wrap">
+<div class="post-actions-wrap">
+  {{ if not (eq .Params.showActions false) }}
       <nav {{ if eq .Params.showPagination false }}style="visibility: hidden"{{ end }}>
         <ul class="post-actions post-action-nav">
+          {{ if .Site.Params.swapPaginator }}
+            <li class="post-action">
+              {{ with .PrevInSection }}
+                <a class="post-action-btn btn btn--default tooltip--top" href="{{ .RelPermalink }}" data-tooltip="{{ .Title }}">
+              {{ else }}
+                <a class="post-action-btn btn btn--disabled">
+              {{ end }}
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">{{ i18n "pagination.previous" }}</span>
+                </a>
+            </li>
             <li class="post-action">
               {{ with .NextInSection }}
                 <a class="post-action-btn btn btn--default tooltip--top" href="{{ .RelPermalink }}" data-tooltip="{{ .Title }}">
               {{ else }}
                 <a class="post-action-btn btn btn--disabled">
               {{ end }}
-                <i class="fa fa-angle-left"></i>
-                <span class="hide-xs hide-sm text-small icon-ml">{{ i18n "pagination.next" }}</span>
-              </a>
+                  <span class="hide-xs hide-sm text-small icon-mr">{{ i18n "pagination.next" }}</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          {{ else }}
+            <li class="post-action">
+              {{ with .NextInSection }}
+                <a class="post-action-btn btn btn--default tooltip--top" href="{{ .RelPermalink }}" data-tooltip="{{ .Title }}">
+              {{ else }}
+                <a class="post-action-btn btn btn--disabled">
+              {{ end }}
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">{{ i18n "pagination.next" }}</span>
+                </a>
             </li>
             <li class="post-action">
               {{ with .PrevInSection }}
@@ -18,10 +40,11 @@
               {{ else }}
                 <a class="post-action-btn btn btn--disabled">
               {{ end }}
-                <span class="hide-xs hide-sm text-small icon-mr">{{ i18n "pagination.previous" }}</span>
-                <i class="fa fa-angle-right"></i>
-              </a>
+                  <span class="hide-xs hide-sm text-small icon-mr">{{ i18n "pagination.previous" }}</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
             </li>
+          {{ end }}
         </ul>
       </nav>
     <ul class="post-actions post-action-share" >
@@ -56,5 +79,5 @@
         </a>
       </li>
     </ul>
-  </div>
-{{ end }}
+  {{ end }}
+</div>

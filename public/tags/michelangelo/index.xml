@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>michelangelo on Shirin&#39;s playgRound</title>
-    <link>https://shirinsplayground.netlify.com/tags/michelangelo/</link>
+    <link>https://shirinsplayground.netlify.app/tags/michelangelo/</link>
     <description>Recent content in michelangelo on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 07 Mar 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/tags/michelangelo/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 07 Mar 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.app/tags/michelangelo/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Sketchnotes from TWiML&amp;AI #115: Scaling Machine Learning at Uber with Mike Del Balso</title>
-      <link>https://shirinsplayground.netlify.com/2018/03/twimlai115/</link>
+      <link>https://shirinsplayground.netlify.app/2018/03/twimlai115/</link>
       <pubDate>Wed, 07 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/03/twimlai115/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/03/twimlai115/</guid>
       <description>These are my sketchnotes for Sam Charrington’s podcast This Week in Machine Learning and AI about Scaling Machine Learning at Uber with Mike Del Balso:
 Sketchnotes from TWiMLAI talk #115: Scaling Machine Learning at Uber with Mike Del Balso
  You can listen to the podcast here.

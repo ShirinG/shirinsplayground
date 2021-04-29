@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>h2o on Shirin&#39;s playgRound</title>
-    <link>https://shirinsplayground.netlify.com/tags/h2o/</link>
+    <link>https://shirinsplayground.netlify.app/tags/h2o/</link>
     <description>Recent content in h2o on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 17 Jan 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/tags/h2o/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 17 Jan 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.app/tags/h2o/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>My course on Hyperparameter Tuning in R is now on Data Camp!</title>
-      <link>https://shirinsplayground.netlify.com/2019/01/data_camp_hyperparameter_tuning/</link>
+      <link>https://shirinsplayground.netlify.app/2019/01/data_camp_hyperparameter_tuning/</link>
       <pubDate>Thu, 17 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2019/01/data_camp_hyperparameter_tuning/</guid>
+      <guid>https://shirinsplayground.netlify.app/2019/01/data_camp_hyperparameter_tuning/</guid>
       <description>UPDATE: Before you take this course please consider the info about the sexual harrassment scandal surrounding DataCamp!
 
 I am very happy to announce that (after many months) my interactive course on Hyperparameter Tuning in R has now been officially launched on Data Camp!
@@ -22,10 +22,10 @@ I am very happy to announce that (after many months) my interactive course on Hy
     
     <item>
       <title>Code for Workshop: Introduction to Machine Learning with R</title>
-      <link>https://shirinsplayground.netlify.com/2018/06/intro_to_ml_workshop_heidelberg/</link>
+      <link>https://shirinsplayground.netlify.app/2018/06/intro_to_ml_workshop_heidelberg/</link>
       <pubDate>Fri, 29 Jun 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/06/intro_to_ml_workshop_heidelberg/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/06/intro_to_ml_workshop_heidelberg/</guid>
       <description>These are the slides from my workshop: Introduction to Machine Learning with R which I gave at the University of Heidelberg, Germany on June 28th 2018. The entire code accompanying the workshop can be found below the video.
 The workshop covered the basics of machine learning. With an example dataset I went through a standard machine learning workflow in R with the packages caret and h2o:
  reading in data exploratory data analysis missingness feature engineering training and test split model training with Random Forests, Gradient Boosting, Neural Nets, etc.</description>
@@ -33,10 +33,10 @@ The workshop covered the basics of machine learning. With an example dataset I w
     
     <item>
       <title>Data Science for Fraud Detection</title>
-      <link>https://shirinsplayground.netlify.com/2017/09/data-science-fraud-detection/</link>
+      <link>https://shirinsplayground.netlify.app/2017/09/data-science-fraud-detection/</link>
       <pubDate>Wed, 06 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2017/09/data-science-fraud-detection/</guid>
+      <guid>https://shirinsplayground.netlify.app/2017/09/data-science-fraud-detection/</guid>
       <description>I have written the following post about Data Science for Fraud Detection at my company codecentric&amp;rsquo;s blog:
  Fraud can be defined as “the crime of getting money by deceiving people” (Cambridge Dictionary); it is as old as humanity: whenever two parties exchange goods or conduct business there is the potential for one party scamming the other. With an ever increasing use of the internet for shopping, banking, filing insurance claims, etc.</description>
     </item>

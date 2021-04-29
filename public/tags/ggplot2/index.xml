@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>ggplot2 on Shirin&#39;s playgRound</title>
-    <link>https://shirinsplayground.netlify.com/tags/ggplot2/</link>
+    <link>https://shirinsplayground.netlify.app/tags/ggplot2/</link>
     <description>Recent content in ggplot2 on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 27 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/tags/ggplot2/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 27 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.app/tags/ggplot2/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>The Good, the Bad and the Ugly: how to visualize Machine Learning data</title>
-      <link>https://shirinsplayground.netlify.com/2021/04/goodbadugly_ml/</link>
+      <link>https://shirinsplayground.netlify.app/2021/04/goodbadugly_ml/</link>
       <pubDate>Tue, 27 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2021/04/goodbadugly_ml/</guid>
+      <guid>https://shirinsplayground.netlify.app/2021/04/goodbadugly_ml/</guid>
       <description>Below you’ll find the complete code and resources used to create the graphs in my talk The Good, the Bad and the Ugly: how to visualize Machine Learning data at this year’s Minds Mastering machines conference. You can find the German slides here:
  You can find Part 1: The Good, the Bad and the Ugly: how (not) to visualize data here.
 If you have questions or would like to talk about this article (or something else data-related), you can now book 15-minute timeslots with me (it’s free - one slot available per weekday):</description>
@@ -20,10 +20,10 @@ If you have questions or would like to talk about this article (or something els
     
     <item>
       <title>k-Means 101: An introductory guide to k-Means clustering in R</title>
-      <link>https://shirinsplayground.netlify.com/2021/03/kmeans_101/</link>
+      <link>https://shirinsplayground.netlify.app/2021/03/kmeans_101/</link>
       <pubDate>Sun, 14 Mar 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2021/03/kmeans_101/</guid>
+      <guid>https://shirinsplayground.netlify.app/2021/03/kmeans_101/</guid>
       <description>Editor’s note: This is a guest post by Nathaniel Schmucker. He is the founder of The Analyst Code, a blog that provides tools to instill a love of data in individuals of all backgrounds and to empower aspiring analysts.
 Introduction In this post, we will look at:
  What is a k-Means analysis? How does the k-Means algorithm work? How do we implement k-Means in R?</description>
@@ -31,10 +31,10 @@ Introduction In this post, we will look at:
     
     <item>
       <title>The Good, the Bad and the Ugly: how (not) to visualize data</title>
-      <link>https://shirinsplayground.netlify.com/2020/10/goodbadugly/</link>
+      <link>https://shirinsplayground.netlify.app/2020/10/goodbadugly/</link>
       <pubDate>Tue, 20 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2020/10/goodbadugly/</guid>
+      <guid>https://shirinsplayground.netlify.app/2020/10/goodbadugly/</guid>
       <description>Below you’ll find the complete code used to create the ggplot2 graphs in my talk The Good, the Bad and the Ugly: how (not) to visualize data at this year’s data2day conference. You can find the German slides here:
  You can also find a German blog article accompanying my talk on codecentric’s blog.
 If you have questions or would like to talk about this article (or something else data-related), you can now book 15-minute timeslots with me (it’s free - one slot available per weekday):</description>
@@ -42,10 +42,10 @@ If you have questions or would like to talk about this article (or something els
     
     <item>
       <title>How to combine point and boxplots in timeline charts with ggplot2 facets</title>
-      <link>https://shirinsplayground.netlify.com/2017/11/combine_point_boxplot_ggplot/</link>
+      <link>https://shirinsplayground.netlify.app/2017/11/combine_point_boxplot_ggplot/</link>
       <pubDate>Sat, 18 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2017/11/combine_point_boxplot_ggplot/</guid>
+      <guid>https://shirinsplayground.netlify.app/2017/11/combine_point_boxplot_ggplot/</guid>
       <description>In a recent project, I was looking to plot data from different variables along the same time axis. The difficulty was, that some of these variables I wanted to have as point plots, while others I wanted as box-plots.
 Because I work with the tidyverse, I wanted to produce these plots with ggplot2. Faceting was the obvious first step but it took me quite a while to figure out how to best combine facets with point plots (where I have one value per time point) with and box-plots (where I have multiple values per time point).</description>
     </item>

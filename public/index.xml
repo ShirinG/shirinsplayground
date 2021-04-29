@@ -1,25 +1,25 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Shirin&#39;s playgRound</title>
-  <link href="https://shirinsplayground.netlify.com/index.xml" rel="self"/>
-  <link href="https://shirinsplayground.netlify.com/"/>
+  <link href="https://shirinsplayground.netlify.app/index.xml" rel="self"/>
+  <link href="https://shirinsplayground.netlify.app/"/>
   <updated>2021-04-27T00:00:00+00:00</updated>
-  <id>https://shirinsplayground.netlify.com/</id>
+  <id>https://shirinsplayground.netlify.app/</id>
   <author>
     <name>Dr. Shirin Elsinghorst</name>
   </author>
   <generator>Hugo -- gohugo.io</generator>
   <entry>
     <title type="html"><![CDATA[Posts]]></title>
-    <link href="https://shirinsplayground.netlify.com/post/"/>
-    <id>https://shirinsplayground.netlify.com/post/</id>
+    <link href="https://shirinsplayground.netlify.app/post/"/>
+    <id>https://shirinsplayground.netlify.app/post/</id>
     <published>2021-04-27T00:00:00+00:00</published>
     <updated>2021-04-27T00:00:00+00:00</updated>
     <content type="html"><![CDATA[]]></content>
   </entry>
   <entry>
     <title type="html"><![CDATA[Pages]]></title>
-    <link href="https://shirinsplayground.netlify.com/page/"/>
-    <id>https://shirinsplayground.netlify.com/page/</id>
+    <link href="https://shirinsplayground.netlify.app/page/"/>
+    <id>https://shirinsplayground.netlify.app/page/</id>
     <published>2020-09-27T00:00:00+00:00</published>
     <updated>2020-09-27T00:00:00+00:00</updated>
     <content type="html"><![CDATA[]]></content>

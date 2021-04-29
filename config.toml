@@ -175,6 +175,10 @@ canonifyurls = true
 
   # Global keywords configuration. Following keywords will be add to every pages
   keywords = ["R"]
+  
+  # Syntax highlighter, possible choice between: "highlight.js" (recommanded) and "prism.js" (experimental)
+  # You can comment it to disable syntax highlighting
+  syntaxHighlighter = "highlight.js"
 
   # Hide sidebar on all article page to let article take full width to improve reading, and enjoy wide images and cover images. (true: enable, false: disable)
   clearReading = true
@@ -206,7 +210,7 @@ canonifyurls = true
   # Current image is on AWS S3 and delivered by AWS CloudFront.
   # Otherwise put your image in folder `static/_images/` (development)  or in `source/assets/images/` if you can't or don't want to build the theme,
   # and use relative url : `your-image.png`
-  coverImage = "autumn-2789234_1920.jpg"
+  coverImage = "images/autumn-2789234_1920.jpg"
 
   # Display an image gallery at the end of a post which have photos variables (false: disabled, true: enabled)
   imageGallery = true
@@ -232,6 +236,10 @@ canonifyurls = true
   #     url: /#search
   #     icon: search
   #     class: st-search-show-outputs
+  
+  # Display `Next` on left side of the pagination, and `Prev` on right side one.
+  # If you set this value to `true`, these positions swap.
+  # swapPaginator = true
 
   # Custom CSS. Put here your custom CSS files. They are loaded after the theme CSS;
   # they have to be referred from static root. Example
@@ -274,7 +282,7 @@ canonifyurls = true
 
   # Customize copyright value "© 2017 Shirin Elsinghorst. All Rights Reserved"
    [params.footer]
-     copyright = "<a href='https://shirin-elsinghorst.appointlet.com/s/15-minute-intro'>Dr. Shirin Elsinghorst</a>"
+     copyright = "<a href='https://github.com/ShirinG/'>Dr. Shirin Elsinghorst</a>"
 
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$", "^Thumbs\\.db$"]
 

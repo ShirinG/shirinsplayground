@@ -2,9 +2,9 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Archives on Shirin&#39;s playgRound</title>
-    <link>https://shirinsplayground.netlify.com/archives/</link>
+    <link>https://shirinsplayground.netlify.app/archives/</link>
     <description>Recent content in Archives on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="https://shirinsplayground.netlify.com/archives/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language><atom:link href="https://shirinsplayground.netlify.app/archives/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>case studies on Shirin&#39;s playgRound</title>
-    <link>https://shirinsplayground.netlify.com/tags/case-studies/</link>
+    <link>https://shirinsplayground.netlify.app/tags/case-studies/</link>
     <description>Recent content in case studies on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 16 Jan 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/tags/case-studies/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 16 Jan 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.app/tags/case-studies/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Lecture slides: Real-World Data Science (Fraud Detection, Customer Churn &amp; Predictive Maintenance)</title>
-      <link>https://shirinsplayground.netlify.com/2019/01/lecture_slides_real_world_ds/</link>
+      <link>https://shirinsplayground.netlify.app/2019/01/lecture_slides_real_world_ds/</link>
       <pubDate>Wed, 16 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2019/01/lecture_slides_real_world_ds/</guid>
+      <guid>https://shirinsplayground.netlify.app/2019/01/lecture_slides_real_world_ds/</guid>
       <description>These are slides from a lecture I gave at the School of Applied Sciences in Münster. In this lecture, I talked about Real-World Data Science and showed examples on Fraud Detection, Customer Churn &amp;amp; Predictive Maintenance.
 
   Real-World Data Science (Fraud Detection, Customer Churn &amp;amp; Predictive Maintenance)  von Shirin Glander  The slides were created with xaringan.</description>

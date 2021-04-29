@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>hyperparameter tuning on Shirin&#39;s playgRound</title>
-    <link>https://shirinsplayground.netlify.com/tags/hyperparameter-tuning/</link>
+    <link>https://shirinsplayground.netlify.app/tags/hyperparameter-tuning/</link>
     <description>Recent content in hyperparameter tuning on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 17 Jan 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/tags/hyperparameter-tuning/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 17 Jan 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.app/tags/hyperparameter-tuning/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>My course on Hyperparameter Tuning in R is now on Data Camp!</title>
-      <link>https://shirinsplayground.netlify.com/2019/01/data_camp_hyperparameter_tuning/</link>
+      <link>https://shirinsplayground.netlify.app/2019/01/data_camp_hyperparameter_tuning/</link>
       <pubDate>Thu, 17 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2019/01/data_camp_hyperparameter_tuning/</guid>
+      <guid>https://shirinsplayground.netlify.app/2019/01/data_camp_hyperparameter_tuning/</guid>
       <description>UPDATE: Before you take this course please consider the info about the sexual harrassment scandal surrounding DataCamp!
 
 I am very happy to announce that (after many months) my interactive course on Hyperparameter Tuning in R has now been officially launched on Data Camp!

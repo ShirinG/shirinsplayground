@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>LIME on Shirin&#39;s playgRound</title>
-    <link>https://shirinsplayground.netlify.com/tags/lime/</link>
+    <link>https://shirinsplayground.netlify.app/tags/lime/</link>
     <description>Recent content in LIME on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 06 Dec 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/tags/lime/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 06 Dec 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.app/tags/lime/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Trust in ML models. Slides from TWiML &amp; AI EMEA Meetup &#43; iX Articles</title>
-      <link>https://shirinsplayground.netlify.com/2018/12/trust_in_ml_slides_ix/</link>
+      <link>https://shirinsplayground.netlify.app/2018/12/trust_in_ml_slides_ix/</link>
       <pubDate>Thu, 06 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/12/trust_in_ml_slides_ix/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/12/trust_in_ml_slides_ix/</guid>
       <description>Update: There is now a recording of the meetup up on YouTube.
  Here you find my slides the TWiML &amp;amp; AI EMEA Meetup about Trust in ML models, where I presented the Anchors paper by Carlos Guestrin et al..
   I have also just written two articles for the German IT magazin iX about the same topic of Explaining Black-Box Machine Learning Models:
@@ -21,20 +21,20 @@
     
     <item>
       <title>Slides from my talk at the R-Ladies Meetup about Interpretable Deep Learning with R, Keras and LIME</title>
-      <link>https://shirinsplayground.netlify.com/2018/10/rladieslondon_slides/</link>
+      <link>https://shirinsplayground.netlify.app/2018/10/rladieslondon_slides/</link>
       <pubDate>Wed, 17 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/10/rladieslondon_slides/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/10/rladieslondon_slides/</guid>
       <description>During my stay in London for the m3 conference, I also gave a talk at the R-Ladies London Meetup on Tuesday, October 16th, about one of my favorite topics: Interpretable Deep Learning with R, Keras and LIME.
  Keras is a high-level open-source deep learning framework that by default works on top of TensorFlow. Keras is minimalistic, efficient and highly flexible because it works with a modular layer system to define, compile and fit neural networks.</description>
     </item>
     
     <item>
       <title>Sketchnotes from TWiML&amp;AI: Evaluating Model Explainability Methods with Sara Hooker</title>
-      <link>https://shirinsplayground.netlify.com/2018/10/twimlai189/</link>
+      <link>https://shirinsplayground.netlify.app/2018/10/twimlai189/</link>
       <pubDate>Fri, 12 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/10/twimlai189/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/10/twimlai189/</guid>
       <description>These are my sketchnotes for Sam Charrington’s podcast This Week in Machine Learning and AI about Evaluating Model Explainability Methods with Sara Hooker:
 Sketchnotes from TWiMLAI talk: Evaluating Model Explainability Methods with Sara Hooker
  You can listen to the podcast here.
@@ -43,10 +43,10 @@ Sketchnotes from TWiMLAI talk: Evaluating Model Explainability Methods with Sara
     
     <item>
       <title>Slides from talk: &#39;Decoding The Black Box&#39; at the Frankfurt Data Science Meetup</title>
-      <link>https://shirinsplayground.netlify.com/2018/09/ffm_datascience_meetup_slides/</link>
+      <link>https://shirinsplayground.netlify.app/2018/09/ffm_datascience_meetup_slides/</link>
       <pubDate>Thu, 27 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/09/ffm_datascience_meetup_slides/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/09/ffm_datascience_meetup_slides/</guid>
       <description>On Wednesday, September 26th, I gave a talk about ‘Decoding The Black Box’ at the Frankfurt Data Science Meetup.
 My slides were created with beautiful.ai and can be found here.
    DECODING THE BLACK BOX
@@ -55,10 +55,10 @@ My slides were created with beautiful.ai and can be found here.
     
     <item>
       <title>I&#39;ll be talking about &#39;Decoding The Black Box&#39; at the Frankfurt Data Science Meetup</title>
-      <link>https://shirinsplayground.netlify.com/2018/09/ffm_datascience_meetup/</link>
+      <link>https://shirinsplayground.netlify.app/2018/09/ffm_datascience_meetup/</link>
       <pubDate>Wed, 19 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/09/ffm_datascience_meetup/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/09/ffm_datascience_meetup/</guid>
       <description>I have yet another Meetup talk to announce:
 On Wednesday, September 26th, I’ll be talking about ‘Decoding The Black Box’ at the Frankfurt Data Science Meetup.
 Particularly cool with this meetup is that they will livestream the event at www.youtube.com/c/FrankfurtDataScience!
@@ -68,10 +68,10 @@ Particularly cool with this meetup is that they will livestream the event at www
     
     <item>
       <title>I&#39;ll be talking at the R-Ladies Meetup about Interpretable Deep Learning with R, Keras and LIME</title>
-      <link>https://shirinsplayground.netlify.com/2018/09/rladieslondontalk/</link>
+      <link>https://shirinsplayground.netlify.app/2018/09/rladieslondontalk/</link>
       <pubDate>Mon, 17 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/09/rladieslondontalk/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/09/rladieslondontalk/</guid>
       <description>Today I am very happy to announce that during my stay in London for the m3 conference, I’ll also be giving a talk at the R-Ladies London Meetup on Tuesday, October 16th, about one of my favorite topics: Interpretable Deep Learning with R, Keras and LIME.
 You can register via Eventbrite: https://www.eventbrite.co.uk/e/interpretable-deep-learning-with-r-lime-and-keras-tickets-50118369392
  ABOUT THE TALK
@@ -80,10 +80,10 @@ You can register via Eventbrite: https://www.eventbrite.co.uk/e/interpretable-de
     
     <item>
       <title>Slides from my SAP webinar: Explaining Keras Image Classification Models with LIME</title>
-      <link>https://shirinsplayground.netlify.com/2018/08/sap_webinar_slides/</link>
+      <link>https://shirinsplayground.netlify.app/2018/08/sap_webinar_slides/</link>
       <pubDate>Tue, 21 Aug 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/08/sap_webinar_slides/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/08/sap_webinar_slides/</guid>
       <description>Here I am sharing the slides for a webinar I gave for SAP about Explaining Keras Image Classification Models with LIME.
 Slides can be found here: https://www.slideshare.net/ShirinGlander/sap-webinar-explaining-keras-image-classification-models-with-lime
  Keras is a high-level open-source deep learning framework that by default works on top of TensorFlow. Keras is minimalistic, efficient and highly flexible because it works with a modular layer system to define, compile and fit neural networks. It has been written in Python but can also be used from within R.</description>
@@ -91,10 +91,10 @@ Slides can be found here: https://www.slideshare.net/ShirinGlander/sap-webinar-e
     
     <item>
       <title>Explaining Black-Box Machine Learning Models - Code Part 2: Text classification with LIME</title>
-      <link>https://shirinsplayground.netlify.com/2018/07/explaining_ml_models_code_text_lime/</link>
+      <link>https://shirinsplayground.netlify.app/2018/07/explaining_ml_models_code_text_lime/</link>
       <pubDate>Thu, 26 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/07/explaining_ml_models_code_text_lime/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/07/explaining_ml_models_code_text_lime/</guid>
       <description>This is code that will encompany an article that will appear in a special edition of a German IT magazine. The article is about explaining black-box machine learning models. In that article I’m showcasing three practical examples:
 
 Explaining supervised classification models built on tabular data using caret and the iml package Explaining image classification models with keras and lime Explaining text classification models with xgboost and lime</description>
@@ -102,10 +102,10 @@ Explaining supervised classification models built on tabular data using caret an
     
     <item>
       <title>Explaining Black-Box Machine Learning Models - Code Part 1: tabular data &#43; caret &#43; iml</title>
-      <link>https://shirinsplayground.netlify.com/2018/07/explaining_ml_models_code_caret_iml/</link>
+      <link>https://shirinsplayground.netlify.app/2018/07/explaining_ml_models_code_caret_iml/</link>
       <pubDate>Fri, 20 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/07/explaining_ml_models_code_caret_iml/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/07/explaining_ml_models_code_caret_iml/</guid>
       <description>This is code that will encompany an article that will appear in a special edition of a German IT magazine. The article is about explaining black-box machine learning models. In that article I’m showcasing three practical examples:
 
 Explaining supervised classification models built on tabular data using caret and the iml package Explaining image classification models with keras and lime Explaining text classification models with xgboost and lime</description>
@@ -113,20 +113,20 @@ Explaining supervised classification models built on tabular data using caret an
     
     <item>
       <title>HH Data Science Meetup slides: Explaining complex machine learning models with LIME</title>
-      <link>https://shirinsplayground.netlify.com/2018/04/hh_datascience_meetup_2018_slides/</link>
+      <link>https://shirinsplayground.netlify.app/2018/04/hh_datascience_meetup_2018_slides/</link>
       <pubDate>Wed, 18 Apr 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/04/hh_datascience_meetup_2018_slides/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/04/hh_datascience_meetup_2018_slides/</guid>
       <description>On April 12th, 2018 I gave a talk about Explaining complex machine learning models with LIME at the Hamburg Data Science Meetup - so if you’re intersted: the slides can be found here: https://www.slideshare.net/ShirinGlander/hh-data-science-meetup-explaining-complex-machine-learning-models-with-lime-94218890
  Traditional machine learning workflows focus heavily on model training and optimization; the best model is usually chosen via performance measures like accuracy or error and we tend to assume that a model is good enough for deployment if it passes certain thresholds of these performance criteria.</description>
     </item>
     
     <item>
       <title>Announcing my talk about explainability of machine learning models at Minds Mastering Machines conference</title>
-      <link>https://shirinsplayground.netlify.com/2018/02/m3_2018/</link>
+      <link>https://shirinsplayground.netlify.app/2018/02/m3_2018/</link>
       <pubDate>Thu, 01 Feb 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/02/m3_2018/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/02/m3_2018/</guid>
       <description>On Wednesday, April 25th 2018 I am going to talk about explainability of machine learning models at the Minds Mastering Machines conference in Cologne. The conference will be in German, though.
   ERKLÄRBARKEIT VON MACHINE LEARNING: WIE KÖNNEN WIR VERTRAUEN IN KOMPLEXE MODELLE SCHAFFEN?
   Mit Machine-Learning getroffene Entscheidungen sind inhärent schwierig – wenn nicht gar unmöglich – nachzuvollziehen. Die Komplexität einiger der besten Modelle, wie Neuronale Netzwerke, ist genau das, was sie so erfolgreich macht.</description>
@@ -134,20 +134,20 @@ Explaining supervised classification models built on tabular data using caret an
     
     <item>
       <title>Looking beyond accuracy to improve trust in machine learning</title>
-      <link>https://shirinsplayground.netlify.com/2018/01/looking_beyond_accuracy_to_improve_trust_in_ml/</link>
+      <link>https://shirinsplayground.netlify.app/2018/01/looking_beyond_accuracy_to_improve_trust_in_ml/</link>
       <pubDate>Wed, 10 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/01/looking_beyond_accuracy_to_improve_trust_in_ml/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/01/looking_beyond_accuracy_to_improve_trust_in_ml/</guid>
       <description>I have written another blogpost about Looking beyond accuracy to improve trust in machine learning at my company codecentric&amp;rsquo;s blog:
  Traditional machine learning workflows focus heavily on model training and optimization; the best model is usually chosen via performance measures like accuracy or error and we tend to assume that a model is good enough for deployment if it passes certain thresholds of these performance criteria. Why a model makes the predictions it makes, however, is generally neglected.</description>
     </item>
     
     <item>
       <title>Explaining Predictions of Machine Learning Models with LIME - Münster Data Science Meetup</title>
-      <link>https://shirinsplayground.netlify.com/2017/12/lime_sketchnotes/</link>
+      <link>https://shirinsplayground.netlify.app/2017/12/lime_sketchnotes/</link>
       <pubDate>Tue, 12 Dec 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2017/12/lime_sketchnotes/</guid>
+      <guid>https://shirinsplayground.netlify.app/2017/12/lime_sketchnotes/</guid>
       <description>Slides from Münster Data Science Meetup These are my slides from the Münster Data Science Meetup on December 12th, 2017.
 knitr::include_url(&amp;quot;https://shiring.github.io/netlify_images/lime_meetup_slides_wvsh6s.pdf&amp;quot;)  
 My sketchnotes were collected from these two podcasts:

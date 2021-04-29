@@ -2,27 +2,27 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Python on Shirin&#39;s playgRound</title>
-    <link>https://shirinsplayground.netlify.com/tags/python/</link>
+    <link>https://shirinsplayground.netlify.app/tags/python/</link>
     <description>Recent content in Python on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 18 Apr 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 18 Apr 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.app/tags/python/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>HH Data Science Meetup slides: Explaining complex machine learning models with LIME</title>
-      <link>https://shirinsplayground.netlify.com/2018/04/hh_datascience_meetup_2018_slides/</link>
+      <link>https://shirinsplayground.netlify.app/2018/04/hh_datascience_meetup_2018_slides/</link>
       <pubDate>Wed, 18 Apr 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/04/hh_datascience_meetup_2018_slides/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/04/hh_datascience_meetup_2018_slides/</guid>
       <description>On April 12th, 2018 I gave a talk about Explaining complex machine learning models with LIME at the Hamburg Data Science Meetup - so if you’re intersted: the slides can be found here: https://www.slideshare.net/ShirinGlander/hh-data-science-meetup-explaining-complex-machine-learning-models-with-lime-94218890
  Traditional machine learning workflows focus heavily on model training and optimization; the best model is usually chosen via performance measures like accuracy or error and we tend to assume that a model is good enough for deployment if it passes certain thresholds of these performance criteria.</description>
     </item>
     
     <item>
       <title>Meetup slides: Introducing Deep Learning with Keras</title>
-      <link>https://shirinsplayground.netlify.com/2018/04/ruhrpy_meetup_2018_slides/</link>
+      <link>https://shirinsplayground.netlify.app/2018/04/ruhrpy_meetup_2018_slides/</link>
       <pubDate>Wed, 11 Apr 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/04/ruhrpy_meetup_2018_slides/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/04/ruhrpy_meetup_2018_slides/</guid>
       <description>On April 4th, 2018 I gave a talk about Deep Learning with Keras at the Ruhr.Py Meetup in Essen, Germany. The talk was not specific to Python, though - so if you’re intersted: the slides can be found here: https://www.slideshare.net/ShirinGlander/ruhrpy-introducing-deep-learning-with-keras-and-python
   Ruhr.PY - Introducing Deep Learning with Keras and Python  von Shirin Glander  There is also a video recording of my talk, which you can see here: https://youtu.</description>
     </item>

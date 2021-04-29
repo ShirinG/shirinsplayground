@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>gradient boosting on Shirin&#39;s playgRound</title>
-    <link>https://shirinsplayground.netlify.com/tags/gradient-boosting/</link>
+    <link>https://shirinsplayground.netlify.app/tags/gradient-boosting/</link>
     <description>Recent content in gradient boosting on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 29 Nov 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/tags/gradient-boosting/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 29 Nov 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.app/tags/gradient-boosting/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Machine Learning Basics - Gradient Boosting &amp; XGBoost</title>
-      <link>https://shirinsplayground.netlify.com/2018/11/ml_basics_gbm/</link>
+      <link>https://shirinsplayground.netlify.app/2018/11/ml_basics_gbm/</link>
       <pubDate>Thu, 29 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/11/ml_basics_gbm/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/11/ml_basics_gbm/</guid>
       <description>In a recent video, I covered Random Forests and Neural Nets as part of the codecentric.ai Bootcamp.
 In the most recent video, I covered Gradient Boosting and XGBoost.
 You can find the video on YouTube and the slides on slides.com. Both are again in German with code examples in Python.
@@ -21,10 +21,10 @@ But below, you find the English version of the content, plus code examples in R 
     
     <item>
       <title>Code for Workshop: Introduction to Machine Learning with R</title>
-      <link>https://shirinsplayground.netlify.com/2018/06/intro_to_ml_workshop_heidelberg/</link>
+      <link>https://shirinsplayground.netlify.app/2018/06/intro_to_ml_workshop_heidelberg/</link>
       <pubDate>Fri, 29 Jun 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/06/intro_to_ml_workshop_heidelberg/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/06/intro_to_ml_workshop_heidelberg/</guid>
       <description>These are the slides from my workshop: Introduction to Machine Learning with R which I gave at the University of Heidelberg, Germany on June 28th 2018. The entire code accompanying the workshop can be found below the video.
 The workshop covered the basics of machine learning. With an example dataset I went through a standard machine learning workflow in R with the packages caret and h2o:
  reading in data exploratory data analysis missingness feature engineering training and test split model training with Random Forests, Gradient Boosting, Neural Nets, etc.</description>

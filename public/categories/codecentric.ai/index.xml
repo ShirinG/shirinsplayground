@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>codecentric.ai on Shirin&#39;s playgRound</title>
-    <link>https://shirinsplayground.netlify.com/categories/codecentric.ai/</link>
+    <link>https://shirinsplayground.netlify.app/categories/codecentric.ai/</link>
     <description>Recent content in codecentric.ai on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 08 Feb 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/categories/codecentric.ai/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 08 Feb 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.app/categories/codecentric.ai/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Launching codecentric.AI Bootcamp course!</title>
-      <link>https://shirinsplayground.netlify.com/2019/02/ccai_bootcamp_launch/</link>
+      <link>https://shirinsplayground.netlify.app/2019/02/ccai_bootcamp_launch/</link>
       <pubDate>Fri, 08 Feb 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2019/02/ccai_bootcamp_launch/</guid>
+      <guid>https://shirinsplayground.netlify.app/2019/02/ccai_bootcamp_launch/</guid>
       <description>Today, I am happy to announce the launch of our codecentric.AI Bootcamp!
 This bootcamp is a free online course for everyone who wants to learn hands-on machine learning and AI techniques, from basic algorithms to deep learning, computer vision and NLP. However, the course language is German only, but for every chapter I did, you will find an English R-version here on my blog (see below for links).
 Right now, the course is in beta phase, so we are happy about everyone who tests our content and leaves feedback.</description>

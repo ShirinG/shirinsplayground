@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>asoiaf on Shirin&#39;s playgRound</title>
-    <link>https://shirinsplayground.netlify.com/tags/asoiaf/</link>
+    <link>https://shirinsplayground.netlify.app/tags/asoiaf/</link>
     <description>Recent content in asoiaf on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 04 Mar 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/tags/asoiaf/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 04 Mar 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.app/tags/asoiaf/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Another Game of Thrones network analysis - this time with tidygraph and ggraph</title>
-      <link>https://shirinsplayground.netlify.com/2018/03/got_network/</link>
+      <link>https://shirinsplayground.netlify.app/2018/03/got_network/</link>
       <pubDate>Sun, 04 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/03/got_network/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/03/got_network/</guid>
       <description>A while back, I did an analysis of the family network of major characters from the A Song of Ice and Fire books and the Game of Thrones TV show. In that analysis I found out that House Stark (specifically Ned and Sansa) and House Lannister (especially Tyrion) are the most important family connections in Game of Thrones; they also connect many of the story lines and are central parts of the narrative.</description>
     </item>
     

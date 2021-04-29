@@ -2,27 +2,27 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>random forest on Shirin&#39;s playgRound</title>
-    <link>https://shirinsplayground.netlify.com/tags/random-forest/</link>
+    <link>https://shirinsplayground.netlify.app/tags/random-forest/</link>
     <description>Recent content in random forest on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Oct 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/tags/random-forest/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 30 Oct 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.app/tags/random-forest/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Machine Learning Basics - Random Forest</title>
-      <link>https://shirinsplayground.netlify.com/2018/10/ml_basics_rf/</link>
+      <link>https://shirinsplayground.netlify.app/2018/10/ml_basics_rf/</link>
       <pubDate>Tue, 30 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/10/ml_basics_rf/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/10/ml_basics_rf/</guid>
       <description>A few colleagues of mine and I from codecentric.ai are currently working on developing a free online course about machine learning and deep learning. As part of this course, I am developing a series of videos about machine learning basics - the first video in this series was about Random Forests.
 You can find the video on YouTube but as of now, it is only available in German. Same goes for the slides, which are also currently German only.</description>
     </item>
     
     <item>
       <title>Code for Workshop: Introduction to Machine Learning with R</title>
-      <link>https://shirinsplayground.netlify.com/2018/06/intro_to_ml_workshop_heidelberg/</link>
+      <link>https://shirinsplayground.netlify.app/2018/06/intro_to_ml_workshop_heidelberg/</link>
       <pubDate>Fri, 29 Jun 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/06/intro_to_ml_workshop_heidelberg/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/06/intro_to_ml_workshop_heidelberg/</guid>
       <description>These are the slides from my workshop: Introduction to Machine Learning with R which I gave at the University of Heidelberg, Germany on June 28th 2018. The entire code accompanying the workshop can be found below the video.
 The workshop covered the basics of machine learning. With an example dataset I went through a standard machine learning workflow in R with the packages caret and h2o:
  reading in data exploratory data analysis missingness feature engineering training and test split model training with Random Forests, Gradient Boosting, Neural Nets, etc.</description>
@@ -30,10 +30,10 @@ The workshop covered the basics of machine learning. With an example dataset I w
     
     <item>
       <title>Update: Can we predict flu outcome with Machine Learning in R?</title>
-      <link>https://shirinsplayground.netlify.com/2018/04/flu_prediction/</link>
+      <link>https://shirinsplayground.netlify.app/2018/04/flu_prediction/</link>
       <pubDate>Sun, 22 Apr 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/04/flu_prediction/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/04/flu_prediction/</guid>
       <description>Since I migrated my blog from Github Pages to blogdown and Netlify, I wanted to start migrating (most of) my old posts too - and use that opportunity to update them and make sure the code still works.
 Here I am updating my very first machine learning post from 27 Nov 2016: Can we predict flu deaths with Machine Learning and R?. Changes are marked as bold comments.
 The main changes I made are:</description>

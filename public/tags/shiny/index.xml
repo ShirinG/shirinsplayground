@@ -2,37 +2,37 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Shiny on Shirin&#39;s playgRound</title>
-    <link>https://shirinsplayground.netlify.com/tags/shiny/</link>
+    <link>https://shirinsplayground.netlify.app/tags/shiny/</link>
     <description>Recent content in Shiny on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 07 Sep 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/tags/shiny/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 07 Sep 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.app/tags/shiny/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Baby Weight Shiny app</title>
-      <link>https://shirinsplayground.netlify.com/2020/09/baby_weight_app/</link>
+      <link>https://shirinsplayground.netlify.app/2020/09/baby_weight_app/</link>
       <pubDate>Mon, 07 Sep 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2020/09/baby_weight_app/</guid>
+      <guid>https://shirinsplayground.netlify.app/2020/09/baby_weight_app/</guid>
       <description>Alright, this is it: I am officially back! :-D
 I have not written any blogposts for over a year. Last year, I had the cutest baby boy and ever since then, I did not get around to doing much coding. One of the reasons was that, unfortunately, we did not have the easiest of starts with the little one. Feeding problems led to weight gain problems, so we had to weigh him regularly.</description>
     </item>
     
     <item>
       <title>Look, something shiny: How to use R Shiny to make Münster traffic data accessible. Join MünsteR for our next meetup!</title>
-      <link>https://shirinsplayground.netlify.com/2018/04/meetup_june18/</link>
+      <link>https://shirinsplayground.netlify.app/2018/04/meetup_june18/</link>
       <pubDate>Thu, 19 Apr 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/04/meetup_june18/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/04/meetup_june18/</guid>
       <description>In our next MünsteR R-user group meetup on Monday, June 11th, 2018 Thomas Kluth and Thorben Jensen will give a talk titled Look, something shiny: How to use R Shiny to make Münster traffic data accessible. You can RSVP here: http://meetu.ps/e/F7zDN/w54bW/f
  About a year ago, we stumbled upon rich datasets on traffic dynamics of Münster: count data of bikes, cars, and bus passengers of high resolution. Since that day we have been crunching, modeling, and visualizing it.</description>
     </item>
     
     <item>
       <title>Explore Predictive Maintenance with flexdashboard</title>
-      <link>https://shirinsplayground.netlify.com/2017/11/predictive_maintenance_dashboard/</link>
+      <link>https://shirinsplayground.netlify.app/2017/11/predictive_maintenance_dashboard/</link>
       <pubDate>Thu, 02 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2017/11/predictive_maintenance_dashboard/</guid>
+      <guid>https://shirinsplayground.netlify.app/2017/11/predictive_maintenance_dashboard/</guid>
       <description>I have written the following post about Predictive Maintenance and flexdashboard at my company codecentric’s blog:
  Predictive Maintenance is an increasingly popular strategy associated with Industry 4.0; it uses advanced analytics and machine learning to optimize machine costs and output (see Google Trends plot below). A common use-case for Predictive Maintenance is to proactively monitor machines, so as to predict when a check-up is needed to reduce failure and maximize performance.</description>
     </item>

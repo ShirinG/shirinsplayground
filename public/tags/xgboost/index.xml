@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>xgboost on Shirin&#39;s playgRound</title>
-    <link>https://shirinsplayground.netlify.com/tags/xgboost/</link>
+    <link>https://shirinsplayground.netlify.app/tags/xgboost/</link>
     <description>Recent content in xgboost on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 29 Nov 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/tags/xgboost/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 29 Nov 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.app/tags/xgboost/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Machine Learning Basics - Gradient Boosting &amp; XGBoost</title>
-      <link>https://shirinsplayground.netlify.com/2018/11/ml_basics_gbm/</link>
+      <link>https://shirinsplayground.netlify.app/2018/11/ml_basics_gbm/</link>
       <pubDate>Thu, 29 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/11/ml_basics_gbm/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/11/ml_basics_gbm/</guid>
       <description>In a recent video, I covered Random Forests and Neural Nets as part of the codecentric.ai Bootcamp.
 In the most recent video, I covered Gradient Boosting and XGBoost.
 You can find the video on YouTube and the slides on slides.com. Both are again in German with code examples in Python.
@@ -21,10 +21,10 @@ But below, you find the English version of the content, plus code examples in R 
     
     <item>
       <title>Explaining Black-Box Machine Learning Models - Code Part 2: Text classification with LIME</title>
-      <link>https://shirinsplayground.netlify.com/2018/07/explaining_ml_models_code_text_lime/</link>
+      <link>https://shirinsplayground.netlify.app/2018/07/explaining_ml_models_code_text_lime/</link>
       <pubDate>Thu, 26 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/07/explaining_ml_models_code_text_lime/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/07/explaining_ml_models_code_text_lime/</guid>
       <description>This is code that will encompany an article that will appear in a special edition of a German IT magazine. The article is about explaining black-box machine learning models. In that article I’m showcasing three practical examples:
 
 Explaining supervised classification models built on tabular data using caret and the iml package Explaining image classification models with keras and lime Explaining text classification models with xgboost and lime</description>

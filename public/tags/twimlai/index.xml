@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>twimlai on Shirin&#39;s playgRound</title>
-    <link>https://shirinsplayground.netlify.com/tags/twimlai/</link>
+    <link>https://shirinsplayground.netlify.app/tags/twimlai/</link>
     <description>Recent content in twimlai on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 06 Dec 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/tags/twimlai/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 06 Dec 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.app/tags/twimlai/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Trust in ML models. Slides from TWiML &amp; AI EMEA Meetup &#43; iX Articles</title>
-      <link>https://shirinsplayground.netlify.com/2018/12/trust_in_ml_slides_ix/</link>
+      <link>https://shirinsplayground.netlify.app/2018/12/trust_in_ml_slides_ix/</link>
       <pubDate>Thu, 06 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/12/trust_in_ml_slides_ix/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/12/trust_in_ml_slides_ix/</guid>
       <description>Update: There is now a recording of the meetup up on YouTube.
  Here you find my slides the TWiML &amp;amp; AI EMEA Meetup about Trust in ML models, where I presented the Anchors paper by Carlos Guestrin et al..
   I have also just written two articles for the German IT magazin iX about the same topic of Explaining Black-Box Machine Learning Models:
@@ -21,10 +21,10 @@
     
     <item>
       <title>Sketchnotes from TWiML&amp;AI: Evaluating Model Explainability Methods with Sara Hooker</title>
-      <link>https://shirinsplayground.netlify.com/2018/10/twimlai189/</link>
+      <link>https://shirinsplayground.netlify.app/2018/10/twimlai189/</link>
       <pubDate>Fri, 12 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/10/twimlai189/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/10/twimlai189/</guid>
       <description>These are my sketchnotes for Sam Charrington’s podcast This Week in Machine Learning and AI about Evaluating Model Explainability Methods with Sara Hooker:
 Sketchnotes from TWiMLAI talk: Evaluating Model Explainability Methods with Sara Hooker
  You can listen to the podcast here.
@@ -33,10 +33,10 @@ Sketchnotes from TWiMLAI talk: Evaluating Model Explainability Methods with Sara
     
     <item>
       <title>Sketchnotes from TWiML&amp;AI: Practical Deep Learning with Rachel Thomas</title>
-      <link>https://shirinsplayground.netlify.com/2018/06/twimlai138/</link>
+      <link>https://shirinsplayground.netlify.app/2018/06/twimlai138/</link>
       <pubDate>Mon, 18 Jun 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/06/twimlai138/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/06/twimlai138/</guid>
       <description>These are my sketchnotes for Sam Charrington’s podcast This Week in Machine Learning and AI about Practical Deep Learning with Rachel Thomas:
 Sketchnotes from TWiMLAI talk: Practical Deep Learning with Rachel Thomas
  You can listen to the podcast here.
@@ -45,10 +45,10 @@ Sketchnotes from TWiMLAI talk: Practical Deep Learning with Rachel Thomas
     
     <item>
       <title>Sketchnotes from TWiML&amp;AI: Adversarial Attacks Against Reinforcement Learning Agents with Ian Goodfellow &amp; Sandy Huang</title>
-      <link>https://shirinsplayground.netlify.com/2018/05/twimlai_adversarial_attacks/</link>
+      <link>https://shirinsplayground.netlify.app/2018/05/twimlai_adversarial_attacks/</link>
       <pubDate>Mon, 14 May 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/05/twimlai_adversarial_attacks/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/05/twimlai_adversarial_attacks/</guid>
       <description>These are my sketchnotes for Sam Charrington’s podcast This Week in Machine Learning and AI about Adversarial Attacks Against Reinforcement Learning Agents with Ian Goodfellow &amp;amp; Sandy Huang:
 Sketchnotes from TWiMLAI talk: Adversarial Attacks Against Reinforcement Learning Agents with Ian Goodfellow &amp;amp; Sandy Huang
  You can listen to the podcast here.
@@ -57,10 +57,10 @@ Sketchnotes from TWiMLAI talk: Adversarial Attacks Against Reinforcement Learnin
     
     <item>
       <title>Sketchnotes from TWiML&amp;AI #121: Reproducibility and the Philosophy of Data with Clare Gollnick</title>
-      <link>https://shirinsplayground.netlify.com/2018/04/twimlai121/</link>
+      <link>https://shirinsplayground.netlify.app/2018/04/twimlai121/</link>
       <pubDate>Sun, 22 Apr 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/04/twimlai121/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/04/twimlai121/</guid>
       <description>These are my sketchnotes for Sam Charrington’s podcast This Week in Machine Learning and AI about Reproducibility and the Philosophy of Data with Clare Gollnick:
 Sketchnotes from TWiMLAI talk #121: Reproducibility and the Philosophy of Data with Clare Gollnick
  You can listen to the podcast here.
@@ -69,10 +69,10 @@ Sketchnotes from TWiMLAI talk #121: Reproducibility and the Philosophy of Data w
     
     <item>
       <title>Sketchnotes from TWiML&amp;AI #124: Systems and Software for Machine Learning at Scale with Jeff Dean</title>
-      <link>https://shirinsplayground.netlify.com/2018/04/twimlai124/</link>
+      <link>https://shirinsplayground.netlify.app/2018/04/twimlai124/</link>
       <pubDate>Wed, 18 Apr 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/04/twimlai124/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/04/twimlai124/</guid>
       <description>These are my sketchnotes for Sam Charrington’s podcast This Week in Machine Learning and AI about Systems and Software for Machine Learning at Scale with Jeff Dean:
 Sketchnotes from TWiMLAI talk #124: Systems and Software for Machine Learning at Scale with Jeff Dean
  You can listen to the podcast here.
@@ -81,10 +81,10 @@ Sketchnotes from TWiMLAI talk #124: Systems and Software for Machine Learning at
     
     <item>
       <title>Sketchnotes from TWiML&amp;AI #115: Scaling Machine Learning at Uber with Mike Del Balso</title>
-      <link>https://shirinsplayground.netlify.com/2018/03/twimlai115/</link>
+      <link>https://shirinsplayground.netlify.app/2018/03/twimlai115/</link>
       <pubDate>Wed, 07 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/03/twimlai115/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/03/twimlai115/</guid>
       <description>These are my sketchnotes for Sam Charrington’s podcast This Week in Machine Learning and AI about Scaling Machine Learning at Uber with Mike Del Balso:
 Sketchnotes from TWiMLAI talk #115: Scaling Machine Learning at Uber with Mike Del Balso
  You can listen to the podcast here.
@@ -93,10 +93,10 @@ Sketchnotes from TWiMLAI talk #115: Scaling Machine Learning at Uber with Mike D
     
     <item>
       <title>Sketchnotes from TWiML&amp;AI #111: Learning “Common Sense” and Physical Concepts with Roland Memisevic</title>
-      <link>https://shirinsplayground.netlify.com/2018/02/twimlai111/</link>
+      <link>https://shirinsplayground.netlify.app/2018/02/twimlai111/</link>
       <pubDate>Mon, 19 Feb 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/02/twimlai111/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/02/twimlai111/</guid>
       <description>These are my sketchnotes for Sam Charrington’s podcast This Week in Machine Learning and AI about Learning “Common Sense” and Physical Concepts with Roland Memisevic:
 Sketchnotes from TWiMLAI talk #111: Learning “Common Sense” and Physical Concepts with Roland Memisevic
  You can listen to the podcast here.
@@ -105,10 +105,10 @@ Sketchnotes from TWiMLAI talk #111: Learning “Common Sense” and Physical Con
     
     <item>
       <title>Sketchnotes from TWiML&amp;AI #94: Neuroevolution: Evolving Novel Neural Network Architectures with Kenneth Stanley</title>
-      <link>https://shirinsplayground.netlify.com/2018/01/twimlai94/</link>
+      <link>https://shirinsplayground.netlify.app/2018/01/twimlai94/</link>
       <pubDate>Sun, 28 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/01/twimlai94/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/01/twimlai94/</guid>
       <description>These are my sketchnotes for Sam Charrington’s podcast This Week in Machine Learning and AI about Neuroevolution: Evolving Novel Neural Network Architectures with Kenneth Stanley:
 Sketchnotes from TWiMLAI talk #94: Neuroevolution: Evolving Novel Neural Network Architectures with Kenneth Stanley
  You can listen to the podcast here.
@@ -117,10 +117,10 @@ Sketchnotes from TWiMLAI talk #94: Neuroevolution: Evolving Novel Neural Network
     
     <item>
       <title>Sketchnotes from TWiML&amp;AI #92: Learning State Representations with Yael Niv</title>
-      <link>https://shirinsplayground.netlify.com/2018/01/twimlai92/</link>
+      <link>https://shirinsplayground.netlify.app/2018/01/twimlai92/</link>
       <pubDate>Fri, 19 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/01/twimlai92/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/01/twimlai92/</guid>
       <description>These are my sketchnotes for Sam Charrington’s podcast This Week in Machine Learning and AI about Learning State Representations with Yael Niv: https://twimlai.com/twiml-talk-92-learning-state-representations-yael-niv/
 Sketchnotes from TWiMLAI talk #92: Learning State Representations with Yael Niv
  You can listen to the podcast here.
@@ -129,10 +129,10 @@ Sketchnotes from TWiMLAI talk #92: Learning State Representations with Yael Niv
     
     <item>
       <title>Sketchnotes from TWiML&amp;AI #91: Philosophy of Intelligence with Matthew Crosby</title>
-      <link>https://shirinsplayground.netlify.com/2018/01/twimlai91/</link>
+      <link>https://shirinsplayground.netlify.app/2018/01/twimlai91/</link>
       <pubDate>Sun, 14 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/01/twimlai91/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/01/twimlai91/</guid>
       <description>These are my sketchnotes for Sam Charrington’s podcast This Week in Machine Learning and AI about Philosophy of Intelligence with Matthew Crosby: https://twimlai.com/twiml-talk-92-learning-state-representations-yael-niv/
 Sketchnotes from TWiMLAI talk #92: Philosophy of Intelligence with Matthew Crosby
  You can listen to the podcast here.
@@ -141,10 +141,10 @@ Sketchnotes from TWiMLAI talk #92: Philosophy of Intelligence with Matthew Crosb
     
     <item>
       <title>TWiMLAI talk 88 sketchnotes: Using Deep Learning and Google Street View to Estimate Demographics with Timnit Gebru</title>
-      <link>https://shirinsplayground.netlify.com/2018/01/twimlai88_sketchnotes/</link>
+      <link>https://shirinsplayground.netlify.app/2018/01/twimlai88_sketchnotes/</link>
       <pubDate>Wed, 10 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/01/twimlai88_sketchnotes/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/01/twimlai88_sketchnotes/</guid>
       <description> These are my sketchnotes taken from the “This week in Machine Learning &amp;amp; AI” podcast number 88 about Using Deep Learning and Google Street View to Estimate Demographics with Timnit Gebru:
 Sketchnotes from TWiMLAI talk #88: Using Deep Learning and Google Street View to Estimate Demographics with Timnit Gebru
  </description>
@@ -152,10 +152,10 @@ Sketchnotes from TWiMLAI talk #88: Using Deep Learning and Google Street View to
     
     <item>
       <title>Explaining Predictions of Machine Learning Models with LIME - Münster Data Science Meetup</title>
-      <link>https://shirinsplayground.netlify.com/2017/12/lime_sketchnotes/</link>
+      <link>https://shirinsplayground.netlify.app/2017/12/lime_sketchnotes/</link>
       <pubDate>Tue, 12 Dec 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2017/12/lime_sketchnotes/</guid>
+      <guid>https://shirinsplayground.netlify.app/2017/12/lime_sketchnotes/</guid>
       <description>Slides from Münster Data Science Meetup These are my slides from the Münster Data Science Meetup on December 12th, 2017.
 knitr::include_url(&amp;quot;https://shiring.github.io/netlify_images/lime_meetup_slides_wvsh6s.pdf&amp;quot;)  
 My sketchnotes were collected from these two podcasts:

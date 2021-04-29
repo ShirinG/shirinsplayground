@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>state representation on Shirin&#39;s playgRound</title>
-    <link>https://shirinsplayground.netlify.com/tags/state-representation/</link>
+    <link>https://shirinsplayground.netlify.app/tags/state-representation/</link>
     <description>Recent content in state representation on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Jan 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/tags/state-representation/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 19 Jan 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.app/tags/state-representation/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Sketchnotes from TWiML&amp;AI #92: Learning State Representations with Yael Niv</title>
-      <link>https://shirinsplayground.netlify.com/2018/01/twimlai92/</link>
+      <link>https://shirinsplayground.netlify.app/2018/01/twimlai92/</link>
       <pubDate>Fri, 19 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/01/twimlai92/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/01/twimlai92/</guid>
       <description>These are my sketchnotes for Sam Charrington’s podcast This Week in Machine Learning and AI about Learning State Representations with Yael Niv: https://twimlai.com/twiml-talk-92-learning-state-representations-yael-niv/
 Sketchnotes from TWiMLAI talk #92: Learning State Representations with Yael Niv
  You can listen to the podcast here.

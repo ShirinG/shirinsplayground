@@ -2,27 +2,27 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>ggplot on Shirin&#39;s playgRound</title>
-    <link>https://shirinsplayground.netlify.com/tags/ggplot/</link>
+    <link>https://shirinsplayground.netlify.app/tags/ggplot/</link>
     <description>Recent content in ggplot on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 07 Sep 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/tags/ggplot/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 07 Sep 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.app/tags/ggplot/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Baby Weight Shiny app</title>
-      <link>https://shirinsplayground.netlify.com/2020/09/baby_weight_app/</link>
+      <link>https://shirinsplayground.netlify.app/2020/09/baby_weight_app/</link>
       <pubDate>Mon, 07 Sep 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2020/09/baby_weight_app/</guid>
+      <guid>https://shirinsplayground.netlify.app/2020/09/baby_weight_app/</guid>
       <description>Alright, this is it: I am officially back! :-D
 I have not written any blogposts for over a year. Last year, I had the cutest baby boy and ever since then, I did not get around to doing much coding. One of the reasons was that, unfortunately, we did not have the easiest of starts with the little one. Feeding problems led to weight gain problems, so we had to weigh him regularly.</description>
     </item>
     
     <item>
       <title>Why I use R for Data Science - An Ode to R</title>
-      <link>https://shirinsplayground.netlify.com/2017/09/ode_to_r/</link>
+      <link>https://shirinsplayground.netlify.app/2017/09/ode_to_r/</link>
       <pubDate>Tue, 19 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2017/09/ode_to_r/</guid>
+      <guid>https://shirinsplayground.netlify.app/2017/09/ode_to_r/</guid>
       <description>Working in Data Science, I often feel like I have to justify using R over Python. And while I do use Python for running scripts in production, I am much more comfortable with the R environment. Basically, whenever I can, I use R for prototyping, testing, visualizing and teaching. But because personal gut-feeling preference isn’t a very good reason to give to (scientifically minded) people, I’ve thought a lot about the pros and cons of using R.</description>
     </item>
     

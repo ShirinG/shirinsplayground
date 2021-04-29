@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>codecentric.ai on Shirin&#39;s playgRound</title>
-    <link>https://shirinsplayground.netlify.com/tags/codecentric.ai/</link>
+    <link>https://shirinsplayground.netlify.app/tags/codecentric.ai/</link>
     <description>Recent content in codecentric.ai on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 08 Feb 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/tags/codecentric.ai/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 08 Feb 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.app/tags/codecentric.ai/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Launching codecentric.AI Bootcamp course!</title>
-      <link>https://shirinsplayground.netlify.com/2019/02/ccai_bootcamp_launch/</link>
+      <link>https://shirinsplayground.netlify.app/2019/02/ccai_bootcamp_launch/</link>
       <pubDate>Fri, 08 Feb 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2019/02/ccai_bootcamp_launch/</guid>
+      <guid>https://shirinsplayground.netlify.app/2019/02/ccai_bootcamp_launch/</guid>
       <description>Today, I am happy to announce the launch of our codecentric.AI Bootcamp!
 This bootcamp is a free online course for everyone who wants to learn hands-on machine learning and AI techniques, from basic algorithms to deep learning, computer vision and NLP. However, the course language is German only, but for every chapter I did, you will find an English R-version here on my blog (see below for links).
 Right now, the course is in beta phase, so we are happy about everyone who tests our content and leaves feedback.</description>
@@ -20,20 +20,20 @@ Right now, the course is in beta phase, so we are happy about everyone who tests
     
     <item>
       <title>How do Convolutional Neural Nets (CNNs) learn? &#43; Keras example</title>
-      <link>https://shirinsplayground.netlify.com/2019/01/how_cnns_learn/</link>
+      <link>https://shirinsplayground.netlify.app/2019/01/how_cnns_learn/</link>
       <pubDate>Wed, 09 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2019/01/how_cnns_learn/</guid>
+      <guid>https://shirinsplayground.netlify.app/2019/01/how_cnns_learn/</guid>
       <description>As with the other videos from our codecentric.ai Bootcamp (Random Forests, Neural Nets &amp;amp; Gradient Boosting), I am again sharing an English version of the script (plus R code) for this most recent addition on How Convolutional Neural Nets work.
 In this lesson, I am going to explain how computers learn to see; meaning, how do they learn to recognize images or object on images? One of the most commonly used approaches to teach computers “vision” are Convolutional Neural Nets.</description>
     </item>
     
     <item>
       <title>Machine Learning Basics - Gradient Boosting &amp; XGBoost</title>
-      <link>https://shirinsplayground.netlify.com/2018/11/ml_basics_gbm/</link>
+      <link>https://shirinsplayground.netlify.app/2018/11/ml_basics_gbm/</link>
       <pubDate>Thu, 29 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/11/ml_basics_gbm/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/11/ml_basics_gbm/</guid>
       <description>In a recent video, I covered Random Forests and Neural Nets as part of the codecentric.ai Bootcamp.
 In the most recent video, I covered Gradient Boosting and XGBoost.
 You can find the video on YouTube and the slides on slides.com. Both are again in German with code examples in Python.
@@ -42,19 +42,19 @@ But below, you find the English version of the content, plus code examples in R 
     
     <item>
       <title>&#39;How do neural nets learn?&#39; A step by step explanation using the H2O Deep Learning algorithm.</title>
-      <link>https://shirinsplayground.netlify.com/2018/11/neural_nets_explained/</link>
+      <link>https://shirinsplayground.netlify.app/2018/11/neural_nets_explained/</link>
       <pubDate>Tue, 06 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/11/neural_nets_explained/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/11/neural_nets_explained/</guid>
       <description>In my last blogpost about Random Forests I introduced the codecentric.ai Bootcamp. The next part I published was about Neural Networks and Deep Learning. Every video of our bootcamp will have example code and tasks to promote hands-on learning. While the practical parts of the bootcamp will be using Python, below you will find the English R version of this Neural Nets Practical Example, where I explain how neural nets learn and how the concepts and techniques translate to training neural nets in R with the H2O Deep Learning function.</description>
     </item>
     
     <item>
       <title>Machine Learning Basics - Random Forest</title>
-      <link>https://shirinsplayground.netlify.com/2018/10/ml_basics_rf/</link>
+      <link>https://shirinsplayground.netlify.app/2018/10/ml_basics_rf/</link>
       <pubDate>Tue, 30 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/10/ml_basics_rf/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/10/ml_basics_rf/</guid>
       <description>A few colleagues of mine and I from codecentric.ai are currently working on developing a free online course about machine learning and deep learning. As part of this course, I am developing a series of videos about machine learning basics - the first video in this series was about Random Forests.
 You can find the video on YouTube but as of now, it is only available in German. Same goes for the slides, which are also currently German only.</description>
     </item>

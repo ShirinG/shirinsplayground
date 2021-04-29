@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>image on Shirin&#39;s playgRound</title>
-    <link>https://shirinsplayground.netlify.com/tags/image/</link>
+    <link>https://shirinsplayground.netlify.app/tags/image/</link>
     <description>Recent content in image on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Oct 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.com/tags/image/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 06 Oct 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.app/tags/image/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Image clustering with Keras and k-Means</title>
-      <link>https://shirinsplayground.netlify.com/2018/10/keras_fruits_cluster/</link>
+      <link>https://shirinsplayground.netlify.app/2018/10/keras_fruits_cluster/</link>
       <pubDate>Sat, 06 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shirinsplayground.netlify.com/2018/10/keras_fruits_cluster/</guid>
+      <guid>https://shirinsplayground.netlify.app/2018/10/keras_fruits_cluster/</guid>
       <description>A while ago, I wrote two blogposts about image classification with Keras and about how to use your own models or pretrained models for predictions and using LIME to explain to predictions.
 Recently, I came across this blogpost on using Keras to extract learned features from models and use those to cluster images. It is written in Python, though - so I adapted the code to R. You find the results below.</description>
     </item>
