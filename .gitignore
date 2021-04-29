@@ -3,3 +3,6 @@
 .RData
 .Ruserdata
 data/*
+/blogdown/
+/public/
+.DS_Store
