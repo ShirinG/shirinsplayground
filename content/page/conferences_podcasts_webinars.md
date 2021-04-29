@@ -77,13 +77,17 @@ implementieren können.
 
 ## Upcoming talks, webinars, podcasts, etc.
 
-- *Tuesday, April 27th 3pm CEST*: During the online **Minds Mastering Machines** conference, I'll be giving a talk about [The Good, the Bad and the Ugly: how to visualize machine learning data](https://www.m3-konferenz.de/lecture_compact1.php?id=12769&source=0)
+- On parental leave until August 2022 :-)
 
 ---
 
 <br>
 
 ## Past talks, webinars, podcasts, etc.
+
+- During the online **Minds Mastering Machines** conference, I gave a talk about [The Good, the Bad and the Ugly: how to visualize machine learning data](https://www.m3-konferenz.de/lecture_compact1.php?id=12769&source=0). Code and slides can be found [here](https://shirinsplayground.netlify.app/2021/04/goodbadugly_ml/).
+
+<br>
 
 - At the ML Summit in April 2021, gave a workshop on [how to visualize data effectively](https://ml-summit.de/machine-learing/the-good-the-bad-and-the-ugly-analysen-effektiv-visualisieren-und-kommunizieren/).
 
