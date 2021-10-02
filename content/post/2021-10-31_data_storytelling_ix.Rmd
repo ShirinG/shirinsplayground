@@ -1,0 +1,286 @@
+---
+title: "Data Storytelling code"
+draft: true
+author: Dr. Shirin Elsinghorst
+date: '2021-10-31'
+categories: ["R"]
+tags: ["R", "ggplot", "ix"]
+thumbnailImagePosition: left
+thumbnailImage: post/2021-10-31_data_storytelling_ix_files/figure-html/unnamed-chunk-3-1.png
+metaAlignment: center
+coverMeta: out
+slug: data_storytelling_ix
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+```{r}
+library(readr)
+library(tidyverse)
+library(stringr)
+library(lubridate)
+```
+
+```{r}
+cbp2 <- c("#000000", "#E69F00", "#56B4E9", "#009E73",
+          "#999999", "#0072B2", "#D55E00", "#CC79A7")
+
+ggplot <- function(...) ggplot2::ggplot(...) + 
+  scale_color_manual(values = cbp2) +
+  scale_fill_manual(values = cbp2) + # note: needs to be overridden when using continuous color scales
+  theme_bw()
+```
+
+```{r}
+library(plotrix)
+sliceValues <- rep(10, 8) # each slice value=10 for proportionate slices
+(
+  p <- pie3D(sliceValues, 
+      explode=0, 
+      theta = 1.2, 
+      col = cbp2, 
+      labels = cbp2, 
+      labelcex = 0.9,
+      shade = 0.6,
+      main = "Colorblind\nfriendly palette")
+)
+```
+
+# Daten
+
+## RKI
+
+- COVID-19-Fälle und 7-Tage-Inzidenz nach Altersgruppe und Meldewoche
+
+https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Daten/Altersverteilung.htm
+
+```{r}
+file_fz <- "fallzahlen.csv"
+file_sti <- "siebentageinzidenz.csv"
+
+data_fz <- read_csv2(paste0("/Users/shiringlander/Documents/Github/data_storytelling_ix2021/data/", file_fz)) %>%
+  gather("jahr_woche", "fallzahl", -Altersgruppe)
+
+data_fz_sti <- read_csv2(paste0("/Users/shiringlander/Documents/Github/data_storytelling_ix2021/data/", file_sti)) %>%
+  gather("jahr_woche", "siebentageinzidenz", -Altersgruppe) %>%
+  full_join(data_fz, by = c("Altersgruppe", "jahr_woche")) %>%
+  mutate(Jahr = as.numeric(str_extract(jahr_woche, "^.*(?=(_))")),
+         Woche = as.numeric(str_remove(jahr_woche, "^(.*?_)")),
+         fallzahl = as.numeric(fallzahl)) %>%
+  mutate(Datum = paste0(Jahr, "-W", Woche, "-1"),
+         Datum = make_datetime(year = Jahr) + weeks(Woche)) %>%
+  select(-jahr_woche) %>%
+  select(Datum, Jahr, Woche, Altersgruppe, everything()) %>%
+  gather("x", "y", siebentageinzidenz:fallzahl)
+
+data_fz_sti %>%
+  head()
+```
+
+### COVID-19-Fälle nach Meldewoche und Geschlecht sowie Anteile mit für COVID-19 relevanten Symptomen, Anteile Hospitalisierter/Verstorbener und Altersmittelwert/-median
+
+https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Daten/Klinische_Aspekte.html
+
+Stand: 08.09.2021 07:09:21
+
+- Die dem RKI übermittelten COVID-19-Fälle nach Meldewoche und  Geschlecht sowie Anteile mit für COVID-19 relevanten Symptomen, Anteile Hospitalisierter und Verstorbener für die Meldewochen KW 10 – 53/2020 und KW 01 - 35/2021
+
+- Altersmedian/-mittelwert für Hospitalisierte, Patienten auf Intensivstation und Verstorbene von an das RKI übermittelten COVID-19-Fällen für die Meldewochen KW 10 – 53/2020 und KW 01 - 35/2021
+
+```{r}
+file_ka <- "klinische_aspekte.csv"
+file_am <- "altersmedian.csv"
+
+data_ka <- read_csv2(paste0("/Users/shiringlander/Documents/Github/data_storytelling_ix2021/data/", file_ka))
+data_am <- read_delim(paste0("/Users/shiringlander/Documents/Github/data_storytelling_ix2021/data/", file_am), delim = ";", locale = locale(decimal_mark = ".")) %>%
+  select(-'Fälle gesamt') %>%
+  full_join(data_ka, by = c("Meldejahr", "Meldewoche" = "MW")) %>%
+  mutate(Datum = paste0(Meldejahr, "-W", Meldewoche, "-1"),
+         Datum = make_datetime(year = Meldejahr) + weeks(Meldewoche)) %>%
+  select(-'Anteil keine, bzw. keine für COVID-19 bedeutsamen Symptome',
+         -'Anteil der Hospitalisierten bei Fällen mit Angabe zur Hospitalisation') %>%
+  select(Datum, Meldejahr, Meldewoche, everything()) %>%
+  mutate(Männer = as.numeric(gsub("[^0-9.]", "",  Männer)),
+         Frauen = as.numeric(gsub("[^0-9.]", "",  Frauen)),
+         `Anteil Verstorben` = gsub(",", ".", `Anteil Verstorben`),
+         `Anteil Verstorben` = as.numeric(gsub("[^0-9.]", "",  `Anteil Verstorben`))) %>%
+  gather("x", "y", Alle_Altersmedian:'Anteil Verstorben') %>%
+  rename(Jahr = Meldejahr, Woche = Meldewoche)
+
+data_am %>%
+  head()
+```
+
+### Impfungen
+
+https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.csv
+
+```{r}
+file_vacc <- "vaccination_ger.csv"
+data_vacc <- read_delim(paste0("/Users/shiringlander/Documents/Github/data_storytelling_ix2021/data/", file_vacc), delim = ",", locale = locale(decimal_mark = ".")) %>%
+  gather("x", "y", total_vaccinations:daily_vaccinations_per_million) %>%
+  select(-location, -iso_code)
+```
+
+### Combination
+
+```{r}
+data_gesamt <- data_fz_sti %>%
+  filter(Altersgruppe == "Gesamt") %>%
+  select(-Altersgruppe) %>%
+  unique() %>%
+  bind_rows(data_am) %>%
+  select(-Jahr,-Woche) %>%
+  rename(date = "Datum") %>%
+  bind_rows(data_vacc)
+```
+
+## PLots
+
+```{r}
+data_gesamt %>%
+  select(x) %>%
+  filter(!duplicated(x))
+```
+
+```{r}
+data_gesamt_perc_vacc <- data_gesamt %>%
+  filter(grepl("people_vaccinated$", x) | grepl("people_fully_vaccinated$", x)) %>%
+  mutate(y_perc = y / 83020000 * 100)
+```
+
+```{r}
+first_vac <- data_gesamt_perc_vacc %>%
+  slice(1) %>%
+  mutate(label = "Erste Impfungen")
+
+bigger_ten <- data_gesamt_perc_vacc %>%
+  group_by(x) %>%
+  filter(y_perc > 10) %>%
+  slice(1) %>%
+  mutate(label = "> 10%")
+
+bigger_25 <- data_gesamt_perc_vacc %>%
+  group_by(x) %>%
+  filter(y_perc > 25) %>%
+  slice(1) %>%
+  mutate(label = "> 25%")
+
+bigger_50 <- data_gesamt_perc_vacc %>%
+  group_by(x) %>%
+  filter(y_perc > 50) %>%
+  slice(1) %>%
+  mutate(label = "> 50%")
+
+last_entry <- data_gesamt_perc_vacc %>%
+  group_by(x) %>%
+  top_n(1) %>%
+  mutate(label = paste0("letzter Eintrag ", round(y_perc, digits = 2), "%"))
+
+vacc_data <- first_vac %>%
+  bind_rows(bigger_ten) %>%
+  bind_rows(bigger_25) %>%
+  bind_rows(bigger_50) %>%
+  bind_rows(last_entry) %>%
+  mutate(x = ifelse(x == "people_vaccinated", "Prozent Geimpft", "Prozent Zweitimpfung"))
+```
+
+```{r}
+# Altersmedian & MW Alter
+data_gesamt_prep <- data_gesamt %>%
+  filter(grepl("median", x) | grepl("MW", x)) %>%
+  mutate(stat = ifelse(grepl("median", x), "Median", "Mittelwert"),
+         x = gsub("_", " ", x),
+         x = gsub("Altersmedian|MW", "", x),
+         x = gsub("Alter", "", x),
+         x = gsub(" ", "", x),
+         x = gsub("Verst$", "Verstorben", x),
+         x = gsub("Verstorben", "Gestorben", x))
+```
+
+```{r}
+data_gesamt <- data_gesamt %>%
+  mutate(date = as.Date(date, "%Y-%m-%d", tz = "CEST"))
+
+data_gesamt_prep <- data_gesamt_prep %>%
+  mutate(date = as.Date(date, "%Y-%m-%d", tz = "CEST"))
+
+vacc_data <- vacc_data %>%
+  mutate(date = as.Date(date, "%Y-%m-%d", tz = "CEST"))
+```
+
+```{r fig.width=15, fig.height=10}
+ggplot() +
+  geom_vline(data = vacc_data,
+             aes(xintercept = date, color = x)) +
+  geom_line(data = data_gesamt_prep,
+            aes(x = date, y = y, color = x, linetype = stat)) +
+  scale_x_date(date_breaks = "1 month",
+               date_minor_breaks = "1 week") +
+  ggrepel::geom_label_repel(data = vacc_data,
+             aes(x = date, y = 90, label = label, color = x),
+             arrow = arrow(length = unit(0.02, "npc"))) +
+  theme(legend.position="top") +
+  labs(x = "Datum",
+       y = "Alter in Jahren",
+       linetype = "Statistik",
+       color = "Einteilung der\nErkrankten/Geimpften",
+        title = "Unterscheiden sich das Durchschnittsalter aller an Covid-19 erkrankter von Hospitalisierten und Verstorbenen?\nUnd welchen Einfluss hat das Impfgeschehen darauf?", 
+        #subtitle = "",
+        caption = "Datenquellen (Stand: 08.09.2021 07:09:21):
+       Robert-Koch-Institut: https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Daten/Klinische_Aspekte.html &
+       https://ourworldindata.org/: https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.csv")
+```
+
+```{r fig.width=15, fig.height=10}
+ggplot() +
+  geom_vline(data = vacc_data %>% rename(xx = x), aes(xintercept = date, color = xx)) +
+  geom_line(data = data_gesamt %>% filter(grepl("Fälle gesamt", x) | grepl("Anteil Verstorben", x)),
+    aes(x = date, y = y, color = x)) +
+  facet_wrap(x ~ ., scales = "free", nrow = 2, 
+                strip.position = "left", 
+                labeller = as_labeller(c('Fälle gesamt' = "Fälle gesamt", 'Anteil Verstorben' = "Anteil Verstorbener") ) ) +
+  scale_x_date(date_breaks = "1 month",
+               date_minor_breaks = "1 week") +
+  ggrepel::geom_label_repel(data = vacc_data %>% rename(xx = x),
+             aes(x = date, y = 7, label = label, color = xx),
+             arrow = arrow(length = unit(0.02, "npc"))) +
+  theme(legend.position="top") +
+  labs(x = "Datum",
+       y = "",
+       color = "",
+        title = "Hat das Impfgeschehen Einfluss auf die Fallzahlen?", 
+        #subtitle = "",
+        caption = "Datenquellen (Stand: 08.09.2021 07:09:21):
+       Robert-Koch-Institut: https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Daten/Klinische_Aspekte.html &
+       https://ourworldindata.org/: https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.csv")
+```
+
+```{r fig.width=15, fig.height=10}
+ggplot() +
+  geom_vline(data = vacc_data %>% rename(xx = x), aes(xintercept = date, color = xx)) +
+  geom_line(data = data_gesamt %>% filter(grepl("Frauen", x)),
+    aes(x = date, y = y, color = x)) +
+  scale_x_date(date_breaks = "1 month",
+               date_minor_breaks = "1 week") +
+  ggrepel::geom_label_repel(data = vacc_data %>% rename(xx = x),
+             aes(x = date, y = 56, label = label, color = xx),
+             arrow = arrow(length = unit(0.02, "npc"))) +
+  theme(legend.position="top") +
+  labs(x = "Datum",
+       y = "Prozentanteil weiblicher Infektionsfälle",
+       color = "",
+        title = "Hat das Impfgeschehen Einfluss auf den Anteil von infizierten Männern und Frauen?", 
+        #subtitle = "",
+        caption = "Datenquellen (Stand: 08.09.2021 07:09:21):
+       Robert-Koch-Institut: https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Daten/Klinische_Aspekte.html &
+       https://ourworldindata.org/: https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.csv")
+```
+
+---
+
+```{r}
+devtools::session_info()
+```
