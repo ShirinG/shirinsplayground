@@ -1,6 +1,6 @@
 ---
 title: "Data Storytelling code"
-draft: true
+draft: false
 author: Dr. Shirin Elsinghorst
 date: '2021-10-31'
 categories: ["R"]
@@ -15,10 +15,16 @@ slug: data_storytelling_ix
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 
+<p>This is code accompanying an article about Data Storytelling in the German IT magazine <a href="">iX 12/21</a> (link will follow as soon as its published). The figures in this article were created as follows.</p>
+<p><strong>Note</strong>: Because the data is partly from a German source, the data description is in German as well.</p>
+<hr />
+<p><br></p>
 <pre class="r"><code>library(readr)
 library(tidyverse)
 library(stringr)
 library(lubridate)</code></pre>
+<div id="set-colorblind-friendly-palette" class="section level2">
+<h2>Set colorblind-friendly palette</h2>
 <pre class="r"><code>cbp2 &lt;- c(&quot;#000000&quot;, &quot;#E69F00&quot;, &quot;#56B4E9&quot;, &quot;#009E73&quot;,
           &quot;#999999&quot;, &quot;#0072B2&quot;, &quot;#D55E00&quot;, &quot;#CC79A7&quot;)
 
@@ -41,14 +47,14 @@ sliceValues &lt;- rep(10, 8) # each slice value=10 for proportionate slices
 <p><img src="/post/2021-10-31_data_storytelling_ix_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <pre><code>## [1] 0.3926991 1.1780972 1.9634954 2.7488936 3.5342917 4.3196899 5.1050881
 ## [8] 5.8904862</code></pre>
-<div id="daten" class="section level1">
-<h1>Daten</h1>
-<div id="rki" class="section level2">
-<h2>RKI</h2>
+</div>
+<div id="data" class="section level2">
+<h2>Data</h2>
+<div id="rki" class="section level3">
+<h3>RKI</h3>
 <ul>
-<li>COVID-19-Fälle und 7-Tage-Inzidenz nach Altersgruppe und Meldewoche</li>
+<li><a href="https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Daten/Altersverteilung.htm">“COVID-19-Fälle und 7-Tage-Inzidenz nach Altersgruppe und Meldewoche”</a></li>
 </ul>
-<p><a href="https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Daten/Altersverteilung.htm" class="uri">https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Daten/Altersverteilung.htm</a></p>
 <pre class="r"><code>file_fz &lt;- &quot;fallzahlen.csv&quot;
 file_sti &lt;- &quot;siebentageinzidenz.csv&quot;
 
@@ -78,14 +84,18 @@ data_fz_sti %&gt;%
 ## 4 2020-03-11 00:00:00  2020    10 80 - 84      siebentageinzidenz  0.36
 ## 5 2020-03-11 00:00:00  2020    10 75 - 79      siebentageinzidenz  0.62
 ## 6 2020-03-11 00:00:00  2020    10 70 - 74      siebentageinzidenz  0.3</code></pre>
-<div id="covid-19-fälle-nach-meldewoche-und-geschlecht-sowie-anteile-mit-für-covid-19-relevanten-symptomen-anteile-hospitalisierterverstorbener-und-altersmittelwert-median" class="section level3">
-<h3>COVID-19-Fälle nach Meldewoche und Geschlecht sowie Anteile mit für COVID-19 relevanten Symptomen, Anteile Hospitalisierter/Verstorbener und Altersmittelwert/-median</h3>
-<p><a href="https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Daten/Klinische_Aspekte.html" class="uri">https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Daten/Klinische_Aspekte.html</a></p>
-<p>Stand: 08.09.2021 07:09:21</p>
 <ul>
-<li><p>Die dem RKI übermittelten COVID-19-Fälle nach Meldewoche und Geschlecht sowie Anteile mit für COVID-19 relevanten Symptomen, Anteile Hospitalisierter und Verstorbener für die Meldewochen KW 10 – 53/2020 und KW 01 - 35/2021</p></li>
-<li><p>Altersmedian/-mittelwert für Hospitalisierte, Patienten auf Intensivstation und Verstorbene von an das RKI übermittelten COVID-19-Fällen für die Meldewochen KW 10 – 53/2020 und KW 01 - 35/2021</p></li>
+<li><a href="https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Daten/Klinische_Aspekte.html">COVID-19-Fälle nach Meldewoche und Geschlecht sowie Anteile mit für COVID-19 relevanten Symptomen, Anteile Hospitalisierter/Verstorbener und Altersmittelwert/-median</a></li>
 </ul>
+<blockquote>
+<p>Stand: 08.09.2021 07:09:21</p>
+</blockquote>
+<blockquote>
+<p>Die dem RKI übermittelten COVID-19-Fälle nach Meldewoche und Geschlecht sowie Anteile mit für COVID-19 relevanten Symptomen, Anteile Hospitalisierter und Verstorbener für die Meldewochen KW 10 – 53/2020 und KW 01 - 35/2021</p>
+</blockquote>
+<blockquote>
+<p>Altersmedian/-mittelwert für Hospitalisierte, Patienten auf Intensivstation und Verstorbene von an das RKI übermittelten COVID-19-Fällen für die Meldewochen KW 10 – 53/2020 und KW 01 - 35/2021</p>
+</blockquote>
 <pre class="r"><code>file_ka &lt;- &quot;klinische_aspekte.csv&quot;
 file_am &lt;- &quot;altersmedian.csv&quot;
 
@@ -117,8 +127,8 @@ data_am %&gt;%
 ## 5 2020-04-08 00:00:00  2020    14 Alle_Altersmedian    52
 ## 6 2020-04-15 00:00:00  2020    15 Alle_Altersmedian    52</code></pre>
 </div>
-<div id="impfungen" class="section level3">
-<h3>Impfungen</h3>
+<div id="vaccination-data" class="section level3">
+<h3>Vaccination data</h3>
 <p><a href="https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.csv" class="uri">https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.csv</a></p>
 <pre class="r"><code>file_vacc &lt;- &quot;vaccination_ger.csv&quot;
 data_vacc &lt;- read_delim(paste0(&quot;/Users/shiringlander/Documents/Github/data_storytelling_ix2021/data/&quot;, file_vacc), delim = &quot;,&quot;, locale = locale(decimal_mark = &quot;.&quot;)) %&gt;%
@@ -138,7 +148,7 @@ data_vacc &lt;- read_delim(paste0(&quot;/Users/shiringlander/Documents/Github/da
 </div>
 </div>
 <div id="plots" class="section level2">
-<h2>PLots</h2>
+<h2>Plots</h2>
 <pre class="r"><code>data_gesamt %&gt;%
   select(x) %&gt;%
   filter(!duplicated(x))</code></pre>
@@ -284,7 +294,7 @@ vacc_data &lt;- vacc_data %&gt;%
 ##  collate  en_US.UTF-8                 
 ##  ctype    en_US.UTF-8                 
 ##  tz       Europe/Berlin               
-##  date     2021-10-02                  
+##  date     2021-12-04                  
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────
 ##  package     * version date       lib source        
@@ -376,5 +386,4 @@ vacc_data &lt;- vacc_data %&gt;%
 ##  yaml          2.2.1   2020-02-01 [1] CRAN (R 4.1.0)
 ## 
 ## [1] /Library/Frameworks/R.framework/Versions/4.1/Resources/library</code></pre>
-</div>
 </div>
