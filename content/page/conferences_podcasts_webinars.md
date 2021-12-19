@@ -46,6 +46,12 @@ implementieren können.
 
 ## Where you find my written word
 
+- In the German IT magazine [iX 1/2022](https://www.heise.de/select/ix/2022/1/2123609253949090251), I wrote an article about Data Storytelling. The complete code accompanying the article can be found [here](https://shirinsplayground.netlify.app/2021/10/data_storytelling_ix/).
+
+![iX 1/2022](https://heise.cloudimg.io/v7/_www-heise-de_/select/thumbnail/ix/2022/1.jpg?q=30&width=318)
+
+<br>
+
 - In the German [iX Developer special edition winter 2020/2021](https://shop.heise.de/ix-developer-machine-learning-2020/PDF), I wrote again about fairness, explainability and ethics in machine learning.
 
 ![](/img/ix2020.jpg)

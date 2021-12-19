@@ -6,7 +6,7 @@ date: '2021-10-31'
 categories: ["R"]
 tags: ["R", "ggplot", "ix"]
 thumbnailImagePosition: left
-thumbnailImage: post/2021-10-31_data_storytelling_ix_files/figure-html/unnamed-chunk-3-1.png
+thumbnailImage: https://heise.cloudimg.io/v7/_www-heise-de_/select/thumbnail/ix/2022/1.jpg?q=30&width=318
 metaAlignment: center
 coverMeta: out
 slug: data_storytelling_ix
@@ -16,9 +16,11 @@ slug: data_storytelling_ix
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
-This is code accompanying an article about Data Storytelling in the German IT magazine [iX 12/21]() (link will follow as soon as its published). The figures in this article were created as follows.
+This is code accompanying an article about Data Storytelling in the **German** IT magazine [iX 1/2022](https://www.heise.de/select/ix/2022/1/2123609253949090251). The figures in this article were created as follows.
 
 **Note**: Because the data is partly from a German source, the data description is in German as well.
+
+![iX 1/2022](https://heise.cloudimg.io/v7/_www-heise-de_/select/thumbnail/ix/2022/1.jpg?q=30&width=318)
 
 ---
 

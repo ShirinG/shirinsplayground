@@ -81,7 +81,7 @@ canonifyurls = true
 [[menu.main]]
   weight = 6
   identifier = "conferences_podcasts_webinars"
-  name = "Hear me talk"
+  name = "All my spoken & written words"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-bullhorn\"></i>"
   url = "/page/conferences_podcasts_webinars/"
 
