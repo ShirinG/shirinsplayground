@@ -3,6 +3,7 @@
 .RData
 .Ruserdata
 data/*
+!data/covid_data/*
 /blogdown/
 /public/
 .DS_Store
