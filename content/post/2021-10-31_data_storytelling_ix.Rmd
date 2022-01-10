@@ -68,7 +68,7 @@ sliceValues <- rep(10, 8) # each slice value=10 for proportionate slices
 
 Because the original data file is in Excel (`.xlsx`) format, I exported worksheets with data of interest as `.csv`. Alternatively, you could use the [xlsx package](http://www.sthda.com/english/wiki/r-xlsx-package-a-quick-start-guide-to-manipulate-excel-files-in-r) to directly read in `.xlsx` files.
 
-You can directly download the csv files I used from [Github]().
+You can directly download the csv files I used from [Github](https://github.com/ShirinG/shirinsplayground/tree/master/static/scripts/covid_data).
 
 ```{r}
 file_fz <- "fallzahlen.csv"
