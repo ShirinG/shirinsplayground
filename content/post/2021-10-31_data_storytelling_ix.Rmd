@@ -66,6 +66,10 @@ sliceValues <- rep(10, 8) # each slice value=10 for proportionate slices
 
 - ["COVID-19-Fälle und 7-Tage-Inzidenz nach Altersgruppe und Meldewoche"](https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Daten/Altersverteilung.htm)
 
+Because the original data file is in Excel (`.xlsx`) format, I exported worksheets with data of interest as `.csv`. Alternatively, you could use the [xlsx package](http://www.sthda.com/english/wiki/r-xlsx-package-a-quick-start-guide-to-manipulate-excel-files-in-r) to directly read in `.xlsx` files.
+
+You can directly download the csv files I used from [Github]().
+
 ```{r}
 file_fz <- "fallzahlen.csv"
 file_sti <- "siebentageinzidenz.csv"
