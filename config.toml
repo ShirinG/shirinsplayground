@@ -165,6 +165,13 @@ canonifyurls = true
   name = "WomenInTech"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-wifi\"></i>"
   url = "https://www.womentech.net/women-tech-conference?join=ODMzOQ=="  
+  
+[[menu.misc]]
+  weight = 9
+  identifier = "stibe"
+  name = "Stillberatung (GER)"
+  #pre = "<i class=\"sidebar-button-icon fa-person-breastfeeding\"></i>"
+  url = "/page/stibe/"  
 
 [params]
   # Customize date format use to render blog post date, categories and other

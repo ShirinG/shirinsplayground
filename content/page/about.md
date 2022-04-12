@@ -9,7 +9,7 @@ thumbnailImage: /img/Bewerbungsfoto.jpg
 
 <a href="https://promocode.com.ph/toplists/top-20-programming-blogs/" title="Banners for Top 20 Programming Blogs"><img src="https://promocode.com.ph/wp-content/uploads/2019/03/340x240-3.png" alt="Banners for Top 20 Programming Blogs"></a>
 
-**Please note that I will be on parental leave until September 2022!**
+**Please note that I will be on parental leave until October 2022!**
 
 I’m Shirin (Elsinghorst, born Glander), a biologist turned bioinformatician turned data scientist. During my PhD and Postdoc I worked with Next Generation Sequencing data. However, I then chose to become a data scientist for a German IT company, called codecentric. In this capacity, I have been working on many different projects, e.g. building fraud detection models, creating a chatbot, implementing predictive maintenance, and more. My preferred tool for data analysis has been R but I also work with Python. I am also very passionate about teaching and sharing knowledge, so I give workshops, talk at conferences or [meetups](https://youtu.be/81UqFUk5B9I), write blog posts and organize the [MünsteR R-users group on meetup.com](https://shiring.github.io/r_users_group/2017/05/20/muenster_r_user_group).
 
@@ -17,7 +17,11 @@ I’m Shirin (Elsinghorst, born Glander), a biologist turned bioinformatician tu
 
 I teach a [Data Camp course on hyperparameter tuning with R](https://www.datacamp.com/courses/hyperparameter-tuning-in-r) (**UPDATE:** Before you take this course please consider [the info about the sexual harrassment scandal surrounding DataCamp](https://shirinsplayground.netlify.com/2019/04/consider_data_camp)!) and I'm on the program committee of the [Minds Mastering Machines M3 conference](https://m3-konferenz.de/programmkomitee.php).
 
-Since summer 2019, I am also mom of a precious boy, who is not leaving me much time to persue coding at the moment. ;-)
+<br>
+
+I am also mom of two precious boys, who are not leaving me much time to persue coding at the moment. ;-) In 2022, I have started my training to become a [certified volunteer lactation consultant](https://shirinsplayground.netlify.app/page/stibe/).
+
+<br>
 
 I love dancing and used to do competitive ballroom and latin dancing. Even though I don't have time for that anymore, I still enjoy teaching "social dances".
 
