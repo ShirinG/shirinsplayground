@@ -1,6 +1,6 @@
 ---
 title: "Conferences, webinars, podcasts, workshops, books, articles and the likes"
-date: '2020-09-27'
+date: '2022-04-12'
 comments:       false
 showMeta:       false
 showActions:    true
@@ -34,8 +34,6 @@ Date and place depend on who and how many people are interested, so please conta
 Keras ist eine High-Level-Schnittstelle, die ein schnelles, einfaches und flexibles Prototypisieren von Neuronalen Netzwerken mit TensorFlow ermöglicht. Zusammen mit Luigi lassen sich beliebig komplexe Datenverarbeitungs-Workflows in Python erstellen. Das führt dazu, dass auch Nicht-Entwickler den End-2-End-Workflow des Keras-TensorFlow-Modells zur Produktionsreife leicht
 implementieren können.
 
-- Next date: [We will give this workshop at the M3 conference in Mannheim on May 14th](https://www.m3-konferenz.de/lecture.php?id=8533&source=0)
-
 <br>
 
 - [Machine Learning Basics in R](https://shirinsplayground.netlify.com/2018/06/intro_to_ml_workshop_heidelberg/)
@@ -51,11 +49,13 @@ implementieren können.
 ![iX 1/2022](https://heise.cloudimg.io/v7/_www-heise-de_/select/thumbnail/ix/2022/1.jpg?q=30&width=318)
 
 <br>
+<br>
 
 - In the German [iX Developer special edition winter 2020/2021](https://shop.heise.de/ix-developer-machine-learning-2020/PDF), I wrote again about fairness, explainability and ethics in machine learning.
 
 ![](/img/ix2020.jpg)
 
+<br>
 <br>
 
 - [For the German Entwickler Magazin, I have written an article about how to train your own image classification model with Python and Keras](https://entwickler.de/leseproben/machine-learning-mit-python-579887732.html)
@@ -72,6 +72,7 @@ implementieren können.
 ![](https://shiring.github.io/netlify_images/ix_article_01.jpeg)
 
 <br>
+<br>
 
 - Book chapter Predictive Analytics (German): [Data Science Grundlagen, Architekturen und Anwendungen](https://www.dpunkt.de/buecher/13208/9783864906107-data-science.html) Mai 2019, 336 Seiten, gebunden, dpunkt.verlag, ISBN Print: 978-3-86490-610-7
 
@@ -83,7 +84,11 @@ implementieren können.
 
 ## Upcoming talks, webinars, podcasts, etc.
 
-- On parental leave until August 2022 :-)
+- On parental leave until October 2022 :-)
+
+<br>
+
+- On April 26th, 2022 I'll be talking about Data Storytelling at the German Online Conference [Data Science im Unternehmen](https://konferenzen.heise.de/data-science/).
 
 ---
 
@@ -102,7 +107,6 @@ implementieren können.
 <br>
 
 - At the ML Summit in April 2021, gave a workshop on [how to visualize data effectively](https://ml-summit.de/machine-learing/the-good-the-bad-and-the-ugly-analysen-effektiv-visualisieren-und-kommunizieren/).
-
 The code & resources are available on [Github](https://github.com/ShirinG/data_viz_workshop_2021).
 
 <br>
@@ -117,14 +121,14 @@ You can watch the video recording of my talk (German) [here](https://vimeo.com/o
 <br>
 
 - **German only -** [RICHTIG GUT: DIE QUALITÄT VON MODELLEN VERSTEHEN](https://www.slideshare.net/ShirinGlander/richtig-gut-die-qualitt-von-modellen-verstehen)
-
 [Vortrag auf der M3 Online-Konferenz am 16.06.2020](https://online.m3-konferenz.de/lecture.php?id=12337&source=0)
 
-Mit Machine Learning getroffene Entscheidungen sind inhärent schwierig – wenn nicht gar unmöglich – nachzuvollziehen. Ein scheinbar gutes Ergebnis mit Hilfe von maschinellen Lernverfahren ist oft schnell erzielt oder wird von anderen als bahnbrechend verkauft.
+> Mit Machine Learning getroffene Entscheidungen sind inhärent schwierig – wenn nicht gar unmöglich – nachzuvollziehen. Ein scheinbar gutes Ergebnis mit Hilfe von maschinellen Lernverfahren ist oft schnell erzielt oder wird von anderen als bahnbrechend verkauft.
 Die Komplexität einiger der besten Modelle wie neuronaler Netze ist genau das, was sie so erfolgreich macht. Aber es macht sie gleichzeitig zu einer Black Box. Das kann problematisch sein, denn Geschäftsführer oder Vorstände werden weniger geneigt sein, einer Entscheidung zu vertrauen und nach ihr zu handeln, wenn sie sie nicht verstehen.
 Shapley Values, Local Interpretable Model-Agnostic Explanations (LIME) und Anchors sind Ansätze, diese komplexen Modelle zumindest teilweise nachvollziehbar zu machen.
 In diesem Vortrag erkläre ich, wie diese Ansätze funktionieren, und zeige Anwendungsbeispiele.
 
+<br>
 <br>
 
 - On April, 11th, at the [Data Science Meetup Bielefeld, I was talking about Building Interpretable Neural Networks with Keras and LIME](http://meetu.ps/e/G8yg1/w54bW/f). Slides are [here](https://www.beautiful.ai/deck/-LaWjFBM_2crkZG-Oz4g/Data-Science-Meetup-Bielefeld).
@@ -200,6 +204,7 @@ Slides can be found here: https://www.slideshare.net/ShirinGlander/deep-learning
 > Deep Learning is one of the "hot" topics in the AI area – a lot of hype, a lot of inflated expectation, but also quite some impressive success stories. As some AI experts already predict that Deep Learning will become "Software 2.0", it might be a good time to have a closer look at the topic. In this session I will try to give a comprehensive overview of Deep Learning. We will start with a bit of history and some theoretical foundations that we will use to create a little Deep Learning taxonomy. Then we will have a look at current and upcoming application areas: Where can we apply Deep Learning successfully and what does it differentiate from other approaches? Afterwards we will examine the ecosystem: Which tools and libraries are available? What are their strengths and weaknesses? And to complete the session, we will look into some practical code examples and the typical pitfalls of Deep Learning. After this session you will have a much better idea of the why, what and how of Deep Learning, including if and how you might want to apply it to your own work. https://jax.de/big-data-machine-learning/deep-learning-a-primer/
 
 <br>
+<br>
 
 - [I talked about explaining complex Machine Learning Models with LIME](https://shirinsplayground.netlify.com/2018/03/meetup_talk_ruhrpy_april_18/) at this meetup: [Data Science Meetup Hamburg](https://www.meetup.com/Hamburg-Data-Science-Meetup/events/244145443/) on Thursday, April 12th 2018.
 Slides can be found here: https://shirinsplayground.netlify.com/2018/04/hh_datascience_meetup_2018_slides/
@@ -207,6 +212,7 @@ Slides can be found here: https://shirinsplayground.netlify.com/2018/04/hh_datas
 > Traditional machine learning workflows focus heavily on model training and optimization; the best model is usually chosen via performance measures like accuracy or error and we tend to assume that a model is good enough for deployment if it passes certain thresholds of these performance criteria. Why a model makes the predictions it makes, however, is generally neglected. But being able to understand and interpret such models can be immensely important for improving model quality, increasing trust and transparency and for reducing bias. Because complex machine learning models are essentially black boxes and too complicated to understand, we need to use approximations to get a better sense of how they work. One such approach is LIME, which stands for Local Interpretable Model-agnostic Explanations and is a tool that helps understand and explain the decisions made by complex machine learning models.
 Dr. Shirin Glander is Data Scientist at codecentric AG. She has received a PhD in Bioinformatics and applies methods of analysis and visualization from different areas - for instance, machine learning, classical statistics, text mining, etc. -to extract and leverage information from data.
 
+<br>
 <br>
 
 - [I talked about Deep Learning with Keras in R and Python](https://shirinsplayground.netlify.com/2018/03/meetup_talk_ruhrpy_april_18/) at this meetup: [Ruhr.Py 2018](https://www.meetup.com/Ruhr-py/events/248093628/) on Wednesday, April 4th 2018.
@@ -216,11 +222,13 @@ Slides can be found here: https://shirinsplayground.netlify.com/2018/04/ruhrpy_m
 Keras is a high-level API written in Python for building and prototyping neural networks. It can be used on top of TensorFlow, Theano or CNTK. In this talk we build, train and visualize a Model using Python and Keras - all interactive with Jupyter Notebooks!
 
 <br>
+<br>
 
 - [I talked about machine learning with Daniel Mies (Podcast in German, though)](https://shirinsplayground.netlify.com/2018/02/herr_mies_wills_wissen/)
 
 > In January 2018 I was interviewed for a tech podcast where I talked about machine learning, neural nets, why I love R and Rstudio and how I became a Data Scientist.
 
+<br>
 <br>
 
 - [Explaining Predictions of Machine Learning Models with LIME - Münster Data Science Meetup](https://shirinsplayground.netlify.com/2017/12/lime_sketchnotes/)
@@ -228,12 +236,14 @@ Keras is a high-level API written in Python for building and prototyping neural 
 > In December 2017 I talked about Explaining Predictions of Machine Learning Models with LIME at the Münster Data Science Meetup.
 
 <br>
+<br>
 
 - [From Biology to Industry. A Blogger’s Journey to Data Science](https://shiring.github.io/blogging/2017/09/20/webinar_biology_to_data_science)
 
 > In September 2017 I gave a webinar for the Applied Epidemiology Didactic of the University of Wisconsin - Madison titled “From Biology to Industry. A Blogger’s Journey to Data Science.”
 I talked about how blogging about R and Data Science helped me become a Data Scientist. I also gave a short introduction to Machine Learning, Big Data and Neural Networks.
 
+<br>
 <br>
 
 - [Building meaningful machine learning models for disease prediction](https://shiring.github.io/machine_learning/2017/03/31/webinar_code)
@@ -251,11 +261,13 @@ I talked about how blogging about R and Data Science helped me become a Data Sci
 Shirin Glander, Fei He, Gregor Schmitz, Anika Witten, Arndt Telschow, J de Meaux; Genome Biology and Evolution, 22nd June 2018, evy124, https://doi.org/10.1093/gbe/evy124
 
 <br>
+<br>
 
 - [**The spectrum of mutations controlling complex traits and the genetics of fitness in plants.**](https://www.sciencedirect.com/science/article/pii/S0959437X1300141X)
 
 K Christin Falke · Shirin Glander · Fei He · Jinyong Hu · Juliette de Meaux · Gregor Schmitz., Nov. 2011, Current Opinion in Genetics & Development
 
+<br>
 <br>
 
 - [**Teriflunomide treatment for multiple sclerosis modulates T cell mitochondrial respiration with affinity-dependent effects**](https://stm.sciencemag.org/content/11/490/eaao5563)
@@ -263,11 +275,13 @@ K Christin Falke · Shirin Glander · Fei He · Jinyong Hu · Juliette de Meaux 
 Luisa Klotz et al. 2019. Science Translational Medicine, May 2019
 
 <br>
+<br>
 
 - [**Transcriptomic and proteomic analysis of iris tissue and aqueous humor in juvenile idiopathic arthritis-associated uveitis.**](https://www.sciencedirect.com/science/article/pii/S0896841119300381?dgcid=author)
 
 Lena Wildschütz, Doreen Ackermann, Anika Witten, Maren Kasper, Martin Busch, Shirin Glander, Harutyun Melkony, Karoline Walscheid, Christoph Tappeiner, Solon Thanos, Andrei Barysenka, Jörg Koch, Carsten Heinz, Björn Laffer, Dirk Bauer, Monika Stoll, Simon König, Arnd Heiligenhaus. Journal of Autoimmunity, Volume 100, June 2019, Pages 75-83
 
+<br>
 <br>
 
 - [**Nur77 serves as a molecular brake of the metabolic switch during T cell activation to restrict autoimmunity**](https://www.pnas.org/content/115/34/E8017)
@@ -275,7 +289,10 @@ Lena Wildschütz, Doreen Ackermann, Anika Witten, Maren Kasper, Martin Busch, Sh
 Marie Liebmann, Stephanie Hucke, Kathrin Koch, Melanie Eschborn, Julia Ghelman, Achmet I. Chasan, Shirin Glander, Martin Schädlich, Meike Kuhlencord, Niklas M. Daber, Maria Eveslage, Marc Beyer, Michael Dietrich, Philipp Albrecht, Monika Stoll, Karin B. Busch, Heinz Wiendl, Johannes Roth, Tanja Kuhlmann, Luisa Klotz. Proceedings of the National Academy of Sciences, August 2018, DOI: 10.1073/pnas.1721049115
 
 <br>
+<br>
 
 - [**S100-induced innate immune programming protects newborn infants from sepsis.**](https://www.nature.com/articles/ni.3745)
 
 Ulas et al., May 2017, Nature Immunology
+
+<br>
