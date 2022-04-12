@@ -383,7 +383,7 @@ tidy_comments %>%
   with(wordcloud(word, n, max.words = 100, colors = brewer.pal(8, "Dark2")))
 ```
 
-```{r}
+```{r eval=FALSE}
 tidy_comments %>%
   count(word) %>%
   wordcloud2(size=1.6, color='random-dark')
