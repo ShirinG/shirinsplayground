@@ -406,6 +406,22 @@ tidy_comments %&gt;%
         subtitle = &quot;Welche Sentiments haben Kommentare über den Tag hinweg?&quot;,
         caption = &quot;https://www.reddit.com/dev/api/&quot;)</code></pre>
 <p><img src="/post/2022-04-26_data_storytelling_presentation_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<pre class="r"><code>tidy_comments_nrc %&gt;%
+  #group_by(hour, time_day, sentiment) %&gt;% 
+  #count(sentiment) %&gt;%
+  filter(sentiment != &quot;negative&quot;,
+         sentiment != &quot;positive&quot;) %&gt;%
+  #group_by(hour, time_day) %&gt;%
+  #mutate(freq = n / sum(n))%&gt;%
+  ggplot(aes(x = as.factor(hour), y = n, fill = sentiment, color = sentiment)) +
+    facet_wrap(vars(time_day), ncol = 2, scales = &quot;free_x&quot;) +
+    geom_boxplot(alpha = 0.6) +
+    labs(x = &quot;Stunde des Tages&quot;,
+       y = &quot;Relative Häufigkeit der Kommentare&quot;,
+        title = &quot;Reddit Technology Subreddit&quot;, 
+        subtitle = &quot;Welche Sentiments haben Kommentare über den Tag hinweg?&quot;,
+        caption = &quot;https://www.reddit.com/dev/api/&quot;)</code></pre>
+<p><img src="/post/2022-04-26_data_storytelling_presentation_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
 <pre class="r"><code>perc &lt;- tidy_comments_nrc %&gt;% 
   filter(sentiment != &quot;negative&quot;,
          sentiment != &quot;positive&quot;) %&gt;%
@@ -427,7 +443,7 @@ tidy_comments %&gt;%
         title = &quot;Reddit Technology Subreddit&quot;, 
         subtitle = &quot;Welche Sentiments haben Kommentare über den Tag hinweg?&quot;,
         caption = &quot;https://www.reddit.com/dev/api/&quot;)</code></pre>
-<p><img src="/post/2022-04-26_data_storytelling_presentation_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<p><img src="/post/2022-04-26_data_storytelling_presentation_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
 <hr />
 <p><br></p>
 <pre class="r"><code>devtools::session_info()</code></pre>
@@ -441,7 +457,7 @@ tidy_comments %&gt;%
 ##  collate  en_US.UTF-8
 ##  ctype    en_US.UTF-8
 ##  tz       Europe/Berlin
-##  date     2022-04-12
+##  date     2022-04-19
 ##  pandoc   2.17.1.1 @ /Applications/RStudio.app/Contents/MacOS/quarto/bin/ (via rmarkdown)
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────

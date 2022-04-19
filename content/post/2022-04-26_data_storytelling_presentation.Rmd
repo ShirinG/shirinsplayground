@@ -444,6 +444,24 @@ tidy_comments_nrc %>%
 ```
 
 ```{r}
+tidy_comments_nrc %>%
+  #group_by(hour, time_day, sentiment) %>% 
+  #count(sentiment) %>%
+  filter(sentiment != "negative",
+         sentiment != "positive") %>%
+  #group_by(hour, time_day) %>%
+  #mutate(freq = n / sum(n))%>%
+  ggplot(aes(x = as.factor(hour), y = n, fill = sentiment, color = sentiment)) +
+    facet_wrap(vars(time_day), ncol = 2, scales = "free_x") +
+    geom_boxplot(alpha = 0.6) +
+    labs(x = "Stunde des Tages",
+       y = "Relative Häufigkeit der Kommentare",
+        title = "Reddit Technology Subreddit", 
+        subtitle = "Welche Sentiments haben Kommentare über den Tag hinweg?",
+        caption = "https://www.reddit.com/dev/api/")
+```
+
+```{r}
 perc <- tidy_comments_nrc %>% 
   filter(sentiment != "negative",
          sentiment != "positive") %>%
