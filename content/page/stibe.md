@@ -7,7 +7,7 @@ showActions:    true
 thumbnailImage: http://www.afs-stillen.de/wp-content/uploads/afs_logo_2018.png
 ---
 
-![](http://www.afs-stillen.de/wp-content/uploads/afs_logo_2018.png)
+![](https://www.afs-stillen.de/wp-content/uploads/afs_logo_vektor_05_18_web.png)
 
 Ich befinde mich gerade in [Ausbildung zur ehrenamtlichen Stillberaterin der AFS](https://www.afs-stillen.de/).
 
@@ -54,4 +54,6 @@ Natürlich unterliegt meine Beratung den DSGVO Richtlinien und ist streng vertra
 - https://www.afs-stillen.de/infomaterial/
 - https://www.instagram.com/stillenentdecken/
 - https://www.facebook.com/groups/diestillecke2/about/
+
+![](https://www.afs-stillen.de/wp-content/uploads/afs_logo_vektor_ohne_schriftzug_05_18_web.png)
 
