@@ -20,7 +20,7 @@ This is code accompanying my [talk about Data Storytelling](https://docs.google.
 
 <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSH_QAnz-v6HwP3lbDPv2tyWXC8uCdvK88PIoErIsvJJ8OAQsscXUwNSZfrMjOhvivWXStKuXgRU5jv/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 
-The data collected from the Technology Subreddit. 
+The data has been collected from the Technology Subreddit. 
 
 The CSV-file can be found here: https://datanizing.com/data-science-day/transport-short.7z
 
