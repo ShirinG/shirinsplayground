@@ -1,6 +1,6 @@
 ---
 title: "Data Storytelling code"
-draft: true
+draft: false
 author: Dr. Shirin Elsinghorst
 date: '2022-04-26'
 categories: ["R"]
