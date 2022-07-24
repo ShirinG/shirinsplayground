@@ -9,9 +9,16 @@ thumbnailImage: http://www.afs-stillen.de/wp-content/uploads/afs_logo_2018.png
 
 ![](https://www.afs-stillen.de/wp-content/uploads/afs_logo_vektor_05_18_web.png)
 
-Ich befinde mich gerade in [Ausbildung zur ehrenamtlichen Stillberaterin der AFS](https://www.afs-stillen.de/).
+Ich befinde mich gerade in [Ausbildung zur ehrenamtlichen Stillberaterin der AFS](https://www.afs-stillen.de/) und unterstütze Familien bei Fragen und Problemen rund um
 
-**Jede Familie, die stillen möchte, sollte die bestmögliche Unterstützung bekommen, damit dies von Anfang gut gelingt und für alle ein positives Erlebnis wird. Ich möchte Familien dabei helfen, den für sich besten Weg zu finden, bei dem die individuellen Bedürfnisse aller langfristig gewahrt werden können.**
+<br>
+
+- Stillvorbereitung in der Schwangerschaft
+- Stillen von Babys und Kleinkindern
+- Stillen und Beikost
+- Abstillen
+
+**Jede Familie, die stillen möchte, sollte die nötige Unterstützung bekommen, damit es von Anfang an ein positives Erlebnis wird. Ich möchte Familien dabei helfen, den für sich besten Weg zu finden, damit das Stillen gut gelingt und mit den individuellen Bedürfnisse aller Familienmitglieder langfristig vereinbar ist.**
 
 <br>
 
@@ -31,11 +38,13 @@ Aber gerade bei Stillproblemen kann eine (frühzeitige) Stillberatung helfen! Di
 
 [AFS Stillberater:innen](https://www.afs-stillen.de/) beraten und bieten **Hilfe zur Selbsthilfe** rund um die Themen **Stillen und Füttern von Babys**, vorbereitend in der **Schwangerschaft** und/oder bei Problemen oder Fragen während der **Stillzeit**. Wir beraten auch zu alternativen Fütterungsmethoden, zu Beikost und zum Abstillen.
 
-Durch meinen Hintergrund als Biologin ist es mir besonders wichtig, dass ich evidenzbasiert und basierend auf dem aktuellen Stand der Forschung unterstütze. 
+Durch meinen Hintergrund als Biologin ist es mir besonders wichtig, dass ich **evidenzbasiert** und basierend auf dem aktuellen Stand der Forschung unterstütze.
 
-Bei Anfragen, die die Grenzen der ehrenamtlichen Mütter-zu-Mütter Beratung überschreiten, verweise ich an entsprechendes Fachpersonal ([IBCLC Stillberatung](https://www.bdl-stillen.de/fachpersonal/stillberatungssuche/), Kinderärzt:in, Gynäkolog:in, etc.).
+In meiner Beratung arbeite ist mit der Haltung und Kommunikationsstrategie der **gewaltfreien Kommunikation**.
 
-[Ehrenamtliche Stillberatung](https://www.afs-stillen.de/fuer-muetter/eine-stillberaterin-finden/) ist immer kostenlos und findet zunächst telefonisch statt, kann aber nach Absprache auch in Person durchgeführt werden.
+Bei Anfragen, die die Grenzen der ehrenamtlichen Mütter-zu-Mütter Beratung überschreiten, verweise ich an entsprechendes Fachpersonal ([IBCLC Stillberatung](https://www.bdl-stillen.de/fachpersonal/stillberatungssuche/), Hebamme, Kinderärzt:in, Gynäkolog:in, etc.).
+
+Meine [ehrenamtliche Stillberatung](https://www.afs-stillen.de/fuer-muetter/eine-stillberaterin-finden/) ist immer kostenlos und findet zunächst telefonisch statt, kann aber nach Absprache auch in Person durchgeführt werden.
 
 Natürlich unterliegt meine Beratung den DSGVO Richtlinien und ist streng vertraulich!
 
