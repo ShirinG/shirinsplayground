@@ -131,15 +131,15 @@ In diesem Vortrag erkläre ich, wie diese Ansätze funktionieren, und zeige Anwe
 <br>
 <br>
 
-- On April, 11th, at the [Data Science Meetup Bielefeld, I was talking about Building Interpretable Neural Networks with Keras and LIME](http://meetu.ps/e/G8yg1/w54bW/f). Slides are [here](https://www.beautiful.ai/deck/-LaWjFBM_2crkZG-Oz4g/Data-Science-Meetup-Bielefeld).
+- On April, 11th, at the [Data Science Meetup Bielefeld, I was talking about Building Interpretable Neural Networks with Keras and LIME](http://meetu.ps/e/G8yg1/w54bW/f).
 
 <br>
 
-- On March, 26th, I gave my talk about [Explainable Machine Learning at the data lounge Meetup Bremen](http://meetu.ps/e/GlST9/w54bW/f). Slides are [here](https://www.beautiful.ai/deck/-L_l8U2hYD6Of0R83sM4/Data-Lounge-HB-Meetup).
+- On March, 26th, I gave my talk about [Explainable Machine Learning at the data lounge Meetup Bremen](http://meetu.ps/e/GlST9/w54bW/f).
 
 <br>
 
-- On March, 15th, I talked about **Deep Learning for Software Engineers** at the [AccsoCon 2019](https://accso.de/magazin/deep-learning-fuer-neugierige-entwickler/). You can find my slides [here](https://www.beautiful.ai/deck/-L_l3VZxSdN73Pxr8dw-/ACCSOCON-2019).
+- On March, 15th, I talked about **Deep Learning for Software Engineers** at the [AccsoCon 2019](https://accso.de/magazin/deep-learning-fuer-neugierige-entwickler/). You can find my slides [here](https://www.slideshare.net/ShirinGlander/deep-learning-a-primer-95197733).
 
 <br>
 
