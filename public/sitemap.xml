@@ -3,24 +3,45 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://shirinsplayground.netlify.app/categories/</loc>
-    <lastmod>2021-04-27T00:00:00+00:00</lastmod>
+    <lastmod>2022-04-26T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://shirinsplayground.netlify.app/tags/ggplot2/</loc>
-    <lastmod>2021-04-27T00:00:00+00:00</lastmod>
+    <loc>https://shirinsplayground.netlify.app/2022/04/data_storytelling_presentation/</loc>
+    <lastmod>2022-04-26T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.app/tags/ggplot/</loc>
+    <lastmod>2022-04-26T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.app/tags/ix/</loc>
+    <lastmod>2022-04-26T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://shirinsplayground.netlify.app/post/</loc>
-    <lastmod>2021-04-27T00:00:00+00:00</lastmod>
+    <lastmod>2022-04-26T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.app/tags/presentation/</loc>
+    <lastmod>2022-04-26T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://shirinsplayground.netlify.app/tags/r/</loc>
-    <lastmod>2021-04-27T00:00:00+00:00</lastmod>
+    <lastmod>2022-04-26T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://shirinsplayground.netlify.app/categories/r/</loc>
-    <lastmod>2021-04-27T00:00:00+00:00</lastmod>
+    <lastmod>2022-04-26T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://shirinsplayground.netlify.app/</loc>
-    <lastmod>2021-04-27T00:00:00+00:00</lastmod>
+    <lastmod>2022-04-26T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://shirinsplayground.netlify.app/tags/</loc>
+    <lastmod>2022-04-26T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.app/page/conferences_podcasts_webinars/</loc>
+    <lastmod>2022-04-12T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.app/page/</loc>
+    <lastmod>2022-04-12T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.app/2021/10/data_storytelling_ix/</loc>
+    <lastmod>2021-10-31T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.app/tags/ggplot2/</loc>
     <lastmod>2021-04-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://shirinsplayground.netlify.app/2021/04/goodbadugly_ml/</loc>
@@ -59,12 +80,6 @@
     <loc>https://shirinsplayground.netlify.app/2020/10/keras_workshop_user20/</loc>
     <lastmod>2020-10-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://shirinsplayground.netlify.app/page/conferences_podcasts_webinars/</loc>
-    <lastmod>2020-09-27T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://shirinsplayground.netlify.app/page/</loc>
-    <lastmod>2020-09-27T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://shirinsplayground.netlify.app/2020/09/keras_funct_api/</loc>
     <lastmod>2020-09-19T00:00:00+00:00</lastmod>
   </url><url>
@@ -72,9 +87,6 @@
     <lastmod>2020-09-13T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://shirinsplayground.netlify.app/2020/09/baby_weight_app/</loc>
-    <lastmod>2020-09-07T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://shirinsplayground.netlify.app/tags/ggplot/</loc>
     <lastmod>2020-09-07T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://shirinsplayground.netlify.app/tags/plotly/</loc>

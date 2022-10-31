@@ -175,7 +175,7 @@ if (!doNotTrack) {
     
       <i class="sidebar-button-icon fa fa-lg fa-bullhorn"></i>
       
-      <span class="sidebar-button-desc">Hear me talk</span>
+      <span class="sidebar-button-desc">All my spoken &amp; written words</span>
     </a>
   </li>
 
@@ -317,6 +317,16 @@ if (!doNotTrack) {
     </a>
   </li>
 
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://shirinsplayground.netlify.app/page/stibe/">
+    
+      
+      
+      <span class="sidebar-button-desc">Stillberatung (GER)</span>
+    </a>
+  </li>
+
 
     </ul>
   </div>
@@ -334,8 +344,32 @@ if (!doNotTrack) {
 <section class="boxes">
   
     
+    <div class="archive archive-year box" data-date="2022">
+      <h4 class="archive-title" style="text-decoration: none;">2022</h4>
+      
+        <ul class="archive-posts archive-month" data-date="202204">
+          <h5 class="archive-title" style="text-decoration: none;">April</h5>
+          
+            <li class="archive-post archive-day" data-date="20220426">
+              <a class="archive-post-title" href="https://shirinsplayground.netlify.app/2022/04/data_storytelling_presentation/">Data Storytelling presentation</a>
+            </li>
+          
+        </ul>
+      
+    </div>
+  
+    
     <div class="archive archive-year box" data-date="2021">
       <h4 class="archive-title" style="text-decoration: none;">2021</h4>
+      
+        <ul class="archive-posts archive-month" data-date="202110">
+          <h5 class="archive-title" style="text-decoration: none;">October</h5>
+          
+            <li class="archive-post archive-day" data-date="20211031">
+              <a class="archive-post-title" href="https://shirinsplayground.netlify.app/2021/10/data_storytelling_ix/">Data Storytelling code</a>
+            </li>
+          
+        </ul>
       
         <ul class="archive-posts archive-month" data-date="202104">
           <h5 class="archive-title" style="text-decoration: none;">April</h5>
@@ -883,13 +917,15 @@ if (!doNotTrack) {
     
   
     
-      <div id="cover" style="background-image:url('https://shirinsplayground.netlify.app/autumn-2789234_1920.jpg');"></div>
+      <div id="cover" style="background-image:url('https://shirinsplayground.netlify.app/images/autumn-2789234_1920.jpg');"></div>
     
   
 
 
     
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
 
@@ -910,6 +946,18 @@ function updateMinWidth() {
   var w3 = getComputedStyle(sidebar).getPropertyValue("left");
   main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
 }
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
 </script>
 
 

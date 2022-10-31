@@ -202,7 +202,7 @@ if (!doNotTrack) {
     
       <i class="sidebar-button-icon fa fa-lg fa-bullhorn"></i>
       
-      <span class="sidebar-button-desc">Hear me talk</span>
+      <span class="sidebar-button-desc">All my spoken &amp; written words</span>
     </a>
   </li>
 
@@ -341,6 +341,16 @@ if (!doNotTrack) {
       <i class="sidebar-button-icon fa fa-lg fa-angle-double-right"></i>
       
       <span class="sidebar-button-desc">codecentric.ai</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://shirinsplayground.netlify.app/page/stibe/">
+    
+      
+      
+      <span class="sidebar-button-desc">Stillberatung (GER)</span>
     </a>
   </li>
 
@@ -563,7 +573,7 @@ and the repository exists.
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2021 <a href='https://shirin-elsinghorst.appointlet.com/s/15-minute-intro'>Dr. Shirin Elsinghorst</a>. All Rights Reserved
+    &copy; 2022 <a href='https://github.com/ShirinG/'>Dr. Shirin Elsinghorst</a>. All Rights Reserved
   </span>
 </footer>
 
@@ -700,13 +710,15 @@ and the repository exists.
     
   
     
-      <div id="cover" style="background-image:url('https://shirinsplayground.netlify.app/autumn-2789234_1920.jpg');"></div>
+      <div id="cover" style="background-image:url('https://shirinsplayground.netlify.app/images/autumn-2789234_1920.jpg');"></div>
     
   
 
 
     
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
 
@@ -727,6 +739,18 @@ function updateMinWidth() {
   var w3 = getComputedStyle(sidebar).getPropertyValue("left");
   main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
 }
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
 </script>
 
 

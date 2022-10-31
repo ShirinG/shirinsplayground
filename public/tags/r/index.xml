@@ -6,7 +6,33 @@
     <description>Recent content in R on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 27 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.app/tags/r/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 26 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.app/tags/r/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Data Storytelling presentation</title>
+      <link>https://shirinsplayground.netlify.app/2022/04/data_storytelling_presentation/</link>
+      <pubDate>Tue, 26 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.app/2022/04/data_storytelling_presentation/</guid>
+      <description>This is code accompanying my talk about Data Storytelling at the German Online Conference Data Science im Unternehmen.
+ The data has been collected from the Technology Subreddit.
+The CSV-file can be found here: https://datanizing.com/data-science-day/transport-short.7z
+Or the data can be accessed via this SQLite-databank: https://datanizing.com/data-science-day/technology-transport-short.7z
+Libraries library(readr) library(tidyverse) library(tidytext) library(lubridate) library(reshape2)  Setting up custom ggplot color scheme  Colorblind-friendly according to https://shirinsplayground.netlify.app/2020/10/goodbadugly/  cbp2 &amp;lt;- c(&amp;quot;#000000&amp;quot;, &amp;quot;#E69F00&amp;quot;, &amp;quot;#56B4E9&amp;quot;, &amp;quot;#009E73&amp;quot;, &amp;quot;#999999&amp;quot;, &amp;quot;#0072B2&amp;quot;, &amp;quot;#D55E00&amp;quot;, &amp;quot;#CC79A7&amp;quot;) ggplot &amp;lt;- function(.</description>
+    </item>
+    
+    <item>
+      <title>Data Storytelling code</title>
+      <link>https://shirinsplayground.netlify.app/2021/10/data_storytelling_ix/</link>
+      <pubDate>Sun, 31 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.app/2021/10/data_storytelling_ix/</guid>
+      <description>This is code accompanying an article about Data Storytelling in the German IT magazine iX 1/2022. The figures in this article were created as follows.
+Note: Because the data is partly from a German source, the data description is in German as well.
+iX 1/2022
+ 
+library(readr) library(tidyverse) library(stringr) library(lubridate) Set colorblind-friendly palette cbp2 &amp;lt;- c(&amp;quot;#000000&amp;quot;, &amp;quot;#E69F00&amp;quot;, &amp;quot;#56B4E9&amp;quot;, &amp;quot;#009E73&amp;quot;, &amp;quot;#999999&amp;quot;, &amp;quot;#0072B2&amp;quot;, &amp;quot;#D55E00&amp;quot;, &amp;quot;#CC79A7&amp;quot;) ggplot &amp;lt;- function(...) ggplot2::ggplot(...) + scale_color_manual(values = cbp2) + scale_fill_manual(values = cbp2) + # note: needs to be overridden when using continuous color scales theme_bw() library(plotrix) sliceValues &amp;lt;- rep(10, 8) # each slice value=10 for proportionate slices ( p &amp;lt;- pie3D(sliceValues, explode=0, theta = 1.</description>
+    </item>
+    
     <item>
       <title>The Good, the Bad and the Ugly: how to visualize Machine Learning data</title>
       <link>https://shirinsplayground.netlify.app/2021/04/goodbadugly_ml/</link>

@@ -175,7 +175,7 @@ if (!doNotTrack) {
     
       <i class="sidebar-button-icon fa fa-lg fa-bullhorn"></i>
       
-      <span class="sidebar-button-desc">Hear me talk</span>
+      <span class="sidebar-button-desc">All my spoken &amp; written words</span>
     </a>
   </li>
 
@@ -317,6 +317,16 @@ if (!doNotTrack) {
     </a>
   </li>
 
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://shirinsplayground.netlify.app/page/stibe/">
+    
+      
+      
+      <span class="sidebar-button-desc">Stillberatung (GER)</span>
+    </a>
+  </li>
+
 
     </ul>
   </div>
@@ -333,6 +343,130 @@ if (!doNotTrack) {
         
           <section class="postShorten-group main-content-wrap">
             
+            
+              
+  
+    
+  
+
+
+  
+
+<article class="postShorten postShorten--thumbnailimg-left" itemscope itemType="http://schema.org/BlogPosting">
+  <div class="postShorten-wrap">
+    
+    <div class="postShorten-header">
+      <h1 class="postShorten-title" itemprop="headline">
+        <a class="link-unstyled" href="https://shirinsplayground.netlify.app/2022/04/data_storytelling_presentation/">
+          Data Storytelling presentation
+        </a>
+      </h1>
+      
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2022-04-26T00:00:00Z">
+        
+  April 26, 2022
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://shirinsplayground.netlify.app/categories/r">R</a>
+    
+  
+
+  </div>
+
+    </div>
+    <div class="postShorten-excerpt" itemprop="articleBody">
+      
+        This is code accompanying my talk about Data Storytelling at the German Online Conference Data Science im Unternehmen.
+ The data has been collected from the Technology Subreddit.
+The CSV-file can be found here: https://datanizing.com/data-science-day/transport-short.7z
+Or the data can be accessed via this SQLite-databank: https://datanizing.com/data-science-day/technology-transport-short.7z
+Libraries library(readr) library(tidyverse) library(tidytext) library(lubridate) library(reshape2)  Setting up custom ggplot color scheme  Colorblind-friendly according to https://shirinsplayground.netlify.app/2020/10/goodbadugly/  cbp2 &lt;- c(&quot;#000000&quot;, &quot;#E69F00&quot;, &quot;#56B4E9&quot;, &quot;#009E73&quot;, &quot;#999999&quot;, &quot;#0072B2&quot;, &quot;#D55E00&quot;, &quot;#CC79A7&quot;) ggplot &lt;- function(.
+      
+      <p>
+        <a href="https://shirinsplayground.netlify.app/2022/04/data_storytelling_presentation/" class="postShorten-excerpt_link link">Continue reading</a>
+        
+      </p>
+    </div>
+  </div>
+  
+    <a href="https://shirinsplayground.netlify.app/2022/04/data_storytelling_presentation/">
+      <div class="postShorten-thumbnailimg">
+        <img alt="" itemprop="image" src="https://konferenzen.heise.de/data-science/wp-content/uploads/sites/5/2021/04/AdobeStock_290607735-Big-Data-u1.png"/>
+      </div>
+    </a>
+  
+</article>
+
+            
+              
+  
+    
+  
+
+
+  
+
+<article class="postShorten postShorten--thumbnailimg-left" itemscope itemType="http://schema.org/BlogPosting">
+  <div class="postShorten-wrap">
+    
+    <div class="postShorten-header">
+      <h1 class="postShorten-title" itemprop="headline">
+        <a class="link-unstyled" href="https://shirinsplayground.netlify.app/2021/10/data_storytelling_ix/">
+          Data Storytelling code
+        </a>
+      </h1>
+      
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2021-10-31T00:00:00Z">
+        
+  October 31, 2021
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://shirinsplayground.netlify.app/categories/r">R</a>
+    
+  
+
+  </div>
+
+    </div>
+    <div class="postShorten-excerpt" itemprop="articleBody">
+      
+        This is code accompanying an article about Data Storytelling in the German IT magazine iX 1/2022. The figures in this article were created as follows.
+Note: Because the data is partly from a German source, the data description is in German as well.
+iX 1/2022
+ 
+library(readr) library(tidyverse) library(stringr) library(lubridate) Set colorblind-friendly palette cbp2 &lt;- c(&quot;#000000&quot;, &quot;#E69F00&quot;, &quot;#56B4E9&quot;, &quot;#009E73&quot;, &quot;#999999&quot;, &quot;#0072B2&quot;, &quot;#D55E00&quot;, &quot;#CC79A7&quot;) ggplot &lt;- function(...) ggplot2::ggplot(...) + scale_color_manual(values = cbp2) + scale_fill_manual(values = cbp2) + # note: needs to be overridden when using continuous color scales theme_bw() library(plotrix) sliceValues &lt;- rep(10, 8) # each slice value=10 for proportionate slices ( p &lt;- pie3D(sliceValues, explode=0, theta = 1.
+      
+      <p>
+        <a href="https://shirinsplayground.netlify.app/2021/10/data_storytelling_ix/" class="postShorten-excerpt_link link">Continue reading</a>
+        
+      </p>
+    </div>
+  </div>
+  
+    <a href="https://shirinsplayground.netlify.app/2021/10/data_storytelling_ix/">
+      <div class="postShorten-thumbnailimg">
+        <img alt="" itemprop="image" src="https://heise.cloudimg.io/v7/_www-heise-de_/select/thumbnail/ix/2022/1.jpg?q=30&amp;width=318"/>
+      </div>
+    </a>
+  
+</article>
+
             
               
   
@@ -457,7 +591,7 @@ I have not written any blogposts for over a year. Last year, I had the cutest ba
         
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2021 <a href='https://shirin-elsinghorst.appointlet.com/s/15-minute-intro'>Dr. Shirin Elsinghorst</a>. All Rights Reserved
+    &copy; 2022 <a href='https://github.com/ShirinG/'>Dr. Shirin Elsinghorst</a>. All Rights Reserved
   </span>
 </footer>
 
@@ -498,13 +632,15 @@ I have not written any blogposts for over a year. Last year, I had the cutest ba
     
   
     
-      <div id="cover" style="background-image:url('https://shirinsplayground.netlify.app/autumn-2789234_1920.jpg');"></div>
+      <div id="cover" style="background-image:url('https://shirinsplayground.netlify.app/images/autumn-2789234_1920.jpg');"></div>
     
   
 
 
     
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
 
@@ -525,6 +661,18 @@ function updateMinWidth() {
   var w3 = getComputedStyle(sidebar).getPropertyValue("left");
   main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
 }
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
 </script>
 
 

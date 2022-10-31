@@ -1,6 +1,6 @@
 ---
 title: "Stillberatung"
-date: '2022-04-12'
+date: '2022-11-01'
 comments:       false
 showMeta:       false
 showActions:    true
@@ -13,7 +13,7 @@ Ich befinde mich gerade in [Ausbildung zur ehrenamtlichen Stillberaterin der AFS
 
 <br>
 
-- Stillvorbereitung in der Schwangerschaft
+- Stillvorbereitung in der Schwangerschaft (siehe auch [Stillvorbereitungskurs](/page/stillvorbereitungskurs/))
 - Stillen von Babys und Kleinkindern
 - Stillen und Beikost
 - Abstillen
