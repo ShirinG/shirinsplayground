@@ -10,10 +10,13 @@ thumbnailImage: http://www.afs-stillen.de/wp-content/uploads/afs_logo_2018.png
 **Termin**: Samstag, 26.11.2022 von 15 - 18 Uhr
 <br>
 
-**Ort**: Hebammenpraxis Bauchladen Ostbevern
+**Ort**: [Hebammenpraxis Bauchladen Ostbevern](https://www.bauchladen-ostbevern.de/hebammenpraxis.html)
 <br>
 
-**Anzahl Teilnehmer**: mindestens 3, maximal 10 (Teilnahme **Einzeln** oder als **Paar** möglich)<br>
+**Kursleitung**: [Dr. Shirin Elsinghorst](/page/stibe/)
+<br>
+
+**Teilnehmer**: Teilnahme **Einzeln** oder als **Paar** möglich<br>
 <br>
 
 **Kosten**: 15€ pro Person, bei Anmeldung als Paar: 20€ pro Paar
