@@ -2,6 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://shirinsplayground.netlify.app/page/</loc>
+    <lastmod>2022-11-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.app/</loc>
+    <lastmod>2022-11-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.app/page/stibe/</loc>
+    <lastmod>2022-11-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://shirinsplayground.netlify.app/page/stillvorbereitungskurs/</loc>
+    <lastmod>2022-11-01T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://shirinsplayground.netlify.app/categories/</loc>
     <lastmod>2022-04-26T00:00:00+00:00</lastmod>
   </url><url>
@@ -26,16 +38,10 @@
     <loc>https://shirinsplayground.netlify.app/categories/r/</loc>
     <lastmod>2022-04-26T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://shirinsplayground.netlify.app/</loc>
-    <lastmod>2022-04-26T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://shirinsplayground.netlify.app/tags/</loc>
     <lastmod>2022-04-26T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://shirinsplayground.netlify.app/page/conferences_podcasts_webinars/</loc>
-    <lastmod>2022-04-12T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://shirinsplayground.netlify.app/page/</loc>
     <lastmod>2022-04-12T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://shirinsplayground.netlify.app/2021/10/data_storytelling_ix/</loc>
