@@ -9,8 +9,7 @@ thumbnailImage: http://www.afs-stillen.de/wp-content/uploads/afs_logo_2018.png
 
 ![](https://www.afs-stillen.de/wp-content/uploads/afs_logo_vektor_05_18_web.png)
 
-Ich befinde mich gerade in [Ausbildung zur ehrenamtlichen Stillberaterin der AFS](https://www.afs-stillen.de/) und unterstütze Familien bei Fragen und Problemen rund um
-
+Ich befinde mich gerade in [Ausbildung zur ehrenamtlichen Stillberaterin der AFS](https://www.afs-stillen.de/) und unterstütze Familien bei Fragen und Problemen rund um die Themen
 <br>
 
 - Stillvorbereitung in der Schwangerschaft (siehe auch [Stillvorbereitungskurs](/page/stillvorbereitungskurs/))
