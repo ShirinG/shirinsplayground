@@ -22,7 +22,7 @@ thumbnailImage: http://www.afs-stillen.de/wp-content/uploads/afs_logo_2018.png
 **Kosten**: *15€ pro Person, bei Anmeldung als Paar: 20€ pro Paar*
 <br>
 
-**Anmeldungen** *bitte per E-Mail an* [*shirin.elsinghorst@afs-stillen.de*](mailto:shirin.elsinghorst@afs-stillen.de) schicken.
+**Anmeldungen** *bitte per E-Mail an* [*shirin.elsinghorst@gmail.com*](mailto:shirin.elsinghorst@gmail.com) schicken.
 <br>
 
 ![](/img/stillen.jpg)
