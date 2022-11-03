@@ -22,10 +22,8 @@ thumbnailImage: http://www.afs-stillen.de/wp-content/uploads/afs_logo_2018.png
 **Kosten**: 15€ pro Person, bei Anmeldung als Paar: 20€ pro Paar
 <br>
 
-**Anmeldung**: Anmeldungen bitter per E-Mail an [shirin.elsinghorst@afs-stillen.de](mailto:shirin.elsinghorst@afs-stillen.de) schicken.
+**Anmeldungen** bitte per E-Mail an [shirin.elsinghorst@afs-stillen.de](mailto:shirin.elsinghorst@afs-stillen.de) schicken.
 <br>
-
-## Beschreibung
 
 Ihr seid schwanger und habt euch über das Stillen bisher keine großen Gedanken gemacht? Vielleicht habt ihr schon Horrorstorys über zerkaute Brustwarzen und zu wenig Milch gehört und seid euch gar nicht sicher, ob ihr das mit dem Stillen schafft? Oder habt ihr schon eine ganz genaue Vorstellung davon, wie es mit dem Stillen für euch laufen soll? 
 <br>
