@@ -7,22 +7,22 @@ showActions:    true
 thumbnailImage: http://www.afs-stillen.de/wp-content/uploads/afs_logo_2018.png
 ---
 
-**Termin**: Samstag, 26.11.2022 von 15 - 18 Uhr
+**Termin**: *Samstag, 26.11.2022 von 15 - 18 Uhr*
 <br>
 
-**Ort**: [Hebammenpraxis Bauchladen Ostbevern](https://www.bauchladen-ostbevern.de/hebammenpraxis.html)
+**Ort**: [*Hebammenpraxis Bauchladen Ostbevern*](https://www.bauchladen-ostbevern.de/hebammenpraxis.html)
 <br>
 
-**Kursleitung**: [Dr. Shirin Elsinghorst](/page/stibe/)
+**Kursleitung**: [*Dr. Shirin Elsinghorst*](/page/stibe/)
 <br>
 
-**Teilnehmer**: Teilnahme **Einzeln** oder als **Paar** möglich<br>
+**Teilnehmer**: *Teilnahme **Einzeln** oder als **Paar** möglich*
 <br>
 
-**Kosten**: 15€ pro Person, bei Anmeldung als Paar: 20€ pro Paar
+**Kosten**: *15€ pro Person, bei Anmeldung als Paar: 20€ pro Paar*
 <br>
 
-**Anmeldungen** bitte per E-Mail an [shirin.elsinghorst@afs-stillen.de](mailto:shirin.elsinghorst@afs-stillen.de) schicken.
+**Anmeldungen** *bitte per E-Mail an* [*shirin.elsinghorst@afs-stillen.de*](mailto:shirin.elsinghorst@afs-stillen.de) schicken.
 <br>
 
 ![](/img/stillen.jpg)
@@ -30,10 +30,10 @@ thumbnailImage: http://www.afs-stillen.de/wp-content/uploads/afs_logo_2018.png
 Ihr seid schwanger und habt euch über das Stillen bisher keine großen Gedanken gemacht? Vielleicht habt ihr schon Horrorstorys über zerkaute Brustwarzen und zu wenig Milch gehört und seid euch gar nicht sicher, ob ihr das mit dem Stillen schafft? Oder habt ihr schon eine ganz genaue Vorstellung davon, wie es mit dem Stillen für euch laufen soll? 
 <br>
 
-Stillen hat zahlreiche Vorteile für Mutter, Kind und Gesellschaft und die meisten Schwangeren wünschen sich, ihr Baby zu stillen. Allerdings will auch das Stillen gelernt sein! Und manchmal kommt alles anders als gedacht. Dann hilft es, wenn ihr fundierte Informationen mitbringt, so dass veraltete Tipps und Ammenmärchen euch nicht aus der Ruhe bringen können.
+**Stillen hat zahlreiche Vorteile** für Mutter, Kind und Gesellschaft und die meisten Schwangeren wünschen sich, ihr Baby zu stillen. **Allerdings will auch das Stillen gelernt sein!** Und manchmal kommt alles anders als gedacht. Dann hilft es, wenn ihr fundierte Informationen mitbringt, so dass veraltete Tipps und Ammenmärchen euch nicht aus der Ruhe bringen können.
 <br>
 
-In meinem Stillvorbereitungskurs erfahrt ihr die Grundlagen des Stillens und wie ihr möglichst gut vorbereitet in eure Stillbeziehung starten könnt. Ihr lernt, warum eure Muttermilch ein wahrer Zaubertrank ist, warum intuitives Stillen super ist und wie ihr euer Baby optimal an die Brust anlegt. Wir sprechen darüber, wie ihr erkennt, dass ihr genug Milch habt, warum Unterstützung das A und O ist und wie ihr eure und die Bedürfnisse eures Babys in Einklang bringen könnt. Ihr bekommt viele Informationen, die euch helfen, informierte Entscheidungen zu treffen, um euren individuellen Weg durch die Stillzeit zu finden. Und ihr wisst, was euch erwarten kann und wie ihr mit Selbstvertrauen in euch und euer Baby mit Problemen umgehen könnt.
+In meinem Stillvorbereitungskurs erfahrt ihr die **Grundlagen des Stillens** und wie ihr möglichst gut vorbereitet in eure Stillbeziehung starten könnt. Ihr lernt, warum eure Muttermilch ein wahrer **Zaubertrank** ist, warum **intuitives Stillen** super ist und wie ihr euer Baby optimal an die Brust anlegt. Wir sprechen darüber, wie ihr erkennt, dass ihr **genug Milch** habt, warum Unterstützung das A und O ist und wie ihr eure und die Bedürfnisse eures Babys in Einklang bringen könnt. Ihr bekommt viele Informationen, die euch helfen, **informierte Entscheidungen** zu treffen, um euren **individuellen Weg durch die Stillzeit** zu finden. Und ihr wisst, was euch erwarten kann und wie ihr mit **Selbstvertrauen** in euch und euer Baby mit Problemen umgehen könnt.
 <br>
 
 ## Feste Inhalte
