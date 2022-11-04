@@ -4,7 +4,7 @@ date: '2022-11-01'
 comments:       false
 showMeta:       false
 showActions:    true
-thumbnailImage: http://www.afs-stillen.de/wp-content/uploads/afs_logo_2018.png
+thumbnailImage: /img/stillen.jpg
 ---
 
 **Termin**: *Samstag, 26.11.2022 von 15 - 18 Uhr*
