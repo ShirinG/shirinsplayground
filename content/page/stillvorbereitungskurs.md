@@ -9,7 +9,7 @@ thumbnailImage: /img/stillen.jpg
 
 **Termin**: *Samstag, 26.11.2022 von 15 - 18 Uhr*
 <br>
-Weitere Termine folgen. Scheint mir gerne eine Email oder WhatsApp wenn ihr über neue Termine informiert werden möchtet.
+Weitere Termine folgen. Schreibt mir gerne eine Email oder WhatsApp wenn ihr über neue Termine informiert werden möchtet.
 <br>
 
 **Ort**: [*Hebammenpraxis Bauchladen Ostbevern*](https://www.bauchladen-ostbevern.de/hebammenpraxis.html)
