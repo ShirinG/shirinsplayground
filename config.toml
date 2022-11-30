@@ -289,7 +289,7 @@ canonifyurls = true
 
   # Customize copyright value "© 2017 Shirin Elsinghorst. All Rights Reserved"
    [params.footer]
-     copyright = "<a href='https://github.com/ShirinG/'>Dr. Shirin Elsinghorst</a>"
+     copyright = "<a href='http://bit.ly/m/shirin_elsinghorst'>© 2022 Dr. Shirin Elsinghorst. All Rights Reserved</a>"
 
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$", "^Thumbs\\.db$"]
 

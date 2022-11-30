@@ -7,7 +7,7 @@ showActions:    true
 thumbnailImage: http://www.afs-stillen.de/wp-content/uploads/afs_logo_2018.png
 ---
 
-![](https://www.afs-stillen.de/wp-content/uploads/afs_logo_vektor_05_18_web.png)
+![http://bit.ly/m/shirin_elsinghorst](https://www.afs-stillen.de/wp-content/uploads/afs_logo_vektor_05_18_web.png)
 
 Ich befinde mich gerade in [Ausbildung zur ehrenamtlichen Stillberaterin der AFS](https://www.afs-stillen.de/) und unterstütze Familien bei Fragen und Problemen rund um die Themen
 <br>
@@ -53,6 +53,7 @@ Natürlich unterliegt meine Beratung den DSGVO Richtlinien und ist streng vertra
 
 - Erstkontakt gerne über WhatsApp oder Signal, um einen Termin für ein Gespräch abzustimmen
 - +4915110851466
+- [http://bit.ly/m/shirin_elsinghorst](http://bit.ly/m/shirin_elsinghorst)
 
 <br>
 

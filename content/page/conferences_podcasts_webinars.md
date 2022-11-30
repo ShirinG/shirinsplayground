@@ -11,32 +11,30 @@ Here, you can find a list of all the talks I gave at conferences, webinars, podc
 
 *If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at <button>[paypal.me](https://paypal.me/ShirinGlander)</button>. Thank you!* :-)
 
-## Workshops I am giving
+## Workshops I am offering
 
-- [Data Camp course on Hyperparameter Tuning in R](https://www.datacamp.com/courses/hyperparameter-tuning-in-r)
-
-**UPDATE:** Before you take this course please consider [the info about the sexual harassment scandal surrounding DataCamp](https://shirinsplayground.netlify.com/2019/04/consider_data_camp)!
-
-> For many machine learning problems, simply running a model out-of-the-box and getting a prediction is not enough; you want the best model with the most accurate prediction. One way to perfect your model is with hyperparameter tuning, which means optimizing the settings for that specific model. In this course, you will work with the caret, mlr and h2o packages to find the optimal combination of hyperparameters in an efficient manner using grid search, random search, adaptive resampling and automatic machine learning (AutoML). Furthermore, you will work with different datasets and tune different supervised learning models, such as random forests, gradient boosting machines, support vector machines, and even neural nets. Get ready to tune!
+- [Data Camp course on Hyperparameter Tuning in R](https://www.datacamp.com/courses/hyperparameter-tuning-in-r) (ENG) [(also note this)](https://shirinsplayground.netlify.com/2019/04/consider_data_camp)
 
 <br>
 
-- [Workshop on Deep Learning with Keras and TensorFlow in R](https://shirinsplayground.netlify.com/2017/11/deep_learning_keras_tensorflow/)
-
-> I offer a workshop on deep learning with Keras and TensorFlow using R.
-Date and place depend on who and how many people are interested, so please contact me either directly or via the workshop page: https://www.codecentric.de/schulung/deep-learning-mit-keras-und-tensorflow/ (the description is in German but I also offer to give the workshop in English).
+- [Workshop on Deep Learning with Keras and TensorFlow in R](https://shirinsplayground.netlify.com/2017/11/deep_learning_keras_tensorflow/) (ENG or GER)
 
 <br>
 
-- [Workshop: End-2-End vom Keras TensorFlow-Modell zur Produktion](https://www.codecentric.de/schulung/end-2-end-vom-keras-tensorflow-modell-zur-produktion/)
-
-> Durch das stark wachsende Datenvolumen hat sich das Rollenverständnis von Data Scientists erweitert. Statt Machine-Learning-Modelle für einmalige Analysen zu erstellen,  wird häufiger in konkreten Entwicklungsprojekten gearbeitet, in denen Prototypen in produktive Anwendungen überführt werden.
-Keras ist eine High-Level-Schnittstelle, die ein schnelles, einfaches und flexibles Prototypisieren von Neuronalen Netzwerken mit TensorFlow ermöglicht. Zusammen mit Luigi lassen sich beliebig komplexe Datenverarbeitungs-Workflows in Python erstellen. Das führt dazu, dass auch Nicht-Entwickler den End-2-End-Workflow des Keras-TensorFlow-Modells zur Produktionsreife leicht
-implementieren können.
+- [Workshop: End-2-End vom Keras TensorFlow-Modell zur Produktion](https://www.codecentric.de/schulung/end-2-end-vom-keras-tensorflow-modell-zur-produktion/) (GER)
 
 <br>
 
-- [Machine Learning Basics in R](https://shirinsplayground.netlify.com/2018/06/intro_to_ml_workshop_heidelberg/)
+- [Machine Learning Basics in R](https://shirinsplayground.netlify.com/2018/06/intro_to_ml_workshop_heidelberg/) (ENG or GER)
+
+---
+
+<br>
+
+## Interviews
+
+- In November 2022, I gave an interview to the RConsortium talking about my motivation to start the [MünsteR useR-group](https://www.meetup.com/de-DE/munster-r-users-group/). You can read the interview [here](https://www.r-consortium.org/blog/2022/11/29/spreading-a-passion-for-r-with-the-munster-community).
+
 
 ---
 
@@ -84,17 +82,23 @@ implementieren können.
 
 ## Upcoming talks, webinars, podcasts, etc.
 
-- On parental leave until October 2022 :-)
+None planned
 
 <br>
-
-- On April 26th, 2022 I'll be talking about Data Storytelling at the German Online Conference [Data Science im Unternehmen](https://konferenzen.heise.de/data-science/).
 
 ---
 
 <br>
 
 ## Past talks, webinars, podcasts, etc.
+
+- On November 23rd, 2022 I gave a talk about Data Security (GDPR) and Data Evaluation for the German KI Garage (content can't be shared, however).
+
+<br>
+
+- On April 26th, 2022 I've beeen talking about Data Storytelling at the German Online Conference [Data Science im Unternehmen](https://konferenzen.heise.de/data-science/).
+
+<br>
 
 - Recently, I had the opportunity to talk to the IML podcast about one of my favorite topics: ethics and interpretability in machine learning with special appearance of my 2-month-old: 
 

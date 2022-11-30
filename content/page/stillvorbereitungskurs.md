@@ -10,7 +10,7 @@ thumbnailImage: /img/stillen.jpg
 **Termin**: *Samstag, 26.11.2022 von 15 - 18 Uhr*
 <br>
 
-**Ort**: [*Hebammenpraxis Bauchladen Ostbevern*](https://www.bauchladen-ostbevern.de/hebammenpraxis.html)
+**Ort**: [*Hebammenpraxis Bauchladen Ostbevern*](https://www.bauchladen-ostbevern.de/Stillvorbereitungskurs.html)
 <br>
 
 **Kursleitung**: [*Dr. Shirin Elsinghorst*](/page/stibe/)
@@ -25,7 +25,7 @@ thumbnailImage: /img/stillen.jpg
 **Anmeldungen** *bitte per E-Mail an* [*shirin.elsinghorst@gmail.com*](mailto:shirin.elsinghorst@gmail.com) schicken.
 <br>
 
-![](/img/stillen.jpg)
+![http://bit.ly/m/shirin_elsinghorst](/img/stillen.jpg)
 
 Ihr seid schwanger und habt euch über das Stillen bisher keine großen Gedanken gemacht? Vielleicht habt ihr schon Horrorstorys über zerkaute Brustwarzen und zu wenig Milch gehört und seid euch gar nicht sicher, ob ihr das mit dem Stillen schafft? Oder habt ihr schon eine ganz genaue Vorstellung davon, wie es mit dem Stillen für euch laufen soll? 
 <br>

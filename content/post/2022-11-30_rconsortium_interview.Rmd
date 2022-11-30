@@ -1,0 +1,26 @@
+---
+title: "RConsortium interview about MünsteR"
+draft: false
+author: Dr. Shirin Elsinghorst
+date: '2022-11-30'
+categories: ["R"]
+tags: ["R", "RConsortium", "MünsteR", "meetup"]
+thumbnailImagePosition: left
+thumbnailImage: https://www.r-consortium.org/wp-content/uploads/sites/13/2019/09/RConsortium_Vertical_Pantone.png
+metaAlignment: center
+coverMeta: out
+slug: rconsortium_interview
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+## Spreading a Passion for R with the Münster Community in Germany
+
+Recently, I gave an interview to the RConsortium talking about my motivation to start the [MünsteR useR-group](https://www.meetup.com/de-DE/munster-r-users-group/).
+
+You can read the interview [here](https://www.r-consortium.org/blog/2022/11/29/spreading-a-passion-for-r-with-the-munster-community).
+
+![](https://secure.meetupstatic.com/photos/event/8/4/8/e/highres_461193934.webp?w=3840)
+
