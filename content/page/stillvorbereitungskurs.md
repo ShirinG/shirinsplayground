@@ -7,9 +7,9 @@ showActions:    true
 thumbnailImage: /img/stillen.jpg
 ---
 
-**Termin**: *Samstag, 26.11.2022 von 15 - 18 Uhr*
+**Termin**: *nächster Termin voraussichtlich an einem Samstag im Februar von 15 - 18 Uhr*
 <br>
-Weitere Termine folgen. Schreibt mir gerne eine Email oder WhatsApp wenn ihr über neue Termine informiert werden möchtet.
+Weitere Termine folgen. Schreibt mir gerne eine Email oder WhatsApp wenn ihr über neue Termine informiert werden möchtet oder wenn ihr an den festgelegten Terminen nicht könnt. Bei genügend Interessenten können weitere Termine festgelegt werden. :-)
 <br>
 
 **Ort**: [*Hebammenpraxis Bauchladen Ostbevern*](https://www.bauchladen-ostbevern.de/Stillvorbereitungskurs.html)
