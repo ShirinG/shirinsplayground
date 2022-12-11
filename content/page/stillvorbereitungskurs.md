@@ -7,7 +7,10 @@ showActions:    true
 thumbnailImage: /img/stillen.jpg
 ---
 
-**Termin**: *nächster Termin voraussichtlich an einem Samstag im Februar von 15 - 18 Uhr*
+**Termin**: *Samstag, 4. Februar von 15 - 18 Uhr*
+
+https://www.bauchladen-ostbevern.de/Stillvorbereitungskurs.html
+
 <br>
 Weitere Termine folgen. Schreibt mir gerne eine Email oder WhatsApp wenn ihr über neue Termine informiert werden möchtet oder wenn ihr an den festgelegten Terminen nicht könnt. Bei genügend Interessenten können weitere Termine festgelegt werden. :-)
 <br>
