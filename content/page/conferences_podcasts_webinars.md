@@ -100,7 +100,7 @@ None planned
 
 <br>
 
-- Recently, I had the opportunity to talk to the IML podcast about one of my favorite topics: ethics and interpretability in machine learning with special appearance of my 2-month-old: 
+- In September 2021, I had the opportunity to talk to the IML podcast about one of my favorite topics: ethics and interpretability in machine learning with special appearance of my 2-month-old: [link to Spotify](https://open.spotify.com/episode/2Yc0NXQ6EJjnOLPaICP6EX?si=B0RWciIESJ6fYepkKnERBQ)
 
 <iframe src="https://open.spotify.com/embed/episode/2Yc0NXQ6EJjnOLPaICP6EX" width="100%" height="232" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 
