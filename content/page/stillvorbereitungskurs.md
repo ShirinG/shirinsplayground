@@ -7,7 +7,7 @@ showActions:    true
 thumbnailImage: /img/stillen.jpg
 ---
 
-**Termin**: *Samstag, 22. April von 15 - 18 Uhr*
+**Termin**: *Samstag, 17. Juni von 15 - 18 Uhr*
 
 https://www.bauchladen-ostbevern.de/Stillvorbereitungskurs.html
 

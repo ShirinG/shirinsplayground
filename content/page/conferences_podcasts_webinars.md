@@ -110,7 +110,7 @@ None planned
 
 <br>
 
-- At the ML Summit in April 2021, gave a workshop on [how to visualize data effectively](https://ml-summit.de/machine-learing/the-good-the-bad-and-the-ugly-analysen-effektiv-visualisieren-und-kommunizieren/).
+- At the ML Summit in April 2021, I gave a workshop on [how to visualize data effectively](https://ml-summit.de/machine-learing/the-good-the-bad-and-the-ugly-analysen-effektiv-visualisieren-und-kommunizieren/).
 The code & resources are available on [Github](https://github.com/ShirinG/data_viz_workshop_2021).
 
 <br>
