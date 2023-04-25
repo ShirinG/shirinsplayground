@@ -82,7 +82,7 @@ Here, you can find a list of all the talks I gave at conferences, webinars, podc
 
 ## Upcoming talks, webinars, podcasts, etc.
 
-None planned
+- May 2023: Part 2 of the [SoftwerkerCast podcast](https://softwerkercast.podigee.io/19-daten-ai-erklarbarkeit) about Explainable AI (GERMAN).
 
 <br>
 
@@ -91,6 +91,10 @@ None planned
 <br>
 
 ## Past talks, webinars, podcasts, etc.
+
+- In April 2023, you can hear me talk about Data and AI in the German [SoftwerkerCast podcast](https://softwerkercast.podigee.io/19-daten-ai-erklarbarkeit) (GERMAN). Part 2 about Explainable AI will follow in May.
+
+<br>
 
 - On November 23rd, 2022 I gave a talk about Data Security (GDPR) and Data Evaluation for the German KI Garage (content can't be shared, however).
 
