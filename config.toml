@@ -68,7 +68,7 @@ canonifyurls = true
 [[menu.main]]
   weight = 4
   identifier = "about"
-  name = "About"
+  name = "About/Impressum"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-question\"></i>"
   # url = "/#about"
   url = "/page/about/"

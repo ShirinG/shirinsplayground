@@ -45,7 +45,9 @@ This blog will showcase some of the analyses I have been doing with different da
 
 Because I have been getting more emails with questions and requests for help than I can answer, you can now [book 15-minute time-slots with me](/page/bookme/). I will offer one 15-minute-slot per day on a first-come-first-serve basis. These 15 minutes will be free of charge but any help you might require beyond that, will have to be billed (details to be discussed in person).
 
-**Please note that I will be on parental leave until September 2022!**
+## Impressum
+
+[codecentric AG](https://www.codecentric.de/impressum)
 
 ---
 
