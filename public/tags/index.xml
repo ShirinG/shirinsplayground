@@ -6,7 +6,43 @@
     <description>Recent content in Tags on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.app/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 30 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.app/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>meetup</title>
+      <link>https://shirinsplayground.netlify.app/tags/meetup/</link>
+      <pubDate>Wed, 30 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.app/tags/meetup/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>MünsteR</title>
+      <link>https://shirinsplayground.netlify.app/tags/m%C3%BCnster/</link>
+      <pubDate>Wed, 30 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.app/tags/m%C3%BCnster/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>R</title>
+      <link>https://shirinsplayground.netlify.app/tags/r/</link>
+      <pubDate>Wed, 30 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.app/tags/r/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>RConsortium</title>
+      <link>https://shirinsplayground.netlify.app/tags/rconsortium/</link>
+      <pubDate>Wed, 30 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.app/tags/rconsortium/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>ggplot</title>
       <link>https://shirinsplayground.netlify.app/tags/ggplot/</link>
@@ -31,15 +67,6 @@
       <pubDate>Tue, 26 Apr 2022 00:00:00 +0000</pubDate>
       
       <guid>https://shirinsplayground.netlify.app/tags/presentation/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>R</title>
-      <link>https://shirinsplayground.netlify.app/tags/r/</link>
-      <pubDate>Tue, 26 Apr 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://shirinsplayground.netlify.app/tags/r/</guid>
       <description></description>
     </item>
     
@@ -130,24 +157,6 @@
       <pubDate>Mon, 07 Sep 2020 00:00:00 +0000</pubDate>
       
       <guid>https://shirinsplayground.netlify.app/tags/tidyverse/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>meetup</title>
-      <link>https://shirinsplayground.netlify.app/tags/meetup/</link>
-      <pubDate>Wed, 26 Jun 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://shirinsplayground.netlify.app/tags/meetup/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>MünsteR</title>
-      <link>https://shirinsplayground.netlify.app/tags/m%C3%BCnster/</link>
-      <pubDate>Wed, 26 Jun 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://shirinsplayground.netlify.app/tags/m%C3%BCnster/</guid>
       <description></description>
     </item>
     
