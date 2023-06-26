@@ -4,7 +4,7 @@ date: 2020-08-23
 comments:       false
 showMeta:       false
 showActions:    true
-thumbnailImage: /img/Bewerbungsfoto.jpg
+thumbnailImage: /img/Shirin_Münster_g.png
 ---
 
 <a href="https://promocode.com.ph/toplists/top-20-programming-blogs/" title="Banners for Top 20 Programming Blogs"><img src="https://promocode.com.ph/wp-content/uploads/2019/03/340x240-3.png" alt="Banners for Top 20 Programming Blogs"></a>
