@@ -9,7 +9,7 @@ thumbnailImage: /img/Shirin_Münster_g.png
 
 <a href="https://promocode.com.ph/toplists/top-20-programming-blogs/" title="Banners for Top 20 Programming Blogs"><img src="https://promocode.com.ph/wp-content/uploads/2019/03/340x240-3.png" alt="Banners for Top 20 Programming Blogs"></a>
 
-![Photo codecentric](/img/Shirin_Münster_g.png)
+![Photo codecentric](https://www.codecentric.de/_next/image?url=https%3A%2F%2Fmedia.graphassets.com%2Foutput%3Dformat%3Awebp%2FNUbyJo12TcyIcJtuPL7P&w=1080&q=75)
 
 My name is [Dr. Shirin Elsinghorst](https://bit.ly/m/shirin_elsinghorst) (born Glander). I'm a biologist turned bioinformatician turned data scientist. During my PhD and Postdoc I worked with quantitative traits & Next Generation Sequencing data in the context of Plant Evolutionary Biology and Genetic Epidemiology of diseases. I then chose to leave academia and became a data scientist for the German IT company [codecentric](https://www.codecentric.de/standorte/muenster/muenster-team). In this capacity, I have been gaining experience in a range of fields and applications around Data Analysis and Applied AI. In order to gain insight into different types of data, I am using a wide variety of tools - from (Bayesian) statistics to machine learning models, neural nets, generative AI and many more. The topics Explainable & Responsible AI and Data Storytelling are particularly important to me in order to share the potential benefits of data and AI with experts on non-experts alike.
 
