@@ -6,7 +6,25 @@
     <description>Recent content in Tags on Shirin&#39;s playgRound</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 30 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.app/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 24 May 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://shirinsplayground.netlify.app/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AI</title>
+      <link>https://shirinsplayground.netlify.app/tags/ai/</link>
+      <pubDate>Wed, 24 May 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.app/tags/ai/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>XAI</title>
+      <link>https://shirinsplayground.netlify.app/tags/xai/</link>
+      <pubDate>Wed, 24 May 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://shirinsplayground.netlify.app/tags/xai/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>meetup</title>
       <link>https://shirinsplayground.netlify.app/tags/meetup/</link>
@@ -634,15 +652,6 @@
       <pubDate>Mon, 19 Feb 2018 00:00:00 +0000</pubDate>
       
       <guid>https://shirinsplayground.netlify.app/tags/video/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>AI</title>
-      <link>https://shirinsplayground.netlify.app/tags/ai/</link>
-      <pubDate>Thu, 01 Feb 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://shirinsplayground.netlify.app/tags/ai/</guid>
       <description></description>
     </item>
     
