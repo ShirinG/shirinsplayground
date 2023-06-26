@@ -82,7 +82,7 @@ Here, you can find a list of all the talks I gave at conferences, webinars, podc
 
 ## Upcoming talks, webinars, podcasts, etc.
 
-- On September 21st 2023, I'll be talking about Data Viz & Storytelling at the [Big Data Fest II: Digital Health and Data Science](https://www.srh-hochschule-heidelberg.de/en/events/2023/big-data-fest-ii-digital-health-and-data-science/) of the Hochschule Heidelberg.
+- On September 21st 2023, I'll be talking about **Effectively communicating insights gained from data using Data Viz and Storytelling** at the [Big Data Fest II: Digital Health and Data Science](https://www.srh-hochschule-heidelberg.de/en/events/2023/big-data-fest-ii-digital-health-and-data-science/) of the Hochschule Heidelberg.
 
 <br>
 
