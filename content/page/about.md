@@ -9,9 +9,11 @@ thumbnailImage: /img/Bewerbungsfoto.jpg
 
 <a href="https://promocode.com.ph/toplists/top-20-programming-blogs/" title="Banners for Top 20 Programming Blogs"><img src="https://promocode.com.ph/wp-content/uploads/2019/03/340x240-3.png" alt="Banners for Top 20 Programming Blogs"></a>
 
-![http://bit.ly/m/shirin_elsinghorst](/img/Bewerbungsfoto_klein.jpg)
+![Photo codecentric](/img/Shirin_Münster_g.png)
 
-I’m [Shirin (Elsinghorst](https://bit.ly/m/shirin_elsinghorst), born Glander), a biologist turned bioinformatician turned data scientist. During my PhD and Postdoc I worked with Next Generation Sequencing data. However, I then chose to become a data scientist for a German IT company, called codecentric. In this capacity, I have been working on many different projects, e.g. building fraud detection models, creating a chatbot, implementing predictive maintenance, and more. My preferred tool for data analysis has been R but I also work with Python. I am also very passionate about teaching and sharing knowledge, so I give workshops, talk at conferences or [meetups](https://youtu.be/81UqFUk5B9I), write blog posts and organize the [MünsteR R-users group on meetup.com](https://shiring.github.io/r_users_group/2017/05/20/muenster_r_user_group).
+My name is [Dr. Shirin (Elsinghorst](https://bit.ly/m/shirin_elsinghorst), born Glander). I'm a biologist turned bioinformatician turned data scientist. During my PhD and Postdoc I worked with quantitative traits & Next Generation Sequencing data in the context of Plant Evolutionary Biology and Genetic Epidemiology of diseases. I then chose to leave academia and became a data scientist for the German IT company [codecentric](https://www.codecentric.de/standorte/muenster/muenster-team). In this capacity, I have been gaining experience in a range of fields and applications around Data Analysis and Applied AI. In order to gain insight into different types of data, I am using a wide variety of tools - from (Bayesian) statistics to machine learning models, neural nets, generative AI and many more. The topics Explainable & Responsible AI and Data Storytelling are particularly important to me in order to share the potential benefits of data and AI with experts on non-experts alike.
+
+My preferred tool for data analysis has been R but I also work with Python. I am also very passionate about teaching and sharing knowledge, so I give workshops, talk at conferences or [meetups](https://youtu.be/81UqFUk5B9I), write blog posts and organize the [MünsteR R-users group on meetup.com](https://shiring.github.io/r_users_group/2017/05/20/muenster_r_user_group).
 
 ![My journey to Data Science](https://shiring.github.io/netlify_images/my_story_wml3zm.png)
 
@@ -19,15 +21,19 @@ I teach a [Data Camp course on hyperparameter tuning with R](https://www.datacam
 
 <br>
 
-I am also mom of two precious boys, who are not leaving me much time to persue coding at the moment. ;-) In 2022, I have started my training to become a [certified volunteer lactation consultant](https://shirinsplayground.netlify.app/page/stibe/).
+I am also mom of two precious boys, who are not leaving me much time to persue coding at the moment. ;-) In 2022 and 2023, I trained and certified as a [volunteer lactation consultant](https://shirinsplayground.netlify.app/page/stibe/).
 
 <br>
 
-I love dancing and used to do competitive ballroom and latin dancing. Even though I don't have time for that anymore, I still enjoy teaching "social dances".
+I love dancing and used to do competitive ballroom and latin dancing. For 11 years, I have been giving lessons as well. Even though I don't have time for that anymore, I still enjoy "social dances".
+
+<br>
 
 I created the R package [exprAnalysis](https://github.com/ShirinG/exprAnalysis), designed to streamline my RNA-seq data analysis pipeline. It is available via Github. Instructions for installation and usage can be found [here](https://shiring.github.io/rna-seq/microarray/2016/09/28/exprAnalysis); however, the package is not being actively maintained any longer.
 
 This blog will showcase some of the analyses I have been doing with different data sets (all freely available). I will also host teaching materials for students to access in conjunction with R courses I am giving.
+
+![Photo Fun](/img/codecentric_2022_Shirin_Elsinghorst_-3429.jpg)
 
 ---
 

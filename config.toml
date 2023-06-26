@@ -39,7 +39,7 @@ canonifyurls = true
   gravatarEmail = "shirin.glander@gmail.com"
   # Your profile picture
   # Overwritten by your gravatar image if `author.gravatarEmail` is filled
-  picture = "https://blog.codecentric.de/wp-content/blogs.dir/2/files/2017/07/shirin_glander-700x700.jpg"
+  picture = "https://www.codecentric.de/_next/image?url=https%3A%2F%2Fmedia.graphassets.com%2Foutput%3Dformat%3Awebp%2FNUbyJo12TcyIcJtuPL7P&w=1080&q=75"
   # Your Twitter username without the @. E.g : thibaudlepretre
   twitter = "ShirinGlander"
   # Your google plus profile id. E.g : +ThibaudLepretre or 114625208755123718311
@@ -289,7 +289,7 @@ canonifyurls = true
 
   # Customize copyright value "© 2017 Shirin Elsinghorst. All Rights Reserved"
    [params.footer]
-     copyright = "<a href='http://bit.ly/m/shirin_elsinghorst'>© 2022 Dr. Shirin Elsinghorst. All Rights Reserved</a>"
+     copyright = "<a href='http://bit.ly/m/shirin_elsinghorst'> Dr. Shirin Elsinghorst (Impressum)</a>"
 
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$", "^Thumbs\\.db$"]
 
