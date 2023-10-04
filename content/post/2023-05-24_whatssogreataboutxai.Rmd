@@ -6,7 +6,7 @@ date: '2023-05-24'
 categories: ["R"]
 tags: ["XAI", "AI"]
 thumbnailImagePosition: left
-thumbnailImage: https://media.licdn.com/dms/image/D4E22AQFwj0JR9S4Wrg/feedshare-shrink_800/0/1684914601438?e=1687996800&v=beta&t=azMBcCcN4LknX_AxRNMQAVt2h5b7x3qbY-9IoQgP9oI
+thumbnailImage: /img/Shirin_Münster_g.png
 metaAlignment: center
 coverMeta: out
 slug: whatssogreataboutxai
