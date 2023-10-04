@@ -91,13 +91,13 @@ Here, you can find a list of all the talks I gave at conferences, webinars, podc
 
 ## Past talks, webinars, podcasts, etc.
 
-- At an internal event, I've been presenting about [Transparent & Responsible AI (German)](https://docs.google.com/presentation/d/e/2PACX-1vSqFZHhlQf8R230fBc7C8VoGbcTgvK-CqThnwb4BfSPZT1yQBevfixctR97oqJRb7cPCY_aR83hkMgf/pub?start=false&loop=false&delayms=3000):
+- At an internal event, I've been presenting about [Transparent & Responsible AI (German)](https://docs.google.com/presentation/d/e/2PACX-1vSqFZHhlQf8R230fBc7C8VoGbcTgvK-CqThnwb4BfSPZT1yQBevfixctR97oqJRb7cPCY_aR83hkMgf/pub?start=false&loop=false&delayms=3000).
 
 <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSqFZHhlQf8R230fBc7C8VoGbcTgvK-CqThnwb4BfSPZT1yQBevfixctR97oqJRb7cPCY_aR83hkMgf/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 
 <br>
 
-- At the same internal event, I've also been talking aboout [Data Strategy (German)](https://docs.google.com/presentation/d/e/2PACX-1vSqqV0ktGKs59RalVHI0LceftWlG7-bnjBxMtbZzxF9xXFx9cCHxJSVDfC-4u9ONC_m2q_bcwg65Gqi/pub?start=false&loop=false&delayms=3000):
+- At the same internal event, I've also been talking aboout [Data Strategy (German)](https://docs.google.com/presentation/d/e/2PACX-1vSqqV0ktGKs59RalVHI0LceftWlG7-bnjBxMtbZzxF9xXFx9cCHxJSVDfC-4u9ONC_m2q_bcwg65Gqi/pub?start=false&loop=false&delayms=3000).
 
 <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSqqV0ktGKs59RalVHI0LceftWlG7-bnjBxMtbZzxF9xXFx9cCHxJSVDfC-4u9ONC_m2q_bcwg65Gqi/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 
