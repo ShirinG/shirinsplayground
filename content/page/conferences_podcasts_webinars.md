@@ -13,9 +13,6 @@ Here, you can find a list of all the talks I gave at conferences, webinars, podc
 
 ## Workshops I am offering
 
-- [Data Camp course on Hyperparameter Tuning in R](https://www.datacamp.com/courses/hyperparameter-tuning-in-r) (ENG) [(also note this)](https://shirinsplayground.netlify.com/2019/04/consider_data_camp)
-
-<br>
 
 - [Workshop on Deep Learning with Keras and TensorFlow in R](https://shirinsplayground.netlify.com/2017/11/deep_learning_keras_tensorflow/) (ENG or GER)
 
@@ -26,6 +23,10 @@ Here, you can find a list of all the talks I gave at conferences, webinars, podc
 <br>
 
 - [Machine Learning Basics in R](https://shirinsplayground.netlify.com/2018/06/intro_to_ml_workshop_heidelberg/) (ENG or GER)
+
+<br>
+
+- [Data Camp course on Hyperparameter Tuning in R](https://www.datacamp.com/courses/hyperparameter-tuning-in-r) (ENG) [(also note this)](https://shirinsplayground.netlify.com/2019/04/consider_data_camp)
 
 ---
 
@@ -82,15 +83,29 @@ Here, you can find a list of all the talks I gave at conferences, webinars, podc
 
 ## Upcoming talks, webinars, podcasts, etc.
 
-- On September 21st 2023, I'll be talking about **Effectively communicating insights gained from data using Data Viz and Storytelling** at the [Big Data Fest II: Digital Health and Data Science](https://www.srh-hochschule-heidelberg.de/en/events/2023/big-data-fest-ii-digital-health-and-data-science/) of the Hochschule Heidelberg.
 
-<br>
 
 ---
 
 <br>
 
 ## Past talks, webinars, podcasts, etc.
+
+- At an internal event, I've been presenting about Transparent & Responsible AI (German):
+
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSqFZHhlQf8R230fBc7C8VoGbcTgvK-CqThnwb4BfSPZT1yQBevfixctR97oqJRb7cPCY_aR83hkMgf/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+
+<br>
+
+- At the same internal event, I've also been talking aboout Data Strategy (German):
+
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSqqV0ktGKs59RalVHI0LceftWlG7-bnjBxMtbZzxF9xXFx9cCHxJSVDfC-4u9ONC_m2q_bcwg65Gqi/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+
+<br>
+
+- On September 21st 2023, I've been talking about **Effectively communicating insights gained from data using Data Viz and Storytelling** at the [Big Data Fest II: Digital Health and Data Science](https://www.srh-hochschule-heidelberg.de/en/events/2023/big-data-fest-ii-digital-health-and-data-science/) of the Hochschule Heidelberg.
+
+<br>
 
 - In April & May 2023, you can hear me talk about Data and AI in the German [SoftwerkerCast podcast](https://softwerkercast.podigee.io/19-daten-ai-erklarbarkeit). Part 2 is about [Explainable AI](https://softwerkercast.podigee.io/20-explainable-ai) (GERMAN).
 

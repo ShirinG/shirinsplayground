@@ -41,6 +41,10 @@ Durch meinen Hintergrund als Biologin ist es mir besonders wichtig, dass ich **e
 
 In meiner Beratung arbeite ist mit der Haltung und Kommunikationsstrategie der **gewaltfreien Kommunikation**.
 
+![](/img/IMG-0520.jpg)
+![](/img/IMG-0521.jpg)
+![](/img/IMG-0522.jpg)
+
 Bei Anfragen, die die Grenzen der ehrenamtlichen Mütter-zu-Mütter Beratung überschreiten, verweise ich an entsprechendes Fachpersonal ([IBCLC Stillberatung](https://www.bdl-stillen.de/fachpersonal/stillberatungssuche/), Hebamme, Kinderärzt:in, Gynäkolog:in, etc.).
 
 Meine [ehrenamtliche Stillberatung](https://www.afs-stillen.de/fuer-muetter/eine-stillberaterin-finden/) ist immer kostenlos und findet zunächst telefonisch statt, kann aber nach Absprache auch in Person durchgeführt werden.
