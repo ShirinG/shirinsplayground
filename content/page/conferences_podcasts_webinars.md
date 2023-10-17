@@ -83,7 +83,7 @@ Here, you can find a list of all the talks I gave at conferences, webinars, podc
 
 ## Upcoming talks, webinars, podcasts, etc.
 
-
+- At the [Mittelstand-Digital Tag Münsterland](https://digitalzentrum-lmo.de/2023/09/13/mittelstand-digital-tag-muensterland/), I'll be talking about [Data Strategy (German)](https://docs.google.com/presentation/d/e/2PACX-1vSqqV0ktGKs59RalVHI0LceftWlG7-bnjBxMtbZzxF9xXFx9cCHxJSVDfC-4u9ONC_m2q_bcwg65Gqi/pub?start=false&loop=false&delayms=3000).
 
 ---
 
