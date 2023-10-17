@@ -91,7 +91,9 @@ Here, you can find a list of all the talks I gave at conferences, webinars, podc
 
 ## Past talks, webinars, podcasts, etc.
 
-- At an internal event, I've been presenting about [Transparent & Responsible AI (German)](https://docs.google.com/presentation/d/e/2PACX-1vSqFZHhlQf8R230fBc7C8VoGbcTgvK-CqThnwb4BfSPZT1yQBevfixctR97oqJRb7cPCY_aR83hkMgf/pub?start=false&loop=false&delayms=3000).
+- At the online [SoftwerkerKonf 2023](https://www.codecentric.de/wissens-hub/softwerker/softwerkerkonf), I've been talking about [Transparent & Responsible AI (German)](https://docs.google.com/presentation/d/e/2PACX-1vSqFZHhlQf8R230fBc7C8VoGbcTgvK-CqThnwb4BfSPZT1yQBevfixctR97oqJRb7cPCY_aR83hkMgf/pub?start=false&loop=false&delayms=3000).
+
+- At an internal event, I've also been presenting about [Transparent & Responsible AI (German)](https://docs.google.com/presentation/d/e/2PACX-1vSqFZHhlQf8R230fBc7C8VoGbcTgvK-CqThnwb4BfSPZT1yQBevfixctR97oqJRb7cPCY_aR83hkMgf/pub?start=false&loop=false&delayms=3000).
 
 <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSqFZHhlQf8R230fBc7C8VoGbcTgvK-CqThnwb4BfSPZT1yQBevfixctR97oqJRb7cPCY_aR83hkMgf/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 
