@@ -83,7 +83,7 @@ Here, you can find a list of all the talks I gave at conferences, webinars, podc
 
 ## Upcoming talks, webinars, podcasts, etc.
 
-- At the [Mittelstand-Digital Tag Münsterland](https://digitalzentrum-lmo.de/2023/09/13/mittelstand-digital-tag-muensterland/), I'll be talking about [Data Strategy (German)](https://docs.google.com/presentation/d/e/2PACX-1vSqqV0ktGKs59RalVHI0LceftWlG7-bnjBxMtbZzxF9xXFx9cCHxJSVDfC-4u9ONC_m2q_bcwg65Gqi/pub?start=false&loop=false&delayms=3000).
+
 
 ---
 
@@ -91,11 +91,19 @@ Here, you can find a list of all the talks I gave at conferences, webinars, podc
 
 ## Past talks, webinars, podcasts, etc.
 
+- At the [Mittelstand-Digital Tag Münsterland](https://digitalzentrum-lmo.de/2023/09/13/mittelstand-digital-tag-muensterland/), I've been talking about [Data Strategy (German)](https://docs.google.com/presentation/d/e/2PACX-1vSqqV0ktGKs59RalVHI0LceftWlG7-bnjBxMtbZzxF9xXFx9cCHxJSVDfC-4u9ONC_m2q_bcwg65Gqi/pub?start=false&loop=false&delayms=3000).
+
+<iframe src="https://www.slideshare.net/slideshow/embed_code/key/IA0ZRtfEGEsW1X?startSlide=1" width="597" height="486" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px;max-width: 100%;" allowfullscreen></iframe><div style="margin-bottom:5px"><strong><a href="https://www.slideshare.net/ShirinGlander/datenstrategie-in-der-praxis" title="Datenstrategie in der Praxis" target="_blank">Datenstrategie in der Praxis</a></strong> from <strong><a href="https://www.slideshare.net/ShirinGlander" target="_blank">Shirin Elsinghorst</a></strong></div>
+
+<br>
+
 - At the online [SoftwerkerKonf 2023](https://www.codecentric.de/wissens-hub/softwerker/softwerkerkonf), I've been talking about [Transparent & Responsible AI (German)](https://docs.google.com/presentation/d/e/2PACX-1vSqFZHhlQf8R230fBc7C8VoGbcTgvK-CqThnwb4BfSPZT1yQBevfixctR97oqJRb7cPCY_aR83hkMgf/pub?start=false&loop=false&delayms=3000).
+
+<br>
 
 - At an internal event, I've also been presenting about [Transparent & Responsible AI (German)](https://docs.google.com/presentation/d/e/2PACX-1vSqFZHhlQf8R230fBc7C8VoGbcTgvK-CqThnwb4BfSPZT1yQBevfixctR97oqJRb7cPCY_aR83hkMgf/pub?start=false&loop=false&delayms=3000).
 
-<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSqFZHhlQf8R230fBc7C8VoGbcTgvK-CqThnwb4BfSPZT1yQBevfixctR97oqJRb7cPCY_aR83hkMgf/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+<iframe src="https://www.slideshare.net/slideshow/embed_code/key/5Bzs2QcWDtSyyT?startSlide=1" width="597" height="486" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px;max-width: 100%;" allowfullscreen></iframe><div style="margin-bottom:5px"><strong><a href="https://www.slideshare.net/ShirinGlander/transparente-und-verantwortungsbewusste-ki" title="Transparente und Verantwortungsbewusste KI" target="_blank">Transparente und Verantwortungsbewusste KI</a></strong> from <strong><a href="https://www.slideshare.net/ShirinGlander" target="_blank">Shirin Elsinghorst</a></strong></div>
 
 <br>
 
