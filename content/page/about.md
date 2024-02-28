@@ -11,17 +11,17 @@ thumbnailImage: /img/Shirin_Münster_g.png
 
 ![Photo codecentric](https://www.codecentric.de/_next/image?url=https%3A%2F%2Fmedia.graphassets.com%2Foutput%3Dformat%3Awebp%2FNUbyJo12TcyIcJtuPL7P&w=1080&q=75)
 
-My name is [Dr. Shirin Elsinghorst](https://bit.ly/m/shirin_elsinghorst) (born Glander). I'm a biologist turned bioinformatician turned data scientist. During my PhD and Postdoc I worked with quantitative traits & Next Generation Sequencing data in the context of Plant Evolutionary Biology and Genetic Epidemiology of diseases. I then chose to leave academia and became a data scientist for the German IT company [codecentric](https://www.codecentric.de/standorte/muenster/muenster-team). In this capacity, I have been gaining experience in a range of fields and applications around Data Analysis and Applied AI. In order to gain insight into different types of data, I am using a wide variety of tools - from (Bayesian) statistics to machine learning models, neural nets, generative AI and many more. The topics Explainable & Responsible AI and Data Storytelling are particularly important to me in order to share the potential benefits of data and AI with experts on non-experts alike.
+My name is [Dr. Shirin Elsinghorst](https://bit.ly/m/shirin_elsinghorst) (born Glander). I'm a biologist turned bioinformatician turned data scientist. Currently I work as Team Lead and Consultant Data & AI. During my PhD and Postdoc I worked with quantitative traits & Next Generation Sequencing data in the context of Plant Evolutionary Biology and Genetic Epidemiology of diseases. I then chose to leave academia and became a data scientist for the German IT company [codecentric](https://www.codecentric.de/standorte/muenster/muenster-team). In this capacity, I have been gaining experience in a range of fields and applications around Data Analysis and Applied AI. In order to gain insight into different types of data, I am using a wide variety of tools - from (Bayesian) statistics to machine learning models, neural nets, generative AI and many more. The topics Explainable & Responsible AI and Data Storytelling are particularly important to me in order to share the potential benefits of data and AI with experts on non-experts alike.
 
 My preferred tool for data analysis has been R but I also work with Python. I am also very passionate about teaching and sharing knowledge, so I give workshops, talk at conferences or [meetups](https://youtu.be/81UqFUk5B9I), write blog posts and organize the [MünsteR R-users group on meetup.com](https://shiring.github.io/r_users_group/2017/05/20/muenster_r_user_group).
 
 ![My journey to Data Science](https://shiring.github.io/netlify_images/my_story_wml3zm.png)
 
-I teach a [Data Camp course on hyperparameter tuning with R](https://www.datacamp.com/courses/hyperparameter-tuning-in-r) (**UPDATE:** Before you take this course please consider [the info about the sexual harrassment scandal surrounding DataCamp](https://shirinsplayground.netlify.com/2019/04/consider_data_camp)!) and I'm on the program committee of the [Minds Mastering Machines M3 conference](https://m3-konferenz.de/programmkomitee.php).
+I used to teach a [Data Camp course on hyperparameter tuning with R](https://www.datacamp.com/courses/hyperparameter-tuning-in-r) (**UPDATE:** Before you take this course please consider [the info about the sexual harrassment scandal surrounding DataCamp](https://shirinsplayground.netlify.com/2019/04/consider_data_camp)!) and I'm on the program committee of the [Minds Mastering Machines M3 conference](https://m3-konferenz.de/programmkomitee.php).
 
 <br>
 
-I am also mom of two precious boys, who are not leaving me much time to persue coding at the moment. ;-) In 2022 and 2023, I trained and certified as a [volunteer lactation consultant](https://shirinsplayground.netlify.app/page/stibe/).
+I am also mom of two boys, who are not leaving me much time to persue coding at the moment. ;-) In 2022 and 2023, I trained and certified as a [volunteer lactation consultant](https://shirinsplayground.netlify.app/page/stibe/).
 
 <br>
 
