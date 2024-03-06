@@ -7,7 +7,7 @@ showActions:    true
 thumbnailImage: /img/stillen.jpg
 ---
 
-**Termin**: *Samstag, 13. Januar 2024 von 15 - 18 Uhr*
+**Termine**: *Samstags am 13.04., 29.06., 14.09. & 30.11.2024 jeweils von 15 - 18 Uhr*
 
 https://www.bauchladen-ostbevern.de/Stillvorbereitungskurs.html
 
