@@ -83,7 +83,7 @@ Here, you can find a list of all the talks I gave at conferences, webinars, podc
 
 ## Upcoming talks, webinars, podcasts, etc.
 
-
+- At the [tech&talk Meetup](https://www.meetup.com/de-DE/tech-talk-muenster/events/305181765/?eventorigin=group_upcoming_events), I'll be talking about **Responsible Data & AI Strategy**
 
 ---
 
@@ -91,7 +91,19 @@ Here, you can find a list of all the talks I gave at conferences, webinars, podc
 
 ## Past talks, webinars, podcasts, etc.
 
-- At the [Mittelstand-Digital Tag Münsterland](https://digitalzentrum-lmo.de/2023/09/13/mittelstand-digital-tag-muensterland/), I've been talking about [Data Strategy (German)](https://docs.google.com/presentation/d/e/2PACX-1vSqqV0ktGKs59RalVHI0LceftWlG7-bnjBxMtbZzxF9xXFx9cCHxJSVDfC-4u9ONC_m2q_bcwg65Gqi/pub?start=false&loop=false&delayms=3000).
+- At the [Mittelstand-Digital Tag Münsterland 2024](https://digitalzentrum-lmo.de/sp_veranstaltungen/mittelstand-digital-tag-muensterland-2024/), I gave a workshop about **Responsible Digital AI-Solutions**
+
+<br>
+
+- At the [minds mastering machines](https://www.m3-konferenz.de/) conference, I was a panelist talking about the **EU AI-Act**
+
+<br>
+
+- At the [data:unplugged conference 2024](https://www.data-unplugged.de/), I was a panelist talking about the topic **Ethics in AI**
+
+<br>
+
+- At the [Mittelstand-Digital Tag Münsterland 2023](https://digitalzentrum-lmo.de/2023/09/13/mittelstand-digital-tag-muensterland/), I've been talking about [Data Strategy (German)](https://docs.google.com/presentation/d/e/2PACX-1vSqqV0ktGKs59RalVHI0LceftWlG7-bnjBxMtbZzxF9xXFx9cCHxJSVDfC-4u9ONC_m2q_bcwg65Gqi/pub?start=false&loop=false&delayms=3000).
 
 <iframe src="https://www.slideshare.net/slideshow/embed_code/key/IA0ZRtfEGEsW1X?startSlide=1" width="597" height="486" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px;max-width: 100%;" allowfullscreen></iframe><div style="margin-bottom:5px"><strong><a href="https://www.slideshare.net/ShirinGlander/datenstrategie-in-der-praxis" title="Datenstrategie in der Praxis" target="_blank">Datenstrategie in der Praxis</a></strong> from <strong><a href="https://www.slideshare.net/ShirinGlander" target="_blank">Shirin Elsinghorst</a></strong></div>
 

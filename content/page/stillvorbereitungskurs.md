@@ -7,7 +7,7 @@ showActions:    true
 thumbnailImage: /img/stillen.jpg
 ---
 
-**Termine**: *Samstags am 13.04., 29.06., 14.09. & 30.11.2024 jeweils von 15 - 18 Uhr*
+**Termine**: siehe
 
 https://www.bauchladen-ostbevern.de/Stillvorbereitungskurs.html
 
@@ -24,7 +24,7 @@ Weitere Termine folgen. Schreibt mir gerne eine Email oder WhatsApp wenn ihr üb
 **Teilnehmer**: *Teilnahme **Einzeln** oder als **Paar** möglich*
 <br>
 
-**Kosten**: *15€ pro Person, bei Anmeldung als Paar: 20€ pro Paar*
+**Kosten**: *20€ pro Person, bei Anmeldung als Paar: 25€ pro Paar*
 <br>
 
 **Anmeldungen** *bitte per E-Mail an* [*shirin.elsinghorst@gmail.com*](mailto:shirin.elsinghorst@gmail.com) schicken.
