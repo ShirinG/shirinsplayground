@@ -64,11 +64,13 @@ Here, you can find a list of all the talks I gave at conferences, webinars, podc
 
 ## Upcoming talks, webinars, podcasts, etc.
 
+None planned.
+
 <br>
 
 ## Past talks, webinars, podcasts, etc.
 
-- At the [Symposium Oeconomicum 2025](https://www.symposium-oeconomicum.de/som-2025/), I was talking about **New Business Models KI als Treiber der Veränderung**
+- At the [Symposium Oeconomicum 2025](https://www.symposium-oeconomicum.de/som-2025/), I was talking about **New Business Models - KI als Treiber der Veränderung** [German]
 
 <br>
 
