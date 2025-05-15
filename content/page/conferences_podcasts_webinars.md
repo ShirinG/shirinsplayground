@@ -83,13 +83,17 @@ Here, you can find a list of all the talks I gave at conferences, webinars, podc
 
 ## Upcoming talks, webinars, podcasts, etc.
 
-- At the [tech&talk Meetup](https://www.meetup.com/de-DE/tech-talk-muenster/events/305181765/?eventorigin=group_upcoming_events), I'll be talking about **Responsible Data & AI Strategy**
-
----
-
 <br>
 
 ## Past talks, webinars, podcasts, etc.
+
+- At the [Symposium Oeconomicum 2025](https://www.symposium-oeconomicum.de/som-2025/), I was talking about **New Business Models KI als Treiber der Veränderung**
+
+<br>
+
+- At the [tech&talk Meetup](https://www.meetup.com/de-DE/tech-talk-muenster/events/305181765/?eventorigin=group_upcoming_events), I was talking about **Responsible Data & AI Strategy**
+
+<br>
 
 - At the [Mittelstand-Digital Tag Münsterland 2024](https://digitalzentrum-lmo.de/sp_veranstaltungen/mittelstand-digital-tag-muensterland-2024/), I gave a workshop about **Responsible Digital AI-Solutions**
 
