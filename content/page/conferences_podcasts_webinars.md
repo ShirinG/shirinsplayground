@@ -11,25 +11,6 @@ Here, you can find a list of all the talks I gave at conferences, webinars, podc
 
 *If you have been enjoying my content and would like to help me be able to create more, please consider sending me a donation at <button>[paypal.me](https://paypal.me/ShirinGlander)</button>. Thank you!* :-)
 
-## Workshops I am offering
-
-
-- [Workshop on Deep Learning with Keras and TensorFlow in R](https://shirinsplayground.netlify.com/2017/11/deep_learning_keras_tensorflow/) (ENG or GER)
-
-<br>
-
-- [Workshop: End-2-End vom Keras TensorFlow-Modell zur Produktion](https://www.codecentric.de/schulung/end-2-end-vom-keras-tensorflow-modell-zur-produktion/) (GER)
-
-<br>
-
-- [Machine Learning Basics in R](https://shirinsplayground.netlify.com/2018/06/intro_to_ml_workshop_heidelberg/) (ENG or GER)
-
-<br>
-
-- [Data Camp course on Hyperparameter Tuning in R](https://www.datacamp.com/courses/hyperparameter-tuning-in-r) (ENG) [(also note this)](https://shirinsplayground.netlify.com/2019/04/consider_data_camp)
-
----
-
 <br>
 
 ## Interviews
@@ -345,3 +326,23 @@ Marie Liebmann, Stephanie Hucke, Kathrin Koch, Melanie Eschborn, Julia Ghelman, 
 Ulas et al., May 2017, Nature Immunology
 
 <br>
+
+## Workshops
+
+The following workshops are not being offered on a regular basis any more. Please inqurie individually, if you are interested in the following content:
+
+<br>
+
+- [Workshop on Deep Learning with Keras and TensorFlow in R](https://shirinsplayground.netlify.com/2017/11/deep_learning_keras_tensorflow/) (ENG or GER)
+
+<br>
+
+- [Workshop: End-2-End vom Keras TensorFlow-Modell zur Produktion](https://www.codecentric.de/schulung/end-2-end-vom-keras-tensorflow-modell-zur-produktion/) (GER)
+
+<br>
+
+- [Machine Learning Basics in R](https://shirinsplayground.netlify.com/2018/06/intro_to_ml_workshop_heidelberg/) (ENG or GER)
+
+<br>
+
+- [Data Camp course on Hyperparameter Tuning in R](https://www.datacamp.com/courses/hyperparameter-tuning-in-r) (ENG) [(also note this)](https://shirinsplayground.netlify.com/2019/04/consider_data_camp)
